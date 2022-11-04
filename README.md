@@ -1,2 +1,2 @@
-# teammates-status
+# YAKI
 Working localization delcaration app
