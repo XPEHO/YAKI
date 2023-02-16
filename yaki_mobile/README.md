@@ -14,3 +14,11 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+## Used library :
+
+- [state management library](https://pub.dev/packages/flutter_riverpod)
+- [translation library](https://pub.dev/packages/easy_localization)
+- [API call library](https://pub.dev/packages/retrofit)
+- [Serialization](https://pub.dev/packages/json_serializable)
+- [Navigation](https://pub.dev/packages/go_router)
