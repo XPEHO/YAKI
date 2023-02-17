@@ -6,6 +6,7 @@ import "dotenv/config"
 import { initConfig } from './config';
 
 import swaggerUi from "swagger-ui-express";
+// import * as swaggerDocument from './swagger.json'
 
 
 // Call the initConfig function to load environment variables and log their values to the console
@@ -23,7 +24,7 @@ app.use(
     swaggerUi.serve,
     swaggerUi.setup(undefined, {
       swaggerOptions: {
-        url: "./swagger.json",
+        url: "./dev/swagger.json",
       },
     })
   );
