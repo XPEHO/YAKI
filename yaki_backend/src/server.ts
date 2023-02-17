@@ -1,11 +1,33 @@
 // Importing the Express library and related types
 import express, { Express, Request, Response } from 'express';
+// Load environment variables from a .env file
+import "dotenv/config"
+// Import the initConfig function from the config.ts module
+import { initConfig } from './config';
+
+
+const swaggerUi = require('swagger-ui-express');
+// const swaggerDocument = require('dev/swagger.json');
+
+// Call the initConfig function to load environment variables and log their values to the console
+initConfig();
 
 // Creating a new instance of the Express app
 const app: Express = express();
 
-// Setting the server port to 3000
-const port = 3000;
+// Get the value of the PORT environment variable
+const port = process.env.Port;
+
+// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use(
+    "/docs",
+    swaggerUi.serve,
+    swaggerUi.setup(undefined, {
+      swaggerOptions: {
+        url: "./dev/swagger.json",
+      },
+    })
+  );
 
 // Setting up a basic "hello world" route at the root URL
 app.get('/', (req: Request, res: Response) => {

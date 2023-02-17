@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "tsc && node ./dist/server.js",
     "start:dev": "ts-node-dev ./src/server.ts",
-    "build": "tsc --build" 
+    "build": "tsc --build"
   },
   "author": "",
   "license": "ISC",
@@ -16,12 +16,17 @@
     "@types/express": "^4.17.17",
     "@types/node": "^18.13.0",
     "nodemon": "^2.0.20",
+    "swagger-autogen": "^2.23.1",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.1.2",
     "tsup": "^6.6.3",
     "typescript": "^4.9.5"
   },
   "dependencies": {
-    "express": "^4.18.2"
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "pg": "^8.9.0",
+    "swagger-ui-express": "^4.6.0",
+    "ts-node-dev": "^2.0.0"
   }
 }
