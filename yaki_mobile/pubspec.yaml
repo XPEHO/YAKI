@@ -1,5 +1,5 @@
 name: yaki
-description: A new Flutter project.
+description: Open source project, with the goal of allowing employees to notify to their working team if they work remotely or on site. This app, also allow to any team lead to easyly see his coworker status on that matter.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
@@ -59,8 +59,23 @@ dependencies:
   # import 'package:retrofit/retrofit.dart';
   # import 'package:dio/dio.dart';
   # link : https://pub.dev/packages/retrofit
-  retrofit: '>=4.0.0 <5.0.0'
-  logger: any  #for logging purpose
+  retrofit: ">=4.0.0 <5.0.0"
+  logger: any #for logging purpose
+
+  # // flutter_svg dependency //
+  # provides a wrapper around Dart implementations of SVG parsing,
+  # including SVG path data
+  # https://pub.dev/packages/flutter_svg
+  flutter_svg: ^2.0.1
+
+  # // Shared preferences plugin //
+  # Wraps platform-specific persistent storage for simple data
+  # (NSUserDefaults on iOS and macOS, SharedPreferences on Android, etc.).
+  # Data may be persisted to disk asynchronously,
+  # no guarantee that writes will be persisted to disk after returning,
+  # this plugin must not be used for storing critical data
+  # https://pub.dev/packages/shared_preferences
+  shared_preferences: ^2.0.17
 
   # Mockito 5.0.0 supports Dart's new null safety language feature in Dart 2.12, primarily
   # with code generation.
@@ -87,8 +102,8 @@ dev_dependencies:
   flutter_lints: ^2.0.0
 
   # Retrofit dependency
-  retrofit_generator: '>=5.0.0 <6.0.0'
-  build_runner: '>=2.3.0 <4.0.0'
+  retrofit_generator: ">=5.0.0 <6.0.0"
+  build_runner: ">=2.3.0 <4.0.0"
   json_serializable: ^6.6.1
 
 # For information on the generic Dart part of this file, see the
