@@ -1,8 +1,9 @@
 const swaggerAutogen = require('swagger-autogen')();
 
 const doc = {
-  openapi: 3.0.0  ,
+  
   info: {
+    version: "1.0.0",
     title: 'Node API YAKI',
     description: 'Working localization delcaration app',
   },

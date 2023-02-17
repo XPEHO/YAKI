@@ -5,8 +5,8 @@ import "dotenv/config"
 // Import the initConfig function from the config.ts module
 import { initConfig } from './config';
 
-
-const swaggerUi = require('swagger-ui-express');
+import swaggerUi from "swagger-ui-express";
+// const swaggerUi = require('swagger-ui-express');
 // const swaggerDocument = require('dev/swagger.json');
 
 // Call the initConfig function to load environment variables and log their values to the console
@@ -24,7 +24,7 @@ app.use(
     swaggerUi.serve,
     swaggerUi.setup(undefined, {
       swaggerOptions: {
-        url: "./dev/swagger.json",
+        url: "dev/swagger.json",
       },
     })
   );
