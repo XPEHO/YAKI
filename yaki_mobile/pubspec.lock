@@ -301,6 +301,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.0.7"
+  golden_toolkit:
+    dependency: "direct main"
+    description:
+      name: golden_toolkit
+      sha256: "3a37d474cdb8f4505ff8be9f1bb248a6bf3e80ee22ef3c8c3c4c805fff7fa153"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.14.0"
   graphs:
     dependency: transitive
     description:
@@ -421,6 +429,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
+  mockito:
+    dependency: "direct main"
+    description:
+      name: mockito
+      sha256: "2a8a17b82b1bde04d514e75d90d634a0ac23f6cb4991f6098009dd56836aeafe"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.3.2"
   package_config:
     dependency: transitive
     description:
