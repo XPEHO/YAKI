@@ -6,8 +6,7 @@ import "dotenv/config"
 import { initConfig } from './config';
 
 import swaggerUi from "swagger-ui-express";
-// const swaggerUi = require('swagger-ui-express');
-// const swaggerDocument = require('dev/swagger.json');
+
 
 // Call the initConfig function to load environment variables and log their values to the console
 initConfig();
@@ -18,13 +17,13 @@ const app: Express = express();
 // Get the value of the PORT environment variable
 const port = process.env.Port;
 
-// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 app.use(
     "/docs",
     swaggerUi.serve,
     swaggerUi.setup(undefined, {
       swaggerOptions: {
-        url: "dev/swagger.json",
+        url: "./swagger.json",
       },
     })
   );

@@ -13,3 +13,12 @@ Run the server
 
 Run with hot reload
 ```npm run dev```
+
+Build docker image
+
+```docker build .```
+
+Run as docker with server + database
+
+```docker compose build```
+```docker compose up```
