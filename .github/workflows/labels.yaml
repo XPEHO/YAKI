@@ -1,0 +1,26 @@
+name: Add labels when pull request is opened
+on: pull_request
+jobs:
+  add-label:
+    name: Add labels on pull request
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          if [[ "${{ github.head_ref }}" == chore/* ]]; then
+            LABEL="chore :construction_worker_man:"
+          else
+            if [[ "${{ github.head_ref }}" ==  feat/* ]]; then
+              LABEL="enhancement :rocket:"
+            else
+              if [[ "${{ github.head_ref }}" == fix/* ]]; then
+                LABEL="bug :bug:"
+              else
+                LABEL="other"
+              fi
+            fi
+          fi
+          gh pr edit $ISSUE --add-label "$LABEL"
+          gh pr comment $ISSUE --body "Label $LABEL has been added to this pull request"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE: ${{ github.event.pull_request.html_url }}
