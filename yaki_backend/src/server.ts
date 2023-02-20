@@ -26,6 +26,7 @@ const app: Express = express();
 
 // Get the value of the PORT environment variable
 const port = process.env.Port;
+const adress = process.env.Adress
 
 // Setting up the Swagger UI middleware
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
@@ -48,7 +49,7 @@ app.get('/captains',  async (req, res) => {
 
 // Starting the server and logging a message to the console
 app.listen(port, () => {
-    console.log(`[Server]: I am running at https://localhost:${port}` );
+    console.log(`[Server]: I am running at ${adress}:${port}` );
 });
 
 

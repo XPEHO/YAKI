@@ -23,6 +23,12 @@ We will use JWT authorization token in the Authorization header
 - GET /captains => get all captains
 - GET /captains/{id} => get a captain by id
 - GET /captains/{id}/teams => get all captain teams
+- POST /teamMates/{id}/declaration => add a new declaration to teamMate
+- GET /captains/{id}/teams/{id}/teamMates => get captain team members
+- GET /captains/{id}/teams/{id}/teamMates/{id}/declarations => get captain team member declarations
+- Get /teamMates/{id}/declarations/date?period="mornig or afternoon" => get teammate today's, morning, afternoon declarations
+- POST /login => to authenticate
+- POST /logout => to disconnect
 
 ## Getting started
 Fetch dependencies
