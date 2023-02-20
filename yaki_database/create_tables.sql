@@ -98,33 +98,11 @@ ALTER TABLE IF EXISTS public."user"
     OWNER to yaki;
 
 
---- CREATE TABLE FOR TEAM MATES
-
-CREATE TABLE IF NOT EXISTS public.team_mate
-(
-    team_mate_id integer NOT NULL DEFAULT nextval('team_mate_id_seq'::regclass),
-    team_mate_team_id integer NOT NULL,
-    team_mate_user_id integer,
-    CONSTRAINT "TEAM_MATE_pkey" PRIMARY KEY (team_mate_id),
-    CONSTRAINT team_mate_team_id_fkey FOREIGN KEY (team_mate_team_id)
-        REFERENCES public.team (team_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
-        NOT VALID
-)
-
-TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS public.team_mate
-    OWNER to yaki;
-
-
 -- CREATE TABLE FOR CAPTAINS
 
 CREATE TABLE IF NOT EXISTS public.captain
 (
     captain_id integer NOT NULL DEFAULT nextval('captain_id_seq'::regclass),
-    captain_team_id integer,
     captain_user_id integer,
     CONSTRAINT "CAPTAIN_pkey" PRIMARY KEY (captain_id)
 )
@@ -133,7 +111,6 @@ TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.captain
     OWNER to yaki;
-
 
 -- CREATE TABLE FOR TEAMS
 
@@ -154,7 +131,27 @@ TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.team
     OWNER to yaki;
+	
 
+--- CREATE TABLE FOR TEAM MATES
+
+CREATE TABLE IF NOT EXISTS public.team_mate
+(
+    team_mate_id integer NOT NULL DEFAULT nextval('team_mate_id_seq'::regclass),
+    team_mate_team_id integer NOT NULL,
+    team_mate_user_id integer,
+    CONSTRAINT "TEAM_MATE_pkey" PRIMARY KEY (team_mate_id),
+    CONSTRAINT team_mate_team_id_fkey FOREIGN KEY (team_mate_team_id)
+        REFERENCES public.team (team_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.team_mate
+    OWNER to yaki;
 
 -- CREATE TABLE FOR LOCATIONS
 
