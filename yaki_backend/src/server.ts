@@ -10,6 +10,14 @@ import swaggerUi from "swagger-ui-express";
 // Import swagger JSON file
 import * as swaggerDocument from "./dev/swagger.json";
 
+// const db = require('./repository.ts')
+import * as db from './repository';
+
+interface Captain {
+    id: number;
+    name: string;
+  }
+
 // Call the initConfig function to load environment variables and log their values to the console
 initConfig();
 
@@ -28,9 +36,19 @@ app.get('/', (req: Request, res: Response) => {
     res.send('Hello, this is Express + TypeScript');
 });
 
+app.get('/captains',  async (req, res) => {
+    const captains: Captain[] = await db.getCaptains();
+    res.send(captains)
+  })
+  
+  app.get('/captains/:name',  async (req, res) => {
+    const captains: Captain[] = await db.findCaptains(req.params.name);
+    res.send(captains)
+  })
+
 // Starting the server and logging a message to the console
 app.listen(port, () => {
-    console.log(`[Server]: I am running at https://localhost:${port}`);
+    console.log(`[Server]: I am running at https://localhost:${port}` );
 });
 
 

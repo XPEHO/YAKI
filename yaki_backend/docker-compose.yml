@@ -1,22 +1,19 @@
 version: "3.9"
 services:
-  bdd:
-    image: postgres:12.3
-    environment:
-      POSTGRES_PASSWORD: ${process.env.DB_PASSWORD}
-      POSTGRES_USER: ${process.env.DB_USER}
-      POSTGRES_DB: ${process.env.DB_DATABASE}
-    ports:
-      - "${process.env.DB_PORT}:${process.env.DB_PORT}"
-  api:
+   api:
     build: .
+    env_file: .env
     environment:
-      - PGUSER=${process.env.DB_USER}
-      - PGHOST=${process.env.DB_HOST}
-      - PGPASSWORD=${process.env.DB_PASSWORD}
-      - PGDATABASE=${process.env.DB_DATABASE}
-      - PGPORT=${process.env.DB_PORT}
+       DB_HOST: bdd
     ports:
-      - "${process.env.Port}:${process.env.Port}"
-    links:
-      - "bdd:database"
+      - "3000:3000"
+    depends_on:
+      - bdd
+   bdd:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
