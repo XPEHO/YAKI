@@ -1,5 +1,5 @@
 // Import the dotenv package
-import dotenv from 'dotenv';
+import dotenv from 'dotenv'
 
 /**
  * This function loads environment variables from a .env file and logs their 
