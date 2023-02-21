@@ -17,12 +17,19 @@ We will use JWT authorization token in the Authorization header
 - declaration: id, idTeamMate, status, date
 
 ### Path
-- GET /teamMates => get all team-mates
-- GET /teamMates/{id} => get a team-mate by id
-- GET /teamMates/{id}/declarations => get all team-mate declarations 
-- GET /captains => get all captains
 - GET /captains/{id} => get a captain by id
-- GET /captains/{id}/teams => get all captain teams
+- GET /teamMates/{id} => get a teamMate by id
+- POST /declarations => add a new declaration to teamMate
+- POST /declarations/_search => get all declarations that match the specified search criteria
+- GET /teamMates?team={id} => get all team members
+- GET /teams?teamMate={id} => get all teamMate teams 
+- POST /login => to authenticate
+- POST /logout => to disconnect
+
+## env.sample
+The `env.sample` file provides a template for creating an environment configuration file. It contains a list of environment variables and their default values, which can be used as a starting point for creating a `.env` file.
+
+The `.env` file is used to store sensitive information such as API keys, database credentials, and other configuration settings that should not be hard-coded in the application code. We recommend that you copy `env.sample` to `.env` and customize it with your own configuration settings.
 
 ## Getting started
 Fetch dependencies
@@ -33,6 +40,10 @@ Run the server
 
 Run with hot reload
 ```npm run dev```
+
+Update Swagger definition
+
+```npm run swagger```
 
 Build docker image
 

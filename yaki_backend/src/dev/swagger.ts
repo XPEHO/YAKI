@@ -1,17 +1,18 @@
+require('dotenv').config()
 const swaggerAutogen = require('swagger-autogen')();
 
 const doc = {
-  
+
   info: {
     version: "1.0.0",
     title: 'Node API YAKI',
     description: 'Working localization delcaration app',
   },
-  host: 'localhost:3000',
-  schemes: ['http'],
+  host: `${process.env.Swagger_host}`,
+  schemes: [`${process.env.Swagger_schemes}`],
 };
 
-const outputFile = './swagger.json';
+const outputFile = './src/dev/swagger.json';
 const endpointsFiles = ['./src/server.ts'];
 
 /* NOTE: if you use the express Router, you must pass in the 
