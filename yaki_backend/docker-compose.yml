@@ -6,7 +6,7 @@ services:
     environment:
        DB_HOST: bdd
     ports:
-      - "3000:3000"
+      - "${Port}:3000"
     depends_on:
       - bdd
    bdd:
@@ -16,4 +16,4 @@ services:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_DB: ${DB_DATABASE}
     ports:
-      - "5432:5432"
+      - "${DB_PORT}:5432"
