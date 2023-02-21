@@ -9,16 +9,17 @@ class Authentification extends StatelessWidget {
 
     return Scaffold(
         body: Column(
-          children: [
-            Expanded(
-                flex: 6,
-                child: Header()),
-            const Expanded(
-                flex: 7,
-                child: Text(' '))
-          ],
+      children: [
+        Expanded(
+            flex: 6,
+            child: Header(
+              pictoIcon: 'assets/images/dots.svg',
+              pictoPath: 'assets/images/authent.svg',
+              headerTitle: 'Authentification',
+              headerHint: 'Who are you ?',
+            )),
+        const Expanded(flex: 7, child: Text(' '))
+      ],
     ));
   }
 }
-
-
