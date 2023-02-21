@@ -7,7 +7,8 @@
     "test": "jest",
     "start": "tsc && node ./dist/server.js",
     "start:dev": "ts-node-dev ./src/server.ts",
-    "build": "tsc --build"
+    "build": "tsc --build",
+    "swagger": "node ./src/dev/swagger.ts"
   },
   "author": "",
   "license": "ISC",
