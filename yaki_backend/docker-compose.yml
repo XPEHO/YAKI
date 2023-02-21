@@ -1,0 +1,19 @@
+version: "3.9"
+services:
+   api:
+    build: .
+    env_file: .env
+    environment:
+       DB_HOST: bdd
+    ports:
+      - "${Port}:3000"
+    depends_on:
+      - bdd
+   bdd:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_DB: ${DB_DATABASE}
+    ports:
+      - "${DB_PORT}:5432"
