@@ -31,25 +31,23 @@ export class UserService {
     checkUserLoginDetails = async (object: any) => {
         const user = await this.userRepository.getByLogin(object.login, object.password); 
         if(await authService.checkPasswordWithHash(object.password, user.user_password)) {
-            const captain : CaptainDtoIn = await this.captainService.getByUserId(user.user_id);
-            // if there is no captain with the specified user_id, check for a team_mate
-            if(captain === undefined) {
-                const teamMate : TeamMateDtoIn = await this.teamMateService.getByUserId(user.user_id);
+            // if captain_id column is null, return a team_mate
+            if(user.captain_id === null) {
                 return new TeamMateDtoOut(
-                    teamMate.team_mate_id,
-                    teamMate.user_id,
-                    teamMate.team_mate_team_id,
-                    teamMate.user_last_name,
-                    teamMate.user_first_name,
-                    teamMate.user_email
+                    user.team_mate_id,
+                    user.user_id,
+                    user.team_mate_team_id,
+                    user.user_last_name,
+                    user.user_first_name,
+                    user.user_email
                 );
-            }
+            } // else return a captain
             return new CaptainDtoOut(
-                captain.captain_id,
-                captain.user_id,
-                captain.user_last_name,
-                captain.user_first_name,
-                captain.user_email
+                user.captain_id,
+                user.user_id,
+                user.user_last_name,
+                user.user_first_name,
+                user.user_email
             )
         } else {
             throw new Error('Bad authentification details');

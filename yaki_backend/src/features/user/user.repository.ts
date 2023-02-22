@@ -17,7 +17,12 @@ export class UserRepository {
             port:  Number(process.env.DB_PORT)
         });      
         const poolResult: QueryResult = await pool.query(
-            `SELECT * FROM public.user WHERE user_login = '${username}';`
+            `SELECT * FROM public.user u
+            LEFT JOIN public.team_mate tm
+            ON u.user_id = tm.team_mate_user_id
+            LEFT JOIN public.captain c
+            ON u.user_id = c.captain_user_id
+			WHERE user_login = '${username}';`
         );
         await pool.end();
         // If the user was found in the database
