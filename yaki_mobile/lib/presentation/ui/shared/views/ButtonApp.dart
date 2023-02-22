@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import '../../../styles/HeaderTextStyle.dart';
 
+
 class ButtonApp extends StatefulWidget {
 
   final String textButton;
 
   const ButtonApp(
-      {
-        super.key,
-        required this.textButton,
-      }
-      );
+                  {
+                    super.key,
+                    required this.textButton,
+                  }
+                );
+
+
 
   @override
   State<ButtonApp> createState() => _ButtonAppState();
