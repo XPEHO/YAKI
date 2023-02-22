@@ -11,23 +11,24 @@ class Header extends StatelessWidget {
   final String headerHint;
 
   Header(
-      {super.key,
-      required this.pictoIcon,
-      required this.pictoPath,
-      required this.headerTitle,
-      required this.headerHint});
+          {
+            super.key,
+            required this.pictoIcon,
+            required this.pictoPath,
+            required this.headerTitle,
+            required this.headerHint,
+          }
+  );
 
   @override
   Widget build(BuildContext context) {
-
-
 
     return Container(
       decoration: BoxDecoration(
           borderRadius: const BorderRadius.only(
               bottomLeft: Radius.circular(16),
               bottomRight: Radius.circular(16)),
-          color: const Color.fromARGB(255, 245, 205, 61),
+          color: HeaderColor.yellowApp,
           boxShadow: [
             BoxShadow(
                 color: Colors.grey.withOpacity(0.7),

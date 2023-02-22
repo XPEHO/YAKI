@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    context.setLocale(Locale('en', 'EN'));
+
     return MaterialApp.router(
       locale: context.locale,
       supportedLocales: context.supportedLocales,
