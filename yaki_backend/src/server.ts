@@ -13,6 +13,9 @@ import * as swaggerDocument from "./dev/swagger.json";
 // const db = require('./repository.ts')
 import * as db from './repository';
 
+import router from "./router"
+import { Declaration } from './features/declaration/declaration.interface';
+
 /* Defining the shape of the data that will be returned from the database. */
 interface Captain {
   id: number;
@@ -33,11 +36,16 @@ const host = process.env.Host
 // Setting up the Swagger UI middleware
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-
+// app.use(router);
 // Setting up a basic "hello world" route at the root URL
 app.get('/', (req: Request, res: Response) => {
   res.send('Hello, this is Express + TypeScript');
 });
+app.post('/declarations', async (req, res) => {
+  const declaration = req.body;
+  const newDeclaration = await db.createDeclaration(declaration)
+  res.status(201).json(newDeclaration);
+})
 
 /* This is a route handler. It is a function that is called when a request is made to the `/captains`
 endpoint. */
