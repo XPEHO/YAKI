@@ -6,14 +6,14 @@ class ButtonApp extends StatefulWidget {
 
   final String textButton;
 
+  /// Generic button component with 1 arg : <br>
+  /// textButton : Text who appear on the button
   const ButtonApp(
                   {
                     super.key,
                     required this.textButton,
                   }
                 );
-
-
 
   @override
   State<ButtonApp> createState() => _ButtonAppState();

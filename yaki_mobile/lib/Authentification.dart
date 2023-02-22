@@ -45,17 +45,18 @@ class _AuthentificationState extends State<Authentification> {
                                 children: <Widget>[
                                   Padding(
                                     padding: EdgeInsets.only(top: size.height/15, right: 50, left: 50),
-                                    child: InputApp(
-                                      inputText: tr('inputLogin'),
-                                      inputHint: tr('hintLogin'),
-                                      password: false,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 20, right: 50, left: 50),
-                                    child: InputApp(
-                                      inputText: tr('inputPassword'),
-                                      inputHint: tr('hintPassword'),
+                                child: InputApp(
+                                  inputText: tr('inputLogin'),
+                                  inputHint: tr('hintLogin'),
+                                  password: false,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 20, right: 50, left: 50),
+                                child: InputApp(
+                                  inputText: tr('inputPassword'),
+                                  inputHint: tr('hintPassword'),
+                                  password: true,
                                       password: true,
                                     ),
                                   ),
