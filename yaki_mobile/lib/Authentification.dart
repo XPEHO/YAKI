@@ -3,6 +3,9 @@ import 'presentation/ui/shared/views/Header.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class Authentification extends StatelessWidget {
+
+  const Authentification({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

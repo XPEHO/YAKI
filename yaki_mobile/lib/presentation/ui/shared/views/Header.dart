@@ -27,14 +27,17 @@ class Header extends StatelessWidget {
       decoration: BoxDecoration(
           borderRadius: const BorderRadius.only(
               bottomLeft: Radius.circular(16),
-              bottomRight: Radius.circular(16)),
+              bottomRight: Radius.circular(16),
+          ),
           color: HeaderColor.yellowApp,
           boxShadow: [
             BoxShadow(
                 color: Colors.grey.withOpacity(0.7),
                 spreadRadius: 5,
-                blurRadius: 4),
-          ]),
+                blurRadius: 4,
+            ),
+          ],
+      ),
       child: Padding(
         padding: const EdgeInsets.all(15),
         child: Column(
@@ -51,10 +54,12 @@ class Header extends StatelessWidget {
                     // top right circle avatar
                     CircleAvatarSVG(iconPath: pictoIcon, radius: 20),
                   ],
-                )),
+                ),
+            ),
             Expanded(
                 flex: 3,
-                child: CircleAvatarSVG(iconPath: pictoPath, radius: 100)),
+                child: CircleAvatarSVG(iconPath: pictoPath, radius: 100),
+            ),
             Expanded(
                 flex: 2,
                 child: Padding(
@@ -63,7 +68,8 @@ class Header extends StatelessWidget {
                     headerHint,
                     style: textStyleTemp(),
                   ),
-                ))
+                ),
+            ),
           ],
         ),
       ),
@@ -71,21 +77,19 @@ class Header extends StatelessWidget {
   }
 }
 
-
-
 class CircleAvatarSVG extends StatelessWidget {
   final String iconPath;
   final double radius;
 
   const CircleAvatarSVG(
-      {super.key, required this.iconPath, required this.radius});
+      {super.key, required this.iconPath, required this.radius,});
 
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
       backgroundColor: Colors.transparent,
       radius: radius,
-      child: Container(child: SvgPicture.asset(iconPath)),
+      child: SvgPicture.asset(iconPath),
     );
   }
 }
@@ -95,7 +99,12 @@ class CircleAvatarPNG extends StatelessWidget {
   final double radius;
 
   const CircleAvatarPNG(
-      {super.key, required this.iconPath, required this.radius});
+      {
+        super.key,
+        required this.iconPath,
+        required this.radius,
+      }
+  );
 
   @override
   Widget build(BuildContext context) {
