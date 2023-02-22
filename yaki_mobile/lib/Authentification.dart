@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:yaki/presentation/styles/HeaderTextStyle.dart';
-import 'package:yaki/presentation/ui/shared/views/ButtonApp.dart';
-import 'package:yaki/presentation/ui/shared/views/InputApp.dart';
 import 'presentation/ui/shared/views/Header.dart';
 
 import 'package:easy_localization/easy_localization.dart';
@@ -9,7 +6,7 @@ import 'package:easy_localization/easy_localization.dart';
 class Authentification extends StatefulWidget {
 
 
-  const Authentification({super.key});
+   const Authentification({super.key});
 
   @override
   State<Authentification> createState() => _AuthentificationState();
