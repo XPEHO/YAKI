@@ -5,6 +5,7 @@ import '../../../styles/HeaderTextStyle.dart';
 class ButtonApp extends StatefulWidget {
 
   final String textButton;
+  final Function fonction;
 
   /// Generic button component with 1 arg : <br>
   /// textButton : Text who appear on the button
@@ -12,6 +13,7 @@ class ButtonApp extends StatefulWidget {
                   {
                     super.key,
                     required this.textButton,
+                    required this.fonction,
                   }
                 );
 
@@ -45,7 +47,9 @@ class _ButtonAppState extends State<ButtonApp> {
           left: 50,
         ),
       ),
-      onPressed: () {},
+      onPressed: () {
+        widget.fonction;
+      },
       child: Text(widget.textButton),
     );
   }

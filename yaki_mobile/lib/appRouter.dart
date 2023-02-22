@@ -5,7 +5,7 @@ final GoRouter appRouter = GoRouter(
     routes: <GoRoute>[
       GoRoute(
         path: '/',
-        builder: (context, state) => const Authentification(),
+        builder: (context, state) => Authentification(),
         routes: const [],
       ),
     ],

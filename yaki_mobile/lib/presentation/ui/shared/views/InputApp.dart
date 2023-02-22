@@ -27,11 +27,14 @@ class InputApp extends StatefulWidget {
 
 class _InputAppState extends State<InputApp> {
 
+  TextEditingController controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return TextField(
-      onSubmitted: (value) {
-        debugPrint(value);
+      controller: controller,
+      onChanged: (value) {
+
       },
       obscureText: widget.password,
       decoration: InputDecoration(
