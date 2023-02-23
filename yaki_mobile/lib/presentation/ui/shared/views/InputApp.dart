@@ -29,18 +29,15 @@ class _InputAppState extends State<InputApp> {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
+    return TextField(
+      onSubmitted: (value) {
+        debugPrint(value);
+      },
       obscureText: widget.password,
       decoration: InputDecoration(
         hintText: widget.inputText,
         border: const OutlineInputBorder(),
       ),
-      validator: (String? value) {
-        if (value == null || value.isEmpty) {
-          return widget.inputHint;
-        }
-        return null;
-      },
     );
   }
 

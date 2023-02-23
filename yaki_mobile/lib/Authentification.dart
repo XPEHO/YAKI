@@ -19,8 +19,11 @@ class _AuthentificationState extends State<Authentification> {
 
   bool isChecked = false;
 
+
   @override
   Widget build(BuildContext context) {
+
+    var size = MediaQuery.of(context).size;
 
     return Scaffold(
         body: Column(
@@ -38,61 +41,63 @@ class _AuthentificationState extends State<Authentification> {
                       flex: 7,
                       child: Form(
                           child: SingleChildScrollView(
-                            child: Column(
-                              children: <Widget>[
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 50, right: 50, left: 50),
-                                  child: InputApp(
-                                    inputText: tr('inputLogin'),
-                                    inputHint: tr('hintLogin'),
-                                    password: false,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 20, right: 50, left: 50),
-                                  child: InputApp(
-                                    inputText: tr('inputPassword'),
-                                    inputHint: tr('hintPassword'),
-                                    password: true,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left : 40, top: 20),
-                                  child: Row(
-                                    children: [
-                                      Checkbox(
-                                          value: isChecked,
-                                          activeColor: HeaderColor.yellowApp,
-                                          onChanged: (bool? value) {
-                                            setState(() {
-                                              isChecked = value!;
-                                            });
-                                          },
-                                      ),
-                                      Text(
-                                        tr('rememberMe'),
-                                        style: const TextStyle(
-                                          fontSize: 20,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top : 20),
-                                  child: ButtonApp(textButton: tr('signIn'),),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 40),
-                                  child: Text(
-                                    tr('forgotPassword'),
-                                    style: const TextStyle(
-                                      color: Colors.purple,
+
+                              child: Column(
+                                children: <Widget>[
+                                  Padding(
+                                    padding: EdgeInsets.only(top: size.height/15, right: 50, left: 50),
+                                    child: InputApp(
+                                      inputText: tr('inputLogin'),
+                                      inputHint: tr('hintLogin'),
+                                      password: false,
                                     ),
                                   ),
-                                )
-                              ],
-                            ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 20, right: 50, left: 50),
+                                    child: InputApp(
+                                      inputText: tr('inputPassword'),
+                                      inputHint: tr('hintPassword'),
+                                      password: true,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left : 40, top: 10),
+                                    child: Row(
+                                      children: [
+                                        Checkbox(
+                                            value: isChecked,
+                                            activeColor: HeaderColor.yellowApp,
+                                            onChanged: (bool? value) {
+                                              setState(() {
+                                                isChecked = value!;
+                                              });
+                                            },
+                                        ),
+                                        Text(
+                                          tr('rememberMe'),
+                                          style: const TextStyle(
+                                            fontSize: 20,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top : 10),
+                                    child: ButtonApp(textButton: tr('signIn')
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 20),
+                                    child: Text(
+                                      tr('forgotPassword'),
+                                      style: const TextStyle(
+                                        color: Colors.purple,
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
                           ),
                       ),
                   ),

@@ -23,13 +23,16 @@ class _ButtonAppState extends State<ButtonApp> {
 
   @override
   Widget build(BuildContext context) {
+
+    var size = MediaQuery.of(context).size;
+
     return ElevatedButton(
       style:ElevatedButton.styleFrom(
         elevation: 5,
         backgroundColor: HeaderColor.yellowApp,
-        textStyle: const TextStyle(
+        textStyle: TextStyle(
           color: Colors.black,
-          fontSize: 30,
+          fontSize: size.height/25,
           fontWeight: FontWeight.w600,
         ),
         padding: const EdgeInsets.only(
