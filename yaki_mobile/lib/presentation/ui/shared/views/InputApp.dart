@@ -12,13 +12,13 @@ class InputApp extends StatefulWidget {
   /// inputHint (String) : text who appear when input is empty
   /// password (boolean) : makes dots instead of text
   const InputApp(
-      {
-        super.key,
-        required this.inputText,
-        required this.inputHint,
-        required this.password
-      }
-      );
+                  {
+                    super.key,
+                    required this.inputText,
+                    required this.inputHint,
+                    required this.password,
+                  }
+                );
 
   @override
   State<InputApp> createState() => _InputAppState();
