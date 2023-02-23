@@ -1,14 +1,8 @@
-import { Pool, QueryResult } from "pg";
-import UserModel from "./user.dtoIn";
 import { UserRepository } from "./user.repository";
-import * as argon2 from 'argon2';
-import * as crypto from 'crypto';
 import { authService } from "./authentication.service";
 import { CaptainService } from "../captain/captain.service";
 import { TeamMateService } from "../teamMate/teamMate.service";
 import { TeamMateDtoOut } from "../teamMate/teamMate.dtoOut";
-import { TeamMateDtoIn } from "../teamMate/teamMate.dtoIn";
-import { CaptainDtoIn } from "../captain/captain.dtoIn";
 import { CaptainDtoOut } from "../captain/captain.dtoOut";
 
 export class UserService {
@@ -29,26 +23,31 @@ export class UserService {
      * @returns 
      */
     checkUserLoginDetails = async (object: any) => {
-        const user = await this.userRepository.getByLogin(object.login, object.password); 
-        if(await authService.checkPasswordWithHash(object.password, user.user_password)) {
-            // if captain_id column is null, return a team_mate
-            if(user.captain_id === null) {
-                return new TeamMateDtoOut(
-                    user.team_mate_id,
-                    user.user_id,
-                    user.team_mate_team_id,
-                    user.user_last_name,
-                    user.user_first_name,
-                    user.user_email
+        const searchUser = await this.userRepository.getByLogin(object.login, object.password); 
+        if(await authService.checkPasswordWithHash(object.password, searchUser.user_password)) {
+            let user = undefined;
+            // if captain_id column is null, create a team_mate
+            if(searchUser.captain_id === null) {
+                user = new TeamMateDtoOut(
+                    searchUser.team_mate_id,
+                    searchUser.user_id,
+                    searchUser.team_mate_team_id,
+                    searchUser.user_last_name,
+                    searchUser.user_first_name,
+                    searchUser.user_email
                 );
-            } // else return a captain
-            return new CaptainDtoOut(
-                user.captain_id,
-                user.user_id,
-                user.user_last_name,
-                user.user_first_name,
-                user.user_email
-            )
+            } else {
+                user = new CaptainDtoOut(
+                    searchUser.captain_id,
+                    searchUser.user_id,
+                    searchUser.user_last_name,
+                    searchUser.user_first_name,
+                    searchUser.user_email
+                )
+            } // else create a captain
+
+            // add a token to the user before sending to front
+            return authService.createToken(user);
         } else {
             throw new Error('Bad authentification details');
         }

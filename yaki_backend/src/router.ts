@@ -6,6 +6,8 @@ import { CaptainRepository } from './features/captain/captain.repository';
 import { CaptainService } from './features/captain/captain.service';
 import { TeamMateRepository } from './features/teamMate/teamMate.repository';
 import { TeamMateService } from './features/teamMate/teamMate.service';
+import { authService } from './features/user/authentication.service';
+import { CaptainController } from './features/captain/captain.controller';
 
 export const router = express.Router();
 
@@ -16,10 +18,14 @@ const teamMateService = new TeamMateService(teamMateRepository);
 //CAPTAIN
 const captainRepository = new CaptainRepository();
 const captainService = new CaptainService(captainRepository);
+const captainController = new CaptainController(captainService);
 
 //USER
 const userRepository = new UserRepository();
 const userService = new UserService(userRepository, captainService, teamMateService);
 const userController = new UserController(userService);
 
-router.post('/login', userController.checkLogin)
+router.post('/login', userController.checkLogin);
+router.post('/token', authService.verifyToken);
+
+router.get('/captains', authService.verifyToken ,captainController.getAll);

@@ -4,6 +4,7 @@ export class CaptainDtoOut {
     last_name: string
     first_name: string
     email: string
+    token: string | undefined = undefined
 
     constructor(
         captain_id: number,

@@ -5,6 +5,7 @@ export class TeamMateDtoOut {
     last_name: string
     first_name: string
     email: string
+    token: string | undefined = undefined;
 
     constructor(
         team_mate_id: number,
