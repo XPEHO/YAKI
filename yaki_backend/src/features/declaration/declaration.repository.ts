@@ -24,10 +24,10 @@ export class DeclarationRepository {
    * @returns A created declaration.
    */
   async createDeclaration(declaration: Declaration) {
-    const { declaration_date, declaration_team_mate_id, status } = declaration;
+    const { declaration_date, declaration_team_mate_id, declaration_status } = declaration;
     const result = await this.pool.query(
-      'INSERT INTO declaration (declaration_date, declaration_team_mate_id, status) VALUES ($1, $2, $3) RETURNING *',
-      [declaration_date, declaration_team_mate_id, status]
+      'INSERT INTO declaration (declaration_date, declaration_team_mate_id, declaration_status) VALUES ($1, $2, $3) RETURNING *',
+      [declaration_date, declaration_team_mate_id, declaration_status]
     );
     await this.pool.end()
     return result.rows[0];
