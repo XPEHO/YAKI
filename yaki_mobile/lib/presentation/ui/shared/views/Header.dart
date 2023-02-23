@@ -81,8 +81,7 @@ class CircleAvatarSVG extends StatelessWidget {
   final String iconPath;
   final double radius;
 
-  const CircleAvatarSVG(
-      {super.key, required this.iconPath, required this.radius,});
+  const CircleAvatarSVG({super.key, required this.iconPath, required this.radius});
 
   @override
   Widget build(BuildContext context) {
