@@ -52,7 +52,8 @@ class Service {
             },
             process.env.TOKEN_SECRET,
             {
-                expiresIn: "2h",
+                // set expire time to 5 minutes for development purpose
+                expiresIn: 300,
             }
         );
         user.token = token;

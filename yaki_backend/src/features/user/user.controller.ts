@@ -1,7 +1,5 @@
-import UserModel from "./user.dtoIn";
 import { UserService } from "./user.service";
 import { Response, Request } from "express";
-import { authService } from "./authentication.service";
 
 export class UserController {
     service: UserService;
