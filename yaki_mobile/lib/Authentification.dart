@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:yaki/presentation/ui/shared/views/ButtonApp.dart';
 import 'package:yaki/presentation/ui/shared/views/InputApp.dart';
 import 'presentation/ui/shared/views/Header.dart';
-
+import 'package:yaki/presentation/styles/HeaderTextStyle.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class Authentification extends StatefulWidget {
@@ -57,7 +57,6 @@ class _AuthentificationState extends State<Authentification> {
                                   inputText: tr('inputPassword'),
                                   inputHint: tr('hintPassword'),
                                   password: true,
-                                      password: true,
                                     ),
                                   ),
                                   Padding(
