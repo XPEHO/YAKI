@@ -1,0 +1,11 @@
+{
+  "headerTitle" : "Authentification",
+  "headerHint" : "Qui êtes vous ?",
+  "inputLogin" : "Identifiant",
+  "hintLogin" : "Entrez votre identifiant",
+  "inputPassword" : "Mot de passe",
+  "hintPassword" : "Entrez votre mot de passe",
+  "rememberMe" : "Se souvenir de moi",
+  "SignIn" : "Se connecter",
+  "forgotPassword" : "Mot de passe oublié ?"
+}

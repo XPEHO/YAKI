@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'app.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+void main() async{
 
 
 
@@ -81,13 +79,11 @@ class _MyHomePageState extends State<MyHomePage> {
               style: Theme.of(context).textTheme.headlineMedium,
             ),
           ],
-        ),
+          path: 'assets/translations',
+          fallbackLocale: const Locale('en'),
+          child: const MyApp(),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
-  }
+  );
 }
+
+

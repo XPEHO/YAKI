@@ -25,5 +25,5 @@ const userRepository = new UserRepository();
 const userService = new UserService(userRepository, captainService, teamMateService);
 const userController = new UserController(userService);
 
-router.post('/login', userController.checkLogin);
-router.get('/captains', authService.verifyToken ,captainController.getAll);
+router.post('/login', (req, res) => userController.checkLogin(req, res));
+router.get('/captains', (req, res, next) => authService.verifyToken(req, res, next) ,(req, res) =>captainController.getAll(req, res));
