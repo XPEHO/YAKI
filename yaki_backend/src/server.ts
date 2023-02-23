@@ -13,14 +13,17 @@ import * as swaggerDocument from "./dev/swagger.json";
 // const db = require('./repository.ts')
 import * as db from './repository';
 
-import router from "./router"
-import { Declaration } from './features/declaration/declaration.interface';
+/* Importing the declaration router from the declaration.router.ts file. */
+import declarationRouter from './features/declaration/declaration.router';
 
 /* Defining the shape of the data that will be returned from the database. */
 interface Captain {
   id: number;
   name: string;
 }
+
+/* A middleware that parses the body of the request and makes it available in the `req.body` property. */
+var bodyParser = require('body-parser')
 
 // Call the initConfig function to load environment variables and log their values to the console
 initConfig();
@@ -36,16 +39,19 @@ const host = process.env.Host
 // Setting up the Swagger UI middleware
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-// app.use(router);
+/* A middleware that parses the body of the request and makes it available in the `req.body` property. */
+app.use(bodyParser.json())
+
+/* A middleware that parses the body of the request and makes it available in the `req.body` property. */
+app.use(bodyParser.urlencoded({ extends: false }))
+
+/* A middleware that is used to route the request to the declaration router. */
+app.use(declarationRouter);
+
 // Setting up a basic "hello world" route at the root URL
 app.get('/', (req: Request, res: Response) => {
   res.send('Hello, this is Express + TypeScript');
 });
-app.post('/declarations', async (req, res) => {
-  const declaration = req.body;
-  const newDeclaration = await db.createDeclaration(declaration)
-  res.status(201).json(newDeclaration);
-})
 
 /* This is a route handler. It is a function that is called when a request is made to the `/captains`
 endpoint. */
