@@ -30,7 +30,7 @@ class Service {
     }
 
     /**
-     * Check if a hashed password match with a hashed password
+     * Check if a hashed password match with a string password
      * @param password 
      * @param hash 
      * @returns 
