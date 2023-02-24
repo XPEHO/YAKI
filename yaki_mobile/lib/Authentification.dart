@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:yaki/presentation/state/login_state.dart';
 import 'package:yaki/presentation/state/providers/login_provider.dart';
 import 'package:yaki/presentation/ui/shared/views/ButtonApp.dart';
 import 'package:yaki/presentation/ui/shared/views/InputApp.dart';
@@ -16,21 +15,19 @@ class Authentification extends ConsumerWidget {
   final loginController = TextEditingController();
   final passwordController = TextEditingController();
 
+  void onPressAuthent(WidgetRef ref, login, password) {
+    ref
+        .read(loginProvider.notifier)
+        .changeLogin(login, password);
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
     final providerLogin = ref.watch(loginProvider).login;
     final providerPassword = ref.watch(loginProvider).password;
 
-    void getClick(login, password) {
-      ref
-          .read(loginProvider.notifier)
-          .changeLogin(login, password);
-          debugPrint(login);
-    }
-
-
-
+    // Size of the device
     var size = MediaQuery.of(context).size;
 
     return Scaffold(
@@ -54,25 +51,21 @@ class Authentification extends ConsumerWidget {
                     Padding(
                       padding: EdgeInsets.only(
                           top: size.height / 15, right: 50, left: 50),
-                      child: TextField(
+                      child: InputApp(
+                        inputText: tr('inputLogin'),
+                        inputHint: tr('hintLogin'),
+                        password: false,
                         controller: loginController,
-                        obscureText: false,
-                        decoration: InputDecoration(
-                          hintText: tr('inputLogin'),
-                          border: const OutlineInputBorder(),
-                        ),
                       ),
                     ),
                     Padding(
                       padding:
                           const EdgeInsets.only(top: 20, right: 50, left: 50),
-                      child: TextField(
+                      child: InputApp(
+                        inputText: tr('inputPassword'),
+                        inputHint: tr('hintPassword'),
+                        password: true,
                         controller: passwordController,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          hintText: tr('hintPassword'),
-                          border: const OutlineInputBorder(),
-                        ),
                       ),
                     ),
                     Padding(
@@ -99,26 +92,9 @@ class Authentification extends ConsumerWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10),
-                      child: ElevatedButton(
-                        style:ElevatedButton.styleFrom(
-                          elevation: 5,
-                          backgroundColor: HeaderColor.yellowApp,
-                          textStyle: TextStyle(
-                            color: Colors.black,
-                            fontSize: size.height/25,
-                            fontWeight: FontWeight.w600,
-                          ),
-                          padding: const EdgeInsets.only(
-                            top: 10,
-                            bottom: 10,
-                            right: 50,
-                            left: 50,
-                          ),
-                        ),
-                        onPressed: () {
-                          getClick(loginController.text, passwordController.text);
-                        },
-                        child: Text(tr('signIn')),
+                      child: ButtonApp(
+                        textButton: tr('signIn'),
+                        onPressed: () => onPressAuthent(ref, providerLogin, providerPassword),
                       ),
                     ),
                     Padding(
