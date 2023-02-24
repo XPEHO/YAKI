@@ -26,6 +26,45 @@ We will use JWT authorization token in the Authorization header
 - POST /login => to authenticate
 - POST /logout => to disconnect
 
+## How to connect with the client side
+### Declaration
+The declaration feature is built using the following technologies: Express, TypeScript, and PostgreSQL.
+
+- The declaration repository class (DeclarationRepository) is responsible for managing the database interaction.
+- The declaration service class (DeclarationService) provides the business logic for creating a declaration.
+- The declaration controller class (DeclarationController) handles the HTTP requests and responses for creating a declaration.
+- The declaration router class (declarationRouter) sets up the routes for the declaration feature.
+Creating a declaration:
+- To create a new declaration, send a POST request to the ```/declarations``` endpoint with the following JSON payload:
+```bash
+{
+"declaration_date": "2023-02-24",
+"declaration_team_mate_id": 123,
+"declaration_status": "Remote"
+}
+``` 
+- declaration_date: The date and time of the declaration in Date format (ISO 8601 format).
+
+- declaration_team_mate_id: The ID of the teammate making the declaration.
+
+ - declaration_status: The status of the declaration (Remote, On site, Vacation, Other).
+#### Response:
+If the declaration is successfully created, the API will return a JSON object with the created declaration.
+```bash
+{
+"declaration_id": 456,
+"declaration_date": "2023-02-24T10:30:00Z",
+"declaration_team_mate_id": 123,
+"declaration_status": "Remote"
+}
+``` 
+If there is an error, the API will return a JSON object with an error message.
+```bash
+{
+"message": "Error message"
+}
+``` 
+
 ## env.sample
 The `env.sample` file provides a template for creating an environment configuration file. It contains a list of environment variables and their default values, which can be used as a starting point for creating a `.env` file.
 
