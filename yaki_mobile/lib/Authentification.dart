@@ -22,11 +22,14 @@ class Authentification extends ConsumerWidget {
     final providerLogin = ref.watch(loginProvider).login;
     final providerPassword = ref.watch(loginProvider).password;
 
-    void getClick() {
+    void getClick(login, password) {
       ref
           .read(loginProvider.notifier)
-          .changeLogin(loginController.text, passwordController.text);
+          .changeLogin(login, password);
+          debugPrint(login);
     }
+
+
 
     var size = MediaQuery.of(context).size;
 
@@ -96,9 +99,26 @@ class Authentification extends ConsumerWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10),
-                      child: ButtonApp(
-                        textButton: tr('signIn'),
-                        fonction: getClick,
+                      child: ElevatedButton(
+                        style:ElevatedButton.styleFrom(
+                          elevation: 5,
+                          backgroundColor: HeaderColor.yellowApp,
+                          textStyle: TextStyle(
+                            color: Colors.black,
+                            fontSize: size.height/25,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          padding: const EdgeInsets.only(
+                            top: 10,
+                            bottom: 10,
+                            right: 50,
+                            left: 50,
+                          ),
+                        ),
+                        onPressed: () {
+                          getClick(loginController.text, passwordController.text);
+                        },
+                        child: Text(tr('signIn')),
                       ),
                     ),
                     Padding(

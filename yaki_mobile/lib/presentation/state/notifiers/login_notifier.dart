@@ -5,6 +5,6 @@ class LoginNotifier extends StateNotifier<LoginState> {
   LoginNotifier() : super(LoginState(login:"", password: ""));
 
   void changeLogin(String newLogin, String newPassword) {
-    LoginState(login: newLogin, password: newPassword);
+    state = LoginState(login: newLogin, password: newPassword);
   }
 }
