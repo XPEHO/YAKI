@@ -1,0 +1,55 @@
+import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:yaki/presentation/ui/declaration/views/status_card.dart';
+
+// ConsumerWidget : stateless widget listening to providers
+class DeclarationBody extends ConsumerWidget {
+  const DeclarationBody({Key? key}) : super(key: key);
+
+  static const List statusCardContent = [
+    {
+      'image': 'assets/images/remote.svg',
+      'text': 'statusRemote',
+    },
+    {
+      'image': 'assets/images/onsite.svg',
+      'text': 'statusOnSite',
+    },
+    {
+      'image': 'assets/images/vacation.svg',
+      'text': 'statusVacation',
+    },
+    {
+      'image': 'assets/images/dots.svg',
+      'text': 'statusOther',
+    },
+  ];
+
+  static const spacingMultiplier = 0.07;
+  static const runSpacingMultiplier = 0.12;
+
+  void _createDeclaration(WidgetRef ref, String declaration) {}
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Center(
+      child: Wrap(
+        spacing: MediaQuery.of(context).size.width * spacingMultiplier,
+        runSpacing: MediaQuery.of(context).size.width * runSpacingMultiplier,
+        children: statusCardContent
+            .map(
+              (cardContent) => StatusCard(
+                statusName: tr(cardContent['text']),
+                statusPicto: cardContent['image'],
+                getClick: () => _createDeclaration(
+                  ref,
+                  "tempString"
+                ),
+              ),
+            )
+            .toList(),
+      ),
+    );
+  }
+}
