@@ -19,7 +19,7 @@ class Authentification extends ConsumerWidget {
     ref
         .read(loginProvider.notifier)
         .changeLogin(login, password);
-    debugPrint('coucou');
+
   }
 
   @override
