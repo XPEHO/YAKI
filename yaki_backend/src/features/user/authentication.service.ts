@@ -30,13 +30,17 @@ class Service {
     }
 
     /**
-     * Check if a hashed password match with a hashed password
+     * Check if the password send by the client match the one from the database
      * @param password 
      * @param hash 
      * @returns 
      */
-    checkPasswordWithHash = async(password: string, hash: string) => {
-        return await argon2.verify(hash, password, this.__hashingConfig);
+    checkPasswords = async(passwordDb: string, passwordClient: string) => {
+        console.log(passwordDb, passwordClient);
+        if(passwordDb === passwordClient) {
+            return true
+        } 
+        return false
     }
 
     /**

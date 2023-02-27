@@ -1,5 +1,6 @@
 // Import the dotenv package
 import dotenv from 'dotenv';
+const initdb = require('./db/initdb')
 
 /**
  * This function loads environment variables from a .env file and logs their 

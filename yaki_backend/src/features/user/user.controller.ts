@@ -14,6 +14,6 @@ export class UserController {
     checkLogin = (async (req: Request, res: Response) => {
         this.service.checkUserLoginDetails(req.body)
             .then((response) => res.send(response))
-            .catch((err) => res.status(204).send(err.message))
+            .catch((err) => {console.log(err)})
     })
 }

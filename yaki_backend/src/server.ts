@@ -11,6 +11,7 @@ import swaggerUi from "swagger-ui-express";
 import * as swaggerDocument from "./dev/swagger.json";
 
 import { router } from './router';
+import { initdb } from './db/initdb';
 
 interface Captain {
     id: number;
@@ -22,6 +23,7 @@ var bodyParser = require('body-parser');
 
 // Call the initConfig function to load environment variables and log their values to the console
 initConfig();
+initdb();
 
 // Creating a new instance of the Express app
 const app: Express = express();
