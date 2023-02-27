@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yaki/presentation/state/providers/login_provider.dart';
 import 'package:yaki/presentation/ui/shared/views/ButtonApp.dart';
 import 'package:yaki/presentation/ui/shared/views/InputApp.dart';
-import 'presentation/ui/shared/views/Header.dart';
+import '../shared/views/Header.dart';
 import 'package:yaki/presentation/styles/HeaderTextStyle.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -19,13 +19,13 @@ class Authentification extends ConsumerWidget {
     ref
         .read(loginProvider.notifier)
         .changeLogin(login, password);
+    debugPrint('coucou');
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
-    final providerLogin = ref.watch(loginProvider).login;
-    final providerPassword = ref.watch(loginProvider).password;
+    final providerlogin = ref.watch(loginProvider);
 
     // Size of the device
     var size = MediaQuery.of(context).size;
@@ -92,9 +92,24 @@ class Authentification extends ConsumerWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10),
-                      child: ButtonApp(
-                        textButton: tr('signIn'),
-                        onPressed: () => onPressAuthent(ref, providerLogin, providerPassword),
+                      child: ElevatedButton(
+                        style:ElevatedButton.styleFrom(
+                          elevation: 5,
+                          backgroundColor: HeaderColor.yellowApp,
+                          textStyle: TextStyle(
+                            color: Colors.black,
+                            fontSize: size.height/25,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          padding: const EdgeInsets.only(
+                            top: 10,
+                            bottom: 10,
+                            right: 50,
+                            left: 50,
+                          ),
+                        ),
+                        onPressed: () => onPressAuthent(ref, loginController.text, passwordController.text),
+                        child: Text(tr('signIn')),
                       ),
                     ),
                     Padding(
@@ -106,7 +121,6 @@ class Authentification extends ConsumerWidget {
                         ),
                       ),
                     ),
-                    Text(providerLogin)
                   ],
                 ),
               ),

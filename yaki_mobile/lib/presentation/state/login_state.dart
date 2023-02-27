@@ -1,3 +1,5 @@
+import 'package:crypt/crypt.dart';
+
 class LoginState {
 
   LoginState(
