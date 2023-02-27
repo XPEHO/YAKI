@@ -36,7 +36,6 @@ class Service {
      * @returns 
      */
     checkPasswords = async(passwordDb: string, passwordClient: string) => {
-        console.log(passwordDb, passwordClient);
         if(passwordDb === passwordClient) {
             return true
         } 

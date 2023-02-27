@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -9,12 +10,18 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+ 
     return MaterialApp.router(
-      title: 'Flutter Demo',
+      locale: context.locale,
+      supportedLocales: context.supportedLocales,
+      localizationsDelegates: context.localizationDelegates,
+      title: 'Yaki',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
       routerConfig: appRouter, // Referencing navigation router
     );
+
+
   }
 }

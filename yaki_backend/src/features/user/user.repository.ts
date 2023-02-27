@@ -25,7 +25,6 @@ export class UserRepository {
 			WHERE user_login = '${username}';`
         );
         await pool.end();
-        console.log('query passée');
         // If the user was found in the database
         if(poolResult.rowCount > 0) {
             return poolResult.rows[0];

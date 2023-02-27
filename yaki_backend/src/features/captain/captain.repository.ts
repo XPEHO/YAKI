@@ -37,7 +37,6 @@ export class CaptainRepository {
       `SELECT * FROM public.captain`
     )
     await pool.end();
-    console.log(poolResult.rows)
     return poolResult.rows;
   }
 }

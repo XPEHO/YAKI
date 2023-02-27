@@ -44,7 +44,6 @@ export class UserService {
                     searchUser.user_first_name,
                     searchUser.user_email
                 )
-            }
 
             // add a token to the user before sending to front
             return authService.createToken(user);
