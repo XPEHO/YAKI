@@ -35,9 +35,7 @@ class _InputAppState extends State<InputApp> {
   Widget build(BuildContext context) {
     return TextField(
       controller: widget.controller,
-      onChanged: (value) {
 
-      },
       obscureText: widget.password,
       decoration: InputDecoration(
         hintText: widget.inputText,

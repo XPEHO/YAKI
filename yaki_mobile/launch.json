@@ -1,0 +1,26 @@
+{
+
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "yaki_mobile",
+            "request": "launch",
+            "type": "dart",
+            "args": [
+                "--dart-define-from-file=config.json"
+            ]
+        },
+        {
+            "name": "yaki_mobile (profile mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "yaki_mobile (release mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}

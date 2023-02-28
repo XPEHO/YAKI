@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../styles/HeaderTextStyle.dart';
+import 'package:yaki/presentation/styles/HeaderTextStyle.dart';
 
 
 class ButtonApp extends StatefulWidget {

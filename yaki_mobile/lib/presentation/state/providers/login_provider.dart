@@ -1,11 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yaki/data/repositories/login_repository.dart';
 import 'package:yaki/data/sources/login_api.dart';
-import 'package:yaki/presentation/state/login_state.dart';
 import 'package:yaki/presentation/state/notifiers/login_notifier.dart';
 import 'package:dio/dio.dart';
 
-import '../../../data/models/login.dart';
+import 'package:yaki/data/models/login.dart';
 
 final dioProvider = Provider((ref) => Dio());
 
@@ -14,6 +13,7 @@ final loginServiceProvider = Provider(
     ref.read(
       dioProvider,
     ),
+    baseUrl: const String.fromEnvironment('API_BASE_URL'),
   ),
 );
 

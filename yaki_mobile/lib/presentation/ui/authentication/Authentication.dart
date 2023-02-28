@@ -3,22 +3,22 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yaki/presentation/state/providers/login_provider.dart';
 import 'package:yaki/presentation/ui/shared/views/ButtonApp.dart';
 import 'package:yaki/presentation/ui/shared/views/InputApp.dart';
-import '../shared/views/Header.dart';
+import 'package:yaki/presentation/ui/shared/views/Header.dart';
 import 'package:yaki/presentation/styles/HeaderTextStyle.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-class Authentification extends ConsumerWidget {
-  bool isChecked = false;
+class Authentication extends ConsumerWidget {
 
 
 
-  Authentification({super.key});
+
+  Authentication({super.key});
 
   final loginController = TextEditingController();
   final passwordController = TextEditingController();
 
   void onPressAuthent(WidgetRef ref, login, password) {
-    final providerlogin = ref.watch(loginProvider);
+    final providerlogin = ref.read(loginProvider);
 
     ref
         .read(loginProvider.notifier)
@@ -29,6 +29,7 @@ class Authentification extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    bool isChecked = false;
 
     final providerlogin = ref.watch(loginProvider);
 
@@ -81,9 +82,7 @@ class Authentification extends ConsumerWidget {
                             value: isChecked,
                             activeColor: HeaderColor.yellowApp,
                             onChanged: (bool? value) {
-                              // setState(() {
-                              //   isChecked = value!;
-                              // });
+
                             },
                           ),
                           Text(
