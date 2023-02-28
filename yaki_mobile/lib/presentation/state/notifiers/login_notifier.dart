@@ -1,24 +1,26 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:yaki/data/models/login.dart';
 import 'package:yaki/data/repositories/login_repository.dart';
 import 'package:yaki/presentation/state/login_state.dart';
 import 'package:crypt/crypt.dart';
 
-class LoginNotifier extends StateNotifier<LoginState> {
+class LoginNotifier extends StateNotifier<Login> {
 
   final LoginRepository repository;
 
   LoginNotifier(
       this.repository,
       ) : super(
-      LoginState(login:"", password: ""),
+      Login(login:"", password: ""),
   );
 
-  void changeLogin(String newLogin, String newPassword) {
+  void changeLogin(String newLogin, String newPassword) async {
     final hashPass = Crypt.sha256(newPassword, rounds: 10000, salt: 'abcdefghijklmnop');
-    state = LoginState(login: newLogin, password: hashPass.toString());
+    final newLog = Login(login: newLogin, password: hashPass.toString());
+    state = newLog;
+    repository.postLogin(newLog);
+    print(newLog.toJson());
   }
 
-  postLogin() async {
-    await repository.postLogin();
-  }
 }

@@ -10,17 +10,22 @@ import 'package:easy_localization/easy_localization.dart';
 class Authentification extends ConsumerWidget {
   bool isChecked = false;
 
+
+
   Authentification({super.key});
 
   final loginController = TextEditingController();
   final passwordController = TextEditingController();
 
   void onPressAuthent(WidgetRef ref, login, password) {
+    final providerlogin = ref.watch(loginProvider);
+
     ref
         .read(loginProvider.notifier)
         .changeLogin(login, password);
-
   }
+
+
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -121,6 +126,7 @@ class Authentification extends ConsumerWidget {
                         ),
                       ),
                     ),
+                    Text(providerlogin.password)
                   ],
                 ),
               ),

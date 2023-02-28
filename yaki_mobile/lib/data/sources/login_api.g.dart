@@ -13,7 +13,7 @@ class _LoginService implements LoginService {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://jsonplaceholder.typicode.com/login/';
+    baseUrl ??= 'http://192.168.1.117:3000';
   }
 
   final Dio _dio;
@@ -21,16 +21,19 @@ class _LoginService implements LoginService {
   String? baseUrl;
 
   @override
-  Future<Login> postLogin() async {
+  Future<Login?> postLogin(login) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'Content-Type': 'application/json'};
+    _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
+    _data.addAll(login.toJson());
     final _result =
-        await _dio.fetch<Map<String, dynamic>>(_setStreamType<Login>(Options(
+        await _dio.fetch<Map<String, dynamic>?>(_setStreamType<Login>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
+      contentType: 'application/json',
     )
             .compose(
               _dio.options,
@@ -39,7 +42,7 @@ class _LoginService implements LoginService {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = Login.fromJson(_result.data!);
+    final value = _result.data == null ? null : Login.fromJson(_result.data!);
     return value;
   }
 

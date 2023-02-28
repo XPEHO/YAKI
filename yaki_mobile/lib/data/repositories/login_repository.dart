@@ -1,5 +1,6 @@
 import 'package:yaki/data/sources/login_api.dart';
 
+import '../../presentation/state/login_state.dart';
 import '../models/login.dart';
 
 class LoginRepository {
@@ -7,8 +8,9 @@ class LoginRepository {
 
   LoginRepository(this._loginService);
 
-  postLogin() async {
-    await _loginService.postLogin();
+  Future<Login?> postLogin(Login login) {
+    final log = _loginService.postLogin(login);
+    return log;
   }
 
 }
