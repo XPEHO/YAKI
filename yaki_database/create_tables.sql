@@ -176,7 +176,7 @@ CREATE TABLE IF NOT EXISTS public.declaration
     declaration_id integer NOT NULL DEFAULT nextval('declaration_id_seq'::regclass),
     declaration_team_mate_id integer,
     declaration_date date,
-    status character varying(30) COLLATE pg_catalog."default",
+    declaration_status character varying(30) COLLATE pg_catalog."default",
     CONSTRAINT declaration_pkey PRIMARY KEY (declaration_id)
 )
 

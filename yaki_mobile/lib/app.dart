@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'appRouter.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'app_router.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -8,18 +9,17 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-
-    return MaterialApp.router(
-      locale: context.locale,
-      supportedLocales: context.supportedLocales,
-      localizationsDelegates: context.localizationDelegates,
-      title: 'Yaki',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return ProviderScope(
+      child: MaterialApp.router(
+        locale: context.locale,
+        supportedLocales: context.supportedLocales,
+        localizationsDelegates: context.localizationDelegates,
+        title: 'Yaki',
+        theme: ThemeData(
+          primarySwatch: Colors.amber,
+        ),
+        routerConfig: appRouter, // Referencing navigation router
       ),
-      routerConfig: appRouter, // Referencing navigation router
     );
-
   }
-
 }

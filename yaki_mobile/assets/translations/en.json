@@ -1,4 +1,10 @@
 {
   "headerTitle" : "Authentication",
-  "headerHint" : "Who are you ?"
+  "headerHint" : "Who are you ?",
+  "headerTitleDecla": "Declaration",
+  "headerHintDecla": "What is your status ?",
+  "statusRemote": "Remote",
+  "statusOnSite": "On site",
+  "statusVacation": "Vacation",
+  "statusOther": "Other"
 }

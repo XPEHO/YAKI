@@ -32,26 +32,18 @@ dependencies:
   flutter:
     sdk: flutter
 
-  # easy_localization : manage app translation, use folder defined in assets "translations",
-  # set .json (or others files) in this folder
-  # https://pub.dev/packages/easy_localization
-  # can now use : import 'package:json_serializable/json_serializable.dart';
-  easy_localization: 3.0.1
   # routing package for Flutter that uses the Router API to provide a convenient,
   # url-based API for navigating between different screens
   # https://pub.dev/packages/go_router
   # can now use : import 'package:go_router/go_router.dart';
   go_router: ^6.0.7
+  dio: ^5.0.1
 
   # // Riverpod dependency //
   # This dependency allows for dependency injection and manage states
   # import 'package:hooks_riverpod/hooks_riverpod.dart'
   # link : https://riverpod.dev/docs/getting_started
   flutter_riverpod: ^2.2.0
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.2
 
   # // Retrofit dependency //
   # this dependency allows to make api requests thanks to annotations
@@ -61,6 +53,16 @@ dependencies:
   # link : https://pub.dev/packages/retrofit
   retrofit: ">=4.0.0 <5.0.0"
   logger: any #for logging purpose
+
+  # easy_localization : manage app translation, use folder defined in assets "translations",
+  # set .json (or others files) in this folder
+  # https://pub.dev/packages/easy_localization
+  # can now use : import 'package:json_serializable/json_serializable.dart';
+  easy_localization: 3.0.1
+
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
+  cupertino_icons: ^1.0.2
 
   # // flutter_svg dependency //
   # provides a wrapper around Dart implementations of SVG parsing,
@@ -76,6 +78,9 @@ dependencies:
   # this plugin must not be used for storing critical data
   # https://pub.dev/packages/shared_preferences
   shared_preferences: ^2.0.17
+
+  built_value: ^8.4.3
+  json_annotation: ^4.8.0
 
 
 dev_dependencies:
