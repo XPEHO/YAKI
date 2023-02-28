@@ -6,7 +6,7 @@ part 'declaration_api.g.dart';
 
 const baseUrl = 'http://192.168.1.116:3000/';
 
-@RestApi(baseUrl: 'http://192.168.1.116:3000/')
+@RestApi(baseUrl: 'baseUrl')
 abstract class DeclarationApi {
   factory DeclarationApi(Dio dio, {String baseUrl}) = _DeclarationApi;
 
