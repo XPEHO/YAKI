@@ -13,7 +13,7 @@ class _DeclarationApi implements DeclarationApi {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'http://localhost:3000/';
+    baseUrl ??= 'http://192.168.1.116:3000/';
   }
 
   final Dio _dio;

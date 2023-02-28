@@ -4,9 +4,9 @@ import 'package:yaki/data/models/declaration_model.dart';
 
 part 'declaration_api.g.dart';
 
-const baseUrl = 'http://localhost:3000/';
+const baseUrl = 'http://192.168.1.116:3000/';
 
-@RestApi(baseUrl: baseUrl)
+@RestApi(baseUrl: 'http://192.168.1.116:3000/')
 abstract class DeclarationApi {
   factory DeclarationApi(Dio dio, {String baseUrl}) = _DeclarationApi;
 

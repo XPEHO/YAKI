@@ -8,14 +8,14 @@ part of 'declaration_model.dart';
 
 DeclarationModel _$DeclarationModelFromJson(Map<String, dynamic> json) =>
     DeclarationModel(
-      declarationDate: DateTime.parse(json['declarationDate'] as String),
-      declarationTeamMateId: json['declarationTeamMateId'] as int,
-      declarationStatus: json['declarationStatus'] as String,
+      declaration_date: DateTime.parse(json['declaration_date'] as String),
+      declaration_team_mate_id: json['declaration_team_mate_id'] as int,
+      declaration_status: json['declaration_status'] as String,
     );
 
 Map<String, dynamic> _$DeclarationModelToJson(DeclarationModel instance) =>
     <String, dynamic>{
-      'declarationDate': instance.declarationDate.toIso8601String(),
-      'declarationTeamMateId': instance.declarationTeamMateId,
-      'declarationStatus': instance.declarationStatus,
+      'declaration_date': instance.declaration_date.toIso8601String(),
+      'declaration_team_mate_id': instance.declaration_team_mate_id,
+      'declaration_status': instance.declaration_status,
     };
