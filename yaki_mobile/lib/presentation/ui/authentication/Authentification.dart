@@ -126,7 +126,6 @@ class Authentification extends ConsumerWidget {
                         ),
                       ),
                     ),
-                    Text(providerlogin.password)
                   ],
                 ),
               ),
