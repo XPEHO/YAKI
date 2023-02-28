@@ -13,11 +13,6 @@ import * as swaggerDocument from "./dev/swagger.json";
 import { router } from './router';
 import { initdb } from './db/initdb';
 
-interface Captain {
-    id: number;
-    name: string;
-  }
-
 // get body-parser to handle request's body
 var bodyParser = require('body-parser');
 
@@ -38,6 +33,6 @@ const port = process.env.Port;
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Starting the server and logging a message to the console
-app.listen(port, () => {
+app.listen( port, () => {
   console.log(`[Server]: I am running at https://localhost:${port}` );
 });
