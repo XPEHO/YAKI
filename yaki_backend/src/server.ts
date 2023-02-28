@@ -33,6 +33,6 @@ const port = process.env.Port;
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Starting the server and logging a message to the console
-app.listen( port, () => {
+app.listen( 3000, () => {
   console.log(`[Server]: I am running at https://localhost:${port}` );
 });
