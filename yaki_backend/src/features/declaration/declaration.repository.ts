@@ -29,7 +29,6 @@ export class DeclarationRepository {
       'INSERT INTO declaration (declaration_date, declaration_team_mate_id, declaration_status) VALUES ($1, $2, $3) RETURNING *',
       [declaration_date, declaration_team_mate_id, declaration_status]
     );
-    await this.pool.end()
     return result.rows[0];
   }
 }
