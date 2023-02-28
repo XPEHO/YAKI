@@ -21,7 +21,7 @@ class StatusCard extends StatelessWidget {
       width: MediaQuery.of(context).size.width * sizeMultiplier,
       height: MediaQuery.of(context).size.width * sizeMultiplier,
       child: ElevatedButton(
-        onPressed: () => getClick,
+        onPressed: getClick,
         style: ElevatedButton.styleFrom(
           elevation: 5,
           shadowColor: Colors.black,

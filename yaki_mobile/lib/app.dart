@@ -22,7 +22,5 @@ class MyApp extends StatelessWidget {
         routerConfig: appRouter, // Referencing navigation router
       ),
     );
-
   }
-
 }

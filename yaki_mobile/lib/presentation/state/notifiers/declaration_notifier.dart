@@ -8,17 +8,17 @@ class DeclarationNotifier extends StateNotifier<DeclarationModel> {
   DeclarationNotifier(this.declarationRepository)
       : super(
           DeclarationModel(
-            declarationDate: DateTime.now(),
-            declarationTeamMateId: 1,
-            declarationStatus: "",
+            declaration_date: DateTime.now(),
+            declaration_team_mate_id: 1,
+            declaration_status: "",
           ),
         );
 
   Future<void> create(String declaration) async {
     DeclarationModel newDeclaration = DeclarationModel(
-        declarationDate: DateTime.now(),
-        declarationTeamMateId: 1,
-        declarationStatus: declaration);
+        declaration_date: DateTime.now(),
+        declaration_team_mate_id: 1,
+        declaration_status: declaration);
     final createdDeclaration =
         await declarationRepository.create(newDeclaration);
   }
