@@ -53,7 +53,7 @@ If the declaration is successfully created, the API will send an HTTP response w
 ```bash
 {
 "declaration_id": 456,
-"declaration_date": "2023-02-24T10:30:00Z",
+"declaration_date": "2023-02-24T00:00:00.000Z",
 "declaration_team_mate_id": 123,
 "declaration_status": "Remote"
 }
