@@ -2,8 +2,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
 import 'package:yaki/presentation/styles/HeaderTextStyle.dart';
 
-
-
 class Header extends StatelessWidget {
   final String pictoIcon;
   final String pictoPath;

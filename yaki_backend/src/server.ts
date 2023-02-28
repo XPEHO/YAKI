@@ -11,17 +11,14 @@ import swaggerUi from "swagger-ui-express";
 import * as swaggerDocument from "./dev/swagger.json";
 
 import { router } from './router';
-
-interface Captain {
-    id: number;
-    name: string;
-  }
+import { initdb } from './db/initdb';
 
 // get body-parser to handle request's body
 var bodyParser = require('body-parser');
 
 // Call the initConfig function to load environment variables and log their values to the console
 initConfig();
+initdb();
 
 // Creating a new instance of the Express app
 const app: Express = express();
@@ -36,6 +33,6 @@ const port = process.env.Port;
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Starting the server and logging a message to the console
-app.listen(port, () => {
+app.listen( port, () => {
   console.log(`[Server]: I am running at https://localhost:${port}` );
 });

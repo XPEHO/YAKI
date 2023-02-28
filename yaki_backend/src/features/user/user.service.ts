@@ -23,8 +23,8 @@ export class UserService {
      * @returns 
      */
     checkUserLoginDetails = async (object: any) => {
-        const searchUser = await this.userRepository.getByLogin(object.login, object.password); 
-        if(await authService.checkPasswordWithHash(object.password, searchUser.user_password)) {
+        const searchUser = await this.userRepository.getByLogin(object.login); 
+        if(await authService.checkPasswords(object.password, searchUser.user_password)) {
             let user = undefined;
             // if captain_id column is null, create a team_mate
             if(searchUser.captain_id === null) {
@@ -36,7 +36,7 @@ export class UserService {
                     searchUser.user_first_name,
                     searchUser.user_email
                 );
-            } else {
+            } else {  // else create a captain
                 user = new CaptainDtoOut(
                     searchUser.captain_id,
                     searchUser.user_id,
@@ -44,8 +44,7 @@ export class UserService {
                     searchUser.user_first_name,
                     searchUser.user_email
                 )
-            } // else create a captain
-
+            }
             // add a token to the user before sending to front
             return authService.createToken(user);
         } else {

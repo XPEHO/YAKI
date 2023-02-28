@@ -8,14 +8,14 @@ export class UserRepository {
      * @param password 
      * @returns 
      */
-    getByLogin = async (username: string, password: string) => {
+    getByLogin = async (username: string) => {
         const pool = new Pool({
-            user: `${process.env.DB_USER}`,
+            user: `${process.env.DB_ROLE}`,
             host: `${process.env.DB_HOST}`,
             database: `${process.env.DB_DATABASE}`,
-            password: `${process.env.DB_PASSWORD}`,
+            password: `${process.env.DB_ROLE_PWD}`,
             port:  Number(process.env.DB_PORT)
-        });      
+        });
         const poolResult: QueryResult = await pool.query(
             `SELECT * FROM public.user u
             LEFT JOIN public.team_mate tm
