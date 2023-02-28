@@ -10,6 +10,7 @@ final dioProvider = Provider((ref) => Dio());
 final declarationApiProvider = Provider(
   (ref) => DeclarationApi(
     ref.read(dioProvider),
+    baseUrl: const String.fromEnvironment('API_BASE_URL'),
   ),
 );
 

@@ -45,3 +45,5 @@ app.*.map.json
 
 #testing
 zdevtesting/
+
+config.json
