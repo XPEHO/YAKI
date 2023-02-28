@@ -38,7 +38,7 @@ Creating a declaration:
 - To create a new declaration, send a POST request to the ```/declarations``` endpoint with the following JSON payload:
 ```bash
 {
-"declaration_date": "2023-02-24",
+"declaration_date": "2023-02-24T00:00:00.000Z",
 "declaration_team_mate_id": 123,
 "declaration_status": "Remote"
 }
@@ -49,7 +49,7 @@ Creating a declaration:
 
  - declaration_status: The status of the declaration (Remote, On site, Vacation, Other).
 #### Response:
-If the declaration is successfully created, the API will return a JSON object with the created declaration.
+If the declaration is successfully created, the API will send an HTTP response with a status code of 201 (Created) and return a JSON object with the created declaration.
 ```bash
 {
 "declaration_id": 456,
@@ -58,7 +58,7 @@ If the declaration is successfully created, the API will return a JSON object wi
 "declaration_status": "Remote"
 }
 ``` 
-If there is an error, the API will return a JSON object with an error message.
+If there is an error, the API will send an HTTP response with a status code of 500 (server errors) and return a JSON object with an error message.
 ```bash
 {
 "message": "Error message"
