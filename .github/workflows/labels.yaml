@@ -9,13 +9,17 @@ jobs:
           if [[ "${{ github.head_ref }}" == chore/* ]]; then
             LABEL="chore :construction_worker_man:"
           else
-            if [[ "${{ github.head_ref }}" ==  feat/* ]]; then
+            if [[ "${{ github.head_ref }}" ==  feature/* ]]; then
               LABEL="enhancement :rocket:"
             else
-              if [[ "${{ github.head_ref }}" == fix/* ]]; then
-                LABEL="bug :bug:"
+              if [[ "${{ github.head_ref }}" ==  feat/* ]]; then
+                LABEL="enhancement :rocket:"
               else
-                LABEL="other"
+                if [[ "${{ github.head_ref }}" == fix/* ]]; then
+                  LABEL="bug :bug:"
+                else
+                  LABEL="other"
+                fi
               fi
             fi
           fi
