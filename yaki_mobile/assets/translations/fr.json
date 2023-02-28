@@ -1,0 +1,10 @@
+{
+  "headerTitle" : "Authentification",
+  "headerHint" : "Qui êtes vous ?",
+  "headerTitleDecla": "Declaration",
+  "headerHintDecla": "Quel est votre status ?",
+  "statusRemote": "Distanciel",
+  "statusOnSite": "Sur site",
+  "statusVacation": "Vacances",
+  "statusOther": "Autre"
+}
