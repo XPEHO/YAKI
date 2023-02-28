@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'views/header.dart';
+import 'package:yaki/presentation/ui/shared/views/header.dart';
 
 class PagesLayout extends StatelessWidget {
   final Widget bodyContent;

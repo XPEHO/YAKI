@@ -18,12 +18,16 @@ class TempHome extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: const [
             ButtonRoute(
-              btnText: 'Authetification page',
-              route: '/authentification',
+              btnText: 'authentication page',
+              route: '/authentication',
             ),
             ButtonRoute(
               btnText: 'Delcaration page',
               route: '/declaration',
+            ),
+            ButtonRoute(
+              btnText: 'Status page',
+              route: '/status',
             ),
           ],
         ),

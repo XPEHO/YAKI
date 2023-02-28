@@ -13,13 +13,11 @@ class StatusCard extends StatelessWidget {
     required this.getClick,
   });
 
-  static const sizeMultiplier = 0.37;
-
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width * sizeMultiplier,
-      height: MediaQuery.of(context).size.width * sizeMultiplier,
+      width: MediaQuery.of(context).size.width * 0.37,
+      height: MediaQuery.of(context).size.width * 0.37,
       child: ElevatedButton(
         onPressed: getClick,
         style: ElevatedButton.styleFrom(

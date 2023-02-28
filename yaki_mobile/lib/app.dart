@@ -9,7 +9,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-
     return ProviderScope(
       child: MaterialApp.router(
         locale: context.locale,
@@ -17,7 +16,7 @@ class MyApp extends StatelessWidget {
         localizationsDelegates: context.localizationDelegates,
         title: 'Yaki',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: Colors.amber,
         ),
         routerConfig: appRouter, // Referencing navigation router
       ),
