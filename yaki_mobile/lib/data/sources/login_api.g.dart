@@ -12,9 +12,7 @@ class _LoginService implements LoginService {
   _LoginService(
     this._dio, {
     this.baseUrl,
-  }) {
-    baseUrl ??= 'http://192.168.1.117:3000';
-  }
+  });
 
   final Dio _dio;
 
@@ -24,8 +22,7 @@ class _LoginService implements LoginService {
   Future<Login?> postLogin(login) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{r'Content-Type': 'application/json'};
-    _headers.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(login.toJson());
     final _result =
@@ -33,7 +30,6 @@ class _LoginService implements LoginService {
       method: 'POST',
       headers: _headers,
       extra: _extra,
-      contentType: 'application/json',
     )
             .compose(
               _dio.options,

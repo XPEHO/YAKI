@@ -43,6 +43,8 @@ dependencies:
   # can now use : import 'package:go_router/go_router.dart';
   go_router: ^6.0.7
 
+  dio: ^5.0.1
+
   # // Riverpod dependency //
   # This dependency allows for dependency injection and manage states
   # import 'package:hooks_riverpod/hooks_riverpod.dart'
