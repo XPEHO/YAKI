@@ -81,7 +81,7 @@ dependencies:
   # https://pub.dev/packages/shared_preferences
   shared_preferences: ^2.0.17
 
-  # // Crypt //
+  # // Crypt //.
   # One-way string hashing for salted passwords using the Unix crypt format.
   # This package implements the SHA-256 crypt hash and SHA-512 crypt hash,
   # cryptographic hash formats that are specified in "Unix crypt using SHA-256
