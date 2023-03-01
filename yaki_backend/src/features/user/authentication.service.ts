@@ -42,7 +42,7 @@ class Service {
     }
 
     /**
-     * Middleware that give authorization if the given token is valid
+     * Middleware that give authorization if the given token is valid.
      * @param req 
      * @param res 
      * @param next 
