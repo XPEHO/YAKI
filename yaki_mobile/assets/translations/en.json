@@ -7,5 +7,11 @@
   "hintPassword" : "Enter your password",
   "rememberMe" : "Remember me",
   "signIn" : "Sign In",
-  "forgotPassword" : "Forgot Password ?"
+  "forgotPassword" : "Forgot Password ?",
+  "headerTitleDecla": "Declaration",
+  "headerHintDecla": "What is your status ?",
+  "statusRemote": "Remote",
+  "statusOnSite": "On site",
+  "statusVacation": "Vacation",
+  "statusOther": "Other"
 }
