@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
-import '../../../styles/HeaderTextStyle.dart';
+import 'package:yaki/presentation/styles/HeaderTextStyle.dart';
+
 
 class ButtonApp extends StatefulWidget {
 
   final String textButton;
+  final Function onPressed;
 
+  /// Generic button component with 1 arg : <br>
+  /// textButton : Text who appear on the button
   const ButtonApp(
-      {
-        super.key,
-        required this.textButton,
-      }
-      );
+                  {
+                    super.key,
+                    required this.textButton,
+                    required this.onPressed,
+                  }
+                );
 
   @override
   State<ButtonApp> createState() => _ButtonAppState();
@@ -20,14 +25,19 @@ class ButtonApp extends StatefulWidget {
 class _ButtonAppState extends State<ButtonApp> {
 
 
+
   @override
   Widget build(BuildContext context) {
+
+    var size = MediaQuery.of(context).size;
+
     return ElevatedButton(
       style:ElevatedButton.styleFrom(
+        elevation: 5,
         backgroundColor: HeaderColor.yellowApp,
-        textStyle: const TextStyle(
+        textStyle: TextStyle(
           color: Colors.black,
-          fontSize: 30,
+          fontSize: size.height/25,
           fontWeight: FontWeight.w600,
         ),
         padding: const EdgeInsets.only(
@@ -37,7 +47,9 @@ class _ButtonAppState extends State<ButtonApp> {
           left: 50,
         ),
       ),
-      onPressed: () {},
+      onPressed: () {
+        widget.onPressed;
+      },
       child: Text(widget.textButton),
     );
   }
