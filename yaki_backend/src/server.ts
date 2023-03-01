@@ -12,6 +12,8 @@ import * as swaggerDocument from "./dev/swagger.json";
 
 import { router } from './router';
 import { initdb } from './db/initdb';
+/* Importing the declaration router from the declaration.router.ts file. */
+import declarationRouter from './features/declaration/declaration.router';
 
 // get body-parser to handle request's body
 var bodyParser = require('body-parser');
@@ -31,6 +33,15 @@ const port = process.env.Port;
 
 // Setting up the Swagger UI middleware
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+/* A middleware that parses the body of the request and makes it available in the `req.body` property. */
+app.use(bodyParser.json())
+
+/* A middleware that parses the body of the request and makes it available in the `req.body` property. */
+app.use(bodyParser.urlencoded({ extends: false }))
+
+/* A middleware that is used to route the request to the declaration router. */
+app.use(declarationRouter);
 
 // Starting the server and logging a message to the console
 app.listen( 3000, () => {
