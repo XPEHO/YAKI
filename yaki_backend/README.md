@@ -4,6 +4,12 @@ this is nodeJs api YAKI
 ## Purpose
 This project is the backend part of the YAKI application.
 
+## Table of contents
+* [General info](#general-info)
+* [Client connection](#how-to-connect-with-the-client-side)
+* [Environment variables](#envsample)
+* [Getting started](#getting-started)
+
 ## General info
 ### Authentification
 No GAFAM will be used for authentification
@@ -27,43 +33,51 @@ We will use JWT authorization token in the Authorization header
 - POST /logout => to disconnect
 
 ## How to connect with the client side
-### Declaration
-The declaration feature is built using the following technologies: Express, TypeScript, and PostgreSQL.
+### Authentication
+When a user tries to connect to the YAKI app, the client must provide a json object in the following format:
 
-- The declaration repository class (DeclarationRepository) is responsible for managing the database interaction.
-- The declaration service class (DeclarationService) provides the business logic for creating a declaration.
-- The declaration controller class (DeclarationController) handles the HTTP requests and responses for creating a declaration.
-- The declaration router class (declarationRouter) sets up the routes for the declaration feature.
-Creating a declaration:
-- To create a new declaration, send a POST request to the ```/declarations``` endpoint with the following JSON payload:
-```bash
+```json
 {
-"declaration_date": "2023-02-24T00:00:00.000Z",
-"declaration_team_mate_id": 123,
-"declaration_status": "Remote"
+    "login": "user_login_value",
+    "password": "user_password_value"
 }
-``` 
-- declaration_date: The date and time of the declaration in Date format (ISO 8601 format).
+```
 
-- declaration_team_mate_id: The ID of the teammate making the declaration.
+If the login and password values match any user in the database, the server will return the latter.
+Depending on the user's role (captain or team_mate) it will return two differents json objects:
 
- - declaration_status: The status of the declaration (Remote, On site, Vacation, Other).
-#### Response:
-If the declaration is successfully created, the API will send an HTTP response with a status code of 201 (Created) and return a JSON object with the created declaration.
-```bash
+**captain**
+```ts
 {
-"declaration_id": 456,
-"declaration_date": "2023-02-24T00:00:00.000Z",
-"declaration_team_mate_id": 123,
-"declaration_status": "Remote"
+    "token": string,
+    "captain_id": number,
+    "user_id": number,
+    "last_name": string,
+    "first_name": string,
+    "email": string
 }
-``` 
-If there is an error, the API will send an HTTP response with a status code of 500 (server errors) and return a JSON object with an error message.
-```bash
+```
+
+**team_mate**
+```ts
 {
-"message": "Error message"
+    "token": string,
+    "team_mate_id": number,
+    "user_id": number,
+    "team_id": number,
+    "last_name": string,
+    "first_name": string,
+    "email": string
 }
-``` 
+```
+
+The token is necessary on each request following the user login. If you don't provide the correct token, the server will withdraw the request and return an error.
+
+The token must be inside the request's headers like so :
+
+```js
+[x-access-token]: //the token returned by the server
+```
 
 ## env.sample
 The `env.sample` file provides a template for creating an environment configuration file. It contains a list of environment variables and their default values, which can be used as a starting point for creating a `.env` file.

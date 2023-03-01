@@ -39,6 +39,8 @@ dependencies:
   go_router: ^6.0.7
   dio: ^5.0.1
 
+  dio: ^5.0.1
+
   # // Riverpod dependency //
   # This dependency allows for dependency injection and manage states
   # import 'package:hooks_riverpod/hooks_riverpod.dart'
@@ -78,6 +80,16 @@ dependencies:
   # this plugin must not be used for storing critical data
   # https://pub.dev/packages/shared_preferences
   shared_preferences: ^2.0.17
+
+  # // Crypt //.
+  # One-way string hashing for salted passwords using the Unix crypt format.
+  # This package implements the SHA-256 crypt hash and SHA-512 crypt hash,
+  # cryptographic hash formats that are specified in "Unix crypt using SHA-256
+  # and SHA-512" (version: 0.6 2016-08-31).
+  #These hashes are commonly used in Unix and POSIX systems,
+  # and in LDAP entries as authentication credentials for POSIX accounts.
+  # https://pub.dev/packages/crypt
+  crypt: ^4.2.1
 
   built_value: ^8.4.3
   json_annotation: ^4.8.0

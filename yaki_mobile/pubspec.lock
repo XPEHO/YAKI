@@ -153,6 +153,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.1"
+  crypt:
+    dependency: "direct main"
+    description:
+      name: crypt
+      sha256: c12682393cc6aae221e278692d8a433e188db2064b7de5daa253fd62ccfa096f
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.2.1"
   crypto:
     dependency: transitive
     description:

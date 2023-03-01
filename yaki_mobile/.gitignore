@@ -1,4 +1,5 @@
 # Miscellaneous
+
 *.class
 *.log
 *.pyc
@@ -43,7 +44,5 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-#testing
-zdevtesting/
 
 config.json
