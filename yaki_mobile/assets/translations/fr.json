@@ -6,6 +6,6 @@
   "inputPassword" : "Mot de passe",
   "hintPassword" : "Entrez votre mot de passe",
   "rememberMe" : "Se souvenir de moi",
-  "SignIn" : "Se connecter",
+  "signIn" : "Se connecter",
   "forgotPassword" : "Mot de passe oublié ?"
 }
