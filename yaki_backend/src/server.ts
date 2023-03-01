@@ -10,56 +10,29 @@ import swaggerUi from "swagger-ui-express";
 // Import swagger JSON file
 import * as swaggerDocument from "./dev/swagger.json";
 
-// const db = require('./repository.ts')
-import * as db from './repository';
+import { router } from './router';
+import { initdb } from './db/initdb';
 
-/* Defining the shape of the data that will be returned from the database. */
-interface Captain {
-  id: number;
-  name: string;
-}
+// get body-parser to handle request's body
+var bodyParser = require('body-parser');
 
 // Call the initConfig function to load environment variables and log their values to the console
 initConfig();
+initdb();
 
 // Creating a new instance of the Express app
 const app: Express = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extends : false}));
+app.use(router);
 
 // Get the value of the PORT environment variable
 const port = process.env.Port;
-// get the value of the HOST envirement variable
-const host = process.env.Host
 
 // Setting up the Swagger UI middleware
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-
-// Setting up a basic "hello world" route at the root URL
-app.get('/', (req: Request, res: Response) => {
-  res.send('Hello, this is Express + TypeScript');
-});
-
-/* This is a route handler. It is a function that is called when a request is made to the `/captains`
-endpoint. */
-app.get('/captains', async (req, res) => {
-  const captains: Captain[] = await db.getCaptains();
-  res.send(captains)
-})
-
-/* This is a route handler. It is a function that is called when a request is made to the `/captains`
-endpoint. */
-app.get('/captains/:name', async (req, res) => {
-  const captains: Captain[] = await db.findCaptains(req.params.name);
-  res.send(captains)
-})
-
 // Starting the server and logging a message to the console
-app.listen(port, () => {
-  console.log(`[Server]: I am running at ${host}:${port}`);
+app.listen( 3000, () => {
+  console.log(`[Server]: I am running at https://localhost:${port}` );
 });
-
-
-
-
-
-
