@@ -10,8 +10,8 @@
   "forgotPassword" : "Forgot Password ?",
   "headerTitleDecla": "Declaration",
   "headerHintDecla": "What is your status ?",
-  "statusRemote": "Remote",
-  "statusOnSite": "On site",
-  "statusVacation": "Vacation",
-  "statusOther": "Other"
+  "Remote": "Remote",
+  "On site": "On site",
+  "Vacation": "Vacation",
+  "Other": "Other"
 }
