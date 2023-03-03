@@ -26,5 +26,5 @@ jobs:
           gh pr edit $ISSUE --add-label "$LABEL"
           gh pr comment $ISSUE --body "Label $LABEL has been added to this pull request"
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
           ISSUE: ${{ github.event.pull_request.html_url }}
