@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yaki/data/models/declaration_model.dart';
 import 'package:yaki/data/repositories/declaration_respository.dart';
@@ -9,20 +8,13 @@ class DeclarationNotifier extends StateNotifier<dynamic> {
 
   DeclarationNotifier(this.declarationRepository) : super("");
 
-  /// Set provider state, get the declaration string coming from
-  /// declaration_body widget.
-  /// Depending of the declaration, loop through card content list to select
-  /// the corresponding image and set it to the state along with the declaration
+  /// create the state based on statusMessage & statusImage MAP
+  ///
   void setState(String declaration) {
-    for (var status in statusCardContent) {
-      if (status['text'] == declaration) {
         state = {
           'text': '${statusMessage[declaration]}',
-          'image': status['image'],
+          'image': '${statusImage[declaration]}',
         };
-        break;
-      }
-    }
   }
 
   /// Create a declaration object using declaration string coming from declaration_body widget.
