@@ -1,10 +1,13 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:yaki/presentation/state/providers/provider.dart';
 import 'package:yaki/presentation/styles/header_text_style.dart';
 import 'package:yaki/presentation/ui/shared/views/avatar_icon.dart';
 import 'package:yaki/presentation/ui/shared/views/circle_avatar_svg.dart';
 
-class Status extends StatelessWidget {
+class Status extends ConsumerWidget {
   const Status({Key? key}) : super(key: key);
 
   void _routeHandling(BuildContext context) {
@@ -13,7 +16,10 @@ class Status extends StatelessWidget {
   void onAvatarIconPress() {}
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+
+    final declarationStatus = ref.watch(declarationProvider);
+
     return Scaffold(
       backgroundColor: HeaderColor.yellowApp,
       body: SafeArea(
@@ -28,11 +34,11 @@ class Status extends StatelessWidget {
                   onPressed: onAvatarIconPress,
                 ),
               ),
-              const Expanded(
+               Expanded(
                 flex: 5,
                 child: Center(
                   child: CircleAvatarSVG(
-                    iconPath: 'assets/images/remote.svg',
+                    iconPath: '${declarationStatus['image']}',
                     radius: 80,
                   ),
                 ),
@@ -41,7 +47,7 @@ class Status extends StatelessWidget {
                 flex: 1,
                 child: Center(
                   child: Text(
-                    "You are remote today",
+                    tr("${declarationStatus['text']}"),
                     style: textStyleTemp(),
                   ),
                 ),

@@ -16,3 +16,10 @@ final List statusCardContent = [
     'text': 'Other',
   },
 ];
+
+final Map<String, String> statusMessage = {
+  'Remote': "StatusRemote",
+  'On site': "StatusOnSite",
+  'Vacation': "StatusVacation",
+  'Other': "StatusOther",
+};
