@@ -13,5 +13,7 @@
   "statusRemote": "Remote",
   "statusOnSite": "On site",
   "statusVacation": "Vacation",
-  "statusOther": "Other"
+  "statusOther": "Other",
+  "inputCaptain": "Name, Status...",
+  "hintCaptain": "Enter a name or a status"
 }
