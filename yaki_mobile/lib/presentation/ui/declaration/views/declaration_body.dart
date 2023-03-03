@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:yaki/presentation/state/providers/provider.dart';
 import 'package:yaki/presentation/ui/declaration/views/status_card.dart';
 
@@ -24,7 +25,6 @@ final List statusCardContent = [
 ];
 
 void _createDeclaration(WidgetRef ref, String declaration) {
-
   ref.read(declarationProvider.notifier).create(declaration);
 }
 
@@ -46,12 +46,15 @@ class DeclarationBody extends ConsumerWidget {
               (cardContent) => StatusCard(
                 statusName: tr(cardContent['text']),
                 statusPicto: cardContent['image'],
-                getClick: () => _createDeclaration(
-                  ref,
-                  tr(
-                    cardContent['text'],
+                getClick: () => {
+                  _createDeclaration(
+                    ref,
+                    tr(
+                      cardContent['text'],
+                    ),
                   ),
-                ),
+                  //context.go('/status')
+                },
               ),
             )
             .toList(),

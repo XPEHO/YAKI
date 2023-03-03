@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:yaki/presentation/state/providers/login_provider.dart';
-import 'package:yaki/presentation/ui/shared/views/ButtonApp.dart';
+import 'package:yaki/presentation/styles/header_text_style.dart';
 import 'package:yaki/presentation/ui/shared/views/InputApp.dart';
 import 'package:yaki/presentation/ui/shared/views/Header.dart';
-import 'package:yaki/presentation/styles/HeaderTextStyle.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class Authentication extends ConsumerWidget {
@@ -112,7 +112,11 @@ class Authentication extends ConsumerWidget {
                             left: 50,
                           ),
                         ),
-                        onPressed: () => onPressAuthent(ref, loginController.text, passwordController.text),
+                        onPressed: ()       {
+                          onPressAuthent(ref, loginController.text,
+                              passwordController.text);
+                          context.go('/declaration');
+                        },
                         child: Text(tr('signIn')),
                       ),
                     ),

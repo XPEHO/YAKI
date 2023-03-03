@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
-import '../shared/pages_layout.dart';
-import '../shared/views/header.dart';
-import 'views/declaration_body.dart';
+import 'package:yaki/presentation/ui/declaration/views/declaration_body.dart';
+import 'package:yaki/presentation/ui/shared/pages_layout.dart';
+import 'package:yaki/presentation/ui/shared/views/header.dart';
 
 class Declaration extends StatelessWidget {
   const Declaration({super.key});
