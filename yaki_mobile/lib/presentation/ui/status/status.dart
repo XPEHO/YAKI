@@ -18,7 +18,7 @@ class Status extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
-    final declarationStatus = ref.watch(declarationProvider);
+    final selectedStatus = ref.watch(declarationProvider);
 
     return Scaffold(
       backgroundColor: HeaderColor.yellowApp,
@@ -38,7 +38,7 @@ class Status extends ConsumerWidget {
                 flex: 5,
                 child: Center(
                   child: CircleAvatarSVG(
-                    iconPath: '${declarationStatus['image']}',
+                    iconPath: '${selectedStatus['image']}',
                     radius: 80,
                   ),
                 ),
@@ -47,7 +47,7 @@ class Status extends ConsumerWidget {
                 flex: 1,
                 child: Center(
                   child: Text(
-                    tr("${declarationStatus['text']}"),
+                    tr("${selectedStatus['text']}"),
                     style: textStyleTemp(),
                   ),
                 ),
