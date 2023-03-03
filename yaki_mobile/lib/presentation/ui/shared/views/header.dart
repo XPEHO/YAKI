@@ -1,6 +1,8 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
 import 'package:yaki/presentation/styles/header_text_style.dart';
+import 'package:yaki/presentation/ui/shared/views/avatar_icon.dart';
+import 'package:yaki/presentation/ui/shared/views/circle_avatar_svg.dart';
 
 class Header extends StatelessWidget {
   final String pictoIcon;
@@ -15,6 +17,10 @@ class Header extends StatelessWidget {
     required this.headerTitle,
     required this.headerHint,
   });
+
+  void onAvatarIconPress() {
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,16 +54,10 @@ class Header extends StatelessWidget {
 
                   const Spacer(),
                   // top right circle avatar
-                  TextButton(
-                    onPressed: () {},
-                    style: TextButton.styleFrom(
-                      foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(100.0),
-                      ),
-                    ),
-                    child: CircleAvatarSVG(iconPath: pictoIcon, radius: 20),
-                  )
+                  AvatarIcon(
+                    pictoIcon: pictoIcon,
+                    onPressed: onAvatarIconPress,
+                  ),
                 ],
               ),
             ),
@@ -78,26 +78,6 @@ class Header extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class CircleAvatarSVG extends StatelessWidget {
-  final String iconPath;
-  final double radius;
-
-  const CircleAvatarSVG({
-    super.key,
-    required this.iconPath,
-    required this.radius,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return CircleAvatar(
-      backgroundColor: Colors.transparent,
-      radius: radius,
-      child: SvgPicture.asset(iconPath),
     );
   }
 }
