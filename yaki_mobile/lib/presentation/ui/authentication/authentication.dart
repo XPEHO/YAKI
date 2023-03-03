@@ -19,6 +19,10 @@ class Authentication extends ConsumerWidget {
     ref.read(loginProvider.notifier).changeLogin(login, password);
   }
 
+  void _routeHandling(BuildContext context) {
+    context.push('/declaration');
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     bool isChecked = false;
@@ -104,12 +108,9 @@ class Authentication extends ConsumerWidget {
                           ),
                         ),
                         onPressed: () {
-                          onPressAuthent(
-                            ref,
-                            loginController.text,
-                            passwordController.text,
-                          );
-                          context.go('/declaration');
+                          onPressAuthent(ref, loginController.text,
+                              passwordController.text);
+                          _routeHandling(context);
                         },
                         child: Text(tr('signIn')),
                       ),

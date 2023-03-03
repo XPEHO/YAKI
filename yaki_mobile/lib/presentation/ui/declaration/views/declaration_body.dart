@@ -10,6 +10,10 @@ void _createDeclaration(WidgetRef ref, String declaration) {
   ref.read(declarationProvider.notifier).create(declaration);
 }
 
+void _routeHandling(BuildContext context) {
+  context.push('/status');
+}
+
 // ConsumerWidget : stateless widget listening to providers
 class DeclarationBody extends ConsumerWidget {
   const DeclarationBody({Key? key}) : super(key: key);
@@ -30,9 +34,9 @@ class DeclarationBody extends ConsumerWidget {
                 (cardContent) => StatusCard(
                   statusName: tr(cardContent['text']),
                   statusPicto: cardContent['image'],
-                  getClick: () => {
-                    _createDeclaration(ref, cardContent['text']),
-                    context.go('/status')
+                  getClick: () {
+                    _createDeclaration(ref, cardContent['text']);
+                    _routeHandling(context);
                   },
                 ),
               )
