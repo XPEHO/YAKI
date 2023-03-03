@@ -29,4 +29,35 @@ export class DeclarationController {
             res.status(500).json({ message: error.message });
         }
     }
+
+    /**
+     * It gets the declarations for a team mate.
+     * @param {Request} req - Request - the request object
+     * @param {Response} res - Response - the response object
+     */
+    async getDeclarationsForTeamMate(req: Request, res: Response) {
+        const teamMateId = parseInt(req.params.teamMateId);
+        try {
+            const declarations = await this.declarationService.getDeclarationsForTeamMate(teamMateId);
+            res.status(200).json(declarations);
+        } catch (error: any) {
+            res.status(500).json({ message: error.message });
+        }
+    }
+
+    /**
+     * Updating the declaration status.
+     * @param req The incoming HTTP request.
+     * @param res The HTTP response to be sent.
+     */
+    async updateDeclarationStatus(req: Request, res: Response) {
+        const declarationId = parseInt(req.params.declarationId);
+        const declaration: Declaration = req.body;
+        try {
+            await this.declarationService.updateDeclarationStatus(declarationId, declaration);
+            res.status(200).json(declaration);
+        } catch (error: any) {
+            res.status(500).json({ message: error.message });
+        }
+    };
 }

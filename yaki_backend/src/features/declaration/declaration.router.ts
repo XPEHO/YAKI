@@ -18,6 +18,8 @@ const declarationController = new DeclarationController(declarationService);
 
 /* Creating a new route for the declarationRouter object. */
 declarationRouter.post("/declarations", (req, res) => { declarationController.createDeclaration(req, res) })
+declarationRouter.get("/declarations/:teamMateId",(req, res) => {declarationController.getDeclarationsForTeamMate(req, res)})
+declarationRouter.put("/declarations/:declarationId",(req, res) => {declarationController.updateDeclarationStatus(req, res)})
 
 /* Exporting the declarationRouter object. */
 export default declarationRouter;
