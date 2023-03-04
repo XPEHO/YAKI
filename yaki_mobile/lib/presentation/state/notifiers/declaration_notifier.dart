@@ -9,7 +9,8 @@ class DeclarationNotifier extends StateNotifier<dynamic> {
   DeclarationNotifier(this.declarationRepository) : super("");
 
   /// create the state based on statusMessage & statusImage MAP
-  ///
+  /// from (presentation/displaydata/declaration_card_content.dart
+  /// using declaration value as key.
   void setState(String declaration) {
         state = {
           'text': '${statusMessage[declaration]}',

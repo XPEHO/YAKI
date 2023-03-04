@@ -7,13 +7,14 @@ import 'package:yaki/presentation/styles/header_text_style.dart';
 import 'package:yaki/presentation/ui/shared/views/avatar_icon.dart';
 import 'package:yaki/presentation/ui/shared/views/circle_avatar_svg.dart';
 
+
+void _routeHandling(BuildContext context) {
+  context.pop();
+}
+void onAvatarIconPress() {}
+
 class Status extends ConsumerWidget {
   const Status({Key? key}) : super(key: key);
-
-  void _routeHandling(BuildContext context) {
-    context.pop();
-  }
-  void onAvatarIconPress() {}
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -27,7 +28,7 @@ class Status extends ConsumerWidget {
           padding: const EdgeInsets.all(15.0),
           child: Column(
             children: [
-              Align(
+              const Align(
                 alignment: Alignment.centerRight,
                 child: AvatarIcon(
                   pictoIcon: 'assets/images/avatar1.svg',
