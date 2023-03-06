@@ -16,10 +16,10 @@ class _CaptainView extends State<CaptainView> {
     return Scaffold(
       body: PagesLayout(
         header: Header(
-          pictoIcon: 'assets/images/avatar1.svg',
-          pictoPath: 'assets/images/unknown.svg',
-          headerTitle: tr('headerTitleDecla'),
-          headerHint: tr('headerHintDecla'),
+          pictoIcon: 'assets/images/captain.svg',
+          pictoPath: 'assets/images/captain.svg',
+          headerTitle: tr('captainTitle'),
+          headerHint: tr('captainHeaderTitle'),
         ),
           bodyContent: CaptainBody(),
       ),

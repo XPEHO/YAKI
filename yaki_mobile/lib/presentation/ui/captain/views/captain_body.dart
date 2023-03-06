@@ -12,11 +12,14 @@ class CaptainBody extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Column(
       children: [
-        InputApp(
-            inputText: tr('inputCaptain'),
-            inputHint: tr('hintCaptain'),
-            password: false,
-            controller: captainInputController,
+        Padding(
+          padding: const EdgeInsets.only(top: 20, left: 10, right: 10),
+          child: InputApp(
+              inputText: tr('inputCaptain'),
+              inputHint: tr('hintCaptain'),
+              password: false,
+              controller: captainInputController,
+          ),
         ),
       ],
     );
