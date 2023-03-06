@@ -13,5 +13,9 @@
   "statusRemote": "Distanciel",
   "statusOnSite": "Sur site",
   "statusVacation": "Vacances",
-  "statusOther": "Autre"
+  "statusOther": "Autre",
+  "CaptainTitle" : "Capitaine",
+  "CaptainHeaderTitle" : "Capitaine",
+  "inputCaptain": "Nom, Status...",
+  "hintCaptain": "Entrez un nom ou un status"
 }

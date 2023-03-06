@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'declaration_api.dart';
+part of 'team_mate_api.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,8 +8,8 @@ part of 'declaration_api.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
-class _DeclarationApi implements DeclarationApi {
-  _DeclarationApi(
+class _TeamMateApi implements TeamMateApi {
+  _TeamMateApi(
     this._dio, {
     this.baseUrl,
   });
@@ -19,26 +19,27 @@ class _DeclarationApi implements DeclarationApi {
   String? baseUrl;
 
   @override
-  Future<DeclarationModel> create(declaration) async {
+  Future<List<TeamMateModel>> getTeamMate() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    _data.addAll(declaration.toJson());
     final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<DeclarationModel>(Options(
-      method: 'POST',
+        .fetch<List<dynamic>>(_setStreamType<List<TeamMateModel>>(Options(
+      method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              '/declarations',
+              '/teamMates',
               queryParameters: queryParameters,
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = DeclarationModel.fromJson(_result.data!);
+    var value = _result.data!
+        .map((dynamic i) => TeamMateModel.fromJson(i as Map<String, dynamic>))
+        .toList();
     return value;
   }
 

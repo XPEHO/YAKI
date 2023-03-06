@@ -14,6 +14,8 @@
   "statusOnSite": "On site",
   "statusVacation": "Vacation",
   "statusOther": "Other",
+  "captainTitle" : "Captain",
+  "captainHeaderTitle" : "Captain",
   "inputCaptain": "Name, Status...",
   "hintCaptain": "Enter a name or a status"
 }

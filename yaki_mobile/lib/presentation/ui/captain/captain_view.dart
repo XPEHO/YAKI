@@ -5,9 +5,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:yaki/presentation/ui/shared/views/header.dart';
 
 class CaptainView extends StatefulWidget {
+  const CaptainView({super.key});
+
   @override
   State<StatefulWidget> createState() => _CaptainView();
-
 }
 
 class _CaptainView extends State<CaptainView> {
@@ -16,14 +17,13 @@ class _CaptainView extends State<CaptainView> {
     return Scaffold(
       body: PagesLayout(
         header: Header(
-          pictoIcon: 'assets/images/avatar1.svg',
-          pictoPath: 'assets/images/unknown.svg',
-          headerTitle: tr('headerTitleDecla'),
-          headerHint: tr('headerHintDecla'),
+          pictoIcon: 'assets/images/captain.svg',
+          pictoPath: 'assets/images/captain.svg',
+          headerTitle: tr('captainTitle'),
+          headerHint: tr('captainHeaderTitle'),
         ),
-          bodyContent: CaptainBody(),
+        bodyContent: const CaptainBody(),
       ),
     );
   }
-  
 }

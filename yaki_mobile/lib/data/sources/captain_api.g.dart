@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'declaration_api.dart';
+part of 'captain_api.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,8 +8,8 @@ part of 'declaration_api.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
-class _DeclarationApi implements DeclarationApi {
-  _DeclarationApi(
+class _CaptainApi implements CaptainApi {
+  _CaptainApi(
     this._dio, {
     this.baseUrl,
   });
@@ -19,26 +19,25 @@ class _DeclarationApi implements DeclarationApi {
   String? baseUrl;
 
   @override
-  Future<DeclarationModel> create(declaration) async {
+  Future<CaptainModel> getCaptain() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    _data.addAll(declaration.toJson());
     final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<DeclarationModel>(Options(
-      method: 'POST',
+        .fetch<Map<String, dynamic>>(_setStreamType<CaptainModel>(Options(
+      method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              '/declarations',
+              '/captains',
               queryParameters: queryParameters,
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = DeclarationModel.fromJson(_result.data!);
+    final value = CaptainModel.fromJson(_result.data!);
     return value;
   }
 
