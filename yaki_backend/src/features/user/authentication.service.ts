@@ -37,7 +37,7 @@ class Service {
                 expiresIn: 300,
             }
         );
-        user.token = token;
+        user.token = token;     
         return user;
     }
 
