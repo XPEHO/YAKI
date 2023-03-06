@@ -28,4 +28,35 @@ export class DeclarationService {
       throw new TypeError("One or more mandatory information is missing.")
     }
   }
+
+  /**
+   * Get all declarations for a team mate and return them, if there are none, return a string
+   * @param {number} teamMateId - number
+   * @returns An array of declarations or a string.
+   */
+  async getDeclarationsForTeamMate(teamMateId: number): Promise<Declaration[] | String> {
+    const declarations = await this.declarationRepository.getDeclarationsForTeamMate(teamMateId);
+    if (declarations.length > 0) {
+      return declarations;
+    } else {
+      return "You have to declare yourself";
+    }
+  }
+
+  /**
+   * This function updates the status of a declaration.
+   * @param {number} declarationId - number,
+   * @param {Declaration} declaration - Declaration
+   * @returns The declarationRepository.updateDeclarationStatus() ;.
+   */
+  async updateDeclarationStatus(
+    declarationId: number,
+    declaration: Declaration,
+  ): Promise<void> {
+    const existingDeclaration = await this.declarationRepository.getDeclarationById(declarationId);
+    if (!existingDeclaration) {
+      throw new Error("The declaration does not existe.");
+    }
+    return this.declarationRepository.updateDeclarationStatus(declarationId, declaration);
+  }
 }

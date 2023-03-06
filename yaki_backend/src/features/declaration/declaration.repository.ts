@@ -37,4 +37,71 @@ export class DeclarationRepository {
     )
     return declarationToFront;
   }
+
+  /**
+   * Get the latest declaration for a team mate
+   * @param {number} teamMateId - number
+   * @returns An array of Declaration objects.
+   */
+  async getDeclarationsForTeamMate(teamMateId: number): Promise<Declaration[]> {
+    const client = await this.pool.connect();
+    try {
+      const result = await client.query(
+        `SELECT *
+        FROM declaration
+        WHERE declaration_team_mate_id = $1
+        AND declaration_date = current_date
+        ORDER BY declaration_id DESC
+        LIMIT 1`,
+        [teamMateId],
+      );
+      return result.rows;
+    } finally {
+      client.release();
+    }
+  }
+
+  /**
+   * "This function updates the declaration_date, declaration_team_mate_id, and declaration_status of a
+   * declaration in the database, given the declaration_id of the declaration to be updated."
+   * @param {number} declarationId - number,
+   * @param {Declaration} declaration - Declaration
+   */
+  async updateDeclarationStatus(
+    declarationId: number,
+    declaration: Declaration,
+  ): Promise<void> {
+    const { declaration_date, declaration_team_mate_id, declaration_status } = declaration;
+    const client = await this.pool.connect();
+    try {
+      await client.query(
+        'UPDATE declaration SET declaration_date = $1, declaration_team_mate_id = $2, declaration_status= $3 WHERE declaration_id = $4',
+        [declaration_date, declaration_team_mate_id, declaration_status, declarationId],
+      );
+    } finally {
+      client.release();
+    }
+  }
+
+  /**
+   * This function returns a promise that resolves to a declaration object, or null if no declaration
+   * is found.
+   * @param {number} declarationId - number
+   * @returns The result of the query.
+   */
+  async getDeclarationById(declarationId: number): Promise<Declaration> {
+    const client = await this.pool.connect();
+    try {
+      const result = await client.query(
+        `SELECT *
+        FROM declaration
+        WHERE declaration_id = $1
+        `,
+        [declarationId],
+      );
+      return result.rows[0];
+    } finally {
+      client.release();
+    }
+  }
 }

@@ -11,10 +11,10 @@ class Service {
      * @param hash 
      * @returns 
      */
-    checkPasswords = async(passwordDb: string, passwordClient: string) => {
-        if(passwordDb === passwordClient) {
+    checkPasswords = async (passwordDb: string, passwordClient: string) => {
+        if (passwordDb === passwordClient) {
             return true
-        } 
+        }
         return false
     }
 
@@ -23,7 +23,7 @@ class Service {
      * @param user 
      * @returns 
      */
-    createToken = async(user: CaptainDtoOut | TeamMateDtoOut) => {
+    createToken = async (user: CaptainDtoOut | TeamMateDtoOut) => {
         const token = jwt.sign(
             {
                 user_id: user.userId,
@@ -35,7 +35,7 @@ class Service {
                 expiresIn: 300,
             }
         );
-        user.token = token;
+        user.token = token;     
         return user;
     }
 
@@ -46,10 +46,10 @@ class Service {
      * @param next 
      * @returns 
      */
-    verifyToken = async(req: Request, res: Response, next: NextFunction) => {
+    verifyToken = async (req: Request, res: Response, next: NextFunction) => {
         const token = req.headers["x-access-token"];
 
-        if(!token) {
+        if (!token) {
             return res.status(403).send("A token is required for authentification")
         }
         try {
