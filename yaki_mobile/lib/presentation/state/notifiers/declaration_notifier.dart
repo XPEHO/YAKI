@@ -8,6 +8,7 @@ class DeclarationNotifier extends StateNotifier<dynamic> {
 
   DeclarationNotifier(this.declarationRepository) : super({
     'isDeclared': false,
+    'token': '',
     'text': '',
     'image': '',
   });
@@ -36,7 +37,6 @@ class DeclarationNotifier extends StateNotifier<dynamic> {
     setState(status, true);
 
     final statusCreateResponse = await declarationRepository.create(newDeclaration);
-    print("test");
     print('print declaratio response ${statusCreateResponse.toJson()}');
 
   }

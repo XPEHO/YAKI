@@ -8,9 +8,9 @@ part of 'authentication.dart';
 
 Authentication _$AuthenticationFromJson(Map<String, dynamic> json) =>
     Authentication(
-      user_id: json['user_id'] as String,
-      team_mate_id: json['team_mate_id'] as String,
-      team_id: json['team_id'] as String,
+      user_id: json['user_id'] as int?,
+      team_mate_id: json['team_mate_id'] as int?,
+      team_id: json['team_id'] as int?,
       last_name: json['last_name'] as String,
       first_name: json['first_name'] as String,
       email: json['email'] as String,

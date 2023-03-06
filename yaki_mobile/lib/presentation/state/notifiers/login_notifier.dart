@@ -10,6 +10,10 @@ class LoginNotifier extends StateNotifier<String> {
     this.repository,
   ) : super("");
 
+  void setState(String? token) {
+    state = token!;
+  }
+
   void changeLogin(String newLogin, String newPassword) async {
     final hashPass = Crypt.sha256(
       newPassword,
@@ -17,11 +21,11 @@ class LoginNotifier extends StateNotifier<String> {
       salt: const String.fromEnvironment('CRED_HASH_PASS'),
     );
     final newLog = Login(login: newLogin, password: hashPass.toString());
+    
     print('log object: ${newLog.toJson()}');
     final createResp = await repository.postLogin(newLog);
-
-    print('login response ${createResp?.toJson()}');
-
+    print('login response ${createResp?.toJson()}, ${createResp?.token}');
+    setState(createResp?.token);
 
   }
 }

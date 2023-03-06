@@ -4,9 +4,9 @@ part "authentication.g.dart";
 
 @JsonSerializable()
 class Authentication {
-  String user_id;
-  String team_mate_id;
-  String team_id;
+  int? user_id;
+  int? team_mate_id;
+  int? team_id;
   String last_name;
   String first_name;
   String email;
