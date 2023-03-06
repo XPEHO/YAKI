@@ -14,7 +14,8 @@ void onPressAuthent(WidgetRef ref, login, password) {
 
 void _routeHandling(BuildContext context, WidgetRef ref) {
   final isDeclared = ref.watch(declarationProvider)['isDeclared'];
-  isDeclared ? context.go('/status') : context.go('/declaration');
+  //isDeclared ? context.go('/status') : context.go('/declaration');
+  context.push('/declaration');
 }
 
 class Authentication extends ConsumerWidget {

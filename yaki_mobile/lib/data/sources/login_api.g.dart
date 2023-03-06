@@ -19,14 +19,14 @@ class _LoginService implements LoginService {
   String? baseUrl;
 
   @override
-  Future<Login?> postLogin(login) async {
+  Future<Authentication?> postLogin(login) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(login.toJson());
-    final _result =
-        await _dio.fetch<Map<String, dynamic>?>(_setStreamType<Login>(Options(
+    final _result = await _dio
+        .fetch<Map<String, dynamic>?>(_setStreamType<Authentication>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -38,7 +38,8 @@ class _LoginService implements LoginService {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = _result.data == null ? null : Login.fromJson(_result.data!);
+    final value =
+        _result.data == null ? null : Authentication.fromJson(_result.data!);
     return value;
   }
 
