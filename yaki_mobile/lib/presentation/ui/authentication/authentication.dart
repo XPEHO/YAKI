@@ -2,10 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yaki/presentation/state/providers/login_provider.dart';
+import 'package:yaki/presentation/state/providers/provider.dart';
 import 'package:yaki/presentation/styles/header_text_style.dart';
 import 'package:yaki/presentation/ui/shared/views/input_app.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:yaki/presentation/ui/shared/views/header.dart';
+
+void onPressAuthent(WidgetRef ref, login, password) {
+  ref.read(loginProvider.notifier).changeLogin(login, password);
+}
+
+void _routeHandling(BuildContext context, WidgetRef ref) {
+  final isDeclared = ref.watch(declarationProvider)['isDeclared'];
+  isDeclared ? context.go('/status') : context.go('/declaration');
+}
 
 class Authentication extends ConsumerWidget {
   Authentication({super.key});
@@ -108,9 +118,12 @@ class Authentication extends ConsumerWidget {
                           ),
                         ),
                         onPressed: () {
-                          onPressAuthent(ref, loginController.text,
-                              passwordController.text);
-                          _routeHandling(context);
+                          onPressAuthent(
+                            ref,
+                            loginController.text,
+                            passwordController.text,
+                          );
+                          _routeHandling(context, ref);
                         },
                         child: Text(tr('signIn')),
                       ),

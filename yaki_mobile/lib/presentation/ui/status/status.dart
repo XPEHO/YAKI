@@ -9,7 +9,8 @@ import 'package:yaki/presentation/ui/shared/views/circle_avatar_svg.dart';
 
 
 void _routeHandling(BuildContext context) {
-  context.pop();
+  //context.pop();
+  context.go('/declaration');
 }
 void onAvatarIconPress() {}
 
