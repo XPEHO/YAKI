@@ -1,6 +1,5 @@
 {
   "swagger": "2.0",
-  
   "info": {
     "version": "1.0.0",
     "title": "Node API YAKI",
@@ -9,18 +8,41 @@
   "host": "localhost:3000",
   "basePath": "/",
   "schemes": [
-    "http"              
+    "http"
   ],
   "paths": {
-    "/": {
-      "get": {
+    "/login": {
+      "post": {
         "description": "",
         "parameters": [],
+        "responses": {}
+      }
+    },
+    "/captains": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "type": "string"
+          }
+        ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
           }
         }
+      }
+    },
+    "/declarations": {
+      "post": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
       }
     }
   }
