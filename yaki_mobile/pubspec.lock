@@ -5,9 +5,17 @@ packages:
     dependency: transitive
     description:
       name: _fe_analyzer_shared
+<<<<<<< HEAD
 
 
       sha256: "98d1d33ed129b372846e862de23a0fc365745f4d7b5e786ce667fcbbb7ac5c07"
+=======
+<<<<<<< Updated upstream
+      sha256: e440ac42679dfc04bbbefb58ed225c994bc7e07fccc8a68ec7d3631a127e5da9
+=======
+      sha256: "98d1d33ed129b372846e862de23a0fc365745f4d7b5e786ce667fcbbb7ac5c07"
+>>>>>>> Stashed changes
+>>>>>>> ee201be (feat(status): add bnack stashed file)
       url: "https://pub.dev"
 
 
@@ -17,9 +25,17 @@ packages:
     dependency: transitive
     description:
       name: analyzer
+<<<<<<< HEAD
 
 
       sha256: "881348aed9b0b425882c97732629a6a31093c8ff20fc4b3b03fb9d3d50a3a126"
+=======
+<<<<<<< Updated upstream
+      sha256: "2c2e3721ee9fb36de92faa060f3480c81b23e904352b087e5c64224b1a044427"
+=======
+      sha256: "881348aed9b0b425882c97732629a6a31093c8ff20fc4b3b03fb9d3d50a3a126"
+>>>>>>> Stashed changes
+>>>>>>> ee201be (feat(status): add bnack stashed file)
       url: "https://pub.dev"
 
 
@@ -175,9 +191,17 @@ packages:
     dependency: transitive
     description:
       name: dart_style
+<<<<<<< HEAD
 
 
       sha256: "5be16bf1707658e4c03078d4a9b90208ded217fb02c163e207d334082412f2fb"
+=======
+<<<<<<< Updated upstream
+      sha256: "7a03456c3490394c8e7665890333e91ae8a49be43542b616e414449ac358acd4"
+=======
+      sha256: "5be16bf1707658e4c03078d4a9b90208ded217fb02c163e207d334082412f2fb"
+>>>>>>> Stashed changes
+>>>>>>> ee201be (feat(status): add bnack stashed file)
       url: "https://pub.dev"
 
 
@@ -253,9 +277,17 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_riverpod
+<<<<<<< HEAD
 
 
       sha256: "40c0d7d03ccd24fa32ea08dcfc4df9bb92c4c26c9a91938945da3be10ed8ca83"
+=======
+<<<<<<< Updated upstream
+      sha256: "46a27b7a11dc13738054093076f2dc65692ddcd463979b15092accf5681aea20"
+=======
+      sha256: "40c0d7d03ccd24fa32ea08dcfc4df9bb92c4c26c9a91938945da3be10ed8ca83"
+>>>>>>> Stashed changes
+>>>>>>> ee201be (feat(status): add bnack stashed file)
       url: "https://pub.dev"
 
 
@@ -303,9 +335,17 @@ packages:
     dependency: "direct dev"
     description:
       name: golden_toolkit
+<<<<<<< HEAD
 
 
       sha256: "8f74adab33154fe7b731395782797021f97d2edc52f7bfb85ff4f1b5c4a215f0"
+=======
+<<<<<<< Updated upstream
+      sha256: "3a37d474cdb8f4505ff8be9f1bb248a6bf3e80ee22ef3c8c3c4c805fff7fa153"
+=======
+      sha256: "8f74adab33154fe7b731395782797021f97d2edc52f7bfb85ff4f1b5c4a215f0"
+>>>>>>> Stashed changes
+>>>>>>> ee201be (feat(status): add bnack stashed file)
       url: "https://pub.dev"
 
 
@@ -511,9 +551,17 @@ packages:
     dependency: transitive
     description:
       name: pubspec_parse
+<<<<<<< HEAD
 
 
       sha256: ec85d7d55339d85f44ec2b682a82fea340071e8978257e5a43e69f79e98ef50c
+=======
+<<<<<<< Updated upstream
+      sha256: "75f6614d6dde2dc68948dffbaa4fe5dae32cd700eb9fb763fe11dfb45a3c4d0a"
+=======
+      sha256: ec85d7d55339d85f44ec2b682a82fea340071e8978257e5a43e69f79e98ef50c
+>>>>>>> Stashed changes
+>>>>>>> ee201be (feat(status): add bnack stashed file)
       url: "https://pub.dev"
 
 
@@ -537,9 +585,17 @@ packages:
     dependency: transitive
     description:
       name: riverpod
+<<<<<<< HEAD
 
 
       sha256: c5aea6c3fed340707f013a023a37ab388bf45611a8a4f7e76b5e9007eb76cd25
+=======
+<<<<<<< Updated upstream
+      sha256: "59a48de9c757aa61aa28e9fd625ffb360d43b6b54606f12536622c55be9e8c4b"
+=======
+      sha256: c5aea6c3fed340707f013a023a37ab388bf45611a8a4f7e76b5e9007eb76cd25
+>>>>>>> Stashed changes
+>>>>>>> ee201be (feat(status): add bnack stashed file)
       url: "https://pub.dev"
 
 
