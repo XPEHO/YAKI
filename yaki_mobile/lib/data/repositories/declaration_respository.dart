@@ -1,4 +1,4 @@
-import 'package:yaki/data/sources/declaration_api.dart';
+import 'package:yaki/data/sources/remote/declaration_api.dart';
 import 'package:yaki/data/models/declaration_model.dart';
 
 class DeclarationRepository {

@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yaki/data/repositories/login_repository.dart';
-import 'package:yaki/data/sources/login_api.dart';
+import 'package:yaki/data/sources/remote/login_api.dart';
 import 'package:yaki/presentation/state/notifiers/login_notifier.dart';
 import 'package:dio/dio.dart';
 
