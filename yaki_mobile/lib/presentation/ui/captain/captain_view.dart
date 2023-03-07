@@ -21,7 +21,8 @@ class _CaptainView extends State<CaptainView> {
           headerTitle: tr('captainTitle'),
           headerHint: tr('captainHeaderTitle'),
         ),
-          bodyContent: CaptainBody(),
+          bodyContent:
+          CaptainBody(),
       ),
     );
   }
