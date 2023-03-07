@@ -1,23 +1,15 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yaki/data/repositories/declaration_respository.dart';
 import 'package:yaki/data/sources/remote/declaration_api.dart';
 import 'package:yaki/presentation/state/notifiers/declaration_notifier.dart';
+import 'package:yaki/presentation/state/providers/dio_provider.dart';
 
-final dioProvider = Provider((ref) {
-  final dio = Dio();
-  dio.interceptors.add(InterceptorsWrapper(
-    // onRequest: (RequestOptions options) {
-    //
-    // }
-  ));
-  return dio;
-});
-
+final dioproviderClean = Provider((ref) => Dio());
 
 final declarationApiProvider = Provider(
   (ref) => DeclarationApi(
-    ref.read(dioProvider),
+    ref.read(dioProviderInterceptor),
     baseUrl: const String.fromEnvironment('API_BASE_URL'),
   ),
 );

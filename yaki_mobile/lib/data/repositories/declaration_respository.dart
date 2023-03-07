@@ -7,7 +7,12 @@ class DeclarationRepository {
   DeclarationRepository(this._declarationApi);
 
   Future<DeclarationModel> create(DeclarationModel declaration) async {
+    print("create declaration method");
     final createdDeclaration = await _declarationApi.create(declaration);
+
+    print("after return");
+    print(createdDeclaration.toJson());
+
     return createdDeclaration;
   }
 }
