@@ -89,7 +89,7 @@ dependencies:
   # https://pub.dev/packages/crypt
   crypt: ^4.2.1
 
-  built_value: ^8.4.3
+  built_value: ^8.4.4
   json_annotation: ^4.8.0
 
 
