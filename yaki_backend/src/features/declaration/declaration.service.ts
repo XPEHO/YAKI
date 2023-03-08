@@ -18,10 +18,12 @@ export class DeclarationService {
    * @returns The declaration object.
    */
   async createDeclaration(declaration: Declaration) {
-    if (declaration.declaration_team_mate_id != null) {
+    if ((declaration.declaration_team_mate_id
+       && declaration.declaration_date
+        && declaration.declaration_status) != null) {
       return await this.declarationRepository.createDeclaration(declaration);
     } else {
-      return "You have to declare a teamMateID"
+      return "One or more mandatory information is missing."
     }
   }
 }
