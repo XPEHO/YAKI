@@ -8,8 +8,8 @@ part of 'declaration_api.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
-class _DeclarationApi implements DeclarationApi {
-  _DeclarationApi(
+class _DeclarationController implements DeclarationController {
+  _DeclarationController(
     this._dio, {
     this.baseUrl,
   });

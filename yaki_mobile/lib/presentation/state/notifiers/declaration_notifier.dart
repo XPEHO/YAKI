@@ -6,22 +6,23 @@ import 'package:yaki/presentation/displaydata/declaration_card_content.dart';
 class DeclarationNotifier extends StateNotifier<dynamic> {
   final DeclarationRepository declarationRepository;
 
-  DeclarationNotifier(this.declarationRepository) : super({
-    'isDeclared': false,
-    'token': '',
-    'text': '',
-    'image': '',
-  });
+  DeclarationNotifier(this.declarationRepository)
+      : super({
+          'isDeclared': false,
+          'token': '',
+          'text': '',
+          'image': '',
+        });
 
   /// create the state based on statusMessage & statusImage MAP
   /// from (presentation/displaydata/declaration_card_content.dart
   /// using declaration value as key.
   void setState(String status, bool isDeclared) {
-        state = {
-          'isDeclared': isDeclared,
-          'text': '${statusMessage[status]}',
-          'image': '${statusImage[status]}',
-        };
+    state = {
+      'isDeclared': isDeclared,
+      'text': '${statusMessage[status]}',
+      'image': '${statusImage[status]}',
+    };
   }
 
   /// Create a declaration object using declaration string coming from declaration_body widget.
@@ -36,8 +37,8 @@ class DeclarationNotifier extends StateNotifier<dynamic> {
 
     setState(status, true);
 
-    final statusCreateResponse = await declarationRepository.create(newDeclaration);
+    final statusCreateResponse =
+        await declarationRepository.create(newDeclaration);
     print('print declaratio response ${statusCreateResponse.toJson()}');
-
   }
 }

@@ -3,7 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yaki/presentation/displaydata/declaration_card_content.dart';
-import 'package:yaki/presentation/state/providers/provider_declaration.dart';
+import 'package:yaki/presentation/state/providers/declaration_provider.dart';
 import 'package:yaki/presentation/ui/declaration/views/status_card_test_media.dart';
 
 
@@ -36,7 +36,7 @@ class DeclarationBody extends ConsumerWidget {
           spacing: width < 670 ? width * 0.07 : width * 0.03,
           // vertical
           runSpacing: width < 670 ? width * 0.12 : width * 0.05,
-          children: statusCardContent
+          children: statusCardsContent
               .map(
                 (cardContent) => StatusCard(
                   statusName: tr(cardContent['text']),

@@ -4,12 +4,12 @@ import 'package:yaki/data/repositories/login_repository.dart';
 import 'package:yaki/data/sources/remote/login_api.dart';
 import 'package:yaki/presentation/state/notifiers/login_notifier.dart';
 
-final dioProviderLog = Provider((ref) => Dio());
+final dioProvider = Provider((ref) => Dio());
 
 final loginServiceProvider = Provider(
-  (ref) => LoginService(
+  (ref) => LoginController(
     ref.read(
-      dioProviderLog,
+      dioProvider,
     ),
     baseUrl: const String.fromEnvironment('API_BASE_URL'),
   ),

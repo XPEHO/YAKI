@@ -4,7 +4,7 @@ const String onSite = 'On site';
 const String vacations = 'Vacation';
 const String other = 'Other';
 
-final List statusCardContent = [
+final List statusCardsContent = [
   {
     'image': 'assets/images/remote.svg',
     'text': remote,
