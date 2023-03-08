@@ -48,7 +48,10 @@ class Authentication extends ConsumerWidget {
                   children: <Widget>[
                     Padding(
                       padding: EdgeInsets.only(
-                          top: size.height / 15, right: 50, left: 50,),
+                        top: size.height / 15,
+                        right: 50,
+                        left: 50,
+                      ),
                       child: InputApp(
                         inputText: tr('inputLogin'),
                         inputHint: tr('hintLogin'),
@@ -103,8 +106,11 @@ class Authentication extends ConsumerWidget {
                           ),
                         ),
                         onPressed: () {
-                          onPressAuthent(ref, loginController.text,
-                              passwordController.text,);
+                          onPressAuthent(
+                            ref,
+                            loginController.text,
+                            passwordController.text,
+                          );
                           context.go('/declaration');
                         },
                         child: Text(tr('signIn')),
