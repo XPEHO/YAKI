@@ -18,6 +18,10 @@ export class DeclarationService {
    * @returns The declaration object.
    */
   async createDeclaration(declaration: Declaration) {
-    return await this.declarationRepository.createDeclaration(declaration);
+    if (declaration.declaration_team_mate_id != null) {
+      return await this.declarationRepository.createDeclaration(declaration);
+    } else {
+      return "You have to declare a teamMateID"
+    }
   }
 }
