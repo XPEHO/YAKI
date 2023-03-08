@@ -20,7 +20,6 @@ class DeclarationNotifier extends StateNotifier<DeclarationModel> {
       declaration_team_mate_id: 1,
       declaration_status: declaration,
     );
-    final createdDeclaration =
-        await declarationRepository.create(newDeclaration);
+    await declarationRepository.create(newDeclaration);
   }
 }

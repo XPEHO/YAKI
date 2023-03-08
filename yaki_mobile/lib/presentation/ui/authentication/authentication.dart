@@ -3,9 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yaki/presentation/state/providers/login_provider.dart';
 import 'package:yaki/presentation/styles/header_text_style.dart';
-import 'package:yaki/presentation/ui/shared/views/InputApp.dart';
-import 'package:yaki/presentation/ui/shared/views/Header.dart';
+import 'package:yaki/presentation/ui/shared/views/input_app.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:yaki/presentation/ui/shared/views/header.dart';
 
 class Authentication extends ConsumerWidget {
   Authentication({super.key});
@@ -14,7 +14,7 @@ class Authentication extends ConsumerWidget {
   final passwordController = TextEditingController();
 
   void onPressAuthent(WidgetRef ref, login, password) {
-    final providerlogin = ref.read(loginProvider);
+    ref.read(loginProvider);
 
     ref.read(loginProvider.notifier).changeLogin(login, password);
   }
@@ -23,7 +23,7 @@ class Authentication extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     bool isChecked = false;
 
-    final providerlogin = ref.watch(loginProvider);
+    ref.watch(loginProvider);
 
     // Size of the device
     var size = MediaQuery.of(context).size;
