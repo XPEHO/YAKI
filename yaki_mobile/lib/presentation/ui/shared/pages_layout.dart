@@ -6,13 +6,11 @@ class PagesLayout extends StatelessWidget {
 
   final Header header;
 
-  const PagesLayout(
-      {
-        super.key,
-        required this.header,
-        required this.bodyContent,
-      }
-  );
+  const PagesLayout({
+    super.key,
+    required this.header,
+    required this.bodyContent,
+  });
 
   @override
   Widget build(BuildContext context) {

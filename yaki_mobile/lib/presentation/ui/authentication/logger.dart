@@ -6,11 +6,8 @@ class logger extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
-        children: const [
-          Text('Connecté')
-        ],
+        children: const [Text('Connecté')],
       ),
     );
   }
-  
 }

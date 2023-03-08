@@ -37,7 +37,7 @@ class _LoginService implements LoginService {
               queryParameters: queryParameters,
               data: _data,
             )
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl),),);
     final value = _result.data == null ? null : Login.fromJson(_result.data!);
     return value;
   }

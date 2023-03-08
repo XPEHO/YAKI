@@ -1,5 +1,4 @@
 import { Pool, QueryResult } from "pg";
-import UserModel from "./user.dtoIn";
 
 export class UserRepository {
     /**

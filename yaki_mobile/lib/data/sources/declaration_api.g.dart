@@ -39,7 +39,7 @@ class _DeclarationApi implements DeclarationApi {
               queryParameters: queryParameters,
               data: _data,
             )
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl),),);
     final value = DeclarationModel.fromJson(_result.data!);
     return value;
   }

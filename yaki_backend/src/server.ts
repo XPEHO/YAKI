@@ -1,5 +1,5 @@
 // Importing the Express library and related types
-import express, { Express, Request, Response } from 'express';
+import express, { Express } from 'express';
 // Load environment variables from a .env file
 import "dotenv/config"
 // Import the initConfig function from the config.ts module
