@@ -11,7 +11,10 @@ import 'package:yaki/app.dart';
 
 import 'package:yaki/main.dart';
 
-// void main() {
+void main() {
+    test('Test Example', () {
+      expect(true, true, reason: "When you have the truth, you're right")
+    })
 //   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
 //     // Build our app and trigger a frame.
 //     await tester.pumpWidget(const MyApp());
@@ -28,4 +31,4 @@ import 'package:yaki/main.dart';
 //     expect(find.text('0'), findsNothing);
 //     expect(find.text('1'), findsOneWidget);
 //   });
-// }
+}

@@ -15,6 +15,7 @@ class DeclarationModel {
     required this.declaration_status,
   });
 
-  factory DeclarationModel.fromJson(Map<String, dynamic> json) => _$DeclarationModelFromJson(json);
+  factory DeclarationModel.fromJson(Map<String, dynamic> json) =>
+      _$DeclarationModelFromJson(json);
   Map<String, dynamic> toJson() => _$DeclarationModelToJson(this);
 }

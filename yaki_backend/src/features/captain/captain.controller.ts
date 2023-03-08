@@ -9,7 +9,7 @@ export class CaptainController {
         this.captainService = captainService;
     }
 
-    getAll = (async (req: Request, res: Response) => {
+    getAll = (async (_ : Request, res: Response) => {
         const captains = await this.captainService.getAll();
         res.send(captains);
     })
