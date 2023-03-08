@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yaki/data/models/login.dart';
 import 'package:yaki/data/repositories/login_repository.dart';
@@ -22,6 +21,5 @@ class LoginNotifier extends StateNotifier<Login> {
     final newLog = Login(login: newLogin, password: hashPass.toString());
     state = newLog;
     repository.postLogin(newLog);
-    print(newLog.toJson());
   }
 }

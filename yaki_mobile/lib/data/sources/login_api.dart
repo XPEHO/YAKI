@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:yaki/data/models/login.dart';
-import 'package:yaki/presentation/state/login_state.dart';
 
 part 'login_api.g.dart';
 

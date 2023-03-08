@@ -4,15 +4,15 @@ part 'declaration_model.g.dart';
 
 @JsonSerializable()
 class DeclarationModel {
-  DateTime declaration_date;
-  int declaration_team_mate_id;
-  String declaration_status;
+  DateTime declarationDate;
+  int declarationTeamMateId;
+  String declarationStatus;
 
   // Remote, On site, Vacation, Other
   DeclarationModel({
-    required this.declaration_date,
-    required this.declaration_team_mate_id,
-    required this.declaration_status,
+    required this.declarationDate,
+    required this.declarationTeamMateId,
+    required this.declarationStatus,
   });
 
   factory DeclarationModel.fromJson(Map<String, dynamic> json) =>

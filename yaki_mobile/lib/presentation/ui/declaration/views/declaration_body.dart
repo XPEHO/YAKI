@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:yaki/presentation/state/providers/provider.dart';
 import 'package:yaki/presentation/ui/declaration/views/status_card.dart';
 
