@@ -22,9 +22,9 @@ void main() {
     final repository = DeclarationRepository(mockedApi);
 
     final declarationSent = DeclarationModel(
-        declarationDate: DateTime.now(),
-        declarationTeamMateId: 1,
-        declarationStatus: 'On Site',
+      declarationDate: DateTime.now(),
+      declarationTeamMateId: 1,
+      declarationStatus: 'On Site',
     );
 
     when(mockedApi.create(declarationSent))
