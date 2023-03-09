@@ -31,7 +31,7 @@ export class DeclarationService {
     if (declarations.length > 0) {
       return declarations;
     } else {
-      return "You have to declare yourself";
+      throw new Error("You have to declare yourself")
     }
   }
 
