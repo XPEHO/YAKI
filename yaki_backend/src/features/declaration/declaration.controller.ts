@@ -26,14 +26,13 @@ export class DeclarationController {
             const createdDeclaration = await this.declarationService.createDeclaration(declaration);
             res.status(201).json(createdDeclaration);
         } catch (error: any) {
-            // res.status(500).json({ message: error.message });
             if (error instanceof SyntaxError || error instanceof TypeError || error instanceof Error) {
                 // catch bad request errors (e.g. invalid JSON payload, missing required fields)
                 res.status(400).json({ message: error.message });
-              } else {
+            } else {
                 // catch server errors (e.g. database connection error, unexpected server error)
                 res.status(500).json({ message: error.message });
-              }
+            }
         }
     }
 }
