@@ -29,4 +29,9 @@ export class DeclarationService {
       throw new Error("One or more mandatory information is missing.")
     }
   }
+
+  // return {
+  //   statusCode: 400,
+  //   body: "One or more mandatory information is missing.",
+  // }
 }
