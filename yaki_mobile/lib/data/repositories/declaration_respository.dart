@@ -9,17 +9,21 @@ class DeclarationRepository {
 
   DeclarationRepository(this._declarationApi);
 
-  Future<bool> create(DeclarationModel declaration) async {
-    try {
-      final createResponse = await _declarationApi.create(declaration);
-      final statusCode = createResponse.response.statusCode;
+  void create(DeclarationModel declaration) async {
+    final createDeclaResponse = await _declarationApi.create(declaration);
+    final statusCode = createDeclaResponse.response.statusCode;
 
+    statusCodeManagement(statusCode!);
+  }
+
+  bool statusCodeManagement(int statusCode) {
+    try {
       if (statusCode == 201 || statusCode == 200) {
         isFetchSuccess = true;
       } else if (statusCode == 500) {
         isFetchSuccess = false;
       }
-    } catch(exception) {
+    } catch (exception) {
       debugPrint("error during creation $exception");
     }
 
