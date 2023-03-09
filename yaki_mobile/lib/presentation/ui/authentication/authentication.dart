@@ -23,8 +23,6 @@ class Authentication extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     bool isChecked = false;
 
-    ref.watch(loginProvider);
-
     // Size of the device
     var size = MediaQuery.of(context).size;
 
