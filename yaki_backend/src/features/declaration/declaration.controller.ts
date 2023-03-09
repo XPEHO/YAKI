@@ -26,7 +26,7 @@ export class DeclarationController {
             const createdDeclaration = await this.declarationService.createDeclaration(declaration);
             res.status(201).json(createdDeclaration);
         } catch (error: any) {
-            res.status(500).json({ message: error.message });
+            res.status(400).json({ message: error.message });
         }
     }
 }
