@@ -8,8 +8,9 @@ class CaptainRepository {
   CaptainRepository(this._captainApi);
 
   Future<CaptainModel> getCaptain() async {
-    final CaptainModel = await _captainApi.getCaptain() ;
-    return CaptainModel;
+    final captainModel = await _captainApi.getCaptain() ;
+
+    return captainModel;
   }
 
 }

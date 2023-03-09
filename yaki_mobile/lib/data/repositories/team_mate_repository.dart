@@ -7,8 +7,8 @@ class TeamMateRepository {
   TeamMateRepository(this._teamMateApi);
 
   Future<List<TeamMateModel?>> getTeamMate() async {
-    final ListTeamMateModel = await _teamMateApi.getTeamMate();
-    return ListTeamMateModel ;
+    final listTeamMateModel = await _teamMateApi.getTeamMate();
+    return listTeamMateModel ;
   }
 
 }
