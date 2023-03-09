@@ -23,7 +23,10 @@ export class DeclarationService {
         && declaration.declaration_status) != null) {
       return await this.declarationRepository.createDeclaration(declaration);
     } else {
-      return "One or more mandatory information is missing."
+       throw new Error("One or more mandatory information is missing.")
     }
   }
+  // async createDeclaration(declaration: Declaration) {
+  //   return await this.declarationRepository.createDeclaration(declaration);
+  // }
 }
