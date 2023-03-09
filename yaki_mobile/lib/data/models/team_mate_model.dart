@@ -4,21 +4,21 @@ part 'team_mate_model.g.dart';
 
 @JsonSerializable()
 class TeamMateModel {
-  int teamMateId;
-  int userId;
-  int teamId;
-  String lastName;
-  String firstName;
+  int team_mate_id;
+  int user_id;
+  int team_id;
+  String last_name;
+  String first_name;
   String email;
-  String? token;
+  String token;
 
 
   TeamMateModel({
-    required this.teamMateId,
-    required this.userId,
-    required this.teamId,
-    required this.lastName,
-    required this.firstName,
+    required this.team_mate_id,
+    required this.user_id,
+    required this.team_id,
+    required this.last_name,
+    required this.first_name,
     required this.email,
     required this.token,
   });

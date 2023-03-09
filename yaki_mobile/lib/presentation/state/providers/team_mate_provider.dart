@@ -23,7 +23,7 @@ final teamMateRepositoryProvider = Provider(
         ),
 );
 
-final teamMateProvider = StateNotifierProvider<TeamMateNotifier, List<TeamMateModel?>>(
+final teamMateProvider = StateNotifierProvider<TeamMateNotifier, List<TeamMateModel>>(
         (ref) => TeamMateNotifier(
           ref.read(teamMateRepositoryProvider),
         ),

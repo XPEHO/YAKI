@@ -1,4 +1,3 @@
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,15 +7,28 @@ import 'package:yaki/presentation/ui/shared/views/InputApp.dart';
 
 import 'package:yaki/presentation/state/providers/team_mate_provider.dart';
 
-
-class CaptainBody extends ConsumerWidget {
-
-  final captainInputController = TextEditingController();
+class CaptainBody extends ConsumerStatefulWidget {
 
   CaptainBody({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<CaptainBody> createState() => _CaptainBodyState();
+}
+
+class _CaptainBodyState extends ConsumerState<CaptainBody> {
+  final captainInputController = TextEditingController();
+
+  @override
+  void initState() {
+    setState(() {
+      ref.read(teamMateProvider.notifier).fetchTeamMates();
+    });
+    super.initState();
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
     final listTeamMate = ref.watch(teamMateProvider);
 
     var size = MediaQuery.of(context).size;
@@ -36,11 +48,20 @@ class CaptainBody extends ConsumerWidget {
         SizedBox(
           // Cards of the Team Mate
           width: size.width * 0.95,
-          height: size.height * 0.14,
-          child: Wrap(
-            children: listTeamMate.map((e) => Text('coucou')).toList()
+          height: size.height * 0.4,
+          child: ListView.builder(
+            itemCount: listTeamMate.length,
+            itemBuilder: (context, index) {
+              return const CardTeamMate();
+            },
           ),
         ),
+        GestureDetector(
+            onTap: () {
+              ref.read(teamMateProvider.notifier).fetchTeamMates();
+            },
+            child: Text('$listTeamMate'),
+        )
       ],
     );
   }

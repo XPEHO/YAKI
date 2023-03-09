@@ -8,22 +8,22 @@ part of 'team_mate_model.dart';
 
 TeamMateModel _$TeamMateModelFromJson(Map<String, dynamic> json) =>
     TeamMateModel(
-      teamMateId: json['teamMateId'] as int,
-      userId: json['userId'] as int,
-      teamId: json['teamId'] as int,
-      lastName: json['lastName'] as String,
-      firstName: json['firstName'] as String,
+      team_mate_id: json['team_mate_id'] as int,
+      user_id: json['user_id'] as int,
+      team_id: json['team_id'] as int,
+      last_name: json['last_name'] as String,
+      first_name: json['first_name'] as String,
       email: json['email'] as String,
-      token: json['token'] as String?,
+      token: json['token'] as String,
     );
 
 Map<String, dynamic> _$TeamMateModelToJson(TeamMateModel instance) =>
     <String, dynamic>{
-      'teamMateId': instance.teamMateId,
-      'userId': instance.userId,
-      'teamId': instance.teamId,
-      'lastName': instance.lastName,
-      'firstName': instance.firstName,
+      'team_mate_id': instance.team_mate_id,
+      'user_id': instance.user_id,
+      'team_id': instance.team_id,
+      'last_name': instance.last_name,
+      'first_name': instance.first_name,
       'email': instance.email,
       'token': instance.token,
     };

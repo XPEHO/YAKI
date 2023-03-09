@@ -10,6 +10,6 @@ abstract class TeamMateApi {
   factory TeamMateApi(Dio dio, {required String baseUrl}) = _TeamMateApi;
 
   @GET('/teammates')
-  Future<List<TeamMateModel?>> getTeamMate();
+  Future<List<TeamMateModel>> getTeamMate();
 
 }

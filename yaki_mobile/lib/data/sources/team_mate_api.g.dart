@@ -19,7 +19,7 @@ class _TeamMateApi implements TeamMateApi {
   String? baseUrl;
 
   @override
-  Future<List<TeamMateModel?>> getTeamMate() async {
+  Future<List<TeamMateModel>> getTeamMate() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -38,9 +38,7 @@ class _TeamMateApi implements TeamMateApi {
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     var value = _result.data!
-        .map((dynamic i) => i == null
-            ? null
-            : TeamMateModel.fromJson(i as Map<String, dynamic>))
+        .map((dynamic i) => TeamMateModel.fromJson(i as Map<String, dynamic>))
         .toList();
     return value;
   }
