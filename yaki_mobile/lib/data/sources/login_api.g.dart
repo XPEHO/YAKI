@@ -25,22 +25,19 @@ class _LoginService implements LoginService {
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(login.toJson());
-    final _result = await _dio.fetch<Map<String, dynamic>?>(
-      _setStreamType<Login>(
-        Options(
-          method: 'POST',
-          headers: _headers,
-          extra: _extra,
-        )
+    final _result =
+        await _dio.fetch<Map<String, dynamic>?>(_setStreamType<Login>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
             .compose(
               _dio.options,
               '/login',
               queryParameters: queryParameters,
               data: _data,
             )
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl),
-      ),
-    );
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl),),);
     final value = _result.data == null ? null : Login.fromJson(_result.data!);
     return value;
   }

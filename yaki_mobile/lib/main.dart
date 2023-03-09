@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'app.dart';
+import 'package:yaki/app.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 void main() async {
