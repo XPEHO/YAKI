@@ -11,17 +11,8 @@ class TeamMateNotifier extends StateNotifier<List<TeamMateModel?>> {
           [],
         );
 
-  void setState(List<TeamMateModel?> maybeTeamList) {
-    final List<TeamMateModel> teamList =
-        maybeTeamList.whereType<TeamMateModel>().toList();
-
-    state = teamList;
-  }
-
   Future<void> fetchTeamMates() async {
     final nullsafetyTeamList = await teamMateRepository.getTeamMate();
     state = nullsafetyTeamList;
-
   }
 }
-
