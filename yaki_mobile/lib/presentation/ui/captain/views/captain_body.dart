@@ -1,3 +1,4 @@
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,28 +9,15 @@ import 'package:yaki/presentation/ui/shared/views/InputApp.dart';
 import 'package:yaki/presentation/state/providers/team_mate_provider.dart';
 
 
-class CaptainBody extends ConsumerStatefulWidget {
+class CaptainBody extends ConsumerWidget {
+
+  final captainInputController = TextEditingController();
 
   CaptainBody({super.key});
 
   @override
-  ConsumerState<CaptainBody> createState() => _CaptainBodyState();
-}
-
-class _CaptainBodyState extends ConsumerState<CaptainBody> {
-  final captainInputController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    ref.read(TeamMateProvider.notifier).fetchTeamMates();
-  }
-
-
-
-  @override
-  Widget build(BuildContext context) {
-    final listTeamMate = ref.watch(TeamMateProvider);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final listTeamMate = ref.watch(teamMateProvider);
 
     var size = MediaQuery.of(context).size;
 
@@ -49,7 +37,9 @@ class _CaptainBodyState extends ConsumerState<CaptainBody> {
           // Cards of the Team Mate
           width: size.width * 0.95,
           height: size.height * 0.14,
-          child: const Text('dkdufg')
+          child: Wrap(
+            children: listTeamMate.map((e) => Text('coucou')).toList()
+          ),
         ),
       ],
     );

@@ -1,23 +1,22 @@
 import 'dart:core';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:yaki/presentation/styles/header_text_style.dart';
 
-
-
-
-
-class CardTeamMate extends ConsumerWidget {
-
+class CardTeamMate extends StatefulWidget {
   ///Card with the Team Mate's avatar, name, update date and status
   const CardTeamMate({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  State<CardTeamMate> createState() => _CardTeamMateState();
+}
+
+class _CardTeamMateState extends State<CardTeamMate> {
+  @override
+  Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
 
     return Card(
@@ -35,7 +34,8 @@ class CardTeamMate extends ConsumerWidget {
                   width: 100,
                   child: Stack(
                     children: <Widget>[
-                      Material( // Circle with the avatar of the Team Mate
+                      Material(
+                        // Circle with the avatar of the Team Mate
                         shape: const CircleBorder(),
                         child: SvgPicture.asset(
                           'assets/images/avatar1.svg',
@@ -43,7 +43,8 @@ class CardTeamMate extends ConsumerWidget {
                           height: 80,
                         ),
                       ),
-                      Align( // Circle with the status of the Team Mate
+                      Align(
+                        // Circle with the status of the Team Mate
                         alignment: Alignment.topRight,
                         child: Padding(
                           padding: const EdgeInsets.only(top: 35),
@@ -73,7 +74,8 @@ class CardTeamMate extends ConsumerWidget {
                     children: [
                       Row(
                         children: const [
-                          Text( // Name of the Team Mate
+                          Text(
+                            // Name of the Team Mate
                             'Jean Dupont',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
@@ -85,7 +87,8 @@ class CardTeamMate extends ConsumerWidget {
                       ),
                       const Align(
                         alignment: Alignment.bottomLeft,
-                        child: Text( // Actualisation Date
+                        child: Text(
+                          // Actualisation Date
                           '16/10/2022 09h40',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
@@ -94,7 +97,8 @@ class CardTeamMate extends ConsumerWidget {
                       ),
                       SizedBox(
                         width: size.width * 0.60,
-                        child: const Text( // Status of the Team Mate
+                        child: const Text(
+                          // Status of the Team Mate
                           'Remote',
                           textAlign: TextAlign.end,
                           style: TextStyle(
@@ -107,8 +111,6 @@ class CardTeamMate extends ConsumerWidget {
                     ],
                   ),
                 ),
-
-
               ],
             ),
           ),

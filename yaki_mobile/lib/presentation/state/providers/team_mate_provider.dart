@@ -10,21 +10,21 @@ import 'package:yaki/presentation/state/notifiers/team_mate_notifier.dart';
 
 final dioProvider = Provider((ref) => Dio());
 
-final TeamMateServiceProvider = Provider(
+final teamMateServiceProvider = Provider(
         (ref) => TeamMateApi(
             ref.read(dioProvider),
             baseUrl: const String.fromEnvironment('API_BASE_URL'),
         ),
 );
 
-final TeamMateRepositoryProvider = Provider(
+final teamMateRepositoryProvider = Provider(
         (ref) => TeamMateRepository(
-            ref.read(TeamMateServiceProvider),
+            ref.read(teamMateServiceProvider),
         ),
 );
 
-final TeamMateProvider = StateNotifierProvider<TeamMateNotifier, List<dynamic>>(
+final teamMateProvider = StateNotifierProvider<TeamMateNotifier, List<TeamMateModel?>>(
         (ref) => TeamMateNotifier(
-          ref.read(TeamMateRepositoryProvider),
+          ref.read(teamMateRepositoryProvider),
         ),
 );

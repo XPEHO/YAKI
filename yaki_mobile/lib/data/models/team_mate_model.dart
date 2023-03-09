@@ -4,26 +4,23 @@ part 'team_mate_model.g.dart';
 
 @JsonSerializable()
 class TeamMateModel {
-  int team_mate_id;
-  int team_mate_team_id;
-  int team_mate_user_id;
-  int user_id;
-  String user_last_name;
-  String user_first_name;
-  String user_email;
-  String user_login;
-  String user_password;
+  int teamMateId;
+  int userId;
+  int teamId;
+  String lastName;
+  String firstName;
+  String email;
+  String? token;
+
 
   TeamMateModel({
-    required this.team_mate_id,
-    required this.team_mate_team_id,
-    required this.team_mate_user_id,
-    required this.user_id,
-    required this.user_last_name,
-    required this.user_first_name,
-    required this.user_email,
-    required this.user_login,
-    required this.user_password,
+    required this.teamMateId,
+    required this.userId,
+    required this.teamId,
+    required this.lastName,
+    required this.firstName,
+    required this.email,
+    required this.token,
   });
 
   factory TeamMateModel.fromJson(Map<String, dynamic> json) => _$TeamMateModelFromJson(json);
