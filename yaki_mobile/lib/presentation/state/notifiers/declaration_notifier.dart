@@ -28,7 +28,7 @@ class DeclarationNotifier extends StateNotifier<dynamic> {
   /// Create a declaration object using declaration string coming from declaration_body widget.
   /// Invoke the setState function
   /// Invoke the repository create method to send the object to the API
-  Future<void> create(String status) async {
+  void create(String status) async {
     DeclarationModel newDeclaration = DeclarationModel(
       declaration_date: DateTime.now(),
       declaration_team_mate_id: 1,

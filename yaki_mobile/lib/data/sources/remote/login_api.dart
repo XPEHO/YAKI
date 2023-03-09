@@ -6,9 +6,9 @@ import 'package:yaki/data/models/login.dart';
 part 'login_api.g.dart';
 
 @RestApi()
-abstract class LoginController {
-  factory LoginController(Dio dio, {required String baseUrl}) = _LoginController;
+abstract class LoginApi {
+  factory LoginApi(Dio dio, {required String baseUrl}) = _LoginApi;
 
   @POST('/login')
-  Future<Authentication?> postLogin(@Body() Login login);
+  Future<HttpResponse<Authentication?>> postLogin(@Body() Login login);
 }

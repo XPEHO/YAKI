@@ -1,18 +1,28 @@
+import 'package:flutter/cupertino.dart';
+import 'package:retrofit/retrofit.dart';
 import 'package:yaki/data/sources/remote/declaration_api.dart';
 import 'package:yaki/data/models/declaration_model.dart';
 
 class DeclarationRepository {
-  final DeclarationController _declarationApi;
+  final DeclarationApi _declarationApi;
+  late final bool isFetchSuccess;
 
   DeclarationRepository(this._declarationApi);
 
-  Future<DeclarationModel> create(DeclarationModel declaration) async {
-    print("create declaration method");
-    final createdDeclaration = await _declarationApi.create(declaration);
+  Future<bool> create(DeclarationModel declaration) async {
+    try {
+      final createResponse = await _declarationApi.create(declaration);
+      final statusCode = createResponse.response.statusCode;
 
-    print("after return");
-    print(createdDeclaration.toJson());
+      if (statusCode == 201 || statusCode == 200) {
+        isFetchSuccess = true;
+      } else if (statusCode == 500) {
+        isFetchSuccess = false;
+      }
+    } catch(exception) {
+      debugPrint("error during creation $exception");
+    }
 
-    return createdDeclaration;
+    return isFetchSuccess;
   }
 }

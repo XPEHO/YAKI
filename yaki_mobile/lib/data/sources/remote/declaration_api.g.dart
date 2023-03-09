@@ -8,8 +8,8 @@ part of 'declaration_api.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
-class _DeclarationController implements DeclarationController {
-  _DeclarationController(
+class _DeclarationApi implements DeclarationApi {
+  _DeclarationApi(
     this._dio, {
     this.baseUrl,
   });
@@ -19,7 +19,7 @@ class _DeclarationController implements DeclarationController {
   String? baseUrl;
 
   @override
-  Future<DeclarationModel> create(declaration) async {
+  Future<HttpResponse<DeclarationModel>> create(declaration) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -42,7 +42,8 @@ class _DeclarationController implements DeclarationController {
       ),
     );
     final value = DeclarationModel.fromJson(_result.data!);
-    return value;
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {

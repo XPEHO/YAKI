@@ -5,7 +5,7 @@ import 'package:yaki/presentation/state/notifiers/declaration_notifier.dart';
 import 'package:yaki/presentation/state/dio/dio_interceptor.dart';
 
 final declarationApiProvider = Provider(
-  (ref) => DeclarationController(
+  (ref) => DeclarationApi(
     ref.read(dioInterceptor),
     baseUrl: const String.fromEnvironment('API_BASE_URL'),
   ),

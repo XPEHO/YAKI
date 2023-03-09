@@ -7,7 +7,7 @@ import 'package:yaki/presentation/state/notifiers/login_notifier.dart';
 final dioProvider = Provider((ref) => Dio());
 
 final loginServiceProvider = Provider(
-  (ref) => LoginController(
+  (ref) => LoginApi(
     ref.read(
       dioProvider,
     ),
