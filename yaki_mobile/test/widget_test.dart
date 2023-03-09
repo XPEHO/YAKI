@@ -24,7 +24,8 @@ void main() {
     final declarationSent = DeclarationModel(
         declarationDate: DateTime.now(),
         declarationTeamMateId: 1,
-        declarationStatus: 'On Site');
+        declarationStatus: 'On Site',
+    );
 
     when(mockedApi.create(declarationSent))
         .thenAnswer((realInvocation) => Future.value(declarationSent));
