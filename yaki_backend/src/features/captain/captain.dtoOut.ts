@@ -1,8 +1,8 @@
 export class CaptainDtoOut {
-    captain_id: number
-    user_id: number
-    last_name: string
-    first_name: string
+    captainId: number
+    userId: number
+    lastName: string
+    firstName: string
     email: string
     token: string | undefined = undefined
 
@@ -13,10 +13,10 @@ export class CaptainDtoOut {
         first_name: string,
         email: string
     ) {
-        this.captain_id = captain_id;
-        this.user_id = user_id;
-        this.last_name = last_name;
-        this.first_name = first_name;
+        this.captainId = captain_id;
+        this.userId = user_id;
+        this.lastName = last_name;
+        this.firstName = first_name;
         this.email = email;
     }
 }

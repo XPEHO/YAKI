@@ -1,5 +1,5 @@
 import { DeclarationRepository } from './declaration.repository';
-import { Declaration } from './declaration.interface';
+import { DeclarationDtoIn } from './declaration.dtoIn';
 
 export class DeclarationService {
   private declarationRepository: DeclarationRepository;
@@ -17,7 +17,7 @@ export class DeclarationService {
    * @param {Declaration} declaration - Declaration
    * @returns The declaration object.
    */
-  async createDeclaration(declaration: Declaration) {
+  async createDeclaration(declaration: DeclarationDtoIn) {
     return await this.declarationRepository.createDeclaration(declaration);
   }
 }
