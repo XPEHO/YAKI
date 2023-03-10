@@ -9,12 +9,11 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:yaki/presentation/ui/shared/views/header.dart';
 
 void onPressAuthent(WidgetRef ref, login, password) {
-  ref.read(loginProvider.notifier).changeLogin(login, password);
+  //ref.read(loginProvider.notifier).changeLogin(login, password);
+  ref.read(loginProvider.notifier).changeLogin('dugrand', 'dugrand');
 }
 
 void _routeHandling(BuildContext context, WidgetRef ref) {
-  final isDeclared = ref.watch(declarationProvider)['isDeclared'];
-  //isDeclared ? context.go('/status') : context.go('/declaration');
   context.push('/declaration');
 }
 

@@ -3,25 +3,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yaki/presentation/state/providers/declaration_provider.dart';
+import 'package:yaki/presentation/state/providers/status_provider.dart';
 import 'package:yaki/presentation/styles/header_text_style.dart';
 import 'package:yaki/presentation/ui/shared/views/avatar_icon.dart';
 import 'package:yaki/presentation/ui/shared/views/circle_avatar_svg.dart';
-
 
 void _routeHandling(BuildContext context) {
   //context.pop();
   context.go('/declaration');
 }
-void onAvatarIconPress() {}
 
+void onAvatarIconPress() {}
 
 class Status extends ConsumerWidget {
   const Status({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final $selectedStatus = ref.watch(statusPageProvider.notifier)
+      ..getSelectedStatus()
+      ..state;
 
-    final selectedStatus = ref.watch(declarationProvider);
+    // final image = selectedStatus.state.image;
+    // final text = selectedStatus.state.text;
+
+    //print('status page: $selectedStatus');
 
     return Scaffold(
       backgroundColor: HeaderColor.yellowApp,
@@ -37,11 +43,11 @@ class Status extends ConsumerWidget {
                   onPressed: onAvatarIconPress,
                 ),
               ),
-               Expanded(
+              Expanded(
                 flex: 5,
                 child: Center(
                   child: CircleAvatarSVG(
-                    iconPath: '${selectedStatus['image']}',
+                    iconPath: 'assets/image/unknown.svg',
                     radius: 80,
                   ),
                 ),
@@ -50,7 +56,7 @@ class Status extends ConsumerWidget {
                 flex: 1,
                 child: Center(
                   child: Text(
-                    tr("${selectedStatus['text']}"),
+                    'not working ...',
                     style: textStyleTemp(),
                   ),
                 ),

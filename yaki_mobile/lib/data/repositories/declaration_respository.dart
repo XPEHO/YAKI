@@ -12,8 +12,8 @@ class DeclarationRepository {
 
   void create(DeclarationModel declaration) async {
     final httpResponse = await _declarationApi.create(declaration);
-
     final statusCode = httpResponse.response.statusCode;
+
     try {
       if (statusCode == 201 || statusCode == 200) {
         declarationStatus = DeclarationStatus(

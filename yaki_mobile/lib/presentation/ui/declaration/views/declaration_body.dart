@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yaki/presentation/displaydata/declaration_card_content.dart';
 import 'package:yaki/presentation/state/providers/declaration_provider.dart';
-import 'package:yaki/presentation/ui/declaration/views/status_card_test_media.dart';
+import 'package:yaki/presentation/ui/declaration/views/status_card.dart';
 
 // ConsumerWidget : stateless widget listening to providers
 class DeclarationBody extends ConsumerWidget {
@@ -16,11 +16,15 @@ class DeclarationBody extends ConsumerWidget {
     required Function goToStatusPage,
   }) async {
     await ref.read(declarationProvider.notifier).create(status);
-    final declaration = ref.read(declarationProvider).state;
-    if(declaration !=null) {
-      goToStatusPage();
-    }
+    goToStatusPage();
   }
+
+
+  // void printteset(WidgetRef ref) {
+  //   final test = ref.watch(statusPageProvider.notifier)..getSelectedStatus()..state;
+  //
+  //   print('test get ffs state : ${test.state}');
+  // }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -29,7 +33,7 @@ class DeclarationBody extends ConsumerWidget {
     return Padding(
       padding: EdgeInsets.symmetric(
         vertical: width * 0.12,
-        horizontal:width * 0.09,
+        horizontal: width * 0.09,
       ),
       child: Center(
         child: Wrap(
@@ -41,14 +45,13 @@ class DeclarationBody extends ConsumerWidget {
           children: statusCardsContent
               .map(
                 (cardContent) => StatusCard(
-                  statusName: tr(cardContent['text']),
-                  statusPicto: cardContent['image'],
-                  getClick: () => _onStatusSelected(
-                    ref: ref,
-                    status: cardContent['text'],
-                    goToStatusPage: () => context.go('/status'),
-                  ),
-                ),
+                    statusName: tr(cardContent['text']),
+                    statusPicto: cardContent['image'],
+                    getClick: () => _onStatusSelected(
+                          ref: ref,
+                          status: cardContent['text'],
+                          goToStatusPage: () => context.go('/status'),
+                        )),
               )
               .toList(),
         ),
@@ -56,6 +59,4 @@ class DeclarationBody extends ConsumerWidget {
     );
   }
 }
-
-//           spacing: MediaQuery.of(context).size.width * 0.07,
-//           runSpacing: MediaQuery.of(context).size.width * 0.12,
+// () => context.go('/status'),

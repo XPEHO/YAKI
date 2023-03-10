@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:yaki/data/models/declaration_model.dart';
 import 'package:yaki/data/repositories/declaration_respository.dart';
 import 'package:yaki/data/sources/remote/declaration_api.dart';
 import 'package:yaki/presentation/state/notifiers/declaration_notifier.dart';
