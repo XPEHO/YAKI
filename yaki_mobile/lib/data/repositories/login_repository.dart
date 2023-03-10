@@ -10,5 +10,4 @@ class LoginRepository {
     final log = _loginService.postLogin(login);
     return log;
   }
-
 }

@@ -3,35 +3,25 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yaki/presentation/state/providers/login_provider.dart';
 import 'package:yaki/presentation/styles/header_text_style.dart';
-import 'package:yaki/presentation/ui/shared/views/InputApp.dart';
-import 'package:yaki/presentation/ui/shared/views/Header.dart';
+import 'package:yaki/presentation/ui/shared/views/input_app.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:yaki/presentation/ui/shared/views/header.dart';
 
 class Authentication extends ConsumerWidget {
-
-
-
-
   Authentication({super.key});
 
   final loginController = TextEditingController();
   final passwordController = TextEditingController();
 
   void onPressAuthent(WidgetRef ref, login, password) {
-    final providerlogin = ref.read(loginProvider);
+    ref.read(loginProvider);
 
-    ref
-        .read(loginProvider.notifier)
-        .changeLogin(login, password);
+    ref.read(loginProvider.notifier).changeLogin(login, password);
   }
-
-
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     bool isChecked = false;
-
-    final providerlogin = ref.watch(loginProvider);
 
     // Size of the device
     var size = MediaQuery.of(context).size;
@@ -56,7 +46,10 @@ class Authentication extends ConsumerWidget {
                   children: <Widget>[
                     Padding(
                       padding: EdgeInsets.only(
-                          top: size.height / 15, right: 50, left: 50),
+                        top: size.height / 15,
+                        right: 50,
+                        left: 50,
+                      ),
                       child: InputApp(
                         inputText: tr('inputLogin'),
                         inputHint: tr('hintLogin'),
@@ -81,9 +74,7 @@ class Authentication extends ConsumerWidget {
                           Checkbox(
                             value: isChecked,
                             activeColor: HeaderColor.yellowApp,
-                            onChanged: (bool? value) {
-
-                            },
+                            onChanged: (bool? value) {},
                           ),
                           Text(
                             tr('rememberMe'),
@@ -97,12 +88,12 @@ class Authentication extends ConsumerWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: 10),
                       child: ElevatedButton(
-                        style:ElevatedButton.styleFrom(
+                        style: ElevatedButton.styleFrom(
                           elevation: 5,
                           backgroundColor: HeaderColor.yellowApp,
                           textStyle: TextStyle(
                             color: Colors.black,
-                            fontSize: size.height/25,
+                            fontSize: size.height / 25,
                             fontWeight: FontWeight.w600,
                           ),
                           padding: const EdgeInsets.only(
@@ -112,9 +103,12 @@ class Authentication extends ConsumerWidget {
                             left: 50,
                           ),
                         ),
-                        onPressed: ()       {
-                          onPressAuthent(ref, loginController.text,
-                              passwordController.text);
+                        onPressed: () {
+                          onPressAuthent(
+                            ref,
+                            loginController.text,
+                            passwordController.text,
+                          );
                           context.go('/declaration');
                         },
                         child: Text(tr('signIn')),

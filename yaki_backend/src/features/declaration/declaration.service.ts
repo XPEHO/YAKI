@@ -1,6 +1,5 @@
 import { DeclarationRepository } from './declaration.repository';
-import { Declaration } from './declaration.interface';
-import { StatusDeclaration } from './status.enum';
+import { DeclarationDtoIn } from './declaration.dtoIn';
 
 export class DeclarationService {
   private declarationRepository: DeclarationRepository;
@@ -18,11 +17,11 @@ export class DeclarationService {
    * @param {Declaration} declaration - Declaration
    * @returns The declaration object.
    */
-  async createDeclaration(declaration: Declaration) {
-    if (declaration.declaration_team_mate_id
-      && declaration.declaration_date
-      && declaration.declaration_status !== undefined
-      && declaration.declaration_status.trim() !== '' ) 
+  async createDeclaration(declaration: DeclarationDtoIn) {
+    if (declaration.declarationTeamMateId
+      && declaration.declarationDate
+      && declaration.declarationStatus !== undefined
+      && declaration.declarationStatus.trim() !== '' ) 
          {
       return await this.declarationRepository.createDeclaration(declaration);
     } else {

@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --coverage",
     "start": "tsc && node ./dist/server.js",
     "start:dev": "ts-node-dev ./src/server.ts",
     "build": "tsc --build",

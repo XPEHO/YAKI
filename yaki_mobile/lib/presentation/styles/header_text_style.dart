@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class HeaderColor {
@@ -7,8 +6,8 @@ class HeaderColor {
 
 TextStyle textStyleTemp() {
   return const TextStyle(
-      fontSize: 23,
-      fontWeight: FontWeight.bold,
-      color: Colors.white,
+    fontSize: 23,
+    fontWeight: FontWeight.bold,
+    color: Colors.white,
   );
 }

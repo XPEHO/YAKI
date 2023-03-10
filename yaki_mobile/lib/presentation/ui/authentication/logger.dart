@@ -1,16 +1,14 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class logger extends StatelessWidget {
+class Logger extends StatelessWidget {
+  const Logger({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
-        children: const [
-          Text('Connecté')
-        ],
+        children: const [Text('Connecté')],
       ),
     );
   }
-  
 }

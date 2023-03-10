@@ -91,6 +91,7 @@ dependencies:
 
   built_value: ^8.4.4
   json_annotation: ^4.8.0
+  mockito: ^5.3.2
 
 
 dev_dependencies:
@@ -114,7 +115,6 @@ dev_dependencies:
   # import 'package:mockito/annotations.dart';
   # import 'package:mockito/mockito.dart';
   # link : https://pub.dev/packages/mockito
-  mockito: ^5.3.2
 
   # This project contains APIs and utilities that build upon Flutter's Golden test functionality
   # to provide powerful UI regression tests.

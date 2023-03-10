@@ -1,5 +1,3 @@
-import * as argon2 from 'argon2';
-import * as crypto from 'crypto';
 import { Request, Response, NextFunction } from 'express';
 import { CaptainDtoOut } from '../captain/captain.dtoOut';
 import { TeamMateDtoOut } from '../teamMate/teamMate.dtoOut';
@@ -28,7 +26,7 @@ class Service {
     createToken = async(user: CaptainDtoOut | TeamMateDtoOut) => {
         const token = jwt.sign(
             {
-                user_id: user.user_id,
+                user_id: user.userId,
                 user_email: user.email
             },
             process.env.TOKEN_SECRET,

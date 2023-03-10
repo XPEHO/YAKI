@@ -1,4 +1,3 @@
-import { authService } from "../user/authentication.service";
 import { CaptainRepository } from "./captain.repository";
 
 export class CaptainService {

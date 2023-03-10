@@ -1,5 +1,5 @@
 import { Pool } from 'pg';
-import { Declaration } from './declaration.interface';
+import { DeclarationDtoIn } from './declaration.dtoIn';
 
 export class DeclarationRepository {
   private pool: Pool;
@@ -23,12 +23,18 @@ export class DeclarationRepository {
    * @param declaration The declaration to be inserted.
    * @returns A created declaration.
    */
-  async createDeclaration(declaration: Declaration) {
-    const { declaration_date, declaration_team_mate_id, declaration_status } = declaration;
+  async createDeclaration(declaration: DeclarationDtoIn) {
+    const { declarationDate, declarationTeamMateId, declarationStatus } = declaration;
     const result = await this.pool.query(
       'INSERT INTO declaration (declaration_date, declaration_team_mate_id, declaration_status) VALUES ($1, $2, $3) RETURNING *',
-      [declaration_date, declaration_team_mate_id, declaration_status]
+      [declarationDate, declarationTeamMateId, declarationStatus]
     );
-    return result.rows[0];
+    const declarationToFront = new DeclarationDtoIn(
+        result.rows[0].declaration_id,
+        result.rows[0].declaration_team_mate_id,
+        result.rows[0].declaration_date,
+        result.rows[0].declaration_status
+    )
+    return declarationToFront;
   }
 }
