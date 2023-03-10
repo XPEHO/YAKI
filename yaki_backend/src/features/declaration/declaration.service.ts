@@ -26,7 +26,7 @@ export class DeclarationService {
          {
       return await this.declarationRepository.createDeclaration(declaration);
     } else {
-      throw new Error("One or more mandatory information is missing.")
+      throw new TypeError("One or more mandatory information is missing.")
     }
   }
 }
