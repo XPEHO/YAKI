@@ -19,13 +19,6 @@ class DeclarationBody extends ConsumerWidget {
     goToStatusPage();
   }
 
-
-  // void printteset(WidgetRef ref) {
-  //   final test = ref.watch(statusPageProvider.notifier)..getSelectedStatus()..state;
-  //
-  //   print('test get ffs state : ${test.state}');
-  // }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     var width = MediaQuery.of(context).size.width;

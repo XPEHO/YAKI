@@ -33,4 +33,9 @@ class StateStatus {
     required this.image,
     required this.text,
   });
+
+  @override
+  String toString() {
+    return 'StateStatus{image: $image, text: $text}';
+  }
 }

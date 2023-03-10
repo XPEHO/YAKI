@@ -20,14 +20,12 @@ class Status extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final $selectedStatus = ref.watch(statusPageProvider.notifier)
-      ..getSelectedStatus()
-      ..state;
+    final selectedStatus = ref.watch(statusPageProvider);
 
-    // final image = selectedStatus.state.image;
-    // final text = selectedStatus.state.text;
+    final image = 'assets/image/unknown.svg';
+    final text = 'Nothinig ...';
 
-    //print('status page: $selectedStatus');
+    print('status page: $selectedStatus');
 
     return Scaffold(
       backgroundColor: HeaderColor.yellowApp,
@@ -47,7 +45,7 @@ class Status extends ConsumerWidget {
                 flex: 5,
                 child: Center(
                   child: CircleAvatarSVG(
-                    iconPath: 'assets/image/unknown.svg',
+                    iconPath: image,
                     radius: 80,
                   ),
                 ),
@@ -56,7 +54,7 @@ class Status extends ConsumerWidget {
                 flex: 1,
                 child: Center(
                   child: Text(
-                    'not working ...',
+                    text,
                     style: textStyleTemp(),
                   ),
                 ),
