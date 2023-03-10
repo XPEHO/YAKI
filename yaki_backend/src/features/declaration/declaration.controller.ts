@@ -1,6 +1,6 @@
-import { Declaration } from "./declaration.interface";
 import { DeclarationService } from "./declaration.service";
 import { Request, Response } from 'express';
+import { DeclarationDtoIn } from "./declaration.dtoIn";
 
 
 export class DeclarationController {
@@ -21,7 +21,7 @@ export class DeclarationController {
      * @returns A promise that returns nothing.
      */
     async createDeclaration(req: Request, res: Response): Promise<void> {
-        const declaration: Declaration = req.body;
+        const declaration: DeclarationDtoIn = req.body;
         try {
             const createdDeclaration = await this.declarationService.createDeclaration(declaration);
             res.status(201).json(createdDeclaration);
