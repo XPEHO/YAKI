@@ -1,8 +1,6 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:yaki/presentation/state/providers/declaration_provider.dart';
 import 'package:yaki/presentation/state/providers/status_provider.dart';
 import 'package:yaki/presentation/styles/header_text_style.dart';
 import 'package:yaki/presentation/ui/shared/views/avatar_icon.dart';
@@ -22,11 +20,6 @@ class Status extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedStatus = ref.watch(statusPageProvider);
 
-    final image = 'assets/image/unknown.svg';
-    final text = 'Nothinig ...';
-
-    print('status page: $selectedStatus');
-
     return Scaffold(
       backgroundColor: HeaderColor.yellowApp,
       body: SafeArea(
@@ -45,7 +38,7 @@ class Status extends ConsumerWidget {
                 flex: 5,
                 child: Center(
                   child: CircleAvatarSVG(
-                    iconPath: image,
+                    iconPath: selectedStatus.image,
                     radius: 80,
                   ),
                 ),
@@ -54,7 +47,7 @@ class Status extends ConsumerWidget {
                 flex: 1,
                 child: Center(
                   child: Text(
-                    text,
+                    selectedStatus.text,
                     style: textStyleTemp(),
                   ),
                 ),

@@ -7,21 +7,26 @@ class StatusPageNotifier extends StateNotifier<StateStatus> {
   final DeclarationRepository declarationRepository;
 
   StatusPageNotifier(this.declarationRepository)
-      : super(StateStatus(image: "", text: ""));
+      : super(
+          StateStatus(image: '', text: ''),
+        );
 
   void setState(String status) {
-    state = StateStatus(
-      image: '${statusImage[status]}',
-      text: tr('${statusMessage[status]}'),
-    );
+    if (status != "nop") {
+      state = StateStatus(
+          image: '${statusImage[status]}',
+          text: tr('${statusMessage[status]}'));
+    } else {
+      state = StateStatus(
+        image: 'assets/images/unknown.svg',
+        text: "No Data, please retry..",
+      );
+    }
   }
 
   void getSelectedStatus() {
     final String status = declarationRepository.status;
-    print('in status notifier :  $status');
-    if (status != "") {
-      setState(status);
-    }
+    setState(status);
   }
 }
 

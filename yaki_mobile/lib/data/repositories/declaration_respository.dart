@@ -10,28 +10,29 @@ class DeclarationRepository {
 
   DeclarationStatus? declarationStatus;
 
-  void create(DeclarationModel declaration) async {
+  Future<int?> create(DeclarationModel declaration) async {
     final httpResponse = await _declarationApi.create(declaration);
     final statusCode = httpResponse.response.statusCode;
 
     try {
-      if (statusCode == 201 || statusCode == 200) {
+      if ([200, 201].contains(statusCode)) {
         declarationStatus = DeclarationStatus(
           status: httpResponse.data.declaration_status,
         );
-      } else if (statusCode == 400) {
+      } else if ([400, 500].contains(statusCode)) {
         debugPrint("code error : $statusCode");
       }
     } catch (exception) {
       debugPrint("error during creation $exception");
     }
+    return statusCode;
   }
 
   String get status {
     String result;
     declarationStatus != null
         ? result = declarationStatus!.status
-        : result = "";
+        : result = "nop";
     return result;
   }
 }

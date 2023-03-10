@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:yaki/presentation/state/providers/declaration_provider.dart';
 import 'package:yaki/presentation/ui/authentication/authentication.dart';
 import 'package:yaki/presentation/ui/status/status.dart';
 import 'package:yaki/presentation/ui/declaration/declaration.dart';

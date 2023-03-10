@@ -7,13 +7,13 @@ class DeclarationNotifier extends StateNotifier<String> {
 
   DeclarationNotifier(this.declarationRepository) : super("");
 
-  Future<void> create(String status) async {
+  Future<int?> create(String status) async {
     DeclarationModel newDeclaration = DeclarationModel(
       declaration_date: DateTime.now(),
       declaration_team_mate_id: 1,
       declaration_status: status,
     );
 
-    declarationRepository.create(newDeclaration);
+   return declarationRepository.create(newDeclaration);
   }
 }

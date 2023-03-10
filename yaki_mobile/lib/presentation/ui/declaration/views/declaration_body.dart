@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yaki/presentation/displaydata/declaration_card_content.dart';
 import 'package:yaki/presentation/state/providers/declaration_provider.dart';
+import 'package:yaki/presentation/state/providers/status_provider.dart';
 import 'package:yaki/presentation/ui/declaration/views/status_card.dart';
 
 // ConsumerWidget : stateless widget listening to providers
@@ -16,6 +17,7 @@ class DeclarationBody extends ConsumerWidget {
     required Function goToStatusPage,
   }) async {
     await ref.read(declarationProvider.notifier).create(status);
+    ref.read(statusPageProvider.notifier).getSelectedStatus();
     goToStatusPage();
   }
 
@@ -38,13 +40,14 @@ class DeclarationBody extends ConsumerWidget {
           children: statusCardsContent
               .map(
                 (cardContent) => StatusCard(
-                    statusName: tr(cardContent['text']),
-                    statusPicto: cardContent['image'],
-                    getClick: () => _onStatusSelected(
-                          ref: ref,
-                          status: cardContent['text'],
-                          goToStatusPage: () => context.go('/status'),
-                        )),
+                  statusName: tr(cardContent['text']),
+                  statusPicto: cardContent['image'],
+                  onPress: () => _onStatusSelected(
+                    ref: ref,
+                    status: cardContent['text'],
+                    goToStatusPage: () => context.go('/status'),
+                  ),
+                ),
               )
               .toList(),
         ),
