@@ -27,10 +27,10 @@ export class DeclarationController {
             res.status(201).json(createdDeclaration);
         } catch (error: any) {
             if (error instanceof TypeError) {
-                // catch bad request errors (e.g. invalid JSON payload, missing required fields)
+                // catch bad request errors 
                 res.status(400).json({ message: error.message });
             } else {
-                // catch server errors (e.g. database connection error, unexpected server error)
+                // catch server errors 
                 res.status(500).json({ message: error.message });
             }
         }
