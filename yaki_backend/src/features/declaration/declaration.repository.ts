@@ -43,7 +43,7 @@ export class DeclarationRepository {
    * @param {number} teamMateId - number
    * @returns An array of Declaration objects.
    */
-  async getDeclarationsForTeamMate(teamMateId: number): Promise<Declaration[]> {
+  async getDeclarationsForTeamMate(teamMateId: number): Promise<DeclarationDtoIn[]> {
     const client = await this.pool.connect();
     try {
       const result = await client.query(
@@ -69,14 +69,14 @@ export class DeclarationRepository {
    */
   async updateDeclarationStatus(
     declarationId: number,
-    declaration: Declaration,
+    declaration: DeclarationDtoIn,
   ): Promise<void> {
-    const { declaration_date, declaration_team_mate_id, declaration_status } = declaration;
+    const { declarationDate, declarationTeamMateId, declarationStatus } = declaration;
     const client = await this.pool.connect();
     try {
       await client.query(
         'UPDATE declaration SET declaration_date = $1, declaration_team_mate_id = $2, declaration_status= $3 WHERE declaration_id = $4',
-        [declaration_date, declaration_team_mate_id, declaration_status, declarationId],
+        [declarationDate, declarationTeamMateId, declarationStatus, declarationId],
       );
     } finally {
       client.release();
@@ -89,7 +89,7 @@ export class DeclarationRepository {
    * @param {number} declarationId - number
    * @returns The result of the query.
    */
-  async getDeclarationById(declarationId: number): Promise<Declaration> {
+  async getDeclarationById(declarationId: number): Promise<DeclarationDtoIn> {
     const client = await this.pool.connect();
     try {
       const result = await client.query(

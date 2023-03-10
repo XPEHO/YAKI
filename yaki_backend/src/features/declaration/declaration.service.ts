@@ -14,7 +14,7 @@ export class DeclarationService {
 
   /**
    * This function creates a declaration and returns the created declaration.
-   * @param {Declaration} declaration - Declaration
+   * @param {DeclarationDtoIn} declaration - Declaration
    * @returns The declaration object.
    */
   async createDeclaration(declaration: DeclarationDtoIn) {
@@ -34,7 +34,7 @@ export class DeclarationService {
    * @param {number} teamMateId - number
    * @returns An array of declarations or a string.
    */
-  async getDeclarationsForTeamMate(teamMateId: number): Promise<Declaration[] | String> {
+  async getDeclarationsForTeamMate(teamMateId: number): Promise<DeclarationDtoIn[] | String> {
     const declarations = await this.declarationRepository.getDeclarationsForTeamMate(teamMateId);
     if (declarations.length > 0) {
       return declarations;
@@ -46,12 +46,12 @@ export class DeclarationService {
   /**
    * This function updates the status of a declaration.
    * @param {number} declarationId - number,
-   * @param {Declaration} declaration - Declaration
+   * @param {DeclarationDtoIn} declaration - Declaration
    * @returns The declarationRepository.updateDeclarationStatus() ;.
    */
   async updateDeclarationStatus(
     declarationId: number,
-    declaration: Declaration,
+    declaration: DeclarationDtoIn,
   ): Promise<void> {
     const existingDeclaration = await this.declarationRepository.getDeclarationById(declarationId);
     if (!existingDeclaration) {

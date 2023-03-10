@@ -30,7 +30,6 @@ export class DeclarationController {
             const createdDeclaration = await this.declarationService.createDeclaration(declaration);
             res.status(201).json(createdDeclaration);
         } catch (error: any) {
-
             if (error instanceof TypeError) {
                 // catch bad request errors 
                 res.status(400).json({ message: error.message });
@@ -64,7 +63,7 @@ export class DeclarationController {
      */
     async updateDeclarationStatus(req: Request, res: Response) {
         const declarationId = parseInt(req.params.declarationId);
-        const declaration: Declaration = req.body;
+        const declaration: DeclarationDtoIn = req.body;
         try {
             await this.declarationService.updateDeclarationStatus(declarationId, declaration);
             res.status(200).json(declaration);

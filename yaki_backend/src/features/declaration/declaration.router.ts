@@ -1,10 +1,6 @@
 import express, { Router } from "express";
-
-
+import { authService } from "../user/authentication.service";
 import { DeclarationController } from "./declaration.controller";
-
-
-
 import { DeclarationRepository } from "./declaration.repository";
 import { DeclarationService } from "./declaration.service";
 
