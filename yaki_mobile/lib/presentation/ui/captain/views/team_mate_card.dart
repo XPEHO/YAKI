@@ -26,6 +26,8 @@ class CardTeamMate extends StatefulWidget {
 class _CardTeamMateState extends State<CardTeamMate> {
   @override
   Widget build(BuildContext context) {
+
+    // recovers device dimensions
     var size = MediaQuery.of(context).size;
 
     return Card(
@@ -70,8 +72,6 @@ class _CardTeamMateState extends State<CardTeamMate> {
                             ),
                           ),
                         ),
-                        // iconPath: 'assets/images/remote.svg',
-                        // radius: 40,
                       ),
                     ],
                   ),

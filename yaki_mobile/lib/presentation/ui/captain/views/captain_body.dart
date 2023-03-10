@@ -4,10 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yaki/presentation/ui/captain/views/team_mate_card.dart';
 import 'package:yaki/presentation/ui/shared/views/InputApp.dart';
-
 import 'package:yaki/presentation/state/providers/team_mate_provider.dart';
-
-import '../../../../data/models/team_mate_model.dart';
 
 class CaptainBody extends ConsumerStatefulWidget {
   const CaptainBody({super.key});
@@ -29,8 +26,11 @@ class _CaptainBodyState extends ConsumerState<CaptainBody> {
 
   @override
   Widget build(BuildContext context) {
+
+    // Monitors changes in card status
     final listTeamMate = ref.watch(teamMateProvider);
 
+    // recovers device dimensions
     var size = MediaQuery.of(context).size;
 
     return Column(
@@ -46,23 +46,21 @@ class _CaptainBodyState extends ConsumerState<CaptainBody> {
           ),
         ),
         SizedBox(
-          // Cards of the Team Mate
           width: size.width * 0.95,
           height: size.height * 0.4,
-          child:
-          ListView.builder(
+          child: ListView.builder(
+            // This widget allows you to create a list object and iterate on it
             itemCount: listTeamMate.length,
             itemBuilder: (context, index) {
               return CardTeamMate(
+                // Cards of the Team Mate
                 firstName: ('${listTeamMate[index].user_first_name}'),
                 lastName: ('${listTeamMate[index].user_last_name}'),
                 status: 'Remote',
               );
             },
           ),
-
         ),
-
       ],
     );
   }
