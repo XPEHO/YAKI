@@ -6,45 +6,48 @@ import 'package:yaki/presentation/displaydata/declaration_card_content.dart';
 import 'package:yaki/presentation/state/providers/declaration_provider.dart';
 import 'package:yaki/presentation/ui/declaration/views/status_card_test_media.dart';
 
-
-void _routeHandling(BuildContext context) {
-  context.go('/status');
-}
-
-void _createDeclaration(WidgetRef ref, String declaration) {
-  ref.read(declarationProvider.notifier).create(declaration);
-}
-
 // ConsumerWidget : stateless widget listening to providers
 class DeclarationBody extends ConsumerWidget {
   const DeclarationBody({Key? key}) : super(key: key);
 
+  Future<void> _onStatusSelected({
+    required WidgetRef ref,
+    required String status,
+    required Function goToStatusPage,
+  }) async {
+    await ref.read(declarationProvider.notifier).create(status);
+    final declaration = ref.read(declarationProvider).state;
+    if(declaration !=null) {
+      goToStatusPage();
+    }
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     var width = MediaQuery.of(context).size.width;
 
     return Padding(
       padding: EdgeInsets.symmetric(
-        vertical: width < 670 ? width * 0.12 : 50,
-        horizontal: width < 670 ? width * 0.09 : 50,
+        vertical: width * 0.12,
+        horizontal:width * 0.09,
       ),
       child: Center(
         child: Wrap(
           alignment: WrapAlignment.center,
           // horizontal
-          spacing: width < 670 ? width * 0.07 : width * 0.03,
+          spacing: width * 0.07,
           // vertical
-          runSpacing: width < 670 ? width * 0.12 : width * 0.05,
+          runSpacing: width * 0.12,
           children: statusCardsContent
               .map(
                 (cardContent) => StatusCard(
                   statusName: tr(cardContent['text']),
                   statusPicto: cardContent['image'],
-                  getClick: () {
-                    _createDeclaration(ref, cardContent['text']);
-                    _routeHandling(context);
-                  },
+                  getClick: () => _onStatusSelected(
+                    ref: ref,
+                    status: cardContent['text'],
+                    goToStatusPage: () => context.go('/status'),
+                  ),
                 ),
               )
               .toList(),

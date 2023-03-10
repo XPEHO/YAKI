@@ -14,12 +14,12 @@ class Authentication {
 
   Authentication(
       {required this.user_id,
-      required this.team_mate_id,
-      required this.team_id,
-      required this.last_name,
-      required this.first_name,
-      required this.email,
-      required this.token});
+        required this.team_mate_id,
+        required this.team_id,
+        required this.last_name,
+        required this.first_name,
+        required this.email,
+        required this.token});
 
   factory Authentication.fromJson(Map<String, dynamic> json) =>
       _$AuthenticationFromJson(json);

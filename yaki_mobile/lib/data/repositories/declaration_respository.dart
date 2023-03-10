@@ -1,32 +1,37 @@
 import 'package:flutter/cupertino.dart';
-import 'package:retrofit/retrofit.dart';
 import 'package:yaki/data/sources/remote/declaration_api.dart';
 import 'package:yaki/data/models/declaration_model.dart';
+import 'package:yaki/domain/entities/declaration_status.dart';
 
 class DeclarationRepository {
   final DeclarationApi _declarationApi;
-  late final bool isFetchSuccess;
 
   DeclarationRepository(this._declarationApi);
 
+  DeclarationStatus? declarationStatus;
+
   void create(DeclarationModel declaration) async {
-    final createDeclaResponse = await _declarationApi.create(declaration);
-    final statusCode = createDeclaResponse.response.statusCode;
+    final httpResponse = await _declarationApi.create(declaration);
 
-    statusCodeManagement(statusCode!);
-  }
-
-  bool statusCodeManagement(int statusCode) {
+    final statusCode = httpResponse.response.statusCode;
     try {
       if (statusCode == 201 || statusCode == 200) {
-        isFetchSuccess = true;
-      } else if (statusCode == 500) {
-        isFetchSuccess = false;
+        declarationStatus = DeclarationStatus(
+          status: httpResponse.data.declaration_status,
+        );
+      } else if (statusCode == 400) {
+        debugPrint("code error : $statusCode");
       }
     } catch (exception) {
       debugPrint("error during creation $exception");
     }
+  }
 
-    return isFetchSuccess;
+  String get status {
+    String result;
+    declarationStatus != null
+        ? result = declarationStatus!.status
+        : result = "";
+    return result;
   }
 }

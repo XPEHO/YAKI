@@ -12,7 +12,7 @@ class LoginRepository {
     final authenticationResponse = await _loginService.postLogin(login);
     // authenticationResponse can be null if user user incorrect login or password, response can be null
     // need to add null check in this situation
-    addTokenToSharedPreference(authenticationResponse.data?.token);
 
+    addTokenToSharedPreference(authenticationResponse.data?.token);
   }
 }
