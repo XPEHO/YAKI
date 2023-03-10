@@ -8,22 +8,22 @@ part of 'authentication.dart';
 
 Authentication _$AuthenticationFromJson(Map<String, dynamic> json) =>
     Authentication(
-      userId: json['user_id'] as int?,
-      teamMateId: json['team_mate_id'] as int?,
-      teamId: json['team_id'] as int?,
-      lastName: json['last_name'] as String,
-      firstName: json['first_name'] as String,
+      userId: json['userId'] as int?,
+      teamMateId: json['teamMateId'] as int?,
+      teamId: json['teamId'] as int?,
+      lastName: json['lastName'] as String,
+      firstName: json['firstName'] as String,
       email: json['email'] as String,
       token: json['token'] as String,
     );
 
 Map<String, dynamic> _$AuthenticationToJson(Authentication instance) =>
     <String, dynamic>{
-      'user_id': instance.userId,
-      'team_mate_id': instance.teamMateId,
-      'team_id': instance.teamId,
-      'last_name': instance.lastName,
-      'first_name': instance.firstName,
+      'userId': instance.userId,
+      'teamMateId': instance.teamMateId,
+      'teamId': instance.teamId,
+      'lastName': instance.lastName,
+      'firstName': instance.firstName,
       'email': instance.email,
       'token': instance.token,
     };

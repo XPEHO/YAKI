@@ -26,21 +26,18 @@ class _DeclarationApi implements DeclarationApi {
     final _data = <String, dynamic>{};
     _data.addAll(declaration.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
-      _setStreamType<DeclarationModel>(
-        Options(
-          method: 'POST',
-          headers: _headers,
-          extra: _extra,
-        )
+        _setStreamType<HttpResponse<DeclarationModel>>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
             .compose(
               _dio.options,
               '/declarations',
               queryParameters: queryParameters,
               data: _data,
             )
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl),
-      ),
-    );
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = DeclarationModel.fromJson(_result.data!);
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;

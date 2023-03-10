@@ -10,7 +10,7 @@ import 'package:yaki/data/models/declaration_model.dart';
 import 'package:yaki/data/repositories/declaration_respository.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:yaki/data/sources/declaration_api.dart';
+import 'package:yaki/data/sources/remote/declaration_api.dart';
 
 import 'widget_test.mocks.dart';
 
