@@ -14,7 +14,6 @@ class TeamMateNotifier extends StateNotifier<List<TeamMateModel>> {
 
   Future<void> fetchTeamMates() async {
     final nullsafetyTeamList = await teamMateRepository.getTeamMate();
-    debugPrint('Etat de la liste dans le notifier : $nullsafetyTeamList');
     state = nullsafetyTeamList;
   }
 }

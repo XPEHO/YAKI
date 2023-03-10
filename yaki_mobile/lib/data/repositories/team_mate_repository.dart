@@ -10,7 +10,6 @@ class TeamMateRepository {
   Future<List<TeamMateModel>> getTeamMate() async {
     try {
       final listTeamMateModel = await teamMateApi.getTeamMate();
-      debugPrint('Etat de la list dans le repo : $listTeamMateModel');
       return listTeamMateModel
           .map(
             (teamMate) => TeamMateModel(
