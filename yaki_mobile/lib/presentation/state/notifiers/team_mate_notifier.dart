@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yaki/data/models/team_mate_model.dart';
 
@@ -13,6 +14,7 @@ class TeamMateNotifier extends StateNotifier<List<TeamMateModel>> {
 
   Future<void> fetchTeamMates() async {
     final nullsafetyTeamList = await teamMateRepository.getTeamMate();
+    debugPrint('Etat de la liste dans le notifier : $nullsafetyTeamList');
     state = nullsafetyTeamList;
   }
 }

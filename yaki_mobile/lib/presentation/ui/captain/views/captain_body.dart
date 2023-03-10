@@ -8,8 +8,7 @@ import 'package:yaki/presentation/ui/shared/views/InputApp.dart';
 import 'package:yaki/presentation/state/providers/team_mate_provider.dart';
 
 class CaptainBody extends ConsumerStatefulWidget {
-
-  CaptainBody({super.key});
+  const CaptainBody({super.key});
 
   @override
   ConsumerState<CaptainBody> createState() => _CaptainBodyState();
@@ -25,7 +24,6 @@ class _CaptainBodyState extends ConsumerState<CaptainBody> {
     });
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -57,10 +55,10 @@ class _CaptainBodyState extends ConsumerState<CaptainBody> {
           ),
         ),
         GestureDetector(
-            onTap: () {
-              ref.read(teamMateProvider.notifier).fetchTeamMates();
-            },
-            child: Text('$listTeamMate'),
+          onTap: () {
+            ref.read(teamMateProvider.notifier).fetchTeamMates();
+          },
+          child: Text('$listTeamMate'),
         )
       ],
     );

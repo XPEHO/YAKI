@@ -9,7 +9,6 @@ part 'team_mate_api.g.dart';
 abstract class TeamMateApi {
   factory TeamMateApi(Dio dio, {required String baseUrl}) = _TeamMateApi;
 
-  @GET('/teammates')
+  @GET('/teamMates')
   Future<List<TeamMateModel>> getTeamMate();
-
 }
