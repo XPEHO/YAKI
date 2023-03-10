@@ -1,5 +1,6 @@
 import { DeclarationRepository } from './declaration.repository';
 import { Declaration } from './declaration.interface';
+import { StatusDeclaration } from './status.enum';
 
 export class DeclarationService {
   private declarationRepository: DeclarationRepository;
@@ -18,6 +19,14 @@ export class DeclarationService {
    * @returns The declaration object.
    */
   async createDeclaration(declaration: Declaration) {
-    return await this.declarationRepository.createDeclaration(declaration);
+    if (declaration.declaration_team_mate_id
+      && declaration.declaration_date
+      && declaration.declaration_status !== undefined
+      && declaration.declaration_status.trim() !== '' ) 
+         {
+      return await this.declarationRepository.createDeclaration(declaration);
+    } else {
+      throw new TypeError("One or more mandatory information is missing.")
+    }
   }
 }
