@@ -17,5 +17,6 @@
   "StatusRemote": "You are working remotely today.",
   "StatusOnSite": "You are on site today.",
   "StatusVacation": "You are in vacations until...",
-  "StatusOther": "Other status for today."
+  "StatusOther": "Other status for today.",
+  "StatusButton": "Change"
 }

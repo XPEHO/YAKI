@@ -26,7 +26,9 @@ final dioInterceptor = Provider(
 class AddTokenToHeader extends Interceptor {
   @override
   void onRequest(
-      RequestOptions options, RequestInterceptorHandler handler) async {
+    RequestOptions options,
+    RequestInterceptorHandler handler,
+  ) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var token = prefs.get("token");
 

@@ -17,6 +17,7 @@ class LoginNotifier extends StateNotifier<String> {
       salt: const String.fromEnvironment('CRED_HASH_PASS'),
     );
     final newLog = Login(login: newLogin, password: hashPass.toString());
+
     await repository.postLogin(newLog);
 
   }

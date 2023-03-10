@@ -19,7 +19,7 @@ class TempHome extends StatelessWidget {
           children: const [
             ButtonRoute(
               btnText: 'authentication page',
-              route: '/demo',
+              route: '/authentication',
             ),
             ButtonRoute(
               btnText: 'Delcaration page',

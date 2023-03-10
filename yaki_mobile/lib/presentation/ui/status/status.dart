@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -7,7 +8,6 @@ import 'package:yaki/presentation/ui/shared/views/avatar_icon.dart';
 import 'package:yaki/presentation/ui/shared/views/circle_avatar_svg.dart';
 
 void _routeHandling(BuildContext context) {
-  //context.pop();
   context.go('/declaration');
 }
 
@@ -66,9 +66,9 @@ class Status extends ConsumerWidget {
                         elevation: 5,
                         backgroundColor: Colors.grey[400],
                       ),
-                      child: const Text(
-                        "Change",
-                        style: TextStyle(
+                      child: Text(
+                        tr("StatusButton"),
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 16,
                         ),

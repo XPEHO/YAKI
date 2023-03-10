@@ -8,8 +8,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:yaki/presentation/ui/shared/views/header.dart';
 
 void onPressAuthent(WidgetRef ref, login, password) {
-  ref.read(loginProvider.notifier).changeLogin(login, password);
- // ref.read(loginProvider.notifier).changeLogin('dugrand', 'dugrand');
+  //ref.read(loginProvider.notifier).changeLogin(login, password);
+ ref.read(loginProvider.notifier).changeLogin('lavigne', 'lavigne');
 }
 
 void _routeHandling(BuildContext context, WidgetRef ref) {

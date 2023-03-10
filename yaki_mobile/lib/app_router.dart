@@ -14,7 +14,7 @@ final goRouterProvider = Provider<GoRouter>(
           builder: (context, state) => const TempHome(),
         ),
         GoRoute(
-          path: '/demo',
+          path: '/authentication',
           builder: (context, state) => Authentication(),
         ),
         GoRoute(

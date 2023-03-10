@@ -14,5 +14,8 @@ class LoginRepository {
     // need to add null check in this situation
 
     addTokenToSharedPreference(authenticationResponse.data?.token);
+
+    print(authenticationResponse.response.statusCode);
+    print(authenticationResponse.response);
   }
 }

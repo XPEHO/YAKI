@@ -17,5 +17,6 @@
   "StatusRemote": "Vous êtes en distanciel aujourd'hui",
   "StatusOnSite": "Vous êtes sur site aujourd'hui",
   "StatusVacation": "Vous êtes en vacances jusque...",
-  "StatusOther": "Autre status pour la journée"
+  "StatusOther": "Autre status pour la journée",
+  "StatusButton": "Changer",
 }

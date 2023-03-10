@@ -55,4 +55,3 @@ class DeclarationBody extends ConsumerWidget {
     );
   }
 }
-// () => context.go('/status'),
