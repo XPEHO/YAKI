@@ -14,25 +14,27 @@ class DeclarationRepository {
     final httpResponse = await _declarationApi.create(declaration);
     final statusCode = httpResponse.response.statusCode;
 
+    String statusValue = "";
     try {
       if ([200, 201].contains(statusCode)) {
-        declarationStatus = DeclarationStatus(
-          status: httpResponse.data.declaration_status,
-        );
+        statusValue = httpResponse.data.declaration_status;
       } else if ([400, 500].contains(statusCode)) {
+        statusValue = "nop";
         debugPrint("code error : $statusCode");
       }
     } catch (exception) {
+      statusValue = "nop";
       debugPrint("error during creation $exception");
     }
+
+    declarationStatus = DeclarationStatus(
+      status: statusValue,
+    );
+
     return statusCode;
   }
 
   String get status {
-    String result;
-    declarationStatus != null
-        ? result = declarationStatus!.status
-        : result = "nop";
-    return result;
+    return declarationStatus!.status;
   }
 }
