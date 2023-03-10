@@ -6,26 +6,26 @@ import 'package:yaki/presentation/ui/declaration/declaration.dart';
 import 'package:yaki/temp_home.dart';
 
 final GoRouter appRouter = GoRouter(
-    routes: <GoRoute>[
-      GoRoute(
-        path: '/',
-        builder: (context, state) => const TempHome(),
-      ),
-      GoRoute(
-        path: '/demo',
-        builder: (context, state) => Authentication(),
-      ),
-      GoRoute(
-        path: '/declaration',
-        builder: (context, state) => const Declaration(),
-      ),
-      GoRoute(
-        path: '/status',
-        builder: (context, state) => const Status(),
-      ),
-      GoRoute(
-        path: '/captain',
-        builder: (context, state) => CaptainView(),
-      ),
-    ],
+  routes: <GoRoute>[
+    GoRoute(
+      path: '/',
+      builder: (context, state) => const TempHome(),
+    ),
+    GoRoute(
+      path: '/demo',
+      builder: (context, state) => Authentication(),
+    ),
+    GoRoute(
+      path: '/declaration',
+      builder: (context, state) => const Declaration(),
+    ),
+    GoRoute(
+      path: '/status',
+      builder: (context, state) => const Status(),
+    ),
+    GoRoute(
+      path: '/captain',
+      builder: (context, state) => const CaptainView(),
+    ),
+  ],
 );

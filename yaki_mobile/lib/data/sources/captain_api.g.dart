@@ -24,19 +24,22 @@ class _CaptainApi implements CaptainApi {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<CaptainModel>(Options(
-      method: 'GET',
-      headers: _headers,
-      extra: _extra,
-    )
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+      _setStreamType<CaptainModel>(
+        Options(
+          method: 'GET',
+          headers: _headers,
+          extra: _extra,
+        )
             .compose(
               _dio.options,
               '/captains',
               queryParameters: queryParameters,
               data: _data,
             )
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl),
+      ),
+    );
     final value = CaptainModel.fromJson(_result.data!);
     return value;
   }

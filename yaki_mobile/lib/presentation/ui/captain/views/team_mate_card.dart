@@ -8,7 +8,16 @@ class CardTeamMate extends StatefulWidget {
   ///Card with the Team Mate's avatar, name, update date and status
   const CardTeamMate({
     super.key,
+    required this.firstName,
+    required this.lastName,
+    required this.status,
   });
+
+  final String firstName;
+  final String lastName;
+  final String status;
+
+
 
   @override
   State<CardTeamMate> createState() => _CardTeamMateState();
@@ -73,13 +82,13 @@ class _CardTeamMateState extends State<CardTeamMate> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
-                        children: const [
+                        children: [
                           Text(
                             // Name of the Team Mate
-                            'Jean Dupont',
-                            style: TextStyle(
+                            '${widget.firstName} ${widget.lastName}',
+                            style: const TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: 25,
+                              fontSize: 20,
                               color: Colors.grey,
                             ),
                           )

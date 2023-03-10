@@ -55,7 +55,7 @@ class ButtonRoute extends StatelessWidget {
       onPressed: () => context.go(route),
       child: Text(
         btnText,
-        style: TextStyle(fontSize: 18),
+        style: const TextStyle(fontSize: 18),
       ),
     );
   }

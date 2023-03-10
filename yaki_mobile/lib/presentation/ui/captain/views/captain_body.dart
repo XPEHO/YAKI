@@ -7,6 +7,8 @@ import 'package:yaki/presentation/ui/shared/views/InputApp.dart';
 
 import 'package:yaki/presentation/state/providers/team_mate_provider.dart';
 
+import '../../../../data/models/team_mate_model.dart';
+
 class CaptainBody extends ConsumerStatefulWidget {
   const CaptainBody({super.key});
 
@@ -47,19 +49,20 @@ class _CaptainBodyState extends ConsumerState<CaptainBody> {
           // Cards of the Team Mate
           width: size.width * 0.95,
           height: size.height * 0.4,
-          child: ListView.builder(
+          child:
+          ListView.builder(
             itemCount: listTeamMate.length,
             itemBuilder: (context, index) {
-              return const CardTeamMate();
+              return CardTeamMate(
+                firstName: ('${listTeamMate[index].user_first_name}'),
+                lastName: ('${listTeamMate[index].user_last_name}'),
+                status: 'Remote',
+              );
             },
           ),
+
         ),
-        GestureDetector(
-          onTap: () {
-            ref.read(teamMateProvider.notifier).fetchTeamMates();
-          },
-          child: Text('$listTeamMate'),
-        )
+
       ],
     );
   }

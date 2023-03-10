@@ -14,13 +14,15 @@ class TeamMateRepository {
       return listTeamMateModel
           .map(
             (teamMate) => TeamMateModel(
-              team_mate_id: teamMate.team_mate_id,
               user_id: teamMate.user_id,
-              team_id: teamMate.team_id,
-              last_name: teamMate.last_name,
-              first_name: teamMate.first_name,
-              email: teamMate.email,
-              token: teamMate.token,
+              user_last_name: teamMate.user_last_name,
+              user_first_name: teamMate.user_first_name,
+              user_email: teamMate.user_email,
+              user_login: teamMate.user_login,
+              user_password: teamMate.user_password,
+              team_mate_id: teamMate.team_mate_id,
+              team_mate_team_id: teamMate.team_mate_team_id,
+              team_mate_user_id: teamMate.team_mate_user_id,
             ),
           )
           .toList();

@@ -1,5 +1,4 @@
 import 'package:yaki/data/models/captain_model.dart';
-import 'package:yaki/data/models/team_mate_model.dart';
 import 'package:yaki/data/sources/captain_api.dart';
 
 class CaptainRepository {
@@ -8,9 +7,8 @@ class CaptainRepository {
   CaptainRepository(this._captainApi);
 
   Future<CaptainModel> getCaptain() async {
-    final captainModel = await _captainApi.getCaptain() ;
+    final captainModel = await _captainApi.getCaptain();
 
     return captainModel;
   }
-
 }

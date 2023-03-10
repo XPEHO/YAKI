@@ -16,9 +16,10 @@ class DeclarationNotifier extends StateNotifier<DeclarationModel> {
 
   Future<void> create(String declaration) async {
     DeclarationModel newDeclaration = DeclarationModel(
-        declaration_date: DateTime.now(),
-        declaration_team_mate_id: 1,
-        declaration_status: declaration);
+      declaration_date: DateTime.now(),
+      declaration_team_mate_id: 1,
+      declaration_status: declaration,
+    );
     final createdDeclaration =
         await declarationRepository.create(newDeclaration);
   }
