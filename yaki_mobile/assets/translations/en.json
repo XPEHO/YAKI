@@ -18,5 +18,6 @@
   "StatusOnSite": "You are on site today.",
   "StatusVacation": "You are in vacations until...",
   "StatusOther": "Other status for today.",
-  "StatusButton": "Change"
+  "StatusButton": "Change",
+  "StatusError": "Something went wrong, please retry..."
 }

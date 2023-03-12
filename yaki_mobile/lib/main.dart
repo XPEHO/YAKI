@@ -15,7 +15,7 @@ void main() async {
       ],
       path: 'assets/translations',
       fallbackLocale: const Locale('en'),
-      child: const ProviderScope(child: MyApp()),
+      child: const ProviderScope(child: YakiApp()),
     ),
   );
 }

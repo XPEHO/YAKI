@@ -19,4 +19,5 @@
   "StatusVacation": "Vous êtes en vacances jusque...",
   "StatusOther": "Autre status pour la journée",
   "StatusButton": "Changer",
+  "StatusError": "Quelque chose ne c'est pas passé comme prévu, veuillez recommencer.."
 }

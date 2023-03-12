@@ -7,29 +7,20 @@ import 'package:yaki/presentation/ui/shared/views/input_app.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:yaki/presentation/ui/shared/views/header.dart';
 
-void onPressAuthent(WidgetRef ref, login, password) {
-  //ref.read(loginProvider.notifier).changeLogin(login, password);
- ref.read(loginProvider.notifier).changeLogin('lavigne', 'lavigne');
-}
-
-void _routeHandling(BuildContext context, WidgetRef ref) {
-  context.push('/declaration');
-}
-
 class Authentication extends ConsumerWidget {
   Authentication({super.key});
 
   final loginController = TextEditingController();
   final passwordController = TextEditingController();
 
-  void onPressAuthent(WidgetRef ref, login, password) {
-    ref.read(loginProvider);
-
-    ref.read(loginProvider.notifier).changeLogin(login, password);
-  }
-
-  void _routeHandling(BuildContext context) {
-    context.push('/declaration');
+  void onPressAuthent({
+    required WidgetRef ref,
+    required String login,
+    required String password,
+    required Function goToDeclarationPage,
+  }) async {
+    final statusCode = await ref.read(loginProvider.notifier).changeLogin(login, password);
+    if (statusCode == 200) goToDeclarationPage();
   }
 
   @override
@@ -116,14 +107,13 @@ class Authentication extends ConsumerWidget {
                             left: 50,
                           ),
                         ),
-                        onPressed: () {
-                          onPressAuthent(
-                            ref,
-                            loginController.text,
-                            passwordController.text,
-                          );
-                          _routeHandling(context, ref);
-                        },
+                        onPressed: () => onPressAuthent(
+                          ref: ref,
+                          login: loginController.text,
+                          password: passwordController.text,
+                          goToDeclarationPage: () =>
+                              context.push('/declaration'),
+                        ),
                         child: Text(tr('signIn')),
                       ),
                     ),

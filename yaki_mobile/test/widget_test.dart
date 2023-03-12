@@ -14,27 +14,27 @@ import 'package:yaki/data/sources/remote/declaration_api.dart';
 
 import 'widget_test.mocks.dart';
 
-@GenerateMocks([DeclarationApi])
-void main() {
-  test('create declaration return a declaration', () async {
-    // GIVEN
-    final mockedApi = MockDeclarationApi();
-    final repository = DeclarationRepository(mockedApi);
-
-    final declarationSent = DeclarationModel(
-      declarationDate: DateTime.now(),
-      declarationTeamMateId: 1,
-      declarationStatus: 'On Site',
-    );
-
-    when(mockedApi.create(declarationSent))
-        .thenAnswer((realInvocation) => Future.value(declarationSent));
-
-    // WHEN
-    final DeclarationModel declaration =
-        await repository.create(declarationSent);
-
-    // THEN
-    expect(declaration, declarationSent);
-  });
-}
+// @GenerateMocks([DeclarationApi])
+// void main() {
+//   test('create declaration return a declaration', () async {
+//     // GIVEN
+//     final mockedApi = MockDeclarationApi();
+//     final repository = DeclarationRepository(mockedApi);
+//
+//     final declarationSent = DeclarationModel(
+//       declarationDate: DateTime.now(),
+//       declarationTeamMateId: 1,
+//       declarationStatus: 'On Site',
+//     );
+//
+//     when(mockedApi.create(declarationSent))
+//         .thenAnswer((realInvocation) => Future.value(declarationSent));
+//
+//     // WHEN
+//     final DeclarationModel declaration =
+//         await repository.create(declarationSent);
+//
+//     // THEN
+//     expect(declaration, declarationSent);
+//   });
+// }

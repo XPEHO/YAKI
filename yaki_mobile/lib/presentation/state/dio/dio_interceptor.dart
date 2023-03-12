@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 /// Interceptor are meant to be intercept request / response / error
 /// before they are handled by then or catch, and depending
-/// of the overwrited method, run custom action.
+/// of the override method, run custom action.
 /// Create a dio instance to add interceptor, which allow to use dynamic data
 final dioInterceptor = Provider(
   (ref) {

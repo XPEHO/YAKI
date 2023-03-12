@@ -1,5 +1,5 @@
 class DeclarationStatus {
-  final String status;
+  String status;
 
   DeclarationStatus({
     required this.status,

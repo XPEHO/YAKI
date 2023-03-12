@@ -3,6 +3,7 @@ import 'package:yaki/data/repositories/declaration_respository.dart';
 import 'package:yaki/data/sources/remote/declaration_api.dart';
 import 'package:yaki/presentation/state/notifiers/declaration_notifier.dart';
 import 'package:yaki/presentation/state/dio/dio_interceptor.dart';
+import 'package:yaki/presentation/state/providers/login_provider.dart';
 
 final declarationApiProvider = Provider(
   (ref) => DeclarationApi(
@@ -21,5 +22,6 @@ final declarationProvider =
     StateNotifierProvider<DeclarationNotifier, dynamic>(
   (ref) => DeclarationNotifier(
     ref.read(declarationRepositoryProvider),
+    ref.read(loginRepositoryProvider),
   ),
 );

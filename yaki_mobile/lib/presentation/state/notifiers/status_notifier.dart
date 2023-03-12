@@ -21,7 +21,7 @@ class StatusPageNotifier extends StateNotifier<StateStatusPage> {
     } else {
       state = StateStatusPage(
         image: 'assets/images/unknown.svg',
-        text: "No Data, please retry..",
+        text: tr("StatusError"),
       );
     }
   }

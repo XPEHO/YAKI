@@ -1,19 +1,21 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yaki/data/models/declaration_model.dart';
 import 'package:yaki/data/repositories/declaration_respository.dart';
+import 'package:yaki/data/repositories/login_repository.dart';
 
 class DeclarationNotifier extends StateNotifier<String> {
   final DeclarationRepository declarationRepository;
+  final LoginRepository loginRepository;
 
-  DeclarationNotifier(this.declarationRepository) : super("");
+  DeclarationNotifier(this.declarationRepository, this.loginRepository) : super("");
 
-  Future<int?> create(String status) async {
+  Future<void> create(String status) async {
     DeclarationModel newDeclaration = DeclarationModel(
-      declaration_date: DateTime.now(),
-      declaration_team_mate_id: 1,
-      declaration_status: status,
+      declarationDate: DateTime.now(),
+      declarationTeamMateId: loginRepository.teamMateId,
+      declarationStatus: status,
     );
 
-   return declarationRepository.create(newDeclaration);
+    await declarationRepository.create(newDeclaration);
   }
 }
