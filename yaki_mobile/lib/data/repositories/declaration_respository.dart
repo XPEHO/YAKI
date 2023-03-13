@@ -10,13 +10,8 @@ class DeclarationRepository {
   DeclarationRepository(this._declarationApi);
 
   Future<int?> getDeclaration(String teamMateId) async {
-    print("DECLA REPO GETTER ");
     final lastDeclaration = await _declarationApi.getDeclaration(teamMateId);
     final statusCode = lastDeclaration.response.statusCode;
-
-    print('decla repo GET :  $statusCode');
-    print(
-        'decla repo GET : status : ${lastDeclaration.data!.declarationStatus}');
 
     if (statusCode == 200) {
       declarationStatus = DeclarationStatus(
