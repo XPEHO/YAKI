@@ -7,7 +7,8 @@ class DeclarationNotifier extends StateNotifier<String> {
   final DeclarationRepository declarationRepository;
   final LoginRepository loginRepository;
 
-  DeclarationNotifier(this.declarationRepository, this.loginRepository) : super("");
+  DeclarationNotifier(this.declarationRepository, this.loginRepository)
+      : super("");
 
   Future<int?> getDeclaration() async {
     final teamMateId = loginRepository.teamMateId.toString();

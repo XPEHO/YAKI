@@ -10,8 +10,12 @@ abstract class DeclarationApi {
   factory DeclarationApi(Dio dio, {required String baseUrl}) = _DeclarationApi;
 
   @GET('/declarations/{id}')
-  Future<HttpResponse<DeclarationModelIn?>> getDeclaration(@Path("id") String id);
+  Future<HttpResponse<DeclarationModelIn?>> getDeclaration(
+    @Path("id") String id,
+  );
 
   @POST('/declarations')
-  Future<HttpResponse<DeclarationModelIn>> create(@Body() DeclarationModel declaration);
+  Future<HttpResponse<DeclarationModelIn>> create(
+    @Body() DeclarationModel declaration,
+  );
 }

@@ -9,5 +9,7 @@ abstract class StatusApi {
   factory StatusApi(Dio dio, {required String baseUrl}) = _StatusApi;
 
   @GET('/status/{teamMateId}')
-  Future<HttpResponse<DeclarationModel>> getDeclaration(@Path("teamMateId") String teamMateId);
+  Future<HttpResponse<DeclarationModel>> getDeclaration(
+    @Path("teamMateId") String teamMateId,
+  );
 }

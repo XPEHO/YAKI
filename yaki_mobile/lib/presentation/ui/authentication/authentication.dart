@@ -22,7 +22,8 @@ class Authentication extends ConsumerWidget {
     required Function goToDeclarationPage,
     required Function goToStatusPage,
   }) async {
-    final statusCode = await ref.read(loginProvider.notifier).changeLogin(login, password);
+    final statusCode =
+        await ref.read(loginProvider.notifier).changeLogin(login, password);
     if (statusCode == 200) {
       final statusCodeDecla =
           await ref.read(declarationProvider.notifier).getDeclaration();

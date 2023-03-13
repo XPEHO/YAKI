@@ -1,4 +1,3 @@
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
 import 'package:yaki/presentation/styles/header_text_style.dart';
 import 'package:yaki/presentation/ui/shared/views/avatar_icon.dart';
@@ -18,9 +17,7 @@ class Header extends StatelessWidget {
     required this.headerHint,
   });
 
-  void onAvatarIconPress() {
-
-  }
+  void onAvatarIconPress() {}
 
   @override
   Widget build(BuildContext context) {
