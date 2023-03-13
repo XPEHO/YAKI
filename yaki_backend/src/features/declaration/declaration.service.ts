@@ -21,8 +21,7 @@ export class DeclarationService {
     if (declaration.declarationTeamMateId
       && declaration.declarationDate
       && declaration.declarationStatus !== undefined
-      && declaration.declarationStatus.trim() !== '' ) 
-         {
+      && declaration.declarationStatus.trim() !== '') {
       return await this.declarationRepository.createDeclaration(declaration);
     } else {
       throw new TypeError("One or more mandatory information is missing.")
@@ -42,7 +41,15 @@ export class DeclarationService {
       throw new Error("You have to declare yourself")
     }
   }
-
+  
+  // async getDeclarationsForTeamMate(teamMateId: number): Promise<DeclarationDtoIn | String> {
+  //   const declaration = await this.declarationRepository.getDeclarationsForTeamMate(teamMateId);
+  //   if (declaration !== null) {
+  //     return declaration;
+  //   } else {
+  //     return "You have to declare yourself";
+  //   }
+  // }
   /**
    * This function updates the status of a declaration.
    * @param {number} declarationId - number,
@@ -59,5 +66,4 @@ export class DeclarationService {
     }
     return this.declarationRepository.updateDeclarationStatus(declarationId, declaration);
   }
-
 }
