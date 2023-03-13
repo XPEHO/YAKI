@@ -30,10 +30,10 @@ export class DeclarationRepository {
       [declarationDate, declarationTeamMateId, declarationStatus]
     );
     const declarationToFront = new DeclarationDtoIn(
-        result.rows[0].declaration_id,
-        result.rows[0].declaration_team_mate_id,
-        result.rows[0].declaration_date,
-        result.rows[0].declaration_status
+      result.rows[0].declaration_id,
+      result.rows[0].declaration_team_mate_id,
+      result.rows[0].declaration_date,
+      result.rows[0].declaration_status
     )
     return declarationToFront;
   }
@@ -55,7 +55,14 @@ export class DeclarationRepository {
         LIMIT 1`,
         [teamMateId],
       );
-      return result.rows;
+      const declarationToFront = new DeclarationDtoIn(
+        result.rows[0].declaration_id,
+        result.rows[0].declaration_team_mate_id,
+        result.rows[0].declaration_date,
+        result.rows[0].declaration_status
+      )
+      // return result.rows;
+      return [declarationToFront]
     } finally {
       client.release();
     }
