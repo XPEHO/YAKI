@@ -9,6 +9,23 @@ class DeclarationRepository {
 
   DeclarationRepository(this._declarationApi);
 
+  Future<int?> getDeclaration(String teamMateId) async {
+    print("DECLA REPO GETTER ");
+    final lastDeclaration = await _declarationApi.getDeclaration(teamMateId);
+    final statusCode = lastDeclaration.response.statusCode;
+
+    print('decla repo GET :  $statusCode');
+    print(
+        'decla repo GET : status : ${lastDeclaration.data!.declarationStatus}');
+
+    if (statusCode == 200) {
+      declarationStatus = DeclarationStatus(
+        status: lastDeclaration.data!.declarationStatus!,
+      );
+    }
+    return statusCode;
+  }
+
   /// Invoke DeclarationAPI to POST a declaration.
   /// await for the API answer to retrieve the response status code.
   /// Used to generate the statusValue, saved into a DeclarationStatus instance.
@@ -17,8 +34,10 @@ class DeclarationRepository {
     final httpResponse = await _declarationApi.create(declaration);
     final statusCode = httpResponse.response.statusCode;
 
-    String statusValue =
-        generateStatusValue(statusCode, httpResponse.data.declarationStatus);
+    String statusValue = generateStatusValue(
+      statusCode,
+      httpResponse.data.declarationStatus,
+    );
     declarationStatus = DeclarationStatus(
       status: statusValue,
     );
@@ -26,11 +45,11 @@ class DeclarationRepository {
 
   /// generate statusValue based on HttpResponse status code,
   /// coming from Declaration creation
-  String generateStatusValue(int? statusCode, String httpResponseStatus) {
+  String generateStatusValue(int? statusCode, String? httpResponseStatus) {
     String statusValue = "";
     try {
       if ([200, 201].contains(statusCode)) {
-        statusValue = httpResponseStatus;
+        statusValue = httpResponseStatus!;
       } else if ([400, 500].contains(statusCode)) {
         debugPrint("code error : $statusCode");
       } else if (statusCode == 401) {

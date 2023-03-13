@@ -19,14 +19,40 @@ class _DeclarationApi implements DeclarationApi {
   String? baseUrl;
 
   @override
-  Future<HttpResponse<DeclarationModel>> create(declaration) async {
+  Future<HttpResponse<DeclarationModelIn?>> getDeclaration(id) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>?>(
+        _setStreamType<HttpResponse<DeclarationModelIn>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/declarations/${id}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = _result.data == null
+        ? null
+        : DeclarationModelIn.fromJson(_result.data!);
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
+  @override
+  Future<HttpResponse<DeclarationModelIn>> create(declaration) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(declaration.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<HttpResponse<DeclarationModel>>(Options(
+        _setStreamType<HttpResponse<DeclarationModelIn>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -38,7 +64,7 @@ class _DeclarationApi implements DeclarationApi {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = DeclarationModel.fromJson(_result.data!);
+    final value = DeclarationModelIn.fromJson(_result.data!);
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }

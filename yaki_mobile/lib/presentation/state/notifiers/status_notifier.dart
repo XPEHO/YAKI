@@ -9,7 +9,10 @@ class StatusPageNotifier extends StateNotifier<StateStatusPage> {
 
   StatusPageNotifier(this.declarationRepository)
       : super(
-          StateStatusPage(image: '', text: ''),
+          StateStatusPage(
+            image: 'assets/images/unknown.svg',
+            text: 'default message',
+          ),
         );
 
   void setState(String status) {

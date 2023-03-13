@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:yaki/presentation/state/providers/declaration_provider.dart';
 import 'package:yaki/presentation/state/providers/login_provider.dart';
+import 'package:yaki/presentation/state/providers/status_provider.dart';
 import 'package:yaki/presentation/styles/header_text_style.dart';
 import 'package:yaki/presentation/ui/shared/views/input_app.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -18,9 +20,21 @@ class Authentication extends ConsumerWidget {
     required String login,
     required String password,
     required Function goToDeclarationPage,
+    required Function goToStatusPage,
   }) async {
-    final statusCode = await ref.read(loginProvider.notifier).changeLogin(login, password);
-    if (statusCode == 200) goToDeclarationPage();
+    //final statusCode = await ref.read(loginProvider.notifier).changeLogin(login, password);
+    final statusCode =
+        await ref.read(loginProvider.notifier).changeLogin("dupond", "dupond");
+    if (statusCode == 200) {
+      final statusCodeDecla =
+          await ref.read(declarationProvider.notifier).getDeclaration();
+      if (statusCodeDecla == 200) {
+        ref.read(statusPageProvider.notifier).getSelectedStatus();
+        goToStatusPage();
+      } else {
+        goToDeclarationPage();
+      }
+    }
   }
 
   @override
@@ -113,6 +127,7 @@ class Authentication extends ConsumerWidget {
                           password: passwordController.text,
                           goToDeclarationPage: () =>
                               context.push('/declaration'),
+                          goToStatusPage: () => context.push('/status'),
                         ),
                         child: Text(tr('signIn')),
                       ),
