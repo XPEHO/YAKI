@@ -1,15 +1,15 @@
-import { DeclarationRepository } from './declaration.repository';
-import { DeclarationDtoIn } from './declaration.dtoIn';
+import {DeclarationRepository} from "./declaration.repository";
+import {DeclarationDtoIn} from "./declaration.dtoIn";
 
 export class DeclarationService {
   private declarationRepository: DeclarationRepository;
 
   /**
- * Creates a new instance of DeclarationService.
- * @param declarationRepository The DeclarationRepository instance to be used by this service.
- */
+   * Creates a new instance of DeclarationService.
+   * @param declarationRepository The DeclarationRepository instance to be used by this service.
+   */
   constructor(declarationRepository: DeclarationRepository) {
-    this.declarationRepository = declarationRepository
+    this.declarationRepository = declarationRepository;
   }
 
   /**
@@ -18,14 +18,15 @@ export class DeclarationService {
    * @returns The declaration object.
    */
   async createDeclaration(declaration: DeclarationDtoIn) {
-    if (declaration.declarationTeamMateId
-      && declaration.declarationDate
-      && declaration.declarationStatus !== undefined
-      && declaration.declarationStatus.trim() !== '' ) 
-         {
+    if (
+      declaration.declarationTeamMateId &&
+      declaration.declarationDate &&
+      declaration.declarationStatus !== undefined &&
+      declaration.declarationStatus.trim() !== ""
+    ) {
       return await this.declarationRepository.createDeclaration(declaration);
     } else {
-      throw new TypeError("One or more mandatory information is missing.")
+      throw new TypeError("One or more mandatory information is missing.");
     }
   }
 
@@ -34,12 +35,20 @@ export class DeclarationService {
    * @param {number} teamMateId - number
    * @returns An array of declarations or a string.
    */
-  async getDeclarationsForTeamMate(teamMateId: number): Promise<DeclarationDtoIn[] | String> {
-    const declarations = await this.declarationRepository.getDeclarationsForTeamMate(teamMateId);
-    if (declarations.length > 0) {
-      return declarations;
+  // async getDeclarationsForTeamMate(teamMateId: number): Promise<DeclarationDtoIn[] | String> {
+  //   const declarations = await this.declarationRepository.getDeclarationsForTeamMate(teamMateId);
+  //   if (declarations.length > 0) {
+  //     return declarations;
+  //   } else {
+  //     throw new Error("You have to declare yourself")
+  //   }
+  // }
+  async getDeclarationsForTeamMate(teamMateId: number): Promise<DeclarationDtoIn | String> {
+    const declaration = await this.declarationRepository.getDeclarationsForTeamMate(teamMateId);
+    if (declaration !== null) {
+      return declaration;
     } else {
-      throw new Error("You have to declare yourself")
+      return "You have to declare yourself";
     }
   }
 
@@ -49,15 +58,11 @@ export class DeclarationService {
    * @param {DeclarationDtoIn} declaration - Declaration
    * @returns The declarationRepository.updateDeclarationStatus() ;.
    */
-  async updateDeclarationStatus(
-    declarationId: number,
-    declaration: DeclarationDtoIn,
-  ): Promise<void> {
+  async updateDeclarationStatus(declarationId: number, declaration: DeclarationDtoIn): Promise<void> {
     const existingDeclaration = await this.declarationRepository.getDeclarationById(declarationId);
     if (!existingDeclaration) {
       throw new Error("The declaration does not existe.");
     }
     return this.declarationRepository.updateDeclarationStatus(declarationId, declaration);
   }
-
 }
