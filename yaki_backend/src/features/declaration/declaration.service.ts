@@ -18,6 +18,7 @@ export class DeclarationService {
    * @returns The declaration object.
    */
   async createDeclaration(declaration: DeclarationDtoIn) {
+
     if (
       declaration.declarationTeamMateId &&
       declaration.declarationDate &&
@@ -51,7 +52,15 @@ export class DeclarationService {
       return "You have to declare yourself";
     }
   }
-
+  
+  // async getDeclarationsForTeamMate(teamMateId: number): Promise<DeclarationDtoIn | String> {
+  //   const declaration = await this.declarationRepository.getDeclarationsForTeamMate(teamMateId);
+  //   if (declaration !== null) {
+  //     return declaration;
+  //   } else {
+  //     return "You have to declare yourself";
+  //   }
+  // }
   /**
    * This function updates the status of a declaration.
    * @param {number} declarationId - number,
@@ -66,3 +75,4 @@ export class DeclarationService {
     return this.declarationRepository.updateDeclarationStatus(declarationId, declaration);
   }
 }
+
