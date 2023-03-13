@@ -43,16 +43,41 @@ export class DeclarationRepository {
    * @param {number} teamMateId - number
    * @returns An array of Declaration objects.
    */
+  // async getDeclarationsForTeamMate(teamMateId: number): Promise<DeclarationDtoIn[]> {
+  //   const client = await this.pool.connect();
+  //   try {
+  //     const result = await client.query(
+  //       `SELECT *
+  //         FROM declaration
+  //         WHERE declaration_team_mate_id = $1
+  //         AND declaration_date = current_date
+  //         ORDER BY declaration_id DESC
+  //         LIMIT 1`,
+  //       [teamMateId]
+  //     );
+  //     const declarationToFront = new DeclarationDtoIn(
+  //       result.rows[0].declaration_id,
+  //       result.rows[0].declaration_team_mate_id,
+  //       result.rows[0].declaration_date,
+  //       result.rows[0].declaration_status
+  //     );
+  //     // return result.rows;
+  //     return [declarationToFront];
+  //   } finally {
+  //     client.release();
+  //   }
+  // }
+
   async getDeclarationsForTeamMate(teamMateId: number): Promise<DeclarationDtoIn> {
     const client = await this.pool.connect();
     try {
       const result = await client.query(
         `SELECT *
-          FROM declaration
-          WHERE declaration_team_mate_id = $1
-          AND declaration_date = current_date
-          ORDER BY declaration_id DESC
-          LIMIT 1`,
+        FROM declaration
+        WHERE declaration_team_mate_id = $1
+        AND declaration_date = current_date
+        ORDER BY declaration_id DESC
+        LIMIT 1`,
         [teamMateId]
       );
       const declarationToFront = new DeclarationDtoIn(
@@ -60,37 +85,12 @@ export class DeclarationRepository {
         result.rows[0].declaration_team_mate_id,
         result.rows[0].declaration_date,
         result.rows[0].declaration_status
-      )
-      // return result.rows;
-      return [declarationToFront]
+      );
+      return declarationToFront;
     } finally {
       client.release();
     }
   }
-
-  // async getDeclarationsForTeamMate(teamMateId: number): Promise<DeclarationDtoIn> {
-  //   const client = await this.pool.connect();
-  //   try {
-  //     const result = await client.query(
-  //       `SELECT *
-  //       FROM declaration
-  //       WHERE declaration_team_mate_id = $1
-  //       AND declaration_date = current_date
-  //       ORDER BY declaration_id DESC
-  //       LIMIT 1`,
-  //       [teamMateId],
-  //     );
-  //     const declarationToFront = new DeclarationDtoIn(
-  //       result.rows[0].declaration_id,
-  //       result.rows[0].declaration_team_mate_id,
-  //       result.rows[0].declaration_date,
-  //       result.rows[0].declaration_status
-  //     )
-  //     return declarationToFront;
-  //   } finally {
-  //     client.release();
-  //   }
-  // }
 
   /**
    * "This function updates the declaration_date, declaration_team_mate_id, and declaration_status of a

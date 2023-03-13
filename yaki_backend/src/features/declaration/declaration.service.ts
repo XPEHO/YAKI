@@ -18,7 +18,6 @@ export class DeclarationService {
    * @returns The declaration object.
    */
   async createDeclaration(declaration: DeclarationDtoIn) {
-
     if (
       declaration.declarationTeamMateId &&
       declaration.declarationDate &&
@@ -41,7 +40,7 @@ export class DeclarationService {
   //   if (declarations.length > 0) {
   //     return declarations;
   //   } else {
-  //     throw new Error("You have to declare yourself")
+  //     throw new Error("You have to declare yourself");
   //   }
   // }
   async getDeclarationsForTeamMate(teamMateId: number): Promise<DeclarationDtoIn | String> {
@@ -52,7 +51,7 @@ export class DeclarationService {
       return "You have to declare yourself";
     }
   }
-  
+
   // async getDeclarationsForTeamMate(teamMateId: number): Promise<DeclarationDtoIn | String> {
   //   const declaration = await this.declarationRepository.getDeclarationsForTeamMate(teamMateId);
   //   if (declaration !== null) {
@@ -75,4 +74,3 @@ export class DeclarationService {
     return this.declarationRepository.updateDeclarationStatus(declarationId, declaration);
   }
 }
-
