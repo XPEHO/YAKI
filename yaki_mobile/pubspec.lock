@@ -528,7 +528,7 @@ packages:
       name: retrofit_generator
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.0.0+1"
+    version: "5.0.0+1"
   riverpod:
     dependency: transitive
     description:
