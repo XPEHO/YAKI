@@ -35,31 +35,16 @@ export class DeclarationService {
    * @param {number} teamMateId - number
    * @returns An array of declarations or a string.
    */
-  // async getDeclarationsForTeamMate(teamMateId: number): Promise<DeclarationDtoIn[] | String> {
-  //   const declarations = await this.declarationRepository.getDeclarationsForTeamMate(teamMateId);
-  //   if (declarations.length > 0) {
-  //     return declarations;
-  //   } else {
-  //     throw new Error("You have to declare yourself");
-  //   }
-  // }
+
   async getDeclarationsForTeamMate(teamMateId: number): Promise<DeclarationDtoIn | String> {
     const declaration = await this.declarationRepository.getDeclarationsForTeamMate(teamMateId);
     if (declaration !== null) {
       return declaration;
     } else {
-      return "You have to declare yourself";
+      throw new Error("You have to declare yourself");
     }
   }
 
-  // async getDeclarationsForTeamMate(teamMateId: number): Promise<DeclarationDtoIn | String> {
-  //   const declaration = await this.declarationRepository.getDeclarationsForTeamMate(teamMateId);
-  //   if (declaration !== null) {
-  //     return declaration;
-  //   } else {
-  //     return "You have to declare yourself";
-  //   }
-  // }
   /**
    * This function updates the status of a declaration.
    * @param {number} declarationId - number,

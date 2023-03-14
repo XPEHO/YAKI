@@ -9,16 +9,16 @@ class DeclarationRepository {
 
   DeclarationRepository(this._declarationApi);
 
-  Future<int?> getDeclaration(String teamMateId) async {
+  Future<String> getDeclaration(String teamMateId) async {
     try {
       final lastDeclaration = await _declarationApi.getDeclaration(teamMateId);
       final statusCode = lastDeclaration.response.statusCode;
 
+      String status = "";
+
       switch (statusCode) {
         case 200:
-          declarationStatus = DeclarationStatus(
-            status: lastDeclaration.data!.declarationStatus!,
-          );
+          status = lastDeclaration.data!.declarationStatus!;
           break;
         case 500:
           debugPrint("No declaration for this day");
@@ -26,12 +26,15 @@ class DeclarationRepository {
         default:
           throw Exception(lastDeclaration.response.statusMessage);
       }
-      return statusCode;
+      declarationStatus = DeclarationStatus(
+        status: lastDeclaration.data!.declarationStatus!,
+      );
+      return status;
     } catch (err) {
       debugPrint('$err');
     }
-    // add return because CI 
-    return 0;
+    // add return because CI
+    return "";
   }
 
   /// Invoke DeclarationAPI to POST a declaration.

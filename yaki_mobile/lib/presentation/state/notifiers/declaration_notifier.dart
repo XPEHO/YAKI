@@ -10,11 +10,11 @@ class DeclarationNotifier extends StateNotifier<String> {
   DeclarationNotifier(this.declarationRepository, this.loginRepository)
       : super("");
 
-  Future<int?> getDeclaration() async {
+  Future<String> getDeclaration() async {
     final teamMateId = loginRepository.teamMateId.toString();
-    final statusCode = await declarationRepository.getDeclaration(teamMateId);
+    final declarationStatus = await declarationRepository.getDeclaration(teamMateId);
 
-    return statusCode;
+    return declarationStatus;
   }
 
   Future<void> create(String status) async {
