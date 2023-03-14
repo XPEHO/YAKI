@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:yaki/domain/entities/declaration_status.dart';
 import 'package:yaki/presentation/state/providers/declaration_provider.dart';
 import 'package:yaki/presentation/state/providers/login_provider.dart';
 import 'package:yaki/presentation/state/providers/status_provider.dart';
@@ -27,7 +28,7 @@ class Authentication extends ConsumerWidget {
     if (statusCode == 200) {
       final declarationStatus =
           await ref.read(declarationProvider.notifier).getDeclaration();
-      if (declarationStatus != "") {
+      if (declarationStatus != emptyDeclarationStatus) {
         ref.read(statusPageProvider.notifier).getSelectedStatus();
         goToStatusPage();
       } else {

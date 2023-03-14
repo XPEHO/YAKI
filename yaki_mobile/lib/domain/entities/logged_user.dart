@@ -11,3 +11,5 @@ class LoggedUser {
     required this.email,
   });
 }
+
+const String incorrectLogin = "";

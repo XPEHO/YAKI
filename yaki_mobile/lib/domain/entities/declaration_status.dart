@@ -5,3 +5,5 @@ class DeclarationStatus {
     required this.status,
   });
 }
+
+const String emptyDeclarationStatus = "";

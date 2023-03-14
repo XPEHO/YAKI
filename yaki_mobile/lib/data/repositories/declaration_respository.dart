@@ -20,7 +20,7 @@ class DeclarationRepository {
         case 200:
           status = lastDeclaration.data!.declarationStatus!;
           break;
-        case 500:
+        case 404:
           debugPrint("No declaration for this day");
           break;
         default:

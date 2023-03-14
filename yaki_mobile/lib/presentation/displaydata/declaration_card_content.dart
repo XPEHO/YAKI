@@ -1,8 +1,8 @@
 // values are the json object's keys from assets/translations/*.json files
-const String remote = 'Remote';
-const String onSite = 'On site';
-const String vacations = 'Vacation';
-const String other = 'Other';
+const String remote = 'REMOTE';
+const String onSite = 'ON_SITE';
+const String vacations = 'VACATION';
+const String other = 'OTHER';
 
 final List statusCardsContent = [
   {
