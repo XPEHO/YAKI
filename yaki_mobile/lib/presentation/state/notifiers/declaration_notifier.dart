@@ -12,7 +12,8 @@ class DeclarationNotifier extends StateNotifier<String> {
 
   Future<String> getDeclaration() async {
     final teamMateId = loginRepository.teamMateId.toString();
-    final declarationStatus = await declarationRepository.getDeclaration(teamMateId);
+    final declarationStatus =
+        await declarationRepository.getDeclaration(teamMateId);
 
     return declarationStatus;
   }
