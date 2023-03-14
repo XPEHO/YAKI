@@ -1,0 +1,6 @@
+*.g.dart linguist-generated
+*.freezed.dart linguist-generated
+*.mocks.dart linguist-generated
+*.look.dart linguist-generated
+*.lookgolden.dart linguist-generated
+*.lock linguist-generated
