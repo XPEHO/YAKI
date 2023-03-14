@@ -1,9 +1,10 @@
 name: Add labels when pull request is opened
-on: pull_request
+on: [pull_request, workflow_dispatch]
 jobs:
   add-label:
     name: Add labels on pull request
     runs-on: ubuntu-latest
+    if: ${{ github.actor != 'dependabot[bot]' }}
     steps:
       - run: |
           if [[ "${{ github.head_ref }}" == chore/* ]]; then
