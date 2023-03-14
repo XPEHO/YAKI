@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yaki/domain/entities/declaration_status.dart';
+import 'package:yaki/domain/entities/logged_user.dart';
 import 'package:yaki/presentation/state/providers/declaration_provider.dart';
 import 'package:yaki/presentation/state/providers/login_provider.dart';
 import 'package:yaki/presentation/state/providers/status_provider.dart';
@@ -23,9 +24,9 @@ class Authentication extends ConsumerWidget {
     required Function goToDeclarationPage,
     required Function goToStatusPage,
   }) async {
-    final statusCode =
+    final userLoggedIn =
         await ref.read(loginProvider.notifier).changeLogin(login, password);
-    if (statusCode == 200) {
+    if (userLoggedIn != incorrectLoggedIn) {
       final declarationStatus =
           await ref.read(declarationProvider.notifier).getDeclaration();
       if (declarationStatus != emptyDeclarationStatus) {

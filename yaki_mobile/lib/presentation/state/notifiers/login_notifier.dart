@@ -10,7 +10,7 @@ class LoginNotifier extends StateNotifier<int> {
     this.repository,
   ) : super(0);
 
-  Future<int?> changeLogin(String newLogin, String newPassword) async {
+  Future<String?> changeLogin(String newLogin, String newPassword) async {
     final hashPass = Crypt.sha256(
       newPassword,
       rounds: 10000,
@@ -18,7 +18,7 @@ class LoginNotifier extends StateNotifier<int> {
     );
     final newLog = Login(login: newLogin, password: hashPass.toString());
 
-    final statusCode = await repository.postLogin(newLog);
-    return statusCode;
+    final userLoggedIn = await repository.postLogin(newLog);
+    return userLoggedIn;
   }
 }

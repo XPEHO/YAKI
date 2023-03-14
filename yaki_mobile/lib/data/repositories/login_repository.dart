@@ -14,7 +14,7 @@ class LoginRepository {
 
   /// Methode invoking the API postLogin method to POST log informations.
   /// then retreive the status code from handleResponse method.
-  Future<int?> postLogin(Login login) async {
+  Future<String?> postLogin(Login login) async {
     final authenticationResponse = await _loginApi.postLogin(login);
     return handleResponse(authenticationResponse);
   }
@@ -23,8 +23,9 @@ class LoginRepository {
   /// response statusCode == 200.
   /// Otherwise, debuglog the statuscode (for now).
   /// Return the statusCode in order to use it, to determine if user can go to the next page.
-  int? handleResponse(HttpResponse<Authentication?> response) {
+  String? handleResponse(HttpResponse<Authentication?> response) {
     final statusCode = response.response.statusCode;
+    String userLoggedIn = "";
 
     try {
       if (statusCode == 200) {
@@ -36,6 +37,7 @@ class LoginRepository {
           firstName: data.firstName,
           email: data.email,
         );
+        userLoggedIn = data.firstName;
       } else if (statusCode == 401) {
         debugPrint("Invalid token, code : $statusCode");
       } else if (statusCode == 204) {
@@ -44,7 +46,7 @@ class LoginRepository {
     } catch (exception) {
       debugPrint('login exception : $exception');
     }
-    return statusCode;
+    return userLoggedIn;
   }
 
   /// teamMateId getter, used at declaration object creation, in order to POST it.

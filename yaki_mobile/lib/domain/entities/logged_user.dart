@@ -12,4 +12,4 @@ class LoggedUser {
   });
 }
 
-const String incorrectLogin = "";
+const String incorrectLoggedIn = "";
