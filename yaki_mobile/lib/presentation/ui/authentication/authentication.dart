@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:yaki/data/sources/local/shared_preference.dart';
+import 'package:yaki/domain/entities/declaration_status.dart';
+import 'package:yaki/presentation/state/providers/declaration_provider.dart';
 import 'package:yaki/presentation/state/providers/login_provider.dart';
+import 'package:yaki/presentation/state/providers/status_provider.dart';
 import 'package:yaki/presentation/styles/header_text_style.dart';
 import 'package:yaki/presentation/ui/shared/views/input_app.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -13,10 +17,24 @@ class Authentication extends ConsumerWidget {
   final loginController = TextEditingController();
   final passwordController = TextEditingController();
 
-  void onPressAuthent(WidgetRef ref, login, password) {
-    ref.read(loginProvider);
-
-    ref.read(loginProvider.notifier).changeLogin(login, password);
+  void onPressAuthent({
+    required WidgetRef ref,
+    required String login,
+    required String password,
+    required Function goToDeclarationPage,
+    required Function goToStatusPage,
+  }) async {
+    await ref.read(loginRepositoryProvider).userAuthentication(login, password);
+    if (await isTokenPresent()) {
+      final declarationStatus =
+          await ref.read(declarationProvider.notifier).getDeclaration();
+      if (declarationStatus != emptyDeclarationStatus) {
+        ref.read(statusPageProvider.notifier).getSelectedStatus();
+        goToStatusPage();
+      } else {
+        goToDeclarationPage();
+      }
+    }
   }
 
   @override
@@ -103,14 +121,14 @@ class Authentication extends ConsumerWidget {
                             left: 50,
                           ),
                         ),
-                        onPressed: () {
-                          onPressAuthent(
-                            ref,
-                            loginController.text,
-                            passwordController.text,
-                          );
-                          context.go('/declaration');
-                        },
+                        onPressed: () => onPressAuthent(
+                          ref: ref,
+                          login: loginController.text,
+                          password: passwordController.text,
+                          goToDeclarationPage: () =>
+                              context.push('/declaration'),
+                          goToStatusPage: () => context.push('/status'),
+                        ),
                         child: Text(tr('signIn')),
                       ),
                     ),

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'login_api.dart';
+part of 'status_api.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,8 +8,8 @@ part of 'login_api.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
-class _LoginService implements LoginService {
-  _LoginService(
+class _StatusApi implements StatusApi {
+  _StatusApi(
     this._dio, {
     this.baseUrl,
   });
@@ -19,27 +19,27 @@ class _LoginService implements LoginService {
   String? baseUrl;
 
   @override
-  Future<Login?> postLogin(login) async {
+  Future<HttpResponse<DeclarationModel>> getDeclaration(teamMateId) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(login.toJson());
-    final _result =
-        await _dio.fetch<Map<String, dynamic>?>(_setStreamType<Login>(Options(
-      method: 'POST',
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<HttpResponse<DeclarationModel>>(Options(
+      method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              '/login',
+              '/status/${teamMateId}',
               queryParameters: queryParameters,
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = _result.data == null ? null : Login.fromJson(_result.data!);
-    return value;
+    final value = DeclarationModel.fromJson(_result.data!);
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {

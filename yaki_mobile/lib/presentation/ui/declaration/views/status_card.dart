@@ -4,13 +4,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 class StatusCard extends StatelessWidget {
   final String statusPicto;
   final String statusName;
-  final VoidCallback getClick;
+  final VoidCallback onPress;
 
   const StatusCard({
     super.key,
     required this.statusName,
     required this.statusPicto,
-    required this.getClick,
+    required this.onPress,
   });
 
   @override
@@ -19,7 +19,7 @@ class StatusCard extends StatelessWidget {
       width: MediaQuery.of(context).size.width * 0.37,
       height: MediaQuery.of(context).size.width * 0.37,
       child: ElevatedButton(
-        onPressed: getClick,
+        onPressed: onPress,
         style: ElevatedButton.styleFrom(
           elevation: 5,
           shadowColor: Colors.black,
