@@ -18,7 +18,7 @@ final declarationRepositoryProvider = Provider(
   ),
 );
 
-final declarationProvider = StateNotifierProvider<DeclarationNotifier, dynamic>(
+final declarationProvider = StateNotifierProvider<DeclarationNotifier, void>(
   (ref) => DeclarationNotifier(
     ref.read(declarationRepositoryProvider),
     ref.read(loginRepositoryProvider),

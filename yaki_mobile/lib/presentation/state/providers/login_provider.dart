@@ -19,7 +19,7 @@ final loginRepositoryProvider = Provider<LoginRepository>(
   (ref) => LoginRepository(ref.read(loginServiceProvider)),
 );
 
-final loginProvider = StateNotifierProvider<LoginNotifier, String>(
+final loginProvider = StateNotifierProvider<LoginNotifier, int>(
   (ref) => LoginNotifier(
     ref.read(
       loginRepositoryProvider,

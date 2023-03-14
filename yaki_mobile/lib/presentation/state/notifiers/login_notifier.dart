@@ -3,12 +3,12 @@ import 'package:yaki/data/models/login.dart';
 import 'package:yaki/data/repositories/login_repository.dart';
 import 'package:crypt/crypt.dart';
 
-class LoginNotifier extends StateNotifier<String> {
+class LoginNotifier extends StateNotifier<int> {
   final LoginRepository repository;
 
   LoginNotifier(
     this.repository,
-  ) : super("");
+  ) : super(0);
 
   Future<int?> changeLogin(String newLogin, String newPassword) async {
     final hashPass = Crypt.sha256(

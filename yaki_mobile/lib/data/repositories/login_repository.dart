@@ -7,15 +7,15 @@ import 'package:yaki/data/models/login.dart';
 import 'package:yaki/domain/entities/logged_user.dart';
 
 class LoginRepository {
-  final LoginApi _loginService;
+  final LoginApi _loginApi;
   LoggedUser? loggedUser;
 
-  LoginRepository(this._loginService);
+  LoginRepository(this._loginApi);
 
   /// Methode invoking the API postLogin method to POST log informations.
   /// then retreive the status code from handleResponse method.
   Future<int?> postLogin(Login login) async {
-    final authenticationResponse = await _loginService.postLogin(login);
+    final authenticationResponse = await _loginApi.postLogin(login);
     return handleResponse(authenticationResponse);
   }
 
@@ -25,12 +25,13 @@ class LoginRepository {
   /// Return the statusCode in order to use it, to determine if user can go to the next page.
   int? handleResponse(HttpResponse<Authentication?> response) {
     final statusCode = response.response.statusCode;
-    final data = response.data!;
+
     try {
       if (statusCode == 200) {
+        final data = response.data!;
         addTokenToSharedPreference(response.data!.token);
         loggedUser = LoggedUser(
-          teamMateid: data.teamMateId!,
+          teamMateid: data.teamMateId,
           lastName: data.lastName,
           firstName: data.firstName,
           email: data.email,

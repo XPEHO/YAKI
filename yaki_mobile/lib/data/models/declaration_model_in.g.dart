@@ -8,11 +8,11 @@ part of 'declaration_model_in.dart';
 
 DeclarationModelIn _$DeclarationModelInFromJson(Map<String, dynamic> json) =>
     DeclarationModelIn(
-      declarationId: json['declarationId'] as int?,
+      declarationId: json['declarationId'] as int,
       declarationDate: json['declarationDate'] == null
           ? null
           : DateTime.parse(json['declarationDate'] as String),
-      declarationTeamMateId: json['declarationTeamMateId'] as int?,
+      declarationTeamMateId: json['declarationTeamMateId'] as int,
       declarationStatus: json['declarationStatus'] as String?,
     );
 

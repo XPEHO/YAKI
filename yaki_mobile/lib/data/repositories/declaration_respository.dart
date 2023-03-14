@@ -10,15 +10,26 @@ class DeclarationRepository {
   DeclarationRepository(this._declarationApi);
 
   Future<int?> getDeclaration(String teamMateId) async {
-    final lastDeclaration = await _declarationApi.getDeclaration(teamMateId);
-    final statusCode = lastDeclaration.response.statusCode;
+    try {
+      final lastDeclaration = await _declarationApi.getDeclaration(teamMateId);
+      final statusCode = lastDeclaration.response.statusCode;
 
-    if (statusCode == 200) {
-      declarationStatus = DeclarationStatus(
-        status: lastDeclaration.data!.declarationStatus!,
-      );
+      switch (statusCode) {
+        case 200:
+          declarationStatus = DeclarationStatus(
+            status: lastDeclaration.data!.declarationStatus!,
+          );
+          break;
+        case 500:
+          debugPrint("No declaration for this day");
+          break;
+        default :
+          throw Exception(lastDeclaration.response.statusMessage);
+      }
+      return statusCode;
+    } catch (err) {
+      debugPrint('$err');
     }
-    return statusCode;
   }
 
   /// Invoke DeclarationAPI to POST a declaration.
@@ -29,7 +40,7 @@ class DeclarationRepository {
     final httpResponse = await _declarationApi.create(declaration);
     final statusCode = httpResponse.response.statusCode;
 
-    String statusValue = generateStatusValue(
+    String statusValue = handleDeclarationStatus(
       statusCode,
       httpResponse.data.declarationStatus,
     );
@@ -40,7 +51,7 @@ class DeclarationRepository {
 
   /// generate statusValue based on HttpResponse status code,
   /// coming from Declaration creation
-  String generateStatusValue(int? statusCode, String? httpResponseStatus) {
+  String handleDeclarationStatus(int? statusCode, String? httpResponseStatus) {
     String statusValue = "";
     try {
       if ([200, 201].contains(statusCode)) {
