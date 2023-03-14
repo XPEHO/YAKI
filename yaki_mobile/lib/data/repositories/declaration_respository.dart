@@ -23,13 +23,15 @@ class DeclarationRepository {
         case 500:
           debugPrint("No declaration for this day");
           break;
-        default :
+        default:
           throw Exception(lastDeclaration.response.statusMessage);
       }
       return statusCode;
     } catch (err) {
       debugPrint('$err');
     }
+    // add return because CI 
+    return 0;
   }
 
   /// Invoke DeclarationAPI to POST a declaration.
