@@ -20,3 +20,18 @@ Mobile front-end of the Yaki application
 - [Shared Preferences](https://pub.dev/packages/shared_preferences) : Wraps platform-specific persistent storage for simple data
 - [Mockito](https://pub.dev/packages/mockito) : Mock library for Dart
 - [Golden Toolkit](https://pub.dev/packages/golden_toolkit) : Lets you quickly test various states of your widgets
+
+## Run on the web
+
+**Compilation**
+
+```bash
+flutter build web --release --dart-define API_BASE_URL=https://www.api-base-url.com/
+docker build -t yaki-mobile-web .
+```
+
+**Run**
+
+```bash
+docker run -p 8080:80 yaki-mobile-web
+```
