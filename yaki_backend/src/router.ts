@@ -45,7 +45,7 @@ router.get("/teamMates", async (_, res) => {
     `
             SELECT *
             FROM public.user
-            INNER JOIN public.team_mate ON user_id = team_mate_id
+            INNER JOIN public.team_mate ON user_id = team_mate_user_id
             INNER JOIN (
                 SELECT
                     MAX(declaration_date) AS declaration_date,
