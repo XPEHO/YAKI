@@ -31,14 +31,15 @@ class Authentication extends ConsumerWidget {
     if (await isTokenPresent()) {
       if (isCaptain) {
         goToCaptain();
-      }
-      final declarationStatus =
-          await ref.read(declarationProvider.notifier).getDeclaration();
-      if (declarationStatus != emptyDeclarationStatus) {
-        ref.read(statusPageProvider.notifier).getSelectedStatus();
-        goToStatusPage();
       } else {
-        goToDeclarationPage();
+        final declarationStatus =
+            await ref.read(declarationProvider.notifier).getDeclaration();
+        if (declarationStatus != emptyDeclarationStatus) {
+          ref.read(statusPageProvider.notifier).getSelectedStatus();
+          goToStatusPage();
+        } else {
+          goToDeclarationPage();
+        }
       }
     }
   }
