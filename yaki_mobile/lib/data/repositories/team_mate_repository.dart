@@ -12,12 +12,12 @@ class TeamMateRepository {
     this.teamMateEntity,
   });
 
-  Future<List<TeamMateEntity>?> getTeamMate() async {
+  Future<List<TeamMateEntity>> getTeamMate() async {
     try {
       final listTeamMateModel = await teamMateApi.getTeamMate();
       teamMatelist = listTeamMateModel.map((e) {
         return TeamMateEntity(
-          userFirstname: e.userFirstName,
+          userFirstName: e.userFirstName,
           userLastName: e.userLastName,
           declarationDate: e.declarationDate,
           declarationStatus: e.declarationStatus,

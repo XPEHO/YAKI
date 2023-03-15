@@ -5,7 +5,7 @@ part 'declaration_model.g.dart';
 @JsonSerializable()
 class DeclarationModel {
   DateTime declarationDate;
-  int declarationTeamMateId;
+  int? declarationTeamMateId;
   String declarationStatus;
 
   // Remote, On site, Vacation, Other

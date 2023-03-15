@@ -12,6 +12,6 @@ class TeamMateNotifier extends StateNotifier<List<TeamMateEntity>> {
 
   Future<void> fetchTeamMates() async {
     final teamList = await teamMateRepository.getTeamMate();
-    state = teamList ?? [];
+    state = teamList;
   }
 }

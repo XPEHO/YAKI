@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -7,9 +8,8 @@ import 'package:yaki/presentation/state/providers/declaration_provider.dart';
 import 'package:yaki/presentation/state/providers/login_provider.dart';
 import 'package:yaki/presentation/state/providers/status_provider.dart';
 import 'package:yaki/presentation/styles/header_text_style.dart';
-import 'package:yaki/presentation/ui/shared/views/input_app.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:yaki/presentation/ui/shared/views/header.dart';
+import 'package:yaki/presentation/ui/shared/views/input_app.dart';
 
 class Authentication extends ConsumerWidget {
   Authentication({super.key});
@@ -23,16 +23,23 @@ class Authentication extends ConsumerWidget {
     required String password,
     required Function goToDeclarationPage,
     required Function goToStatusPage,
+    required Function goToCaptain,
   }) async {
-    await ref.read(loginRepositoryProvider).userAuthentication(login, password);
+    final bool isCaptain = await ref
+        .read(loginRepositoryProvider)
+        .userAuthentication(login, password);
     if (await isTokenPresent()) {
-      final declarationStatus =
-          await ref.read(declarationProvider.notifier).getDeclaration();
-      if (declarationStatus != emptyDeclarationStatus) {
-        ref.read(statusPageProvider.notifier).getSelectedStatus();
-        goToStatusPage();
+      if (isCaptain) {
+        goToCaptain();
       } else {
-        goToDeclarationPage();
+        final declarationStatus =
+            await ref.read(declarationProvider.notifier).getDeclaration();
+        if (declarationStatus != emptyDeclarationStatus) {
+          ref.read(statusPageProvider.notifier).getSelectedStatus();
+          goToStatusPage();
+        } else {
+          goToDeclarationPage();
+        }
       }
     }
   }
@@ -127,7 +134,8 @@ class Authentication extends ConsumerWidget {
                           password: passwordController.text,
                           goToDeclarationPage: () =>
                               context.push('/declaration'),
-                          goToStatusPage: () => context.push('/status'),
+                          goToStatusPage: () => context.go('/status'),
+                          goToCaptain: () => context.go('/captain'),
                         ),
                         child: Text(tr('signIn')),
                       ),

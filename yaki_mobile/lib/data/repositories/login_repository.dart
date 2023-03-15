@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:retrofit/retrofit.dart';
-import 'package:yaki/data/models/authentication.dart';
+import 'package:yaki/data/models/user.dart';
 import 'package:yaki/data/sources/local/shared_preference.dart';
 import 'package:yaki/data/sources/remote/login_api.dart';
 import 'package:yaki/data/models/login.dart';
@@ -13,14 +13,17 @@ class LoginRepository {
 
   LoginRepository(this._loginApi);
 
-  Future<void> userAuthentication(String login, String password) async {
+  Future<bool> userAuthentication(String login, String password) async {
     Login newLog = Login(login: login, password: hashPassword(password));
 
     final authenticationResponse = await _loginApi.postLogin(newLog);
-    handleResponse(authenticationResponse);
+    bool isCaptain = handleResponse(authenticationResponse);
+
+    return isCaptain;
   }
 
-  void handleResponse(HttpResponse<Authentication?> response) {
+  bool handleResponse(HttpResponse<User?> response) {
+    bool isCaptain = false;
     try {
       final statusCode = response.response.statusCode;
 
@@ -34,6 +37,11 @@ class LoginRepository {
             firstName: data.firstName,
             email: data.email,
           );
+
+          if (response.data?.captainId != null) {
+            isCaptain = true;
+          }
+
           break;
         case 204:
           debugPrint("invalid login informations, code : $statusCode");
@@ -47,6 +55,8 @@ class LoginRepository {
     } catch (err) {
       debugPrint('login exception : $err');
     }
+
+    return isCaptain;
   }
 
   /// hash password received from authentication page
@@ -62,7 +72,7 @@ class LoginRepository {
   }
 
   /// teamMateId getter, used at declaration object creation, in order to POST it.
-  int get teamMateId {
-    return loggedUser!.teamMateid;
+  int? get teamMateId {
+    return loggedUser?.teamMateid;
   }
 }

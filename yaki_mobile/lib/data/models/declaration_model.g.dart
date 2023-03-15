@@ -9,7 +9,7 @@ part of 'declaration_model.dart';
 DeclarationModel _$DeclarationModelFromJson(Map<String, dynamic> json) =>
     DeclarationModel(
       declarationDate: DateTime.parse(json['declarationDate'] as String),
-      declarationTeamMateId: json['declarationTeamMateId'] as int,
+      declarationTeamMateId: json['declarationTeamMateId'] as int?,
       declarationStatus: json['declarationStatus'] as String,
     );
 
