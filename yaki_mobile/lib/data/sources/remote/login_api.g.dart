@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'captain_api.dart';
+part of 'login_api.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,8 +8,8 @@ part of 'captain_api.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
-class _CaptainApi implements CaptainApi {
-  _CaptainApi(
+class _LoginApi implements LoginApi {
+  _LoginApi(
     this._dio, {
     this.baseUrl,
   });
@@ -19,26 +19,29 @@ class _CaptainApi implements CaptainApi {
   String? baseUrl;
 
   @override
-  Future<CaptainModel> getCaptain() async {
+  Future<HttpResponse<Authentication?>> postLogin(login) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
-    final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<CaptainModel>(Options(
-      method: 'GET',
+    final _data = <String, dynamic>{};
+    _data.addAll(login.toJson());
+    final _result = await _dio.fetch<Map<String, dynamic>?>(
+        _setStreamType<HttpResponse<Authentication>>(Options(
+      method: 'POST',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              '/captains',
+              '/login',
               queryParameters: queryParameters,
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = CaptainModel.fromJson(_result.data!);
-    return value;
+    final value =
+        _result.data == null ? null : Authentication.fromJson(_result.data!);
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {

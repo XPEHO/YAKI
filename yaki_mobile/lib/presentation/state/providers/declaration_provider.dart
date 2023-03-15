@@ -1,15 +1,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:dio/dio.dart';
-import 'package:yaki/data/models/declaration_model.dart';
 import 'package:yaki/data/repositories/declaration_respository.dart';
-import 'package:yaki/data/sources/declaration_api.dart';
+import 'package:yaki/data/sources/remote/declaration_api.dart';
 import 'package:yaki/presentation/state/notifiers/declaration_notifier.dart';
-
-final dioProvider = Provider((ref) => Dio());
+import 'package:yaki/presentation/state/dio/dio_interceptor.dart';
+import 'package:yaki/presentation/state/providers/login_provider.dart';
 
 final declarationApiProvider = Provider(
   (ref) => DeclarationApi(
-    ref.read(dioProvider),
+    ref.read(dioInterceptor),
     baseUrl: const String.fromEnvironment('API_BASE_URL'),
   ),
 );
@@ -20,9 +18,9 @@ final declarationRepositoryProvider = Provider(
   ),
 );
 
-final declarationProvider =
-    StateNotifierProvider<DeclarationNotifier, DeclarationModel>(
+final declarationProvider = StateNotifierProvider<DeclarationNotifier, void>(
   (ref) => DeclarationNotifier(
     ref.read(declarationRepositoryProvider),
+    ref.read(loginRepositoryProvider),
   ),
 );

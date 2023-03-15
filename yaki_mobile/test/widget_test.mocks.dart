@@ -6,8 +6,10 @@
 import 'dart:async' as _i4;
 
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:yaki/data/models/declaration_model.dart' as _i2;
-import 'package:yaki/data/sources/declaration_api.dart' as _i3;
+import 'package:retrofit/retrofit.dart' as _i2;
+import 'package:yaki/data/models/declaration_model.dart' as _i6;
+import 'package:yaki/data/models/declaration_model_in.dart' as _i5;
+import 'package:yaki/data/sources/remote/declaration_api.dart' as _i3;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -20,9 +22,9 @@ import 'package:yaki/data/sources/declaration_api.dart' as _i3;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeDeclarationModel_0 extends _i1.SmartFake
-    implements _i2.DeclarationModel {
-  _FakeDeclarationModel_0(
+class _FakeHttpResponse_0<T> extends _i1.SmartFake
+    implements _i2.HttpResponse<T> {
+  _FakeHttpResponse_0(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -40,19 +42,38 @@ class MockDeclarationApi extends _i1.Mock implements _i3.DeclarationApi {
   }
 
   @override
-  _i4.Future<_i2.DeclarationModel> create(_i2.DeclarationModel? declaration) =>
+  _i4.Future<_i2.HttpResponse<_i5.DeclarationModelIn?>> getDeclaration(
+          String? id) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getDeclaration,
+          [id],
+        ),
+        returnValue:
+            _i4.Future<_i2.HttpResponse<_i5.DeclarationModelIn?>>.value(
+                _FakeHttpResponse_0<_i5.DeclarationModelIn?>(
+          this,
+          Invocation.method(
+            #getDeclaration,
+            [id],
+          ),
+        )),
+      ) as _i4.Future<_i2.HttpResponse<_i5.DeclarationModelIn?>>);
+  @override
+  _i4.Future<_i2.HttpResponse<_i5.DeclarationModelIn>> create(
+          _i6.DeclarationModel? declaration) =>
       (super.noSuchMethod(
         Invocation.method(
           #create,
           [declaration],
         ),
-        returnValue:
-            _i4.Future<_i2.DeclarationModel>.value(_FakeDeclarationModel_0(
+        returnValue: _i4.Future<_i2.HttpResponse<_i5.DeclarationModelIn>>.value(
+            _FakeHttpResponse_0<_i5.DeclarationModelIn>(
           this,
           Invocation.method(
             #create,
             [declaration],
           ),
         )),
-      ) as _i4.Future<_i2.DeclarationModel>);
+      ) as _i4.Future<_i2.HttpResponse<_i5.DeclarationModelIn>>);
 }

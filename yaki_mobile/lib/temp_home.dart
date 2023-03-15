@@ -52,7 +52,7 @@ class ButtonRoute extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         fixedSize: const Size(100, 70),
       ),
-      onPressed: () => context.go(route),
+      onPressed: () => context.push(route),
       child: Text(
         btnText,
         style: const TextStyle(fontSize: 18),

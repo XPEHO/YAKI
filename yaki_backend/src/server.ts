@@ -30,6 +30,8 @@ app.use(router);
 
 // Get the value of the PORT environment variable
 const port = process.env.Port;
+// Get the value of the HOST environment variable
+const host = process.env.Host
 
 // Setting up the Swagger UI middleware
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
@@ -44,6 +46,6 @@ app.use(bodyParser.urlencoded({ extends: false }))
 app.use(declarationRouter);
 
 // Starting the server and logging a message to the console
-app.listen( 3000, () => {
-  console.log(`[Server]: I am running at https://localhost:${port}` );
+app.listen( `${port}`, () => {
+  console.log(`[Server]: I am running at ${host}:${port}` );
 });

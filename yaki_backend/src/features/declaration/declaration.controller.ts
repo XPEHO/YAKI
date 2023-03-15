@@ -3,6 +3,8 @@ import { Request, Response } from 'express';
 import { DeclarationDtoIn } from "./declaration.dtoIn";
 
 
+
+
 export class DeclarationController {
     private declarationService: DeclarationService;
 
@@ -26,6 +28,7 @@ export class DeclarationController {
             const createdDeclaration = await this.declarationService.createDeclaration(declaration);
             res.status(201).json(createdDeclaration);
         } catch (error: any) {
+
             if (error instanceof TypeError) {
                 // catch bad request errors 
                 res.status(400).json({ message: error.message });
@@ -35,4 +38,47 @@ export class DeclarationController {
             }
         }
     }
+
+    /**
+     * It gets the declaration for a team mate.
+     * @param {Request} req - Request - the request object
+     * @param {Response} res - Response - the response object
+     */
+    async getDeclarationsForTeamMate(req: Request, res: Response) {
+        const teamMateId = Number(req.query.teamMateId);
+        try {
+            const declarations = await this.declarationService.getDeclarationForTeamMate(teamMateId);
+            res.status(200).json(declarations);
+        } catch (error: any) {
+            if (error instanceof TypeError) {
+                // catch not found errors
+                res.status(404).json({ message: error.message });
+            } else {
+                // catch server errors 
+                res.status(500).json({ message: error.message });
+            }
+        }
+    }
+
+    /**
+     * Updating the declaration status.
+     * @param req The incoming HTTP request.
+     * @param res The HTTP response to be sent.
+     */
+    async updateDeclarationStatus(req: Request, res: Response) {
+        const declarationId = parseInt(req.params.declarationId);
+        const declaration: DeclarationDtoIn = req.body;
+        try {
+            await this.declarationService.updateDeclarationStatus(declarationId, declaration);
+            res.status(200).json(declaration);
+        } catch (error: any) {
+            if (error instanceof TypeError) {
+                // catch not found errors
+                res.status(404).json({ message: error.message });
+            } else {
+                // catch server errors 
+                res.status(500).json({ message: error.message });
+            }
+        }
+    };
 }
