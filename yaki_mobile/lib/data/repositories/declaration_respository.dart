@@ -12,6 +12,7 @@ class DeclarationRepository {
   DeclarationRepository(this._declarationApi);
 
   Future<String> getDeclaration(String teamMateId) async {
+    /**/
     String status = "";
     try {
       final lastDeclaration = await _declarationApi.getDeclaration(teamMateId);

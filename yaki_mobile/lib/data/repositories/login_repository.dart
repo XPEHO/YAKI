@@ -38,7 +38,7 @@ class LoginRepository {
             email: data.email,
           );
 
-          if(response.data?.captainId != null) {
+          if (response.data?.captainId != null) {
             isCaptain = true;
           }
 
