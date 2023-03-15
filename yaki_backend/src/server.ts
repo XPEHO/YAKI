@@ -15,6 +15,8 @@ import { initdb } from './db/initdb';
 /* Importing the declaration router from the declaration.router.ts file. */
 import declarationRouter from './features/declaration/declaration.router';
 
+import cors from 'cors';
+
 // get body-parser to handle request's body
 var bodyParser = require('body-parser');
 
@@ -22,8 +24,15 @@ var bodyParser = require('body-parser');
 initConfig();
 initdb();
 
+var corsOptions = {
+  origin: '*',
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
+
+
 // Creating a new instance of the Express app
 const app: Express = express();
+app.use(cors(corsOptions))
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extends : false}));
 app.use(router);
