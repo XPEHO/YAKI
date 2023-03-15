@@ -405,6 +405,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.1"
+  look:
+    dependency: "direct main"
+    description:
+      name: look
+      sha256: "23c8ec83f64700f6cb9eae1fb0ae3eeb76d32b707f39f6fec1aea5f5b26a3014"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0"
+  look_generator:
+    dependency: "direct dev"
+    description:
+      name: look_generator
+      sha256: "94c024f9b224a0a8fd66c576099da9a7054f781abc29f38dc202a949aa995fc5"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.1"
   matcher:
     dependency: transitive
     description:
