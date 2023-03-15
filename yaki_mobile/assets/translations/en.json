@@ -10,6 +10,7 @@
   "forgotPassword" : "Forgot Password ?",
   "headerTitleDecla": "Declaration",
   "headerHintDecla": "What is your status ?",
+<<<<<<< HEAD
   "REMOTE": "Remote",
   "ON_SITE": "On site",
   "VACATION": "Vacation",
@@ -20,4 +21,14 @@
   "StatusOther": "Other status for today.",
   "StatusButton": "Change",
   "StatusError": "Something went wrong, please retry..."
+=======
+  "statusRemote": "Remote",
+  "statusOnSite": "On site",
+  "statusVacation": "Vacation",
+  "statusOther": "Other",
+  "captainTitle" : "Captain",
+  "captainHeaderTitle" : "Captain",
+  "inputCaptain": "Name, Status...",
+  "hintCaptain": "Enter a name or a status"
+>>>>>>> main
 }

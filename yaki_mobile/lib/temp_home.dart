@@ -29,6 +29,10 @@ class TempHome extends StatelessWidget {
               btnText: 'Status page',
               route: '/status',
             ),
+            ButtonRoute(
+              btnText: 'Captain page',
+              route: '/captain',
+            ),
           ],
         ),
       ),

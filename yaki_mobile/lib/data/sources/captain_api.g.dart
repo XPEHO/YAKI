@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'status_api.dart';
+part of 'captain_api.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,8 +8,8 @@ part of 'status_api.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
-class _StatusApi implements StatusApi {
-  _StatusApi(
+class _CaptainApi implements CaptainApi {
+  _CaptainApi(
     this._dio, {
     this.baseUrl,
   });
@@ -19,35 +19,26 @@ class _StatusApi implements StatusApi {
   String? baseUrl;
 
   @override
-  Future<HttpResponse<DeclarationModel>> getDeclaration(teamMateId) async {
+  Future<CaptainModel> getCaptain() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-<<<<<<< HEAD:yaki_mobile/lib/data/sources/remote/status_api.g.dart
-    final Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<HttpResponse<DeclarationModel>>(Options(
-      method: 'GET',
-=======
     final _data = <String, dynamic>{};
-    _data.addAll(declaration.toJson());
     final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<DeclarationModel>(Options(
-      method: 'POST',
->>>>>>> main:yaki_mobile/lib/data/sources/declaration_api.g.dart
+        .fetch<Map<String, dynamic>>(_setStreamType<CaptainModel>(Options(
+      method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              '/status/${teamMateId}',
+              '/captains',
               queryParameters: queryParameters,
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = DeclarationModel.fromJson(_result.data!);
-    final httpResponse = HttpResponse(value, _result);
-    return httpResponse;
+    final value = CaptainModel.fromJson(_result.data!);
+    return value;
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {

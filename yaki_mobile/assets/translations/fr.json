@@ -10,6 +10,7 @@
   "forgotPassword" : "Mot de passe oublié ?",
   "headerTitleDecla": "Declaration",
   "headerHintDecla": "Quel est votre status ?",
+<<<<<<< HEAD
   "REMOTE": "Distanciel",
   "ON_SITE": "Sur site",
   "VACATION": "Vacances",
@@ -20,4 +21,14 @@
   "StatusOther": "Autre status pour la journée",
   "StatusButton": "Changer",
   "StatusError": "Quelque chose ne c'est pas passé comme prévu, veuillez recommencer.."
+=======
+  "statusRemote": "Distanciel",
+  "statusOnSite": "Sur site",
+  "statusVacation": "Vacances",
+  "statusOther": "Autre",
+  "CaptainTitle" : "Capitaine",
+  "CaptainHeaderTitle" : "Capitaine",
+  "inputCaptain": "Nom, Status...",
+  "hintCaptain": "Entrez un nom ou un status"
+>>>>>>> main
 }
