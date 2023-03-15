@@ -1,8 +1,8 @@
 class LoggedUser {
-  int teamMateid;
-  String lastName;
-  String firstName;
-  String email;
+  int? teamMateid;
+  String? lastName;
+  String? firstName;
+  String? email;
 
   LoggedUser({
     required this.teamMateid,

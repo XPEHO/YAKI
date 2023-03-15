@@ -23,9 +23,15 @@ class Authentication extends ConsumerWidget {
     required String password,
     required Function goToDeclarationPage,
     required Function goToStatusPage,
+    required Function goToCaptain,
   }) async {
-    await ref.read(loginRepositoryProvider).userAuthentication(login, password);
+    final bool isCaptain = await ref
+        .read(loginRepositoryProvider)
+        .userAuthentication(login, password);
     if (await isTokenPresent()) {
+      if (isCaptain) {
+        goToCaptain();
+      }
       final declarationStatus =
           await ref.read(declarationProvider.notifier).getDeclaration();
       if (declarationStatus != emptyDeclarationStatus) {
@@ -127,7 +133,8 @@ class Authentication extends ConsumerWidget {
                           password: passwordController.text,
                           goToDeclarationPage: () =>
                               context.push('/declaration'),
-                          goToStatusPage: () => context.push('/status'),
+                          goToStatusPage: () => context.go('/status'),
+                          goToCaptain: () => context.go('/captain'),
                         ),
                         child: Text(tr('signIn')),
                       ),

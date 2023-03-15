@@ -19,14 +19,14 @@ class _LoginApi implements LoginApi {
   String? baseUrl;
 
   @override
-  Future<HttpResponse<Authentication?>> postLogin(login) async {
+  Future<HttpResponse<TeammateOrCaptain?>> postLogin(login) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(login.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>?>(
-        _setStreamType<HttpResponse<Authentication>>(Options(
+        _setStreamType<HttpResponse<TeammateOrCaptain>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -39,7 +39,7 @@ class _LoginApi implements LoginApi {
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value =
-        _result.data == null ? null : Authentication.fromJson(_result.data!);
+        _result.data == null ? null : TeammateOrCaptain.fromJson(_result.data!);
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }
