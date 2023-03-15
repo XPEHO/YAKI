@@ -17,10 +17,10 @@ class TeamMateRepository {
       final listTeamMateModel = await teamMateApi.getTeamMate();
       teamMatelist = listTeamMateModel.map((e) {
         return TeamMateEntity(
-          user_firstname: e.user_first_name,
-          user_lastName: e.user_last_name,
-          declaration_date: e.declaration_date,
-          declaration_status: e.declaration_status,
+          userFirstname: e.userFirstName,
+          userLastName: e.userLastName,
+          declarationDate: e.declarationDate,
+          declarationStatus: e.declarationStatus,
         );
       }).toList();
       return teamMatelist;

@@ -8,26 +8,26 @@ part of 'team_mate_model.dart';
 
 TeamMateModel _$TeamMateModelFromJson(Map<String, dynamic> json) =>
     TeamMateModel(
-      user_id: json['user_id'] as int,
-      user_last_name: json['user_last_name'] as String,
-      user_first_name: json['user_first_name'] as String,
-      user_email: json['user_email'] as String,
-      team_mate_id: json['team_mate_id'] as int,
-      team_mate_team_id: json['team_mate_team_id'] as int,
-      team_mate_user_id: json['team_mate_user_id'] as int,
-      declaration_date: DateTime.parse(json['declaration_date'] as String),
-      declaration_status: json['declaration_status'] as String,
+      userId: json['userId'] as int,
+      userLastName: json['userLastName'] as String,
+      userFirstName: json['userFirstName'] as String,
+      userEmail: json['userEmail'] as String,
+      teamMateId: json['teamMateId'] as int,
+      teamMateTeamId: json['teamMateTeamId'] as int,
+      teamMateUserId: json['teamMateUserId'] as int,
+      declarationDate: DateTime.parse(json['declarationDate'] as String),
+      declarationStatus: json['declarationStatus'] as String,
     );
 
 Map<String, dynamic> _$TeamMateModelToJson(TeamMateModel instance) =>
     <String, dynamic>{
-      'user_id': instance.user_id,
-      'user_last_name': instance.user_last_name,
-      'user_first_name': instance.user_first_name,
-      'user_email': instance.user_email,
-      'team_mate_id': instance.team_mate_id,
-      'team_mate_team_id': instance.team_mate_team_id,
-      'team_mate_user_id': instance.team_mate_user_id,
-      'declaration_date': instance.declaration_date.toIso8601String(),
-      'declaration_status': instance.declaration_status,
+      'userId': instance.userId,
+      'userLastName': instance.userLastName,
+      'userFirstName': instance.userFirstName,
+      'userEmail': instance.userEmail,
+      'teamMateId': instance.teamMateId,
+      'teamMateTeamId': instance.teamMateTeamId,
+      'teamMateUserId': instance.teamMateUserId,
+      'declarationDate': instance.declarationDate.toIso8601String(),
+      'declarationStatus': instance.declarationStatus,
     };

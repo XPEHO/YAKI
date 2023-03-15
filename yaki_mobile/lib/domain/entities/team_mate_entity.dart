@@ -1,13 +1,13 @@
 class TeamMateEntity {
-  String user_firstname;
-  String user_lastName;
-  DateTime declaration_date;
-  String declaration_status;
+  String userFirstname;
+  String userLastName;
+  DateTime declarationDate;
+  String declarationStatus;
 
   TeamMateEntity({
-    required this.user_firstname,
-    required this.user_lastName,
-    required this.declaration_date,
-    required this.declaration_status,
+    required this.userFirstname,
+    required this.userLastName,
+    required this.declarationDate,
+    required this.declarationStatus,
   });
 }
