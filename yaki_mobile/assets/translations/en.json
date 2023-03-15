@@ -1,16 +1,15 @@
 {
-  "headerTitle" : "Authentication",
-  "headerHint" : "Who are you ?",
-  "inputLogin" : "Login",
-  "hintLogin" : "Enter your login",
-  "inputPassword" : "Password",
-  "hintPassword" : "Enter your password",
-  "rememberMe" : "Remember me",
-  "signIn" : "Sign In",
-  "forgotPassword" : "Forgot Password ?",
+  "headerTitle": "Authentication",
+  "headerHint": "Who are you ?",
+  "inputLogin": "Login",
+  "hintLogin": "Enter your login",
+  "inputPassword": "Password",
+  "hintPassword": "Enter your password",
+  "rememberMe": "Remember me",
+  "signIn": "Sign In",
+  "forgotPassword": "Forgot Password ?",
   "headerTitleDecla": "Declaration",
   "headerHintDecla": "What is your status ?",
-<<<<<<< HEAD
   "REMOTE": "Remote",
   "ON_SITE": "On site",
   "VACATION": "Vacation",
@@ -20,15 +19,9 @@
   "StatusVacation": "You are in vacations until...",
   "StatusOther": "Other status for today.",
   "StatusButton": "Change",
-  "StatusError": "Something went wrong, please retry..."
-=======
-  "statusRemote": "Remote",
-  "statusOnSite": "On site",
-  "statusVacation": "Vacation",
-  "statusOther": "Other",
-  "captainTitle" : "Captain",
-  "captainHeaderTitle" : "Captain",
+  "StatusError": "Something went wrong, please retry...",
+  "captainTitle": "Captain",
+  "captainHeaderTitle": "Captain",
   "inputCaptain": "Name, Status...",
   "hintCaptain": "Enter a name or a status"
->>>>>>> main
 }

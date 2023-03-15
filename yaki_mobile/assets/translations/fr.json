@@ -1,16 +1,15 @@
 {
-  "headerTitle" : "Authentification",
-  "headerHint" : "Qui êtes vous ?",
-  "inputLogin" : "Identifiant",
-  "hintLogin" : "Entrez votre identifiant",
-  "inputPassword" : "Mot de passe",
-  "hintPassword" : "Entrez votre mot de passe",
-  "rememberMe" : "Se souvenir de moi",
-  "signIn" : "Se connecter",
-  "forgotPassword" : "Mot de passe oublié ?",
+  "headerTitle": "Authentification",
+  "headerHint": "Qui êtes vous ?",
+  "inputLogin": "Identifiant",
+  "hintLogin": "Entrez votre identifiant",
+  "inputPassword": "Mot de passe",
+  "hintPassword": "Entrez votre mot de passe",
+  "rememberMe": "Se souvenir de moi",
+  "signIn": "Se connecter",
+  "forgotPassword": "Mot de passe oublié ?",
   "headerTitleDecla": "Declaration",
   "headerHintDecla": "Quel est votre status ?",
-<<<<<<< HEAD
   "REMOTE": "Distanciel",
   "ON_SITE": "Sur site",
   "VACATION": "Vacances",
@@ -20,15 +19,9 @@
   "StatusVacation": "Vous êtes en vacances jusque...",
   "StatusOther": "Autre status pour la journée",
   "StatusButton": "Changer",
-  "StatusError": "Quelque chose ne c'est pas passé comme prévu, veuillez recommencer.."
-=======
-  "statusRemote": "Distanciel",
-  "statusOnSite": "Sur site",
-  "statusVacation": "Vacances",
-  "statusOther": "Autre",
-  "CaptainTitle" : "Capitaine",
-  "CaptainHeaderTitle" : "Capitaine",
+  "StatusError": "Quelque chose ne c'est pas passé comme prévu, veuillez recommencer..",
+  "CaptainTitle": "Capitaine",
+  "CaptainHeaderTitle": "Capitaine",
   "inputCaptain": "Nom, Status...",
   "hintCaptain": "Entrez un nom ou un status"
->>>>>>> main
 }
