@@ -6,6 +6,7 @@ import 'package:yaki/presentation/ui/declaration/declaration.dart';
 import 'package:yaki/presentation/ui/status/status.dart';
 import 'package:yaki/temp_home.dart';
 
+/// router set as provider.
 final goRouterProvider = Provider<GoRouter>(
   (ref) {
     return GoRouter(
