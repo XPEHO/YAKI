@@ -53,7 +53,7 @@ class _CaptainBodyState extends ConsumerState<CaptainBody> {
             itemBuilder: (context, index) {
               return CardTeamMate(
                 // Cards of the Team Mate
-                firstName: (listTeamMate[index].userFirstname),
+                firstName: (listTeamMate[index].userFirstName),
                 lastName: (listTeamMate[index].userLastName),
                 dateActu: (listTeamMate[index].declarationDate),
                 status: (listTeamMate[index].declarationStatus),
