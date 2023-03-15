@@ -23,18 +23,10 @@ class _StatusApi implements StatusApi {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-<<<<<<< HEAD:yaki_mobile/lib/data/sources/remote/status_api.g.dart
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<HttpResponse<DeclarationModel>>(Options(
       method: 'GET',
-=======
-    final _data = <String, dynamic>{};
-    _data.addAll(declaration.toJson());
-    final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<DeclarationModel>(Options(
-      method: 'POST',
->>>>>>> main:yaki_mobile/lib/data/sources/declaration_api.g.dart
       headers: _headers,
       extra: _extra,
     )
