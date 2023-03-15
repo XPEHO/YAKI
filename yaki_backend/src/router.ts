@@ -39,25 +39,24 @@ router.get('/teamMates', async (_, res) => {
         port:  Number(process.env.DB_PORT)
     });
     const poolResult: QueryResult = await pool.query(
-        `SELECT * from public.team_mate
-        INNER JOIN (
-            SELECT
-            user_id,user_last_name, user_first_name, user_email,
-            MAX(decl.declaration_status) as declaration_status,
-            MAX(decl.declaration_date) as declaration_date
+
+            `
+            SELECT *
             FROM public.user
-            LEFT JOIN
-            (
-                SELECT *
-                FROM declaration
-                INNER JOIN public.team_mate
-                ON declaration_team_mate_id = team_mate_id
-            ) AS decl
-            ON decl.team_mate_user_id = user_id
-            GROUP BY user_id
-            ORDER BY user_id ASC
-        ) as use
-        ON use.user_id = team_mate_user_id;`
+            INNER JOIN public.team_mate ON user_id = team_mate_id
+            INNER JOIN (
+                SELECT
+                    MAX(declaration_date) AS declaration_date,
+                    declaration_team_mate_id
+                FROM public.declaration
+                GROUP BY declaration_team_mate_id
+            ) AS max_decl
+            ON team_mate.team_mate_id = max_decl.declaration_team_mate_id
+            INNER JOIN public.declaration
+            ON max_decl.declaration_date = declaration.declaration_date
+            AND max_decl.declaration_team_mate_id = declaration.declaration_team_mate_id;
+            `
+
 
     );
     console.log(poolResult.rows);
