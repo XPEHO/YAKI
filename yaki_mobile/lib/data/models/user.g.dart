@@ -1,13 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'teammate_or_captain.dart';
+part of 'user.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-TeammateOrCaptain _$TeammateOrCaptainFromJson(Map<String, dynamic> json) =>
-    TeammateOrCaptain(
+User _$UserFromJson(Map<String, dynamic> json) => User(
       captainId: json['captainId'] as int?,
       teamMateId: json['teamMateId'] as int?,
       teamId: json['teamId'] as int?,
@@ -18,8 +17,7 @@ TeammateOrCaptain _$TeammateOrCaptainFromJson(Map<String, dynamic> json) =>
       token: json['token'] as String?,
     );
 
-Map<String, dynamic> _$TeammateOrCaptainToJson(TeammateOrCaptain instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'captainId': instance.captainId,
       'teamMateId': instance.teamMateId,
       'teamId': instance.teamId,

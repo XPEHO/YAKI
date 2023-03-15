@@ -1,9 +1,9 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'teammate_or_captain.g.dart';
+part 'user.g.dart';
 
 @JsonSerializable()
-class TeammateOrCaptain {
+class User {
   int? captainId;
   int? teamMateId;
   int? teamId;
@@ -13,7 +13,7 @@ class TeammateOrCaptain {
   String? email;
   String? token;
 
-  TeammateOrCaptain({
+  User({
     required this.captainId,
     required this.teamMateId,
     required this.teamId,
@@ -24,7 +24,7 @@ class TeammateOrCaptain {
     required this.token,
   });
 
-  factory TeammateOrCaptain.fromJson(Map<String, dynamic> json) =>
-      _$TeammateOrCaptainFromJson(json);
-  Map<String, dynamic> toJson() => _$TeammateOrCaptainToJson(this);
+  factory User.fromJson(Map<String, dynamic> json) =>
+      _$UserFromJson(json);
+  Map<String, dynamic> toJson() => _$UserToJson(this);
 }

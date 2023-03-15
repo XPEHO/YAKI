@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:retrofit/retrofit.dart';
-import 'package:yaki/data/models/teammate_or_captain.dart';
+import 'package:yaki/data/models/user.dart';
 import 'package:yaki/data/sources/local/shared_preference.dart';
 import 'package:yaki/data/sources/remote/login_api.dart';
 import 'package:yaki/data/models/login.dart';
@@ -22,7 +22,7 @@ class LoginRepository {
     return isCaptain;
   }
 
-  bool handleResponse(HttpResponse<TeammateOrCaptain?> response) {
+  bool handleResponse(HttpResponse<User?> response) {
     bool isCaptain = false;
     try {
       final statusCode = response.response.statusCode;
