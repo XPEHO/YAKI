@@ -86,6 +86,7 @@ feat/authentication
 * style
 * refactor
 * chore
+* test
 
 **Prefix list explaination**
 
@@ -121,6 +122,10 @@ __chore__
 
 Branch containing tooling change like CI/CD, Issue templates, gitignore file etc...
 
+__test__
+
+Branch containing test
+
 ### Commit convention
 
 We respect the `Angular Js Commit message` convention 
@@ -150,6 +155,7 @@ Accepted prefix list is the same as the branch prefix list
 * style
 * refactor
 * chore
+* test
 
 ## Pull Requests
 
@@ -157,3 +163,62 @@ Each change must be proposed to merge using a `Pull Request` from the current br
 
 For more information about `Pull Request` creation please visit [https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request)
 
+## Naming Convention
+
+For this project, naming convention for all language use in this project should be on lower camelCase,
+except for Classes, enum types, typedefs, and type parameters these one should be on Upper CamelCase (PascalCase)
+And files names and PostgreSQL, both should be name types using snake_case
+
+**Example**
+
+```
+For a new files : new_file_create.dart
+```
+
+```
+For a new Classes : class MyClasse
+```
+
+```
+For a new constant variable : const myNewConst = x
+```
+
+## Project architecture
+
+The project is a monorepo project
+
+divided into 2 main parts :
+
+- yaki_mobile who content the flutter project :
+
+  - assets content all images we need to run the project and a translate file
+  - In the lib file you will discovers three files, main, app and app_router and three folder, data, domain and presentation:
+
+  - All the view is display in ./lib/presentation/ui
+
+  - A style folder is available to use the graphic chart of this project. ./lib/styles
+
+  - In this project we use riverpod for the state-management :
+    we use two differents forlder to manage state:
+    notifiers folder (./lib/presentation/state/notifier) and providers folder (./lib/presentation/state/provider)
+
+  - We also use dio and retrofit for http request, interceptors...
+    you can find the dio file in ./lib/presentation/state/dio
+
+  - For all the data you can find a folder in ./lib/data then you have three files :
+
+  - models : you will find all the model class
+  - source : you will find all the http request do with retrofit
+  - repositories : you will find all the repositories
+
+  - Test folder like the name said will containt all the test of our application
+
+- yaki_backend is based on node.js and express :
+
+  - ./src will containt server, router and config file. To use don't forget to create your .env file
+  - ./test will containt all the test of the back-end project
+  - ./db will containt file to generate your database with fake data
+  - ./dev containt swagger files
+  - ./feature each feature containt controller, DTO, repository and service of its own folder
+
+- database is based on PostgreSQL
