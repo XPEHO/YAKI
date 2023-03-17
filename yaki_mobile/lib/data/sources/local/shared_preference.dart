@@ -8,6 +8,11 @@ void addTokenToSharedPreference(String? token) async {
   prefs.setString('token', token!);
 }
 
+void addUserIdToSharedPreference(int? id) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.setInt('userId', id!);
+}
+
 /// check if sharedPreference has a token, return a true or false depending.
 Future<bool> isTokenPresent() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
