@@ -32,7 +32,7 @@ final goRouterProvider = Provider<GoRouter>(
               builder: (context, state) => const Status(),
               redirect: (BuildContext context, GoRouterState state) async {
                 if (await isTokenPresent()) {
-                  return 'declaration';
+                  return 'status';
                 } else {
                   return '/';
                 }
@@ -43,7 +43,7 @@ final goRouterProvider = Provider<GoRouter>(
               builder: (context, state) => const CaptainView(),
               redirect: (BuildContext context, GoRouterState state) async {
                 if (await isTokenPresent()) {
-                  return 'declaration';
+                  return 'captain';
                 } else {
                   return '/';
                 }
