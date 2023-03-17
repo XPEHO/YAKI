@@ -1,5 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:yaki/data/sources/local/shared_preference.dart';
 import 'package:yaki/presentation/ui/authentication/authentication.dart';
 import 'package:yaki/presentation/ui/captain/captain_view.dart';
 import 'package:yaki/presentation/ui/declaration/declaration.dart';
@@ -17,14 +19,35 @@ final goRouterProvider = Provider<GoRouter>(
             GoRoute(
               path: 'declaration',
               builder: (context, state) => const Declaration(),
+              redirect: (BuildContext context, GoRouterState state) async {
+                if (await isTokenPresent()) {
+                  return 'declaration';
+                } else {
+                  return '/';
+                }
+              },
             ),
             GoRoute(
               path: 'status',
               builder: (context, state) => const Status(),
+              redirect: (BuildContext context, GoRouterState state) async {
+                if (await isTokenPresent()) {
+                  return 'status';
+                } else {
+                  return '/';
+                }
+              },
             ),
             GoRoute(
               path: 'captain',
               builder: (context, state) => const CaptainView(),
+              redirect: (BuildContext context, GoRouterState state) async {
+                if (await isTokenPresent()) {
+                  return 'captain';
+                } else {
+                  return '/';
+                }
+              },
             ),
           ],
         ),

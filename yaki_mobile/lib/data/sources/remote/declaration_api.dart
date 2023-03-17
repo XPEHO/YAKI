@@ -9,7 +9,7 @@ part 'declaration_api.g.dart';
 abstract class DeclarationApi {
   factory DeclarationApi(Dio dio, {required String baseUrl}) = _DeclarationApi;
 
-  @GET('/declarations/')
+  @GET('/declarations')
   Future<HttpResponse<DeclarationModelIn?>> getDeclaration(
     @Query("teamMateId") String id,
   );

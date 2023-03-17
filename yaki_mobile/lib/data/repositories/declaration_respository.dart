@@ -47,7 +47,7 @@ class DeclarationRepository {
   }
 
   /// generate statusValue based on HttpResponse status code,
-  /// coming from Declaration creation
+  /// coming from Declaration creation.
   String handleDeclarationStatus(HttpResponse<DeclarationModelIn> response) {
     String statusValue = "";
     try {
