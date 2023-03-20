@@ -56,8 +56,6 @@ class Service {
       if(req.headers["user_id"] != decoded.user_id) {
         throw new Error()
       }
-      console.log(decoded);
-      console.log(req.headers);
       req.body.user = decoded;
     } catch (err) {
       return res.status(401).send("Invalid Token");
