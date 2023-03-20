@@ -43,23 +43,25 @@ router.get("/teamMates", async (_, res) => {
   });
   const poolResult: QueryResult = await pool.query(
     `
-            SELECT *
-            FROM public.user
-            INNER JOIN public.team_mate ON user_id = team_mate_user_id
-            INNER JOIN (
-                SELECT
-                    MAX(declaration_date) AS declaration_date,
-                    declaration_team_mate_id
-                FROM public.declaration
-                GROUP BY declaration_team_mate_id
-            ) AS max_decl
-            ON team_mate.team_mate_id = max_decl.declaration_team_mate_id
-            INNER JOIN public.declaration
-            ON max_decl.declaration_date = declaration.declaration_date
-            AND max_decl.declaration_team_mate_id = declaration.declaration_team_mate_id;
-            `
+      SELECT 
+      user_id, team_mate_id, user_last_name, user_first_name, max_decl.declaration_date, max_decl.declaration_status
+      FROM public.user
+      INNER JOIN public.team_mate
+      ON user_id = team_mate_user_id
+      LEFT JOIN
+      (
+        SELECT * 
+        FROM (
+          SELECT declaration_team_mate_id, declaration_date, declaration_status, rank()
+          OVER (PARTITION BY declaration_team_mate_id ORDER BY declaration_date DESC)
+          FROM public.declaration
+        ) t
+        WHERE rank = 1
+      ) as max_decl
+      ON declaration_team_mate_id = team_mate.team_mate_id
+      WHERE team_mate_team_id = 2;
+    `
   );
-  console.log(poolResult.rows);
   await pool.end();
   // If the user was found in the database
   res.send(poolResult.rows);
