@@ -31,7 +31,6 @@ class Service {
       },
       process.env.TOKEN_SECRET,
       {
-        // set expire time to 5 minutes for development purpose
         expiresIn: "30d",
       }
     );
@@ -54,6 +53,9 @@ class Service {
     }
     try {
       const decoded = jwt.verify(token, process.env.TOKEN_SECRET);
+      if(req.headers["user_id"] != decoded.user_id) {
+        throw new Error()
+      }
       req.body.user = decoded;
     } catch (err) {
       return res.status(401).send("Invalid Token");

@@ -31,8 +31,9 @@ class AddTokenToHeader extends Interceptor {
   ) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var token = prefs.get("token");
+    var userId = prefs.get("userId");
 
-    options.headers.addAll({"x-access-token": token});
+    options.headers.addAll({"x-access-token": token, "user_id": userId});
 
     return super.onRequest(options, handler);
   }
