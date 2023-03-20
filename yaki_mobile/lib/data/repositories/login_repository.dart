@@ -31,6 +31,7 @@ class LoginRepository {
         case 200:
           final data = response.data!;
           addTokenToSharedPreference(data.token);
+          addUserIdToSharedPreference(data.userId);
           loggedUser = LoggedUser(
             teamMateid: data.teamMateId,
             lastName: data.lastName,
