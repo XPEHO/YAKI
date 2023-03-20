@@ -25,7 +25,7 @@ class Authentication extends ConsumerWidget {
     required Function goToStatusPage,
     required Function goToCaptain,
   }) async {
-    await clearSharedPreferences();
+    await removeTokenFromSharedPreferences();
     final bool isCaptain = await ref
         .read(loginRepositoryProvider)
         .userAuthentication(login, password);
