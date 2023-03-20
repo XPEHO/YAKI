@@ -3,6 +3,7 @@ Feature: Authenticate
   Background:
     * url 'http://localhost:3000'
 
+  @AuthenticateSuccess
   Scenario: Authenticate successful
 
     Given path '/login'
