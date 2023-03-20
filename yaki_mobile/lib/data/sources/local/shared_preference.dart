@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// the token value is associated to the 'token' key.
 void addTokenToSharedPreference(String? token) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  // !token, use null check, if login error.
+  // !token, use null check, if login error..
   prefs.setString('token', token!);
 }
 
