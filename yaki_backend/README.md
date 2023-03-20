@@ -119,7 +119,7 @@ If there is an error, the API will send an HTTP response with a status code of 5
 }
 ```
 
-#### GET /declarations/:teamMateId
+#### GET /declarations?teamMateId=#number
 This endpoint retrieves the most recent declaration made by the team member identified by ```teamMateId```.
 #### Response
 The API will send an HTTP response with a status code of 200 (OK) and return a JSON object representing the declaration made by the teammate. The object has the following properties:
