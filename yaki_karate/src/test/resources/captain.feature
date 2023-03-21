@@ -8,7 +8,7 @@ Feature: Captain
     * def result = call read('authenticate.feature@AuthenticateSuccess')
     * def token = result.response.token
 
-    Given path '/teamMates'
+    Given path '/teamMates?teamId=1'
     When method GET
     Then status 200
     And assert responseTime < 300
