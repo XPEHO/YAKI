@@ -30,11 +30,30 @@ void main() {
         devices: [Device.iphone11, Device.phone],
       )
       ..addScenario(
+        name: 'Captain',
         widget: Header(
           pictoIcon: 'assets/images/captain.svg',
           pictoPath: 'assets/images/captain.svg',
           headerTitle: tr('captainTitle'),
           headerHint: tr('captainHeaderTitle'),
+        ),
+      )
+      ..addScenario(
+        name: 'Declaration',
+        widget: Header(
+          pictoIcon: 'assets/images/avatar1.svg',
+          pictoPath: 'assets/images/unknown.svg',
+          headerTitle: tr('headerTitleDecla'),
+          headerHint: tr('headerHintDecla'),
+        ),
+      )
+      ..addScenario(
+        name: 'Authentication',
+        widget: Header(
+          pictoIcon: 'assets/images/dots.svg',
+          pictoPath: 'assets/images/authent.svg',
+          headerTitle: tr('headerTitle'),
+          headerHint: tr('headerHint'),
         ),
       );
     await tester.pumpDeviceBuilder(builder);
