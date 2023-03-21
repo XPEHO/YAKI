@@ -1,14 +1,16 @@
 Feature: Captain
 
   Background:
+    * def result = call read('authenticate.feature@AuthenticateCaptainSuccess')
+    * def token = result.response.token
     * url 'http://localhost:3000'
 
-  Scenario: Request all team mates from a team takes less than 300 mates
+  Scenario: Request all team mates from a team takes less than 300 ms
 
-    * def result = call read('authenticate.feature@AuthenticateSuccess')
-    * def token = result.response.token
-
-    Given path '/teamMates?teamId=1'
+    Given path '/teamMates'
+    And param teamId = 1
+    And header x-access-token = token
+    And header user_id = result.response.userId
     When method GET
     Then status 200
     And assert responseTime < 300
