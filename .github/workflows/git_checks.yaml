@@ -11,7 +11,7 @@ jobs:
         if: github.base_ref == 'main'
         run: |
           echo "base ref is main checking branch name..."
-          ALLOWED_PREFIXES="feature feat fix hotfix release chore dependabot docs test"
+          ALLOWED_PREFIXES="feature feat fix hotfix release chore dependabot docs test refactor"
           BRANCH_NAME_VALID=false
           PREFIXES_ARRAY=$(echo $ALLOWED_PREFIXES | tr " " "\n")
           for PREFIX in $PREFIXES_ARRAY ; 
