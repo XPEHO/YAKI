@@ -9,7 +9,7 @@ export class TeamMateController {
     }
 
     getByTeamIdWithLastDeclaration = (async (req: Request, res: Response) => {
-        const teamId = Number(req.query.teamId);
+        const teamId = Number(req.query.captainId);
         this.service.getByTeamIdWithLastDeclaration(teamId)
             .then((response) => res.send(response))
             .catch((err) => res.status(500).send(err.message));

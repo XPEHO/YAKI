@@ -9,12 +9,18 @@ import {TeamMateService} from "./features/teamMate/teamMate.service";
 import {authService} from "./features/user/authentication.service";
 import {CaptainController} from "./features/captain/captain.controller";
 import { TeamMateController } from "./features/teamMate/teamMate.controller";
+import { TeamRepository } from "./features/team/team.repository";
+import { TeamService } from "./features/team/team.service";
 
 export const router = express.Router();
 
+// TEAM
+const teamRepository = new TeamRepository();
+const teamService = new TeamService(teamRepository);
+
 //TEAM MATE
 const teamMateRepository = new TeamMateRepository();
-const teamMateService = new TeamMateService(teamMateRepository);
+const teamMateService = new TeamMateService(teamMateRepository, teamService);
 const teamMateController = new TeamMateController(teamMateService);
 
 //CAPTAIN

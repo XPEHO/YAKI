@@ -8,7 +8,7 @@ Feature: Captain
   Scenario: Request all team mates from a team takes less than 300 ms
 
     Given path '/teamMates'
-    And param teamId = 1
+    And param captainId = 1
     And header x-access-token = token
     And header user_id = result.response.userId
     When method GET
