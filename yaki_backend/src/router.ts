@@ -8,13 +8,14 @@ import {TeamMateRepository} from "./features/teamMate/teamMate.repository";
 import {TeamMateService} from "./features/teamMate/teamMate.service";
 import {authService} from "./features/user/authentication.service";
 import {CaptainController} from "./features/captain/captain.controller";
-import {Pool, QueryResult} from "pg";
+import { TeamMateController } from "./features/teamMate/teamMate.controller";
 
 export const router = express.Router();
 
 //TEAM MATE
 const teamMateRepository = new TeamMateRepository();
 const teamMateService = new TeamMateService(teamMateRepository);
+const teamMateController = new TeamMateController(teamMateService);
 
 //CAPTAIN
 const captainRepository = new CaptainRepository();
@@ -33,36 +34,4 @@ router.get(
   (_, res) => captainController.getAll(_, res)
 );
 
-router.get("/teamMates", async (_, res) => {
-  const pool = new Pool({
-    user: `${process.env.DB_ROLE}`,
-    host: `${process.env.DB_HOST}`,
-    database: `${process.env.DB_DATABASE}`,
-    password: `${process.env.DB_ROLE_PWD}`,
-    port: Number(process.env.DB_PORT),
-  });
-  const poolResult: QueryResult = await pool.query(
-    `
-      SELECT 
-      user_id, team_mate_id, user_last_name, user_first_name, max_decl.declaration_date, max_decl.declaration_status
-      FROM public.user
-      INNER JOIN public.team_mate
-      ON user_id = team_mate_user_id
-      LEFT JOIN
-      (
-        SELECT * 
-        FROM (
-          SELECT declaration_team_mate_id, declaration_date, declaration_status, rank()
-          OVER (PARTITION BY declaration_team_mate_id ORDER BY declaration_date DESC)
-          FROM public.declaration
-        ) t
-        WHERE rank = 1
-      ) as max_decl
-      ON declaration_team_mate_id = team_mate.team_mate_id
-      WHERE team_mate_team_id = 2;
-    `
-  );
-  await pool.end();
-  // If the user was found in the database
-  res.send(poolResult.rows);
-});
+router.get("/teamMates", async (req, res) => teamMateController.getByTeamIdWithLastDeclaration(req, res));
