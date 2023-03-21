@@ -6,7 +6,7 @@ Feature: Authenticate
   Scenario: Authenticate successful
 
     Given path '/login'
-    And request { "login": "dupond", "password": "dupond" }
+    And request { "login": "dupond", "password": "dupond"  }
     When method POST
     Then status 200
 
