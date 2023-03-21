@@ -10,8 +10,15 @@ export class TeamMateController {
 
     getByTeamIdWithLastDeclaration = (async (req: Request, res: Response) => {
         const teamId = Number(req.query.captainId);
-        this.service.getByTeamIdWithLastDeclaration(teamId)
-            .then((response) => res.send(response))
-            .catch((err) => res.status(500).send(err.message));
+        try {
+            const teamMates = await this.service.getByTeamIdWithLastDeclaration(teamId);
+            res.send(teamMates);
+        } catch(error: any) {
+            if(error instanceof TypeError) {
+                res.status(404).json({ message: error.message})
+            } else {
+                res.status(500).json({ message: error.message });
+            }
+        }
     });
 }
