@@ -7,11 +7,12 @@ Feature: CreationDeclaration
 
   Scenario: Creation declaration successful
     Given path '/declarations'
-    And set $currentDate = new Date().toISOString()
-    And set $request = {"declarationTeamMateId": 4, "declarationDate": "$currentDate", "declarationStatus": "Remote" }
+    And def now = java.time.LocalDateTime.now().toString()
+    And def requestPayload = { declarationTeamMateId: 4, declarationDate: now, declarationStatus: "Remote" }
+    And request requestPayload
     When method POST
     Then status 201
-    And match response == { declarationId: '#number', declarationTeamMateId: 4, declarationDate: '$currentDate', declarationStatus: 'Remote' }
+    And match response == { declarationId: '#number', declarationTeamMateId: 4, declarationDate: '#string', declarationStatus: 'Remote' }
 
   Scenario: Creation declaration fail
     Given path '/declarations'

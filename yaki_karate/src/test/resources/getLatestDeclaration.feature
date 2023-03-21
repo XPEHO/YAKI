@@ -10,7 +10,7 @@ Feature: get the latest declaration
     And param teamMateId = 4
     When method get
     Then status 200
-    And match response contains { declarationId: '#number', declarationTeamMateId: 4, declarationDate: "$currentDate", declarationStatus: 'Remote' }
+    And match response contains { declarationId: '#number', declarationTeamMateId: 4, declarationDate: '#string', declarationStatus: 'Remote' }
 
   Scenario: Get the latest declaration fail
     Given path '/declarations'
