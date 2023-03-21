@@ -13,3 +13,11 @@ updates:
     directory: "/yaki_mobile"
     schedule:
       interval: "weekly"
+  - package-ecosystem: "gradle"
+    directory: "/yaki_admin_backend"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "maven"
+    directory: "/yaki_karate"
+    schedule:
+      interval: "weekly"

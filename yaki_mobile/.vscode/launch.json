@@ -1,7 +1,5 @@
 {
-    // Utilisez IntelliSense pour en savoir plus sur les attributs possibles.
-    // Pointez pour afficher la description des attributs existants.
-    // Pour plus d'informations, visitez : https://go.microsoft.com/fwlink/?linkid=830387
+
     "version": "0.2.0",
     "configurations": [
         {
@@ -23,6 +21,15 @@
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"
+        },
+        {
+            "name": "Tolerance",
+            "request": "launch",
+            "type": "dart",
+            "args": [
+                "--dart-define=golden_tolerance=0.1"
+            ]
         }
+
     ]
 }

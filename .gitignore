@@ -44,3 +44,5 @@ app.*.map.json
 /android/app/release
 
 yaki_karate/target/
+
+yaki_admin_backend/src/main/resources/application.properties
