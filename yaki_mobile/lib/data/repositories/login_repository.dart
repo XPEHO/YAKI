@@ -1,11 +1,11 @@
+import 'package:crypt/crypt.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:retrofit/retrofit.dart';
+import 'package:yaki/data/models/login.dart';
 import 'package:yaki/data/models/user.dart';
 import 'package:yaki/data/sources/local/shared_preference.dart';
 import 'package:yaki/data/sources/remote/login_api.dart';
-import 'package:yaki/data/models/login.dart';
 import 'package:yaki/domain/entities/logged_user.dart';
-import 'package:crypt/crypt.dart';
 
 class LoginRepository {
   final LoginApi _loginApi;
@@ -15,6 +15,7 @@ class LoginRepository {
 
   Future<bool> userAuthentication(String login, String password) async {
     Login newLog = Login(login: login, password: password);
+    debugPrint(hashPassword(password));
 
     final authenticationResponse = await _loginApi.postLogin(newLog);
     bool isCaptain = handleResponse(authenticationResponse);
