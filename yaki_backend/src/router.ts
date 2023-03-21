@@ -34,4 +34,4 @@ router.get(
   (_, res) => captainController.getAll(_, res)
 );
 
-router.get("/teamMates", async (req, res) => teamMateController.getByTeamIdWithLastDeclaration(req, res));
+router.get("/teamMates",(req, res, next) => authService.verifyToken(req, res, next), async (req, res) => teamMateController.getByTeamIdWithLastDeclaration(req, res));
