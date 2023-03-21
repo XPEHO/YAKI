@@ -15,7 +15,6 @@ class LoginRepository {
 
   Future<bool> userAuthentication(String login, String password) async {
     Login newLog = Login(login: login, password: password);
-    debugPrint(newLog.password);
 
     final authenticationResponse = await _loginApi.postLogin(newLog);
     bool isCaptain = handleResponse(authenticationResponse);
