@@ -1,8 +1,8 @@
 class TeamMateEntity {
   String userFirstName;
   String userLastName;
-  DateTime declarationDate;
-  String declarationStatus;
+  DateTime? declarationDate;
+  String? declarationStatus;
 
   TeamMateEntity({
     required this.userFirstName,
