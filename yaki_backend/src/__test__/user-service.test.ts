@@ -5,7 +5,7 @@ import UserModel from "../features/user/user.dtoIn";
 import { TeamMateDtoOut } from "../features/teamMate/teamMate.dtoOut";
 import { CaptainDtoOut } from "../features/captain/captain.dtoOut";
 import dbMockup from "./__mocks__/user";
-import UserModel from "../features/user/user.dtoIn";
+
 
 jest.mock('../features/user/user.repository', () => {
     return {
