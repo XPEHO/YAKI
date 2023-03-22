@@ -6,7 +6,6 @@
 // tree, read text, and verify that the values of widget properties are correct.
 
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter_test/flutter_test.dart';
 import 'package:golden_toolkit/golden_toolkit.dart';
 import 'package:mockito/annotations.dart';
 import 'package:yaki/data/sources/remote/declaration_api.dart';
@@ -14,9 +13,7 @@ import 'package:yaki/presentation/ui/shared/views/header.dart';
 
 @GenerateMocks([DeclarationApi])
 void main() {
-  test('super test', () {
-    expect(true, true);
-  });
+  EasyLocalization.logger.enableLevels = [];
 
   /// Golden Test
   ///
