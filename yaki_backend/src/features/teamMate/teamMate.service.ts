@@ -18,24 +18,18 @@ export class TeamMateService {
 
     getByTeamIdWithLastDeclaration = async (captain_id: number) => {
         const team : TeamDtoIn = await this.teamService.getByCaptainId(captain_id);
-        // check if team service returned a team
-        if(team !== undefined) {
-            // check if repository returned a list of team mates
-            const getTeamMates : any[] = await this.teamMateRepository.getByTeamIdWithLastDeclaration(team.team_id);
-            let result : TeamMateWithDeclaration[] = [];
-            getTeamMates.forEach(element => {
-                result.push(new TeamMateWithDeclaration(
-                    element.user_id,
-                    element.team_mate_id,
-                    element.user_last_name,
-                    element.user_first_name,
-                    element.declaration_date,
-                    element.declaration_status,
-                ))
-            });
-            return result;
-        } else {
-            throw new TypeError("No team with this captain exists")
-        }
+        const getTeamMates : any[] = await this.teamMateRepository.getByTeamIdWithLastDeclaration(team.team_id);
+        let result : TeamMateWithDeclaration[] = [];
+        getTeamMates.forEach(element => {
+            result.push(new TeamMateWithDeclaration(
+                element.user_id,
+                element.team_mate_id,
+                element.user_last_name,
+                element.user_first_name,
+                element.declaration_date,
+                element.declaration_status,
+            ))
+        });
+        return result;
     }
 }

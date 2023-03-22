@@ -8,6 +8,11 @@ export class TeamService {
     }
 
     getByCaptainId = async (captain_id: number) => {
-        return this.teamRepository.getByCaptainId(captain_id)
+        const captain = await this.teamRepository.getByCaptainId(captain_id);
+        if(captain !== undefined) {
+            return captain;
+        } else {
+            throw new TypeError("No team with this captain exists")
+        }
     }
 }
