@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:yaki/data/models/declaration_model.dart';
-import 'package:yaki/data/models/declaration_model_in.dart';
 
 part 'declaration_api.g.dart';
 
@@ -10,12 +9,12 @@ abstract class DeclarationApi {
   factory DeclarationApi(Dio dio, {required String baseUrl}) = _DeclarationApi;
 
   @GET('/declarations')
-  Future<HttpResponse<DeclarationModelIn?>> getDeclaration(
+  Future<HttpResponse> getDeclaration(
     @Query("teamMateId") String id,
   );
 
   @POST('/declarations')
-  Future<HttpResponse<DeclarationModelIn>> create(
+  Future<HttpResponse> create(
     @Body() DeclarationModel declaration,
   );
 }
