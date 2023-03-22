@@ -16,6 +16,8 @@ import 'package:yaki/presentation/ui/shared/views/header.dart';
 
 @GenerateMocks([DeclarationApi])
 void main() {
+  EasyLocalization.ensureInitialized();
+
   test('super test', () {
     expect(true, true);
   });
