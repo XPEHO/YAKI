@@ -174,10 +174,15 @@ ALTER TABLE IF EXISTS public.locations
 CREATE TABLE IF NOT EXISTS public.declaration
 (
     declaration_id integer NOT NULL DEFAULT nextval('declaration_id_seq'::regclass),
-    declaration_team_mate_id integer,
+    declaration_team_mate_id integer NOT NULL,
     declaration_date date,
     declaration_status character varying(30) COLLATE pg_catalog."default",
-    CONSTRAINT declaration_pkey PRIMARY KEY (declaration_id)
+    CONSTRAINT declaration_pkey PRIMARY KEY (declaration_id),
+	CONSTRAINT declaration_team_mate_id_fkey FOREIGN KEY (declaration_team_mate_id)
+		REFERENCES public.team_mate (team_mate_id) MATCH SIMPLE
+		ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
 )
 
 TABLESPACE pg_default;
