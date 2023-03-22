@@ -125,6 +125,8 @@ dev_dependencies:
   # link : https://pub.dev/packages/golden_toolkit
   look_generator: ^2.0.1
 
+  flutter_goldens: ^0.3.0
+
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
