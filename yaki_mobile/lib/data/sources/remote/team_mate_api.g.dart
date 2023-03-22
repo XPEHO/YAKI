@@ -19,13 +19,13 @@ class _TeamMateApi implements TeamMateApi {
   String? baseUrl;
 
   @override
-  Future<List<TeamMateModel>> getTeamMate() async {
+  Future<HttpResponse<dynamic>> getTeamMate() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
-    final _result = await _dio
-        .fetch<List<dynamic>>(_setStreamType<List<TeamMateModel>>(Options(
+    final _result =
+        await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -37,10 +37,9 @@ class _TeamMateApi implements TeamMateApi {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    var value = _result.data!
-        .map((dynamic i) => TeamMateModel.fromJson(i as Map<String, dynamic>))
-        .toList();
-    return value;
+    final value = _result.data;
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {

@@ -7,8 +7,7 @@ import 'dart:async' as _i4;
 
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:retrofit/retrofit.dart' as _i2;
-import 'package:yaki/data/models/declaration_model.dart' as _i6;
-import 'package:yaki/data/models/declaration_model_in.dart' as _i5;
+import 'package:yaki/data/models/declaration_model.dart' as _i5;
 import 'package:yaki/data/sources/remote/declaration_api.dart' as _i3;
 
 // ignore_for_file: type=lint
@@ -42,38 +41,36 @@ class MockDeclarationApi extends _i1.Mock implements _i3.DeclarationApi {
   }
 
   @override
-  _i4.Future<_i2.HttpResponse<_i5.DeclarationModelIn?>> getDeclaration(
-          String? id) =>
+  _i4.Future<_i2.HttpResponse<dynamic>> getDeclaration(String? id) =>
       (super.noSuchMethod(
         Invocation.method(
           #getDeclaration,
           [id],
         ),
-        returnValue:
-            _i4.Future<_i2.HttpResponse<_i5.DeclarationModelIn?>>.value(
-                _FakeHttpResponse_0<_i5.DeclarationModelIn?>(
+        returnValue: _i4.Future<_i2.HttpResponse<dynamic>>.value(
+            _FakeHttpResponse_0<dynamic>(
           this,
           Invocation.method(
             #getDeclaration,
             [id],
           ),
         )),
-      ) as _i4.Future<_i2.HttpResponse<_i5.DeclarationModelIn?>>);
+      ) as _i4.Future<_i2.HttpResponse<dynamic>>);
   @override
-  _i4.Future<_i2.HttpResponse<_i5.DeclarationModelIn>> create(
-          _i6.DeclarationModel? declaration) =>
+  _i4.Future<_i2.HttpResponse<dynamic>> create(
+          _i5.DeclarationModel? declaration) =>
       (super.noSuchMethod(
         Invocation.method(
           #create,
           [declaration],
         ),
-        returnValue: _i4.Future<_i2.HttpResponse<_i5.DeclarationModelIn>>.value(
-            _FakeHttpResponse_0<_i5.DeclarationModelIn>(
+        returnValue: _i4.Future<_i2.HttpResponse<dynamic>>.value(
+            _FakeHttpResponse_0<dynamic>(
           this,
           Invocation.method(
             #create,
             [declaration],
           ),
         )),
-      ) as _i4.Future<_i2.HttpResponse<_i5.DeclarationModelIn>>);
+      ) as _i4.Future<_i2.HttpResponse<dynamic>>);
 }

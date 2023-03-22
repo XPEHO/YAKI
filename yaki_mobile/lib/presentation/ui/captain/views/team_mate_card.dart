@@ -17,8 +17,8 @@ class CardTeamMate extends StatefulWidget {
 
   final String firstName;
   final String lastName;
-  final String? status;
-  final DateTime? dateActu;
+  final String status;
+  final DateTime dateActu;
 
   @override
   State<CardTeamMate> createState() => _CardTeamMateState();
@@ -31,8 +31,7 @@ class _CardTeamMateState extends State<CardTeamMate> {
     var size = MediaQuery.of(context).size;
 
     // Format Date.nom
-    // var dateDec = DateFormat('dd/MM/yyyy HH:mm')
-    //     .format(widget.dateActu ?? DateTime.now());
+    var dateDec = DateFormat('dd/MM/yyyy HH:mm').format(widget.dateActu);
 
     return Card(
       child: Column(
@@ -102,10 +101,7 @@ class _CardTeamMateState extends State<CardTeamMate> {
                         alignment: Alignment.bottomLeft,
                         child: Text(
                           // Actualisation Date
-                          widget.dateActu != null
-                              ? DateFormat('dd/MM/yyyy HH:mm')
-                                  .format(widget.dateActu!)
-                              : '',
+                          dateDec,
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
@@ -115,7 +111,7 @@ class _CardTeamMateState extends State<CardTeamMate> {
                         width: size.width * 0.60,
                         child: Text(
                           // Status of the Team Mate
-                          widget.status ?? 'Undeclared',
+                          widget.status,
                           textAlign: TextAlign.end,
                           style: const TextStyle(
                             fontSize: 30,

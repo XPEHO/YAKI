@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yaki/data/repositories/team_mate_repository.dart';
-import 'package:yaki/data/sources/team_mate_api.dart';
+import 'package:yaki/data/sources/remote/team_mate_api.dart';
 import 'package:yaki/domain/entities/team_mate_entity.dart';
 import 'package:yaki/presentation/state/notifiers/team_mate_notifier.dart';
 

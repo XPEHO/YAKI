@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:retrofit/retrofit.dart';
 import 'package:yaki/data/models/declaration_model_in.dart';
 import 'package:yaki/data/sources/remote/declaration_api.dart';
 import 'package:yaki/data/models/declaration_model.dart';
@@ -8,53 +7,58 @@ import 'package:yaki/domain/entities/declaration_status.dart';
 class DeclarationRepository {
   final DeclarationApi _declarationApi;
   DeclarationStatus? declarationStatus;
+  String? statusValue = "";
+  String? nullStatusValue = "";
 
-  DeclarationRepository(this._declarationApi);
+  // inbetween {} are optional attributes
+  // as long as they are nullable. no need to set them at class instantiation
+  DeclarationRepository(
+    this._declarationApi, {
+    this.declarationStatus,
+    this.statusValue,
+    this.nullStatusValue,
+  });
 
   Future<String> getDeclaration(String teamMateId) async {
-    String status = "";
     try {
-      final lastDeclaration = await _declarationApi.getDeclaration(teamMateId);
-      final statusCode = lastDeclaration.response.statusCode;
+      final getHttpResponse = await _declarationApi.getDeclaration(teamMateId);
+      // convert HttpResponse<dynamic> (Map<String, dynamic>) into Model using .fromJson method
+      final getDeclarationIn = DeclarationModelIn.fromJson(
+        getHttpResponse.data,
+      );
 
+      final statusCode = getHttpResponse.response.statusCode;
       switch (statusCode) {
         case 200:
-          status = lastDeclaration.data!.declarationStatus!;
+          // null check "??" mean, if left is null, set right value
+          statusValue = getDeclarationIn.declarationStatus ?? nullStatusValue;
           break;
         case 404:
           debugPrint("No declaration for this day");
           break;
         default:
-          throw Exception(lastDeclaration.response.statusMessage);
+          throw Exception(getHttpResponse.response.statusMessage);
       }
-      declarationStatus = DeclarationStatus(
-        status: lastDeclaration.data!.declarationStatus!,
-      );
-      return status;
+      setDeclarationEntities(statusValue!);
     } catch (err) {
-      debugPrint('$err');
+      debugPrint('error during get last declaration : $err');
     }
-    return status;
+    return statusValue!;
   }
 
   Future<void> create(DeclarationModel declaration) async {
-    final declarationResponse = await _declarationApi.create(declaration);
-
-    String statusValue = handleDeclarationStatus(declarationResponse);
-    declarationStatus = DeclarationStatus(
-      status: statusValue,
-    );
-  }
-
-  /// generate statusValue based on HttpResponse status code,
-  /// coming from Declaration creation.
-  String handleDeclarationStatus(HttpResponse<DeclarationModelIn> response) {
-    String statusValue = "";
     try {
-      final statusCode = response.response.statusCode;
+      final createHttpResponse = await _declarationApi.create(declaration);
+      // convert HttpResponse<dynamic> (Map<String, dynamic>) into Model using .fromJson method
+      final createdDeclarationIn = DeclarationModelIn.fromJson(
+        createHttpResponse.data,
+      );
+
+      final statusCode = createHttpResponse.response.statusCode;
       switch (statusCode) {
         case 200 | 201:
-          statusValue = response.data.declarationStatus!;
+          statusValue =
+              createdDeclarationIn.declarationStatus ?? nullStatusValue;
           break;
         case 400 | 500:
           debugPrint("code error : $statusCode");
@@ -66,12 +70,19 @@ class DeclarationRepository {
           debugPrint("missing token in header : $statusCode");
           break;
         default:
-          throw Exception(response.response.statusMessage);
+          throw Exception(createHttpResponse.response.statusMessage);
       }
+      setDeclarationEntities(statusValue!);
     } catch (exception) {
-      debugPrint("error during creation $exception");
+      debugPrint("error during creation : $exception");
     }
-    return statusValue;
+  }
+
+  /// Assign status, to declarationStatus entities.
+  void setDeclarationEntities(String status) {
+    declarationStatus = DeclarationStatus(
+      status: status,
+    );
   }
 
   /// getter to retrieve declaration status stored in DeclarationStatus instance.
