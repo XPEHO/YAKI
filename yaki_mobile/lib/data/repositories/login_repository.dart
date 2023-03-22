@@ -1,6 +1,5 @@
 import 'package:crypt/crypt.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:retrofit/retrofit.dart';
 import 'package:yaki/data/models/login.dart';
 import 'package:yaki/data/models/user.dart';
 import 'package:yaki/data/sources/local/shared_preference.dart';
@@ -21,15 +20,6 @@ class LoginRepository {
 
   Future<bool> userAuthentication(String login, String password) async {
     Login newLog = Login(login: login, password: password);
-
-    final authenticationResponse = await _loginApi.postLogin(newLog);
-    bool isCaptain = handleResponse(authenticationResponse);
-
-    return isCaptain;
-  }
-
-  bool handleResponse(HttpResponse<User?> response) {
-    bool isCaptain = false;
     try {
       final authenticationResponse = await _loginApi.postLogin(newLog);
       // convert HttpResponse<dynamic> (Map<String, dynamic>) into Model using .fromJson method
