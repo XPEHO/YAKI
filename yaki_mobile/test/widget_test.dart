@@ -12,12 +12,8 @@ import 'package:mockito/annotations.dart';
 import 'package:yaki/data/sources/remote/declaration_api.dart';
 import 'package:yaki/presentation/ui/shared/views/header.dart';
 
-//import 'widget_test.mocks.dart';
-
 @GenerateMocks([DeclarationApi])
 void main() {
-  EasyLocalization.ensureInitialized();
-
   test('super test', () {
     expect(true, true);
   });
