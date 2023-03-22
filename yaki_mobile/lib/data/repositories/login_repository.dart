@@ -10,12 +10,17 @@ import 'package:yaki/domain/entities/logged_user.dart';
 class LoginRepository {
   final LoginApi _loginApi;
   LoggedUser? loggedUser;
+  // isCaptain determine redirection after login.
+  bool? isCaptain = false;
 
-  LoginRepository(this._loginApi);
+  LoginRepository(
+    this._loginApi, {
+    this.loggedUser,
+    this.isCaptain,
+  });
 
   Future<bool> userAuthentication(String login, String password) async {
     Login newLog = Login(login: login, password: password);
-    debugPrint(hashPassword(password));
 
     final authenticationResponse = await _loginApi.postLogin(newLog);
     bool isCaptain = handleResponse(authenticationResponse);
@@ -26,24 +31,18 @@ class LoginRepository {
   bool handleResponse(HttpResponse<User?> response) {
     bool isCaptain = false;
     try {
-      final statusCode = response.response.statusCode;
+      final authenticationResponse = await _loginApi.postLogin(newLog);
+      // convert HttpResponse<dynamic> (Map<String, dynamic>) into Model using .fromJson method
+      final userResponse = User.fromJson(authenticationResponse.data);
 
+      final statusCode = authenticationResponse.response.statusCode;
       switch (statusCode) {
         case 200:
-          final data = response.data!;
-          addTokenToSharedPreference(data.token);
-          addUserIdToSharedPreference(data.userId);
-          loggedUser = LoggedUser(
-            teamMateid: data.teamMateId,
-            lastName: data.lastName,
-            firstName: data.firstName,
-            email: data.email,
-          );
-
-          if (response.data?.captainId != null) {
+          setSharedPreference(userResponse);
+          setLoggedUser(userResponse);
+          if (userResponse.captainId != null) {
             isCaptain = true;
           }
-
           break;
         case 204:
           debugPrint("invalid login informations, code : $statusCode");
@@ -52,13 +51,30 @@ class LoginRepository {
           debugPrint("Invalid token, code : $statusCode");
           break;
         default:
-          throw Exception(response.response.statusMessage);
+          throw Exception(authenticationResponse.response.statusMessage);
       }
     } catch (err) {
       debugPrint('login exception : $err');
     }
+    return isCaptain!;
+  }
 
-    return isCaptain;
+  /// Attributes from User model,
+  /// to be saved into sharedPreferences.
+  void setSharedPreference(User user) {
+    addTokenToSharedPreference(user.token);
+    addUserIdToSharedPreference(user.userId);
+  }
+
+  /// Retrieve User model attributes
+  /// and assign the selected attributes to the loggedUser entities
+  void setLoggedUser(User user) {
+    loggedUser = LoggedUser(
+      teamMateid: user.teamMateId ?? 0,
+      lastName: user.lastName ?? "",
+      firstName: user.firstName ?? "",
+      email: user.email ?? "",
+    );
   }
 
   /// hash password received from authentication page
@@ -69,7 +85,6 @@ class LoginRepository {
       rounds: 10000,
       salt: const String.fromEnvironment('CRED_HASH_PASS'),
     );
-
     return hashPass.toString();
   }
 
