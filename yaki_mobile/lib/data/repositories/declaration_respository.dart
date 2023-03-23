@@ -31,9 +31,13 @@ class DeclarationRepository {
           debugPrint("No declaration for this day");
           break;
         default:
+<<<<<<< HEAD
           throw Exception(
             "Invalid statusCode from server : ${getHttpResponse.response.statusCode}",
           );
+=======
+          throw Exception("Invalid statusCode from server : ${getHttpResponse.response.statusCode}");
+>>>>>>> f3cf52c (test(front): updated flutter unit for create function)
       }
       setDeclarationEntities(statusValue);
     } catch (err) {
