@@ -29,28 +29,30 @@ import 'declaration_repository_test.mocks.dart';
   ],
 )
 void main() {
+
+  final mockedApi = MockDeclarationApi();
+  final httpResponse = MockHttpResponse();
+  final response = MockResponse();
+  final declarationRepository = DeclarationRepository(mockedApi);
+
+  const String teammateId = "1";
+
+  final Map<String, dynamic> responseApi = {
+    "declarationId": 2,
+    "declarationDate": DateTime.now().toIso8601String(),
+    "declarationTeamMateId": 3,
+    "declarationStatus": "Remote"
+  };
+
+  final Map<String, dynamic> errorResponse = {};
+
   group(
-    'declaration repository GET',
+    'declaration repository getDeclaration()',
     () {
-      final mockedApi = MockDeclarationApi();
-      final httpResponse = MockHttpResponse();
-      final response = MockResponse();
-      final declarationRepository = DeclarationRepository(mockedApi);
-
-      const String teammateId = "1";
-
-      final Map<String, dynamic> responseApi = {
-        "declarationId": 2,
-        "declarationDate": DateTime.now().toIso8601String(),
-        "declarationTeamMateId": 3,
-        "declarationStatus": "Remote"
-      };
-
-      final Map<String, dynamic> errorResponse = {};
-
       test(
         'Successfully GET daily declaration.',
         () async {
+          // Stubbing
           when(mockedApi.getDeclaration(teammateId))
               .thenAnswer((realInvocation) => Future.value(httpResponse));
           when(httpResponse.response).thenReturn(response);
@@ -66,6 +68,7 @@ void main() {
       test(
         'Fail to get the last declaration, or no daily declaration.',
         () async {
+          // Stubbing
           when(mockedApi.getDeclaration(teammateId))
               .thenAnswer((realInvocation) => Future.value(httpResponse));
           when(httpResponse.response).thenReturn(response);
@@ -81,12 +84,22 @@ void main() {
       test(
         'throw exception when get declaration',
         () async {
+          // Stubbing
           when(mockedApi.getDeclaration(teammateId))
               .thenAnswer((realInvocation) => Future.value(httpResponse));
           when(httpResponse.response).thenReturn(response);
-          when(response.statusCode).thenReturn();
+          when(response.statusCode).thenReturn(500);
+          when(httpResponse.data).thenReturn(errorResponse);
+
+          final String status =
+          await declarationRepository.getDeclaration(teammateId);
+
+          expect(status, "");
         },
       );
     },
   );
+  group('Declaration respository create()', () {
+
+  });
 }
