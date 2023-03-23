@@ -78,6 +78,15 @@ void main() {
           expect(status, "");
         },
       );
+      test(
+        'throw exception when get declaration',
+        () async {
+          when(mockedApi.getDeclaration(teammateId))
+              .thenAnswer((realInvocation) => Future.value(httpResponse));
+          when(httpResponse.response).thenReturn(response);
+          when(response.statusCode).thenReturn();
+        },
+      );
     },
   );
 }
