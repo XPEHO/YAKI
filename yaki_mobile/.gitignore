@@ -1,5 +1,6 @@
 # Miscellaneous
-
+# don't check in golden failure output
+**/failures/*.png
 *.class
 *.log
 *.pyc
