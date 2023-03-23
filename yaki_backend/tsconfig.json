@@ -103,6 +103,7 @@
   "exclude": [
     "./coverage/**/*",
     "./dist/**/*",
-    "./babel.config.js"
+    "./babel.config.js",
+    "./__test__"
   ]
 }
