@@ -40,13 +40,6 @@ test("it should pass", async () => {
 //     }
 // })
 
-<<<<<<< HEAD
-    it('return a captain', () => {
-        const userRepo = new UserRepository();
-        expect
-    })
-})
-=======
 // describe('check login details', () => {
 //     beforeEach(() => {
 //         mockedUserRepo.mockClear();
@@ -57,4 +50,3 @@ test("it should pass", async () => {
 //         expect
 //     })
 // })
->>>>>>> e961e35 (test(login_jest): successful unit tests jest of authetificateService)
