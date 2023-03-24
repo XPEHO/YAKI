@@ -7,7 +7,7 @@ import 'package:yaki/domain/entities/declaration_status.dart';
 class DeclarationRepository {
   final DeclarationApi _declarationApi;
   DeclarationStatus? declarationStatus;
-  
+
   // inbetween {} are optional attributes
   // as long as they are nullable. no need to set them at class instantiation
   DeclarationRepository(
@@ -22,7 +22,7 @@ class DeclarationRepository {
       final statusCode = getHttpResponse.response.statusCode;
       switch (statusCode) {
         case 200:
-        // convert HttpResponse<dynamic> (Map<String, dynamic>) into Model using .fromJson method
+          // convert HttpResponse<dynamic> (Map<String, dynamic>) into Model using .fromJson method
           final getDeclarationIn = DeclarationModelIn.fromJson(
             getHttpResponse.data,
           );
@@ -32,7 +32,8 @@ class DeclarationRepository {
           debugPrint("No declaration for this day");
           break;
         default:
-          throw Exception("Invalid statusCode from server : ${getHttpResponse.response.statusCode}");
+          throw Exception(
+              "Invalid statusCode from server : ${getHttpResponse.response.statusCode}");
       }
       setDeclarationEntities(statusValue);
     } catch (err) {
@@ -48,12 +49,11 @@ class DeclarationRepository {
       final statusCode = createHttpResponse.response.statusCode;
       switch (statusCode) {
         case 200 | 201:
-        // convert HttpResponse<dynamic> (Map<String, dynamic>) into Model using .fromJson method
+          // convert HttpResponse<dynamic> (Map<String, dynamic>) into Model using .fromJson method
           final createdDeclarationIn = DeclarationModelIn.fromJson(
             createHttpResponse.data,
           );
-          statusValue =
-              createdDeclarationIn.declarationStatus ?? "";
+          statusValue = createdDeclarationIn.declarationStatus ?? "";
           break;
         case 400 | 500:
           debugPrint("Code error : $statusCode");
@@ -65,7 +65,8 @@ class DeclarationRepository {
           debugPrint("Missing token in header : $statusCode");
           break;
         default:
-          throw Exception("Invalid statusCode from server : ${createHttpResponse.response.statusCode}");
+          throw Exception(
+              "Invalid statusCode from server : ${createHttpResponse.response.statusCode}");
       }
       setDeclarationEntities(statusValue);
     } catch (err) {
