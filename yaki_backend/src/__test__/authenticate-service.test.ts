@@ -56,31 +56,18 @@ describe('authService', () => {
       'johndoe@example.com'
     );
 
-<<<<<<< HEAD
     /* This is a test that checks if the token is created for the given user and returns the updated
     user object. */
     it('should create a token for the given user and return the updated user object', async () => {
       const mockToken = 'mockToken';
       jest.spyOn(jwt, 'sign').mockReturnValueOnce(mockToken);
       const result = await authService.createToken(mockCaptain);
-=======
-    it('should create a token for the given user and return the updated user object', async () => {
-      const mockToken = 'mockToken';
-      jest.spyOn(jwt, 'sign').mockReturnValueOnce(mockToken);
-
-      const result = await authService.createToken(mockCaptain);
-
->>>>>>> e84c1fc (test(login_jest): successful unit tests jest of authetificateService)
       expect(jwt.sign).toHaveBeenCalledWith(
         {
           user_id: mockCaptain.userId,
           user_email: mockCaptain.email,
         },
-<<<<<<< HEAD
         `${process.env.TOKEN_SECRET}`,
-=======
-        process.env.TOKEN_SECRET,
->>>>>>> e84c1fc (test(login_jest): successful unit tests jest of authetificateService)
         {
           expiresIn: '30d',
         }
