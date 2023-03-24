@@ -8,22 +8,22 @@ part of 'team_mate_model.dart';
 
 TeamMateModel _$TeamMateModelFromJson(Map<String, dynamic> json) =>
     TeamMateModel(
-      userId: json['user_id'] as int,
-      userLastName: json['user_last_name'] as String,
-      userFirstName: json['user_first_name'] as String,
-      teamMateId: json['team_mate_id'] as int,
-      declarationDate: json['declaration_date'] == null
+      userId: json['userId'] as int?,
+      userLastName: json['userLastName'] as String?,
+      userFirstName: json['userFirstName'] as String?,
+      teamMateId: json['teamMateId'] as int?,
+      declarationDate: json['declarationDate'] == null
           ? null
-          : DateTime.parse(json['declaration_date'] as String),
-      declarationStatus: json['declaration_status'] as String?,
+          : DateTime.parse(json['declarationDate'] as String),
+      declarationStatus: json['declarationStatus'] as String?,
     );
 
 Map<String, dynamic> _$TeamMateModelToJson(TeamMateModel instance) =>
     <String, dynamic>{
-      'user_id': instance.userId,
-      'user_last_name': instance.userLastName,
-      'user_first_name': instance.userFirstName,
-      'team_mate_id': instance.teamMateId,
-      'declaration_date': instance.declarationDate?.toIso8601String(),
-      'declaration_status': instance.declarationStatus,
+      'userId': instance.userId,
+      'userLastName': instance.userLastName,
+      'userFirstName': instance.userFirstName,
+      'teamMateId': instance.teamMateId,
+      'declarationDate': instance.declarationDate?.toIso8601String(),
+      'declarationStatus': instance.declarationStatus,
     };

@@ -8,15 +8,16 @@ class TeamMateRepository {
   final TeamMateApi teamMateApi;
   List<TeamMateEntity> teamMatelist;
   TeamMateEntity? teamMateEntity;
+
   TeamMateRepository(
     this.teamMateApi, {
     this.teamMatelist = const [],
     this.teamMateEntity,
   });
 
-  Future<List<TeamMateEntity>> getTeamMate() async {
+  Future<List<TeamMateEntity>> getTeamMate(String captainId) async {
     try {
-      final listHttpResponse = await teamMateApi.getTeamMate();
+      final listHttpResponse = await teamMateApi.getTeamMate(captainId);
       final modelList = setTeamMateModelList(listHttpResponse);
 
       teamMatelist = modelList.map(

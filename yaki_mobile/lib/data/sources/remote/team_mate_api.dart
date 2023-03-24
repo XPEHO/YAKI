@@ -8,5 +8,7 @@ abstract class TeamMateApi {
   factory TeamMateApi(Dio dio, {required String baseUrl}) = _TeamMateApi;
 
   @GET('/teamMates')
-  Future<HttpResponse> getTeamMate();
+  Future<HttpResponse> getTeamMate(
+    @Query('captainId') String id,
+  );
 }
