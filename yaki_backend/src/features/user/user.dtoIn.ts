@@ -12,4 +12,4 @@ interface UserModel {
     captain_user_id: number,
 }
 
-export default UserModel
+export default UserModel;
