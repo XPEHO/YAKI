@@ -23,39 +23,6 @@ jest.mock('../features/teamMate/teamMate.repository', () => {
   };
 });
 
-
-describe('get teammate by teammateID and last declaration', () => {
-  const teamMateRepo = new TeamMateRepository();
-  const teamMateService = new TeamMateService(
-    teamMateRepo,
-    new TeamService(new TeamRepository())
-  );
-  beforeEach(() => {
-    mockedTeamMateRepo.mockClear();
-  });
-  it('return a team mate', async () => {
-    expect(await teamMateService.getByUserId('1')).toMatchObject({
-      user_id: 1,
-    });
-  });
-});
-
-jest.mock('../features/teamMate/teamMate.repository', () => {
-  return {
-    TeamMateRepository: jest.fn().mockImplementation(() => {
-      return {
-        getByTeamIdWithLastDeclaration: (user_id: number): TeamMateDtoIn => {
-          const user = mockTeamMock.filter((elm) => elm.user_id == user_id);
-          if (user_id == null) {
-            throw new Error('Bad authentification details');
-          }
-          return user[0];
-        },
-      };
-    }),
-  };
-});
-
 describe('get teammate by userId', () => {
   const teamMateRepo = new TeamMateRepository();
   const teamMateService = new TeamMateService(
@@ -66,9 +33,7 @@ describe('get teammate by userId', () => {
     mockedTeamMateRepo.mockClear();
   });
   it('return a team mate', async () => {
-    expect(
-      await teamMateService.getByTeamIdWithLastDeclaration('1')
-    ).toMatchObject({
+    expect(await teamMateService.getByUserId('1')).toMatchObject({
       user_id: 1,
     });
   });
