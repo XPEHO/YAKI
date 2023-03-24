@@ -23,7 +23,13 @@ class Service {
    * @param user
    * @returns
    */
+<<<<<<< HEAD
   createToken = async (user: CaptainDtoOut | TeamMateDtoOut) => {  
+=======
+  createToken = async (user: CaptainDtoOut | TeamMateDtoOut) => {
+    console.log( process.env.TOKEN_SECRET);
+    
+>>>>>>> e84c1fc (test(login_jest): successful unit tests jest of authetificateService)
     const token = jwt.sign(
       {
         user_id: user.userId,

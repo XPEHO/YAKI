@@ -20,9 +20,13 @@
     "@types/express": "^4.17.17",
     "@types/jest": "^29.5.0",
 <<<<<<< HEAD
+<<<<<<< HEAD
     "@types/jsonwebtoken": "^9.0.1",
 =======
 >>>>>>> 1b84541 (test(login_jest): keep working)
+=======
+    "@types/jsonwebtoken": "^9.0.1",
+>>>>>>> e84c1fc (test(login_jest): successful unit tests jest of authetificateService)
     "@types/node": "^18.15.1",
     "@types/pg": "^8.6.6",
     "@types/swagger-ui-express": "^4.1.3",
