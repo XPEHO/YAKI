@@ -6,7 +6,7 @@ Feature: Login
   Scenario: Login successful
 
     Given path '/login'
-    And request { "login": "dupond", "password": "dupond"}
+    And request { "login": "lavigne", "password": "lavigne"}
     When method POST
     Then status 200
     * def token = response.token

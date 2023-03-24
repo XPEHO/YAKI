@@ -1,4 +1,4 @@
-Feature: get the latest declaration
+Feature: GetLatestDeclaration
 
   Background:
     * url 'http://localhost:3000'
@@ -6,12 +6,15 @@ Feature: get the latest declaration
     * header x-access-token = login.token
     * header user_id = login.userId
 
+
+  @GetTheLatestDeclarationSuccessful
   Scenario: Get the latest declaration successful
     Given path '/declarations'
     And param teamMateId = 4
     When method get
     Then status 200
     And match response contains { declarationId: '#number', declarationTeamMateId: 4, declarationDate: '#string', declarationStatus: 'Remote' }
+
 
   Scenario: Get the latest declaration fail
     Given path '/declarations'

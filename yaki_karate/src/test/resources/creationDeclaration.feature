@@ -15,7 +15,6 @@ Feature: CreationDeclaration
     Then status 201
     And match response == { declarationId: '#number', declarationTeamMateId: 4, declarationDate: '#string', declarationStatus: 'Remote' }
 
-
   Scenario: Creation declaration fail
     Given path '/declarations'
     And request { "declarationTeamMateId": ,"declarationDate": "",  "declarationStatus": ""}
