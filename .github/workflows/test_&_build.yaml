@@ -57,3 +57,16 @@ jobs:
           npm run swagger
           npm run test
           npm run build
+  java:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: Build with Gradle
+        run: |
+          cd yaki_admin_backend
+          ./gradlew clean build
