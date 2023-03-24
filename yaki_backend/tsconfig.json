@@ -103,11 +103,6 @@
   "exclude": [
     "./coverage/**/*",
     "./dist/**/*",
-<<<<<<< Updated upstream
     "./babel.config.js"
-=======
-    "./babel.config.js",
-    "./__test__"
->>>>>>> Stashed changes
   ]
 }
