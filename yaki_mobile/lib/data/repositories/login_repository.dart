@@ -1,10 +1,10 @@
+import 'package:crypt/crypt.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:yaki/data/models/login.dart';
 import 'package:yaki/data/models/user.dart';
 import 'package:yaki/data/sources/local/shared_preference.dart';
 import 'package:yaki/data/sources/remote/login_api.dart';
-import 'package:yaki/data/models/login.dart';
 import 'package:yaki/domain/entities/logged_user.dart';
-import 'package:crypt/crypt.dart';
 
 class LoginRepository {
   final LoginApi _loginApi;
@@ -22,12 +22,13 @@ class LoginRepository {
     Login newLog = Login(login: login, password: password);
     try {
       final authenticationResponse = await _loginApi.postLogin(newLog);
-      // convert HttpResponse<dynamic> (Map<String, dynamic>) into Model using .fromJson method
-      final userResponse = User.fromJson(authenticationResponse.data);
 
       final statusCode = authenticationResponse.response.statusCode;
       switch (statusCode) {
         case 200:
+          // convert HttpResponse<dynamic> (Map<String, dynamic>) into Model using .fromJson method
+          final userResponse = User.fromJson(authenticationResponse.data);
+
           setSharedPreference(userResponse);
           setLoggedUser(userResponse);
           if (userResponse.captainId != null) {
@@ -60,7 +61,8 @@ class LoginRepository {
   /// and assign the selected attributes to the loggedUser entities
   void setLoggedUser(User user) {
     loggedUser = LoggedUser(
-      teamMateid: user.teamMateId ?? 0,
+      captainId: user.captainId,
+      teamMateid: user.teamMateId ?? -1,
       lastName: user.lastName ?? "",
       firstName: user.firstName ?? "",
       email: user.email ?? "",
@@ -81,5 +83,9 @@ class LoginRepository {
   /// teamMateId getter, used at declaration object creation, in order to POST it.
   int? get teamMateId {
     return loggedUser?.teamMateid;
+  }
+
+  int? get captainId {
+    return loggedUser?.captainId ?? 0;
   }
 }
