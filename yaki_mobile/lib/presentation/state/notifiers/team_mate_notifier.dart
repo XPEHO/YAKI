@@ -1,3 +1,4 @@
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yaki/data/repositories/login_repository.dart';
 import 'package:yaki/data/repositories/team_mate_repository.dart';
@@ -10,8 +11,8 @@ class TeamMateNotifier extends StateNotifier<List<TeamMateEntity>> {
 
   TeamMateNotifier(this.teamMateRepository, this.loginRepository)
       : super(
-          [],
-        );
+    [],
+  );
 
   Future<void> fetchTeamMates() async {
     final captainId = loginRepository.captainId.toString();

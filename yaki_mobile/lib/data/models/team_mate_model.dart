@@ -5,6 +5,7 @@ part 'team_mate_model.g.dart';
 @JsonSerializable()
 class TeamMateModel {
   int? userId;
+<<<<<<< HEAD
 
   String? userLastName;
 
@@ -14,6 +15,12 @@ class TeamMateModel {
 
   DateTime? declarationDate;
 
+=======
+  String? userLastName;
+  String? userFirstName;
+  int? teamMateId;
+  DateTime? declarationDate;
+>>>>>>> 8d96542 (test(front): add captain modification for testing)
   String? declarationStatus;
 
   TeamMateModel({

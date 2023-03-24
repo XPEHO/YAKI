@@ -10,10 +10,10 @@ class TeamMateRepository {
   TeamMateEntity? teamMateEntity;
 
   TeamMateRepository(
-    this.teamMateApi, {
-    this.teamMatelist = const [],
-    this.teamMateEntity,
-  });
+      this.teamMateApi, {
+        this.teamMatelist = const [],
+        this.teamMateEntity,
+      });
 
   Future<List<TeamMateEntity>> getTeamMate(String captainId) async {
     try {
@@ -21,7 +21,7 @@ class TeamMateRepository {
       final modelList = setTeamMateModelList(listHttpResponse);
 
       teamMatelist = modelList.map(
-        (e) {
+            (e) {
           return TeamMateEntity(
             userFirstName: e.userFirstName,
             userLastName: e.userLastName,
@@ -42,7 +42,7 @@ class TeamMateRepository {
   /// Convert it afterward into a List<TeamMateModel>
   List<TeamMateModel> setTeamMateModelList(HttpResponse response) {
     final dynamicList = response.data.map(
-      (teammate) {
+          (teammate) {
         return TeamMateModel.fromJson(teammate);
       },
     ).toList();

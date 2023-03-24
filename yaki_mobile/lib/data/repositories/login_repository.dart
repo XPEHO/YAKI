@@ -14,10 +14,10 @@ class LoginRepository {
   bool? isCaptain = false;
 
   LoginRepository(
-    this._loginApi, {
-    this.loggedUser,
-    this.isCaptain,
-  });
+      this._loginApi, {
+        this.loggedUser,
+        this.isCaptain,
+      });
 
   Future<bool> userAuthentication(String login, String password) async {
     Login newLog = Login(login: login, password: password);
@@ -27,7 +27,7 @@ class LoginRepository {
       final statusCode = authenticationResponse.response.statusCode;
       switch (statusCode) {
         case 200:
-          // convert HttpResponse<dynamic> (Map<String, dynamic>) into Model using .fromJson method
+        // convert HttpResponse<dynamic> (Map<String, dynamic>) into Model using .fromJson method
           final userResponse = User.fromJson(authenticationResponse.data);
 
           setSharedPreference(userResponse);
@@ -62,7 +62,7 @@ class LoginRepository {
   /// and assign the selected attributes to the loggedUser entities
   void setLoggedUser(User user) {
     loggedUser = LoggedUser(
-      captainId: user.captainId,
+      captainId: user.captainId ?? 0,
       teamMateid: user.teamMateId ?? 0,
       lastName: user.lastName ?? "",
       firstName: user.firstName ?? "",
