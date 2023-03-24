@@ -1,30 +1,29 @@
 package com.xpeho.yaki_admin_backend.data.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.PrimaryKeyJoinColumn;
-import jakarta.persistence.Table;
-import org.springframework.data.annotation.Id;
+import jakarta.persistence.*;
+
 @Table(name = "captain")
 @Entity
 @PrimaryKeyJoinColumn(name = "captain_user_id")
-public class CaptainModel extends UserModel{
-    @Id
+public class CaptainModel extends UserModel {
+
     @Column(name = "captain_id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int captainId;
 
-    int id;
-
-    public int getId() {
-        return id;
+    public CaptainModel(int captainId, int userId, String lastname, String firstname, String email, String login, String password) {
+        super(userId, lastname, firstname, email, login, password);
+        this.captainId = captainId;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public CaptainModel(int id) {
-        this.id = id;
-    }
     public CaptainModel() {
+    }
+
+    public int getCaptainId() {
+        return captainId;
+    }
+
+    public void setCaptainId(int id) {
+        this.captainId = captainId;
     }
 }
