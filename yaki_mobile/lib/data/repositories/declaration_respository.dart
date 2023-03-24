@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
+import 'package:yaki/data/models/declaration_model.dart';
 import 'package:yaki/data/models/declaration_model_in.dart';
 import 'package:yaki/data/sources/remote/declaration_api.dart';
-import 'package:yaki/data/models/declaration_model.dart';
 import 'package:yaki/domain/entities/declaration_status.dart';
 
 class DeclarationRepository {
@@ -33,7 +33,8 @@ class DeclarationRepository {
           break;
         default:
           throw Exception(
-              "Invalid statusCode from server : ${getHttpResponse.response.statusCode}");
+            "Invalid statusCode from server : ${getHttpResponse.response.statusCode}",
+          );
       }
       setDeclarationEntities(statusValue);
     } catch (err) {
@@ -66,7 +67,8 @@ class DeclarationRepository {
           break;
         default:
           throw Exception(
-              "Invalid statusCode from server : ${createHttpResponse.response.statusCode}");
+            "Invalid statusCode from server : ${createHttpResponse.response.statusCode}",
+          );
       }
       setDeclarationEntities(statusValue);
     } catch (err) {
