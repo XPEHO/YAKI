@@ -23,9 +23,7 @@ class Service {
    * @param user
    * @returns
    */
-  createToken = async (user: CaptainDtoOut | TeamMateDtoOut) => {
-    console.log( process.env.TOKEN_SECRET);
-    
+  createToken = async (user: CaptainDtoOut | TeamMateDtoOut) => {  
     const token = jwt.sign(
       {
         user_id: user.userId,
