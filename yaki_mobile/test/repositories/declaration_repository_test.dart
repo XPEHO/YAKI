@@ -120,13 +120,13 @@ void main() {
           when(httpResponse.data).thenReturn(responseApi);
 
           await declarationRepository.create(createdDeclaration);
-          
+
           expect(declarationRepository.status, "REMOTE");
         },
       );
       test(
         'Fail create declaration 400 or 500.',
-            () async {
+        () async {
           when(mockedApi.create(createdDeclaration))
               .thenAnswer((realInvocation) => Future.value(httpResponse));
           when(httpResponse.response).thenReturn(response);
@@ -140,7 +140,7 @@ void main() {
       );
       test(
         'Fail create declaration 401.',
-            () async {
+        () async {
           when(mockedApi.create(createdDeclaration))
               .thenAnswer((realInvocation) => Future.value(httpResponse));
           when(httpResponse.response).thenReturn(response);
@@ -154,7 +154,7 @@ void main() {
       );
       test(
         'Fail create declaration 403.',
-            () async {
+        () async {
           when(mockedApi.create(createdDeclaration))
               .thenAnswer((realInvocation) => Future.value(httpResponse));
           when(httpResponse.response).thenReturn(response);
@@ -168,7 +168,7 @@ void main() {
       );
       test(
         'Throw exception when create declaration',
-            () async {
+        () async {
           when(mockedApi.create(createdDeclaration))
               .thenAnswer((realInvocation) => Future.value(httpResponse));
           when(httpResponse.response).thenReturn(response);
@@ -178,6 +178,19 @@ void main() {
           await declarationRepository.create(createdDeclaration);
 
           expect(declarationRepository.status, "");
+        },
+      );
+    },
+  );
+  group(
+    'function annexe',
+    () {
+      test(
+        'setDeclarationEntity',
+        () {
+          when(declarationRepository.setDeclarationEntities(selectedStatus));
+
+          expect(declarationRepository.status, selectedStatus);
         },
       );
     },

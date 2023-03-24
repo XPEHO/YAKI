@@ -47,3 +47,6 @@ app.*.map.json
 
 
 config.json
+
+#flutter unit test coverge :
+coverage/
