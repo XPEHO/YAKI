@@ -15,8 +15,8 @@ class CardTeamMate extends StatefulWidget {
     required this.dateActu,
   });
 
-  final String firstName;
-  final String lastName;
+  final String? firstName;
+  final String? lastName;
   final String? status;
   final DateTime? dateActu;
 

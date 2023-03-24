@@ -8,10 +8,10 @@ part of 'team_mate_model.dart';
 
 TeamMateModel _$TeamMateModelFromJson(Map<String, dynamic> json) =>
     TeamMateModel(
-      userId: json['user_id'] as int,
-      userLastName: json['user_last_name'] as String,
-      userFirstName: json['user_first_name'] as String,
-      teamMateId: json['team_mate_id'] as int,
+      userId: json['user_id'] as int?,
+      userLastName: json['user_last_name'] as String?,
+      userFirstName: json['user_first_name'] as String?,
+      teamMateId: json['team_mate_id'] as int?,
       declarationDate: json['declaration_date'] == null
           ? null
           : DateTime.parse(json['declaration_date'] as String),

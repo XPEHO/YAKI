@@ -1,6 +1,6 @@
 class TeamMateEntity {
-  String userFirstName;
-  String userLastName;
+  String? userFirstName;
+  String? userLastName;
   DateTime? declarationDate;
   String? declarationStatus;
 

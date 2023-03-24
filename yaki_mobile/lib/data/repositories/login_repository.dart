@@ -9,6 +9,7 @@ import 'package:yaki/domain/entities/logged_user.dart';
 class LoginRepository {
   final LoginApi _loginApi;
   LoggedUser? loggedUser;
+
   // isCaptain determine redirection after login.
   bool? isCaptain = false;
 
@@ -47,7 +48,7 @@ class LoginRepository {
     } catch (err) {
       debugPrint('login exception : $err');
     }
-    return isCaptain!;
+    return isCaptain ?? false;
   }
 
   /// Attributes from User model,
@@ -62,7 +63,7 @@ class LoginRepository {
   void setLoggedUser(User user) {
     loggedUser = LoggedUser(
       captainId: user.captainId,
-      teamMateid: user.teamMateId ?? -1,
+      teamMateid: user.teamMateId ?? 0,
       lastName: user.lastName ?? "",
       firstName: user.firstName ?? "",
       email: user.email ?? "",

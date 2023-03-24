@@ -21,7 +21,7 @@ class _TeamMateApi implements TeamMateApi {
   @override
   Future<HttpResponse<dynamic>> getTeamMate(id) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'captain': id};
+    final queryParameters = <String, dynamic>{r'captainId': id};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result =

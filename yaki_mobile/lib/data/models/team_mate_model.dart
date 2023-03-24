@@ -5,13 +5,13 @@ part 'team_mate_model.g.dart';
 @JsonSerializable()
 class TeamMateModel {
   @JsonKey(name: 'user_id')
-  int userId;
+  int? userId;
   @JsonKey(name: 'user_last_name')
-  String userLastName;
+  String? userLastName;
   @JsonKey(name: 'user_first_name')
-  String userFirstName;
+  String? userFirstName;
   @JsonKey(name: 'team_mate_id')
-  int teamMateId;
+  int? teamMateId;
   @JsonKey(name: 'declaration_date')
   DateTime? declarationDate;
   @JsonKey(name: 'declaration_status')
@@ -28,5 +28,6 @@ class TeamMateModel {
 
   factory TeamMateModel.fromJson(Map<String, dynamic> json) =>
       _$TeamMateModelFromJson(json);
+
   Map<String, dynamic> toJson() => _$TeamMateModelToJson(this);
 }
