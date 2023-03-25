@@ -10,16 +10,14 @@ class LoginRepository {
   final LoginApi _loginApi;
   LoggedUser? loggedUser;
 
-  // isCaptain determine redirection after login.
-  bool? isCaptain = false;
-
   LoginRepository(
       this._loginApi, {
         this.loggedUser,
-        this.isCaptain,
       });
 
   Future<bool> userAuthentication(String login, String password) async {
+    // isCaptain determine redirection after login.
+    bool isCaptain = false;
     Login newLog = Login(login: login, password: password);
     try {
       final authenticationResponse = await _loginApi.postLogin(newLog);
@@ -48,7 +46,7 @@ class LoginRepository {
     } catch (err) {
       debugPrint('login exception : $err');
     }
-    return isCaptain ?? false;
+    return isCaptain;
   }
 
   /// Attributes from User model,
@@ -87,6 +85,6 @@ class LoginRepository {
   }
 
   int? get captainId {
-    return loggedUser?.captainId ?? 0;
+    return loggedUser?.captainId;
   }
 }

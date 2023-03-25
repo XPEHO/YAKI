@@ -1,38 +1,25 @@
 import 'dart:async';
 
-import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:retrofit/dio.dart';
-import 'package:retrofit/retrofit.dart';
 import 'package:yaki/data/models/declaration_model.dart';
 import 'package:yaki/data/repositories/declaration_respository.dart';
 import 'package:yaki/data/sources/remote/declaration_api.dart';
 
+import '../../mocking.mocks.dart';
 import 'declaration_repository_test.mocks.dart';
 
 @GenerateMocks(
   [
     DeclarationApi,
-    Response,
-  ],
-  customMocks: [
-    MockSpec<HttpResponse<Map<String, dynamic>>>(
-      as: #MockHttpResponse,
-    ),
-    MockSpec<HttpResponse<List<Map<String, dynamic>>>>(
-      as: #MockHttpResponseList,
-    ),
-    MockSpec<HttpResponse<String>>(
-      as: #MockHttpResponseString,
-    ),
   ],
 )
 void main() {
-  final mockedApi = MockDeclarationApi();
   final httpResponse = MockHttpResponse();
   final response = MockResponse();
+
+  final mockedApi = MockDeclarationApi();
   final declarationRepository = DeclarationRepository(mockedApi);
 
   const String selectedStatus = "REMOTE";
@@ -183,7 +170,7 @@ void main() {
     },
   );
   group(
-    'function annexe',
+    'annexe function',
     () {
       test(
         'setDeclarationEntity',
