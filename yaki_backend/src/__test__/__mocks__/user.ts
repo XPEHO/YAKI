@@ -3,6 +3,7 @@ import UserModel from "../../features/user/user.dtoIn";
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 const mockDb : UserModel[] = [
 =======
 const dbMockup : UserModel[] = [
@@ -13,6 +14,9 @@ const mockDb : UserModel[] = [
 =======
 const dbMockup : UserModel[] = [
 >>>>>>> 8dbf4e1 (test(user-login): add mockup data and beginning of user service testing)
+=======
+const mockDb : UserModel[] = [
+>>>>>>> 2f757ff (test(user-auth): add test for team mate and captain creation methods)
   { 
     user_id: 1,
     user_last_name: 'Dugrand',
@@ -44,6 +48,7 @@ const dbMockup : UserModel[] = [
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 export default mockDb
 =======
 export default dbMockup
@@ -54,3 +59,6 @@ export default mockDb
 =======
 export default dbMockup
 >>>>>>> 8dbf4e1 (test(user-login): add mockup data and beginning of user service testing)
+=======
+export default mockDb
+>>>>>>> 2f757ff (test(user-auth): add test for team mate and captain creation methods)
