@@ -29,7 +29,8 @@ class Service {
         user_id: user.userId,
         user_email: user.email,
       },
-      process.env.TOKEN_SECRET,
+      // added backtick cause jest didn't want to read it otherwise
+      `${process.env.TOKEN_SECRET}`,
       {
         expiresIn: "30d",
       }

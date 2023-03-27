@@ -1,6 +1,6 @@
 import UserModel from "../../features/user/user.dtoIn";
 
-const dbMockup : UserModel[] = [
+const mockDb : UserModel[] = [
   { 
     user_id: 1,
     user_last_name: 'Dugrand',
@@ -29,4 +29,4 @@ const dbMockup : UserModel[] = [
   }
 ]
 
-export default dbMockup
+export default mockDb

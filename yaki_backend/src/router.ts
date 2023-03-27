@@ -30,7 +30,7 @@ const captainController = new CaptainController(captainService);
 
 //USER
 const userRepository = new UserRepository();
-const userService = new UserService(userRepository, captainService, teamMateService);
+const userService = new UserService(userRepository);
 const userController = new UserController(userService);
 
 router.post("/login", (req, res) => userController.checkLogin(req, res));
