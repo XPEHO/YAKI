@@ -56,7 +56,7 @@ void main() {
         () async {
           when(mockedTeamMateApi.getTeamMate(captainId))
               .thenAnswer((realInvocation) => Future.value(httpResponse));
-          when(httpResponse.data).thenReturn(expected)
+          //when(httpResponse.data).thenReturn(expected);
 
           List<TeamMateEntity> teamMatelist =
               await teamMateRepository.getTeamMate(captainId);
