@@ -47,3 +47,5 @@ app.*.map.json
 
 
 config.json
+
+coverage/
