@@ -20,17 +20,12 @@ Future<bool> isTokenPresent() async {
   return prefs.containsKey('token');
 }
 
-Future<void> removeTokenFromSharedPreferences() async {
+void removeTokenFromSharedPreferences() async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   await prefs.remove('token');
 }
 
-Future<void> clearSharedPreference() async {
+void clearSharedPreference() async {
   final SharedPreferences prefs =   await SharedPreferences.getInstance();
   await prefs.clear();
-}
-
-Future<SharedPreferences> testSharedPref() async {
-  final SharedPreferences prefs = await SharedPreferences.getInstance();
-  return prefs;
 }
