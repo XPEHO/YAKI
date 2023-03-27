@@ -11,9 +11,9 @@ class LoginRepository {
   LoggedUser? loggedUser;
 
   LoginRepository(
-      this._loginApi, {
-        this.loggedUser,
-      });
+    this._loginApi, {
+    this.loggedUser,
+  });
 
   Future<bool> userAuthentication(String login, String password) async {
     // isCaptain determine redirection after login.
@@ -24,7 +24,7 @@ class LoginRepository {
       final statusCode = authenticationResponse.response.statusCode;
       switch (statusCode) {
         case 200:
-        // convert HttpResponse<dynamic> (Map<String, dynamic>) into Model using .fromJson method
+          // convert HttpResponse<dynamic> (Map<String, dynamic>) into Model using .fromJson method
           final userResponse = User.fromJson(authenticationResponse.data);
           setSharedPreference(userResponse);
           setLoggedUser(userResponse);
