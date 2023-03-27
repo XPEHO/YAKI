@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -19,27 +17,30 @@ void main() {
   final httpResponse = MockHttpResponse();
   final response = MockResponse();
 
-  final mockedApi = MockDeclarationApi();
-  final declarationRepository = DeclarationRepository(mockedApi);
+  final mockedDeclarationApi = MockDeclarationApi();
+  final declarationRepository = DeclarationRepository(mockedDeclarationApi);
 
-  const String selectedStatus = "REMOTE";
+  // get declaration test
+  const String teammateId = "1";
 
+  final Map<String, dynamic> getErrorResponse = {};
+
+  // create declaration test
   DeclarationModel createdDeclaration = DeclarationModel(
     declarationDate: DateTime.now(),
     declarationTeamMateId: 1,
     declarationStatus: "REMOTE",
   );
 
-  const String teammateId = "1";
-
-  final Map<String, dynamic> responseApi = {
+  final Map<String, dynamic> createResponseApi = {
     "declarationId": 2,
     "declarationDate": DateTime.now().toIso8601String(),
     "declarationTeamMateId": 3,
     "declarationStatus": "REMOTE"
   };
 
-  final Map<String, dynamic> errorResponse = {};
+  // setDeclarationEntities
+  const String selectedStatus = "REMOTE";
 
   group(
     'declaration repository getDeclaration()',
@@ -48,11 +49,12 @@ void main() {
         'Successfully GET daily declaration.',
         () async {
           // Stubbing
-          when(mockedApi.getDeclaration(teammateId))
-              .thenAnswer((realInvocation) => Future.value(httpResponse));
+          when(mockedDeclarationApi.getDeclaration(teammateId)).thenAnswer(
+            (realInvocation) => Future.value(httpResponse),
+          );
           when(httpResponse.response).thenReturn(response);
           when(response.statusCode).thenReturn(200);
-          when(httpResponse.data).thenReturn(responseApi);
+          when(httpResponse.data).thenReturn(createResponseApi);
 
           final String status =
               await declarationRepository.getDeclaration(teammateId);
@@ -64,11 +66,12 @@ void main() {
         'Fail to get the last declaration, or no daily declaration.',
         () async {
           // Stubbing
-          when(mockedApi.getDeclaration(teammateId))
-              .thenAnswer((realInvocation) => Future.value(httpResponse));
+          when(mockedDeclarationApi.getDeclaration(teammateId)).thenAnswer(
+            (realInvocation) => Future.value(httpResponse),
+          );
           when(httpResponse.response).thenReturn(response);
           when(response.statusCode).thenReturn(404);
-          when(httpResponse.data).thenReturn(errorResponse);
+          when(httpResponse.data).thenReturn(getErrorResponse);
 
           final String status =
               await declarationRepository.getDeclaration(teammateId);
@@ -80,11 +83,11 @@ void main() {
         'throw exception when get declaration',
         () async {
           // Stubbing
-          when(mockedApi.getDeclaration(teammateId))
+          when(mockedDeclarationApi.getDeclaration(teammateId))
               .thenAnswer((realInvocation) => Future.value(httpResponse));
           when(httpResponse.response).thenReturn(response);
           when(response.statusCode).thenReturn(418);
-          when(httpResponse.data).thenReturn(errorResponse);
+          when(httpResponse.data).thenReturn(getErrorResponse);
 
           final String status =
               await declarationRepository.getDeclaration(teammateId);
@@ -100,11 +103,11 @@ void main() {
       test(
         'Successfully create declaration.',
         () async {
-          when(mockedApi.create(createdDeclaration))
+          when(mockedDeclarationApi.create(createdDeclaration))
               .thenAnswer((realInvocation) => Future.value(httpResponse));
           when(httpResponse.response).thenReturn(response);
           when(response.statusCode).thenReturn(200 | 201);
-          when(httpResponse.data).thenReturn(responseApi);
+          when(httpResponse.data).thenReturn(createResponseApi);
 
           await declarationRepository.create(createdDeclaration);
 
@@ -114,11 +117,11 @@ void main() {
       test(
         'Fail create declaration 400 or 500.',
         () async {
-          when(mockedApi.create(createdDeclaration))
+          when(mockedDeclarationApi.create(createdDeclaration))
               .thenAnswer((realInvocation) => Future.value(httpResponse));
           when(httpResponse.response).thenReturn(response);
           when(response.statusCode).thenReturn(400 | 500);
-          when(httpResponse.data).thenReturn(responseApi);
+          when(httpResponse.data).thenReturn(createResponseApi);
 
           await declarationRepository.create(createdDeclaration);
 
@@ -128,11 +131,11 @@ void main() {
       test(
         'Fail create declaration 401.',
         () async {
-          when(mockedApi.create(createdDeclaration))
+          when(mockedDeclarationApi.create(createdDeclaration))
               .thenAnswer((realInvocation) => Future.value(httpResponse));
           when(httpResponse.response).thenReturn(response);
           when(response.statusCode).thenReturn(401);
-          when(httpResponse.data).thenReturn(responseApi);
+          when(httpResponse.data).thenReturn(createResponseApi);
 
           await declarationRepository.create(createdDeclaration);
 
@@ -142,11 +145,11 @@ void main() {
       test(
         'Fail create declaration 403.',
         () async {
-          when(mockedApi.create(createdDeclaration))
+          when(mockedDeclarationApi.create(createdDeclaration))
               .thenAnswer((realInvocation) => Future.value(httpResponse));
           when(httpResponse.response).thenReturn(response);
           when(response.statusCode).thenReturn(403);
-          when(httpResponse.data).thenReturn(responseApi);
+          when(httpResponse.data).thenReturn(createResponseApi);
 
           await declarationRepository.create(createdDeclaration);
 
@@ -156,11 +159,11 @@ void main() {
       test(
         'Throw exception when create declaration',
         () async {
-          when(mockedApi.create(createdDeclaration))
+          when(mockedDeclarationApi.create(createdDeclaration))
               .thenAnswer((realInvocation) => Future.value(httpResponse));
           when(httpResponse.response).thenReturn(response);
           when(response.statusCode).thenReturn(418);
-          when(httpResponse.data).thenReturn(responseApi);
+          when(httpResponse.data).thenReturn(createResponseApi);
 
           await declarationRepository.create(createdDeclaration);
 
@@ -176,7 +179,6 @@ void main() {
         'setDeclarationEntity',
         () {
           when(declarationRepository.setDeclarationEntities(selectedStatus));
-
           expect(declarationRepository.status, selectedStatus);
         },
       );

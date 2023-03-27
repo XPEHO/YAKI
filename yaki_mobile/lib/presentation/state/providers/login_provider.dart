@@ -5,15 +5,13 @@ import 'package:yaki/data/sources/remote/login_api.dart';
 
 final dioProvider = Provider((ref) => Dio());
 
-final loginServiceProvider = Provider(
+final loginApiProvider = Provider(
   (ref) => LoginApi(
-    ref.read(
-      dioProvider,
-    ),
+    ref.read(dioProvider),
     baseUrl: const String.fromEnvironment('API_BASE_URL'),
   ),
 );
 
 final loginRepositoryProvider = Provider<LoginRepository>(
-  (ref) => LoginRepository(ref.read(loginServiceProvider)),
+  (ref) => LoginRepository(ref.read(loginApiProvider)),
 );

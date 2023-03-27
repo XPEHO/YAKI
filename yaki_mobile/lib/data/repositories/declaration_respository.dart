@@ -31,7 +31,8 @@ class DeclarationRepository {
           debugPrint("No declaration for this day");
           break;
         default:
-          throw Exception("Invalid statusCode from server : ${getHttpResponse.response.statusCode}");
+          throw Exception(
+              "Invalid statusCode from server : ${getHttpResponse.response.statusCode}");
       }
       setDeclarationEntities(statusValue);
     } catch (err) {
