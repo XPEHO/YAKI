@@ -1,4 +1,4 @@
-import TeamMateDtoIn from '../../features/teamMate/teamMate.dtoIn';
+import { TeamMateDtoIn } from '../../features/teamMate/teamMate.dtoIn';
 
 const teamMatesMock: TeamMateDtoIn[] = [
   {
@@ -11,6 +11,7 @@ const teamMatesMock: TeamMateDtoIn[] = [
     user_email: 'jean.dupuis@gmail.com',
     user_login: 'dupuis',
     user_password: 'dupuis',
+    
   },
   {
     team_mate_id: 2,
