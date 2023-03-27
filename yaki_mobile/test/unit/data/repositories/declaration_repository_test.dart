@@ -8,16 +8,12 @@ import 'package:yaki/data/sources/remote/declaration_api.dart';
 import '../../mocking.mocks.dart';
 import 'declaration_repository_test.mocks.dart';
 
-@GenerateMocks(
-  [
-    DeclarationApi,
-  ],
-)
+@GenerateMocks([DeclarationApi])
 void main() {
   final httpResponse = MockHttpResponse();
   final response = MockResponse();
-
   final mockedDeclarationApi = MockDeclarationApi();
+
   final declarationRepository = DeclarationRepository(mockedDeclarationApi);
 
   // get declaration test

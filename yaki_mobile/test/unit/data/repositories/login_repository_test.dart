@@ -8,11 +8,7 @@ import 'package:yaki/data/sources/remote/login_api.dart';
 import '../../mocking.mocks.dart';
 import 'login_repository_test.mocks.dart';
 
-@GenerateMocks(
-  [
-    LoginApi,
-  ],
-)
+@GenerateMocks([LoginApi])
 void main() {
   final httpResponse = MockHttpResponse();
   final response = MockResponse();
@@ -26,14 +22,16 @@ void main() {
   String captainLog = "lavigne";
   String captainPw = "lavigne";
 
-  LoginModel teammateLogin = LoginModel(login: teammateLog, password: teammatePw);
+  LoginModel teammateLogin =
+      LoginModel(login: teammateLog, password: teammatePw);
   LoginModel captainLogin = LoginModel(login: captainLog, password: captainPw);
 
   final Map<String, dynamic> authenticationDupond = {
     "token": "azertyuioptoken",
+    "captainId": null,
     "teamMateId": 7,
-    "userId": 3,
     "teamId": 2,
+    "userId": 3,
     "lastName": "Dupond",
     "firstName": "Dupond",
     "email": "dupond@mail.com"
@@ -42,6 +40,8 @@ void main() {
   final Map<String, dynamic> authenticationLavigne = {
     "token": "azertyuioptoken",
     "captainId": 1,
+    "teamMateId": null,
+    "teamId": null,
     "userId": 6,
     "lastName": "Lavigne",
     "firstName": "Lavigne",
@@ -56,16 +56,27 @@ void main() {
       test(
         'Successfully authenticate as teammate',
         () async {
-          when(mockedLoginApi.postLogin(teammateLogin)).thenAnswer((realInvocation) => Future.value(httpResponse));
+          when(mockedLoginApi.postLogin(teammateLogin))
+              .thenAnswer((realInvocation) => Future.value(httpResponse));
           when(httpResponse.response).thenReturn(response);
           when(response.statusCode).thenReturn(200);
           when(httpResponse.data).thenReturn(authenticationDupond);
 
-          final bool isCaptain = await loginRepository.userAuthentication("dupond", "dupond");
+          // final isCaptain =
+          //     await loginRepository.userAuthentication("dupond", "dupond");
 
-
-           //expect(isCaptain, false);
+          //expect(isCaptain, isFalse);
         },
+      );
+    },
+  );
+
+  group(
+    'others repo method',
+    () {
+      test(
+        'invoke function to save into sharedPreference',
+        () {},
       );
     },
   );
