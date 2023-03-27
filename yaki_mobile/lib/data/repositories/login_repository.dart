@@ -1,6 +1,6 @@
 import 'package:crypt/crypt.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:yaki/data/models/login.dart';
+import 'package:yaki/data/models/login_model.dart';
 import 'package:yaki/data/models/user.dart';
 import 'package:yaki/data/sources/local/shared_preference.dart';
 import 'package:yaki/data/sources/remote/login_api.dart';
@@ -10,17 +10,16 @@ class LoginRepository {
   final LoginApi _loginApi;
   LoggedUser? loggedUser;
 
-  // isCaptain determine redirection after login.
-  bool? isCaptain = false;
-
   LoginRepository(
     this._loginApi, {
     this.loggedUser,
-    this.isCaptain,
   });
 
   Future<bool> userAuthentication(String login, String password) async {
-    Login newLog = Login(login: login, password: password);
+    // isCaptain determine redirection after login.
+    bool isCaptain = false;
+    LoginModel newLog = LoginModel(login: login, password: password);
+
     try {
       final authenticationResponse = await _loginApi.postLogin(newLog);
 
@@ -29,7 +28,6 @@ class LoginRepository {
         case 200:
           // convert HttpResponse<dynamic> (Map<String, dynamic>) into Model using .fromJson method
           final userResponse = User.fromJson(authenticationResponse.data);
-
           setSharedPreference(userResponse);
           setLoggedUser(userResponse);
           if (userResponse.captainId != null) {
@@ -46,9 +44,9 @@ class LoginRepository {
           throw Exception(authenticationResponse.response.statusMessage);
       }
     } catch (err) {
-      debugPrint('login exception : $err');
+      debugPrint('error during userAuthentication : $err');
     }
-    return isCaptain ?? false;
+    return isCaptain;
   }
 
   /// Attributes from User model,
@@ -87,6 +85,6 @@ class LoginRepository {
   }
 
   int? get captainId {
-    return loggedUser?.captainId ?? 0;
+    return loggedUser?.captainId;
   }
 }

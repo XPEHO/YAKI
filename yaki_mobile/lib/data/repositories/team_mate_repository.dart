@@ -33,8 +33,8 @@ class TeamMateRepository {
         },
       ).toList();
       return teamMatelist;
-    } catch (e) {
-      debugPrint('erreur dans le repo : $e');
+    } catch (err) {
+      debugPrint('erreur lors du getTeamate : $err');
       return [];
     }
   }
