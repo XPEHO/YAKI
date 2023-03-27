@@ -3,7 +3,6 @@ import { CaptainDtoOut } from '../features/captain/captain.dtoOut';
 var jwt = require("jsonwebtoken");
 import { Request, Response, NextFunction } from 'express';
 
-
 /* This is a Jest function that clears all mocks after each test to ensure they don't affect other
 tests. */
 afterEach(() => {
@@ -15,7 +14,6 @@ describe('authService', () => {
   const passwordDb = 'password123';
   const correctPassword = 'password123';
   const incorrectPassword = 'wrongPassword';
-
   describe('checkPasswords', () => {
     /* This is a test that checks if the passwords match. */
     it('returns true if the passwords match', async () => {
@@ -23,14 +21,12 @@ describe('authService', () => {
       expect(result).toBe(true);
     });
 
-
     /* This is a test that checks if the passwords do not match. */
     it('returns false if the passwords do not match', async () => {
       const result = await authService.checkPasswords(passwordDb, incorrectPassword);
       expect(result).toBe(false);
     });
   });
-
 
   describe('createToken function', () => {
     const mockCaptain: CaptainDtoOut = new CaptainDtoOut(
@@ -67,25 +63,23 @@ describe('authService', () => {
       let next: NextFunction;
       const token = 'testToken';
       const decodedToken = { user_id: '12345' };
-
       beforeEach(() => {
         // Create new mock objects for req, res, and next before each test
         req = {
           headers: {},
           body: {}
         } as Request;
-
         res = {
           status: jest.fn().mockReturnThis(),
           send: jest.fn(),
         } as unknown as Response;
-
         next = jest.fn() as unknown as NextFunction;
       });
 
+      /* This is a test that checks if the verifyToken function returns a 403 response when no token is
+      provided. */
       it('should return a 403 response when no token is provided', async () => {
         await authService.verifyToken(req, res, next);
-
         expect(res.status).toHaveBeenCalledWith(403);
         expect(res.send).toHaveBeenCalledWith('A token is required for authentification');
         expect(next).not.toHaveBeenCalled();
