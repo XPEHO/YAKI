@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -18,17 +20,13 @@ void main() {
 
   String teammateLog = "dupond";
   String teammatePw = "dupond";
-
-  String captainLog = "lavigne";
-  String captainPw = "lavigne";
-
-  LoginModel teammateLogin =
-      LoginModel(login: teammateLog, password: teammatePw);
-  LoginModel captainLogin = LoginModel(login: captainLog, password: captainPw);
+  LoginModel teammateLogin = LoginModel(
+    login: teammateLog,
+    password: teammatePw,
+  );
 
   final Map<String, dynamic> authenticationDupond = {
     "token": "azertyuioptoken",
-    "captainId": null,
     "teamMateId": 7,
     "teamId": 2,
     "userId": 3,
@@ -36,6 +34,13 @@ void main() {
     "firstName": "Dupond",
     "email": "dupond@mail.com"
   };
+
+  String captainLog = "lavigne";
+  String captainPw = "lavigne";
+  LoginModel captainLogin = LoginModel(
+    login: captainLog,
+    password: captainPw,
+  );
 
   final Map<String, dynamic> authenticationLavigne = {
     "token": "azertyuioptoken",
@@ -48,11 +53,20 @@ void main() {
     "email": "lavigne@mail.com"
   };
 
+  String incorrectLog = "Marcelazerty";
+  String incorrectPw = "azertyuiop";
+  LoginModel incorrectLogObject = LoginModel(
+    login: incorrectLog,
+    password: incorrectPw,
+  );
   final Map<String, dynamic> authenticationFail = {};
 
   group(
     'authentication methode',
     () {
+      //  In the test the teammateLogin (LoginModel instance) need to be the
+      // same as the one created inside the userAuthentication method, using
+      // login & password
       test(
         'Successfully authenticate as teammate',
         () async {
@@ -62,10 +76,43 @@ void main() {
           when(response.statusCode).thenReturn(200);
           when(httpResponse.data).thenReturn(authenticationDupond);
 
-          // final isCaptain =
-          //     await loginRepository.userAuthentication("dupond", "dupond");
+          final isCaptain =
+              await loginRepository.userAuthentication(teammateLog, teammatePw);
 
-          //expect(isCaptain, isFalse);
+          expect(isCaptain, isFalse);
+        },
+      );
+      //  In the test the teammateLogin (LoginModel instance) need to be the
+      // same as the one created inside the userAuthentication method, using
+      // login & password
+      test(
+        'Successfully authenticate as Captain',
+            () async {
+          when(mockedLoginApi.postLogin(captainLogin))
+              .thenAnswer((realInvocation) => Future.value(httpResponse));
+          when(httpResponse.response).thenReturn(response);
+          when(response.statusCode).thenReturn(200);
+          when(httpResponse.data).thenReturn(authenticationLavigne);
+
+          final isCaptain =
+          await loginRepository.userAuthentication(captainLog, captainPw);
+
+          expect(isCaptain, true);
+        },
+      );
+      test(
+        'Fail to authenticate 204',
+            () async {
+          when(mockedLoginApi.postLogin(captainLogin))
+              .thenAnswer((realInvocation) => Future.value(httpResponse));
+          when(httpResponse.response).thenReturn(response);
+          when(response.statusCode).thenReturn(204);
+          when(httpResponse.data).thenReturn(authenticationLavigne);
+
+          final isCaptain =
+          await loginRepository.userAuthentication(teammateLog, "azertyuiop");
+
+          expect(isCaptain, false);
         },
       );
     },
