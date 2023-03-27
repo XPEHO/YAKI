@@ -15,7 +15,7 @@ describe('authService', () => {
   const passwordDb = 'password123';
   const correctPassword = 'password123';
   const incorrectPassword = 'wrongPassword';
- 
+
   describe('checkPasswords', () => {
     /* This is a test that checks if the passwords match. */
     it('returns true if the passwords match', async () => {
