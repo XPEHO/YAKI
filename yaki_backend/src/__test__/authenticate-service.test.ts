@@ -49,7 +49,7 @@ describe('authService', () => {
           user_id: mockCaptain.userId,
           user_email: mockCaptain.email,
         },
-        process.env.TOKEN_SECRET,
+        `${process.env.TOKEN_SECRET}`,
         {
           expiresIn: '30d',
         }
