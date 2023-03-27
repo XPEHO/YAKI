@@ -1,20 +1,13 @@
 import { UserRepository } from "./user.repository";
 import { authService } from "./authentication.service";
-import { CaptainService } from "../captain/captain.service";
-import { TeamMateService } from "../teamMate/teamMate.service";
 import { TeamMateDtoOut } from "../teamMate/teamMate.dtoOut";
 import { CaptainDtoOut } from "../captain/captain.dtoOut";
 
 export class UserService {
-
     userRepository : UserRepository;
-    captainService: CaptainService;
-    teamMateService: TeamMateService;
 
-    constructor(repository : UserRepository, captainService: CaptainService, teamMateService: TeamMateService) {
+    constructor(repository : UserRepository) {
         this.userRepository = repository;
-        this.captainService = captainService;
-        this.teamMateService = teamMateService;
     }
 
     /**

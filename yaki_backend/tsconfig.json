@@ -102,6 +102,7 @@
   },
   "exclude": [
     "./coverage/**/*",
-    "./dist/**/*"
+    "./dist/**/*",
+    "./babel.config.js"
   ]
 }

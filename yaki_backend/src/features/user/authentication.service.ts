@@ -23,13 +23,14 @@ class Service {
    * @param user
    * @returns
    */
-  createToken = async (user: CaptainDtoOut | TeamMateDtoOut) => {
+  createToken = async (user: CaptainDtoOut | TeamMateDtoOut) => {  
     const token = jwt.sign(
       {
         user_id: user.userId,
         user_email: user.email,
       },
-      process.env.TOKEN_SECRET,
+      // added backtick cause jest didn't want to read it otherwise
+      `${process.env.TOKEN_SECRET}`,
       {
         expiresIn: "30d",
       }
