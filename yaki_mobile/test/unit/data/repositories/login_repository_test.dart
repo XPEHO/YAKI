@@ -1,8 +1,7 @@
-import 'dart:io';
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yaki/data/models/login_model.dart';
 import 'package:yaki/data/repositories/login_repository.dart';
 import 'package:yaki/data/sources/remote/login_api.dart';
@@ -61,8 +60,17 @@ void main() {
   );
   final Map<String, dynamic> authenticationFail = {};
 
+  // Need to initialise the  sharedPreferences values
+  // Or else if its empty it will break during test
+  SharedPreferences.setMockInitialValues(
+    {
+      'token': '',
+      'userId': '',
+    },
+  );
+
   group(
-    'authentication methode',
+    'userAuthentication success',
     () {
       //  In the test the teammateLogin (LoginModel instance) need to be the
       // same as the one created inside the userAuthentication method, using
@@ -79,7 +87,7 @@ void main() {
           final isCaptain =
               await loginRepository.userAuthentication(teammateLog, teammatePw);
 
-          expect(isCaptain, isFalse);
+          expect(isCaptain, false);
         },
       );
       //  In the test the teammateLogin (LoginModel instance) need to be the
@@ -87,7 +95,7 @@ void main() {
       // login & password
       test(
         'Successfully authenticate as Captain',
-            () async {
+        () async {
           when(mockedLoginApi.postLogin(captainLogin))
               .thenAnswer((realInvocation) => Future.value(httpResponse));
           when(httpResponse.response).thenReturn(response);
@@ -95,22 +103,58 @@ void main() {
           when(httpResponse.data).thenReturn(authenticationLavigne);
 
           final isCaptain =
-          await loginRepository.userAuthentication(captainLog, captainPw);
+              await loginRepository.userAuthentication(captainLog, captainPw);
 
           expect(isCaptain, true);
         },
       );
+    },
+  );
+
+  group(
+    'userAuthentication fails',
+    () {
       test(
         'Fail to authenticate 204',
-            () async {
-          when(mockedLoginApi.postLogin(captainLogin))
+        () async {
+          when(mockedLoginApi.postLogin(incorrectLogObject))
               .thenAnswer((realInvocation) => Future.value(httpResponse));
           when(httpResponse.response).thenReturn(response);
           when(response.statusCode).thenReturn(204);
-          when(httpResponse.data).thenReturn(authenticationLavigne);
+          when(httpResponse.data).thenReturn(authenticationFail);
 
-          final isCaptain =
-          await loginRepository.userAuthentication(teammateLog, "azertyuiop");
+          final isCaptain = await loginRepository.userAuthentication(
+              incorrectLog, incorrectPw);
+
+          expect(isCaptain, false);
+        },
+      );
+      test(
+        'Fail to authenticate 401',
+        () async {
+          when(mockedLoginApi.postLogin(incorrectLogObject))
+              .thenAnswer((realInvocation) => Future.value(httpResponse));
+          when(httpResponse.response).thenReturn(response);
+          when(response.statusCode).thenReturn(401);
+          when(httpResponse.data).thenReturn(authenticationFail);
+
+          final isCaptain = await loginRepository.userAuthentication(
+              incorrectLog, incorrectPw);
+
+          expect(isCaptain, false);
+        },
+      );
+      test(
+        'Fail to authenticate throw exception',
+        () async {
+          when(mockedLoginApi.postLogin(incorrectLogObject))
+              .thenAnswer((realInvocation) => Future.value(httpResponse));
+          when(httpResponse.response).thenReturn(response);
+          when(response.statusCode).thenReturn(418);
+          when(httpResponse.data).thenReturn(authenticationFail);
+
+          final isCaptain = await loginRepository.userAuthentication(
+              incorrectLog, incorrectPw);
 
           expect(isCaptain, false);
         },

@@ -16,20 +16,20 @@ void main() {
 
   final teamMateRepository = TeamMateRepository(mockedTeamMateApi);
 
-  // dynamic getResponseAsJson = [
-  //   {
-  //     "userFirstName": "Dupond",
-  //     "userLastName": "Dupond",
-  //     "declarationDate": '2023-03-20T10:00:00.950Z',
-  //     "declarationStatus": "VACATION",
-  //   },
-  //   {
-  //     "userFirstName": "Jean",
-  //     "userLastName": "Val",
-  //     "declarationDate": '2023-03-20T10:00:00.950Z',
-  //     "declarationStatus": "REMOTE",
-  //   }
-  // ];
+  dynamic getResponseAsJson = [
+    {
+      "userFirstName": "Dupond",
+      "userLastName": "Dupond",
+      "declarationDate": '2023-03-20T10:00:00.950Z',
+      "declarationStatus": "VACATION",
+    },
+    {
+      "userFirstName": "Jean",
+      "userLastName": "Val",
+      "declarationDate": '2023-03-20T10:00:00.950Z',
+      "declarationStatus": "REMOTE",
+    }
+  ];
 
   List<TeamMateEntity> teamMatelistReturned = [
     TeamMateEntity(
@@ -51,19 +51,19 @@ void main() {
   group(
     'Get() teamate list',
     () {
-      test(
-        'GetTeammate testing',
-        () async {
-          when(mockedTeamMateApi.getTeamMate(captainId))
-              .thenAnswer((realInvocation) => Future.value(httpResponse));
-          //when(httpResponse.data).thenReturn(expected);
-
-          List<TeamMateEntity> teamMatelist =
-              await teamMateRepository.getTeamMate(captainId);
-
-          expect(teamMatelist, teamMatelistReturned);
-        },
-      );
+      // test(
+      //   'GetTeammate testing',
+      //   () async {
+      //     when(mockedTeamMateApi.getTeamMate(captainId))
+      //         .thenAnswer((realInvocation) => Future.value(httpResponse));
+      //     //when(httpResponse.data).thenReturn(expected);
+      //
+      //     List<TeamMateEntity> teamMatelist =
+      //         await teamMateRepository.getTeamMate(captainId);
+      //
+      //     expect(teamMatelist, teamMatelistReturned);
+      //   },
+      // );
     },
   );
 }

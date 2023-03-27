@@ -1,5 +1,6 @@
 import 'package:crypt/crypt.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yaki/data/models/login_model.dart';
 import 'package:yaki/data/models/user.dart';
 import 'package:yaki/data/sources/local/shared_preference.dart';
@@ -41,7 +42,7 @@ class LoginRepository {
           debugPrint("Invalid token, code : $statusCode");
           break;
         default:
-          throw Exception(authenticationResponse.response.statusMessage);
+          throw Exception('Invalid statusCode : $statusCode');
       }
     } catch (err) {
       debugPrint('error during userAuthentication : $err');
@@ -51,7 +52,7 @@ class LoginRepository {
 
   /// Attributes from User model,
   /// to be saved into sharedPreferences.
-  void setSharedPreference(User user) {
+  void setSharedPreference(User user) async {
     addTokenToSharedPreference(user.token);
     addUserIdToSharedPreference(user.userId);
   }

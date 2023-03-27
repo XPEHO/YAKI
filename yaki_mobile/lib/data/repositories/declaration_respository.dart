@@ -32,7 +32,7 @@ class DeclarationRepository {
           break;
         default:
           throw Exception(
-            "Invalid statusCode from server : ${getHttpResponse.response.statusCode}",
+            "Invalid statusCode : $statusCode",
           );
       }
       setDeclarationEntities(statusValue);
