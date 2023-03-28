@@ -1,6 +1,5 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 /// Save token received after user authentication in the sharedPreference.
 /// the token value is associated to the 'token' key.
 void addTokenToSharedPreference(String? token) async {
@@ -20,7 +19,8 @@ Future<bool> isTokenPresent() async {
   return prefs.containsKey('token');
 }
 
-void removeTokenFromSharedPreferences() async {
+// Future<void> return necessary to be inoked with 'await'
+Future<void> removeTokenFromSharedPreferences() async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   await prefs.remove('token');
 }

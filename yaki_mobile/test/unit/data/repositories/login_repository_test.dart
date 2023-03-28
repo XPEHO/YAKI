@@ -17,49 +17,6 @@ void main() {
   final mockedLoginApi = MockLoginApi();
   final loginRepository = LoginRepository(mockedLoginApi);
 
-  String teammateLog = "dupond";
-  String teammatePw = "dupond";
-  LoginModel teammateLogin = LoginModel(
-    login: teammateLog,
-    password: teammatePw,
-  );
-
-  final Map<String, dynamic> authenticationDupond = {
-    "token": "azertyuioptoken",
-    "teamMateId": 7,
-    "teamId": 2,
-    "userId": 3,
-    "lastName": "Dupond",
-    "firstName": "Dupond",
-    "email": "dupond@mail.com"
-  };
-
-  String captainLog = "lavigne";
-  String captainPw = "lavigne";
-  LoginModel captainLogin = LoginModel(
-    login: captainLog,
-    password: captainPw,
-  );
-
-  final Map<String, dynamic> authenticationLavigne = {
-    "token": "azertyuioptoken",
-    "captainId": 1,
-    "teamMateId": null,
-    "teamId": null,
-    "userId": 6,
-    "lastName": "Lavigne",
-    "firstName": "Lavigne",
-    "email": "lavigne@mail.com"
-  };
-
-  String incorrectLog = "Marcelazerty";
-  String incorrectPw = "azertyuiop";
-  LoginModel incorrectLogObject = LoginModel(
-    login: incorrectLog,
-    password: incorrectPw,
-  );
-  final Map<String, dynamic> authenticationFail = {};
-
   // Need to initialise the  sharedPreferences values
   // Or else if its empty it will break during test
   SharedPreferences.setMockInitialValues(
@@ -68,6 +25,24 @@ void main() {
       'userId': '',
     },
   );
+
+  String teammateLog = "dupond";
+  String teammatePw = "dupond";
+
+  LoginModel teammateLogin = LoginModel(
+    login: teammateLog,
+    password: teammatePw,
+  );
+
+  final Map<String, dynamic> authenticationTeammate = {
+    "token": "azertyuioptoken",
+    "teamMateId": 7,
+    "teamId": 2,
+    "userId": 3,
+    "lastName": "Dupond",
+    "firstName": "Dupond",
+    "email": "dupond@mail.com"
+  };
 
   group(
     'userAuthentication success',
@@ -82,7 +57,7 @@ void main() {
               .thenAnswer((realInvocation) => Future.value(httpResponse));
           when(httpResponse.response).thenReturn(response);
           when(response.statusCode).thenReturn(200);
-          when(httpResponse.data).thenReturn(authenticationDupond);
+          when(httpResponse.data).thenReturn(authenticationTeammate);
 
           final isCaptain =
               await loginRepository.userAuthentication(teammateLog, teammatePw);
@@ -96,6 +71,25 @@ void main() {
       test(
         'Successfully authenticate as Captain',
         () async {
+          String captainLog = "lavigne";
+          String captainPw = "lavigne";
+
+          LoginModel captainLogin = LoginModel(
+            login: captainLog,
+            password: captainPw,
+          );
+
+          final Map<String, dynamic> authenticationLavigne = {
+            "token": "azertyuioptoken",
+            "captainId": 1,
+            "teamMateId": null,
+            "teamId": null,
+            "userId": 6,
+            "lastName": "Lavigne",
+            "firstName": "Lavigne",
+            "email": "lavigne@mail.com"
+          };
+
           when(mockedLoginApi.postLogin(captainLogin))
               .thenAnswer((realInvocation) => Future.value(httpResponse));
           when(httpResponse.response).thenReturn(response);
@@ -117,6 +111,16 @@ void main() {
       test(
         'Fail to authenticate 204',
         () async {
+          String incorrectLog = "Marcelazerty";
+          String incorrectPw = "azertyuiop";
+
+          LoginModel incorrectLogObject = LoginModel(
+            login: incorrectLog,
+            password: incorrectPw,
+          );
+
+          final Map<String, dynamic> authenticationFail = {};
+
           when(mockedLoginApi.postLogin(incorrectLogObject))
               .thenAnswer((realInvocation) => Future.value(httpResponse));
           when(httpResponse.response).thenReturn(response);
@@ -124,7 +128,9 @@ void main() {
           when(httpResponse.data).thenReturn(authenticationFail);
 
           final isCaptain = await loginRepository.userAuthentication(
-              incorrectLog, incorrectPw);
+            incorrectLog,
+            incorrectPw,
+          );
 
           expect(isCaptain, false);
         },
@@ -132,14 +138,16 @@ void main() {
       test(
         'Fail to authenticate 401',
         () async {
-          when(mockedLoginApi.postLogin(incorrectLogObject))
+          when(mockedLoginApi.postLogin(teammateLogin))
               .thenAnswer((realInvocation) => Future.value(httpResponse));
           when(httpResponse.response).thenReturn(response);
           when(response.statusCode).thenReturn(401);
-          when(httpResponse.data).thenReturn(authenticationFail);
+          when(httpResponse.data).thenReturn(authenticationTeammate);
 
           final isCaptain = await loginRepository.userAuthentication(
-              incorrectLog, incorrectPw);
+            teammateLog,
+            teammatePw,
+          );
 
           expect(isCaptain, false);
         },
@@ -147,14 +155,16 @@ void main() {
       test(
         'Fail to authenticate throw exception',
         () async {
-          when(mockedLoginApi.postLogin(incorrectLogObject))
+          when(mockedLoginApi.postLogin(teammateLogin))
               .thenAnswer((realInvocation) => Future.value(httpResponse));
           when(httpResponse.response).thenReturn(response);
           when(response.statusCode).thenReturn(418);
-          when(httpResponse.data).thenReturn(authenticationFail);
+          when(httpResponse.data).thenReturn(authenticationTeammate);
 
           final isCaptain = await loginRepository.userAuthentication(
-              incorrectLog, incorrectPw);
+            teammateLog,
+            teammatePw,
+          );
 
           expect(isCaptain, false);
         },
@@ -163,11 +173,34 @@ void main() {
   );
 
   group(
-    'others repo method',
+    'others repository method',
     () {
       test(
-        'invoke function to save into sharedPreference',
-        () {},
+        'hassPassword function',
+        () {
+          const String password = "test";
+          const String hassPassword =
+              "\$5\$rounds=10000\$\$vXYm07DxA4pmB/3vIXLFokX6E7MTBcDW0wjAsFRY4nA";
+
+          expect(loginRepository.hashPassword(password), hassPassword);
+        },
+      );
+      // teamateId & captainId value come from the captainId log test,
+      // which change value in "loggedUser" attribute
+      // teammateID = 0 because of loginRepository.setLoggedUser() method.
+      test(
+        'teammateId getter',
+        () {
+          expect(loginRepository.teamMateId, 0);
+
+        },
+      );
+      test(
+        'captainId getter',
+            () {
+          expect(loginRepository.captainId, 1);
+
+        },
       );
     },
   );
