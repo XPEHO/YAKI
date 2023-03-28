@@ -65,4 +65,4 @@ export class DeclarationService {
     }
     return this.declarationRepository.updateDeclarationStatus(declarationId, declaration);
   }
-}
+} 
