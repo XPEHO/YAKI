@@ -17,7 +17,7 @@ class SharedPref {
 
   /// check if sharedPreference has a token, return a true or false depending.
   static Future<bool> isTokenPresent() async {
-    final  SharedPreferences prefs = await SharedPreferences.getInstance();
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.containsKey('token');
   }
 
@@ -28,7 +28,7 @@ class SharedPref {
   }
 
   static void clearAll() async {
-    final SharedPreferences prefs =   await SharedPreferences.getInstance();
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.clear();
   }
 }

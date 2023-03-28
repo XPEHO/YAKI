@@ -71,7 +71,6 @@ void main() {
       test(
         'throw  exception',
         () async {
-
           String incorrectCaptainId = "50";
           List<Map<String, dynamic>> incorrectResponse = [
             {

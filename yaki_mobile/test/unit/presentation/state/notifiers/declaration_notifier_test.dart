@@ -15,7 +15,8 @@ void main() {
   final declarationRepository = MockDeclarationRepository();
   final loginRepository = MockLoginRepository();
 
-  final declarationNotifier = DeclarationNotifier(declarationRepository, loginRepository);
+  final declarationNotifier =
+      DeclarationNotifier(declarationRepository, loginRepository);
 
   int returnedTeamMateId = 1;
   String declarationStatus = "REMOTE";
@@ -28,7 +29,8 @@ void main() {
         () async {
           when(loginRepository.teamMateId).thenReturn(returnedTeamMateId);
           when(
-            declarationRepository.getDeclaration(returnedTeamMateId.toString(),
+            declarationRepository.getDeclaration(
+              returnedTeamMateId.toString(),
             ),
           ).thenAnswer(
             (realInvocation) => Future.value(declarationStatus),

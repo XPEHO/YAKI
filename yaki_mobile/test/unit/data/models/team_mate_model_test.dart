@@ -27,10 +27,12 @@ void main() {
       test(
         'TeamMateModel fromJson',
         () {
-          TeamMateModel teammateModelFromJson = TeamMateModel.fromJson(teammateModelAsJson);
+          TeamMateModel teammateModelFromJson =
+              TeamMateModel.fromJson(teammateModelAsJson);
 
           expect(
-            teammateModelFromJson.toJson().toString() == teammateModel.toJson().toString(),
+            teammateModelFromJson.toJson().toString() ==
+                teammateModel.toJson().toString(),
             true,
           );
         },

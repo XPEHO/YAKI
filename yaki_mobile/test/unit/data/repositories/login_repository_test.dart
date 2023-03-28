@@ -192,14 +192,12 @@ void main() {
         'teammateId getter',
         () {
           expect(loginRepository.teamMateId, 0);
-
         },
       );
       test(
         'captainId getter',
-            () {
+        () {
           expect(loginRepository.captainId, 1);
-
         },
       );
     },

@@ -1,6 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yaki/data/sources/local/shared_preference.dart';
 
@@ -64,7 +62,7 @@ void main() {
           SharedPref.clearAll();
 
           final isToken = await SharedPref.isTokenPresent();
-          final isUserId = await pref.containsKey('userId');
+          final isUserId = pref.containsKey('userId');
 
           expect(isToken, false);
           expect(isUserId, false);

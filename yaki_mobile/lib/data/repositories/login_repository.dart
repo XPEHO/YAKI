@@ -1,6 +1,5 @@
 import 'package:crypt/crypt.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yaki/data/models/login_model.dart';
 import 'package:yaki/data/models/user.dart';
 import 'package:yaki/data/sources/local/shared_preference.dart';
