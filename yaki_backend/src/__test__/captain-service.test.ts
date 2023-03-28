@@ -16,16 +16,10 @@ jest.mock('../features/captain/captain.repository', () => {
           }
           return user[0];
         },
-        // getAll: async () => {
-        //   const teamMates = await mockCaptain.filter(
-        //     (elm) => elm.team_mate_team_id == team_id
-        //   );
-        //   const teamMateWithDeclaration =
-        //     await mockTeamMatesWithDeclaration.filter(
-        //       (elm) => elm.team_mate_id == teamMates[0].team_mate_id
-        //     );
-        //   return teamMateWithDeclaration;
-        // },
+        getAll: async () => {
+          const captain = mockCaptain;
+          return captain;
+        },
       };
     }),
   };
@@ -52,28 +46,36 @@ describe('get captain by userId', () => {
   });
 });
 
-// describe('get teammate by team id with last declaration', () => {
-//   const teamRepo = new TeamRepository();
-//   const teamService = new TeamService(teamRepo);
-//   const teamMateRepo = new TeamMateRepository();
-//   const teamMateService = new TeamMateService(teamMateRepo, teamService);
-//   beforeEach(() => {
-//     mockedTeamRepo.mockClear();
-//     mockedTeamMateRepo.mockClear();
-//   });
+describe('get teammate by team id with last declaration', () => {
+  const captainRepo = new CaptainRepository();
+  const captainService = new CaptainService(captainRepo);
 
-//   it('return a team mate with last declaration', async () => {
-//     expect(
-//       await teamMateService.getByTeamIdWithLastDeclaration(1)
-//     ).toMatchObject([
-//       {
-//         userId: 1,
-//         teamMateId: 1,
-//         userLastName: 'Dupuis',
-//         userFirstName: 'Jean',
-//         declarationDate: new Date('1996-12-23'),
-//         declarationStatus: 'On site',
-//       },
-//     ]);
-//   });
-// });
+  beforeEach(() => {
+    mockedCaptainRepo.mockClear();
+  });
+
+  it('return a team mate with last declaration', async () => {
+    expect(await captainService.getAll()).toMatchObject([
+      {
+        captain_id: 1,
+        team_mate_user_id: 1,
+        user_id: 1,
+        user_last_name: 'Lavigne',
+        user_first_name: 'Martin',
+        user_email: 'lavigne.martin@gmail.com',
+        user_login: 'lavigne',
+        user_password: 'lavigne',
+      },
+      {
+        captain_id: 2,
+        team_mate_user_id: 2,
+        user_id: 2,
+        user_last_name: 'Doe',
+        user_first_name: 'John',
+        user_email: 'doe.john@gmail.com',
+        user_login: 'doe',
+        user_password: 'doe',
+      },
+    ]);
+  });
+});
