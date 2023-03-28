@@ -6,7 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:yaki/presentation/styles/header_text_style.dart';
 
 class CardTeamMate extends StatefulWidget {
-  ///Card with the Team Mate's avatar, name, update date and status
+  /// Card with the Team Mate's avatar, name, update date and status
   const CardTeamMate({
     super.key,
     required this.firstName,

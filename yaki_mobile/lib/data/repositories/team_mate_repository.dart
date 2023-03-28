@@ -15,6 +15,8 @@ class TeamMateRepository {
     this.teamMateEntity,
   });
 
+  /// Retrieves information from the TeamMate API <br>
+  /// and stores the response in the modelList variable
   Future<List<TeamMateEntity>> getTeamMate(String captainId) async {
     try {
       final listHttpResponse = await teamMateApi.getTeamMate(captainId);

@@ -16,6 +16,7 @@ class CaptainBody extends ConsumerStatefulWidget {
 class _CaptainBodyState extends ConsumerState<CaptainBody> {
   final captainInputController = TextEditingController();
 
+  /// Retrieves data from the team_mate_notifier.dart
   @override
   void initState() {
     setState(() {
