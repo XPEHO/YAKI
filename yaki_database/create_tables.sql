@@ -104,7 +104,12 @@ CREATE TABLE IF NOT EXISTS public.captain
 (
     captain_id integer NOT NULL DEFAULT nextval('captain_id_seq'::regclass),
     captain_user_id integer,
-    CONSTRAINT "CAPTAIN_pkey" PRIMARY KEY (captain_id)
+    CONSTRAINT "CAPTAIN_pkey" PRIMARY KEY (captain_id),
+    CONSTRAINT captain_user_id_fkey FOREIGN KEY (captain_user_id)
+        REFERENCES public.user (user_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
 )
 
 TABLESPACE pg_default;
@@ -143,6 +148,11 @@ CREATE TABLE IF NOT EXISTS public.team_mate
     CONSTRAINT "TEAM_MATE_pkey" PRIMARY KEY (team_mate_id),
     CONSTRAINT team_mate_team_id_fkey FOREIGN KEY (team_mate_team_id)
         REFERENCES public.team (team_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID,
+    CONSTRAINT team_mate_user_id_fkey FOREIGN KEY (team_mate_user_id)
+        REFERENCES public.user (user_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
         NOT VALID
