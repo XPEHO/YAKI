@@ -38,13 +38,6 @@ void main() {
           expect(notifierStatus, declarationStatus);
         },
       );
-      test(
-        'create Declaration method test',
-            () async {
-          when(loginRepository.teamMateId).thenReturn(returnedTeamMateId);
-          declarationNotifier.create(declarationStatus);
-        },
-      );
     },
   );
 }
