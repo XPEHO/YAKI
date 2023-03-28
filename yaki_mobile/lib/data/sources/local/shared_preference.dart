@@ -3,13 +3,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SharedPref {
   /// Save token received after user authentication in the sharedPreference.
   /// the token value is associated to the 'token' key.
-  static void setToken(String? token) async {
+  /// Use Future<Void> for testing purpose.
+  static Future<void> setToken(String? token) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     // !token, use null check, if login error..
     prefs.setString('token', token!);
   }
 
-  static void setUserId(int? id) async {
+  static Future<void> setUserId(int? id) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setInt('userId', id!);
   }
@@ -20,7 +21,7 @@ class SharedPref {
     return prefs.containsKey('token');
   }
 
-// Future<void> return necessary to be inoked with 'await'
+// Future<void> return is necessary to be inoked with 'await'
   static Future<void> deleteToken() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove('token');
