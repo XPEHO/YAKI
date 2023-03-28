@@ -23,24 +23,7 @@ class Service {
    * @param user
    * @returns
    */
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
   createToken = async (user: CaptainDtoOut | TeamMateDtoOut) => {  
-=======
-  createToken = async (user: CaptainDtoOut | TeamMateDtoOut) => {
-    console.log( process.env.TOKEN_SECRET);
-    
-<<<<<<< HEAD
->>>>>>> e84c1fc (test(login_jest): successful unit tests jest of authetificateService)
-=======
-  createToken = async (user: CaptainDtoOut | TeamMateDtoOut) => {  
->>>>>>> 0dceb75 (test(login_jest): deleted log from authenticationService)
-=======
->>>>>>> e961e35 (test(login_jest): successful unit tests jest of authetificateService)
-=======
-  createToken = async (user: CaptainDtoOut | TeamMateDtoOut) => {  
->>>>>>> 627c883 (test(login_jest): deleted log from authenticationService)
     const token = jwt.sign(
       {
         user_id: user.userId,
