@@ -5,15 +5,10 @@ part 'team_mate_model.g.dart';
 @JsonSerializable()
 class TeamMateModel {
   int? userId;
-
   String? userLastName;
-
   String? userFirstName;
-
   int? teamMateId;
-
   DateTime? declarationDate;
-
   String? declarationStatus;
 
   TeamMateModel({
