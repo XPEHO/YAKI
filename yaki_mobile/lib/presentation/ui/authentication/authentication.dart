@@ -25,11 +25,11 @@ class Authentication extends ConsumerWidget {
     required Function goToStatusPage,
     required Function goToCaptain,
   }) async {
-    await removeTokenFromSharedPreferences();
+    await SharedPref.deleteToken();
     final bool isCaptain = await ref
         .read(loginRepositoryProvider)
         .userAuthentication(login, password);
-    if (await isTokenPresent()) {
+    if (await SharedPref.isTokenPresent()) {
       if (isCaptain) {
         goToCaptain();
       } else {

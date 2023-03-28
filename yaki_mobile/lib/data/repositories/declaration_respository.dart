@@ -7,7 +7,6 @@ import 'package:yaki/domain/entities/declaration_status.dart';
 class DeclarationRepository {
   final DeclarationApi _declarationApi;
   DeclarationStatus? declarationStatus;
-
   // inbetween {} are optional attributes
   // as long as they are nullable. no need to set them at class instantiation
   DeclarationRepository(
@@ -33,7 +32,7 @@ class DeclarationRepository {
           break;
         default:
           throw Exception(
-            "Invalid statusCode from server : ${getHttpResponse.response.statusCode}",
+            "Invalid statusCode : $statusCode",
           );
       }
       setDeclarationEntities(statusValue);
