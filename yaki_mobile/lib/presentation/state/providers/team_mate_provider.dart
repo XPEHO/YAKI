@@ -6,6 +6,7 @@ import 'package:yaki/presentation/state/dio/dio_interceptor.dart';
 import 'package:yaki/presentation/state/notifiers/team_mate_notifier.dart';
 import 'package:yaki/presentation/state/providers/login_provider.dart';
 
+/// Retrieves informations from the API
 final teamMateServiceProvider = Provider(
   (ref) => TeamMateApi(
     ref.read(dioInterceptor),
@@ -17,6 +18,7 @@ final teamMateRepositoryProvider = Provider(
   (ref) => TeamMateRepository(ref.read(teamMateServiceProvider)),
 );
 
+/// Retrieves data from the team_mate_notifier.dart
 final teamMateProvider =
     StateNotifierProvider<TeamMateNotifier, List<TeamMateEntity>>(
   (ref) => TeamMateNotifier(

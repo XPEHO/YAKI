@@ -13,6 +13,7 @@ class TeamMateNotifier extends StateNotifier<List<TeamMateEntity>> {
           [],
         );
 
+  /// Retrieve the information from the team_mate_repository and store it in the state
   Future<void> fetchTeamMates() async {
     final captainId = loginRepository.captainId.toString();
     final teamList = await teamMateRepository.getTeamMate(captainId);
