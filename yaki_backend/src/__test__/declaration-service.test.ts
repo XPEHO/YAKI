@@ -44,4 +44,89 @@ describe("DeclarationService", () => {
       await expect(declarationService.createDeclaration(declaration)).rejects.toThrow(TypeError);
     })
   })
+
+  describe('updateDeclarationStatus', () => {
+   /* This test is checking if the declarationService.updateDeclarationStatus method throws a TypeError
+   if the declaration does not exist. */
+    it("should throw an error if declaration does not exist", async () => {
+
+      const declarationId = 1;
+      const declaration: any = {
+        declarationTeamMateId: 1,
+        declarationDate: new Date(),
+        declarationStatus: StatusDeclaration.REMOTE,
+      };
+      jest.spyOn(declarationRepository, "getDeclarationById").mockResolvedValueOnce(Promise.resolve<any>(null));
+
+      await expect(declarationService.updateDeclarationStatus(declarationId, declaration)).rejects.toThrow(TypeError);
+    });
+  })
+
+  /* This test is checking if the declarationService.updateDeclarationStatus method throws a TypeError
+  if mandatory information is missing. */
+  it("should throw an error if mandatory information is missing", async () => {
+
+    const declarationId = 1;
+    const declaration: any = {
+      declarationId: 1,
+      declarationTeamMateId: null,
+      declarationDate: null,
+      declarationStatus: "",
+    };
+    jest.spyOn(declarationRepository, "getDeclarationById").mockResolvedValueOnce({
+      declarationId: 1,
+      declarationTeamMateId: 1,
+      declarationDate: new Date(),
+      declarationStatus: StatusDeclaration.REMOTE,
+    });
+
+    await expect(declarationService.updateDeclarationStatus(declarationId, declaration)).rejects.toThrow(TypeError);
+  });
+
+  /* This test is checking if the declarationService.updateDeclarationStatus method throws a TypeError
+    if the declaration status is invalid. */
+  it("should throw an error if declaration status is invalid", async () => {
+
+    const declarationId = 1;
+    const declaration: any = {
+      declarationId: 1,
+      declarationTeamMateId: 1,
+      declarationDate: new Date(),
+      declarationStatus: "INVALID_STATUS",
+    };
+    jest.spyOn(declarationRepository, "getDeclarationById").mockResolvedValueOnce({
+      declarationId: 1,
+      declarationTeamMateId: 1,
+      declarationDate: new Date(),
+      declarationStatus: StatusDeclaration.REMOTE,
+    });
+
+    await expect(declarationService.updateDeclarationStatus(declarationId, declaration)).rejects.toThrow(TypeError);
+  });
+
+  /* This test is checking if the declarationService.updateDeclarationStatus method updates the
+  declaration status successfully. */
+  it('should update the declaration status successfully', async () => {
+
+    const declarationId = 1;
+    const declaration: DeclarationDtoIn = {
+      declarationId: 1,
+      declarationTeamMateId: 1,
+      declarationDate: new Date(),
+      declarationStatus: StatusDeclaration.REMOTE,
+    };
+    const existingDeclaration = {
+      declarationId: 1,
+      declarationTeamMateId: 1,
+      declarationDate: new Date(),
+      declarationStatus: StatusDeclaration.ON_SITE,
+    };
+    const updateDeclarationSpy = jest.spyOn(declarationRepository, 'updateDeclarationStatus').mockResolvedValue(undefined);
+    jest.spyOn(declarationRepository, 'getDeclarationById').mockResolvedValue(existingDeclaration);
+
+    await declarationService.updateDeclarationStatus(declarationId, declaration);
+
+    expect(updateDeclarationSpy).toHaveBeenCalledWith(declarationId, declaration);
+  });
 })
+
