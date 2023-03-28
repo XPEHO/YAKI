@@ -53,8 +53,8 @@ class LoginRepository {
   /// Attributes from User model,
   /// to be saved into sharedPreferences.
   void setSharedPreference(User user) async {
-    addTokenToSharedPreference(user.token);
-    addUserIdToSharedPreference(user.userId);
+    SharedPref.addToken(user.token);
+    SharedPref.addUserId(user.userId);
   }
 
   /// Retrieve User model attributes
