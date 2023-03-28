@@ -1,0 +1,21 @@
+version: '3.7'
+services:
+  postgres_db:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_DB: ${DB_USERNAME}
+    ports:
+      - "5432:5432"
+  api_back:
+    build: .
+    container_name: Yaki_admin
+    environment:
+      SPRING_DATASOURCE_URL: ${DB_URL}
+      SPRING_DATASOURCE_USERNAME: ${DB_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+    depends_on:
+      - postgres_db
+    ports:
+      - "8080:8080"
