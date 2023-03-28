@@ -20,21 +20,28 @@ class TeamMateRepository {
   Future<List<TeamMateEntity>> getTeamMate(String captainId) async {
     try {
       final listHttpResponse = await teamMateApi.getTeamMate(captainId);
-      final modelList = setTeamMateModelList(listHttpResponse);
+      final statusCode = listHttpResponse.response.statusCode;
 
-      teamMatelist = modelList.map(
-        (e) {
-          return TeamMateEntity(
-            userFirstName: e.userFirstName,
-            userLastName: e.userLastName,
-            declarationDate: e.declarationDate,
-            declarationStatus: e.declarationStatus,
-          );
-        },
-      ).toList();
-      return teamMatelist;
+      switch (statusCode) {
+        case 200:
+          final modelList = setTeamMateModelList(listHttpResponse);
+
+          teamMatelist = modelList.map(
+            (e) {
+              return TeamMateEntity(
+                userFirstName: e.userFirstName,
+                userLastName: e.userLastName,
+                declarationDate: e.declarationDate,
+                declarationStatus: e.declarationStatus,
+              );
+            },
+          ).toList();
+          return teamMatelist;
+        default:
+          throw Exception('Invalid statusCode : $statusCode');
+      }
     } catch (err) {
-      debugPrint('erreur lors du getTeamate : $err');
+      debugPrint('error during teammate list get : $err');
       return [];
     }
   }
