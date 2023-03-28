@@ -31,4 +31,4 @@ Feature: UpdateDeclaration
     And def requestPayload = { declarationTeamMateId: "", declarationDate: now, declarationStatus: "Rewote" }
     And request requestPayload
     When method PUT
-    Then status 500
+    Then status 404
