@@ -16,18 +16,6 @@ void main() {
 
   final declarationRepository = DeclarationRepository(mockedDeclarationApi);
 
-  // get declaration test
-  const String teammateId = "1";
-
-  final Map<String, dynamic> getErrorResponse = {};
-
-  // create declaration test
-  DeclarationModel createdDeclaration = DeclarationModel(
-    declarationDate: DateTime.now(),
-    declarationTeamMateId: 1,
-    declarationStatus: "REMOTE",
-  );
-
   final Map<String, dynamic> createResponseApi = {
     "declarationId": 2,
     "declarationDate": DateTime.now().toIso8601String(),
@@ -35,12 +23,13 @@ void main() {
     "declarationStatus": "REMOTE"
   };
 
-  // setDeclarationEntities
-  const String selectedStatus = "REMOTE";
-
   group(
     'declaration repository getDeclaration()',
     () {
+      const String teammateId = "1";
+
+      final Map<String, dynamic> getErrorResponse = {};
+
       test(
         'Successfully GET daily declaration.',
         () async {
@@ -96,6 +85,12 @@ void main() {
   group(
     'Declaration respository create()',
     () {
+      DeclarationModel createdDeclaration = DeclarationModel(
+        declarationDate: DateTime.now(),
+        declarationTeamMateId: 1,
+        declarationStatus: "REMOTE",
+      );
+
       test(
         'Successfully create declaration.',
         () async {
@@ -174,6 +169,8 @@ void main() {
       test(
         'setDeclarationEntity',
         () {
+          const String selectedStatus = "REMOTE";
+
           when(declarationRepository.setDeclarationEntities(selectedStatus));
           expect(declarationRepository.status, selectedStatus);
         },
