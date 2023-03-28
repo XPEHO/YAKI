@@ -12,7 +12,7 @@ describe("DeclarationService", () => {
     declarationRepository = new DeclarationRepository();
     declarationService = new DeclarationService(declarationRepository);
   });
-  
+
   /* The above code is testing the declarationService.createDeclaration method. */
   describe('create a declaration ', () => {
     const declarationDtoIn: DeclarationDtoIn = new DeclarationDtoIn(
