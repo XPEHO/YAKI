@@ -54,7 +54,7 @@ void main() {
               declarationStatus: "REMOTE",
             )
           ];
-          
+
           when(mockedTeamMateApi.getTeamMate(captainId)).thenAnswer(
             (realInvocation) => Future.value(httpResponseList),
           );
