@@ -15,9 +15,34 @@ class LoginRepository {
     this.loggedUser,
   });
 
+  /// Invoked at sign in button press in authentication page.
+  /// Create a new LoginModel using login and password coming from front input.
+  /// invoke loginApi.postLogin() method to POST the new login information's
+  /// Receive a HttpResponse allowing with :
+  ///
+  /// HttpResponse.response to get the response statusCode
+  ///
+  /// And
+  ///
+  /// HttpResponse.data to get the data from the response body
+  ///
+  /// Depending of the response statusCode corresponding actions are set
+  ///
+  /// ( for now, only actions at statusCode 200 are made, waiting to setup analytic to be set up for others error code)
+  ///
+  /// At statusCode 200 :
+  /// * convert the HttpResponse.data into a User model instance,
+  /// * invoke setSharedPreference() to save selected attributes into the sharedPreference
+  /// * setLoggedUser() create the LoggedUser instance, to selected information accessible from the front.
+  /// * change isCaptain value depending of the User model captainId attribute.
   Future<bool> userAuthentication(String login, String password) async {
     // isCaptain determine redirection after login.
     bool isCaptain = false;
+
+    // when hash password is needed replace
+    // password: password,
+    // with
+    // password: hashPassword(password)
     LoginModel newLog = LoginModel(login: login, password: password);
 
     try {
@@ -58,6 +83,7 @@ class LoginRepository {
 
   /// Retrieve User model attributes
   /// and assign the selected attributes to the loggedUser entities
+  /// entities are the class connected to the front.
   void setLoggedUser(User user) {
     loggedUser = LoggedUser(
       captainId: user.captainId,
@@ -84,6 +110,7 @@ class LoginRepository {
     return loggedUser?.teamMateid;
   }
 
+  /// captainId getter, used in team_mate_notifier to fetch the teammate list associated to the logged captain.
   int? get captainId {
     return loggedUser?.captainId;
   }

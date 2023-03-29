@@ -11,12 +11,31 @@ import 'package:yaki/presentation/styles/header_text_style.dart';
 import 'package:yaki/presentation/ui/shared/views/header.dart';
 import 'package:yaki/presentation/ui/shared/views/input_app.dart';
 
+/// using ConsumerWidget (statelessWidget) to have access to the WidgetRef object
+/// allowing the current widget to have access to any provider.
 class Authentication extends ConsumerWidget {
   Authentication({super.key});
 
   final loginController = TextEditingController();
   final passwordController = TextEditingController();
 
+  /// on 'Sign in' button press/tap :
+  /// * delete the previously saved token in the sharedPreferences
+  /// * POST to the API the login information's, by invoking the loginRepositoryProvider.userAuthentication() method,
+  /// then retrieve the boolean to know if the logged user is a captain.
+  ///
+  /// Depending of the newly saved token and if the user is a captain or not :
+  /// * route to the captain page
+  ///
+  /// Or
+  /// * route to the declaration page
+  /// fetch the latest declaration and retrieve the status,
+  ///
+  /// if not null
+  /// route to the status page directly
+  ///
+  /// if null
+  /// route to the declaration page
   void onPressAuthent({
     required WidgetRef ref,
     required String login,

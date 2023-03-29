@@ -7,10 +7,16 @@ import 'package:yaki/presentation/state/providers/declaration_provider.dart';
 import 'package:yaki/presentation/state/providers/status_provider.dart';
 import 'package:yaki/presentation/ui/declaration/views/status_card.dart';
 
-// ConsumerWidget : stateless widget listening to providers
+/// using ConsumerStatefulWidget (statefullWidget) to have access to the WidgetRef object
+/// allowing the current widget to have access to any provider.
 class DeclarationBody extends ConsumerWidget {
   const DeclarationBody({Key? key}) : super(key: key);
 
+  /// when a statusCard is selected / pressed / taped
+  /// * access the declarationNotifier to invoke the create method
+  /// * pass the selected status String.
+  /// * Then invoke the statusNotifier getSelectedStatus change the state to set displayed data in the status page.
+  /// * Finaly trigger router to change to the status page.
   Future<void> _onStatusSelected({
     required WidgetRef ref,
     required String status,
