@@ -15,7 +15,6 @@ class StatusPageNotifier extends StateNotifier<StateStatusPage> {
           ),
         );
 
-
   /// this setState will determine the notifier state value based on the status value.
   ///
   /// Retrieve image and text matching the status.

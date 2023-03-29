@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:yaki/data/models/user.dart';
 
 void main() {
+  // simulate json send by API
   Map<String, dynamic> userAsJson = {
     "token": "azertyuioptoken",
     "captainId": 1,
@@ -13,7 +14,7 @@ void main() {
     "firstName": "dupond",
     "email": "dupond@gmail.com"
   };
-
+  // model instance once json is parsed into dart usable model
   User user = User(
     token: "azertyuioptoken",
     captainId: 1,
@@ -44,6 +45,7 @@ void main() {
         () {
           Map<String, dynamic> userToJson = user.toJson();
 
+          // compare Map / Json
           expect(
             mapEquals(userToJson, userAsJson),
             true,

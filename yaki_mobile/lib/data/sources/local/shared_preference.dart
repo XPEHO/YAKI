@@ -26,6 +26,7 @@ class SharedPref {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.containsKey('token');
   }
+
   /// Obtain shared preferences by getting the current instance via .getInstance()
   /// Check if a token is saved in the sharedPreference, if so, deleteIt.
   /// Future<void> return is necessary to be inoked with 'await'
@@ -35,6 +36,7 @@ class SharedPref {
       await prefs.remove('token');
     }
   }
+
   /// Obtain shared preferences by getting the current instance via .getInstance()
   /// Clear all values saved in sharedPreference
   static void clearAll() async {

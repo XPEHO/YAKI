@@ -127,6 +127,7 @@ class DeclarationRepository {
       status: status,
     );
   }
+
   /// getter to retrieve declaration status stored in DeclarationStatus instance.
   /// This getter is called in the status_notifier, this value will determine the status page content.
   String get status {

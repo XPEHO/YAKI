@@ -3,6 +3,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:retrofit/retrofit.dart';
 
+/// Mock HttpResponse and Response object
+/// Thoses will be accessible to any files with import.
 @GenerateMocks(
   [
     Response,
