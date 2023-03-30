@@ -7,10 +7,10 @@ import 'package:yaki/domain/entities/declaration_status.dart';
 enum Status {
   //enum.values.name(enum.values.text),
   //String(String)
-  remote('REMOTE'),
-  onsite('ON_SITE'),
-  vacation('VACATION'),
-  other('OTHER');
+  remote('Remote'),
+  onSite('On site'),
+  vacation('Vacation'),
+  other('Other');
 
   final String text;
   const Status(this.text);
@@ -26,10 +26,10 @@ enum Status {
 String getStatusImage(String status) {
   String link = 'assets/images/unknown.svg';
 
-  if (status == Status.other.text) {
+  if (status.toLowerCase() == Status.other.text.toLowerCase()) {
     link = 'assets/images/dots.svg';
   } else if (status != emptyDeclarationStatus) {
-    String key = Status.values.byName(status).name;
+    String key = Status.values.byName(status).name.toLowerCase();
     link = 'assets/images/$key.svg';
   }
   return link;
@@ -50,8 +50,8 @@ String getStatusTranslationKey(String status) {
   if (status != emptyDeclarationStatus) {
     String value = status;
 
-    if (status == Status.onsite.text) {
-      value = status.replaceAll(RegExp('_'), '');
+    if (status == Status.onSite.text) {
+      value = status.replaceAll(RegExp(' '), '');
     }
     String name = Status.values.byName(value.toLowerCase()).name;
     String key = name[0].toUpperCase() + name.substring(1);

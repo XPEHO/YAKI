@@ -7,7 +7,7 @@ final List statusCardsContent = [
   },
   {
     'image': 'assets/images/onsite.svg',
-    'text': Status.onsite.text,
+    'text': Status.onSite.text,
   },
   {
     'image': 'assets/images/vacation.svg',
