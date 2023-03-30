@@ -1,20 +1,21 @@
 import 'package:yaki/presentation/displaydata/status_page_content.dart';
 
+// list used in declaration body to map and create status card.
 final List statusCardsContent = [
   {
     'image': 'assets/images/remote.svg',
-    'text': Status.remote.name,
+    'text': StatusEnum.remote.name,
   },
   {
     'image': 'assets/images/onsite.svg',
-    'text': Status.onSite.name,
+    'text': StatusEnum.onSite.name,
   },
   {
     'image': 'assets/images/vacation.svg',
-    'text': Status.vacation.name,
+    'text': StatusEnum.vacation.name,
   },
   {
     'image': 'assets/images/dots.svg',
-    'text': Status.other.name,
+    'text': StatusEnum.other.name,
   },
 ];

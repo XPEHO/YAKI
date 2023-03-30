@@ -1,10 +1,8 @@
-// StatusEnum.'values'.text is the json object's keys from assets/translations/*.json files
-// StatusEnum.values.byName('remote') = StatusEnum.remote
-// StatusEnum.remote.name = remote (type : String)
-// StatusEnum.remote.text = REMOTE (type : String)
 import 'package:yaki/domain/entities/declaration_status.dart';
 
-enum Status {
+// StatusEnum.'values'.text is the json object's keys from assets/translations/*.json files
+// StatusEnum.values.byName('remote') = StatusEnum.remote
+enum StatusEnum {
   //enum.values.name(enum.values.text),
   //String(String)
   remote('remote'),
@@ -13,7 +11,16 @@ enum Status {
   other('other');
 
   final String text;
-  const Status(this.text);
+  const StatusEnum(this.text);
+}
+
+String reformatOnSite(String status) {
+  String statusFormat = status;
+  if (status == 'on site') {
+    // on site to onSite
+    statusFormat = status.split(" ")[0] + status.split(" ")[1][0].toUpperCase() + status.split(" ")[1].substring(1);
+  }
+  return statusFormat;
 }
 
 /// Create image link from declaration status string value.
@@ -26,10 +33,10 @@ enum Status {
 String getStatusImage(String status) {
   String link = 'assets/images/unknown.svg';
 
-  if (status.toLowerCase() == Status.other.text.toLowerCase()) {
+  if (status.toLowerCase() == StatusEnum.other.text.toLowerCase()) {
     link = 'assets/images/dots.svg';
   } else if (status != emptyDeclarationStatus) {
-    String key = Status.values.byName(status).name.toLowerCase();
+    String key = StatusEnum.values.byName(status).name.toLowerCase();
     link = 'assets/images/$key.svg';
   }
   return link;
@@ -50,10 +57,10 @@ String getStatusTranslationKey(String status) {
   if (status != emptyDeclarationStatus) {
     String value = status;
 
-    if (status == Status.onsite.text) {
+    if (status == StatusEnum.onSite.text) {
       value = status.replaceAll(RegExp(' '), '');
     }
-    String name = Status.values.byName(value.toLowerCase()).name;
+    String name = StatusEnum.values.byName(value.toLowerCase()).name;
     String key = name[0].toUpperCase() + name.substring(1);
     translationKey = "Status$key";
   }
