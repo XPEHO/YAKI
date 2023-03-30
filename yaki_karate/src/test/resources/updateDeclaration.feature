@@ -11,11 +11,11 @@ Feature: UpdateDeclaration
     Given def declarationId = declaration.response.declarationId
     And path '/declarations/' + declarationId
     And def now = java.time.LocalDateTime.now().toString()
-    And def requestPayload = { declarationTeamMateId: 4, declarationDate: now, declarationStatus: "Remote" }
+    And def requestPayload = { declarationTeamMateId: 4, declarationDate: now, declarationStatus: "remote" }
     And request requestPayload
     When method PUT
     Then status 200
-    And match response == { declarationTeamMateId: 4, declarationDate: '#string', declarationStatus: 'Remote', user: '#notnull' }
+    And match response == { declarationTeamMateId: 4, declarationDate: '#string', declarationStatus: 'remote', user: '#notnull' }
 
   Scenario: Update declaration fail 404
     Given def declarationId = declaration.response.declarationId
@@ -25,7 +25,7 @@ Feature: UpdateDeclaration
     When method PUT
     Then status 404
 
-  Scenario: Update declaration fail 500
+  Scenario: Update declaration fail 404
     Given def declarationId = declaration.response.declarationId
     And path '/declarations/' + declarationId
     And def requestPayload = { declarationTeamMateId: "", declarationDate: now, declarationStatus: "Rewote" }
