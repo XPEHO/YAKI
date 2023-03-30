@@ -14,6 +14,30 @@ class DeclarationRepository {
     this.declarationStatus,
   });
 
+  /// Invoked in declaration Notifier
+  ///
+  /// String statusValue in authentication page :
+  /// to determine if the response has a declaration object or not
+  /// if statusValue == "", there is no declaration in the current day, if there is a value, the user already has declared itself.
+  ///
+  /// invoke declarationApi.getDeclaration() method to GET the declaration for the selected teammate
+  /// Receive a HttpResponse allowing with :
+  ///
+  /// HttpResponse.response to get the response statusCode
+  ///
+  /// And
+  ///
+  /// HttpResponse.data to get the data from the response body
+  ///
+  /// Depending of the response statusCode corresponding actions are set
+  ///
+  /// ( for now, only actions at statusCode 200 are made, waiting to setup analytic to be set up for others error code)
+  ///
+  /// At statusCode 200 :
+  /// * convert the HttpResponse.data into a DeclarationModelIn instance,
+  /// * and get the declarationStatus from the newly created object and assign it to the statusValue.
+  ///
+  /// This method return the statusValue value.
   Future<String> getDeclaration(String teamMateId) async {
     String statusValue = "";
     try {
@@ -42,6 +66,28 @@ class DeclarationRepository {
     return statusValue;
   }
 
+  /// Invoked in declaration Notifier
+  ///
+  /// String statusValue in authentication page :
+  /// to determine if the response has a declaration object or not
+  /// if statusValue == "", there is no declaration in the current day, if there is a value, the user already has declared itself.
+  ///
+  /// invoke declarationApi.getDeclaration() method to GET the declaration for the selected teammate
+  /// Receive a HttpResponse allowing with :
+  ///
+  /// HttpResponse.response to get the response statusCode
+  ///
+  /// And
+  ///
+  /// HttpResponse.data to get the data from the response body
+  ///
+  /// Depending of the response statusCode corresponding actions are set
+  ///
+  /// ( for now, only actions at statusCode 200 or 201 are made, waiting to setup analytic to be set up for others error code)
+  /// * convert the HttpResponse.data into a DeclarationModelIn instance,
+  /// * and get the declarationStatus from the newly created object and assign it to the statusValue.
+  ///
+  /// At the end of the function assign the statusValue to the DeclarationStatus
   Future<void> create(DeclarationModel declaration) async {
     String statusValue = "";
     try {
@@ -83,6 +129,7 @@ class DeclarationRepository {
   }
 
   /// getter to retrieve declaration status stored in DeclarationStatus instance.
+  /// This getter is called in the status_notifier, this value will determine the status page content.
   String get status {
     return declarationStatus?.status ?? "";
   }

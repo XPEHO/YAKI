@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:yaki/data/models/declaration_model_in.dart';
 
 void main() {
+  // simulate json send by API
   Map<String, dynamic> declarationInAsJson = {
     "declarationId": 83,
     "declarationTeamMateId": 15,
@@ -10,6 +11,7 @@ void main() {
     "declarationStatus": "REMOTE"
   };
 
+  // model instance once json is parsed into dart usable model
   DeclarationModelIn declarationModelIn = DeclarationModelIn(
     declarationId: 83,
     declarationTeamMateId: 15,
@@ -39,6 +41,7 @@ void main() {
           Map<String, dynamic> declarationInToJson =
               declarationModelIn.toJson();
 
+          // compare Map / Json
           expect(
             mapEquals(declarationInToJson, declarationInAsJson),
             true,

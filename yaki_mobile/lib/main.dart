@@ -15,6 +15,13 @@ void main() async {
       ],
       path: 'assets/translations',
       fallbackLocale: const Locale('en'),
+      // ProviderScope is a widget that stores the state of all the providers we create.
+      // it wrap the root widget.
+
+      // provider is described it as a mix between State Management and Dependency Injection
+      // its a bridge from widget to data stored in state. It make possible to use any declared provider globally
+      // Any widget(converted as consumerWidget, for the statelessWidget)
+      // will have access to the WidgetRef objet, making the widget able to have access to any provider, so state.
       child: const ProviderScope(child: YakiApp()),
     ),
   );

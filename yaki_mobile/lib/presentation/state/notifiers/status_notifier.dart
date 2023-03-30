@@ -15,6 +15,11 @@ class StatusPageNotifier extends StateNotifier<StateStatusPage> {
           ),
         );
 
+  /// this setState will determine the notifier state value based on the status value.
+  ///
+  /// Retrieve image and text matching the status.
+  ///
+  /// If status == "", it will set an error message when routing to the status page.
   void setState(String status) {
     if (status != "") {
       state = StateStatusPage(
@@ -29,6 +34,14 @@ class StatusPageNotifier extends StateNotifier<StateStatusPage> {
     }
   }
 
+  /// Invoked at sign in button press in authentication page.
+  ///
+  /// And
+  ///
+  /// Invoked in declaration_body "page".
+  ///
+  /// Retrieve the status saved in DeclarationStatus entities;
+  /// And invoke the "setState" method.
   void getSelectedStatus() {
     final String status = declarationRepository.status;
     setState(status);

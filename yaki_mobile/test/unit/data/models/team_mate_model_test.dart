@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:yaki/data/models/team_mate_model.dart';
 
 void main() {
+  // simulate json send by API
   Map<String, dynamic> teammateModelAsJson = {
     "userId": 1,
     "userLastName": "dupond",
@@ -11,7 +12,7 @@ void main() {
     "declarationDate": "2023-03-20T10:00:00.950Z",
     "declarationStatus": "Testing",
   };
-
+  // model instance once json is parsed into dart usable model
   TeamMateModel teammateModel = TeamMateModel(
     userId: 1,
     userLastName: "dupond",
@@ -41,7 +42,7 @@ void main() {
         'TeamMateModel toJson',
         () {
           Map<String, dynamic> teammateModelToJson = teammateModel.toJson();
-
+          // compare Map / Json
           expect(
             mapEquals(teammateModelToJson, teammateModelAsJson),
             true,

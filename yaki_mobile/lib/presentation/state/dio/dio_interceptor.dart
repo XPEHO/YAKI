@@ -2,28 +2,30 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-/// Interceptor are meant to be intercept request / response / error
-/// before they are handled by then or catch, and depending
-/// of the override method, run custom action.
-/// Create a dio instance to add interceptor, which allow to use dynamic data
+// Dio is a flutter http client,
+/// Interceptor are meant to be intercept request / response / error before they are handled by then or catch
+/// Depending of the overrided method, it will run custom action.
+/// Here create a dio instance to add interceptor, which allow to use dynamic data
 final dioInterceptor = Provider(
   (ref) {
     final dio = Dio();
-    final addTokenToHeader = AddTokenToHeader();
+    final addDataToHeader = AddDataToHeader();
+
     dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (RequestOptions options, handler) =>
-            addTokenToHeader.onRequest(options, handler),
+            addDataToHeader.onRequest(options, handler),
       ),
     );
     return dio;
   },
 );
 
-/// Custom interceptor, to, on any request ( as long as the custom dio interceptor is used ),
-/// add token save in sharedPreference to the request header.
-/// Overwrite onRequest method for this action.
-class AddTokenToHeader extends Interceptor {
+/// Custom interceptor, to, on any request
+/// ( as long as the custom dioInterceptor is used at *_api.dart instantiation, ex : see declaration_provider.dart ),
+/// add the token & userId (from authentication response) saved in the sharedPreference to the request header.
+/// Overwrite Interceptor onRequest method for this.
+class AddDataToHeader extends Interceptor {
   @override
   void onRequest(
     RequestOptions options,

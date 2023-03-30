@@ -6,6 +6,9 @@ import 'package:yaki/presentation/state/providers/team_mate_provider.dart';
 import 'package:yaki/presentation/ui/captain/views/team_mate_card.dart';
 import 'package:yaki/presentation/ui/shared/views/input_app.dart';
 
+/// using ConsumerStatefulWidget (statefullWidget) to have access to the WidgetRef object
+/// allowing the current widget to have access to any provider.
+/// ConsumerStatefulWidget, is used to have access to the statefull initState() method ( and override it )
 class CaptainBody extends ConsumerStatefulWidget {
   const CaptainBody({super.key});
 
