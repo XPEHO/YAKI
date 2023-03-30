@@ -7,10 +7,10 @@ import 'package:yaki/domain/entities/declaration_status.dart';
 enum Status {
   //enum.values.name(enum.values.text),
   //String(String)
-  remote('Remote'),
-  onSite('On site'),
-  vacation('Vacation'),
-  other('Other');
+  remote('remote'),
+  onSite('on site'),
+  vacation('vacation'),
+  other('other');
 
   final String text;
   const Status(this.text);
@@ -50,7 +50,7 @@ String getStatusTranslationKey(String status) {
   if (status != emptyDeclarationStatus) {
     String value = status;
 
-    if (status == Status.onSite.text) {
+    if (status == Status.onsite.text) {
       value = status.replaceAll(RegExp(' '), '');
     }
     String name = Status.values.byName(value.toLowerCase()).name;
