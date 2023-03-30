@@ -3,6 +3,7 @@ import 'dart:core';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:yaki/presentation/displaydata/status_page_content.dart';
 import 'package:yaki/presentation/styles/header_text_style.dart';
 
 class CardTeamMate extends StatefulWidget {
@@ -69,7 +70,7 @@ class _CardTeamMateState extends State<CardTeamMate> {
                             child: Padding(
                               padding: const EdgeInsets.all(10),
                               child: SvgPicture.asset(
-                                'assets/images/remote.svg',
+                                getStatusImage(widget.status ?? ""),
                                 width: 40,
                                 height: 40,
                               ),
