@@ -25,6 +25,7 @@ export class DeclarationService {
       declaration.declarationDate &&
       declaration.declarationStatus !== undefined &&
       declaration.declarationStatus.trim() !== "") {
+        
       return await this.declarationRepository.createDeclaration(declaration);
     } else {
       throw new TypeError("One or more mandatory information is missing.");

@@ -9,11 +9,11 @@ Feature: CreationDeclaration
   Scenario: Creation declaration successful
     Given path '/declarations'
     And def now = java.time.LocalDateTime.now().toString()
-    And def requestPayload = { declarationTeamMateId: 4, declarationDate: now, declarationStatus: "Remote" }
+    And def requestPayload = { declarationTeamMateId: 4, declarationDate: now, declarationStatus: "remote" }
     And request requestPayload
     When method POST
     Then status 201
-    And match response == { declarationId: '#number', declarationTeamMateId: 4, declarationDate: '#string', declarationStatus: 'Remote' }
+    And match response == { declarationId: '#number', declarationTeamMateId: 4, declarationDate: '#string', declarationStatus: 'remote' }
 
   Scenario: Creation declaration fail
     Given path '/declarations'

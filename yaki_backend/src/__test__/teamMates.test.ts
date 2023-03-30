@@ -86,7 +86,7 @@ describe('get teammate by team id with last declaration', () => {
         userLastName: 'Dupuis',
         userFirstName: 'Jean',
         declarationDate: new Date('1996-12-23'),
-        declarationStatus: 'On site',
+        declarationStatus: 'on site',
       },
     ]);
   });
