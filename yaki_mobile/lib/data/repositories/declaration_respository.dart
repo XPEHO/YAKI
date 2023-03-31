@@ -16,26 +16,25 @@ class DeclarationRepository {
 
   /// Invoked in declaration Notifier
   ///
-  /// String statusValue in authentication page :
+  /// String statusValue used in authentication page :
+  ///
   /// to determine if the response has a declaration object or not
-  /// if statusValue == "", there is no declaration in the current day, if there is a value, the user already has declared itself.
+  /// if statusValue is emptyString, there is no declaration at the current day, otherwise a declaration was created.
   ///
   /// invoke declarationApi.getDeclaration() method to GET the declaration for the selected teammate
-  /// Receive a HttpResponse allowing with :
+  /// Receive a HttpResponse, with :
   ///
-  /// HttpResponse.response to get the response statusCode
+  /// * HttpResponse.response, get the response statusCode
   ///
-  /// And
-  ///
-  /// HttpResponse.data to get the data from the response body
+  /// * HttpResponse.data to get the data from the response body
   ///
   /// Depending of the response statusCode corresponding actions are set
   ///
   /// ( for now, only actions at statusCode 200 are made, waiting to setup analytic to be set up for others error code)
   ///
   /// At statusCode 200 :
-  /// * convert the HttpResponse.data into a DeclarationModelIn instance,
-  /// * and get the declarationStatus from the newly created object and assign it to the statusValue.
+  /// * Convert the HttpResponse.data into a DeclarationModelIn instance,
+  /// * Get the declarationStatus from the newly created object and assign it to the statusValue.
   ///
   /// This method return the statusValue value.
   Future<String> getDeclaration(String teamMateId) async {
@@ -68,24 +67,21 @@ class DeclarationRepository {
 
   /// Invoked in declaration Notifier
   ///
-  /// String statusValue in authentication page :
+  /// String statusValue used in authentication page :
   /// to determine if the response has a declaration object or not
-  /// if statusValue == "", there is no declaration in the current day, if there is a value, the user already has declared itself.
+  /// if statusValue isn't emptyString, the declaration is successfully created.
   ///
-  /// invoke declarationApi.getDeclaration() method to GET the declaration for the selected teammate
-  /// Receive a HttpResponse allowing with :
+  /// Receive a HttpResponse, with :
   ///
-  /// HttpResponse.response to get the response statusCode
+  /// * HttpResponse.response, get the response statusCode
   ///
-  /// And
-  ///
-  /// HttpResponse.data to get the data from the response body
+  /// * HttpResponse.data to get the data from the response body
   ///
   /// Depending of the response statusCode corresponding actions are set
   ///
   /// ( for now, only actions at statusCode 200 or 201 are made, waiting to setup analytic to be set up for others error code)
-  /// * convert the HttpResponse.data into a DeclarationModelIn instance,
-  /// * and get the declarationStatus from the newly created object and assign it to the statusValue.
+  /// * Convert the HttpResponse.data into a DeclarationModelIn instance,
+  /// * Get the declarationStatus from created instance and assign it to the statusValue.
   ///
   /// At the end of the function assign the statusValue to the DeclarationStatus
   Future<void> create(DeclarationModel declaration) async {

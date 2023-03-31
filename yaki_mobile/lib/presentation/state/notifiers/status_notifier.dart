@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yaki/data/repositories/declaration_respository.dart';
-import 'package:yaki/presentation/displaydata/declaration_card_content.dart';
+import 'package:yaki/presentation/displaydata/status_page_content.dart';
 import 'package:yaki/presentation/state/state/state_status_page.dart';
 
 class StatusPageNotifier extends StateNotifier<StateStatusPage> {
@@ -11,7 +11,7 @@ class StatusPageNotifier extends StateNotifier<StateStatusPage> {
       : super(
           StateStatusPage(
             image: 'assets/images/unknown.svg',
-            text: 'default message',
+            text: '...',
           ),
         );
 
@@ -19,19 +19,15 @@ class StatusPageNotifier extends StateNotifier<StateStatusPage> {
   ///
   /// Retrieve image and text matching the status.
   ///
-  /// If status == "", it will set an error message when routing to the status page.
+  /// Functions from status_page_content will determine which text & image will be displayed.
   void setState(String status) {
-    if (status != "") {
-      state = StateStatusPage(
-        image: '${statusImage[status]}',
-        text: tr('${statusMessage[status]}'),
-      );
-    } else {
-      state = StateStatusPage(
-        image: 'assets/images/unknown.svg',
-        text: tr("StatusError"),
-      );
-    }
+    String text = StatusUtils.getTranslationKey(status);
+    String image = StatusUtils.getImage(status);
+
+    state = StateStatusPage(
+      image: image,
+      text: tr(text),
+    );
   }
 
   /// Invoked at sign in button press in authentication page.
