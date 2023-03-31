@@ -14,7 +14,7 @@ class DeclarationNotifier extends StateNotifier<String> {
   ///
   /// Get the teammateId from loginRepository getter.
   ///
-  /// then invoke the declarationRepository.getDeclaration() method to get the daily declaration, if one was set.
+  /// then invoke the declarationRepository.getDeclaration() method to get the daily declaration, if one was created.
   ///
   /// return the declarationStatus, used in authentication page to determine the redirection.
   Future<String> getDeclaration() async {
@@ -25,7 +25,7 @@ class DeclarationNotifier extends StateNotifier<String> {
     return declarationStatus;
   }
 
-  /// invoked in declaration_body "page",
+  /// Invoked in declaration_body "page",
   ///
   /// With the selected status, and the loginRepository.teamMateId getter,
   ///
