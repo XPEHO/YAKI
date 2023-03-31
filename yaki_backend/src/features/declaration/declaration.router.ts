@@ -20,7 +20,7 @@ const declarationController = new DeclarationController(declarationService);
 declarationRouter.post(
   '/declarations',
   (req, res, next) =>
-    /* #swagger.parameters['obj'] = {
+    /* #swagger.parameters['declaration'] = {
                 in: 'body',
                 description: 'Declaration details',
                 required: true,
@@ -36,12 +36,12 @@ declarationRouter.post(
 declarationRouter.get(
   '/declarations',
   (req, res, next) =>
-    /*#swagger.parameters['declaration'] = {
+    /*#swagger.parameters['teamMateId'] = {
                 in: 'query',
                 description: 'Team mate id',
                 required: true,
                 type: 'number',
-                schema: { token: 1 }
+                schema: { teamMateId: 1 }
 }
   */
     authService.verifyToken(req, res, next),
