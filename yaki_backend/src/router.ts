@@ -51,7 +51,15 @@ router.get(
 
 router.get(
   '/teamMates',
-  (req, res, next) => authService.verifyToken(req, res, next),
+  (req, res, next) =>
+    /*#swagger.parameters['captainId'] = {
+                in: 'query',
+                description: 'Captain id',
+                required: true,
+                type: 'number',
+                schema: { captainId: 1 }
+}
+  */ authService.verifyToken(req, res, next),
   async (req, res) =>
     teamMateController.getByTeamIdWithLastDeclaration(req, res)
 );
