@@ -8,7 +8,7 @@ final List statusCardsContent = [
     'text': StatusEnum.remote.name,
   },
   {
-    'image': 'assets/images/onsite.svg',
+    'image': 'assets/images/onSite.svg',
     'text': StatusEnum.onSite.name,
   },
   {
