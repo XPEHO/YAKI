@@ -35,25 +35,25 @@ INSERT INTO public.team_mate(
 INSERT INTO public.declaration(
 	declaration_team_mate_id, declaration_date, declaration_status)
 	VALUES -- for team_mate 1
-		   (1, '2023-02-20', 'sur site'),
-		   (1, '2023-02-19', 'sur site'),
+		   (1, '2023-02-20', 'on site'),
+		   (1, '2023-02-19', 'on site'),
 		   (1, '2023-02-18', 'remote'),
-		   (1, '2023-02-17', 'sur site'),
+		   (1, '2023-02-17', 'on site'),
 		   (1, '2023-02-16', 'remote'),
 		   -- for team_mate 2
-		   (2, '2023-02-20', 'sur site'),
+		   (2, '2023-02-20', 'on site'),
 		   (2, '2023-02-19', 'remote'),
 		   (2, '2023-02-18', 'remote'),
-		   (2, '2023-02-17', 'sur site'),
-		   (2, '2023-02-16', 'sur site'),
+		   (2, '2023-02-17', 'on site'),
+		   (2, '2023-02-16', 'on site'),
 		   -- for team_mate 3
-		   (3, '2023-02-20', 'congés'),
-		   (3, '2023-02-19', 'congés'),
-		   (3, '2023-02-18', 'congés'),
-		   (3, '2023-02-17', 'congés'),
-		   (3, '2023-02-16', 'congés'),
+		   (3, '2023-02-20', 'vacation'),
+		   (3, '2023-02-19', 'vacation'),
+		   (3, '2023-02-18', 'vacation'),
+		   (3, '2023-02-17', 'vacation'),
+		   (3, '2023-02-16', 'vacation'),
 		   -- for team_mate 4
-		   (4, '2023-02-20', 'sur site'),
+		   (4, '2023-02-20', 'on site'),
 		   (4, '2023-02-19', 'remote'),
 		   (4, '2023-02-18', 'remote'),
 		   (4, '2023-02-17', 'remote'),
