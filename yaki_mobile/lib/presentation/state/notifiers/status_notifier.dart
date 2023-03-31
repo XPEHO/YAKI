@@ -11,7 +11,7 @@ class StatusPageNotifier extends StateNotifier<StateStatusPage> {
       : super(
           StateStatusPage(
             image: 'assets/images/unknown.svg',
-            text: 'default message',
+            text: '...',
           ),
         );
 
@@ -21,8 +21,8 @@ class StatusPageNotifier extends StateNotifier<StateStatusPage> {
   ///
   /// Functions from status_page_content will determine which text & image will be displayed.
   void setState(String status) {
-    String text = getStatusTranslationKey(status);
-    String image = getStatusImage(status);
+    String text = StatusUtils.getTranslationKey(status);
+    String image = StatusUtils.getImage(status);
 
     state = StateStatusPage(
       image: image,

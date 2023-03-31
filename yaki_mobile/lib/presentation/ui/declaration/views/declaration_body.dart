@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yaki/presentation/displaydata/declaration_card_content.dart';
+import 'package:yaki/presentation/displaydata/status_page_content.dart';
 import 'package:yaki/presentation/state/providers/declaration_provider.dart';
 import 'package:yaki/presentation/state/providers/status_provider.dart';
 import 'package:yaki/presentation/ui/declaration/views/status_card.dart';
@@ -15,6 +16,7 @@ class DeclarationBody extends ConsumerWidget {
   /// when a statusCard is selected / pressed / taped
   /// * access the declarationNotifier to invoke the create method
   /// * pass the selected status String.
+  /// ( get the StatusEnum text from card content, as its the format that need to be send to the back )
   /// * Then invoke the statusNotifier getSelectedStatus change the state to set displayed data in the status page.
   /// * Finaly trigger router to change to the status page.
   Future<void> _onStatusSelected({
@@ -50,7 +52,7 @@ class DeclarationBody extends ConsumerWidget {
                   statusPicto: cardContent['image'],
                   onPress: () => _onStatusSelected(
                     ref: ref,
-                    status: cardContent['text'],
+                    status: StatusEnum.values.byName(cardContent['text']).text,
                     goToStatusPage: () => context.go('/status'),
                   ),
                 ),

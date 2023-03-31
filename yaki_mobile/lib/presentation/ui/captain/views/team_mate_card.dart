@@ -70,7 +70,7 @@ class _CardTeamMateState extends State<CardTeamMate> {
                             child: Padding(
                               padding: const EdgeInsets.all(10),
                               child: SvgPicture.asset(
-                                getStatusImage(widget.status ?? ""),
+                                StatusUtils.getImage(widget.status ?? ""),
                                 width: 40,
                                 height: 40,
                               ),

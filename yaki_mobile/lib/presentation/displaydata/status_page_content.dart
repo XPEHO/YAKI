@@ -1,7 +1,7 @@
 import 'package:yaki/domain/entities/declaration_status.dart';
 
 // StatusEnum.'values'.text is the json object's keys from assets/translations/*.json files
-// StatusEnum.values.byName('remote') = StatusEnum.remote
+// StatusEnum.values.byName('key') = StatusEnum.key
 enum StatusEnum {
   //enum.values.name(enum.values.text),
   //String(String)
@@ -14,55 +14,54 @@ enum StatusEnum {
   const StatusEnum(this.text);
 }
 
-String reformatOnSite(String status) {
-  String statusFormat = status;
-  if (status == 'on site') {
-    // on site to onSite
-    statusFormat = status.split(" ")[0] + status.split(" ")[1][0].toUpperCase() + status.split(" ")[1].substring(1);
-  }
-  return statusFormat;
-}
 
-/// Create image link from declaration status string value.
-///
-/// If status = "", it will return the "unknown" image ( error situation )
-///
-/// If not empty string compare status with enum.text.
-///
-/// And the enum.name will determine which image name will be used and display.
-String getStatusImage(String status) {
-  String link = 'assets/images/unknown.svg';
-
-  if (status.toLowerCase() == StatusEnum.other.text.toLowerCase()) {
-    link = 'assets/images/dots.svg';
-  } else if (status != emptyDeclarationStatus) {
-    String key = StatusEnum.values.byName(status).name.toLowerCase();
-    link = 'assets/images/$key.svg';
-  }
-  return link;
-}
-
-/// Create status message translationKey from declaration status string
-///
-/// If status = "", it will return the StatusError message.
-///
-/// If not empty string, reformat enum.name to uppercase the first letter.
-///
-/// ( remove _ from ON_SITE if its the selected status )
-///
-/// Which will be aggregated to "Status" to create the translationKey.
-String getStatusTranslationKey(String status) {
-  String translationKey = "StatusError";
-
-  if (status != emptyDeclarationStatus) {
-    String value = status;
-
-    if (status == StatusEnum.onSite.text) {
-      value = status.replaceAll(RegExp(' '), '');
+class StatusUtils {
+  /// reformat a string, split with a defined character into, camelCase
+  ///
+  /// ex : "Hello World" to "helloWorld".
+  static String toCamelCase({required String toFormat, required String splitChar}) {
+    // get out if either is empty string.
+    if (toFormat.isEmpty) {
+      return '';
+    } else if (splitChar.isEmpty) {
+      return toFormat.toLowerCase();
     }
-    String name = StatusEnum.values.byName(value.toLowerCase()).name;
-    String key = name[0].toUpperCase() + name.substring(1);
-    translationKey = "Status$key";
+    List<String> split = toFormat.split(splitChar);
+    String formatted = split[0].toLowerCase();
+    for(var i = 1; i < split.length; i++) {
+      // first letter ([0]) capitalize + substring from string [1] in lowerCase.
+      formatted += split[i][0].toUpperCase() + split[i].substring(1).toLowerCase();
+    }
+    return formatted;
   }
-  return translationKey;
+
+
+  static String getImage(String status) {
+    String link = 'assets/images/unknown.svg';
+    String keyFormat = StatusUtils.toCamelCase(toFormat: status, splitChar: ' ');
+
+    if (status != emptyDeclarationStatus) {
+      if (keyFormat == StatusEnum.other.name) {
+        link = 'assets/images/dots.svg';
+      } else {
+        String key = StatusEnum.values.byName(keyFormat).name;
+        link = 'assets/images/$key.svg';
+      }
+    }
+    return link;
+  }
+
+
+  static String getTranslationKey(String status) {
+    String translationKey = "StatusError";
+    String keyFormat = StatusUtils.toCamelCase(toFormat: status, splitChar: ' ');
+
+    if (status != emptyDeclarationStatus) {
+      keyFormat = keyFormat[0].toUpperCase() + keyFormat.substring(1);
+      translationKey = "Status$keyFormat";
+    }
+    return translationKey;
+  }
 }
+
+
