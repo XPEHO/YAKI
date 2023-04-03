@@ -40,9 +40,11 @@ class LoginRepository {
     // password: password
     // with :
     // password: hashPassword(password)
-    LoginModel newLog = LoginModel(login: login, password: password);
+    LoginModel newLog =
+        LoginModel(login: login, password: hashPassword(password));
 
     try {
+      print(newLog.password);
       final authenticationResponse = await _loginApi.postLogin(newLog);
 
       final statusCode = authenticationResponse.response.statusCode;
