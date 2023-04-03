@@ -5,7 +5,7 @@ Feature: GetAllCaptain
     * def login = call read('classpath:login.feature')
     * header x-access-token = login.token
     * header user_id = login.userId
-    * def schema = [{captain_id : '#number', captain_user_id: '#number'}]
+    * def schema = [{captain_id : '#number', captain_user_id: '#number',captain_customer_id: '#number'}]
 
   @GetAllCaptainSuccessful
   Scenario: Get all captain
