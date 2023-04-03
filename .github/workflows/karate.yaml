@@ -21,6 +21,7 @@ jobs:
           echo "Starting docker containers"
           docker compose up --build --quiet-pull -d
           echo "run swagger"
+          npm run swagger
           cd ../yaki_karate
           echo "Running karate tests"
           mvn test --quiet
