@@ -1,8 +1,8 @@
-import express, { Router } from 'express';
-import { authService } from '../user/authentication.service';
-import { DeclarationController } from './declaration.controller';
-import { DeclarationRepository } from './declaration.repository';
-import { DeclarationService } from './declaration.service';
+import express, {Router} from "express";
+import {authService} from "../user/authentication.service";
+import {DeclarationController} from "./declaration.controller";
+import {DeclarationRepository} from "./declaration.repository";
+import {DeclarationService} from "./declaration.service";
 
 /* Creating a new router object. */
 const declarationRouter: Router = express.Router();
@@ -18,7 +18,7 @@ const declarationController = new DeclarationController(declarationService);
 
 /* Creating a new route for the declarationRouter object. */
 declarationRouter.post(
-  '/declarations',
+  "/declarations",
   (req, res, next) =>
     /* #swagger.parameters['declaration'] = {
                 in: 'body',
@@ -34,7 +34,7 @@ declarationRouter.post(
   }
 );
 declarationRouter.get(
-  '/declarations',
+  "/declarations",
   (req, res, next) =>
     /*#swagger.parameters['teamMateId'] = {
                 in: 'query',
@@ -50,7 +50,7 @@ declarationRouter.get(
   }
 );
 declarationRouter.put(
-  '/declarations/:declarationId',
+  "/declarations/:declarationId",
   (req, res, next) =>
     /*#swagger.parameters['declarationBody'] = {
                 in: 'body',
