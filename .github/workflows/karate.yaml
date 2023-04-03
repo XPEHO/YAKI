@@ -16,6 +16,7 @@ jobs:
           echo ${{ secrets.ENV_FILE }} | base64 -d > .env
           echo "Starting docker containers"
           docker compose up --build --quiet-pull -d
+          npm run swagger
           cd ../yaki_karate
           echo "Running karate tests"
           mvn test --quiet
