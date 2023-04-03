@@ -1,0 +1,27 @@
+name: Create and publish all Docker images
+
+on:
+  push:
+    branches: ['main', 'chore/docker_push']
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: 'Reason'
+        required: true
+        default: 'Manual trigger'
+
+jobs:
+  build-yaki-backend:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build and publish Yaki backend Docker image
+        run: |
+          echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io --username phanatic --password-stdin
+          cd yaki_backend
+          docker build -t yaki_backend .
+          docker tag yaki_backend ghcr.io/xpeho/yaki:latest
+          docker push ghcr.io/xpeho/yaki:latest
