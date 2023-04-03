@@ -10,7 +10,7 @@ INSERT INTO public.user(
 		   ('Lavigne', 'Valentin', 'valentin.lavigne@mail.com', 'lavigne', 'lavigne'),
 		   ('Lazard', 'Arnaud', 'arnaud.lazard@mail.com', 'lazard', 'lazard'),
 		   ('Bain', 'Aaron', 'aaron.bain@mail.com', 'bain', 'bain'),
-		   ('Bain', 'Aaron', 'aaron.bain@mail.com', 'bain', 'bain');
+		   ('Valverde', 'Paul', 'paul.valverde@mail.com', 'valverde', 'valverde');
 
 -- INSERT LOCATIONS
 
