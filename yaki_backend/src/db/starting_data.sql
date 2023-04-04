@@ -7,7 +7,11 @@ INSERT INTO public.user(
 		   ('Dupond', 'Michel', 'dupond.michel@mail.com', 'dupond', '$5$rounds=10000$abcdefghijklmnop$5nP0MR35CzShPTl9K3Vl5gEF2kBc6cDKoQ2LEtG18FB'),
 		   ('Marquez', 'Auguste', 'auguste.marquez@mail.com', 'marquez', '$5$rounds=10000$abcdefghijklmnop$RPAmnJzQd9oz41ZHa/w/irK73ragHk6.coDwjarc8PB'),
 		   ('Leclerc', 'Megane', 'megane.leclerc@mail.com', 'leclerc', '$5$rounds=10000$abcdefghijklmnop$86rpsyu697b0vfHinaeAwhJ7bXwRPXM7JifCH41sgt9'),
-		   ('Lavigne', 'Valentin', 'valentin.lavigne@mail.com', 'lavigne', '$5$rounds=10000$abcdefghijklmnop$aVV68ybbmry88mMGXU1snZOfwd0pKbYFTQbzrv.7n44');
+		   ('Lavigne', 'Valentin', 'valentin.lavigne@mail.com', 'lavigne', '$5$rounds=10000$abcdefghijklmnop$aVV68ybbmry88mMGXU1snZOfwd0pKbYFTQbzrv.7n44'),
+		   ('Lazard', 'Arnaud', 'arnaud.lazard@mail.com', 'lazard', '$5$rounds=10000$abcdefghijklmnop$FwrCge3JnXlGV1xkCrOnyT5QDBQb//f6oGmyjQ6nDc0'),
+           ('Bain', 'Aaron', 'aaron.bain@mail.com', 'bain', '$5$rounds=10000$abcdefghijklmnop$flxzos/1DN13hD1e0Wjji3clwr.cL7jZqfuimgtVO80'),
+           ('Valverde', 'Paul', 'paul.valverde@mail.com', 'valverde', '$5$rounds=10000$abcdefghijklmnop$RMO84AgIIe8yMm8I4mdbFWBRUrikpr7XdPIpMVnOE4C');
+
 
 -- INSERT LOCATIONS
 
