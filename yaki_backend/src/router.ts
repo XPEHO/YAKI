@@ -34,7 +34,7 @@ const userService = new UserService(userRepository);
 const userController = new UserController(userService);
 
 router.post('/login', (req, res) =>
-  /* #swagger.parameters['obj'] = {
+  /* #swagger.parameters['Login'] = {
                 in: 'body',
                 description: 'Login details',
                 required: true,
