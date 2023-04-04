@@ -76,7 +76,7 @@ void main() {
 
           LoginModel captainLogin = LoginModel(
             login: captainLog,
-            password: captainPw,
+            password: loginRepository.hashPassword(captainPw),
           );
 
           final Map<String, dynamic> authenticationLavigne = {
