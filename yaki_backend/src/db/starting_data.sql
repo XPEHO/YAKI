@@ -30,7 +30,8 @@ INSERT INTO public.owner(
 INSERT INTO public.customer(
 	customer_name,customer_owner_id,customer_location_id)
 	VALUES ('customer0',1,1),
-		   ('Customer1',1,2);
+		   ('Customer1',1,2),
+		   ('Customer2',1,3);
 
 -- INSERT CUSTOMER_RIGHTS
 
