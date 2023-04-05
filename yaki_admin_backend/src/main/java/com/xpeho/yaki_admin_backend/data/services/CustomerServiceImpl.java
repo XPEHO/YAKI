@@ -32,13 +32,13 @@ public class CustomerServiceImpl implements CustomerService {
         return customerJpaRepository
                 .findAll()
                 .stream()
-                .map(customerModel -> new CustomerEntity(customerModel.getName(), customerModel.getOwnerId()))
+                .map(customerModel -> new CustomerEntity(customerModel.getName(), customerModel.getOwnerId(), customerModel.getLocationId()))
                 .toList();
     }
 
     @Override
     public CustomerEntity createCustomer(CustomerEntity customerEntity) {
-        final CustomerModel customerModel = new CustomerModel(customerEntity.customer_name(), customerEntity.owner_id());
+        final CustomerModel customerModel = new CustomerModel(customerEntity.customer_name(), customerEntity.owner_id(), customerEntity.location_id());
         final CustomerModel savedModel = customerJpaRepository.save(customerModel);
         return customerEntity;
     }

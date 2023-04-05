@@ -32,21 +32,18 @@ public class CustomerModel {
     @Column(name = "customer_user_id")
     private List<UserModel> user;
 
-
-
-    /*@OneToOne
-    @JoinColumn(name = "customer_location_id")
-    private LocationModel location;*/
-
-
-    public CustomerModel(String customer_name, int ownerId) {
-        this.user = new ArrayList<>();
-        this.ownerId = ownerId;
-        this.name = customer_name;
-    }
+    @Column(name = "customer_location_id")
+    private int locationId;
 
     public CustomerModel() {
 
+    }
+
+    public CustomerModel(String customerName, int ownerId, int locationId) {
+        this.user = new ArrayList<>();
+        this.ownerId = ownerId;
+        this.name = customerName;
+        this.locationId = locationId;
     }
 
     public void addUsers(List<UserModel> users) {
@@ -59,5 +56,9 @@ public class CustomerModel {
 
     public int getOwnerId() {
         return ownerId;
+    }
+
+    public int getLocationId() {
+        return this.locationId;
     }
 }
