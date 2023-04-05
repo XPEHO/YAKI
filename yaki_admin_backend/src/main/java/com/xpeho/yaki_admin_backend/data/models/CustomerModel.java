@@ -3,12 +3,11 @@ package com.xpeho.yaki_admin_backend.data.models;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@NoArgsConstructor
+
 @AllArgsConstructor
 @Data
 @Entity
@@ -17,7 +16,8 @@ public class CustomerModel {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_seq")
+    @SequenceGenerator(name = "customer_seq", sequenceName = "customer_id_seq", allocationSize = 1)
     @Column(name = "customer_id")
     private int id;
     @ManyToOne()
@@ -43,6 +43,10 @@ public class CustomerModel {
         this.user = new ArrayList<>();
         this.ownerId = ownerId;
         this.name = customer_name;
+    }
+
+    public CustomerModel() {
+
     }
 
     public void addUsers(List<UserModel> users) {
