@@ -34,7 +34,7 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 /* A middleware that parses the body of the request and makes it available in the `req.body` property. */
-app.use(express.urlencoded());
+app.use(express.urlencoded({extended: false}));
 
 app.use(router);
 /* A middleware that is used to route the request to the declaration router. */
