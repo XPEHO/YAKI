@@ -24,15 +24,26 @@ export class DeclarationRepository {
    * @returns A created declaration.
    */
   async createDeclaration(declaration: DeclarationDtoIn) {
-    const {declarationDate, declarationTeamMateId, declarationStatus} = declaration;
+    const {declarationDate, declarationDateStart, declarationDateEnd, declarationTeamMateId, declarationStatus} =
+      declaration;
     const result = await this.pool.query(
-      "INSERT INTO declaration (declaration_date, declaration_team_mate_id, declaration_status) VALUES ($1, $2, $3) RETURNING *",
-      [declarationDate, declarationTeamMateId, declarationStatus]
+      `INSERT INTO declaration 
+      (
+        declaration_date, 
+        declaration_date_start, 
+        declaration_date_end, 
+        declaration_team_mate_id, 
+        declaration_status
+        ) 
+      VALUES ($1, $2, $3, $4, $5) RETURNING *`,
+      [declarationDate, declarationDateStart, declarationDateEnd, declarationTeamMateId, declarationStatus]
     );
     const declarationToFront = new DeclarationDtoIn(
       result.rows[0].declaration_id,
       result.rows[0].declaration_team_mate_id,
       result.rows[0].declaration_date,
+      result.rows[0].declaration_date_start,
+      result.rows[0].declaration_date_end,
       result.rows[0].declaration_status
     );
     return declarationToFront;
@@ -60,6 +71,8 @@ export class DeclarationRepository {
         result.rows[0].declaration_id,
         result.rows[0].declaration_team_mate_id,
         result.rows[0].declaration_date,
+        result.rows[0].declaration_date_start,
+        result.rows[0].declaration_date_end,
         result.rows[0].declaration_status
       );
 
@@ -76,12 +89,26 @@ export class DeclarationRepository {
    * @param {Declaration} declaration - Declaration
    */
   async updateDeclarationStatus(declarationId: number, declaration: DeclarationDtoIn): Promise<void> {
-    const {declarationDate, declarationTeamMateId, declarationStatus} = declaration;
+    const {declarationDate, declarationDateStart, declarationDateEnd, declarationTeamMateId, declarationStatus} =
+      declaration;
     const client = await this.pool.connect();
     try {
       await client.query(
-        "UPDATE declaration SET declaration_date = $1, declaration_team_mate_id = $2, declaration_status= $3 WHERE declaration_id = $4",
-        [declarationDate, declarationTeamMateId, declarationStatus, declarationId]
+        `UPDATE declaration 
+        SET declaration_date = $1, 
+        declaration_date_start = $2, 
+        declaration_date_end = $3, 
+        declaration_team_mate_id = $4, 
+        declaration_status = $5 
+        WHERE declaration_id = $6`,
+        [
+          declarationDate,
+          declarationDateStart,
+          declarationDateEnd,
+          declarationTeamMateId,
+          declarationStatus,
+          declarationId,
+        ]
       );
     } finally {
       client.release();
