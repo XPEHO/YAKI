@@ -2,16 +2,15 @@
 
 INSERT INTO public.user(
 	user_last_name, user_first_name, user_email, user_login, user_password)
-	VALUES ('DuGrand', 'Jacques', 'dugrand.jacques@mail.com', 'dugrand', 'dugrand'),
-		   ('Sauvagneau', 'Benjamin', 'benjamin.sauvagneau@mail.com', 'sauvagneau', 'sauvagneau'),
-		   ('Dupond', 'Michel', 'dupond.michel@mail.com', 'dupond', 'dupond'),
-		   ('Marquez', 'Auguste', 'auguste.marquez@mail.com', 'marquez', 'marquez'),
-		   ('Leclerc', 'Megane', 'megane.leclerc@mail.com', 'leclerc', 'leclerc'),
-		   ('Lavigne', 'Valentin', 'valentin.lavigne@mail.com', 'lavigne', 'lavigne'),
-		   ('Lazard', 'Arnaud', 'arnaud.lazard@mail.com', 'lazard', 'lazard'),
-		   ('Bain', 'Aaron', 'aaron.bain@mail.com', 'bain', 'bain'),
-		   ('Valverde', 'Paul', 'paul.valverde@mail.com', 'valverde', 'valverde');
-
+	VALUES ('DuGrand', 'Jacques', 'dugrand.jacques@mail.com', 'dugrand', '$5$rounds=10000$abcdefghijklmnop$OA65zl2VDjeMzN.O3S/2pSV4eWCglNv9o4nVabmkQz5'),
+           ('Sauvagneau', 'Benjamin', 'benjamin.sauvagneau@mail.com', 'sauvagneau', '$5$rounds=10000$abcdefghijklmnop$xlREmQbTt/diimOXnxUzDQaWJx8CPvKtJFL5EH8jAE7'),
+           ('Dupond', 'Michel', 'dupond.michel@mail.com', 'dupond', '$5$rounds=10000$abcdefghijklmnop$5nP0MR35CzShPTl9K3Vl5gEF2kBc6cDKoQ2LEtG18FB'),
+           ('Marquez', 'Auguste', 'auguste.marquez@mail.com', 'marquez', '$5$rounds=10000$abcdefghijklmnop$RPAmnJzQd9oz41ZHa/w/irK73ragHk6.coDwjarc8PB'),
+           ('Leclerc', 'Megane', 'megane.leclerc@mail.com', 'leclerc', '$5$rounds=10000$abcdefghijklmnop$86rpsyu697b0vfHinaeAwhJ7bXwRPXM7JifCH41sgt9'),
+           ('Lavigne', 'Valentin', 'valentin.lavigne@mail.com', 'lavigne', '$5$rounds=10000$abcdefghijklmnop$aVV68ybbmry88mMGXU1snZOfwd0pKbYFTQbzrv.7n44'),
+           ('Lazard', 'Arnaud', 'arnaud.lazard@mail.com', 'lazard', '$5$rounds=10000$abcdefghijklmnop$FwrCge3JnXlGV1xkCrOnyT5QDBQb//f6oGmyjQ6nDc0'),
+           ('Bain', 'Aaron', 'aaron.bain@mail.com', 'bain', '$5$rounds=10000$abcdefghijklmnop$flxzos/1DN13hD1e0Wjji3clwr.cL7jZqfuimgtVO80'),
+           ('Valverde', 'Paul', 'paul.valverde@mail.com', 'valverde', '$5$rounds=10000$abcdefghijklmnop$RMO84AgIIe8yMm8I4mdbFWBRUrikpr7XdPIpMVnOE4C');
 -- INSERT LOCATIONS
 
 INSERT INTO public.locations(
@@ -29,9 +28,9 @@ INSERT INTO public.owner(
 -- INSERT CUSTOMERS
 
 INSERT INTO public.customer(
-	customer_owner_id,customer_location_id)
-	VALUES (1,1),
-		   (1,2);
+	customer_name,customer_owner_id,customer_location_id)
+	VALUES ('customer0',1,1),
+		   ('Customer1',1,2);
 
 -- INSERT CUSTOMER_RIGHTS
 
