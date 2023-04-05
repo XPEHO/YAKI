@@ -248,6 +248,8 @@ CREATE TABLE IF NOT EXISTS public.declaration
     declaration_id integer NOT NULL DEFAULT nextval('declaration_id_seq'::regclass),
     declaration_team_mate_id integer NOT NULL,
     declaration_date timestamp with time zone,
+    declaration_date_start timestamp with time zone,
+    declaration_date_end timestamp with time zone,
     declaration_status character varying(30),
     CONSTRAINT declaration_pkey PRIMARY KEY (declaration_id),
     CONSTRAINT declaration_team_mate_id_fkey FOREIGN KEY (declaration_team_mate_id)
