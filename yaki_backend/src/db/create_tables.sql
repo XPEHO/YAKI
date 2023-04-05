@@ -35,7 +35,6 @@ CREATE SEQUENCE IF NOT EXISTS public.customer_id_seq
     CACHE 1;
 ALTER SEQUENCE public.customer_id_seq
     OWNER TO yaki;
-<<<<<<< HEAD
 -- CREATE CUSTOMER_RIGHTS IDS
 CREATE SEQUENCE IF NOT EXISTS public.customer_rights_id_seq
     INCREMENT 1
@@ -45,8 +44,6 @@ CREATE SEQUENCE IF NOT EXISTS public.customer_rights_id_seq
     CACHE 1;
 ALTER SEQUENCE public.customer_id_seq
     OWNER TO yaki;
-=======
->>>>>>> 31920d9 (Feat/post halfday declaration (#200))
 -- CREATE CAPTAIN IDs
 CREATE SEQUENCE IF NOT EXISTS public.captain_id_seq
     INCREMENT 1
@@ -103,8 +100,6 @@ CREATE TABLE IF NOT EXISTS public.user
 TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.user
-<<<<<<< HEAD
-=======
     OWNER to yaki;
 
 
@@ -177,7 +172,6 @@ CREATE TABLE IF NOT EXISTS public.customer
 TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.customer
->>>>>>> 31920d9 (Feat/post halfday declaration (#200))
     OWNER to yaki;
 
 
@@ -353,10 +347,15 @@ CREATE TABLE IF NOT EXISTS public.declaration
     declaration_team_mate_id integer NOT NULL,
     declaration_date timestamp with time zone,
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     declaration_date_start timestamp with time zone,
     declaration_date_end timestamp with time zone,
 >>>>>>> 31920d9 (Feat/post halfday declaration (#200))
+=======
+    declaration_date_start timestamp with time zone,
+    declaration_date_end timestamp with time zone,
+>>>>>>> 4023e5d (Feat/post halfday declaration (#200))
     declaration_status character varying(30),
     CONSTRAINT declaration_pkey PRIMARY KEY (declaration_id),
     CONSTRAINT declaration_team_mate_id_fkey FOREIGN KEY (declaration_team_mate_id)
