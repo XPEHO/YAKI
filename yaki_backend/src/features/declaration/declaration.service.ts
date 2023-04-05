@@ -1,6 +1,6 @@
-import { DeclarationRepository } from "./declaration.repository";
-import { DeclarationDtoIn } from "./declaration.dtoIn";
-import { StatusDeclaration } from "./status.enum";
+import {DeclarationRepository} from "./declaration.repository";
+import {DeclarationDtoIn} from "./declaration.dtoIn";
+import {StatusDeclaration} from "./status.enum";
 
 export class DeclarationService {
   private declarationRepository: DeclarationRepository;
@@ -21,11 +21,15 @@ export class DeclarationService {
   async createDeclaration(declaration: DeclarationDtoIn) {
     if (!Object.values(StatusDeclaration).includes(declaration.declarationStatus)) {
       throw new TypeError("Invalid declaration status.");
-    } if (declaration.declarationTeamMateId &&
+    }
+    if (
+      declaration.declarationTeamMateId &&
       declaration.declarationDate &&
+      declaration.declarationDateStart &&
+      declaration.declarationDateEnd &&
       declaration.declarationStatus !== undefined &&
-      declaration.declarationStatus.trim() !== "") {
-        
+      declaration.declarationStatus.trim() !== ""
+    ) {
       return await this.declarationRepository.createDeclaration(declaration);
     } else {
       throw new TypeError("One or more mandatory information is missing.");
@@ -57,13 +61,18 @@ export class DeclarationService {
     if (!existingDeclaration) {
       throw new TypeError("The declaration does not existe.");
     }
-    if (declaration.declarationTeamMateId === null ||
+    if (
+      declaration.declarationTeamMateId === null ||
       declaration.declarationDate === null ||
-      declaration.declarationStatus.trim() === "") {
+      declaration.declarationDateStart === null ||
+      declaration.declarationDateEnd === null ||
+      declaration.declarationStatus.trim() === ""
+    ) {
       throw new TypeError("One or more mandatory information is missing.");
-    } if (!Object.values(StatusDeclaration).includes(declaration.declarationStatus)) {
+    }
+    if (!Object.values(StatusDeclaration).includes(declaration.declarationStatus)) {
       throw new TypeError("Invalid declaration status.");
     }
     return this.declarationRepository.updateDeclarationStatus(declarationId, declaration);
   }
-} 
+}
