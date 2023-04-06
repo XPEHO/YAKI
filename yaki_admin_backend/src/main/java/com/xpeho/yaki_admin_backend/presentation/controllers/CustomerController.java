@@ -52,4 +52,9 @@ public class CustomerController {
 
         customerService.addCustomerRight(users, customerId);
     }
+
+    @GetMapping("{id}")
+    public CustomerEntity getCaptain(@PathVariable int id) {
+        return customerService.getCustomer(id);
+    }
 }

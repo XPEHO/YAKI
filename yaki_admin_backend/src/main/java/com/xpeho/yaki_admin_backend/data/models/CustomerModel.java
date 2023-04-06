@@ -28,9 +28,11 @@ public class CustomerModel {
     @Column(name = "customer_owner_id")
     private int ownerId;
 
-    @OneToMany
-    @Column(name = "customer_user_id")
-    private List<UserModel> user;
+    @ManyToMany
+    @JoinTable(name = "customer_rights",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "customer_id"))
+    private List<UserModel> users = new ArrayList<>();
 
     @Column(name = "customer_location_id")
     private int locationId;
@@ -40,14 +42,13 @@ public class CustomerModel {
     }
 
     public CustomerModel(String customerName, int ownerId, int locationId) {
-        this.user = new ArrayList<>();
         this.ownerId = ownerId;
         this.name = customerName;
         this.locationId = locationId;
     }
 
     public void addUsers(List<UserModel> users) {
-        this.user.addAll(users);
+        this.users.addAll(users);
     }
 
     public String getName() {
