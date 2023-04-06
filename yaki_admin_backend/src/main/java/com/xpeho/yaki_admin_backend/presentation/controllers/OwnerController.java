@@ -1,6 +1,7 @@
 package com.xpeho.yaki_admin_backend.presentation.controllers;
 
 import com.xpeho.yaki_admin_backend.data.models.OwnerModel;
+import com.xpeho.yaki_admin_backend.domain.entities.OwnerEntity;
 import com.xpeho.yaki_admin_backend.domain.services.OwnerService;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,7 +11,6 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/Owner")
 @CrossOrigin
-
 public class OwnerController {
     final OwnerService ownerService;
 
@@ -19,13 +19,15 @@ public class OwnerController {
     }
 
     @GetMapping
-    public List<OwnerModel> findAll() {
+    public List<OwnerEntity> findAll() {
         return ownerService.findAll();
     }
 
     @PostMapping()
-    public OwnerModel save(OwnerModel entity) {
-        return ownerService.save(entity);
+    public OwnerEntity createOwner(
+            @RequestBody OwnerEntity ownerEntity
+    ) {
+        return ownerService.createOwner(ownerEntity);
     }
 
     @GetMapping("{id}")
