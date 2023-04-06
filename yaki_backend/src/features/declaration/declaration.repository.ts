@@ -24,29 +24,38 @@ export class DeclarationRepository {
    * @returns A created declaration.
    */
   async createDeclaration(declaration: DeclarationDtoIn) {
+    const client = await this.pool.connect();
     const {declarationDate, declarationDateStart, declarationDateEnd, declarationTeamMateId, declarationStatus} =
       declaration;
-    const result = await this.pool.query(
-      `INSERT INTO declaration 
-      (
-        declaration_date, 
-        declaration_date_start, 
-        declaration_date_end, 
-        declaration_team_mate_id, 
-        declaration_status
-        ) 
-      VALUES ($1, $2, $3, $4, $5) RETURNING *`,
-      [declarationDate, declarationDateStart, declarationDateEnd, declarationTeamMateId, declarationStatus]
-    );
-    const declarationToFront = new DeclarationDtoIn(
-      result.rows[0].declaration_id,
-      result.rows[0].declaration_team_mate_id,
-      result.rows[0].declaration_date,
-      result.rows[0].declaration_date_start,
-      result.rows[0].declaration_date_end,
-      result.rows[0].declaration_status
-    );
-    return declarationToFront;
+    try {
+      const result = await client.query(
+        `INSERT INTO declaration 
+          (
+            declaration_date, 
+            declaration_date_start, 
+            declaration_date_end, 
+            declaration_team_mate_id, 
+            declaration_status
+            ) 
+          VALUES ($1, $2, $3, $4, $5) RETURNING *`,
+        [declarationDate, declarationDateStart, declarationDateEnd, declarationTeamMateId, declarationStatus]
+      );
+      const declarationToFront = new DeclarationDtoIn(
+        result.rows[0].declaration_id,
+        result.rows[0].declaration_team_mate_id,
+        result.rows[0].declaration_date,
+        result.rows[0].declaration_date_start,
+        result.rows[0].declaration_date_end,
+        result.rows[0].declaration_status
+      );
+      return declarationToFront;
+    } finally {
+      client.release();
+    }
+  }
+
+  async createHalfDayDeclaration(declarationList: DeclarationDtoIn[]) {
+    const client = await this.pool.connect();
   }
 
   /**
