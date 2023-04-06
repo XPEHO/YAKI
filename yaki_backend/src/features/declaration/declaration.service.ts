@@ -1,4 +1,3 @@
-import {Declaration} from "./declaration.interface";
 import {DeclarationRepository} from "./declaration.repository";
 import {DeclarationDtoIn} from "./declaration.dtoIn";
 import {StatusDeclaration} from "./status.enum";

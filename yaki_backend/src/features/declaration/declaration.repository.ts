@@ -57,11 +57,13 @@ export class DeclarationRepository {
   async createHalfDayDeclaration(declarationList: DeclarationDtoIn[]) {
     const client = await this.pool.connect();
 
-    const declarationListToSave = declarationList.map((obj) => {
-      return Object.values(obj).map((key) => {
-        return obj[key as keyof typeof declarationList[0]];
-      });
-    });
+    // transform
+    const declarationListToSave = declarationList
+      .map((obj) => {
+        return Object.values(obj);
+      })
+      .flat();
+
     try {
       const result = await client.query(
         `INSERT INTO declaration
@@ -71,9 +73,10 @@ export class DeclarationRepository {
           declaration_date_end, 
           declaration_team_mate_id, 
           declaration_status
-        ) 
-        VALUES %L returning *`,
-        declarationListToSave
+        )
+        VALUES ($1, $2, $3, $4, $5), ($6, $7, $8, $9, $10)
+        RETURNING *`,
+        [...declarationListToSave]
       );
       const declarationListToFront = result.rows.map((item) => {
         new DeclarationDtoIn(
