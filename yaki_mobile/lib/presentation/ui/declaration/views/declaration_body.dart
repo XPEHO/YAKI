@@ -24,7 +24,7 @@ class DeclarationBody extends ConsumerWidget {
     required String status,
     required Function goToStatusPage,
   }) async {
-    await ref.read(declarationProvider.notifier).create(status);
+    await ref.read(declarationProvider.notifier).createAllDay(status);
     ref.read(statusPageProvider.notifier).getSelectedStatus();
     goToStatusPage();
   }
@@ -46,21 +46,19 @@ class DeclarationBody extends ConsumerWidget {
             spacing: width * 0.07,
             // vertical
             runSpacing: width * 0.12,
-            children: statusCardsContent
-                .map(
-                  (cardContent) => StatusCard(
-                    statusName: tr(cardContent['text']),
-                    statusPicto: cardContent['image'],
-                    onPress: () => _onStatusSelected(
-                      ref: ref,
-                      status:
-                          StatusEnum.values.byName(cardContent['text']).text,
-                      goToStatusPage: () => context.go('/status'),
-                    ),
-                  ),
-                )
-                .toList(),
-          ),
+            children: statusCardsContent.map(
+              (cardContent) => StatusCard(
+                statusName: tr(cardContent['text']),
+                statusPicto: cardContent['image'],
+                onPress: () => _onStatusSelected(
+                  ref: ref,
+                  status: StatusEnum.values.byName(cardContent['text']).text,
+                  goToStatusPage: () => context.go('/status'),
+                ),
+                isSelected: false,
+              ),
+            ),
+          ).toList(),
         ),
       ),
     );

@@ -87,6 +87,8 @@ void main() {
     () {
       DeclarationModel createdDeclaration = DeclarationModel(
         declarationDate: DateTime.now(),
+        declarationDateStart: DateTime.parse('2023-03-20T00:00:00.000Z'),
+        declarationDateEnd: DateTime.parse('2023-03-20T23:59:59.950Z'),
         declarationTeamMateId: 1,
         declarationStatus: "REMOTE",
       );
@@ -102,7 +104,7 @@ void main() {
 
           await declarationRepository.create(createdDeclaration);
 
-          expect(declarationRepository.status, "REMOTE");
+          expect(declarationRepository.statusAllDay, "REMOTE");
         },
       );
       test(
@@ -116,7 +118,7 @@ void main() {
 
           await declarationRepository.create(createdDeclaration);
 
-          expect(declarationRepository.status, "");
+          expect(declarationRepository.statusAllDay, "");
         },
       );
       test(
@@ -130,7 +132,7 @@ void main() {
 
           await declarationRepository.create(createdDeclaration);
 
-          expect(declarationRepository.status, "");
+          expect(declarationRepository.statusAllDay, "");
         },
       );
       test(
@@ -144,7 +146,7 @@ void main() {
 
           await declarationRepository.create(createdDeclaration);
 
-          expect(declarationRepository.status, "");
+          expect(declarationRepository.statusAllDay, "");
         },
       );
       test(
@@ -158,7 +160,7 @@ void main() {
 
           await declarationRepository.create(createdDeclaration);
 
-          expect(declarationRepository.status, "");
+          expect(declarationRepository.statusAllDay, "");
         },
       );
     },
@@ -171,8 +173,8 @@ void main() {
         () {
           const String selectedStatus = "REMOTE";
 
-          when(declarationRepository.setDeclarationEntities(selectedStatus));
-          expect(declarationRepository.status, selectedStatus);
+          when(declarationRepository.setAllDayDeclaration(selectedStatus));
+          expect(declarationRepository.statusAllDay, selectedStatus);
         },
       );
     },

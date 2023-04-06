@@ -1,9 +1,25 @@
 class DeclarationStatus {
-  String status;
+  late String allDayDeclaration;
+  late String morningDeclaration;
+  late String afternoonDeclaration;
 
-  DeclarationStatus({
-    required this.status,
-  });
+  DeclarationStatus();
+
+  set statusAllDay(String status) {
+    allDayDeclaration = status;
+  }
+
+  set statusMorning(String status) {
+    morningDeclaration = status;
+  }
+
+  String get statusAllDay {
+    return allDayDeclaration;
+  }
+
+  String get statusMorning {
+    return morningDeclaration;
+  }
 }
 
 const String emptyDeclarationStatus = "";

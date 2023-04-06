@@ -6,13 +6,12 @@ import 'package:yaki/domain/entities/declaration_status.dart';
 
 class DeclarationRepository {
   final DeclarationApi _declarationApi;
-  DeclarationStatus? declarationStatus;
+  DeclarationStatus declarationStatus = DeclarationStatus();
   // inbetween {} are optional attributes
   // as long as they are nullable. no need to set them at class instantiation
   DeclarationRepository(
-    this._declarationApi, {
-    this.declarationStatus,
-  });
+    this._declarationApi,
+  );
 
   /// Invoked in declaration Notifier
   ///
@@ -58,7 +57,7 @@ class DeclarationRepository {
             "Invalid statusCode : $statusCode",
           );
       }
-      setDeclarationEntities(statusValue);
+      setAllDayDeclaration(statusValue);
     } catch (err) {
       debugPrint('error during get last declaration : $err');
     }
@@ -84,7 +83,13 @@ class DeclarationRepository {
   /// * Get the declarationStatus from created instance and assign it to the statusValue.
   ///
   /// At the end of the function assign the statusValue to the DeclarationStatus
-  Future<void> create(DeclarationModel declaration) async {
+  Future<void> createAllDay(DeclarationModel declaration) async {
+    declaration.declarationTeamMateId = 3;
+    debugPrint(declaration.declarationDateStart.toString());
+    debugPrint(declaration.declarationDateEnd.toString());
+    debugPrint(declaration.declarationDate.toString());
+    debugPrint(declaration.declarationStatus.toString());
+    debugPrint(declaration.declarationTeamMateId.toString());
     String statusValue = "";
     try {
       final createHttpResponse = await _declarationApi.create(declaration);
@@ -111,22 +116,36 @@ class DeclarationRepository {
             "Invalid statusCode from server : ${createHttpResponse.response.statusCode}",
           );
       }
-      setDeclarationEntities(statusValue);
+      setAllDayDeclaration(statusValue);
     } catch (err) {
       debugPrint("error during creation : $err");
     }
   }
 
   /// Assign status, to declarationStatus entities.
-  void setDeclarationEntities(String status) {
-    declarationStatus = DeclarationStatus(
-      status: status,
-    );
+  void setAllDayDeclaration(String status) {
+    declarationStatus.allDayDeclaration = status;
+  }
+
+  void setMorningDeclaration(String status) {
+    declarationStatus.morningDeclaration = status;
+  }
+
+  void setAfternoonDeclaration(String status) {
+    declarationStatus.afternoonDeclaration = status;
   }
 
   /// getter to retrieve declaration status stored in DeclarationStatus instance.
   /// This getter is called in the status_notifier, this value will determine the status page content.
-  String get status {
-    return declarationStatus?.status ?? "";
+  String get statusAllDay {
+    return declarationStatus.allDayDeclaration;
+  }
+
+  String get statusMorning {
+    return declarationStatus.morningDeclaration;
+  }
+
+  DeclarationStatus get allDeclarations {
+    return declarationStatus;
   }
 }

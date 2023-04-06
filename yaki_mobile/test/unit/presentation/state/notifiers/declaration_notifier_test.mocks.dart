@@ -8,9 +8,9 @@ import 'dart:async' as _i4;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:yaki/data/models/declaration_model.dart' as _i5;
 import 'package:yaki/data/models/user.dart' as _i8;
-import 'package:yaki/data/repositories/declaration_respository.dart' as _i2;
+import 'package:yaki/data/repositories/declaration_respository.dart' as _i3;
 import 'package:yaki/data/repositories/login_repository.dart' as _i6;
-import 'package:yaki/domain/entities/declaration_status.dart' as _i3;
+import 'package:yaki/domain/entities/declaration_status.dart' as _i2;
 import 'package:yaki/domain/entities/logged_user.dart' as _i7;
 
 // ignore_for_file: type=lint
@@ -24,17 +24,36 @@ import 'package:yaki/domain/entities/logged_user.dart' as _i7;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
+class _FakeDeclarationStatus_0 extends _i1.SmartFake
+    implements _i2.DeclarationStatus {
+  _FakeDeclarationStatus_0(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
 /// A class which mocks [DeclarationRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockDeclarationRepository extends _i1.Mock
-    implements _i2.DeclarationRepository {
+    implements _i3.DeclarationRepository {
   MockDeclarationRepository() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  set declarationStatus(_i3.DeclarationStatus? _declarationStatus) =>
+  _i2.DeclarationStatus get declarationStatus => (super.noSuchMethod(
+        Invocation.getter(#declarationStatus),
+        returnValue: _FakeDeclarationStatus_0(
+          this,
+          Invocation.getter(#declarationStatus),
+        ),
+      ) as _i2.DeclarationStatus);
+  @override
+  set declarationStatus(_i2.DeclarationStatus? _declarationStatus) =>
       super.noSuchMethod(
         Invocation.setter(
           #declarationStatus,
@@ -43,10 +62,23 @@ class MockDeclarationRepository extends _i1.Mock
         returnValueForMissingStub: null,
       );
   @override
-  String get status => (super.noSuchMethod(
-        Invocation.getter(#status),
+  String get statusAllDay => (super.noSuchMethod(
+        Invocation.getter(#statusAllDay),
         returnValue: '',
       ) as String);
+  @override
+  String get statusMorning => (super.noSuchMethod(
+        Invocation.getter(#statusMorning),
+        returnValue: '',
+      ) as String);
+  @override
+  _i2.DeclarationStatus get allDeclarations => (super.noSuchMethod(
+        Invocation.getter(#allDeclarations),
+        returnValue: _FakeDeclarationStatus_0(
+          this,
+          Invocation.getter(#allDeclarations),
+        ),
+      ) as _i2.DeclarationStatus);
   @override
   _i4.Future<String> getDeclaration(String? teamMateId) => (super.noSuchMethod(
         Invocation.method(
@@ -66,9 +98,25 @@ class MockDeclarationRepository extends _i1.Mock
         returnValueForMissingStub: _i4.Future<void>.value(),
       ) as _i4.Future<void>);
   @override
-  void setDeclarationEntities(String? status) => super.noSuchMethod(
+  void setAllDayDeclaration(String? status) => super.noSuchMethod(
         Invocation.method(
-          #setDeclarationEntities,
+          #setAllDayDeclaration,
+          [status],
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  void setMorningDeclaration(String? status) => super.noSuchMethod(
+        Invocation.method(
+          #setMorningDeclaration,
+          [status],
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  void setAfternoonDeclaration(String? status) => super.noSuchMethod(
+        Invocation.method(
+          #setAfternoonDeclaration,
           [status],
         ),
         returnValueForMissingStub: null,

@@ -4,9 +4,11 @@ import 'package:go_router/go_router.dart';
 import 'package:yaki/data/sources/local/shared_preference.dart';
 import 'package:yaki/presentation/ui/authentication/authentication.dart';
 import 'package:yaki/presentation/ui/captain/captain_view.dart';
-import 'package:yaki/presentation/ui/declaration/afternoon_declaration.dart';
+//import 'package:yaki/presentation/ui/declaration/afternoon_declaration.dart';
 import 'package:yaki/presentation/ui/declaration/declaration.dart';
-import 'package:yaki/presentation/ui/declaration/morning_declaration.dart';
+//import 'package:yaki/presentation/ui/declaration/morning_declaration.dart';
+import 'package:yaki/presentation/ui/halfday_declaration/afternoon_declaration.dart';
+import 'package:yaki/presentation/ui/halfday_declaration/morning_declaration.dart';
 import 'package:yaki/presentation/ui/status/status.dart';
 
 /// router set as provider.
@@ -16,7 +18,7 @@ final goRouterProvider = Provider<GoRouter>(
       routes: <GoRoute>[
         GoRoute(
           path: '/',
-          builder: (context, state) => Authentication(),
+          builder: (context, state) => const MorningDeclaration(),
           routes: [
             GoRoute(
               path: 'declaration',
@@ -94,6 +96,14 @@ final goRouterProvider = Provider<GoRouter>(
                   return '/';
                 }
               },
+            ),
+            GoRoute(
+              path: 'morning',
+              builder: (context, state) => const MorningDeclaration(),
+            ),
+            GoRoute(
+              path: 'afternoon',
+              builder: (context, state) => const AfternoonDeclaration(),
             ),
           ],
         ),

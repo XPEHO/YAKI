@@ -39,7 +39,12 @@ class StatusPageNotifier extends StateNotifier<StateStatusPage> {
   /// Retrieve the status saved in DeclarationStatus entities;
   /// And invoke the "setState" method.
   void getSelectedStatus() {
-    final String status = declarationRepository.status;
+    final String status = declarationRepository.statusAllDay;
+    setState(status);
+  }
+
+  void getMorningStatus() {
+    final String status = declarationRepository.statusMorning;
     setState(status);
   }
 }
