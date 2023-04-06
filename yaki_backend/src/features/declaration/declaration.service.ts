@@ -33,10 +33,15 @@ export class DeclarationService {
     ) {
       return await this.declarationRepository.createDeclaration(declaration);
     } else {
-      throw new TypeError("One or more mandatory information is missing.");
+      throw new TypeError("One or more mandatory information are missing.");
     }
   }
 
+  /**
+   *
+   * @param DeclarationList List containing morning and afternoon declaration objects
+   * @returns Array containing saved halfday declaration object
+   */
   async createHalfDayDeclarations(DeclarationList: DeclarationDtoIn[]) {
     for (let declaration of DeclarationList) {
       // object.values : array containing keys.
@@ -44,16 +49,16 @@ export class DeclarationService {
         throw new TypeError("Invalid declaration status.");
       }
 
-      let truthy: boolean = false;
+      let isObjectValid: boolean = false;
       for (let declaration of DeclarationList) {
         // check  if all values are true,  therefore  no null, nor undefined, nor empty string.
-        truthy = Object.values(declaration).every((value) => value);
+        isObjectValid = Object.values(declaration).every((value) => value);
       }
 
-      if (truthy) {
+      if (isObjectValid) {
         return await this.declarationRepository.createHalfDayDeclaration(DeclarationList);
       } else {
-        throw new TypeError("One or more mandatory information is missing.");
+        throw new TypeError("One or more mandatory information are missing.");
       }
     }
   }
