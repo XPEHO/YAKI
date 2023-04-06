@@ -35,6 +35,15 @@ CREATE SEQUENCE IF NOT EXISTS public.customer_id_seq
     CACHE 1;
 ALTER SEQUENCE public.customer_id_seq
     OWNER TO yaki;
+-- CREATE CUSTOMER_RIGHTS IDS
+CREATE SEQUENCE IF NOT EXISTS public.customer_rights_id_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    CACHE 1;
+ALTER SEQUENCE public.customer_id_seq
+    OWNER TO yaki;
 -- CREATE CAPTAIN IDs
 CREATE SEQUENCE IF NOT EXISTS public.captain_id_seq
     INCREMENT 1
@@ -139,15 +148,9 @@ CREATE TABLE IF NOT EXISTS public.customer
 (
     customer_id integer NOT NULL DEFAULT nextval('customer_id_seq'::regclass),
     customer_name character varying(100),
-    customer_user_id integer NOT NULL,
     customer_owner_id integer NOT NULL,
     customer_location_id integer NOT NULL,
     CONSTRAINT "CUSTOMER_pkey" PRIMARY KEY (customer_id),
-    CONSTRAINT customer_user_id_fkey FOREIGN KEY (customer_user_id)
-        REFERENCES public.user (user_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
-        NOT VALID,
     CONSTRAINT customer_owner_id_fkey FOREIGN KEY (customer_owner_id)
         REFERENCES public.owner (owner_id) MATCH SIMPLE
         ON UPDATE NO ACTION
@@ -165,7 +168,30 @@ TABLESPACE pg_default;
 ALTER TABLE IF EXISTS public.customer
     OWNER to yaki;
 
+-- CREATE TABLE FOR CUSTOMER_RIGHTS
 
+CREATE TABLE IF NOT EXISTS public.customer_rights
+(
+    customer_rights_id integer NOT NULL DEFAULT nextval('customer_rights_id_seq'::regclass),
+    customer_rights_user_id integer NOT NULL,
+    customer_rights_customer_id integer NOT NULL,
+    CONSTRAINT "CUSTOMER_RIGHTS_pkey" PRIMARY KEY (customer_rights_id),
+    CONSTRAINT customer_rights_user_id_fkey FOREIGN KEY (customer_rights_user_id)
+        REFERENCES public.user (user_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID,
+    CONSTRAINT customer_rights_customer_id_fkey FOREIGN KEY (customer_rights_customer_id)
+        REFERENCES public.customer (customer_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.customer_rights
+    OWNER to yaki;
 -- CREATE TABLE FOR CAPTAINS
 
 

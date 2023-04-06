@@ -28,10 +28,17 @@ INSERT INTO public.owner(
 -- INSERT CUSTOMERS
 
 INSERT INTO public.customer(
-	customer_user_id,customer_name,customer_owner_id,customer_location_id)
-	VALUES (6,'customer0',1,1),
-		   (7,'Customer1',1,2);
+	customer_name,customer_owner_id,customer_location_id)
+	VALUES ('customer0',1,1),
+		   ('Customer1',1,2),
+		   ('Customer2',1,3);
 
+-- INSERT CUSTOMER_RIGHTS
+
+INSERT INTO public.customer_rights(
+	customer_rights_user_id,customer_rights_customer_id)
+	VALUES (7,1),
+		   (8,1);
 -- INSERT CAPTAINS
 
 INSERT INTO public.captain(
