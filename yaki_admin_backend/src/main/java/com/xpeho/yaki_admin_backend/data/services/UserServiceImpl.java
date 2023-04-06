@@ -53,4 +53,6 @@ public class UserServiceImpl implements UserService {
     public Optional<UserModel> findById(int id) {
         return userJpaRepository.findById(id);
     }
+
+
 }

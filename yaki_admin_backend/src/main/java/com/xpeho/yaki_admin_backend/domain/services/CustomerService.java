@@ -12,4 +12,6 @@ public interface CustomerService {
     CustomerEntity createCustomer(CustomerEntity customerEntity);
 
     void addCustomerRight(List<UserModel> users, int customerId);
+
+    CustomerEntity getCustomer(int id);
 }
