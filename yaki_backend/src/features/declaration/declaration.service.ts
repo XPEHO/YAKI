@@ -1,3 +1,4 @@
+import {Declaration} from "./declaration.interface";
 import {DeclarationRepository} from "./declaration.repository";
 import {DeclarationDtoIn} from "./declaration.dtoIn";
 import {StatusDeclaration} from "./status.enum";
@@ -33,6 +34,27 @@ export class DeclarationService {
       return await this.declarationRepository.createDeclaration(declaration);
     } else {
       throw new TypeError("One or more mandatory information is missing.");
+    }
+  }
+
+  async createHalfDayDeclarations(DeclarationList: DeclarationDtoIn[]) {
+    for (let declaration of DeclarationList) {
+      // object.values : array containing keys.
+      if (!Object.values(StatusDeclaration).includes(declaration.declarationStatus)) {
+        throw new TypeError("Invalid declaration status.");
+      }
+
+      let truthy: boolean = false;
+      for (let declaration of DeclarationList) {
+        // check  if all values are true,  therefore  no null, nor undefined, nor empty string.
+        truthy = Object.values(declaration).every((value) => value);
+      }
+
+      if (truthy) {
+        return await this.declarationRepository.createHalfDayDeclaration(DeclarationList);
+      } else {
+        throw new TypeError("One or more mandatory information is missing.");
+      }
     }
   }
 
