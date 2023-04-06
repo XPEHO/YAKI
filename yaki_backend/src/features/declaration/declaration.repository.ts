@@ -56,6 +56,23 @@ export class DeclarationRepository {
 
   async createHalfDayDeclaration(declarationList: DeclarationDtoIn[]) {
     const client = await this.pool.connect();
+
+    const declarationListToSave = declarationList.map((obj) => {});
+    try {
+      const result = await client.query(
+        `INSERT INTO declaration
+        (
+          declaration_date, 
+          declaration_date_start, 
+          declaration_date_end, 
+          declaration_team_mate_id, 
+          declaration_status
+        ) 
+        VALUES $1`
+      );
+    } finally {
+      client.release();
+    }
   }
 
   /**
