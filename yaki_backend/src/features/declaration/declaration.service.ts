@@ -48,18 +48,17 @@ export class DeclarationService {
       if (!Object.values(StatusDeclaration).includes(declaration.declarationStatus)) {
         throw new TypeError("Invalid declaration status.");
       }
+    }
+    let isObjectValid: boolean = false;
+    for (let declaration of DeclarationList) {
+      // check  if all values are true,  therefore  no null, nor undefined, nor empty string.
+      isObjectValid = Object.values(declaration).every((value) => value);
+    }
 
-      let isObjectValid: boolean = false;
-      for (let declaration of DeclarationList) {
-        // check  if all values are true,  therefore  no null, nor undefined, nor empty string.
-        isObjectValid = Object.values(declaration).every((value) => value);
-      }
-
-      if (isObjectValid) {
-        return await this.declarationRepository.createHalfDayDeclaration(DeclarationList);
-      } else {
-        throw new TypeError("One or more mandatory information are missing.");
-      }
+    if (isObjectValid) {
+      return await this.declarationRepository.createHalfDayDeclaration(DeclarationList);
+    } else {
+      throw new TypeError("One or more mandatory information are missing.");
     }
   }
 
