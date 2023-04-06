@@ -18,4 +18,26 @@ class DeclarationModel {
   factory DeclarationModel.fromJson(Map<String, dynamic> json) =>
       _$DeclarationModelFromJson(json);
   Map<String, dynamic> toJson() => _$DeclarationModelToJson(this);
+
+  @override
+  String toString() {
+    return 'DeclarationModel(declarationDate: $declarationDate, declarationTeamMateId: $declarationTeamMateId, declarationStatus: $declarationStatus)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is DeclarationModel &&
+        other.declarationDate == declarationDate &&
+        other.declarationTeamMateId == declarationTeamMateId &&
+        other.declarationStatus == declarationStatus;
+  }
+
+  @override
+  int get hashCode {
+    return declarationDate.hashCode ^
+        declarationTeamMateId.hashCode ^
+        declarationStatus.hashCode;
+  }
 }
