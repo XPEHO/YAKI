@@ -33,6 +33,7 @@ declarationRouter.post(
     declarationController.createDeclaration(req, res);
   }
 );
+
 declarationRouter.get(
   "/declarations",
   (req, res, next) =>

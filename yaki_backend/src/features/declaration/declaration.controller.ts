@@ -1,6 +1,6 @@
-import { DeclarationService } from './declaration.service';
-import { Request, Response } from 'express';
-import { DeclarationDtoIn } from './declaration.dtoIn';
+import {DeclarationService} from "./declaration.service";
+import {Request, Response} from "express";
+import {DeclarationDtoIn} from "./declaration.dtoIn";
 
 export class DeclarationController {
   private declarationService: DeclarationService;
@@ -14,24 +14,34 @@ export class DeclarationController {
   }
 
   /**
-   * Handles an incoming HTTP POST request to create a new declaration.
+   * Handles an incoming HTTP POST request to create a new declaration,
+   * Or create the half days declarations depending of the "mode" request params.
    * @param req The incoming HTTP request.
    * @param res The HTTP response to be sent.
    * @returns A promise that returns nothing.
    */
   async createDeclaration(req: Request, res: Response): Promise<void> {
-    const declaration: DeclarationDtoIn = req.body;
+    const mode = req.query.mode;
+
     try {
-      const createdDeclaration =
-        await this.declarationService.createDeclaration(declaration);
-      res.status(201).json(createdDeclaration);
+      if (mode === "fullDay") {
+        const declarationBody: DeclarationDtoIn = req.body;
+        const createdDeclaration = await this.declarationService.createDeclaration(declarationBody);
+        res.status(201).json(createdDeclaration);
+      }
+
+      if (mode === "halfDay") {
+        const declarationBody: DeclarationDtoIn[] = req.body;
+        const createdHalfDayDeclarations = await this.declarationService.createHalfDayDeclarations(declarationBody);
+        res.status(201).json(createdHalfDayDeclarations);
+      }
     } catch (error: any) {
       if (error instanceof TypeError) {
         // catch bad request errors
-        res.status(400).json({ message: error.message });
+        res.status(400).json({message: error.message});
       } else {
         // catch server errors
-        res.status(500).json({ message: error.message });
+        res.status(500).json({message: error.message});
       }
     }
   }
@@ -44,16 +54,15 @@ export class DeclarationController {
   async getDeclarationsForTeamMate(req: Request, res: Response) {
     const teamMateId = Number(req.query.teamMateId);
     try {
-      const declarations =
-        await this.declarationService.getDeclarationForTeamMate(teamMateId);
+      const declarations = await this.declarationService.getDeclarationForTeamMate(teamMateId);
       res.status(200).json(declarations);
     } catch (error: any) {
       if (error instanceof TypeError) {
         // catch not found errors
-        res.status(404).json({ message: error.message });
+        res.status(404).json({message: error.message});
       } else {
         // catch server errors
-        res.status(500).json({ message: error.message });
+        res.status(500).json({message: error.message});
       }
     }
   }
@@ -67,18 +76,15 @@ export class DeclarationController {
     const declarationId = parseInt(req.params.declarationId);
     const declaration: DeclarationDtoIn = req.body;
     try {
-      await this.declarationService.updateDeclarationStatus(
-        declarationId,
-        declaration
-      );
+      await this.declarationService.updateDeclarationStatus(declarationId, declaration);
       res.status(200).json(declaration);
     } catch (error: any) {
       if (error instanceof TypeError) {
         // catch not found errors
-        res.status(404).json({ message: error.message });
+        res.status(404).json({message: error.message});
       } else {
         // catch server errors
-        res.status(500).json({ message: error.message });
+        res.status(500).json({message: error.message});
       }
     }
   }
