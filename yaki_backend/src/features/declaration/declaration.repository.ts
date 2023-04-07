@@ -1,5 +1,6 @@
 import {Pool} from "pg";
 import {DeclarationDtoIn} from "./declaration.dtoIn";
+import YakiUtils from "../../utils/yakiUtils";
 
 export class DeclarationRepository {
   private pool: Pool;
@@ -25,8 +26,10 @@ export class DeclarationRepository {
    */
   async createDeclaration(declaration: DeclarationDtoIn) {
     const client = await this.pool.connect();
-    const {declarationDate, declarationDateStart, declarationDateEnd, declarationTeamMateId, declarationStatus} =
-      declaration;
+
+    const valuesString: string = YakiUtils.createInsertValues(Object.values(declaration), declaration);
+    const declarationValuesList: Array<string> = Object.values(declaration);
+
     try {
       const result = await client.query(
         `INSERT INTO declaration 
@@ -37,32 +40,35 @@ export class DeclarationRepository {
             declaration_team_mate_id, 
             declaration_status
             ) 
-          VALUES ($1, $2, $3, $4, $5) RETURNING *`,
-        [declarationDate, declarationDateStart, declarationDateEnd, declarationTeamMateId, declarationStatus]
+          VALUES ${valuesString} RETURNING *`,
+        declarationValuesList
       );
-      const declarationToFront = new DeclarationDtoIn(
-        result.rows[0].declaration_id,
-        result.rows[0].declaration_team_mate_id,
-        result.rows[0].declaration_date,
-        result.rows[0].declaration_date_start,
-        result.rows[0].declaration_date_end,
-        result.rows[0].declaration_status
-      );
+      const declarationToFront = [
+        new DeclarationDtoIn(
+          result.rows[0].declaration_id,
+          result.rows[0].declaration_team_mate_id,
+          result.rows[0].declaration_date,
+          result.rows[0].declaration_date_start,
+          result.rows[0].declaration_date_end,
+          result.rows[0].declaration_status
+        ),
+      ];
       return declarationToFront;
     } finally {
       client.release();
     }
   }
 
+  /**
+   * Inset the half day declaration into the database
+   * @param declarationList declaration list containing the declaratin to be inserted
+   * @returns return the inserted halfDay declarations
+   */
   async createHalfDayDeclaration(declarationList: DeclarationDtoIn[]) {
     const client = await this.pool.connect();
 
-    // transform
-    const declarationListToSave = declarationList
-      .map((obj) => {
-        return Object.values(obj);
-      })
-      .flat();
+    const declarationsValuesList: Array<string> = YakiUtils.objectsListToValuesList(declarationList);
+    const valuesString: string = YakiUtils.createInsertValues(declarationsValuesList, declarationList[0]);
 
     try {
       const result = await client.query(
@@ -74,12 +80,12 @@ export class DeclarationRepository {
           declaration_team_mate_id, 
           declaration_status
         )
-        VALUES ($1, $2, $3, $4, $5), ($6, $7, $8, $9, $10)
-        RETURNING *`,
-        [...declarationListToSave]
+        VALUES ${valuesString} RETURNING *`,
+        declarationsValuesList
       );
+
       const declarationListToFront = result.rows.map((item) => {
-        new DeclarationDtoIn(
+        return new DeclarationDtoIn(
           item.declaration_id,
           item.declaration_team_mate_id,
           item.declaration_date,
@@ -88,6 +94,7 @@ export class DeclarationRepository {
           item.declaration_status
         );
       });
+
       return declarationListToFront;
     } finally {
       client.release();
