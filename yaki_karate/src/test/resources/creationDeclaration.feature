@@ -10,7 +10,7 @@ Feature: CreationDeclaration
     Given path '/declarations'
     And param mode = 'fullDay'
     And def now = java.time.LocalDateTime.now().toString()
-    And def requestPayload = { declarationTeamMateId: 4, declarationDate: now, declarationDateStart: now, declarationDateEnd: now, declarationStatus: "remote" }
+    And def requestPayload = { declarationDate: now, declarationDateStart: now, declarationDateEnd: now, declarationStatus: "remote" }
     And request requestPayload
     When method POST
     Then status 201

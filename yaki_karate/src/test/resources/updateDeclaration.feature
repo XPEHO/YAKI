@@ -11,16 +11,16 @@ Feature: UpdateDeclaration
     Given def declarationId = declaration.response.declarationId
     And path '/declarations/' + declarationId
     And def now = java.time.LocalDateTime.now().toString()
-    And def requestPayload = { declarationTeamMateId: 4, declarationDate: now, declarationDateStart: now, declarationDateEnd: now, declarationStatus: "remote" }
+    And def requestPayload = [{ declarationDate: now, declarationDateStart: now, declarationDateEnd: now,declarationTeamMateId: 4,  declarationStatus: "remote" }]
     And request requestPayload
     When method PUT
     Then status 200
-    And match response == { declarationTeamMateId: 4, declarationDate: '#string', declarationDateStart: '#string', declarationDateEnd: '#string', declarationStatus: 'remote', user: '#notnull' }
+    And match response == [{ declarationDate: '#string', declarationDateStart: '#string', declarationDateEnd: '#string', declarationTeamMateId: 4,  declarationStatus: 'remote'}]
 
   Scenario: Update declaration fail 404
     Given def declarationId = declaration.response.declarationId
     And path '/declarations/' + declarationId + 9
-    And def requestPayload = { declarationTeamMateId: 4, declarationDate: now, declarationDateStart: now, declarationDateEnd: now, declarationStatus: 2 }
+    And def requestPayload = [{declarationDate: now, declarationDateStart: now, declarationDateEnd: now, declarationTeamMateId: 4,  declarationStatus: 2 }]
     And request requestPayload
     When method PUT
     Then status 404
@@ -28,7 +28,7 @@ Feature: UpdateDeclaration
   Scenario: Update declaration fail 404
     Given def declarationId = declaration.response.declarationId
     And path '/declarations/' + declarationId
-    And def requestPayload = { declarationTeamMateId: "", declarationDate: now, declarationDateStart: now, declarationDateEnd: now, declarationStatus: "Rewote" }
+    And def requestPayload = [{ declarationDate: now, declarationDateStart: now, declarationDateEnd: now, declarationTeamMateId: "",  declarationStatus: "Rewote" }]
     And request requestPayload
     When method PUT
     Then status 404
