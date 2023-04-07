@@ -19,10 +19,10 @@ public class OwnerModel {
     int id;
 
     @Column(name = "owner_user_id")
-    int user_id = 8;
+    int userId;
 
     public OwnerModel(int userId) {
-        this.user_id = userId;
+        this.userId = userId;
     }
 
     public OwnerModel() {
@@ -32,7 +32,7 @@ public class OwnerModel {
         return id;
     }
 
-    public int getUser_id() {
-        return user_id;
+    public int getUserId() {
+        return userId;
     }
 }

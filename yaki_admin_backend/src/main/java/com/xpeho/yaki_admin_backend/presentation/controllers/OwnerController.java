@@ -1,12 +1,10 @@
 package com.xpeho.yaki_admin_backend.presentation.controllers;
 
-import com.xpeho.yaki_admin_backend.data.models.OwnerModel;
 import com.xpeho.yaki_admin_backend.domain.entities.OwnerEntity;
 import com.xpeho.yaki_admin_backend.domain.services.OwnerService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/Owner")
@@ -31,7 +29,7 @@ public class OwnerController {
     }
 
     @GetMapping("{id}")
-    public Optional<OwnerModel> findById(@PathVariable Integer id) {
+    public OwnerEntity findById(@PathVariable Integer id) {
         return ownerService.findById(id);
     }
 

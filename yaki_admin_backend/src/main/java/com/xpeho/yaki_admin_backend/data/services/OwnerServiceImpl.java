@@ -23,7 +23,7 @@ public class OwnerServiceImpl implements OwnerService {
         List<OwnerModel> ownerModels = ownerJpaRepository.findAll();
         List<OwnerEntity> ownerEntities = new ArrayList<>();
         for (OwnerModel ownerModel : ownerModels) {
-            OwnerEntity ownerEntitie = new OwnerEntity(ownerModel.getId(), ownerModel.getUser_id());
+            OwnerEntity ownerEntitie = new OwnerEntity(ownerModel.getId(), ownerModel.getUserId());
             ownerEntities.add(ownerEntitie);
         }
         return ownerEntities;
@@ -33,12 +33,14 @@ public class OwnerServiceImpl implements OwnerService {
     public OwnerEntity createOwner(OwnerEntity ownerEntity) {
         final OwnerModel model = new OwnerModel(ownerEntity.userId());
         final OwnerModel savedOwner = ownerJpaRepository.save(model);
-        return new OwnerEntity(savedOwner.getId(), savedOwner.getUser_id());
+        return new OwnerEntity(savedOwner.getId(), savedOwner.getUserId());
     }
 
     @Override
-    public Optional<OwnerModel> findById(Integer integer) {
-        return ownerJpaRepository.findById(integer);
+    public OwnerEntity findById(Integer id) {
+        final Optional<OwnerModel> ownerModelOptional = ownerJpaRepository.findById(id);
+        OwnerModel ownerModel = ownerModelOptional.get();
+        return new OwnerEntity(ownerModel.getId(), ownerModel.getUserId());
     }
 
     @Override
