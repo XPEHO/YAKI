@@ -3,7 +3,6 @@ package com.xpeho.yaki_admin_backend.data.models;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
@@ -11,7 +10,6 @@ import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "user", schema = "public")
 @Entity
@@ -36,7 +34,7 @@ public class UserModel {
     @JoinTable(name = "customer_rights",
             joinColumns = @JoinColumn(name = "customer_rights_user_id"),
             inverseJoinColumns = @JoinColumn(name = "customer_rights_customer_id"))
-    private List<UserModel> roles = new ArrayList<>();
+    private List<CustomerModel> customers = new ArrayList<>();
 
     public UserModel(String lastName, String firstName, String email, String login) {
         this.email = email;
@@ -45,4 +43,59 @@ public class UserModel {
         this.login = login;
     }
 
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public List<CustomerModel> getCustomers() {
+        return customers;
+    }
+
+    public void setCustomers(List<CustomerModel> customers) {
+        this.customers = customers;
+    }
 }
