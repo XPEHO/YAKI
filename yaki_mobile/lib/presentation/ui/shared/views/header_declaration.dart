@@ -24,11 +24,19 @@ class HeaderDeclaration extends StatelessWidget {
     required this.headerHint,
   });
 
-  void onAvatarIconPress() {}
+  void onAvatarIconPress(BuildContext context) {
+    context.go('/afternoonDeclaration');
+  }
 
   void onPictoSwitchTap(BuildContext context) {
-   // context.go('/morningDeclaration');
+    if ((ModalRoute.of(context)?.settings?.name == 'morningDeclaration') ||
+        (ModalRoute.of(context)?.settings?.name == 'afternoonDeclaration')) {
+      context.go('/declaration');
+    } else {
+      context.go('/morningDeclaration');
+    }
   }
+
 
 
   @override
@@ -54,23 +62,20 @@ class HeaderDeclaration extends StatelessWidget {
           children: [
             Expanded(
               flex: 3,
-          child: ElevatedButton(
-            onPressed: () => context.go('/declaration'),
-            child: Row(
-              children: [
-                Text(
-                  headerTitle,
-                  style: textStyleTemp(),
-                ),
+              child: Row(
+                children: [
+                  Text(
+                    headerTitle,
+                    style: textStyleTemp(),
+                  ),
 
                   const Spacer(),
                   // top right circle avatar
                   AvatarIcon(
                     pictoIcon: pictoIcon,
-                    onPressed: onAvatarIconPress,
+                    onPressed: () => onAvatarIconPress(context),
                   ),
                 ],
-            ),
               ),
             ),
             Expanded(
@@ -81,7 +86,10 @@ class HeaderDeclaration extends StatelessWidget {
                     child: Material(
                       color: Colors.transparent,
                       shape: const CircleBorder(),
-                      child: CircleAvatarSVG(iconPath: pictoPath, radius: 100),
+
+                        child:
+                            CircleAvatarSVG(iconPath: pictoPath, radius: 100),
+
                     ),
                   ),
                   Positioned(
@@ -93,8 +101,6 @@ class HeaderDeclaration extends StatelessWidget {
                         elevation: 10,
                         color: Colors.transparent,
                         shape: const CircleBorder(),
-
-
                         child: Padding(
                           padding: const EdgeInsets.all(0),
                           child: Container(
@@ -112,7 +118,7 @@ class HeaderDeclaration extends StatelessWidget {
                               child: SizedBox(
                                 width: 40,
                                 height: 40,
-                                child: GestureDetector(
+                                child: InkWell(
                                   onTap: () => onPictoSwitchTap(context),
                                   child: SvgPicture.asset(
                                     pictoSwitch,
@@ -125,7 +131,6 @@ class HeaderDeclaration extends StatelessWidget {
                       ),
                     ),
                   ),
-
                 ],
               ),
             ),

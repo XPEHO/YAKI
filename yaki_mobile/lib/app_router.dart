@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:yaki/data/sources/local/shared_preference.dart';
 import 'package:yaki/presentation/ui/authentication/authentication.dart';
 import 'package:yaki/presentation/ui/captain/captain_view.dart';
+import 'package:yaki/presentation/ui/declaration/afternoon_declaration.dart';
 import 'package:yaki/presentation/ui/declaration/declaration.dart';
 import 'package:yaki/presentation/ui/declaration/morning_declaration.dart';
 import 'package:yaki/presentation/ui/status/status.dart';
@@ -28,10 +29,28 @@ final goRouterProvider = Provider<GoRouter>(
                 }
               },
             ),
-            //GoRoute(
-              //path: '/morningDeclaration',
-              //builder: (context, state) => const MorningDeclaration(),
-           // ),
+            GoRoute(
+              path: 'morningDeclaration',
+              builder: (context, state) => const MorningDeclaration(),
+              redirect: (BuildContext context, GoRouterState state) async {
+                if (await SharedPref.isTokenPresent()) {
+                  return '/morningDeclaration';
+                } else {
+                  return '/';
+                }
+              },
+            ),
+            GoRoute(
+              path: 'afternoonDeclaration',
+              builder: (context, state) => const AfternoonDeclaration(),
+              redirect: (BuildContext context, GoRouterState state) async {
+                if (await SharedPref.isTokenPresent()) {
+                  return '/afternoonDeclaration';
+                } else {
+                  return '/';
+                }
+              },
+            ),
             GoRoute(
               path: 'status',
               builder: (context, state) => const Status(),
