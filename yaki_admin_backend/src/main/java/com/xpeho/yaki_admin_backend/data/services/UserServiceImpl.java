@@ -30,10 +30,6 @@ public class UserServiceImpl implements UserService {
         return userJpaRepository.save(entity);
     }
 
-    public Optional<UserModel> findById(Integer integer) {
-        return userJpaRepository.findById(integer);
-    }
-
     public void deleteById(Integer integer) {
         userJpaRepository.deleteById(integer);
     }
