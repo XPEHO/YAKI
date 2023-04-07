@@ -3,23 +3,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yaki/presentation/state/providers/halfday_status_provider.dart';
-import 'package:yaki/presentation/state/providers/status_provider.dart';
 import 'package:yaki/presentation/styles/header_text_style.dart';
 import 'package:yaki/presentation/ui/shared/views/avatar_icon.dart';
 import 'package:yaki/presentation/ui/shared/views/circle_avatar_svg.dart';
 
 void _routeHandling(BuildContext context) {
-  context.go('/declaration');
+  context.go('/morning');
 }
 
 void onAvatarIconPress() {}
 
-class Status extends ConsumerWidget {
-  const Status({Key? key}) : super(key: key);
+class HalfDayStatus extends ConsumerWidget {
+  const HalfDayStatus({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selectedStatus = ref.watch(statusPageProvider);
+    final halfdayDeclarations = ref.watch(halfdayStatusPageProvider);
+
+    debugPrint(halfdayDeclarations.morning.text);
+    debugPrint(halfdayDeclarations.afternoon.text);
 
     return Scaffold(
       backgroundColor: HeaderColor.yellowApp,
@@ -28,33 +30,54 @@ class Status extends ConsumerWidget {
           padding: const EdgeInsets.all(15.0),
           child: Column(
             children: [
-              const Align(
-                alignment: Alignment.centerRight,
-                child: AvatarIcon(
-                  pictoIcon: 'assets/images/avatar1.svg',
-                  onPressed: onAvatarIconPress,
+              const Expanded(
+                flex: 2,
+                child: Align(
+                  alignment: Alignment.topRight,
+                  child: AvatarIcon(
+                    pictoIcon: 'assets/images/avatar1.svg',
+                    onPressed: onAvatarIconPress,
+                  ),
                 ),
               ),
               Expanded(
-                flex: 5,
+                flex: 2,
                 child: Center(
                   child: CircleAvatarSVG(
-                    iconPath: selectedStatus.image,
+                    iconPath: halfdayDeclarations.morning.image,
                     radius: 80,
                   ),
                 ),
               ),
               Expanded(
-                flex: 1,
+                flex: 2,
                 child: Center(
                   child: Text(
-                    selectedStatus.text,
+                    halfdayDeclarations.morning.text,
                     style: textStyleTemp(),
                   ),
                 ),
               ),
               Expanded(
-                flex: 4,
+                flex: 2,
+                child: Center(
+                  child: CircleAvatarSVG(
+                    iconPath: halfdayDeclarations.afternoon.image,
+                    radius: 80,
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 2,
+                child: Center(
+                  child: Text(
+                    halfdayDeclarations.afternoon.text,
+                    style: textStyleTemp(),
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 3,
                 child: Center(
                   child: ConstrainedBox(
                     constraints: const BoxConstraints.tightFor(

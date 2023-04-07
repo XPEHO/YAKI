@@ -45,7 +45,8 @@ class MorningDeclarationBody extends ConsumerWidget {
                   onPress: () => _onStatusSelected(
                     ref: ref,
                     status: StatusEnum.values.byName(cardContent['text']).text,
-                    goToAfternoonDeclaration: () => context.go('/afternoon'),
+                    goToAfternoonDeclaration: () =>
+                        context.go('/afternoonDeclaration'),
                   ),
                   isSelected: false,
                 ),

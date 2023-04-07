@@ -21,7 +21,7 @@ class StatusPageNotifier extends StateNotifier<StateStatusPage> {
   ///
   /// Functions from status_page_content will determine which text & image will be displayed.
   void setState(String status) {
-    String text = StatusUtils.getTranslationKey(status);
+    String text = StatusUtils.getTranslationKey(status, 'Day');
     String image = StatusUtils.getImage(status);
 
     state = StateStatusPage(
@@ -36,15 +36,17 @@ class StatusPageNotifier extends StateNotifier<StateStatusPage> {
   ///
   /// Invoked in declaration_body "page".
   ///
-  /// Retrieve the status saved in DeclarationStatus entities;
+  /// Retrieve the status for the day saved in DeclarationStatus entities;
   /// And invoke the "setState" method.
   void getSelectedStatus() {
     final String status = declarationRepository.statusAllDay;
     setState(status);
   }
 
-  void getMorningStatus() {
-    final String status = declarationRepository.statusMorning;
-    setState(status);
-  }
+  /// Retrieve the  for the morning saved in DeclarationStatus entities;
+  /// And invoke the "setState" method.
+  // void getMorningStatus() {
+  //   final String status = declarationRepository.statusMorning;
+  //   setState(status);
+  // }
 }

@@ -32,7 +32,7 @@ class DeclarationNotifier extends StateNotifier<String> {
   ///
   /// create a DeclarationModel model instance,
   ///
-  /// then invoke the declarationRepository.create(), that will send the newly declaration to the API (via _api.dart)
+  /// then invoke the declarationRepository.createAllDay(), that will send the newly declaration to the API (via _api.dart)
   Future<void> createAllDay(String status) async {
     final todayDate = DateTime.now();
 
@@ -54,10 +54,10 @@ class DeclarationNotifier extends StateNotifier<String> {
   /// Create declaration for the morning by setting
   /// the dateStart to midnight and dateEnd to noon.
   /// Then send it to declarationRepository's function
-  Future<void> createMorning(String status) async {
+  Future<void> createHalfDay(String morning, String afternoon) async {
     final todayDate = DateTime.now();
 
-    DeclarationModel newDeclaration = DeclarationModel(
+    DeclarationModel newDeclarationMorning = DeclarationModel(
       declarationDate: todayDate,
       declarationDateStart: DateTime.parse(
         '${parseDate(todayDate)} 00:00:00Z',
@@ -66,19 +66,10 @@ class DeclarationNotifier extends StateNotifier<String> {
         '${parseDate(todayDate)} 12:00:00Z',
       ),
       declarationTeamMateId: loginRepository.teamMateId,
-      declarationStatus: status,
+      declarationStatus: morning,
     );
 
-    await declarationRepository.createAllDay(newDeclaration);
-  }
-
-  /// Create declaration for the afternoon by setting
-  /// the dateStart to noon and dateEnd to midnight.
-  /// Then send it to declarationRepository's function
-  Future<void> createAfternoon(String status) async {
-    final todayDate = DateTime.now();
-
-    DeclarationModel newDeclaration = DeclarationModel(
+    DeclarationModel newDeclarationAfternoon = DeclarationModel(
       declarationDate: todayDate,
       declarationDateStart: DateTime.parse(
         '${parseDate(todayDate)} 12:00:00Z',
@@ -87,10 +78,15 @@ class DeclarationNotifier extends StateNotifier<String> {
         '${parseDate(todayDate)} 23:59:59Z',
       ),
       declarationTeamMateId: loginRepository.teamMateId,
-      declarationStatus: status,
+      declarationStatus: afternoon,
     );
 
-    await declarationRepository.createAllDay(newDeclaration);
+    List<DeclarationModel> declarations = [
+      newDeclarationMorning,
+      newDeclarationAfternoon
+    ];
+
+    await declarationRepository.createHalfDay(declarations);
   }
 
   /// Take a DateTime and convert it to a string
@@ -108,10 +104,6 @@ class DeclarationNotifier extends StateNotifier<String> {
 
   setMorningDeclaration(String status) {
     declarationRepository.setMorningDeclaration(status);
-  }
-
-  setAfternoonDeclaration(String status) {
-    declarationRepository.setAfternoonDeclaration(status);
   }
 
   String getMorningDeclaration() {

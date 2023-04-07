@@ -9,7 +9,10 @@ import 'package:yaki/presentation/ui/declaration/declaration.dart';
 //import 'package:yaki/presentation/ui/declaration/morning_declaration.dart';
 import 'package:yaki/presentation/ui/halfday_declaration/afternoon_declaration.dart';
 import 'package:yaki/presentation/ui/halfday_declaration/morning_declaration.dart';
+import 'package:yaki/presentation/ui/declaration/afternoon_declaration.dart';
+import 'package:yaki/presentation/ui/declaration/morning_declaration.dart';
 import 'package:yaki/presentation/ui/status/status.dart';
+import 'package:yaki/presentation/ui/status/halfday_status.dart';
 
 /// router set as provider.
 final goRouterProvider = Provider<GoRouter>(
@@ -98,12 +101,31 @@ final goRouterProvider = Provider<GoRouter>(
               },
             ),
             GoRoute(
-              path: 'morning',
+              path: 'morningDeclaration',
               builder: (context, state) => const MorningDeclaration(),
             ),
             GoRoute(
-              path: 'afternoon',
+              path: 'afternoonDeclaration',
               builder: (context, state) => const AfternoonDeclaration(),
+              pageBuilder: (context, state) => CustomTransitionPage(
+                child: const AfternoonDeclaration(),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) =>
+                        SlideTransition(
+                  position: animation.drive(
+                    Tween(
+                      begin: const Offset(1.0, 0.0),
+                      end: Offset.zero,
+                    ),
+                  ),
+                  child: child,
+                ),
+                transitionDuration: const Duration(milliseconds: 200),
+              ),
+            ),
+            GoRoute(
+              path: 'halfdayStatus',
+              builder: (context, state) => const HalfDayStatus(),
             ),
           ],
         ),

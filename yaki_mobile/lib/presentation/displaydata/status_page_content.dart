@@ -65,13 +65,13 @@ class StatusUtils {
   ///
   /// If status is an empty string, the default value will be used,
   /// and return the translationKey for the error message.
-  static String getTranslationKey(String status) {
+  static String getTranslationKey(String status, String mode) {
     String translationKey = "StatusError";
     String keyFormat = toCamelCase(toFormat: status, splitChar: ' ');
 
     if (status != emptyDeclarationStatus) {
       keyFormat = keyFormat[0].toUpperCase() + keyFormat.substring(1);
-      translationKey = "Status$keyFormat";
+      translationKey = "Status$keyFormat$mode";
     }
     return translationKey;
   }

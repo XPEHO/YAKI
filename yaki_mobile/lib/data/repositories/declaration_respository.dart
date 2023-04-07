@@ -84,15 +84,12 @@ class DeclarationRepository {
   ///
   /// At the end of the function assign the statusValue to the DeclarationStatus
   Future<void> createAllDay(DeclarationModel declaration) async {
+    // CODE A ENLEVER
     declaration.declarationTeamMateId = 3;
-    debugPrint(declaration.declarationDateStart.toString());
-    debugPrint(declaration.declarationDateEnd.toString());
-    debugPrint(declaration.declarationDate.toString());
-    debugPrint(declaration.declarationStatus.toString());
-    debugPrint(declaration.declarationTeamMateId.toString());
     String statusValue = "";
     try {
-      final createHttpResponse = await _declarationApi.create(declaration);
+      final createHttpResponse =
+          await _declarationApi.createAllDayDeclaration(declaration);
       final statusCode = createHttpResponse.response.statusCode;
       switch (statusCode) {
         case 200 | 201:
@@ -122,17 +119,64 @@ class DeclarationRepository {
     }
   }
 
+  Future<void> createHalfDay(List<DeclarationModel> declarations) async {
+    // CODE A ENLEVER
+    declarations[0].declarationTeamMateId = 3;
+    declarations[1].declarationTeamMateId = 3;
+    String statusValueMorning = "";
+    String statusValueAfternoon = "";
+    try {
+      final createHttpResponse =
+          await _declarationApi.createHalfdayDeclaration(declarations);
+      final statusCode = createHttpResponse.response.statusCode;
+      switch (statusCode) {
+        case 200 | 201:
+          // convert HttpResponse<dynamic> (Map<String, dynamic>) into Model using .fromJson method
+          final createdDeclarationInMorning = DeclarationModelIn.fromJson(
+            createHttpResponse.data[0],
+          );
+          final createdDeclarationInAfternoon = DeclarationModelIn.fromJson(
+            createHttpResponse.data[1],
+          );
+          statusValueMorning =
+              createdDeclarationInMorning.declarationStatus ?? "";
+          statusValueAfternoon =
+              createdDeclarationInAfternoon.declarationStatus ?? "";
+          break;
+        case 400 | 500:
+          debugPrint("Code error : $statusCode");
+          break;
+        case 401:
+          debugPrint("Invalid token");
+          break;
+        case 403:
+          debugPrint("Missing token in header : $statusCode");
+          break;
+        default:
+          throw Exception(
+            "Invalid statusCode from server : ${createHttpResponse.response.statusCode}",
+          );
+      }
+      setHalfDayDeclaration(statusValueMorning, statusValueAfternoon);
+    } catch (err) {
+      debugPrint("error during creation : $err");
+    }
+  }
+
   /// Assign status, to declarationStatus entities.
   void setAllDayDeclaration(String status) {
     declarationStatus.allDayDeclaration = status;
   }
 
-  void setMorningDeclaration(String status) {
-    declarationStatus.morningDeclaration = status;
+  /// Assign status, to declarationStatus entities.
+  void setHalfDayDeclaration(String morningStatus, String afternoonStatus) {
+    declarationStatus.morningDeclaration = morningStatus;
+    declarationStatus.afternoonDeclaration = afternoonStatus;
   }
 
-  void setAfternoonDeclaration(String status) {
-    declarationStatus.afternoonDeclaration = status;
+  /// Assign status, to declarationStatus entities.
+  void setMorningDeclaration(String status) {
+    declarationStatus.morningDeclaration = status;
   }
 
   /// getter to retrieve declaration status stored in DeclarationStatus instance.

@@ -88,11 +88,21 @@ class MockDeclarationRepository extends _i1.Mock
         returnValue: _i4.Future<String>.value(''),
       ) as _i4.Future<String>);
   @override
-  _i4.Future<void> create(_i5.DeclarationModel? declaration) =>
+  _i4.Future<void> createAllDay(_i5.DeclarationModel? declaration) =>
       (super.noSuchMethod(
         Invocation.method(
-          #create,
+          #createAllDay,
           [declaration],
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
+  @override
+  _i4.Future<void> createHalfDay(List<_i5.DeclarationModel>? declarations) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #createHalfDay,
+          [declarations],
         ),
         returnValue: _i4.Future<void>.value(),
         returnValueForMissingStub: _i4.Future<void>.value(),

@@ -43,7 +43,7 @@ class _DeclarationApi implements DeclarationApi {
   }
 
   @override
-  Future<HttpResponse<dynamic>> create(declaration) async {
+  Future<HttpResponse<dynamic>> createAllDayDeclaration(declaration) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -57,7 +57,31 @@ class _DeclarationApi implements DeclarationApi {
     )
             .compose(
               _dio.options,
-              '/declarations',
+              '/declarations?mode="fullDay"',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = _result.data;
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
+  @override
+  Future<HttpResponse<dynamic>> createHalfdayDeclaration(declaration) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = declaration.map((e) => e.toJson()).toList();
+    final _result =
+        await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/declarations?mode="halfDay"',
               queryParameters: queryParameters,
               data: _data,
             )

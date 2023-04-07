@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:yaki/presentation/displaydata/declaration_card_content.dart';
 import 'package:yaki/presentation/displaydata/status_page_content.dart';
 import 'package:yaki/presentation/state/providers/declaration_provider.dart';
+import 'package:yaki/presentation/state/providers/halfday_status_provider.dart';
 import 'package:yaki/presentation/state/providers/status_provider.dart';
 import 'package:yaki/presentation/ui/declaration/views/status_card.dart';
 
@@ -19,15 +20,20 @@ class AfternoonDeclarationBody extends ConsumerWidget {
     required String afternoonStatus,
     required Function goToStatusPage,
   }) async {
-    ref
-        .read(declarationProvider.notifier)
-        .setAfternoonDeclaration(afternoonStatus);
-    await ref.read(declarationProvider.notifier).createMorning(morningStatus);
+    // ref
+    //     .read(declarationProvider.notifier)
+    //     .setAfternoonDeclaration(afternoonStatus);
+    // await ref
+    //     .read(declarationProvider.notifier)
+    //     .createMorning(morningStatus, afternoonStatus);
+    // await ref
+    //     .read(declarationProvider.notifier)
+    //     .createAfternoon(afternoonStatus);
     await ref
         .read(declarationProvider.notifier)
-        .createAfternoon(afternoonStatus);
-    // set la state dans le status_notifier.dart avec la valeur du matin
-    ref.read(statusPageProvider.notifier).getMorningStatus();
+        .createHalfDay(morningStatus, afternoonStatus);
+    // set la state dans le status_notifier.dart avec la valeur du morning
+    ref.read(halfdayStatusPageProvider.notifier).getHalfdayDeclaration();
     goToStatusPage();
   }
 
@@ -59,7 +65,7 @@ class AfternoonDeclarationBody extends ConsumerWidget {
                     morningStatus: morningDeclaration,
                     afternoonStatus:
                         StatusEnum.values.byName(cardContent['text']).text,
-                    goToStatusPage: () => context.go('/status'),
+                    goToStatusPage: () => context.go('/halfdayStatus'),
                   ),
                   isSelected:
                       StatusEnum.values.byName(cardContent['text']).text ==
