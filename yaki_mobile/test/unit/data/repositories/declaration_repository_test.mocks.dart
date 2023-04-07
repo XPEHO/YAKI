@@ -57,36 +57,27 @@ class MockDeclarationApi extends _i1.Mock implements _i3.DeclarationApi {
         )),
       ) as _i4.Future<_i2.HttpResponse<dynamic>>);
   @override
-  _i4.Future<_i2.HttpResponse<dynamic>> createAllDayDeclaration(
-          _i5.DeclarationModel? declaration) =>
+  _i4.Future<_i2.HttpResponse<dynamic>> create(
+    List<_i5.DeclarationModel>? declaration,
+    String? mode,
+  ) =>
       (super.noSuchMethod(
         Invocation.method(
-          #createAllDayDeclaration,
-          [declaration],
+          #create,
+          [
+            declaration,
+            mode,
+          ],
         ),
         returnValue: _i4.Future<_i2.HttpResponse<dynamic>>.value(
             _FakeHttpResponse_0<dynamic>(
           this,
           Invocation.method(
-            #createAllDayDeclaration,
-            [declaration],
-          ),
-        )),
-      ) as _i4.Future<_i2.HttpResponse<dynamic>>);
-  @override
-  _i4.Future<_i2.HttpResponse<dynamic>> createHalfdayDeclaration(
-          List<_i5.DeclarationModel>? declaration) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #createHalfdayDeclaration,
-          [declaration],
-        ),
-        returnValue: _i4.Future<_i2.HttpResponse<dynamic>>.value(
-            _FakeHttpResponse_0<dynamic>(
-          this,
-          Invocation.method(
-            #createHalfdayDeclaration,
-            [declaration],
+            #create,
+            [
+              declaration,
+              mode,
+            ],
           ),
         )),
       ) as _i4.Future<_i2.HttpResponse<dynamic>>);

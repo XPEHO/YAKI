@@ -13,13 +13,9 @@ abstract class DeclarationApi {
     @Query("teamMateId") String id,
   );
 
-  @POST('/declarations?mode="fullDay"')
-  Future<HttpResponse> createAllDayDeclaration(
-    @Body() DeclarationModel declaration,
-  );
-
-  @POST('/declarations?mode="halfDay"')
-  Future<HttpResponse> createHalfdayDeclaration(
+  @POST('/declarations')
+  Future<HttpResponse> create(
     @Body() List<DeclarationModel> declaration,
+    @Query("mode") String mode,
   );
 }

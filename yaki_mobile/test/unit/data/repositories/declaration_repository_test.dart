@@ -96,7 +96,7 @@ void main() {
       test(
         'Successfully create declaration.',
         () async {
-          when(mockedDeclarationApi.create(createdDeclaration))
+          when(mockedDeclarationApi.create([createdDeclaration], 'fullDay'))
               .thenAnswer((realInvocation) => Future.value(httpResponse));
           when(httpResponse.response).thenReturn(response);
           when(response.statusCode).thenReturn(200 | 201);
@@ -110,7 +110,7 @@ void main() {
       test(
         'Fail create declaration 400 or 500.',
         () async {
-          when(mockedDeclarationApi.create(createdDeclaration))
+          when(mockedDeclarationApi.create([createdDeclaration], 'fullDay'))
               .thenAnswer((realInvocation) => Future.value(httpResponse));
           when(httpResponse.response).thenReturn(response);
           when(response.statusCode).thenReturn(400 | 500);
@@ -124,7 +124,7 @@ void main() {
       test(
         'Fail create declaration 401.',
         () async {
-          when(mockedDeclarationApi.create(createdDeclaration))
+          when(mockedDeclarationApi.create([createdDeclaration], 'fullDay'))
               .thenAnswer((realInvocation) => Future.value(httpResponse));
           when(httpResponse.response).thenReturn(response);
           when(response.statusCode).thenReturn(401);
@@ -138,7 +138,7 @@ void main() {
       test(
         'Fail create declaration 403.',
         () async {
-          when(mockedDeclarationApi.create(createdDeclaration))
+          when(mockedDeclarationApi.create([createdDeclaration], 'fullDay'))
               .thenAnswer((realInvocation) => Future.value(httpResponse));
           when(httpResponse.response).thenReturn(response);
           when(response.statusCode).thenReturn(403);
@@ -152,7 +152,7 @@ void main() {
       test(
         'Throw exception when create declaration',
         () async {
-          when(mockedDeclarationApi.create(createdDeclaration))
+          when(mockedDeclarationApi.create([createdDeclaration], 'fullDay'))
               .thenAnswer((realInvocation) => Future.value(httpResponse));
           when(httpResponse.response).thenReturn(response);
           when(response.statusCode).thenReturn(418);

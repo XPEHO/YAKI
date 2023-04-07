@@ -89,7 +89,7 @@ class DeclarationRepository {
     String statusValue = "";
     try {
       final createHttpResponse =
-          await _declarationApi.createAllDayDeclaration(declaration);
+          await _declarationApi.create([declaration], 'fullDay');
       final statusCode = createHttpResponse.response.statusCode;
       switch (statusCode) {
         case 200 | 201:
@@ -127,7 +127,7 @@ class DeclarationRepository {
     String statusValueAfternoon = "";
     try {
       final createHttpResponse =
-          await _declarationApi.createHalfdayDeclaration(declarations);
+          await _declarationApi.create(declarations, 'halfDay');
       final statusCode = createHttpResponse.response.statusCode;
       switch (statusCode) {
         case 200 | 201:
