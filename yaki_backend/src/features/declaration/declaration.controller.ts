@@ -73,7 +73,7 @@ export class DeclarationController {
    */
   async updateDeclarationStatus(req: Request, res: Response) {
     const declarationId = parseInt(req.params.declarationId);
-    const declaration: DeclarationDtoIn = req.body;
+    const declaration: DeclarationDtoIn[] = req.body;
     try {
       await this.declarationService.updateDeclarationStatus(declarationId, declaration);
       res.status(200).json(declaration);
