@@ -7,6 +7,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -30,6 +33,12 @@ public class UserModel {
     private String login;
     @Column(name = "user_password")
     private String password;
+
+    @ManyToMany
+    @JoinTable(name = "customer_rights",
+            joinColumns = @JoinColumn(name = "customer_rights_user_id"),
+            inverseJoinColumns = @JoinColumn(name = "customer_rights_customer_id"))
+    private List<UserModel> roles = new ArrayList<>();
 
     public UserModel(String lastName, String firstName, String email, String login) {
         this.email = email;
