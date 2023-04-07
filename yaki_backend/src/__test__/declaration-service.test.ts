@@ -15,14 +15,9 @@ describe("DeclarationService", () => {
 
   /* The above code is testing the declarationService.createDeclaration method. */
   describe("create a declaration ", () => {
-    const declarationDtoIn: DeclarationDtoIn = new DeclarationDtoIn(
-      1,
-      1,
-      new Date(),
-      new Date(),
-      new Date(),
-      StatusDeclaration.REMOTE
-    );
+    const declarationDtoIn: DeclarationDtoIn[] = [
+      new DeclarationDtoIn(1, 1, new Date(), new Date(), new Date(), StatusDeclaration.REMOTE),
+    ];
 
     /* This test is checking if the declarationService.createDeclaration method returns a new
     declaration. */
