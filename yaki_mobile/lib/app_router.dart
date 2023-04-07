@@ -29,16 +29,9 @@ final goRouterProvider = Provider<GoRouter>(
               },
             ),
             //GoRoute(
-              //path: 'morningDeclaration',
-              //builder: (context) => const MorningDeclaration(),
-              //redirect: (BuildContext context) async {
-                //if (await SharedPref.isTokenPresent()) {
-                  //return '/morningDeclaration';
-                //} else {
-                  //return '/';
-                //}
-              //},
-            //),
+              //path: '/morningDeclaration',
+              //builder: (context, state) => const MorningDeclaration(),
+           // ),
             GoRoute(
               path: 'status',
               builder: (context, state) => const Status(),

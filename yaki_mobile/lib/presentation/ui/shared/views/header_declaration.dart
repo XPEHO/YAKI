@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:yaki/presentation/ui/declaration/morning_declaration.dart';
+
+import 'package:go_router/go_router.dart';
 
 import '../../../styles/header_text_style.dart';
 import 'avatar_icon.dart';
@@ -25,6 +26,9 @@ class HeaderDeclaration extends StatelessWidget {
 
   void onAvatarIconPress() {}
 
+  void onPictoSwitchTap(BuildContext context) {
+   // context.go('/morningDeclaration');
+  }
 
 
   @override
@@ -50,12 +54,14 @@ class HeaderDeclaration extends StatelessWidget {
           children: [
             Expanded(
               flex: 3,
-              child: Row(
-                children: [
-                  Text(
-                    headerTitle,
-                    style: textStyleTemp(),
-                  ),
+          child: ElevatedButton(
+            onPressed: () => context.go('/declaration'),
+            child: Row(
+              children: [
+                Text(
+                  headerTitle,
+                  style: textStyleTemp(),
+                ),
 
                   const Spacer(),
                   // top right circle avatar
@@ -64,6 +70,7 @@ class HeaderDeclaration extends StatelessWidget {
                     onPressed: onAvatarIconPress,
                   ),
                 ],
+            ),
               ),
             ),
             Expanded(
@@ -86,14 +93,8 @@ class HeaderDeclaration extends StatelessWidget {
                         elevation: 10,
                         color: Colors.transparent,
                         shape: const CircleBorder(),
-                        child: InkWell(
-                          onTap: () {
-                            if (ModalRoute.of(context)?.settings?.name == '/morning_declaration') {
-                              Navigator.pushReplacementNamed(context, '/declaration');
-                            } else {
-                              Navigator.pushReplacementNamed(context, '/morning_declaration');
-                            }
-                          },
+
+
                         child: Padding(
                           padding: const EdgeInsets.all(0),
                           child: Container(
@@ -111,10 +112,12 @@ class HeaderDeclaration extends StatelessWidget {
                               child: SizedBox(
                                 width: 40,
                                 height: 40,
-                                child: SvgPicture.asset(
-                                  pictoSwitch,
+                                child: GestureDetector(
+                                  onTap: () => onPictoSwitchTap(context),
+                                  child: SvgPicture.asset(
+                                    pictoSwitch,
+                                  ),
                                 ),
-                              ),
                               ),
                             ),
                           ),
@@ -122,6 +125,7 @@ class HeaderDeclaration extends StatelessWidget {
                       ),
                     ),
                   ),
+
                 ],
               ),
             ),
