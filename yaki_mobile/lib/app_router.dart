@@ -29,10 +29,28 @@ final goRouterProvider = Provider<GoRouter>(
                 }
               },
             ),
-            //GoRoute(
-              //path: '/morningDeclaration',
-              //builder: (context, state) => const MorningDeclaration(),
-           // ),
+            GoRoute(
+              path: 'morningDeclaration',
+              builder: (context, state) => const MorningDeclaration(),
+              redirect: (BuildContext context, GoRouterState state) async {
+                if (await SharedPref.isTokenPresent()) {
+                  return '/morningDeclaration';
+                } else {
+                  return '/';
+                }
+              },
+            ),
+            GoRoute(
+              path: 'afternoonDeclaration',
+              builder: (context, state) => const AfternoonDeclaration(),
+              redirect: (BuildContext context, GoRouterState state) async {
+                if (await SharedPref.isTokenPresent()) {
+                  return '/afternoonDeclaration';
+                } else {
+                  return '/';
+                }
+              },
+            ),
             GoRoute(
               path: 'morningDeclaration',
               builder: (context, state) => const MorningDeclaration(),
