@@ -108,14 +108,16 @@ describe("DeclarationService", () => {
   declaration status successfully. */
   it("should update the declaration status successfully", async () => {
     const declarationId = 1;
-    const declaration: DeclarationDtoIn = {
-      declarationId: 1,
-      declarationTeamMateId: 1,
-      declarationDate: new Date(),
-      declarationDateStart: new Date(),
-      declarationDateEnd: new Date(),
-      declarationStatus: StatusDeclaration.REMOTE,
-    };
+    const declaration: DeclarationDtoIn[] = [
+      {
+        declarationId: 1,
+        declarationTeamMateId: 1,
+        declarationDate: new Date(),
+        declarationDateStart: new Date(),
+        declarationDateEnd: new Date(),
+        declarationStatus: StatusDeclaration.REMOTE,
+      },
+    ];
     const existingDeclaration = {
       declarationId: 1,
       declarationTeamMateId: 1,
