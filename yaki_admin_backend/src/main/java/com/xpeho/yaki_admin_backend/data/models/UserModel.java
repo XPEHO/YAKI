@@ -3,17 +3,15 @@ package com.xpeho.yaki_admin_backend.data.models;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
+@Data
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "user", schema = "public")
 @Entity
