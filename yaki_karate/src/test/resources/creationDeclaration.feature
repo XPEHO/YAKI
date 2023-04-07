@@ -19,6 +19,6 @@ Feature: CreationDeclaration
   Scenario: Creation declaration fail
     Given path '/declarations'
     And param mode = 'fullDay'
-    And request [{"declarationDate": "" ,"declarationDateStart": "" ,"declarationDateEnd": "","declarationTeamMateId":   "declarationStatus": ""}]
+    And request [{"declarationDate": "" ,"declarationDateStart": "" ,"declarationDateEnd": "","declarationTeamMateId": '',  "declarationStatus": ""}]
     When method POST
     Then status 400
