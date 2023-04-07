@@ -28,25 +28,6 @@ INSERT INTO public.owner(
 -- INSERT CUSTOMERS
 
 INSERT INTO public.customer(
-	customer_user_id,customer_name,customer_owner_id,customer_location_id)
-	VALUES (6,'customer0',1,1),
-		   (7,'Customer1',1,2);
-
-INSERT INTO public.locations(
-	location_name, location_adress)
-	VALUES ('Leroy merlin', 'Rue de Versailles, 59650 Villeneuve-d''Ascq'),
-		   ('XPEHO', '1 Boulevard de Valmy, 59650 Villeneuve d Ascq'),
-		   ('ADEO', '135 Rue Sadi Carnot, 59790 Ronchin');
-
--- INSERT OWNERS
-
-INSERT INTO public.owner(
-	owner_user_id)
-	VALUES (8);
-
--- INSERT CUSTOMERS
-
-INSERT INTO public.customer(
 	customer_name,customer_owner_id,customer_location_id)
 	VALUES ('customer0',1,1),
 		   ('Customer1',1,2),
@@ -83,8 +64,10 @@ INSERT INTO public.team_mate(
 
 -- INSERT DECLARATIONS
 
+-- INSERT DECLARATIONS
+
 INSERT INTO public.declaration(
-	declaration_team_mate_id, declaration_date, declaration_status)
+	declaration_team_mate_id, declaration_date,declaration_date_start, declaration_date_end, declaration_status)
 	VALUES -- for team_mate 1
 		   (1, '2023-02-20','2023-02-20','2023-02-20', 'on site'),
 		   (1, '2023-02-19','2023-02-19','2023-02-19', 'on site'),

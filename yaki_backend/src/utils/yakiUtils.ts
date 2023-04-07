@@ -28,6 +28,10 @@ export default class YakiUtils {
    */
   static createInsertValues(arr: Array<any>, obj: object): string {
     const arrLength: number = arr.length;
+    if (arrLength === 0) {
+      return "";
+    }
+
     const step: number = Object.values(obj).length;
     let postgresValues: string = "(";
 
@@ -43,10 +47,13 @@ export default class YakiUtils {
         break;
       }
 
-      if (i % step === 0) {
-        postgresValues += "), (";
+      if (arrLength > 1) {
+        if (i % step === 0) {
+          postgresValues += "), (";
+        }
       }
     }
+
     return postgresValues;
   }
 }
