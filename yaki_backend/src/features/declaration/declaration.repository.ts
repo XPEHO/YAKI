@@ -26,11 +26,7 @@ export class DeclarationRepository {
    */
   async createDeclaration(declaration: DeclarationDtoIn) {
     const client = await this.pool.connect();
-
-    // const {declarationDate, declarationDateStart, declarationDateEnd, declarationTeamMateId, declarationStatus} =
-    //   declaration;
-
-    const valuesString: string = YakiUtils.createInsertValues(Object.values(declaration), declaration);
+    const valuesString: string = YakiUtils.queryValuesString([declaration], declaration);
     const declarationValuesList: Array<string> = Object.values(declaration);
 
     try {
@@ -45,9 +41,6 @@ export class DeclarationRepository {
             ) 
            VALUES ${valuesString} RETURNING *`,
         declarationValuesList
-
-        //VALUES ($1, $2, $3, $4, $5) RETURNING *`
-        //[declarationDate, declarationDateStart, declarationDateEnd, declarationTeamMateId, declarationStatus]
       );
       const declarationToFront = [
         new DeclarationDtoIn(
@@ -74,7 +67,7 @@ export class DeclarationRepository {
     const client = await this.pool.connect();
 
     const declarationsValuesList: Array<string> = YakiUtils.objectsListToValuesList(declarationList);
-    const valuesString: string = YakiUtils.createInsertValues(declarationsValuesList, declarationList[0]);
+    const valuesString: string = YakiUtils.queryValuesString(declarationsValuesList, declarationList[0]);
 
     try {
       const result = await client.query(

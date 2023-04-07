@@ -14,45 +14,33 @@ export default class YakiUtils {
   }
 
   /**
-   * Create the string used for postGres INSERT query VALUES string.
-   * Use complete values list to insert to determine VALUES count.
-   * (*Need to convert any object or Array<object> into flat values list*)
    *
-   * And reference obj to determine how many rows to insert.
-   *
-   *  *Check if reach array end to break loop, before step check.*
-   *  *Prevent to add "()" at string end in situations where arr.length % step === 0*
-   * @param arr reference list to produces VALUES
+   * @param arr list containing all objects to insert
    * @param obj reference object
    * @returns string like : ($1, $2...), ($x, $y...),...
    */
-  static createInsertValues(arr: Array<any>, obj: object): string {
-    const arrLength: number = arr.length;
-    if (arrLength === 0) {
-      return "";
+  static queryValuesString(arr: Array<any>, obj: object): string {
+    if (!arr || !obj) {
+      throw new TypeError("incorrect data to produce the query VALUES string");
+    }
+    // amount of object in the array
+    const objectCount: number = arr.length;
+    // values count per object.
+    const valuesCount: number = Object.values(obj).length;
+
+    if (objectCount === 0 || valuesCount === 0) {
+      throw new TypeError("No data to insert in the database");
     }
 
-    const step: number = Object.values(obj).length;
-    let postgresValues: string = "(";
+    let startValue = 1;
+    const rows = Array(objectCount).fill(0);
+    const columns = Array(valuesCount).fill(0);
 
-    for (let i = 1; i <= arrLength; i++) {
-      postgresValues += "$" + i;
-
-      if (i % step !== 0 && i !== arrLength) {
-        postgresValues += ", ";
-      }
-
-      if (i === arrLength) {
-        postgresValues += ")";
-        break;
-      }
-
-      if (arrLength > 1) {
-        if (i % step === 0) {
-          postgresValues += "), (";
-        }
-      }
-    }
+    const postgresValues = rows
+      .map(() => {
+        return `(${columns.map(() => `$${startValue++}`).join(", ")})`;
+      })
+      .join(", ");
 
     return postgresValues;
   }
