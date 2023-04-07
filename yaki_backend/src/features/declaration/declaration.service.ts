@@ -18,26 +18,33 @@ export class DeclarationService {
    * @param {DeclarationDtoIn} declaration - Declaration
    * @returns The declaration object.
    */
-  async createDeclaration(declaration: DeclarationDtoIn) {
-    if (!Object.values(StatusDeclaration).includes(declaration.declarationStatus)) {
+  async createDeclaration(declaration: DeclarationDtoIn[]) {
+    if (!Object.values(StatusDeclaration).includes(declaration[0].declarationStatus)) {
       throw new TypeError("Invalid declaration status.");
     }
     if (
-      declaration.declarationTeamMateId &&
-      declaration.declarationDate &&
-      declaration.declarationDateStart &&
-      declaration.declarationDateEnd &&
-      declaration.declarationStatus !== undefined &&
-      declaration.declarationStatus.trim() !== ""
+      declaration[0].declarationTeamMateId &&
+      declaration[0].declarationDate &&
+      declaration[0].declarationDateStart &&
+      declaration[0].declarationDateEnd &&
+      declaration[0].declarationStatus !== undefined &&
+      declaration[0].declarationStatus.trim() !== ""
     ) {
-      return await this.declarationRepository.createDeclaration(declaration);
+      return await this.declarationRepository.createDeclaration(declaration[0]);
     } else {
-      throw new TypeError("One or more mandatory information are missing.");
+      throw new TypeError("One or more mandatory information is missing.");
     }
   }
 
   /**
+   * Function to save into the database the half day declaration.
    *
+   * Check if each declaration status match the statusDeclaration enum, if not throw Error
+   *
+   * Check if each values from each objects arent either null, undefined, or empty string. if so throw error,
+   * else invoke repository function to save data in the database
+   *
+   * It return the saved declaration as DtoIn list.
    * @param DeclarationList List containing morning and afternoon declaration objects
    * @returns Array containing saved halfday declaration object
    */
@@ -51,13 +58,15 @@ export class DeclarationService {
     let isObjectValid: boolean = false;
     for (let declaration of DeclarationList) {
       // check  if all values are true,  therefore  no null, nor undefined, nor empty string.
-      isObjectValid = Object.values(declaration).every((value) => value);
+      isObjectValid = Object.values(declaration).every((value) => value.trim());
+      // break loop at the first false value ( found unexpected data )
+      if (!isObjectValid) break;
     }
 
     if (isObjectValid) {
       return await this.declarationRepository.createHalfDayDeclaration(DeclarationList);
     } else {
-      throw new TypeError("One or more mandatory information are missing.");
+      throw new TypeError("One or more requiered information is missing.");
     }
   }
 
