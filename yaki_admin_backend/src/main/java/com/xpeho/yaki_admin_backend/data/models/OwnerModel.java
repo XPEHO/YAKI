@@ -19,7 +19,7 @@ public class OwnerModel {
     int id;
 
     @Column(name = "owner_user_id")
-    int user_id = 7;
+    int user_id = 8;
 
     public OwnerModel(int userId) {
         this.user_id = userId;
