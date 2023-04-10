@@ -15,26 +15,26 @@ export default class YakiUtils {
 
   /**
    *
-   * @param arr list containing all objects to insert
-   * @param obj reference object
-   * @returns string like : ($1, $2...), ($x, $y...),...
+   * @param arr list containing all objects to insert, will determine row(s) count.
+   * @param obj object to be inserted in a row, will determine values count to be saved ( columns ).
+   * @param startValue query VALUES start value.
+   * @returns query VALUE string : ($1, $2...), ($x, $y...),...
    */
-  static queryValuesString(arr: Array<any>, obj: object): string {
+  static queryValuesString(arr: Array<any>, obj: object, startValue: number): string {
     if (!arr || !obj) {
-      throw new TypeError("incorrect data to produce the query VALUES string");
+      throw new TypeError("data is requiered to create the query VALUES string");
     }
-    // amount of object in the array
+    // amount of object in the array ( row count )
     const objectCount: number = arr.length;
-    // values count per object.
+    // values count per object ( columns )
     const valuesCount: number = Object.values(obj).length;
 
-    if (objectCount === 0 || valuesCount === 0) {
-      throw new TypeError("No data to insert in the database");
+    if (objectCount < 1 || valuesCount < 1) {
+      throw new TypeError("No data to create the query VALUES string");
     }
 
-    let startValue = 1;
-    const rows = Array(objectCount).fill(0);
-    const columns = Array(valuesCount).fill(0);
+    const rows: Array<string> = Array(objectCount).fill("0");
+    const columns: Array<string> = Array(valuesCount).fill("0");
 
     const postgresValues = rows
       .map(() => {

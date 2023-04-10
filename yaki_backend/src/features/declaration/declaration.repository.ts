@@ -21,13 +21,13 @@ export class DeclarationRepository {
 
   /**
    * Inserts a new declaration into the database.
-   * @param declaration The declaration to be inserted.
+   * @param declarationList The declaration to be inserted.
    * @returns A created declaration.
    */
-  async createDeclaration(declaration: DeclarationDtoIn) {
+  async createDeclaration(declarationList: DeclarationDtoIn[]) {
     const client = await this.pool.connect();
-    const valuesString: string = YakiUtils.queryValuesString([declaration], declaration);
-    const declarationValuesList: Array<string> = Object.values(declaration);
+    const valuesString: string = YakiUtils.queryValuesString(declarationList, declarationList, 1);
+    const declarationValuesList: Array<string> = YakiUtils.objectsListToValuesList(declarationList);
 
     try {
       const result = await client.query(
@@ -38,8 +38,8 @@ export class DeclarationRepository {
             declaration_date_end, 
             declaration_team_mate_id, 
             declaration_status
-            ) 
-           VALUES ${valuesString} RETURNING *`,
+          ) 
+        VALUES ${valuesString} RETURNING *`,
         declarationValuesList
       );
       const declarationToFront = [
@@ -66,8 +66,8 @@ export class DeclarationRepository {
   async createHalfDayDeclaration(declarationList: DeclarationDtoIn[]) {
     const client = await this.pool.connect();
 
+    const valuesString: string = YakiUtils.queryValuesString(declarationList, declarationList[0], 1);
     const declarationsValuesList: Array<string> = YakiUtils.objectsListToValuesList(declarationList);
-    const valuesString: string = YakiUtils.queryValuesString(declarationsValuesList, declarationList[0]);
 
     try {
       const result = await client.query(
