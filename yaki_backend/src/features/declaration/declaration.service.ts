@@ -15,22 +15,25 @@ export class DeclarationService {
 
   /**
    * This function creates a declaration and returns the created declaration.
-   * @param {DeclarationDtoIn} declaration - Declaration
+   * @param {DeclarationDtoIn} declarationList - Declaration
    * @returns The declaration object.
    */
-  async createDeclaration(declaration: DeclarationDtoIn[]) {
-    if (!Object.values(StatusDeclaration).includes(declaration[0].declarationStatus)) {
+  async createDeclaration(declarationList: DeclarationDtoIn[]) {
+    if (declarationList.length !== 1) {
+      throw new TypeError("Incorrect full day declaration data, must contain one object only");
+    }
+    if (!Object.values(StatusDeclaration).includes(declarationList[0].declarationStatus)) {
       throw new TypeError("Invalid declaration status.");
     }
     if (
-      declaration[0].declarationTeamMateId &&
-      declaration[0].declarationDate &&
-      declaration[0].declarationDateStart &&
-      declaration[0].declarationDateEnd &&
-      declaration[0].declarationStatus !== undefined &&
-      declaration[0].declarationStatus.trim() !== ""
+      declarationList[0].declarationTeamMateId &&
+      declarationList[0].declarationDate &&
+      declarationList[0].declarationDateStart &&
+      declarationList[0].declarationDateEnd &&
+      declarationList[0].declarationStatus !== undefined &&
+      declarationList[0].declarationStatus.trim() !== ""
     ) {
-      return await this.declarationRepository.createDeclaration(declaration[0]);
+      return await this.declarationRepository.createDeclaration(declarationList);
     } else {
       throw new TypeError("One or more mandatory information is missing.");
     }
@@ -45,26 +48,29 @@ export class DeclarationService {
    * else invoke repository function to save data in the database
    *
    * It return the saved declaration as DtoIn list.
-   * @param DeclarationList List containing morning and afternoon declaration objects
+   * @param declarationList List containing morning and afternoon declaration objects
    * @returns Array containing saved halfday declaration object
    */
-  async createHalfDayDeclarations(DeclarationList: DeclarationDtoIn[]) {
-    for (let declaration of DeclarationList) {
+  async createHalfDayDeclarations(declarationList: DeclarationDtoIn[]) {
+    if (declarationList.length !== 2) {
+      throw new TypeError("Incorrect half day declaration data, must contain 2 object");
+    }
+    for (let declaration of declarationList) {
       // object.values : array containing keys.
       if (!Object.values(StatusDeclaration).includes(declaration.declarationStatus)) {
         throw new TypeError("Invalid declaration status.");
       }
     }
-    let isObjectValid: boolean = false;
-    for (let declaration of DeclarationList) {
+    let isObjectsValid: boolean = false;
+    for (let declaration of declarationList) {
       // check  if all values are true,  therefore  no null, nor undefined, nor empty string.
-      isObjectValid = Object.values(declaration).every((value) => value.trim());
+      isObjectsValid = Object.values(declaration).every((value) => value.trim());
       // break loop at the first false value ( found unexpected data )
-      if (!isObjectValid) break;
+      if (!isObjectsValid) break;
     }
 
-    if (isObjectValid) {
-      return await this.declarationRepository.createHalfDayDeclaration(DeclarationList);
+    if (isObjectsValid) {
+      return await this.declarationRepository.createHalfDayDeclaration(declarationList);
     } else {
       throw new TypeError("One or more requiered information is missing.");
     }

@@ -22,16 +22,16 @@ export class DeclarationController {
    */
   async createDeclaration(req: Request, res: Response): Promise<void> {
     const mode = req.query.mode;
-    const declarationBody: DeclarationDtoIn[] = req.body;
+    const declarationReqBody: DeclarationDtoIn[] = req.body;
 
     try {
       if (mode === "fullDay") {
-        const createdDeclaration = await this.declarationService.createDeclaration(declarationBody);
-        res.status(201).json(createdDeclaration);
+        const createdFullDayDeclaration = await this.declarationService.createDeclaration(declarationReqBody);
+        res.status(201).json(createdFullDayDeclaration);
       }
 
       if (mode === "halfDay") {
-        const createdHalfDayDeclarations = await this.declarationService.createHalfDayDeclarations(declarationBody);
+        const createdHalfDayDeclarations = await this.declarationService.createHalfDayDeclarations(declarationReqBody);
         res.status(201).json(createdHalfDayDeclarations);
       }
     } catch (error: any) {
