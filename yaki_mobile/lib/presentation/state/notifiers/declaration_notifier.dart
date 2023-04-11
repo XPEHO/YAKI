@@ -72,7 +72,7 @@ class DeclarationNotifier extends StateNotifier<String> {
     DeclarationModel newDeclarationAfternoon = DeclarationModel(
       declarationDate: todayDate,
       declarationDateStart: DateTime.parse(
-        '${parseDate(todayDate)} 12:00:00Z',
+        '${parseDate(todayDate)} 13:00:00Z',
       ),
       declarationDateEnd: DateTime.parse(
         '${parseDate(todayDate)} 23:59:59Z',
