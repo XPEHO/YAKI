@@ -26,7 +26,7 @@ export class DeclarationRepository {
    */
   async createDeclaration(declarationList: DeclarationDtoIn[]) {
     const client = await this.pool.connect();
-    const valuesString: string = YakiUtils.queryValuesString(declarationList, declarationList, 1);
+    const valuesString: string = YakiUtils.queryValuesString(declarationList, declarationList[0], 1);
     const declarationValuesList: Array<string> = YakiUtils.objectsListToValuesList(declarationList);
 
     try {
