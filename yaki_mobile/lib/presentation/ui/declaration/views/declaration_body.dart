@@ -38,26 +38,28 @@ class DeclarationBody extends ConsumerWidget {
         vertical: width * 0.12,
         horizontal: width * 0.09,
       ),
-      child: Center(
-        child: Wrap(
-          alignment: WrapAlignment.center,
-          // horizontal
-          spacing: width * 0.07,
-          // vertical
-          runSpacing: width * 0.12,
-          children: statusCardsContent
-              .map(
-                (cardContent) => StatusCard(
-                  statusName: tr(cardContent['text']),
-                  statusPicto: cardContent['image'],
-                  onPress: () => _onStatusSelected(
-                    ref: ref,
-                    status: StatusEnum.values.byName(cardContent['text']).text,
-                    goToStatusPage: () => context.go('/status'),
-                  ),
+      child: SingleChildScrollView(
+        child: Center(
+          child: Wrap(
+            alignment: WrapAlignment.center,
+            // horizontal
+            spacing: width * 0.07,
+            // vertical
+            runSpacing: width * 0.12,
+            children: statusCardsContent
+                .map(
+                  (cardContent) => StatusCard(
+                statusName: tr(cardContent['text']),
+                statusPicto: cardContent['image'],
+                onPress: () => _onStatusSelected(
+                  ref: ref,
+                  status: StatusEnum.values.byName(cardContent['text']).text,
+                  goToStatusPage: () => context.go('/status'),
                 ),
-              )
-              .toList(),
+              ),
+            )
+                .toList(),
+          ),
         ),
       ),
     );

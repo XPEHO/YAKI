@@ -24,20 +24,22 @@ class HeaderDeclaration extends StatelessWidget {
     required this.headerHint,
   });
 
-  void onAvatarIconPress(BuildContext context) {
-    context.go('/afternoonDeclaration');
-  }
+  void onAvatarIconPress(BuildContext context) {}
 
+  /// Called when the picto switch button is tapped.
+  /// Checks the current route and navigates to the corresponding route.
   void onPictoSwitchTap(BuildContext context) {
+    // Check if the current route is either the 'morningDeclaration'
+    // or 'afternoonDeclaration' route
     if ((ModalRoute.of(context)?.settings?.name == 'morningDeclaration') ||
         (ModalRoute.of(context)?.settings?.name == 'afternoonDeclaration')) {
+      // If so, navigate to the 'declaration' route
       context.go('/declaration');
     } else {
+      // Otherwise, navigate to the 'morningDeclaration' route
       context.go('/morningDeclaration');
     }
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -86,10 +88,7 @@ class HeaderDeclaration extends StatelessWidget {
                     child: Material(
                       color: Colors.transparent,
                       shape: const CircleBorder(),
-
-                        child:
-                            CircleAvatarSVG(iconPath: pictoPath, radius: 100),
-
+                      child: CircleAvatarSVG(iconPath: pictoPath, radius: 100),
                     ),
                   ),
                   Positioned(
