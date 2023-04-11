@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:yaki/presentation/ui/shared/pages_layout.dart';
 import 'package:yaki/presentation/ui/shared/pages_layout_declaration.dart';
-import 'package:yaki/presentation/ui/shared/views/header.dart';
 import 'package:yaki/presentation/ui/declaration/views/morning_declaration_body.dart';
 import 'package:yaki/presentation/ui/shared/views/header_declaration.dart';
 

@@ -6,7 +6,6 @@ import 'package:yaki/presentation/displaydata/declaration_card_content.dart';
 import 'package:yaki/presentation/displaydata/status_page_content.dart';
 import 'package:yaki/presentation/state/providers/declaration_provider.dart';
 import 'package:yaki/presentation/state/providers/halfday_status_provider.dart';
-import 'package:yaki/presentation/state/providers/status_provider.dart';
 import 'package:yaki/presentation/ui/declaration/views/status_card.dart';
 
 /// using ConsumerStatefulWidget (statefullWidget) to have access to the WidgetRef object

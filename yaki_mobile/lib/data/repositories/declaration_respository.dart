@@ -88,7 +88,6 @@ class DeclarationRepository {
     try {
       final createHttpResponse =
           await _declarationApi.create([declaration], 'fullDay');
-      print(createHttpResponse.data);
       final statusCode = createHttpResponse.response.statusCode;
       switch (statusCode) {
         case 200 | 201:
@@ -121,12 +120,9 @@ class DeclarationRepository {
   Future<void> createHalfDay(List<DeclarationModel> declarations) async {
     String statusValueMorning = "";
     String statusValueAfternoon = "";
-    print(declarations[0].toJson());
-    print(declarations[1].toJson());
     try {
       final createHttpResponse =
           await _declarationApi.create(declarations, 'halfDay');
-      print(createHttpResponse.data);
       final statusCode = createHttpResponse.response.statusCode;
       switch (statusCode) {
         case 200 | 201:
