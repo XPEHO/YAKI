@@ -102,32 +102,48 @@ export class DeclarationRepository {
 
   /**
    * Get the latest declaration for a team mate
+   * Select current day declaration, OR declaration ending after the current day (vacation or "other" situation)
    * @param {number} teamMateId - number
    * @returns An array of Declaration objects.
    */
-  async getDeclarationForTeamMate(teamMateId: number): Promise<DeclarationDtoIn> {
+  async getDeclarationForTeamMate(teamMateId: number): Promise<DeclarationDtoIn[]> {
     const client = await this.pool.connect();
     try {
+      // now()::date  =  YYYY-MM-dd
       const result = await client.query(
         `SELECT *
         FROM declaration
         WHERE declaration_team_mate_id = $1
-        AND declaration_date >= date_trunc('day', CURRENT_TIMESTAMP)
-        AND declaration_date < date_trunc('day', CURRENT_TIMESTAMP) + interval '1 day'
-        ORDER BY declaration_id DESC
-        LIMIT 1`,
+        AND declaration_date::date = now()::date
+        OR (
+            declaration_date_start::date <= now()::date
+            AND declaration_date_end::date > now()::date 
+            AND (
+              declaration_status = 'vacation' 
+              OR
+              declaration_status = 'other'
+              )
+            )
+        ORDER BY declaration_date DESC LIMIT 10`,
         [teamMateId]
       );
-      const declarationToFront = new DeclarationDtoIn(
-        result.rows[0].declaration_id,
-        result.rows[0].declaration_team_mate_id,
-        result.rows[0].declaration_date,
-        result.rows[0].declaration_date_start,
-        result.rows[0].declaration_date_end,
-        result.rows[0].declaration_status
-      );
 
-      return declarationToFront;
+      const declarationListToFront: DeclarationDtoIn[] = [];
+
+      for (let declaration of result.rows) {
+        declarationListToFront.push(
+          new DeclarationDtoIn(
+            declaration.declaration_id,
+            declaration.declaration_team_mate_id,
+            declaration.declaration_date,
+            declaration.declaration_date_start,
+            declaration.declaration_date_end,
+            declaration.declaration_status
+          )
+        );
+      }
+
+      return declarationListToFront;
     } finally {
       client.release();
     }

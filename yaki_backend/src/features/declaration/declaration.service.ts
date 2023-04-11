@@ -63,18 +63,23 @@ export class DeclarationService {
     }
     let isObjectsValid: boolean = false;
     for (let declaration of declarationList) {
-      // check  if all values are true,  therefore  no null, nor undefined, nor empty string.      if (
+      // check  if all values are true,  therefore  no null, nor undefined, nor empty string.
+
+      if (
         declaration.declarationTeamMateId &&
         declaration.declarationDate &&
         declaration.declarationDateStart &&
         declaration.declarationDateEnd &&
         declaration.declarationStatus !== undefined &&
         declaration.declarationStatus.trim() !== ""
-      {
+      ) {
         isObjectsValid = true;
-      }      // break loop at the first false value ( found unexpected data )
+      }
+
+      // break loop at the first false value ( found unexpected data )
       if (!isObjectsValid) break;
-    }    if (isObjectsValid) {
+    }
+    if (isObjectsValid) {
       return await this.declarationRepository.createHalfDayDeclaration(declarationList);
     } else {
       throw new TypeError("One or more requiered information is missing.");
@@ -84,12 +89,12 @@ export class DeclarationService {
   /**
    * Get all declarations for a team mate.
    * @param {number} teamMateId - number
-   * @returns DeclarationDtoIn | String
+   * @returns DeclarationDtoIn[] | String
    */
-  async getDeclarationForTeamMate(teamMateId: number): Promise<DeclarationDtoIn | String> {
-    const declaration = await this.declarationRepository.getDeclarationForTeamMate(teamMateId);
-    if (declaration !== null || declaration !== undefined) {
-      return declaration;
+  async getDeclarationForTeamMate(teamMateId: number): Promise<DeclarationDtoIn[] | String> {
+    const declarationList = await this.declarationRepository.getDeclarationForTeamMate(teamMateId);
+    if (declarationList !== null || declarationList !== undefined) {
+      return this.selectDeclarationToReturn(declarationList);
     } else {
       throw new TypeError("You have to declare yourself.");
     }
@@ -120,4 +125,50 @@ export class DeclarationService {
     }
     return this.declarationRepository.updateDeclarationStatus(declarationId, declaration);
   }
+
+  /**
+   * Function returning either daily declaration or both halfday declaration.
+   *
+   * Use declarationList sorted by the declaration time, the lastest resgistered declaration is the first array element.
+   *
+   * Check if the first element is a full day declaration based on start and end hours.
+   * If not, find the first morning and afternoon declaration and add them in order to the array,
+   * that will be returned
+   * @param declarationList declarations of the current day coming from sql request
+   * @returns declarationList to return to be to the front.
+   */
+  selectDeclarationToReturn = (declarationList: DeclarationDtoIn[]): DeclarationDtoIn[] => {
+    const listToReturn: DeclarationDtoIn[] = [];
+    const hourStart = declarationList[0].declarationDateStart.getHours();
+    const hourEnd = declarationList[0].declarationDateEnd.getHours();
+
+    const dayStart = declarationList[0].declarationDateStart.toDateString();
+    const dayEnd = declarationList[0].declarationDateEnd.toDateString();
+
+    // check for same day declaration
+    // if not can be vacation or "other" that could requier for more than on day.
+    if (dayStart == dayEnd) {
+      // check if first declaration for the day is daily declaration.
+      // if not necessary halfDay declaration.
+      if (hourStart < 9 && hourEnd > 15) {
+        listToReturn.push(declarationList[0]);
+      } else {
+        const morning: DeclarationDtoIn | undefined = declarationList.find(
+          (declaration) => declaration.declarationDateEnd.getHours() < 13
+        );
+        const afternoon: DeclarationDtoIn | undefined = declarationList.find(
+          (declaration) => declaration.declarationDateStart.getHours() > 12
+        );
+
+        if (morning !== undefined && afternoon !== undefined) {
+          listToReturn.push(morning, afternoon);
+        } else {
+          throw new TypeError("Missing a half day declaration");
+        }
+      }
+    } else {
+      console.log(declarationList[0]);
+    }
+    return listToReturn;
+  };
 }
