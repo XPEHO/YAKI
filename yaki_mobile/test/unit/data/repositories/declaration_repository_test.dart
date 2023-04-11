@@ -10,15 +10,29 @@ import 'declaration_repository_test.mocks.dart';
 
 @GenerateMocks([DeclarationApi])
 void main() {
-  final httpResponse = MockHttpResponse();
+  final httpResponse = MockHttpResponseList();
+  final httpResponseGet = MockHttpResponse();
   final response = MockResponse();
   final mockedDeclarationApi = MockDeclarationApi();
 
   final declarationRepository = DeclarationRepository(mockedDeclarationApi);
 
-  final Map<String, dynamic> createResponseApi = {
+  final List<Map<String, dynamic>> createResponseApi = [
+    {
+      "declarationId": 2,
+      "declarationDate": DateTime.now().toIso8601String(),
+      "declarationDateStart": DateTime.now().toIso8601String(),
+      "declarationDateEnd": DateTime.now().toIso8601String(),
+      "declarationTeamMateId": 3,
+      "declarationStatus": "REMOTE"
+    }
+  ];
+
+  final Map<String, dynamic> createResponseApiGet = {
     "declarationId": 2,
     "declarationDate": DateTime.now().toIso8601String(),
+    "declarationDateStart": DateTime.now().toIso8601String(),
+    "declarationDateEnd": DateTime.now().toIso8601String(),
     "declarationTeamMateId": 3,
     "declarationStatus": "REMOTE"
   };
@@ -28,18 +42,18 @@ void main() {
     () {
       const String teammateId = "1";
 
-      final Map<String, dynamic> getErrorResponse = {};
+      final List<Map<String, dynamic>> getErrorResponse = [{}];
 
       test(
         'Successfully GET daily declaration.',
         () async {
           // Stubbing
           when(mockedDeclarationApi.getDeclaration(teammateId)).thenAnswer(
-            (realInvocation) => Future.value(httpResponse),
+            (realInvocation) => Future.value(httpResponseGet),
           );
-          when(httpResponse.response).thenReturn(response);
+          when(httpResponseGet.response).thenReturn(response);
           when(response.statusCode).thenReturn(200);
-          when(httpResponse.data).thenReturn(createResponseApi);
+          when(httpResponseGet.data).thenReturn(createResponseApiGet);
 
           final String status =
               await declarationRepository.getDeclaration(teammateId);
