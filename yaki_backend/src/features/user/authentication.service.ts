@@ -23,7 +23,7 @@ class Service {
    * @param user
    * @returns
    */
-  createToken = async (user: CaptainDtoOut | TeamMateDtoOut) => {  
+  createToken = async (user: CaptainDtoOut | TeamMateDtoOut) => {
     const token = jwt.sign(
       {
         user_id: user.userId,
@@ -54,10 +54,9 @@ class Service {
     }
     try {
       const decoded = jwt.verify(token, process.env.TOKEN_SECRET);
-      if(req.headers["user_id"] != decoded.user_id) {
-        throw new Error()
+      if (req.headers["user_id"] != decoded.user_id) {
+        throw new Error();
       }
-      req.body.user = decoded;
     } catch (err) {
       return res.status(401).send("Invalid Token");
     }
