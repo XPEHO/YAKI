@@ -113,6 +113,6 @@ export class DeclarationService {
     if (!Object.values(StatusDeclaration).includes(declaration[0].declarationStatus)) {
       throw new TypeError("Invalid declaration status.");
     }
-    return this.declarationRepository.updateDeclarationStatus(declarationId, declaration[0]);
+    return this.declarationRepository.updateDeclarationStatus(declarationId, declaration);
   }
 }

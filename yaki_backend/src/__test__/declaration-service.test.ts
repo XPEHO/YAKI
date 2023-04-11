@@ -126,6 +126,7 @@ describe("DeclarationService", () => {
       declarationDateEnd: new Date(),
       declarationStatus: StatusDeclaration.ON_SITE,
     };
+
     const updateDeclarationSpy = jest
       .spyOn(declarationRepository, "updateDeclarationStatus")
       .mockResolvedValue(undefined);
