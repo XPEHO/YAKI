@@ -63,13 +63,18 @@ export class DeclarationService {
     }
     let isObjectsValid: boolean = false;
     for (let declaration of declarationList) {
-      // check  if all values are true,  therefore  no null, nor undefined, nor empty string.
-      isObjectsValid = Object.values(declaration).every((value) => value.trim());
-      // break loop at the first false value ( found unexpected data )
+      // check  if all values are true,  therefore  no null, nor undefined, nor empty string.      if (
+        declaration.declarationTeamMateId &&
+        declaration.declarationDate &&
+        declaration.declarationDateStart &&
+        declaration.declarationDateEnd &&
+        declaration.declarationStatus !== undefined &&
+        declaration.declarationStatus.trim() !== ""
+      {
+        isObjectsValid = true;
+      }      // break loop at the first false value ( found unexpected data )
       if (!isObjectsValid) break;
-    }
-
-    if (isObjectsValid) {
+    }    if (isObjectsValid) {
       return await this.declarationRepository.createHalfDayDeclaration(declarationList);
     } else {
       throw new TypeError("One or more requiered information is missing.");

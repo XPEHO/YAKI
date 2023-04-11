@@ -84,18 +84,17 @@ class DeclarationRepository {
   ///
   /// At the end of the function assign the statusValue to the DeclarationStatus
   Future<void> createAllDay(DeclarationModel declaration) async {
-    // CODE A ENLEVER
-    declaration.declarationTeamMateId = 3;
     String statusValue = "";
     try {
       final createHttpResponse =
           await _declarationApi.create([declaration], 'fullDay');
+      print(createHttpResponse.data);
       final statusCode = createHttpResponse.response.statusCode;
       switch (statusCode) {
         case 200 | 201:
           // convert HttpResponse<dynamic> (Map<String, dynamic>) into Model using .fromJson method
           final createdDeclarationIn = DeclarationModelIn.fromJson(
-            createHttpResponse.data,
+            createHttpResponse.data[0],
           );
           statusValue = createdDeclarationIn.declarationStatus ?? "";
           break;
@@ -120,14 +119,14 @@ class DeclarationRepository {
   }
 
   Future<void> createHalfDay(List<DeclarationModel> declarations) async {
-    // CODE A ENLEVER
-    declarations[0].declarationTeamMateId = 3;
-    declarations[1].declarationTeamMateId = 3;
     String statusValueMorning = "";
     String statusValueAfternoon = "";
+    print(declarations[0].toJson());
+    print(declarations[1].toJson());
     try {
       final createHttpResponse =
           await _declarationApi.create(declarations, 'halfDay');
+      print(createHttpResponse.data);
       final statusCode = createHttpResponse.response.statusCode;
       switch (statusCode) {
         case 200 | 201:
