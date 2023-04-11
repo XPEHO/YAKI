@@ -1,13 +1,7 @@
 package com.xpeho.yaki_admin_backend.data.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "owner", schema = "public")
 public class OwnerModel {
@@ -25,6 +19,11 @@ public class OwnerModel {
         this.userId = userId;
     }
 
+    public OwnerModel(int id, int userId) {
+        this.id = id;
+        this.userId = userId;
+    }
+
     public OwnerModel() {
     }
 
@@ -32,7 +31,15 @@ public class OwnerModel {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public int getUserId() {
         return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 }

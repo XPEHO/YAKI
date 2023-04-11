@@ -34,13 +34,13 @@ public class CustomerController {
 
 
     @GetMapping("{id}")
-    public CustomerEntity getCaptain(@PathVariable int id) {
+    public CustomerEntity getCustomer(@PathVariable int id) {
         return customerService.getCustomer(id);
     }
 
     @DeleteMapping("{id}")
-    public void deleteCustomer(@PathVariable int id) {
-        customerService.deleteById(id);
+    public CustomerEntity deleteCustomer(@PathVariable int id) {
+        return customerService.deleteById(id);
     }
 
     @PutMapping("{id}")
