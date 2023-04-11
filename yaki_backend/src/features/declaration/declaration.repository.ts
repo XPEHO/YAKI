@@ -139,9 +139,9 @@ export class DeclarationRepository {
    * @param {number} declarationId - number,
    * @param {Declaration} declaration - Declaration
    */
-  async updateDeclarationStatus(declarationId: number, declaration: DeclarationDtoIn): Promise<void> {
+  async updateDeclarationStatus(declarationId: number, declaration: DeclarationDtoIn[]): Promise<void> {
     const {declarationDate, declarationDateStart, declarationDateEnd, declarationTeamMateId, declarationStatus} =
-      declaration;
+      declaration[0];
     const client = await this.pool.connect();
     try {
       await client.query(
