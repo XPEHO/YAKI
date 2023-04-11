@@ -1,12 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
 import 'package:go_router/go_router.dart';
-
-import '../../../styles/header_text_style.dart';
-import 'avatar_icon.dart';
-import 'circle_avatar_svg.dart';
+import 'package:yaki/presentation/styles/header_text_style.dart';
+import 'package:yaki/presentation/ui/shared/views/avatar_icon.dart';
+import 'package:yaki/presentation/ui/shared/views/circle_avatar_svg.dart';
 
 class HeaderDeclaration extends StatelessWidget {
   final String pictoIcon;
@@ -31,8 +28,8 @@ class HeaderDeclaration extends StatelessWidget {
   void onPictoSwitchTap(BuildContext context) {
     // Check if the current route is either the 'morningDeclaration'
     // or 'afternoonDeclaration' route
-    if ((ModalRoute.of(context)?.settings?.name == 'morningDeclaration') ||
-        (ModalRoute.of(context)?.settings?.name == 'afternoonDeclaration')) {
+    if ((ModalRoute.of(context)?.settings.name == 'morningDeclaration') ||
+        (ModalRoute.of(context)?.settings.name == 'afternoonDeclaration')) {
       // If so, navigate to the 'declaration' route
       context.go('/declaration');
     } else {

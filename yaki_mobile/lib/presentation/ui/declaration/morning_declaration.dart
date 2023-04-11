@@ -1,10 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:yaki/presentation/ui/declaration/views/declaration_body.dart';
-
-import '../shared/pages_layout_declaration.dart';
-import '../shared/views/header_declaration.dart';
+import 'package:yaki/presentation/ui/shared/pages_layout_declaration.dart';
+import 'package:yaki/presentation/ui/shared/views/header_declaration.dart';
 
 class MorningDeclaration extends StatelessWidget {
   const MorningDeclaration({Key? key}) : super(key: key);
