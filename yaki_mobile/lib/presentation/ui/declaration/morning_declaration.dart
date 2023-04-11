@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
 import 'package:yaki/presentation/ui/declaration/views/declaration_body.dart';
-import 'package:yaki/presentation/ui/shared/views/header_declaration.dart';
 import 'package:yaki/presentation/ui/shared/pages_layout_declaration.dart';
+import 'package:yaki/presentation/ui/shared/views/header_declaration.dart';
 
-class Declaration extends StatelessWidget {
-  const Declaration({super.key});
+class MorningDeclaration extends StatelessWidget {
+  const MorningDeclaration({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,10 +13,10 @@ class Declaration extends StatelessWidget {
       body: PagesLayoutDeclaration(
         header: HeaderDeclaration(
           pictoIcon: 'assets/images/avatar1.svg',
-          pictoPath: 'assets/images/day.svg',
+          pictoPath: 'assets/images/sun.svg',
           pictoSwitch: 'assets/images/pm.svg',
           headerTitle: tr('headerTitleDecla'),
-          headerHint: tr('headerHintDecla'),
+          headerHint: tr('headerHintDeclaMorning'),
         ),
         bodyContent: const DeclarationBody(),
       ),
