@@ -19,15 +19,6 @@ class AfternoonDeclarationBody extends ConsumerWidget {
     required String afternoonStatus,
     required Function goToStatusPage,
   }) async {
-    // ref
-    //     .read(declarationProvider.notifier)
-    //     .setAfternoonDeclaration(afternoonStatus);
-    // await ref
-    //     .read(declarationProvider.notifier)
-    //     .createMorning(morningStatus, afternoonStatus);
-    // await ref
-    //     .read(declarationProvider.notifier)
-    //     .createAfternoon(afternoonStatus);
     await ref
         .read(declarationProvider.notifier)
         .createHalfDay(morningStatus, afternoonStatus);
