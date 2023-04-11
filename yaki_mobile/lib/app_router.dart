@@ -44,28 +44,21 @@ final goRouterProvider = Provider<GoRouter>(
             GoRoute(
               path: 'afternoonDeclaration',
               builder: (context, state) => const AfternoonDeclaration(),
-              redirect: (BuildContext context, GoRouterState state) async {
-                if (await SharedPref.isTokenPresent()) {
-                  return '/afternoonDeclaration';
-                } else {
-                  return '/';
-                }
-              },
-            ),
-            GoRoute(
-              path: 'morningDeclaration',
-              builder: (context, state) => const MorningDeclaration(),
-              redirect: (BuildContext context, GoRouterState state) async {
-                if (await SharedPref.isTokenPresent()) {
-                  return '/morningDeclaration';
-                } else {
-                  return '/';
-                }
-              },
-            ),
-            GoRoute(
-              path: 'afternoonDeclaration',
-              builder: (context, state) => const AfternoonDeclaration(),
+              pageBuilder: (context, state) => CustomTransitionPage(
+                child: const AfternoonDeclaration(),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) =>
+                        SlideTransition(
+                  position: animation.drive(
+                    Tween(
+                      begin: const Offset(1.0, 0.0),
+                      end: Offset.zero,
+                    ),
+                  ),
+                  child: child,
+                ),
+                transitionDuration: const Duration(milliseconds: 200),
+              ),
               redirect: (BuildContext context, GoRouterState state) async {
                 if (await SharedPref.isTokenPresent()) {
                   return '/afternoonDeclaration';
@@ -95,29 +88,6 @@ final goRouterProvider = Provider<GoRouter>(
                   return '/';
                 }
               },
-            ),
-            GoRoute(
-              path: 'morningDeclaration',
-              builder: (context, state) => const MorningDeclaration(),
-            ),
-            GoRoute(
-              path: 'afternoonDeclaration',
-              builder: (context, state) => const AfternoonDeclaration(),
-              pageBuilder: (context, state) => CustomTransitionPage(
-                child: const AfternoonDeclaration(),
-                transitionsBuilder:
-                    (context, animation, secondaryAnimation, child) =>
-                        SlideTransition(
-                  position: animation.drive(
-                    Tween(
-                      begin: const Offset(1.0, 0.0),
-                      end: Offset.zero,
-                    ),
-                  ),
-                  child: child,
-                ),
-                transitionDuration: const Duration(milliseconds: 200),
-              ),
             ),
             GoRoute(
               path: 'halfdayStatus',
