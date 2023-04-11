@@ -93,12 +93,8 @@ class DeclarationNotifier extends StateNotifier<String> {
   /// in the format YYYY-mm-dd
   String parseDate(DateTime date) {
     var result = '${date.year}';
-    if (date.month < 10) {
-      result += '-0${date.month}';
-    }
-    if (date.day < 10) {
-      result += '-0${date.day}';
-    }
+    date.month < 10 ? result += '-0${date.month}' : result += '-${date.month}';
+    date.day < 10 ? result += '-0${date.day}' : result += '-${date.day}';
     return result;
   }
 
