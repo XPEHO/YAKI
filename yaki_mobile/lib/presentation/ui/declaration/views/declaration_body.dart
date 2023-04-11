@@ -49,28 +49,16 @@ class DeclarationBody extends ConsumerWidget {
             children: statusCardsContent
                 .map(
                   (cardContent) => StatusCard(
-<<<<<<< HEAD
-                    statusName: tr(cardContent['text']),
-                    statusPicto: cardContent['image'],
-                    onPress: () => _onStatusSelected(
-                      ref: ref,
-                      status:
-                          StatusEnum.values.byName(cardContent['text']).text,
-                      goToStatusPage: () => context.go('/status'),
-                    ),
-                  ),
-                )
-=======
                 statusName: tr(cardContent['text']),
                 statusPicto: cardContent['image'],
                 onPress: () => _onStatusSelected(
                   ref: ref,
-                  status: StatusEnum.values.byName(cardContent['text']).text,
+                  status:
+                  StatusEnum.values.byName(cardContent['text']).text,
                   goToStatusPage: () => context.go('/status'),
                 ),
               ),
             )
->>>>>>> 18ffa43 (feat(header): add scroll function to declarationBody)
                 .toList(),
           ),
         ),
