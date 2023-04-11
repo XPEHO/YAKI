@@ -138,14 +138,9 @@ describe("DeclarationService", () => {
   });
 
   describe("get a declaration ", () => {
-    const declarationDtoIn: DeclarationDtoIn = new DeclarationDtoIn(
-      1,
-      1,
-      new Date(),
-      new Date(),
-      new Date(),
-      StatusDeclaration.REMOTE
-    );
+    const declarationDtoIn: DeclarationDtoIn[] = [
+      new DeclarationDtoIn(1, 1, new Date(), new Date(), new Date(), StatusDeclaration.REMOTE),
+    ];
 
     it("should get and return declaration of teamMate 1", async () => {
       jest.spyOn(declarationRepository, "getDeclarationForTeamMate").mockResolvedValueOnce(declarationDtoIn);
