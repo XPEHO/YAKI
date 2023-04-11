@@ -7,8 +7,6 @@ import 'package:yaki/presentation/ui/captain/captain_view.dart';
 //import 'package:yaki/presentation/ui/declaration/afternoon_declaration.dart';
 import 'package:yaki/presentation/ui/declaration/declaration.dart';
 //import 'package:yaki/presentation/ui/declaration/morning_declaration.dart';
-import 'package:yaki/presentation/ui/halfday_declaration/afternoon_declaration.dart';
-import 'package:yaki/presentation/ui/halfday_declaration/morning_declaration.dart';
 import 'package:yaki/presentation/ui/declaration/afternoon_declaration.dart';
 import 'package:yaki/presentation/ui/declaration/morning_declaration.dart';
 import 'package:yaki/presentation/ui/status/status.dart';
@@ -21,7 +19,7 @@ final goRouterProvider = Provider<GoRouter>(
       routes: <GoRoute>[
         GoRoute(
           path: '/',
-          builder: (context, state) => const MorningDeclaration(),
+          builder: (context, state) => Authentication(),
           routes: [
             GoRoute(
               path: 'declaration',
