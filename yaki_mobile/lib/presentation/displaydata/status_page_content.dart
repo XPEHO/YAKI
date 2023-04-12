@@ -7,7 +7,11 @@ enum StatusEnum {
   remote('remote'),
   onSite('on site'),
   vacation('vacation'),
-  other('other');
+  other('other'),
+  halfDay('halfDay'),
+  fullDay('fullDay'),
+  morningTr('Morning'),
+  afternoonTr('Afternoon');
 
   final String text;
   const StatusEnum(this.text);

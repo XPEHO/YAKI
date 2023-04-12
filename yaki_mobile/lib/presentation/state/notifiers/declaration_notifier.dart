@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yaki/data/models/declaration_model.dart';
 import 'package:yaki/data/repositories/declaration_respository.dart';
@@ -39,10 +40,10 @@ class DeclarationNotifier extends StateNotifier<String> {
     DeclarationModel newDeclaration = DeclarationModel(
       declarationDate: todayDate,
       declarationDateStart: DateTime.parse(
-        '${parseDate(todayDate)} 00:00:00Z',
+        '${DateFormat('yyyy-MM-dd').format(todayDate)} 00:00:00Z',
       ),
       declarationDateEnd: DateTime.parse(
-        '${parseDate(todayDate)} 23:59:59Z',
+        '${DateFormat('yyyy-MM-dd').format(todayDate)} 23:59:59Z',
       ),
       declarationTeamMateId: loginRepository.teamMateId,
       declarationStatus: status,
@@ -60,10 +61,10 @@ class DeclarationNotifier extends StateNotifier<String> {
     DeclarationModel newDeclarationMorning = DeclarationModel(
       declarationDate: todayDate,
       declarationDateStart: DateTime.parse(
-        '${parseDate(todayDate)} 00:00:00Z',
+        '${DateFormat('yyyy-MM-dd').format(todayDate)} 00:00:00Z',
       ),
       declarationDateEnd: DateTime.parse(
-        '${parseDate(todayDate)} 12:00:00Z',
+        '${DateFormat('yyyy-MM-dd').format(todayDate)} 12:00:00Z',
       ),
       declarationTeamMateId: loginRepository.teamMateId,
       declarationStatus: morning,
@@ -72,10 +73,10 @@ class DeclarationNotifier extends StateNotifier<String> {
     DeclarationModel newDeclarationAfternoon = DeclarationModel(
       declarationDate: todayDate,
       declarationDateStart: DateTime.parse(
-        '${parseDate(todayDate)} 13:00:00Z',
+        '${DateFormat('yyyy-MM-dd').format(todayDate)} 13:00:00Z',
       ),
       declarationDateEnd: DateTime.parse(
-        '${parseDate(todayDate)} 23:59:59Z',
+        '${DateFormat('yyyy-MM-dd').format(todayDate)} 23:59:59Z',
       ),
       declarationTeamMateId: loginRepository.teamMateId,
       declarationStatus: afternoon,
@@ -87,15 +88,6 @@ class DeclarationNotifier extends StateNotifier<String> {
     ];
 
     await declarationRepository.createHalfDay(declarations);
-  }
-
-  /// Take a DateTime and convert it to a string
-  /// in the format YYYY-mm-dd
-  String parseDate(DateTime date) {
-    var result = '${date.year}';
-    date.month < 10 ? result += '-0${date.month}' : result += '-${date.month}';
-    date.day < 10 ? result += '-0${date.day}' : result += '-${date.day}';
-    return result;
   }
 
   setMorningDeclaration(String status) {

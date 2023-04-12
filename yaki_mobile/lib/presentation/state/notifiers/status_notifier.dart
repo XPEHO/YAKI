@@ -42,11 +42,4 @@ class StatusPageNotifier extends StateNotifier<StateStatusPage> {
     final String status = declarationRepository.statusAllDay;
     setState(status);
   }
-
-  /// Retrieve the  for the morning saved in DeclarationStatus entities;
-  /// And invoke the "setState" method.
-  // void getMorningStatus() {
-  //   final String status = declarationRepository.statusMorning;
-  //   setState(status);
-  // }
 }

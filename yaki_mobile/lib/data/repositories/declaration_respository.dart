@@ -3,6 +3,7 @@ import 'package:yaki/data/models/declaration_model.dart';
 import 'package:yaki/data/models/declaration_model_in.dart';
 import 'package:yaki/data/sources/remote/declaration_api.dart';
 import 'package:yaki/domain/entities/declaration_status.dart';
+import 'package:yaki/presentation/displaydata/status_page_content.dart';
 
 class DeclarationRepository {
   final DeclarationApi _declarationApi;
@@ -87,13 +88,13 @@ class DeclarationRepository {
     String statusValue = "";
     try {
       final createHttpResponse =
-          await _declarationApi.create([declaration], 'fullDay');
+          await _declarationApi.create([declaration], StatusEnum.fullDay.text);
       final statusCode = createHttpResponse.response.statusCode;
       switch (statusCode) {
         case 200 | 201:
           // convert HttpResponse<dynamic> (Map<String, dynamic>) into Model using .fromJson method
           final createdDeclarationIn = DeclarationModelIn.fromJson(
-            createHttpResponse.data[0],
+            createHttpResponse.data.first,
           );
           statusValue = createdDeclarationIn.declarationStatus ?? "";
           break;
@@ -122,7 +123,7 @@ class DeclarationRepository {
     String statusValueAfternoon = "";
     try {
       final createHttpResponse =
-          await _declarationApi.create(declarations, 'halfDay');
+          await _declarationApi.create(declarations, StatusEnum.halfDay.text);
       final statusCode = createHttpResponse.response.statusCode;
       switch (statusCode) {
         case 200 | 201:

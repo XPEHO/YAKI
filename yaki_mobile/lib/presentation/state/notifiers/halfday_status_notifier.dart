@@ -25,7 +25,8 @@ class HalfdayStatusNotifier extends StateNotifier<StateHalfdayPage> {
 
   /// set state declaration for the morning
   void setStateMorning(String status) {
-    String text = StatusUtils.getTranslationKey(status, 'Morning');
+    String text =
+        StatusUtils.getTranslationKey(status, StatusEnum.morningTr.text);
     String image = StatusUtils.getImage(status);
 
     state.morning = StateStatusPage(
@@ -36,7 +37,8 @@ class HalfdayStatusNotifier extends StateNotifier<StateHalfdayPage> {
 
   /// set state declaration for the afternoon
   void setStateAfternoon(String status) {
-    String text = StatusUtils.getTranslationKey(status, 'Afternoon');
+    String text =
+        StatusUtils.getTranslationKey(status, StatusEnum.afternoonTr.text);
     String image = StatusUtils.getImage(status);
 
     state.afternoon = StateStatusPage(
