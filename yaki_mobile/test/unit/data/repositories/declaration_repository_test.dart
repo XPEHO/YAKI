@@ -27,15 +27,6 @@ void main() {
     }
   ];
 
-  final Map<String, dynamic> createResponseApiGet = {
-    "declarationId": 2,
-    "declarationDate": DateTime.now().toIso8601String(),
-    "declarationDateStart": DateTime.now().toIso8601String(),
-    "declarationDateEnd": DateTime.now().toIso8601String(),
-    "declarationTeamMateId": 3,
-    "declarationStatus": "REMOTE"
-  };
-
   group(
     'declaration repository getDeclaration()',
     () {
