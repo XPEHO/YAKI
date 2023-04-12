@@ -145,8 +145,6 @@ describe("DeclarationService", () => {
       new DeclarationDtoIn(1, 1, new Date(), dateStart, dateEnd, StatusDeclaration.REMOTE),
     ];
 
-    const declarationDtoInEmpty: DeclarationDtoIn[] = [];
-
     it("should get and return declaration of teamMate 1", async () => {
       jest.spyOn(declarationRepository, "getDeclarationForTeamMate").mockResolvedValueOnce(declarationDtoIn);
 
