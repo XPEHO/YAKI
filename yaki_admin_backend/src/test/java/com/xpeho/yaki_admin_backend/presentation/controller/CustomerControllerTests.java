@@ -100,13 +100,15 @@ public class CustomerControllerTests {
     @Test
     public void mustGetANotFoundStatus() throws Exception {
 
+        //given
         given(customerService.getCustomer(250)).willThrow(EntityNotFoundException.class);
 
-
+        //when
         MockHttpServletResponse result = mvc.perform(MockMvcRequestBuilders.get("/customers/250")
                         .accept(MediaType.APPLICATION_JSON))
                 .andReturn().getResponse();
 
+        //then
         assertThat(result.getStatus(), is(equalTo(HttpStatus.NOT_FOUND.value())));
     }
 
