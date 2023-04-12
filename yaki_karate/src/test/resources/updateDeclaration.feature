@@ -8,10 +8,12 @@ Feature: UpdateDeclaration
     * header user_id = login.userId
 
   Scenario: Update declaration successful
-    Given def declarationId = declaration.response.declarationId
+    * def timeStart = function(){ return java.time.LocalDate.now().toString() + "T08:00:00.950Z" }
+    * def timeEnd = function(){ return java.time.LocalDate.now().toString() + "T18:00:00.950Z" }
+    Given def declarationId = declaration.response[0].declarationId
     And path '/declarations/' + declarationId
     And def now = java.time.LocalDateTime.now().toString()
-    And def requestPayload = [{ declarationDate: now, declarationDateStart: start, declarationDateEnd: end, declarationTeamMateId: 4,  declarationStatus: "remote" }]
+    And def requestPayload = [{ declarationDate: now, declarationDateStart: '#(timeStart())', declarationDateEnd: '#(timeEnd())', declarationTeamMateId: 4,  declarationStatus: "remote" }]
     And request requestPayload
     When method PUT
     Then status 200
@@ -20,7 +22,7 @@ Feature: UpdateDeclaration
   Scenario: Update declaration fail 404
     Given def declarationId = declaration.response.declarationId
     And path '/declarations/' + declarationId + 9
-    And def requestPayload = [{declarationDate: now, declarationDateStart: start, declarationDateEnd: end, declarationTeamMateId: 4,  declarationStatus: 2 }]
+    And def requestPayload = [{declarationDate: now, declarationDateStart: '#(timeStart())', declarationDateEnd: '#(timeEnd())', declarationTeamMateId: 4,  declarationStatus: 2 }]
     And request requestPayload
     When method PUT
     Then status 404
@@ -28,7 +30,7 @@ Feature: UpdateDeclaration
   Scenario: Update declaration fail 404
     Given def declarationId = declaration.response.declarationId
     And path '/declarations/' + declarationId
-    And def requestPayload = [{ declarationDate: now, declarationDateStart: start, declarationDateEnd: end, declarationTeamMateId: "",  declarationStatus: "Rewote" }]
+    And def requestPayload = [{ declarationDate: now, declarationDateStart: '#(timeStart())', declarationDateEnd: '#(timeEnd())', declarationTeamMateId: "",  declarationStatus: "Rewote" }]
     And request requestPayload
     When method PUT
     Then status 404

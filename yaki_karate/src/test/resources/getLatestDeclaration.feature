@@ -13,7 +13,7 @@ Feature: GetLatestDeclaration
     And param teamMateId = 4
     When method get
     Then status 200
-    And match response contains [{ declarationId: '#number' declarationDate: '#string', declarationDateStart: '#string', declarationDateEnd: '#string', declarationTeamMateId: 4, declarationStatus: 'remote' }]
+    And match response contains [{ declarationId: '#number', declarationDate: '#string', declarationDateStart: '#string', declarationDateEnd: '#string', declarationTeamMateId: 4, declarationStatus: 'remote' }]
 
 
   Scenario: Get the latest declaration fail
