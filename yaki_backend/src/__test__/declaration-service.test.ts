@@ -138,14 +138,12 @@ describe("DeclarationService", () => {
   });
 
   describe("get a declaration ", () => {
-    const declarationDtoIn: DeclarationDtoIn = new DeclarationDtoIn(
-      1,
-      1,
-      new Date(),
-      new Date(),
-      new Date(),
-      StatusDeclaration.REMOTE
-    );
+    const dateStart: Date = new Date(new Date().setHours(6));
+    const dateEnd: Date = new Date(new Date().setHours(18));
+
+    const declarationDtoIn: DeclarationDtoIn[] = [
+      new DeclarationDtoIn(1, 1, new Date(), dateStart, dateEnd, StatusDeclaration.REMOTE),
+    ];
 
     it("should get and return declaration of teamMate 1", async () => {
       jest.spyOn(declarationRepository, "getDeclarationForTeamMate").mockResolvedValueOnce(declarationDtoIn);
@@ -153,6 +151,16 @@ describe("DeclarationService", () => {
       const declarationForTeamMates = await declarationService.getDeclarationForTeamMate(1);
 
       expect(declarationForTeamMates).toEqual(declarationDtoIn);
+    });
+
+    it("should throw an error for null or undefined declaration list", async () => {
+      // Arrange
+      const teamMateId = 1;
+
+      jest.spyOn(declarationRepository, "getDeclarationForTeamMate").mockResolvedValueOnce([]);
+
+      // Act and Assert
+      await expect(declarationService.getDeclarationForTeamMate(teamMateId)).rejects.toThrow(TypeError);
     });
   });
 });

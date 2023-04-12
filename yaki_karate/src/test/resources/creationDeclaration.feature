@@ -7,10 +7,12 @@ Feature: CreationDeclaration
     * header user_id = login.userId
 
   Scenario: Creation declaration successful
+    * def timeStart = function(){ return java.time.LocalDate.now().toString() + "T08:00:00.950Z" }
+    * def timeEnd = function(){ return java.time.LocalDate.now().toString() + "T18:00:00.950Z" }
     Given path '/declarations'
     And param mode = 'fullDay'
-    And def now = java.time.LocalDateTime.now().toString()
-    And def requestPayload = [{ declarationDate: now, declarationDateStart: now, declarationDateEnd: now, declarationTeamMateId: 4, declarationStatus: "remote" }]
+    And def now = java.time.OffsetDateTime.now().toString()
+    And def requestPayload = [{ declarationDate: now, declarationDateStart: '#(timeStart())', declarationDateEnd: '#(timeEnd())', declarationTeamMateId: 4, declarationStatus: "remote" }]
     And request requestPayload
     When method POST
     Then status 201

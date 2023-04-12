@@ -6,5 +6,4 @@ public class KarateRunner {
     Karate runAllTests() {
         return Karate.run().relativeTo(getClass());
     }
-
 }
