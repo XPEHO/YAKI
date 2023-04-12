@@ -138,15 +138,11 @@ describe("DeclarationService", () => {
   });
 
   describe("get a declaration ", () => {
+    const dateStart: Date = new Date(new Date().setHours(6));
+    const dateEnd: Date = new Date(new Date().setHours(18));
+
     const declarationDtoIn: DeclarationDtoIn[] = [
-      new DeclarationDtoIn(
-        1,
-        1,
-        new Date(),
-        new Date(new Date().setHours(6)),
-        new Date(new Date().setHours(18)),
-        StatusDeclaration.REMOTE
-      ),
+      new DeclarationDtoIn(1, 1, new Date(), dateStart, dateEnd, StatusDeclaration.REMOTE),
     ];
 
     it("should get and return declaration of teamMate 1", async () => {
