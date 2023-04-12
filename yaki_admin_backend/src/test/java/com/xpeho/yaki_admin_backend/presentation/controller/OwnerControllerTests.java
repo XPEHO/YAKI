@@ -99,7 +99,8 @@ public class OwnerControllerTests {
         //when
         MockHttpServletResponse response = mvc.perform(
                         MockMvcRequestBuilders.post("/Owner")
-                                .contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(owner2)))
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(owner2)))
                 .andReturn().getResponse();
 
         //then

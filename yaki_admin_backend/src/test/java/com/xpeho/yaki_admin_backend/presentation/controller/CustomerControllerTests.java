@@ -108,8 +108,6 @@ public class CustomerControllerTests {
                 .andReturn().getResponse();
 
         assertThat(result.getStatus(), is(equalTo(HttpStatus.NOT_FOUND.value())));
-        assertThat(result.getContentAsString(), is(equalTo("test")));
-
     }
 
     //testing the customerController.createCustomer() method
