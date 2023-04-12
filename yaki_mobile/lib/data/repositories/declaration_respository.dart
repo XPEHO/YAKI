@@ -46,7 +46,7 @@ class DeclarationRepository {
         case 200:
           // convert HttpResponse<dynamic> (Map<String, dynamic>) into Model using .fromJson method
           final getDeclarationIn = DeclarationModelIn.fromJson(
-            getHttpResponse.data,
+            getHttpResponse.data.first,
           );
           statusValue = getDeclarationIn.declarationStatus ?? "";
           break;
