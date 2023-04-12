@@ -5,33 +5,33 @@ import 'package:go_router/go_router.dart';
 import 'package:yaki/presentation/displaydata/declaration_card_content.dart';
 import 'package:yaki/presentation/displaydata/status_page_content.dart';
 import 'package:yaki/presentation/state/providers/declaration_provider.dart';
-import 'package:yaki/presentation/state/providers/status_provider.dart';
+import 'package:yaki/presentation/state/providers/halfday_status_provider.dart';
 import 'package:yaki/presentation/ui/declaration/views/status_card.dart';
 
 /// using ConsumerStatefulWidget (statefullWidget) to have access to the WidgetRef object
 /// allowing the current widget to have access to any provider.
-class DeclarationBody extends ConsumerWidget {
-  const DeclarationBody({Key? key}) : super(key: key);
+class AfternoonDeclarationBody extends ConsumerWidget {
+  const AfternoonDeclarationBody({Key? key}) : super(key: key);
 
-  /// when a statusCard is selected / pressed / taped
-  /// * access the declarationNotifier to invoke the create method
-  /// * pass the selected status String.
-  /// ( get the StatusEnum text from card content, as its the format that need to be send to the back )
-  /// * Then invoke the statusNotifier getSelectedStatus change the state to set displayed data in the status page.
-  /// * Finaly trigger router to change to the status page.
-  Future<void> _onStatusSelected({
+  _onStatusSelected({
     required WidgetRef ref,
-    required String status,
+    required String morningStatus,
+    required String afternoonStatus,
     required Function goToStatusPage,
   }) async {
-    await ref.read(declarationProvider.notifier).createAllDay(status);
-    ref.read(statusPageProvider.notifier).getSelectedStatus();
+    await ref
+        .read(declarationProvider.notifier)
+        .createHalfDay(morningStatus, afternoonStatus);
+    // set la state dans le status_notifier.dart avec la valeur du morning
+    ref.read(halfdayStatusPageProvider.notifier).getHalfdayDeclaration();
     goToStatusPage();
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     var width = MediaQuery.of(context).size.width;
+    var morningDeclaration =
+        ref.watch(declarationProvider.notifier).getMorningDeclaration();
 
     return Padding(
       padding: EdgeInsets.symmetric(
@@ -52,10 +52,14 @@ class DeclarationBody extends ConsumerWidget {
                   statusPicto: cardContent['image'],
                   onPress: () => _onStatusSelected(
                     ref: ref,
-                    status: StatusEnum.values.byName(cardContent['text']).text,
-                    goToStatusPage: () => context.go('/status'),
+                    morningStatus: morningDeclaration,
+                    afternoonStatus:
+                        StatusEnum.values.byName(cardContent['text']).text,
+                    goToStatusPage: () => context.go('/halfdayStatus'),
                   ),
-                  isSelected: false,
+                  isSelected:
+                      StatusEnum.values.byName(cardContent['text']).text ==
+                          morningDeclaration,
                 ),
               )
               .toList(),

@@ -4,10 +4,11 @@ import 'package:go_router/go_router.dart';
 import 'package:yaki/data/sources/local/shared_preference.dart';
 import 'package:yaki/presentation/ui/authentication/authentication.dart';
 import 'package:yaki/presentation/ui/captain/captain_view.dart';
-import 'package:yaki/presentation/ui/declaration/afternoon_declaration.dart';
 import 'package:yaki/presentation/ui/declaration/declaration.dart';
+import 'package:yaki/presentation/ui/declaration/afternoon_declaration.dart';
 import 'package:yaki/presentation/ui/declaration/morning_declaration.dart';
 import 'package:yaki/presentation/ui/status/status.dart';
+import 'package:yaki/presentation/ui/status/halfday_status.dart';
 
 /// router set as provider.
 final goRouterProvider = Provider<GoRouter>(
@@ -43,28 +44,21 @@ final goRouterProvider = Provider<GoRouter>(
             GoRoute(
               path: 'afternoonDeclaration',
               builder: (context, state) => const AfternoonDeclaration(),
-              redirect: (BuildContext context, GoRouterState state) async {
-                if (await SharedPref.isTokenPresent()) {
-                  return '/afternoonDeclaration';
-                } else {
-                  return '/';
-                }
-              },
-            ),
-            GoRoute(
-              path: 'morningDeclaration',
-              builder: (context, state) => const MorningDeclaration(),
-              redirect: (BuildContext context, GoRouterState state) async {
-                if (await SharedPref.isTokenPresent()) {
-                  return '/morningDeclaration';
-                } else {
-                  return '/';
-                }
-              },
-            ),
-            GoRoute(
-              path: 'afternoonDeclaration',
-              builder: (context, state) => const AfternoonDeclaration(),
+              pageBuilder: (context, state) => CustomTransitionPage(
+                child: const AfternoonDeclaration(),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) =>
+                        SlideTransition(
+                  position: animation.drive(
+                    Tween(
+                      begin: const Offset(1.0, 0.0),
+                      end: Offset.zero,
+                    ),
+                  ),
+                  child: child,
+                ),
+                transitionDuration: const Duration(milliseconds: 200),
+              ),
               redirect: (BuildContext context, GoRouterState state) async {
                 if (await SharedPref.isTokenPresent()) {
                   return '/afternoonDeclaration';
@@ -94,6 +88,10 @@ final goRouterProvider = Provider<GoRouter>(
                   return '/';
                 }
               },
+            ),
+            GoRoute(
+              path: 'halfdayStatus',
+              builder: (context, state) => const HalfDayStatus(),
             ),
           ],
         ),

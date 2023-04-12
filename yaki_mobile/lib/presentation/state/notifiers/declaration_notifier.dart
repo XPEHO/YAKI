@@ -1,7 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yaki/data/models/declaration_model.dart';
 import 'package:yaki/data/repositories/declaration_respository.dart';
 import 'package:yaki/data/repositories/login_repository.dart';
+import 'package:yaki/domain/entities/declaration_status.dart';
 
 class DeclarationNotifier extends StateNotifier<String> {
   final DeclarationRepository declarationRepository;
@@ -31,14 +33,72 @@ class DeclarationNotifier extends StateNotifier<String> {
   ///
   /// create a DeclarationModel model instance,
   ///
-  /// then invoke the declarationRepository.create(), that will send the newly declaration to the API (via _api.dart)
-  Future<void> create(String status) async {
+  /// then invoke the declarationRepository.createAllDay(), that will send the newly declaration to the API (via _api.dart)
+  Future<void> createAllDay(String status) async {
+    final todayDate = DateTime.now();
+
     DeclarationModel newDeclaration = DeclarationModel(
-      declarationDate: DateTime.now(),
+      declarationDate: todayDate,
+      declarationDateStart: DateTime.parse(
+        '${DateFormat('yyyy-MM-dd').format(todayDate)} 00:00:00Z',
+      ),
+      declarationDateEnd: DateTime.parse(
+        '${DateFormat('yyyy-MM-dd').format(todayDate)} 23:59:59Z',
+      ),
       declarationTeamMateId: loginRepository.teamMateId,
       declarationStatus: status,
     );
 
-    await declarationRepository.create(newDeclaration);
+    await declarationRepository.createAllDay(newDeclaration);
+  }
+
+  /// Create declaration for the morning by setting
+  /// the dateStart to midnight and dateEnd to noon.
+  /// Then send it to declarationRepository's function
+  Future<void> createHalfDay(String morning, String afternoon) async {
+    final todayDate = DateTime.now();
+
+    DeclarationModel newDeclarationMorning = DeclarationModel(
+      declarationDate: todayDate,
+      declarationDateStart: DateTime.parse(
+        '${DateFormat('yyyy-MM-dd').format(todayDate)} 00:00:00Z',
+      ),
+      declarationDateEnd: DateTime.parse(
+        '${DateFormat('yyyy-MM-dd').format(todayDate)} 12:00:00Z',
+      ),
+      declarationTeamMateId: loginRepository.teamMateId,
+      declarationStatus: morning,
+    );
+
+    DeclarationModel newDeclarationAfternoon = DeclarationModel(
+      declarationDate: todayDate,
+      declarationDateStart: DateTime.parse(
+        '${DateFormat('yyyy-MM-dd').format(todayDate)} 13:00:00Z',
+      ),
+      declarationDateEnd: DateTime.parse(
+        '${DateFormat('yyyy-MM-dd').format(todayDate)} 23:59:59Z',
+      ),
+      declarationTeamMateId: loginRepository.teamMateId,
+      declarationStatus: afternoon,
+    );
+
+    List<DeclarationModel> declarations = [
+      newDeclarationMorning,
+      newDeclarationAfternoon
+    ];
+
+    await declarationRepository.createHalfDay(declarations);
+  }
+
+  setMorningDeclaration(String status) {
+    declarationRepository.setMorningDeclaration(status);
+  }
+
+  String getMorningDeclaration() {
+    return declarationRepository.statusMorning;
+  }
+
+  DeclarationStatus getAllDeclaration() {
+    return declarationRepository.allDeclarations;
   }
 }

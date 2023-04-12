@@ -43,12 +43,14 @@ class _DeclarationApi implements DeclarationApi {
   }
 
   @override
-  Future<HttpResponse<dynamic>> create(declaration) async {
+  Future<HttpResponse<dynamic>> create(
+    declaration,
+    mode,
+  ) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'mode': mode};
     final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(declaration.toJson());
+    final _data = declaration.map((e) => e.toJson()).toList();
     final _result =
         await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(Options(
       method: 'POST',

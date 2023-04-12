@@ -15,6 +15,7 @@ abstract class DeclarationApi {
 
   @POST('/declarations')
   Future<HttpResponse> create(
-    @Body() DeclarationModel declaration,
+    @Body() List<DeclarationModel> declaration,
+    @Query("mode") String mode,
   );
 }

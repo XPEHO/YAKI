@@ -18,7 +18,9 @@ class Declaration extends StatelessWidget {
           headerTitle: tr('headerTitleDecla'),
           headerHint: tr('headerHintDecla'),
         ),
-        bodyContent: const DeclarationBody(),
+        bodyContent: const SingleChildScrollView(
+          child: DeclarationBody(),
+        ),
       ),
     );
   }

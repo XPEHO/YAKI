@@ -1,11 +1,11 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:yaki/presentation/ui/declaration/views/declaration_body.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:yaki/presentation/ui/shared/pages_layout_declaration.dart';
+import 'package:yaki/presentation/ui/declaration/views/morning_declaration_body.dart';
 import 'package:yaki/presentation/ui/shared/views/header_declaration.dart';
 
 class MorningDeclaration extends StatelessWidget {
-  const MorningDeclaration({Key? key}) : super(key: key);
+  const MorningDeclaration({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,11 +14,13 @@ class MorningDeclaration extends StatelessWidget {
         header: HeaderDeclaration(
           pictoIcon: 'assets/images/avatar1.svg',
           pictoPath: 'assets/images/sun.svg',
-          pictoSwitch: 'assets/images/pm.svg',
+          pictoSwitch: 'assets/images/day.svg',
           headerTitle: tr('headerTitleDecla'),
           headerHint: tr('headerHintDeclaMorning'),
         ),
-        bodyContent: const DeclarationBody(),
+        bodyContent: const SingleChildScrollView(
+          child: MorningDeclarationBody(),
+        ),
       ),
     );
   }

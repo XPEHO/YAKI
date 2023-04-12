@@ -10,15 +10,29 @@ import 'declaration_repository_test.mocks.dart';
 
 @GenerateMocks([DeclarationApi])
 void main() {
-  final httpResponse = MockHttpResponse();
+  final httpResponse = MockHttpResponseList();
+  final httpResponseGet = MockHttpResponse();
   final response = MockResponse();
   final mockedDeclarationApi = MockDeclarationApi();
 
   final declarationRepository = DeclarationRepository(mockedDeclarationApi);
 
-  final Map<String, dynamic> createResponseApi = {
+  final List<Map<String, dynamic>> createResponseApi = [
+    {
+      "declarationId": 2,
+      "declarationDate": DateTime.now().toIso8601String(),
+      "declarationDateStart": DateTime.now().toIso8601String(),
+      "declarationDateEnd": DateTime.now().toIso8601String(),
+      "declarationTeamMateId": 3,
+      "declarationStatus": "REMOTE"
+    }
+  ];
+
+  final Map<String, dynamic> createResponseApiGet = {
     "declarationId": 2,
     "declarationDate": DateTime.now().toIso8601String(),
+    "declarationDateStart": DateTime.now().toIso8601String(),
+    "declarationDateEnd": DateTime.now().toIso8601String(),
     "declarationTeamMateId": 3,
     "declarationStatus": "REMOTE"
   };
@@ -28,18 +42,18 @@ void main() {
     () {
       const String teammateId = "1";
 
-      final Map<String, dynamic> getErrorResponse = {};
+      final List<Map<String, dynamic>> getErrorResponse = [{}];
 
       test(
         'Successfully GET daily declaration.',
         () async {
           // Stubbing
           when(mockedDeclarationApi.getDeclaration(teammateId)).thenAnswer(
-            (realInvocation) => Future.value(httpResponse),
+            (realInvocation) => Future.value(httpResponseGet),
           );
-          when(httpResponse.response).thenReturn(response);
+          when(httpResponseGet.response).thenReturn(response);
           when(response.statusCode).thenReturn(200);
-          when(httpResponse.data).thenReturn(createResponseApi);
+          when(httpResponseGet.data).thenReturn(createResponseApiGet);
 
           final String status =
               await declarationRepository.getDeclaration(teammateId);
@@ -87,6 +101,8 @@ void main() {
     () {
       DeclarationModel createdDeclaration = DeclarationModel(
         declarationDate: DateTime.now(),
+        declarationDateStart: DateTime.parse('2023-03-20T00:00:00.000Z'),
+        declarationDateEnd: DateTime.parse('2023-03-20T23:59:59.950Z'),
         declarationTeamMateId: 1,
         declarationStatus: "REMOTE",
       );
@@ -94,71 +110,71 @@ void main() {
       test(
         'Successfully create declaration.',
         () async {
-          when(mockedDeclarationApi.create(createdDeclaration))
+          when(mockedDeclarationApi.create([createdDeclaration], 'fullDay'))
               .thenAnswer((realInvocation) => Future.value(httpResponse));
           when(httpResponse.response).thenReturn(response);
           when(response.statusCode).thenReturn(200 | 201);
           when(httpResponse.data).thenReturn(createResponseApi);
 
-          await declarationRepository.create(createdDeclaration);
+          await declarationRepository.createAllDay(createdDeclaration);
 
-          expect(declarationRepository.status, "REMOTE");
+          expect(declarationRepository.statusAllDay, "REMOTE");
         },
       );
       test(
         'Fail create declaration 400 or 500.',
         () async {
-          when(mockedDeclarationApi.create(createdDeclaration))
+          when(mockedDeclarationApi.create([createdDeclaration], 'fullDay'))
               .thenAnswer((realInvocation) => Future.value(httpResponse));
           when(httpResponse.response).thenReturn(response);
           when(response.statusCode).thenReturn(400 | 500);
           when(httpResponse.data).thenReturn(createResponseApi);
 
-          await declarationRepository.create(createdDeclaration);
+          await declarationRepository.createAllDay(createdDeclaration);
 
-          expect(declarationRepository.status, "");
+          expect(declarationRepository.statusAllDay, "");
         },
       );
       test(
         'Fail create declaration 401.',
         () async {
-          when(mockedDeclarationApi.create(createdDeclaration))
+          when(mockedDeclarationApi.create([createdDeclaration], 'fullDay'))
               .thenAnswer((realInvocation) => Future.value(httpResponse));
           when(httpResponse.response).thenReturn(response);
           when(response.statusCode).thenReturn(401);
           when(httpResponse.data).thenReturn(createResponseApi);
 
-          await declarationRepository.create(createdDeclaration);
+          await declarationRepository.createAllDay(createdDeclaration);
 
-          expect(declarationRepository.status, "");
+          expect(declarationRepository.statusAllDay, "");
         },
       );
       test(
         'Fail create declaration 403.',
         () async {
-          when(mockedDeclarationApi.create(createdDeclaration))
+          when(mockedDeclarationApi.create([createdDeclaration], 'fullDay'))
               .thenAnswer((realInvocation) => Future.value(httpResponse));
           when(httpResponse.response).thenReturn(response);
           when(response.statusCode).thenReturn(403);
           when(httpResponse.data).thenReturn(createResponseApi);
 
-          await declarationRepository.create(createdDeclaration);
+          await declarationRepository.createAllDay(createdDeclaration);
 
-          expect(declarationRepository.status, "");
+          expect(declarationRepository.statusAllDay, "");
         },
       );
       test(
         'Throw exception when create declaration',
         () async {
-          when(mockedDeclarationApi.create(createdDeclaration))
+          when(mockedDeclarationApi.create([createdDeclaration], 'fullDay'))
               .thenAnswer((realInvocation) => Future.value(httpResponse));
           when(httpResponse.response).thenReturn(response);
           when(response.statusCode).thenReturn(418);
           when(httpResponse.data).thenReturn(createResponseApi);
 
-          await declarationRepository.create(createdDeclaration);
+          await declarationRepository.createAllDay(createdDeclaration);
 
-          expect(declarationRepository.status, "");
+          expect(declarationRepository.statusAllDay, "");
         },
       );
     },
@@ -171,8 +187,8 @@ void main() {
         () {
           const String selectedStatus = "REMOTE";
 
-          when(declarationRepository.setDeclarationEntities(selectedStatus));
-          expect(declarationRepository.status, selectedStatus);
+          when(declarationRepository.setAllDayDeclaration(selectedStatus));
+          expect(declarationRepository.statusAllDay, selectedStatus);
         },
       );
     },
