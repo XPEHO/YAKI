@@ -20,7 +20,7 @@ Feature: UpdateDeclaration
     And match response == [{ declarationDate: '#string', declarationDateStart: '#string', declarationDateEnd: '#string', declarationTeamMateId: 4,  declarationStatus: 'remote'}]
 
   Scenario: Update declaration fail 404
-    Given def declarationId = declaration.response.declarationId
+    Given def declarationId = declaration.response[0].declarationId
     And path '/declarations/' + declarationId + 9
     And def requestPayload = [{declarationDate: now, declarationDateStart: '#(timeStart())', declarationDateEnd: '#(timeEnd())', declarationTeamMateId: 4,  declarationStatus: 2 }]
     And request requestPayload
@@ -28,7 +28,7 @@ Feature: UpdateDeclaration
     Then status 404
 
   Scenario: Update declaration fail 404
-    Given def declarationId = declaration.response.declarationId
+    Given def declarationId = declaration.response[0].declarationId
     And path '/declarations/' + declarationId
     And def requestPayload = [{ declarationDate: now, declarationDateStart: '#(timeStart())', declarationDateEnd: '#(timeEnd())', declarationTeamMateId: "",  declarationStatus: "Rewote" }]
     And request requestPayload
