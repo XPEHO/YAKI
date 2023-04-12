@@ -152,5 +152,18 @@ describe("DeclarationService", () => {
 
       expect(declarationForTeamMates).toEqual(declarationDtoIn);
     });
+
+    it("should throw an error for null or undefined declaration list", async () => {
+      // Arrange
+      const teamMateId = 1;
+
+      jest.spyOn(declarationRepository, "getDeclarationForTeamMate").mockResolvedValueOnce([]);
+
+      // Act and Assert
+      await expect(declarationService.getDeclarationForTeamMate(teamMateId)).rejects.toThrow(TypeError);
+      await expect(declarationService.getDeclarationForTeamMate(teamMateId)).rejects.toThrow(
+        "You have to declare yourself."
+      );
+    });
   });
 });
