@@ -140,7 +140,7 @@ export class DeclarationService {
   selectDeclarationToReturn = (declarationList: DeclarationDtoIn[]): DeclarationDtoIn[] => {
     const listToReturn: DeclarationDtoIn[] = [];
     if (declarationList.length === 0) {
-      throw new TypeError("No data to send");
+      throw new TypeError("No declaration to send");
     }
     const hourStart = declarationList[0].declarationDateStart.getHours();
     const hourEnd = declarationList[0].declarationDateEnd.getHours();
