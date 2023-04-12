@@ -90,9 +90,6 @@ public class CustomerControllerTests {
         String expectedResponse = objectMapper.writeValueAsString(customer2);
         assertThat(response.getContentAsString(), is(equalTo(
                 expectedResponse)));
-
-        //given
-
     }
 
     /* testing if the customerController.getCustomer(id) return an EntityNotFound exception
