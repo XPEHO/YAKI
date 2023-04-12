@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xpeho.yaki_admin_backend.domain.entities.CustomerEntity;
 import com.xpeho.yaki_admin_backend.domain.services.CustomerService;
+import com.xpeho.yaki_admin_backend.errorHandling.CustomExceptionHandler;
 import com.xpeho.yaki_admin_backend.presentation.controllers.CustomerController;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
@@ -43,14 +44,16 @@ public class CustomerControllerTests {
     @InjectMocks
     private CustomerController customerController;
 
+    //creating a mock of the controller before each test
     @BeforeEach
     public void setup() {
 
-        // MockMvc standalone approach
         mvc = MockMvcBuilders.standaloneSetup(customerController)
+                .setControllerAdvice(new CustomExceptionHandler())
                 .build();
     }
 
+    //testing the customerController.getCustomers() method
     @Test
     public void mustGetCustomers() throws Exception {
         //given
@@ -69,8 +72,9 @@ public class CustomerControllerTests {
 
     }
 
+    //testing the customerController.getCustomer(id) method
     @Test
-    public void mustGetACustomers() throws Exception {
+    public void mustGetACustomer() throws Exception {
 
         //given
         given(customerService.getCustomer(2)).willReturn(customer2);
@@ -87,24 +91,28 @@ public class CustomerControllerTests {
         assertThat(response.getContentAsString(), is(equalTo(
                 expectedResponse)));
 
-        //test with wrong id
         //given
-        given(customerService.getCustomer(250)).willThrow(EntityNotFoundException.class);
-
-        //when
-        MockHttpServletResponse response2 = mvc.perform(
-                        MockMvcRequestBuilders.get("/customers/250")
-                                .accept(MediaType.APPLICATION_JSON))
-                .andReturn().getResponse();
-
-        //then
-        assertThat(response2.getStatus(), is(equalTo(HttpStatus.NOT_FOUND.value())));
-        String expectedResponse2 = objectMapper.writeValueAsString(customer2);
-        assertThat(response2.getContentAsString(), is(equalTo(
-                expectedResponse2)));
 
     }
 
+    /* testing if the customerController.getCustomer(id) return an EntityNotFound exception
+    in case we have a nonexistent id. */
+    @Test
+    public void mustGetANotFoundStatus() throws Exception {
+
+        given(customerService.getCustomer(250)).willThrow(EntityNotFoundException.class);
+
+
+        MockHttpServletResponse result = mvc.perform(MockMvcRequestBuilders.get("/customers/250")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andReturn().getResponse();
+
+        assertThat(result.getStatus(), is(equalTo(HttpStatus.NOT_FOUND.value())));
+        assertThat(result.getContentAsString(), is(equalTo("test")));
+
+    }
+
+    //testing the customerController.createCustomer() method
     @Test
     public void mustCreateANewCustomer() throws Exception {
 
@@ -114,17 +122,18 @@ public class CustomerControllerTests {
         //when
         MockHttpServletResponse response = mvc.perform(
                         MockMvcRequestBuilders.post("/customers")
-                                .contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(customer2)))
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(customer2)))
                 .andReturn().getResponse();
 
         //then
         assertThat(response.getStatus(), is(equalTo(HttpStatus.OK.value())));
-        String expectedResponse = objectMapper.writeValueAsString(customer1);
         JsonNode returnedResponse = objectMapper.readTree(response.getContentAsString());
         assertThat(returnedResponse.get("customerName").asText(), is(equalTo("Auchan")));
 
     }
 
+    //testing the customerController.deleteCustomer() method
     @Test
     public void mustDeleteACustomer() throws Exception {
 
@@ -144,16 +153,19 @@ public class CustomerControllerTests {
 
     }
 
+    //testing the customerController.update() method
     @Test
     public void mustPutACustomer() throws Exception {
-        CustomerEntity customer3 = new CustomerEntity(2, customer1.customerName(), customer1.ownerId(), customer1.locationId());
+        CustomerEntity customer3 = new CustomerEntity(
+                2, customer1.customerName(), customer1.ownerId(), customer1.locationId());
         //given
         given(customerService.saveOrUpdate(customer1, 2)).willReturn(customer3);
 
         //when
         MockHttpServletResponse response = mvc.perform(
                         MockMvcRequestBuilders.put("/customers/2")
-                                .contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(customer1)))
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(customer1)))
                 .andReturn().getResponse();
         //then
         assertThat(response.getStatus(), is(equalTo(HttpStatus.OK.value())));

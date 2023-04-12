@@ -42,14 +42,14 @@ public class OwnerControllerTests {
     @InjectMocks
     private OwnerController ownerController;
 
+    //creating a mock of the controller before each test
     @BeforeEach
     public void setup() {
-
-        // MockMvc standalone approach
         mvc = MockMvcBuilders.standaloneSetup(ownerController)
                 .build();
     }
 
+    //testing the ownerController.getAll() method
     @Test
     public void mustGetOwners() throws Exception {
         //given
@@ -57,7 +57,7 @@ public class OwnerControllerTests {
 
         //when
         MockHttpServletResponse response = mvc.perform(
-                        MockMvcRequestBuilders.get("/owners")
+                        MockMvcRequestBuilders.get("/Owner")
                                 .accept(MediaType.APPLICATION_JSON))
                 .andReturn().getResponse();
         //then
@@ -68,6 +68,7 @@ public class OwnerControllerTests {
 
     }
 
+    //testing the ownerController.getById() method
     @Test
     public void mustGetAOwners() throws Exception {
 
@@ -76,7 +77,7 @@ public class OwnerControllerTests {
 
         //when
         MockHttpServletResponse response = mvc.perform(
-                        MockMvcRequestBuilders.get("/owners/2")
+                        MockMvcRequestBuilders.get("/Owner/2")
                                 .accept(MediaType.APPLICATION_JSON))
                 .andReturn().getResponse();
 
@@ -86,17 +87,9 @@ public class OwnerControllerTests {
         assertThat(response.getContentAsString(), is(equalTo(
                 expectedResponse)));
 
-        //test with wrong id
-        //given
-        /*when(ownerService.findById(250)).thenReturn(null);
-
-
-        assertThatExceptionOfType(EntityNotFoundException.class).isThrownBy(() -> {
-            ownerService.findById(250);
-        });*/
-
     }
 
+    //testing the ownerController.createOwner() method
     @Test
     public void mustCreateANewOwner() throws Exception {
 
@@ -105,27 +98,27 @@ public class OwnerControllerTests {
 
         //when
         MockHttpServletResponse response = mvc.perform(
-                        MockMvcRequestBuilders.post("/owners")
+                        MockMvcRequestBuilders.post("/Owner")
                                 .contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(owner2)))
                 .andReturn().getResponse();
 
         //then
         assertThat(response.getStatus(), is(equalTo(HttpStatus.OK.value())));
-        String expectedResponse = objectMapper.writeValueAsString(owner1);
         JsonNode returnedResponse = objectMapper.readTree(response.getContentAsString());
-        assertThat(returnedResponse.get("ownerUserId").asText(), is(equalTo(5)));
+        assertThat(returnedResponse.get("userId").asText(), is(equalTo("5")));
 
     }
 
-    /*@Test
+    //testing the ownerController.deleteById() method
+    @Test
     public void mustDeleteAOwner() throws Exception {
 
         //given
-        given(ownerService.deleteById(2);).willReturn(owner2);
+        given(ownerService.deleteById(2)).willReturn(owner2);
 
         //when
         MockHttpServletResponse response = mvc.perform(
-                        MockMvcRequestBuilders.delete("/owners/2")
+                        MockMvcRequestBuilders.delete("/Owner/2")
                                 .accept(MediaType.APPLICATION_JSON))
                 .andReturn().getResponse();
         //then
@@ -134,7 +127,7 @@ public class OwnerControllerTests {
         assertThat(response.getContentAsString(), is(equalTo(
                 expectedResponse)));
 
-    }*/
+    }
 
 
 }

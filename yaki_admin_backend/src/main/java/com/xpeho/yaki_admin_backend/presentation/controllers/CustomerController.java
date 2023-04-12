@@ -19,7 +19,6 @@ public class CustomerController {
         this.userService = userService;
     }
 
-    // get all customers
     @GetMapping
     public List<CustomerEntity> getCustomers() {
         return customerService.getCustomers();
@@ -35,11 +34,13 @@ public class CustomerController {
 
     @GetMapping("{id}")
     public CustomerEntity getCustomer(@PathVariable int id) {
+
         return customerService.getCustomer(id);
     }
 
     @DeleteMapping("{id}")
     public CustomerEntity deleteCustomer(@PathVariable int id) {
+
         return customerService.deleteById(id);
     }
 
