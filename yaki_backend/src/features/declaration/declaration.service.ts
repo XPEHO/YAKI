@@ -166,9 +166,8 @@ export class DeclarationService {
           throw new TypeError("Missing a half day declaration");
         }
       }
-    } else {
-      console.log(declarationList[0]);
-    }
+    } // can add else to retreive vacations or other having longer duration than just a day
+
     return listToReturn;
   };
 }
