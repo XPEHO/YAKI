@@ -11,7 +11,6 @@ import 'declaration_repository_test.mocks.dart';
 @GenerateMocks([DeclarationApi])
 void main() {
   final httpResponse = MockHttpResponseList();
-  final httpResponseGet = MockHttpResponse();
   final response = MockResponse();
   final mockedDeclarationApi = MockDeclarationApi();
 
@@ -28,15 +27,6 @@ void main() {
     }
   ];
 
-  final Map<String, dynamic> createResponseApiGet = {
-    "declarationId": 2,
-    "declarationDate": DateTime.now().toIso8601String(),
-    "declarationDateStart": DateTime.now().toIso8601String(),
-    "declarationDateEnd": DateTime.now().toIso8601String(),
-    "declarationTeamMateId": 3,
-    "declarationStatus": "REMOTE"
-  };
-
   group(
     'declaration repository getDeclaration()',
     () {
@@ -49,11 +39,11 @@ void main() {
         () async {
           // Stubbing
           when(mockedDeclarationApi.getDeclaration(teammateId)).thenAnswer(
-            (realInvocation) => Future.value(httpResponseGet),
+            (realInvocation) => Future.value(httpResponse),
           );
-          when(httpResponseGet.response).thenReturn(response);
+          when(httpResponse.response).thenReturn(response);
           when(response.statusCode).thenReturn(200);
-          when(httpResponseGet.data).thenReturn(createResponseApiGet);
+          when(httpResponse.data).thenReturn(createResponseApi);
 
           final String status =
               await declarationRepository.getDeclaration(teammateId);
