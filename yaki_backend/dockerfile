@@ -4,11 +4,13 @@ FROM node:lts-alpine
 WORKDIR /usr/src/app
 
 # Install app dependencies
-COPY package*.json ./
+COPY . .
 
 RUN npm install
 
-# Bundle app source
+RUN npm run swagger
+
+# Bundle app source 
 COPY . .
 
 EXPOSE 3000
