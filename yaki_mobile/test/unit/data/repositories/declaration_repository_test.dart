@@ -11,7 +11,6 @@ import 'declaration_repository_test.mocks.dart';
 @GenerateMocks([DeclarationApi])
 void main() {
   final httpResponse = MockHttpResponseList();
-  final httpResponseGet = MockHttpResponse();
   final response = MockResponse();
   final mockedDeclarationApi = MockDeclarationApi();
 
@@ -49,11 +48,11 @@ void main() {
         () async {
           // Stubbing
           when(mockedDeclarationApi.getDeclaration(teammateId)).thenAnswer(
-            (realInvocation) => Future.value(httpResponseGet),
+            (realInvocation) => Future.value(httpResponse),
           );
-          when(httpResponseGet.response).thenReturn(response);
+          when(httpResponse.response).thenReturn(response);
           when(response.statusCode).thenReturn(200);
-          when(httpResponseGet.data).thenReturn(createResponseApiGet);
+          when(httpResponse.data).thenReturn(createResponseApi);
 
           final String status =
               await declarationRepository.getDeclaration(teammateId);
