@@ -92,8 +92,8 @@ export class DeclarationService {
    * @returns DeclarationDtoIn[] | String
    */
   async getDeclarationForTeamMate(teamMateId: number): Promise<DeclarationDtoIn[] | String> {
-    const declarationList = await this.declarationRepository.getDeclarationForTeamMate(teamMateId);
-    if (declarationList !== null || declarationList !== undefined) {
+    const declarationList: DeclarationDtoIn[] = await this.declarationRepository.getDeclarationForTeamMate(teamMateId);
+    if (declarationList.length !== 0 || declarationList !== null || declarationList !== undefined) {
       return this.selectDeclarationToReturn(declarationList);
     } else {
       throw new TypeError("You have to declare yourself.");
@@ -139,6 +139,9 @@ export class DeclarationService {
    */
   selectDeclarationToReturn = (declarationList: DeclarationDtoIn[]): DeclarationDtoIn[] => {
     const listToReturn: DeclarationDtoIn[] = [];
+    if (declarationList.length === 0) {
+      throw new TypeError("No data to send");
+    }
     const hourStart = declarationList[0].declarationDateStart.getHours();
     const hourEnd = declarationList[0].declarationDateEnd.getHours();
 

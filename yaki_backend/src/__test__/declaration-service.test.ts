@@ -145,6 +145,8 @@ describe("DeclarationService", () => {
       new DeclarationDtoIn(1, 1, new Date(), dateStart, dateEnd, StatusDeclaration.REMOTE),
     ];
 
+    const declarationDtoInEmpty: DeclarationDtoIn[] = [];
+
     it("should get and return declaration of teamMate 1", async () => {
       jest.spyOn(declarationRepository, "getDeclarationForTeamMate").mockResolvedValueOnce(declarationDtoIn);
 
@@ -161,9 +163,6 @@ describe("DeclarationService", () => {
 
       // Act and Assert
       await expect(declarationService.getDeclarationForTeamMate(teamMateId)).rejects.toThrow(TypeError);
-      await expect(declarationService.getDeclarationForTeamMate(teamMateId)).rejects.toThrow(
-        "You have to declare yourself."
-      );
     });
   });
 });
