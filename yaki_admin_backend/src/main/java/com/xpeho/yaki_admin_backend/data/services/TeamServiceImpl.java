@@ -59,7 +59,6 @@ public class TeamServiceImpl implements TeamService {
         }
         //id and entity.id() could be different
         TeamEntity entitySaved = new TeamEntity(id, entity.captainId(), entity.teamName());
-
         return entitySaved;
     }
 }
