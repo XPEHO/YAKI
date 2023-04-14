@@ -30,7 +30,7 @@ public class TeamServiceImpl implements TeamService {
     public TeamEntity getTeam(int id) {
         Optional<TeamModel> teamModelOpt = teamJpaRepository.findById(id);
         if (!teamModelOpt.isPresent()) {
-            throw new EntityNotFoundException("L'entité avec l'id " + id + " n'a pas été trouvée.");
+            throw new EntityNotFoundException("The team with id " + id + " not found.");
         }
         TeamModel teamModel = teamModelOpt.get();
         return new TeamEntity(teamModel.getId(), teamModel.getCaptainId(), teamModel.getTeamName());
@@ -42,7 +42,7 @@ public class TeamServiceImpl implements TeamService {
             TeamModel teamModel = teamJpaRepository.findById(id).get();
             teamJpaRepository.deleteById(id);
             return new TeamEntity(id, teamModel.getCaptainId(), teamModel.getTeamName());
-        } else return null;
+        } else throw new EntityNotFoundException("The team with id " + id + " not found.");
     }
 
     @Override
