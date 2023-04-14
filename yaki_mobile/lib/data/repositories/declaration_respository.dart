@@ -50,7 +50,11 @@ class DeclarationRepository {
             final getDeclarationIn = DeclarationModelIn.fromJson(
               getHttpResponse.data.first,
             );
+<<<<<<< HEAD
             statusValue.add(getDeclarationIn.declarationStatus);
+=======
+            statusValue.add(getDeclarationIn.declarationStatus ?? "");
+>>>>>>> 1ca2f95 (fix(get-declaration): now, when a teammate logs in back after making its daily declaration, it is redirected to a status page matching the type of the declaration)
             setAllDayDeclaration(statusValue.first);
           }
           // else the server returns at least two declarations
@@ -61,8 +65,13 @@ class DeclarationRepository {
             final getDeclarationInAfternoon = DeclarationModelIn.fromJson(
               getHttpResponse.data[1],
             );
+<<<<<<< HEAD
             statusValue.add(getDeclarationInMorning.declarationStatus);
             statusValue.add(getDeclarationInAfternoon.declarationStatus);
+=======
+            statusValue.add(getDeclarationInMorning.declarationStatus ?? "");
+            statusValue.add(getDeclarationInAfternoon.declarationStatus ?? "");
+>>>>>>> 1ca2f95 (fix(get-declaration): now, when a teammate logs in back after making its daily declaration, it is redirected to a status page matching the type of the declaration)
             setHalfDayDeclaration(statusValue[0], statusValue[1]);
           }
           // convert HttpResponse<dynamic> (Map<String, dynamic>) into Model using .fromJson method

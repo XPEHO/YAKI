@@ -95,14 +95,23 @@ class MockDeclarationRepository extends _i1.Mock
         ),
       ) as _i2.DeclarationStatus);
   @override
+<<<<<<< HEAD
   _i5.Future<List<String>> getDeclaration(String? teamMateId) =>
+=======
+  _i4.Future<List<String>> getDeclaration(String? teamMateId) =>
+>>>>>>> 1ca2f95 (fix(get-declaration): now, when a teammate logs in back after making its daily declaration, it is redirected to a status page matching the type of the declaration)
       (super.noSuchMethod(
         Invocation.method(
           #getDeclaration,
           [teamMateId],
         ),
+<<<<<<< HEAD
         returnValue: _i5.Future<List<String>>.value(<String>[]),
       ) as _i5.Future<List<String>>);
+=======
+        returnValue: _i4.Future<List<String>>.value(<String>[]),
+      ) as _i4.Future<List<String>>);
+>>>>>>> 1ca2f95 (fix(get-declaration): now, when a teammate logs in back after making its daily declaration, it is redirected to a status page matching the type of the declaration)
   @override
   _i5.Future<void> createAllDay(_i6.DeclarationModel? declaration) =>
       (super.noSuchMethod(

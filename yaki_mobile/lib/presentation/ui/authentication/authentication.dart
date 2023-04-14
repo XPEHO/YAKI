@@ -157,6 +157,7 @@ class Authentication extends ConsumerWidget {
                           ),
                         ),
                         onPressed: () => onPressAuthent(
+<<<<<<< HEAD
                           ref: ref,
                           login: loginController.text,
                           password: passwordController.text,
@@ -167,6 +168,17 @@ class Authentication extends ConsumerWidget {
                           goToHalfdayStatusPage: () =>
                               context.go('/halfdayStatus'),
                         ),
+=======
+                            ref: ref,
+                            login: loginController.text,
+                            password: passwordController.text,
+                            goToDeclarationPage: () =>
+                                context.push('/declaration'),
+                            goToStatusPage: () => context.go('/status'),
+                            goToCaptain: () => context.go('/captain'),
+                            goToHalfdayStatusPage: () =>
+                                context.go('/halfdayStatus')),
+>>>>>>> 1ca2f95 (fix(get-declaration): now, when a teammate logs in back after making its daily declaration, it is redirected to a status page matching the type of the declaration)
                         child: Text(tr('signIn')),
                       ),
                     ),

@@ -23,7 +23,11 @@ class DeclarationNotifier extends StateNotifier<String> {
   ///
   /// then invoke the declarationRepository.getDeclaration() method to get the daily declaration, if one was created.
   ///
+<<<<<<< HEAD
   /// Return the declarationStatus, used in authentication page to determine the redirection.
+=======
+  /// return the declarationStatus, used in authentication page to determine the redirection.
+>>>>>>> 1ca2f95 (fix(get-declaration): now, when a teammate logs in back after making its daily declaration, it is redirected to a status page matching the type of the declaration)
   Future<List<String>> getDeclaration() async {
     final teamMateId = loginRepository.teamMateId.toString();
     final declarationStatus =
