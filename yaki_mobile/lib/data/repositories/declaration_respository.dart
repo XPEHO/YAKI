@@ -37,18 +37,35 @@ class DeclarationRepository {
   /// * Get the declarationStatus from the newly created object and assign it to the statusValue.
   ///
   /// This method return the statusValue value.
-  Future<String> getDeclaration(String teamMateId) async {
-    String statusValue = "";
+  Future<List<String>> getDeclaration(String teamMateId) async {
+    List<String> statusValue = [];
     try {
       final getHttpResponse = await _declarationApi.getDeclaration(teamMateId);
       final statusCode = getHttpResponse.response.statusCode;
       switch (statusCode) {
         case 200:
+          // if the server returns one declaration it means it's a declaration
+          // for the whole day
+          if (getHttpResponse.data.length == 1) {
+            final getDeclarationIn = DeclarationModelIn.fromJson(
+              getHttpResponse.data.first,
+            );
+            statusValue.add(getDeclarationIn.declarationStatus);
+            setAllDayDeclaration(statusValue.first);
+          }
+          // else the server returns at least two declarations
+          else {
+            final getDeclarationInMorning = DeclarationModelIn.fromJson(
+              getHttpResponse.data[0],
+            );
+            final getDeclarationInAfternoon = DeclarationModelIn.fromJson(
+              getHttpResponse.data[1],
+            );
+            statusValue.add(getDeclarationInMorning.declarationStatus);
+            statusValue.add(getDeclarationInAfternoon.declarationStatus);
+            setHalfDayDeclaration(statusValue[0], statusValue[1]);
+          }
           // convert HttpResponse<dynamic> (Map<String, dynamic>) into Model using .fromJson method
-          final getDeclarationIn = DeclarationModelIn.fromJson(
-            getHttpResponse.data.first,
-          );
-          statusValue = getDeclarationIn.declarationStatus;
           break;
         case 404:
           debugPrint("No declaration for this day");
@@ -58,7 +75,6 @@ class DeclarationRepository {
             "Invalid statusCode : $statusCode",
           );
       }
-      setAllDayDeclaration(statusValue);
     } catch (err) {
       debugPrint('error during get last declaration : $err');
     }
