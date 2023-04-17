@@ -61,7 +61,7 @@ export class DeclarationRepository {
   /**
    * Inset the half day declaration into the database
    * @param declarationList declaration list containing the declaratin to be inserted
-   * @returns return the inserted halfDay declarations
+   * @returns return the inserted halfDay declarations.
    */
   async createHalfDayDeclaration(declarationList: DeclarationDtoIn[]) {
     const client = await this.pool.connect();
