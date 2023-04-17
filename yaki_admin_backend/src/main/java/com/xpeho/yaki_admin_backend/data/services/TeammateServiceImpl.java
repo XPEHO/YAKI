@@ -7,6 +7,7 @@ import com.xpeho.yaki_admin_backend.domain.services.TeammateService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,8 +22,13 @@ public class TeammateServiceImpl implements TeammateService {
     }
 
     public List<TeammateEntity> findAllByTeam(int teamId) {
-        List<TeammateModel> TeammateEntities = teammateJpaRepository.findAllByTeam();
-
+        List<TeammateModel> TeammateModels = teammateJpaRepository.findAllByTeam(teamId);
+        List<TeammateEntity> teammateEntities = new ArrayList<>();
+        for (TeammateModel teammateModel : TeammateModels) {
+            TeammateEntity teammateEntity = new TeammateEntity(teammateModel.getId(), teammateModel.getTeamId(), teammateModel.getUserId());
+            teammateEntities.add(teammateEntity);
+        }
+        return teammateEntities;
     }
 
     @Override
@@ -34,7 +40,7 @@ public class TeammateServiceImpl implements TeammateService {
     }
 
     @Override
-    public TeammateEntity getTeam(int id) {
+    public TeammateEntity getTeammate(int id) {
         Optional<TeammateModel> teammateModelOpt = teammateJpaRepository.findById(id);
         if (!teammateModelOpt.isPresent()) {
             throw new EntityNotFoundException("The team with id " + id + " not found.");

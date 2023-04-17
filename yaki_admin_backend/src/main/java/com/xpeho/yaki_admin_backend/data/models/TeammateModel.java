@@ -15,6 +15,7 @@ public class TeammateModel {
     @Column(name = "team_mate_user_id")
     private int userId;
 
+
     public TeammateModel(int teamId, int userId) {
         this.teamId = teamId;
         this.userId = userId;

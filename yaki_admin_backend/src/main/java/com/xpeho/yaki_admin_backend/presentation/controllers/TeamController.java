@@ -16,13 +16,13 @@ public class TeamController {
 
     @PostMapping
     public TeamEntity createTeam(@RequestBody TeamEntity teamEntity) {
-        
+
         return teamService.createTeam(teamEntity);
     }
 
 
     @GetMapping("{id}")
-    public TeamEntity getCaptain(@PathVariable int id) {
+    public TeamEntity getTeam(@PathVariable int id) {
 
         return teamService.getTeam(id);
     }

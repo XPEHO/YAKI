@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface TeammateJpaRepository extends JpaRepository<TeammateModel, Integer> {
-    @Query("SELECT DISTINCT tm FROM TeammateModel tm LEFT JOIN FETCH tm.team")
-    List<TeammateModel> findAllByTeam();
+    @Query("SELECT DISTINCT tm FROM TeammateModel tm WHERE tm.teamId = ?1")
+    List<TeammateModel> findAllByTeam(int id);
 }
