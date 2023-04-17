@@ -1,11 +1,10 @@
-package com.xpeho.yaki_admin_backend.presentation.controller;
+package com.xpeho.yaki_admin_backend.presentation.controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xpeho.yaki_admin_backend.domain.entities.CustomerEntity;
 import com.xpeho.yaki_admin_backend.domain.services.CustomerService;
 import com.xpeho.yaki_admin_backend.errorHandling.CustomExceptionHandler;
-import com.xpeho.yaki_admin_backend.presentation.controllers.CustomerController;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

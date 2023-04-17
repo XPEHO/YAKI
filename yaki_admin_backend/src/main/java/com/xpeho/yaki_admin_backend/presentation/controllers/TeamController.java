@@ -16,18 +16,20 @@ public class TeamController {
 
     @PostMapping
     public TeamEntity createTeam(@RequestBody TeamEntity teamEntity) {
+        
         return teamService.createTeam(teamEntity);
     }
 
 
     @GetMapping("{id}")
     public TeamEntity getCaptain(@PathVariable int id) {
+
         return teamService.getTeam(id);
     }
 
     @DeleteMapping("{id}")
-    public void deleteTeam(@PathVariable int id) {
-        teamService.deleteById(id);
+    public TeamEntity deleteTeam(@PathVariable int id) {
+        return teamService.deleteById(id);
     }
 
     @PutMapping("{id}")
