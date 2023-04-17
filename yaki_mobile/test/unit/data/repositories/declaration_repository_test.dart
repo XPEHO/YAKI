@@ -191,10 +191,14 @@ void main() {
         declarationRepository.declarationStatus.morningDeclaration = "remote";
         declarationRepository.declarationStatus.afternoonDeclaration = "other";
         await declarationRepository.createHalfDay(declarations);
-        expect(declarationRepository.declarationStatus.morningDeclaration,
-            "remote",);
-        expect(declarationRepository.declarationStatus.afternoonDeclaration,
-            "other",);
+        expect(
+          declarationRepository.declarationStatus.morningDeclaration,
+          "remote",
+        );
+        expect(
+          declarationRepository.declarationStatus.afternoonDeclaration,
+          "other",
+        );
       },
     );
     test('Fail create declaration 400 or 500.', () async {
@@ -230,8 +234,8 @@ void main() {
       declarationRepository.declarationStatus.morningDeclaration = "";
       declarationRepository.declarationStatus.afternoonDeclaration = "";
       await declarationRepository.createHalfDay(declarations);
-      expect(declarationRepository.declarationStatus.morningDeclaration, "");
-      expect(declarationRepository.declarationStatus.afternoonDeclaration, "");
+      expect(declarationRepository.declarationStatus.morningDeclaration, "",);
+      expect(declarationRepository.declarationStatus.afternoonDeclaration, "",);
     });
   });
   group(
@@ -242,12 +246,20 @@ void main() {
         () {
           const String selectedStatusMorning = "remote";
           const String selectedStatusAfternoon = "other";
-          when(declarationRepository.setHalfDayDeclaration(
-              selectedStatusMorning, selectedStatusAfternoon,),);
-          expect(declarationRepository.declarationStatus.morningDeclaration,
-              selectedStatusMorning,);
-          expect(declarationRepository.declarationStatus.afternoonDeclaration,
-              selectedStatusAfternoon,);
+          when(
+            declarationRepository.setHalfDayDeclaration(
+              selectedStatusMorning,
+              selectedStatusAfternoon,
+            ),
+          );
+          expect(
+            declarationRepository.declarationStatus.morningDeclaration,
+            selectedStatusMorning,
+          );
+          expect(
+            declarationRepository.declarationStatus.afternoonDeclaration,
+            selectedStatusAfternoon,
+          );
         },
       );
     },
