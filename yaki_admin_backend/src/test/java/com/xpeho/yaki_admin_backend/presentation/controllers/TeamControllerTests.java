@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xpeho.yaki_admin_backend.domain.entities.TeamEntity;
 import com.xpeho.yaki_admin_backend.domain.services.TeamService;
+import com.xpeho.yaki_admin_backend.errorHandling.CustomExceptionHandler;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,8 +31,8 @@ import static org.mockito.BDDMockito.given;
 @ExtendWith(MockitoExtension.class)
 public class TeamControllerTests {
     private final ObjectMapper objectMapper = new ObjectMapper();
-    TeamEntity team1 = new TeamEntity(1, 1, "Chelsea");
-    TeamEntity team2 = new TeamEntity(2, 1, "Man United");
+    TeamEntity team1 = new TeamEntity(1, 1, "teamFeliz");
+    TeamEntity team2 = new TeamEntity(2, 1, "teamHappy");
     List<TeamEntity> teams = Arrays.asList(team1, team2);
     private JacksonTester<TeamEntity> jacksonEntities;
     private MockMvc mvc;
@@ -45,7 +46,7 @@ public class TeamControllerTests {
     public void setup() {
 
         mvc = MockMvcBuilders.standaloneSetup(teamController)
-                .setControllerAdvice(new CustomerExceptionHandler())
+                .setControllerAdvice(new CustomExceptionHandler())
                 .build();
     }
 
@@ -104,7 +105,7 @@ public class TeamControllerTests {
         //then
         assertThat(response.getStatus(), is(equalTo(HttpStatus.OK.value())));
         JsonNode returnedResponse = objectMapper.readTree(response.getContentAsString());
-        assertThat(returnedResponse.get("teamName").asText(), is(equalTo("Auchan")));
+        assertThat(returnedResponse.get("teamName").asText(), is(equalTo("teamHappy")));
 
     }
 

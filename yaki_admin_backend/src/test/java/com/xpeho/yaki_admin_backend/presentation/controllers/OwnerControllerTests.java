@@ -1,10 +1,9 @@
-package com.xpeho.yaki_admin_backend.presentation.controller;
+package com.xpeho.yaki_admin_backend.presentation.controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xpeho.yaki_admin_backend.domain.entities.OwnerEntity;
 import com.xpeho.yaki_admin_backend.domain.services.OwnerService;
-import com.xpeho.yaki_admin_backend.presentation.controllers.OwnerController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
