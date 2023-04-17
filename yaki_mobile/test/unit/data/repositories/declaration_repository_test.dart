@@ -155,7 +155,10 @@ void main() {
           const String selectedStatus = "REMOTE";
 
           when(declarationRepository.setAllDayDeclaration(selectedStatus));
-          expect(declarationRepository.statusAllDay, selectedStatus);
+          expect(
+            declarationRepository.statusAllDay,
+            selectedStatus,
+          );
         },
       );
     },
@@ -210,8 +213,14 @@ void main() {
       declarationRepository.declarationStatus.morningDeclaration = "";
       declarationRepository.declarationStatus.afternoonDeclaration = "";
       await declarationRepository.createHalfDay(declarations);
-      expect(declarationRepository.declarationStatus.morningDeclaration, "");
-      expect(declarationRepository.declarationStatus.afternoonDeclaration, "");
+      expect(
+        declarationRepository.declarationStatus.morningDeclaration,
+        "",
+      );
+      expect(
+        declarationRepository.declarationStatus.afternoonDeclaration,
+        "",
+      );
     });
     test('Fail create declaration 401.', () async {
       when(mockedDeclarationApi.create(declarations, 'halfDay'))
@@ -222,8 +231,14 @@ void main() {
       declarationRepository.declarationStatus.morningDeclaration = "";
       declarationRepository.declarationStatus.afternoonDeclaration = "";
       await declarationRepository.createHalfDay(declarations);
-      expect(declarationRepository.declarationStatus.morningDeclaration, "");
-      expect(declarationRepository.declarationStatus.afternoonDeclaration, "");
+      expect(
+        declarationRepository.declarationStatus.morningDeclaration,
+        "",
+      );
+      expect(
+        declarationRepository.declarationStatus.afternoonDeclaration,
+        "",
+      );
     });
     test('Fail create declaration 403.', () async {
       when(mockedDeclarationApi.create(declarations, 'halfDay'))
@@ -234,8 +249,14 @@ void main() {
       declarationRepository.declarationStatus.morningDeclaration = "";
       declarationRepository.declarationStatus.afternoonDeclaration = "";
       await declarationRepository.createHalfDay(declarations);
-      expect(declarationRepository.declarationStatus.morningDeclaration, "",);
-      expect(declarationRepository.declarationStatus.afternoonDeclaration, "",);
+      expect(
+        declarationRepository.declarationStatus.morningDeclaration,
+        "",
+      );
+      expect(
+        declarationRepository.declarationStatus.afternoonDeclaration,
+        "",
+      );
     });
   });
   group(
