@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 
@@ -32,7 +31,7 @@ public class CustomerServiceImplTest {
         OwnerModel ownerModel = new OwnerModel(1, 1);
         List<UserModel> userCustomer = new ArrayList<>(3);
 
-        CustomerModel customerEntity = new CustomerModel(1, ownerModel, "Auchan", 1, userCustomer, 2);
+        CustomerModel customerEntity = new CustomerModel(1, ownerModel, "A la ferme", 1, userCustomer, 2);
 
         // when
         when(customerJpaRepository.findById(1)).thenReturn(Optional.of(customerEntity));
@@ -40,7 +39,7 @@ public class CustomerServiceImplTest {
 
         // then
         assertEquals(1, (int) customerDto.id());
-        assertEquals("Auchan", customerDto.customerName());
+        assertEquals("A la ferme", customerDto.customerName());
         assertEquals(customerDto.ownerId(), 1);
         assertEquals(customerDto.locationId(), 2);
     }

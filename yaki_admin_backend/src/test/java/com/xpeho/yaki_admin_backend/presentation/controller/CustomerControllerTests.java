@@ -34,8 +34,8 @@ import static org.mockito.BDDMockito.given;
 public class CustomerControllerTests {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
-    CustomerEntity customer1 = new CustomerEntity(1, "name", 1, 1);
-    CustomerEntity customer2 = new CustomerEntity(2, "Auchan", 1, 2);
+    CustomerEntity customer1 = new CustomerEntity(1, "La reine du bricolage", 1, 1);
+    CustomerEntity customer2 = new CustomerEntity(2, "A la ferme", 1, 2);
     List<CustomerEntity> customers = Arrays.asList(customer1, customer2);
     private JacksonTester<CustomerEntity> jacksonEntities;
     private MockMvc mvc;
@@ -126,7 +126,7 @@ public class CustomerControllerTests {
         //then
         assertThat(response.getStatus(), is(equalTo(HttpStatus.OK.value())));
         JsonNode returnedResponse = objectMapper.readTree(response.getContentAsString());
-        assertThat(returnedResponse.get("customerName").asText(), is(equalTo("Auchan")));
+        assertThat(returnedResponse.get("customerName").asText(), is(equalTo("A la ferme")));
 
     }
 
