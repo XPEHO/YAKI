@@ -68,7 +68,7 @@ dependencies:
   # provides a wrapper around Dart implementations of SVG parsing,
   # including SVG path data
   # https://pub.dev/packages/flutter_svg
-  flutter_svg: ^2.0.3
+  flutter_svg: ^2.0.5
 
   # // Shared preferences plugin //
   # Wraps platform-specific persistent storage for simple data
