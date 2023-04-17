@@ -101,32 +101,6 @@ export class DeclarationService {
   }
 
   /**
-   * This function updates the status of a declaration.
-   * @param {number} declarationId - number,
-   * @param {DeclarationDtoIn} declaration - Declaration.
-   * @returns The declarationRepository.updateDeclarationStatus() ;.
-   */
-  async updateDeclarationStatus(declarationId: number, declaration: DeclarationDtoIn[]): Promise<void> {
-    const existingDeclaration = await this.declarationRepository.getDeclarationById(declarationId);
-    if (!existingDeclaration) {
-      throw new TypeError("The declaration does not existe.");
-    }
-    if (
-      declaration[0].declarationTeamMateId === null ||
-      declaration[0].declarationDate === null ||
-      declaration[0].declarationDateStart === null ||
-      declaration[0].declarationDateEnd === null ||
-      declaration[0].declarationStatus.trim() === ""
-    ) {
-      throw new TypeError("One or more mandatory information is missing.");
-    }
-    if (!Object.values(StatusDeclaration).includes(declaration[0].declarationStatus)) {
-      throw new TypeError("Invalid declaration status.");
-    }
-    return this.declarationRepository.updateDeclarationStatus(declarationId, declaration);
-  }
-
-  /**
    * Function returning either daily declaration or both halfday declaration.
    *
    * Use declarationList sorted by the declaration time, the lastest resgistered declaration is the first array element.
