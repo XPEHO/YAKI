@@ -14,6 +14,7 @@ public class UserServiceImpl implements UserService {
     final UserJpaRepository userJpaRepository;
 
     public UserServiceImpl(UserJpaRepository userJpaRepository) {
+
         this.userJpaRepository = userJpaRepository;
     }
 

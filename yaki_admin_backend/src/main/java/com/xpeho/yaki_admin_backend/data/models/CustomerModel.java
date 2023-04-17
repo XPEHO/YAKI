@@ -1,13 +1,11 @@
 package com.xpeho.yaki_admin_backend.data.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-@AllArgsConstructor
 @Entity
 @Table(name = "customer", schema = "public")
 public class CustomerModel {
@@ -37,6 +35,15 @@ public class CustomerModel {
 
     public CustomerModel() {
 
+    }
+
+    public CustomerModel(int id, OwnerModel owner, String name, int ownerId, List<UserModel> users, int locationId) {
+        this.id = id;
+        this.owner = owner;
+        this.name = name;
+        this.ownerId = ownerId;
+        this.users = users;
+        this.locationId = locationId;
     }
 
     public CustomerModel(String customerName, int ownerId, int locationId) {

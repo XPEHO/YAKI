@@ -15,7 +15,7 @@ public interface CustomerService {
 
     CustomerEntity getCustomer(int id);
 
-    void deleteById(int id);
+    CustomerEntity deleteById(int id);
 
     CustomerEntity saveOrUpdate(CustomerEntity entity, int id);
 }
