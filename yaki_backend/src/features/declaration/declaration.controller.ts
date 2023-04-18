@@ -87,4 +87,5 @@ export class DeclarationController {
       }
     }
   }
+
 }

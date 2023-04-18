@@ -16,6 +16,7 @@ import {initdb} from "./db/initdb";
 import declarationRouter from "./features/declaration/declaration.router";
 
 import cors from "cors";
+import teamRouter from "./features/team/team.router";
 
 // Call the initConfig function to load environment variables and log their values to the console
 initConfig();
@@ -39,6 +40,7 @@ app.use(express.urlencoded({extended: false}));
 app.use(router);
 /* A middleware that is used to route the request to the declaration router. */
 app.use(declarationRouter);
+app.use(teamRouter)
 
 // Get the value of the PORT environment variable
 const port = process.env.Port;
