@@ -46,10 +46,11 @@ public class CaptainServiceImpl implements CaptainService {
     }
 
     @Override
-    public void deleteById(Integer captainId) {
+    public CaptainEntity deleteById(Integer captainId) {
         if (captainJpaRepository.existsById(captainId)) {
             captainJpaRepository.deleteById(captainId);
         }
+        return null;
     }
 
     @Override

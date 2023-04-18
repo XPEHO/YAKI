@@ -2,6 +2,8 @@ package com.xpeho.yaki_admin_backend.presentation.controllers;
 
 import com.xpeho.yaki_admin_backend.domain.entities.CaptainEntity;
 import com.xpeho.yaki_admin_backend.domain.services.CaptainService;
+import com.xpeho.yaki_admin_backend.domain.services.CustomerService;
+import com.xpeho.yaki_admin_backend.domain.services.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,8 +15,14 @@ import java.util.List;
 public class CaptainController {
     final CaptainService captainService;
 
-    public CaptainController(CaptainService captainService) {
+    final UserService userService;
+
+    final CustomerService customerService;
+
+    public CaptainController(CaptainService captainService, UserService userService, CustomerService customerService) {
         this.captainService = captainService;
+        this.userService = userService;
+        this.customerService = customerService;
     }
 
     @GetMapping
@@ -35,7 +43,13 @@ public class CaptainController {
     }
 
     @DeleteMapping("{id}")
-    public void deleteById(@PathVariable Integer id) {
-        captainService.deleteById(id);
+    public CaptainEntity deleteById(@PathVariable Integer id) {
+        return captainService.deleteById(id);
+    }
+
+    @PutMapping("{id}")
+    private CaptainEntity update(@RequestBody CaptainEntity entity, @PathVariable int id) {
+        CaptainEntity entitySaved = captainService.saveOrUpdate(entity, id);
+        return entitySaved;
     }
 }

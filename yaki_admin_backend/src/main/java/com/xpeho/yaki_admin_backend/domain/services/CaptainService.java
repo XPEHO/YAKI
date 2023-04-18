@@ -12,7 +12,7 @@ public interface CaptainService {
 
     CaptainEntity getCaptainById(Integer id);
 
-    void deleteById(Integer id);
+    CaptainEntity deleteById(Integer id);
 
     CaptainEntity saveOrUpdate(CaptainEntity entity, int captainId);
 
