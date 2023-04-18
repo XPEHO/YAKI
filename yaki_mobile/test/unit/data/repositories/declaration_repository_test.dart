@@ -163,116 +163,138 @@ void main() {
       );
     },
   );
-  group('Declaration halfDay respository create()', () {
-    final DeclarationModel declarationMorning = DeclarationModel(
-      declarationDate: DateTime.utc(2023, 4, 17),
-      declarationDateStart: DateTime.utc(2023, 4, 17, 00),
-      declarationDateEnd: DateTime.utc(2023, 4, 17, 12),
-      declarationTeamMateId: 123,
-      declarationStatus: 'remote',
-    );
-    final DeclarationModel declarationAfternoon = DeclarationModel(
-      declarationDate: DateTime.utc(2023, 4, 17),
-      declarationDateStart: DateTime.utc(2023, 4, 17, 13),
-      declarationDateEnd: DateTime.utc(2023, 4, 17, 23),
-      declarationTeamMateId: 123,
-      declarationStatus: 'other',
-    );
-    final List<DeclarationModel> declarations = [
-      declarationMorning,
-      declarationAfternoon
-    ];
-    test(
-      'should set declaration status after creating declarations',
-      () async {
-        // Mock the API's create method to return the response defined above
+  group(
+    'Declaration halfDay respository create()',
+    () {
+      final DeclarationModel declarationMorning = DeclarationModel(
+        declarationDate: DateTime.utc(2023, 4, 17),
+        declarationDateStart: DateTime.utc(2023, 4, 17, 00),
+        declarationDateEnd: DateTime.utc(2023, 4, 17, 12),
+        declarationTeamMateId: 123,
+        declarationStatus: 'remote',
+      );
+      final DeclarationModel declarationAfternoon = DeclarationModel(
+        declarationDate: DateTime.utc(2023, 4, 17),
+        declarationDateStart: DateTime.utc(2023, 4, 17, 13),
+        declarationDateEnd: DateTime.utc(2023, 4, 17, 23),
+        declarationTeamMateId: 123,
+        declarationStatus: 'other',
+      );
+      final List<DeclarationModel> declarations = [
+        declarationMorning,
+        declarationAfternoon
+      ];
+      test(
+        'should set declaration status after creating declarations',
+        () async {
+          // Mock the API's create method to return the response defined above
+          when(mockedDeclarationApi.create(declarations, 'halfDay'))
+              .thenAnswer((realInvocation) => Future.value(httpResponse));
+          // Simulate the response of the API
+          when(httpResponse.response).thenReturn(response);
+          when(response.statusCode).thenReturn(200 | 201);
+          when(httpResponse.data).thenReturn(createResponseApi);
+          // Set the initial declaration status
+          declarationRepository.declarationStatus.morningDeclaration = "remote";
+          declarationRepository.declarationStatus.afternoonDeclaration =
+              "other";
+          // Call the function to create a half-day declaration
+          await declarationRepository.createHalfDay(declarations);
+          // Verify that the declaration status is correctly updated
+          expect(
+            declarationRepository.declarationStatus.morningDeclaration,
+            "remote",
+          );
+          expect(
+            declarationRepository.declarationStatus.afternoonDeclaration,
+            "other",
+          );
+        },
+      );
+      test(
+        'Fail create declaration 400 or 500.',
+        () async {
+          // Mock the API's create method to return the response defined above
+          when(mockedDeclarationApi.create(declarations, 'halfDay'))
+              .thenAnswer((realInvocation) => Future.value(httpResponse));
+          // Simulate the response of the API
+          when(httpResponse.response).thenReturn(response);
+          when(response.statusCode).thenReturn(400 | 500);
+          when(httpResponse.data).thenReturn(createResponseApi);
+          // Set the initial declaration status to empty strings
+          declarationRepository.declarationStatus.morningDeclaration = "";
+          declarationRepository.declarationStatus.afternoonDeclaration = "";
+          // Call the function to create a half-day declaration
+          await declarationRepository.createHalfDay(declarations);
+          // Verify that the declaration status is not updated
+          expect(
+            declarationRepository.declarationStatus.morningDeclaration,
+            "",
+          );
+          expect(
+            declarationRepository.declarationStatus.afternoonDeclaration,
+            "",
+          );
+        },
+      );
+      test(
+        'Fail create declaration 401.',
+        () async {
+          when(mockedDeclarationApi.create(declarations, 'halfDay'))
+              .thenAnswer((realInvocation) => Future.value(httpResponse));
+          when(httpResponse.response).thenReturn(response);
+          when(response.statusCode).thenReturn(401);
+          when(httpResponse.data).thenReturn(createResponseApi);
+          declarationRepository.declarationStatus.morningDeclaration = "";
+          declarationRepository.declarationStatus.afternoonDeclaration = "";
+          await declarationRepository.createHalfDay(declarations);
+          expect(
+            declarationRepository.declarationStatus.morningDeclaration,
+            "",
+          );
+          expect(
+            declarationRepository.declarationStatus.afternoonDeclaration,
+            "",
+          );
+        },
+      );
+      test('Fail create declaration 403.', () async {
         when(mockedDeclarationApi.create(declarations, 'halfDay'))
             .thenAnswer((realInvocation) => Future.value(httpResponse));
         when(httpResponse.response).thenReturn(response);
-        when(response.statusCode).thenReturn(200 | 201);
+        when(response.statusCode).thenReturn(403);
         when(httpResponse.data).thenReturn(createResponseApi);
-        declarationRepository.declarationStatus.morningDeclaration = "remote";
-        declarationRepository.declarationStatus.afternoonDeclaration = "other";
+        declarationRepository.declarationStatus.morningDeclaration = "";
+        declarationRepository.declarationStatus.afternoonDeclaration = "";
         await declarationRepository.createHalfDay(declarations);
         expect(
           declarationRepository.declarationStatus.morningDeclaration,
-          "remote",
+          "",
         );
         expect(
           declarationRepository.declarationStatus.afternoonDeclaration,
-          "other",
+          "",
         );
-      },
-    );
-    test('Fail create declaration 400 or 500.', () async {
-      when(mockedDeclarationApi.create(declarations, 'halfDay'))
-          .thenAnswer((realInvocation) => Future.value(httpResponse));
-      when(httpResponse.response).thenReturn(response);
-      when(response.statusCode).thenReturn(400 | 500);
-      when(httpResponse.data).thenReturn(createResponseApi);
-      declarationRepository.declarationStatus.morningDeclaration = "";
-      declarationRepository.declarationStatus.afternoonDeclaration = "";
-      await declarationRepository.createHalfDay(declarations);
-      expect(
-        declarationRepository.declarationStatus.morningDeclaration,
-        "",
-      );
-      expect(
-        declarationRepository.declarationStatus.afternoonDeclaration,
-        "",
-      );
-    });
-    test('Fail create declaration 401.', () async {
-      when(mockedDeclarationApi.create(declarations, 'halfDay'))
-          .thenAnswer((realInvocation) => Future.value(httpResponse));
-      when(httpResponse.response).thenReturn(response);
-      when(response.statusCode).thenReturn(401);
-      when(httpResponse.data).thenReturn(createResponseApi);
-      declarationRepository.declarationStatus.morningDeclaration = "";
-      declarationRepository.declarationStatus.afternoonDeclaration = "";
-      await declarationRepository.createHalfDay(declarations);
-      expect(
-        declarationRepository.declarationStatus.morningDeclaration,
-        "",
-      );
-      expect(
-        declarationRepository.declarationStatus.afternoonDeclaration,
-        "",
-      );
-    });
-    test('Fail create declaration 403.', () async {
-      when(mockedDeclarationApi.create(declarations, 'halfDay'))
-          .thenAnswer((realInvocation) => Future.value(httpResponse));
-      when(httpResponse.response).thenReturn(response);
-      when(response.statusCode).thenReturn(403);
-      when(httpResponse.data).thenReturn(createResponseApi);
-      declarationRepository.declarationStatus.morningDeclaration = "";
-      declarationRepository.declarationStatus.afternoonDeclaration = "";
-      await declarationRepository.createHalfDay(declarations);
-      expect(
-        declarationRepository.declarationStatus.morningDeclaration,
-        "",
-      );
-      expect(
-        declarationRepository.declarationStatus.afternoonDeclaration,
-        "",
-      );
-    });
-  });
+      });
+    },
+  );
   group(
     'Assign status, to declarationStatus entities.',
     () {
       test(
         'set half day Declaration',
         () {
+          // Set the selected declaration statuses
           const String selectedStatusMorning = "remote";
           const String selectedStatusAfternoon = "other";
+          // Call the function to set the declaration status
           when(
             declarationRepository.setHalfDayDeclaration(
               selectedStatusMorning,
               selectedStatusAfternoon,
             ),
           );
+          // Verify that the declaration status is updated accordingly
           expect(
             declarationRepository.declarationStatus.morningDeclaration,
             selectedStatusMorning,
