@@ -12,7 +12,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -31,10 +30,9 @@ import static org.mockito.BDDMockito.given;
 @ExtendWith(MockitoExtension.class)
 public class TeamControllerTests {
     private final ObjectMapper objectMapper = new ObjectMapper();
-    TeamEntity team1 = new TeamEntity(1, 1, "teamFeliz");
-    TeamEntity team2 = new TeamEntity(2, 1, "teamHappy");
-    List<TeamEntity> teams = Arrays.asList(team1, team2);
-    private JacksonTester<TeamEntity> jacksonEntities;
+    private final TeamEntity team1 = new TeamEntity(1, 1, "teamFeliz");
+    private final TeamEntity team2 = new TeamEntity(2, 1, "teamHappy");
+    private final List<TeamEntity> teams = Arrays.asList(team1, team2);
     private MockMvc mvc;
     @Mock
     private TeamService teamService;

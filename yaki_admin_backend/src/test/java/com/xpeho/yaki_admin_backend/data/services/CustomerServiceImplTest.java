@@ -29,12 +29,12 @@ public class CustomerServiceImplTest {
     void getCustomerById() {
         // given
         OwnerModel ownerModel = new OwnerModel(1, 1);
-        List<UserModel> userCustomer = new ArrayList<>(3);
+        List<UserModel> usersCustomer = new ArrayList<>(3);
 
-        CustomerModel customerEntity = new CustomerModel(1, ownerModel, "A la ferme", 1, userCustomer, 2);
+        CustomerModel customerModel = new CustomerModel(1, ownerModel, "A la ferme", 1, usersCustomer, 2);
 
         // when
-        when(customerJpaRepository.findById(1)).thenReturn(Optional.of(customerEntity));
+        when(customerJpaRepository.findById(1)).thenReturn(Optional.of(customerModel));
         CustomerEntity customerDto = customerService.getCustomer(1);
 
         // then

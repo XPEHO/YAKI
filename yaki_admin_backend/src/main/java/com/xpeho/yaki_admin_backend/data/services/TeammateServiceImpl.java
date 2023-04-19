@@ -34,16 +34,16 @@ public class TeammateServiceImpl implements TeammateService {
     @Override
     public TeammateEntity createTeammate(TeammateEntity teammateEntity) {
         final TeammateModel teammateModel = new TeammateModel(teammateEntity.teamId(), teammateEntity.userId());
-        teammateJpaRepository.save(teammateModel);
+        TeammateModel savedModel = teammateJpaRepository.save(teammateModel);
         //teammateEntity.id could be null so we use autogenerate id
-        return new TeammateEntity(teammateModel.getId(), teammateEntity.teamId(), teammateEntity.userId());
+        return new TeammateEntity(savedModel.getId(), savedModel.getTeamId(), savedModel.getUserId());
     }
 
     @Override
     public TeammateEntity getTeammate(int id) {
         Optional<TeammateModel> teammateModelOpt = teammateJpaRepository.findById(id);
         if (!teammateModelOpt.isPresent()) {
-            throw new EntityNotFoundException("The team with id " + id + " not found.");
+            throw new EntityNotFoundException("The teammate with id " + id + " not found.");
         }
         TeammateModel teammateModel = teammateModelOpt.get();
         return new TeammateEntity(teammateModel.getId(), teammateModel.getTeamId(), teammateModel.getUserId());
@@ -55,23 +55,25 @@ public class TeammateServiceImpl implements TeammateService {
             TeammateModel teammateModel = teammateJpaRepository.findById(id).get();
             teammateJpaRepository.deleteById(id);
             return new TeammateEntity(id, teammateModel.getTeamId(), teammateModel.getUserId());
-        } else throw new EntityNotFoundException("The team with id " + id + " not found.");
+        } else throw new EntityNotFoundException("The teammate with id " + id + " not found.");
     }
 
     @Override
     public TeammateEntity saveOrUpdate(TeammateEntity entity, int id) {
         Optional<TeammateModel> teammateModelOpt = teammateJpaRepository.findById(id);
+        TeammateEntity entitySaved;
         if (teammateModelOpt.isPresent()) {
             TeammateModel teammateModel = teammateModelOpt.get();
             teammateModel.setTeamId(entity.teamId());
             teammateModel.setUserId(entity.userId());
-            teammateJpaRepository.save(teammateModel);
-
+            TeammateModel savedModel = teammateJpaRepository.save(teammateModel);
+            entitySaved = new TeammateEntity(
+                    savedModel.getId(), savedModel.getTeamId(), savedModel.getUserId());
         } else {
             throw new EntityNotFoundException("Entity team with id " + id + " not found");
         }
         //id and entity.id() could be different
-        TeammateEntity entitySaved = new TeammateEntity(id, entity.teamId(), entity.userId());
+
         return entitySaved;
     }
 

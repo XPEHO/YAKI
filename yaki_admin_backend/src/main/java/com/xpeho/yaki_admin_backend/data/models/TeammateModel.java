@@ -1,12 +1,16 @@
 package com.xpeho.yaki_admin_backend.data.models;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 
+import java.util.Objects;
+
+@Builder
 @Entity
 @Table(name = "team_mate", schema = "public")
 public class TeammateModel {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "team_mate_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "team_mate_seq")
     @SequenceGenerator(name = "team_mate_seq", sequenceName = "team_mate_id_seq", allocationSize = 1)
     @Column(name = "team_mate_id")
     private int id;
@@ -52,5 +56,19 @@ public class TeammateModel {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    //used for test servicesImpl for create and save methods
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TeammateModel that = (TeammateModel) o;
+        return id == that.id && teamId == that.teamId && userId == that.userId;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, teamId, userId);
     }
 }
