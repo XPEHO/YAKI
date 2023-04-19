@@ -1,11 +1,9 @@
 package com.xpeho.yaki_admin_backend.data.models;
 
 import jakarta.persistence.*;
-import lombok.Builder;
 
 import java.util.Objects;
 
-@Builder
 @Entity
 @Table(name = "team_mate", schema = "public")
 public class TeammateModel {

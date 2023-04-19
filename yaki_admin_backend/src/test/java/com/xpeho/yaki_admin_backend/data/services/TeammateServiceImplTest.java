@@ -10,8 +10,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.junit.jupiter.MockitoSettings;
-import org.mockito.quality.Strictness;
 
 import java.util.Arrays;
 import java.util.List;
@@ -42,7 +40,7 @@ public class TeammateServiceImplTest {
         teammate1 = new TeammateModel(1, 5);
         teammate2 = new TeammateModel(1, 8);
         teammateE1 = new TeammateEntity(teammate1.getId(), 1, 5);
-        teammateE2 = new TeammateEntity(teammate1.getId(), 1, 8);
+        teammateE2 = new TeammateEntity(teammate2.getId(), 1, 8);
         teammatesFromTeamOne = Arrays.asList(teammate1, teammate2);
         teammatesEFromTeamOne = Arrays.asList(teammateE1, teammateE2);
     }
@@ -63,7 +61,6 @@ public class TeammateServiceImplTest {
                 expectedResponse);
     }
 
-    @MockitoSettings(strictness = Strictness.WARN)
     @Test
     void createTeammateTest() throws Exception {
 
