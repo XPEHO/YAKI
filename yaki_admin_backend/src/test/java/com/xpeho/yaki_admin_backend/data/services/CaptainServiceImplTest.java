@@ -14,8 +14,10 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 public class CaptainServiceImplTest {
@@ -64,6 +66,76 @@ public class CaptainServiceImplTest {
 
     }
 
+    @Test
+    void createCaptain() {
+        //given
+        CaptainEntity captainEntity = new CaptainEntity(1, 2, 3);
+        when(captainJpaRepository.save(any())).thenReturn(new CaptainModel(1, 2, 3));
 
+        //when
+        CaptainEntity createCaptain = captainService.createCaptain(captainEntity);
+
+        //then
+        assertEquals(1, (int) createCaptain.id());
+        assertEquals(captainEntity.userId(), createCaptain.userId());
+        assertEquals(captainEntity.customerId(), createCaptain.customerId());
+        verify(captainJpaRepository).save(any());
+    }
+
+    @Test
+    void deleteById() {
+        //given
+        int captainId = 1;
+        CaptainModel captainModel = new CaptainModel(captainId, 1, 1);
+
+        when(captainJpaRepository.existsById(captainId)).thenReturn(true);
+        doNothing().when(captainJpaRepository).deleteById(captainId);
+
+        //when
+        CaptainEntity result = captainService.deleteById(captainId);
+
+        //then
+        assertNull(result);
+        verify(captainJpaRepository).existsById(captainId);
+        verify(captainJpaRepository).deleteById(captainId);
+    }
+
+
+    @Test
+    void deleteByIdNotExist() {
+        //given
+        int captainId = 1;
+
+        when(captainJpaRepository.existsById(captainId)).thenReturn(false);
+
+        //when
+        CaptainEntity result = captainService.deleteById(captainId);
+
+        //then
+        assertNull(result);
+        verify(captainJpaRepository).existsById(captainId);
+        verify(captainJpaRepository, never()).deleteById(captainId);
+    }
+
+    @Test
+    void saveOrUpdate() {
+
+        // given
+        int captainId = 1;
+        CaptainEntity captainEntity = new CaptainEntity(2, 3, 3);
+        CaptainModel captainModel = new CaptainModel(captainId, 4, 5);
+        when(captainJpaRepository.findById(captainId)).thenReturn(Optional.of(captainModel));
+
+        // when
+        CaptainEntity savedCaptain = captainService.saveOrUpdate(captainEntity, captainId);
+
+        // then
+        verify(captainJpaRepository, times(1)).findById(captainId);
+        verify(captainJpaRepository, times(1)).save(captainModel);
+        assertEquals(captainId, savedCaptain.id());
+        assertEquals(captainEntity.userId(), savedCaptain.userId());
+        assertEquals(captainEntity.customerId(), savedCaptain.customerId());
+    }
 }
+
 
