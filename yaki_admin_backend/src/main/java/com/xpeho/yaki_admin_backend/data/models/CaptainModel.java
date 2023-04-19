@@ -32,7 +32,7 @@ public class CaptainModel {
     public CaptainModel(int captainId, List<UserModel> users, int userId, CustomerModel customer, int customerId) {
         this.captainId = captainId;
         this.userId = userId;
-        this.customerId = userId;
+        this.customerId = customerId;
 
     }
 
@@ -42,6 +42,12 @@ public class CaptainModel {
     }
 
     public CaptainModel() {
+    }
+
+    public CaptainModel(int captainId, int userId, int customerId) {
+        this.captainId = captainId;
+        this.userId = userId;
+        this.customerId = customerId;
     }
 
     public UserModel getUser() {
