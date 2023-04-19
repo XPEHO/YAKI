@@ -9,9 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -39,8 +42,28 @@ public class CaptainServiceImplTest {
 
     }
 
-    
+    @Test
+    void getCaptains() {
+        //given
+        CustomerModel customerModel = new CustomerModel("Géo trouve tout", 1, 1);
+        List<CaptainModel> captainModels = Arrays.asList(
+                new CaptainModel(1, 1, 2),
+                new CaptainModel(2, 1, 2),
+                new CaptainModel(3, 2, 2)
+        );
+
+        //when
+        given(captainJpaRepository.findAll()).willReturn(captainModels);
+        List<CaptainEntity> captainEntities = captainService.getCaptains();
+
+        //then
+        assertEquals(3, captainEntities.size());
+        assertEquals(1, (int) captainEntities.get(0).id());
+        assertEquals(2, (int) captainEntities.get(2).userId());
+        assertEquals(2, (int) captainEntities.get(1).customerId());
+
     }
 
 
 }
+
