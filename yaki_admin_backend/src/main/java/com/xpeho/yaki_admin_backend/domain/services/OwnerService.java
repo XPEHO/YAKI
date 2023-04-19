@@ -12,5 +12,5 @@ public interface OwnerService {
 
     OwnerEntity findById(Integer integer);
 
-    void deleteById(Integer integer);
+    OwnerEntity deleteById(Integer integer);
 }

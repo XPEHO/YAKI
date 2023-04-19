@@ -2,19 +2,15 @@ package com.xpeho.yaki_admin_backend.data.models;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@AllArgsConstructor
-@NoArgsConstructor
+
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "user", schema = "public")
 @Entity
 public class UserModel {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id")
@@ -29,12 +25,23 @@ public class UserModel {
     private String login;
     @Column(name = "user_password")
     private String password;
-
     @ManyToMany
     @JoinTable(name = "customer_rights",
             joinColumns = @JoinColumn(name = "customer_rights_user_id"),
             inverseJoinColumns = @JoinColumn(name = "customer_rights_customer_id"))
     private List<CustomerModel> customers = new ArrayList<>();
+    public UserModel(int userId, String lastName, String firstName, String email, String login, String password, List<CustomerModel> customers) {
+        this.userId = userId;
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.email = email;
+        this.login = login;
+        this.password = password;
+        this.customers = customers;
+    }
+
+    public UserModel() {
+    }
 
     public UserModel(String lastName, String firstName, String email, String login) {
         this.email = email;

@@ -27,13 +27,15 @@ public class CustomerServiceImpl implements CustomerService {
         return customerJpaRepository
                 .findAll()
                 .stream()
-                .map(customerModel -> new CustomerEntity(customerModel.getId(), customerModel.getName(), customerModel.getOwnerId(), customerModel.getLocationId()))
+                .map(customerModel -> new CustomerEntity(customerModel.getId(),
+                        customerModel.getName(), customerModel.getOwnerId(), customerModel.getLocationId()))
                 .toList();
     }
 
     @Override
     public CustomerEntity createCustomer(CustomerEntity customerEntity) {
-        final CustomerModel customerModel = new CustomerModel(customerEntity.customer_name(), customerEntity.owner_id(), customerEntity.location_id());
+        final CustomerModel customerModel = new CustomerModel(customerEntity.customerName(),
+                customerEntity.ownerId(), customerEntity.locationId());
         customerJpaRepository.save(customerModel);
         return customerEntity;
     }
@@ -48,19 +50,23 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerEntity getCustomer(int id) {
-        Optional<CustomerModel> captainModelOpt = customerJpaRepository.findById(id);
-        if (!captainModelOpt.isPresent()) {
-            throw new EntityNotFoundException("L'entité avec l'id " + id + " n'a pas été trouvée.");
+        Optional<CustomerModel> customerModelOpt = customerJpaRepository.findById(id);
+        if (!customerModelOpt.isPresent()) {
+            throw new EntityNotFoundException("Entity Customer with id " + id + " has not been found");
         }
-        CustomerModel captainModel = captainModelOpt.get();
-        return new CustomerEntity(captainModel.getId(), captainModel.getName(), captainModel.getOwnerId(), captainModel.getLocationId());
+        CustomerModel customerModel = customerModelOpt.get();
+        return new CustomerEntity(customerModel.getId(), customerModel.getName(),
+                customerModel.getOwnerId(), customerModel.getLocationId());
     }
 
     @Override
-    public void deleteById(int id) {
+    public CustomerEntity deleteById(int id) {
         if (customerJpaRepository.existsById(id)) {
+            CustomerModel customerModel = customerJpaRepository.findById(id).get();
             customerJpaRepository.deleteById(id);
-        }
+            return new CustomerEntity(customerModel.getId(), customerModel.getName()
+                    , customerModel.getOwnerId(), customerModel.getLocationId());
+        } else return null;
     }
 
     @Override
@@ -68,14 +74,15 @@ public class CustomerServiceImpl implements CustomerService {
         Optional<CustomerModel> customerModelOpt = customerJpaRepository.findById(id);
         if (customerModelOpt.isPresent()) {
             CustomerModel customerModel = customerModelOpt.get();
-            customerModel.setName(entity.customer_name());
-            customerModel.setLocationId(entity.location_id());
+            customerModel.setName(entity.customerName());
+            customerModel.setLocationId(entity.locationId());
             customerJpaRepository.save(customerModel);
 
         } else {
             throw new EntityNotFoundException("Entity customer with id " + id + " not found");
         }
-        CustomerEntity entitySaved = new CustomerEntity(id, entity.customer_name(), entity.owner_id(), entity.location_id());
+        CustomerEntity entitySaved = new CustomerEntity(id, entity.customerName(),
+                entity.ownerId(), entity.locationId());
 
         return entitySaved;
 
