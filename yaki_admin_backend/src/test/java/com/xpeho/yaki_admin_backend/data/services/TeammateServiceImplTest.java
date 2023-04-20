@@ -47,8 +47,6 @@ public class TeammateServiceImplTest {
 
     @Test
     void getTeammateByIdTest() throws Exception {
-
-
         //given
         given(teammateJpaRepository.findById(1)).willReturn(Optional.of(teammate1));
 
@@ -63,18 +61,18 @@ public class TeammateServiceImplTest {
 
     @Test
     void createTeammateTest() throws Exception {
-
+        //given
         given(teammateJpaRepository.save(teammate1)).willReturn(teammate1);
         // when
         TeammateEntity savedTeammate = teammateService.createTeammate(teammateE1);
         // then - verify the output
         assertNotEquals(savedTeammate, (null));
-
     }
 
     //given
     @Test
     void saveTeammateTest() throws Exception {
+        //given
         int idUsed = 3;
         TeammateModel replacedModel = new TeammateModel(idUsed, 235, 772);
         TeammateModel expectedModel = new TeammateModel(
@@ -84,6 +82,7 @@ public class TeammateServiceImplTest {
 
         //when
         TeammateEntity teammateDto = teammateService.saveOrUpdate(teammateE2, idUsed);
+
         //then
         String returnedResponse = objectMapper.writeValueAsString(teammateDto);
         TeammateEntity teammateE3 = new TeammateEntity(
@@ -99,8 +98,10 @@ public class TeammateServiceImplTest {
 
         //given
         given(teammateJpaRepository.findAllByTeam(1)).willReturn(teammatesFromTeamOne);
+
         //when
         List<TeammateEntity> teammateDto = teammateService.findAllByTeam(1);
+
         //then
         String returnedResponse = objectMapper.writeValueAsString(teammateDto);
         String expectedResponse = objectMapper.writeValueAsString(teammatesEFromTeamOne);
@@ -110,18 +111,20 @@ public class TeammateServiceImplTest {
 
     @Test
     void deleteByIdTest() throws Exception {
+
         //given
         int deletedId = 1;
         TeammateModel deletedModel = new TeammateModel(deletedId, 25, 86);
         willDoNothing().given(teammateJpaRepository).deleteById(deletedId);
         given(teammateJpaRepository.existsById(deletedId)).willReturn(Boolean.TRUE);
         given(teammateJpaRepository.findById(deletedId)).willReturn(Optional.of(deletedModel));
+
         //when
         TeammateEntity teamMateDeleted = teammateService.deleteById(deletedId);
+
         //then
         assertEquals(teamMateDeleted,
                 new TeammateEntity(deletedModel.getId(),
                         deletedModel.getTeamId(), deletedModel.getUserId()));
-
     }
 }

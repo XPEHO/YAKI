@@ -20,6 +20,7 @@ import static org.mockito.BDDMockito.willDoNothing;
 
 @ExtendWith(MockitoExtension.class)
 public class OwnerServiceImplTests {
+
     private final ObjectMapper objectMapper = new ObjectMapper();
     private OwnerModel owner1;
     private OwnerEntity ownerE1;
@@ -36,8 +37,6 @@ public class OwnerServiceImplTests {
 
     @Test
     void getOwnerByIdTest() throws Exception {
-
-
         //given
         given(ownerJpaRepository.findById(1)).willReturn(Optional.of(owner1));
 
@@ -52,16 +51,15 @@ public class OwnerServiceImplTests {
 
     @Test
     void createOwnerTest() throws Exception {
-
+        //given
         given(ownerJpaRepository.save(owner1)).willReturn(owner1);
+
         // when
         OwnerEntity savedOwner = ownerService.createOwner(ownerE1);
+
         // then - verify the output
         assertNotEquals(savedOwner, (null));
-
     }
-
-    //given
 
 
     @Test
@@ -72,8 +70,10 @@ public class OwnerServiceImplTests {
         willDoNothing().given(ownerJpaRepository).deleteById(deletedId);
         given(ownerJpaRepository.existsById(deletedId)).willReturn(Boolean.TRUE);
         given(ownerJpaRepository.findById(deletedId)).willReturn(Optional.of(deletedModel));
+
         //when
         OwnerEntity ownerMateDeleted = ownerService.deleteById(deletedId);
+
         //then
         assertEquals(ownerMateDeleted,
                 new OwnerEntity(deletedModel.getId(),

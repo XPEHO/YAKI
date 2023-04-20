@@ -34,8 +34,10 @@ public class TeamControllerTests {
     private final TeamEntity team2 = new TeamEntity(2, 1, "teamHappy");
     private final List<TeamEntity> teams = Arrays.asList(team1, team2);
     private MockMvc mvc;
+
     @Mock
     private TeamService teamService;
+
     @InjectMocks
     private TeamController teamController;
 
@@ -104,7 +106,6 @@ public class TeamControllerTests {
         assertThat(response.getStatus(), is(equalTo(HttpStatus.OK.value())));
         JsonNode returnedResponse = objectMapper.readTree(response.getContentAsString());
         assertThat(returnedResponse.get("teamName").asText(), is(equalTo("teamHappy")));
-
     }
 
     //testing the teamController.deleteTeam() method
@@ -119,12 +120,12 @@ public class TeamControllerTests {
                         MockMvcRequestBuilders.delete("/teams/2")
                                 .accept(MediaType.APPLICATION_JSON))
                 .andReturn().getResponse();
+
         //then
         assertThat(response.getStatus(), is(equalTo(HttpStatus.OK.value())));
         String expectedResponse = objectMapper.writeValueAsString(team2);
         assertThat(response.getContentAsString(), is(equalTo(
                 expectedResponse)));
-
     }
 
     //testing the teamController.update() method
@@ -132,6 +133,7 @@ public class TeamControllerTests {
     public void mustPutATeam() throws Exception {
         TeamEntity team3 = new TeamEntity(
                 2, team1.captainId(), team1.teamName());
+
         //given
         given(teamService.saveOrUpdate(team1, 2)).willReturn(team3);
 
@@ -141,11 +143,11 @@ public class TeamControllerTests {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsString(team1)))
                 .andReturn().getResponse();
+
         //then
         assertThat(response.getStatus(), is(equalTo(HttpStatus.OK.value())));
         String expectedResponse = objectMapper.writeValueAsString(team3);
         assertThat(response.getContentAsString(), is(equalTo(
                 expectedResponse)));
-
     }
 }

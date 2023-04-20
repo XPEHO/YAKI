@@ -15,7 +15,6 @@ public class TeamServiceImpl implements TeamService {
     final TeamJpaRepository teamJpaRepository;
 
     public TeamServiceImpl(TeamJpaRepository teamJpaRepository) {
-
         this.teamJpaRepository = teamJpaRepository;
     }
 
@@ -54,7 +53,6 @@ public class TeamServiceImpl implements TeamService {
             teamModel.setCaptainId(entity.captainId());
             teamModel.setTeamName(entity.teamName());
             teamJpaRepository.save(teamModel);
-
         } else {
             throw new EntityNotFoundException("Entity team with id " + id + " not found");
         }

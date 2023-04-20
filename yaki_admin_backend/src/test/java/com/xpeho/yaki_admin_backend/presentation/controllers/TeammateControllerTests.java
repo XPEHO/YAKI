@@ -50,7 +50,6 @@ public class TeammateControllerTests {
                 .build();
     }
 
-
     //testing the teammateController.getTeammate(id) method
     @Test
     public void mustGetATeammate() throws Exception {
@@ -127,7 +126,6 @@ public class TeammateControllerTests {
         String expectedResponse = objectMapper.writeValueAsString(teammate2);
         assertThat(response.getContentAsString(), is(equalTo(
                 expectedResponse)));
-
     }
 
     //testing the teammateController.update() method
@@ -135,6 +133,7 @@ public class TeammateControllerTests {
     public void mustPutATeammate() throws Exception {
         TeammateEntity teammate3 = new TeammateEntity(
                 2, teammate1.teamId(), teammate1.userId());
+
         //given
         given(teammateService.saveOrUpdate(teammate1, 2)).willReturn(teammate3);
 
@@ -144,16 +143,17 @@ public class TeammateControllerTests {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsString(teammate1)))
                 .andReturn().getResponse();
+
         //then
         assertThat(response.getStatus(), is(equalTo(HttpStatus.OK.value())));
         String expectedResponse = objectMapper.writeValueAsString(teammate3);
         assertThat(response.getContentAsString(), is(equalTo(
                 expectedResponse)));
-
     }
 
     @Test
     public void getAllWithinTeam() throws Exception {
+
         //given
         given(teammateService.findAllByTeam(1)).willReturn(teammatesFromTeamOne);
 

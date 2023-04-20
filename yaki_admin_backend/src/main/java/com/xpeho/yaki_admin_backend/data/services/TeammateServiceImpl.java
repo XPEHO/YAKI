@@ -72,10 +72,8 @@ public class TeammateServiceImpl implements TeammateService {
         } else {
             throw new EntityNotFoundException("Entity team with id " + id + " not found");
         }
-        //id and entity.id() could be different
 
+        //id and entity.id() could be different
         return entitySaved;
     }
-
 }
-

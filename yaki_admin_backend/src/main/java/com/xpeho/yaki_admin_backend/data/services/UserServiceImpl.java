@@ -11,10 +11,10 @@ import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
+
     final UserJpaRepository userJpaRepository;
 
     public UserServiceImpl(UserJpaRepository userJpaRepository) {
-
         this.userJpaRepository = userJpaRepository;
     }
 
@@ -36,6 +36,4 @@ public class UserServiceImpl implements UserService {
                     userModel.getEmail(), userModel.getLogin());
         } else throw new EntityNotFoundException("Entity User with id " + id + " not found");
     }
-
-
 }

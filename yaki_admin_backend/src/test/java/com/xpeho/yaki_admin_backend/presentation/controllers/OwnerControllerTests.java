@@ -27,8 +27,7 @@ import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
 public class OwnerControllerTests {
-
-
+    
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final OwnerEntity owner1 = new OwnerEntity(1, 1);
     private final OwnerEntity owner2 = new OwnerEntity(2, 5);
@@ -62,7 +61,6 @@ public class OwnerControllerTests {
         String expectedResponse = objectMapper.writeValueAsString(owners);
         assertThat(response.getContentAsString(), is(equalTo(
                 expectedResponse)));
-
     }
 
     //testing the ownerController.getById() method
@@ -83,7 +81,6 @@ public class OwnerControllerTests {
         String expectedResponse = objectMapper.writeValueAsString(owner2);
         assertThat(response.getContentAsString(), is(equalTo(
                 expectedResponse)));
-
     }
 
     //testing the ownerController.createOwner() method
@@ -104,7 +101,6 @@ public class OwnerControllerTests {
         assertThat(response.getStatus(), is(equalTo(HttpStatus.OK.value())));
         JsonNode returnedResponse = objectMapper.readTree(response.getContentAsString());
         assertThat(returnedResponse.get("userId").asText(), is(equalTo("5")));
-
     }
 
     //testing the ownerController.deleteById() method
@@ -119,13 +115,11 @@ public class OwnerControllerTests {
                         MockMvcRequestBuilders.delete("/Owner/2")
                                 .accept(MediaType.APPLICATION_JSON))
                 .andReturn().getResponse();
+
         //then
         assertThat(response.getStatus(), is(equalTo(HttpStatus.OK.value())));
         String expectedResponse = objectMapper.writeValueAsString(owner2);
         assertThat(response.getContentAsString(), is(equalTo(
                 expectedResponse)));
-
     }
-
-
 }

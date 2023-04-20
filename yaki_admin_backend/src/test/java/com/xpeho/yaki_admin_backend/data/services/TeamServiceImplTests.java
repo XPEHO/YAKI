@@ -22,6 +22,7 @@ import static org.mockito.BDDMockito.willDoNothing;
 
 @ExtendWith(MockitoExtension.class)
 public class TeamServiceImplTests {
+
     private final ObjectMapper objectMapper = new ObjectMapper();
     private TeamModel team1;
     private TeamModel team2;
@@ -30,6 +31,7 @@ public class TeamServiceImplTests {
 
     @InjectMocks
     private TeamServiceImpl teamService;
+
     @Mock
     private TeamJpaRepository teamJpaRepository;
 
@@ -44,12 +46,12 @@ public class TeamServiceImplTests {
     @Test
     void getTeamByIdTest() throws Exception {
 
-
         //given
         given(teamJpaRepository.findById(1)).willReturn(Optional.of(team1));
 
         //when
         TeamEntity teamDto = teamService.getTeam(1);
+
         //then
         String returnedResponse = objectMapper.writeValueAsString(teamDto);
         String expectedResponse = objectMapper.writeValueAsString(teamE1);
@@ -61,17 +63,21 @@ public class TeamServiceImplTests {
     @Test
     void createTeamTest() throws Exception {
 
+        //given
         given(teamJpaRepository.save(team1)).willReturn(team1);
+
         // when
         TeamEntity savedTeam = teamService.createTeam(teamE1);
+
         // then - verify the output
         assertNotEquals(savedTeam, (null));
 
     }
 
-    //given
     @Test
     void saveTeamTest() throws Exception {
+
+        //given
         int idUsed = 3;
         TeamModel replacedModel = new TeamModel(idUsed, 235, "Team Céou");
         TeamModel expectedModel = new TeamModel(
@@ -81,6 +87,7 @@ public class TeamServiceImplTests {
 
         //when
         TeamEntity teamDto = teamService.saveOrUpdate(teamE2, idUsed);
+
         //then
         String returnedResponse = objectMapper.writeValueAsString(teamDto);
         TeamEntity teamE3 = new TeamEntity(
@@ -90,21 +97,22 @@ public class TeamServiceImplTests {
                 expectedResponse);
     }
 
-
     @Test
     void deleteByIdTest() throws Exception {
+
         //given
         int deletedId = 1;
         TeamModel deletedModel = new TeamModel(deletedId, 25, "team Cékoi");
         willDoNothing().given(teamJpaRepository).deleteById(deletedId);
         given(teamJpaRepository.existsById(deletedId)).willReturn(Boolean.TRUE);
         given(teamJpaRepository.findById(deletedId)).willReturn(Optional.of(deletedModel));
+
         //when
         TeamEntity teamMateDeleted = teamService.deleteById(deletedId);
+
         //then
         assertEquals(teamMateDeleted,
                 new TeamEntity(deletedModel.getId(),
                         deletedModel.getCaptainId(), deletedModel.getTeamName()));
-
     }
 }

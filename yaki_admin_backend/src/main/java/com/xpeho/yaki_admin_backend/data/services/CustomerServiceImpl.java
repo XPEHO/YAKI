@@ -16,11 +16,9 @@ public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerJpaRepository customerJpaRepository;
 
-
     public CustomerServiceImpl(CustomerJpaRepository customerJpaRepository) {
         this.customerJpaRepository = customerJpaRepository;
     }
-
 
     @Override
     public List<CustomerEntity> getCustomers() {
@@ -45,7 +43,6 @@ public class CustomerServiceImpl implements CustomerService {
         CustomerModel model = customerJpaRepository.getReferenceById(customerId);
         model.addUsers(users);
         customerJpaRepository.save(model);
-
     }
 
     @Override
@@ -77,13 +74,10 @@ public class CustomerServiceImpl implements CustomerService {
             customerModel.setName(entity.customerName());
             customerModel.setLocationId(entity.locationId());
             customerJpaRepository.save(customerModel);
-
         } else {
             throw new EntityNotFoundException("Entity customer with id " + id + " not found");
         }
         return new CustomerEntity(id, entity.customerName(),
                 entity.ownerId(), entity.locationId());
-
     }
-
 }

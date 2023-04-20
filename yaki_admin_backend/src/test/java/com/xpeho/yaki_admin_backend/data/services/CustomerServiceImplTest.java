@@ -43,7 +43,4 @@ public class CustomerServiceImplTest {
         assertEquals(customerDto.ownerId(), 1);
         assertEquals(customerDto.locationId(), 2);
     }
-
 }
-
-

@@ -7,6 +7,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "team_mate", schema = "public")
 public class TeammateModel {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "team_mate_seq")
     @SequenceGenerator(name = "team_mate_seq", sequenceName = "team_mate_id_seq", allocationSize = 1)

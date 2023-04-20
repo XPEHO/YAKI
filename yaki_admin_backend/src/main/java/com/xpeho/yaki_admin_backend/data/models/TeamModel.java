@@ -7,13 +7,16 @@ import java.util.Objects;
 @Entity
 @Table(name = "team", schema = "public")
 public class TeamModel {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "team_seq")
     @SequenceGenerator(name = "team_seq", sequenceName = "team_id_seq", allocationSize = 1)
     @Column(name = "team_id")
     int id;
+
     @Column(name = "team_captain_id")
     int captainId;
+
     @Column(name = "team_name")
     String teamName;
 

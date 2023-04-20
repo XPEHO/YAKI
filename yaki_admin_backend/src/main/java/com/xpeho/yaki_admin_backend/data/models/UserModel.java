@@ -11,25 +11,31 @@ import java.util.List;
 @Table(name = "user", schema = "public")
 @Entity
 public class UserModel {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id")
     private int userId;
+
     @Column(name = "user_last_name")
     private String lastName;
+
     @Column(name = "user_first_name")
     private String firstName;
+
     @Column(name = "user_email")
     private String email;
+
     @Column(name = "user_login")
     private String login;
+
     @Column(name = "user_password")
     private String password;
+
     @ManyToMany
-    @JoinTable(name = "customer_rights",
-            joinColumns = @JoinColumn(name = "customer_rights_user_id"),
-            inverseJoinColumns = @JoinColumn(name = "customer_rights_customer_id"))
+    @JoinTable(name = "customer_rights", joinColumns = @JoinColumn(name = "customer_rights_user_id"), inverseJoinColumns = @JoinColumn(name = "customer_rights_customer_id"))
     private List<CustomerModel> customers = new ArrayList<>();
+
     public UserModel(int userId, String lastName, String firstName, String email, String login, String password, List<CustomerModel> customers) {
         this.userId = userId;
         this.lastName = lastName;
