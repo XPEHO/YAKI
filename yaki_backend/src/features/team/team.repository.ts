@@ -42,7 +42,7 @@ export class TeamRepository {
         try {
           const result = await client.query(
             `
-              SELECT team_name FROM public.team_mate
+              SELECT * FROM public.team_mate
               INNER JOIN public.team ON team_id = team_mate_team_id
               WHERE team_mate_id = $1;
             `,
