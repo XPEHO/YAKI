@@ -173,4 +173,5 @@ export class DeclarationService {
 
     return listToReturn;
   };
+
 }
