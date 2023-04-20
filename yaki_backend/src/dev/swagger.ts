@@ -5,11 +5,10 @@ const doc = {
 
   info: {
     version: "1.0.0",
-    title: 'Node API YAKI',
     description: 'Working localization delcaration app',
   },
   host: `${process.env.Swagger_host}`,
-  schemes: [`${process.env.Swagger_schemes}`],
+  schemes: ['https', 'http'],
 };
 
 const outputFile = './src/dev/swagger.json';

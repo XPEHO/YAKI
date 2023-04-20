@@ -1,18 +1,18 @@
 import { TeamRepository } from "../features/team/team.repository";
 import { TeamService } from "../features/team/team.service";
-// import mockTeam from "./__mocks__/team";
 
 describe('teamService', () => {
     let teamService: TeamService;
     let teamRepository: TeamRepository;
-
-   
 
     beforeEach(() => {
         teamRepository = new TeamRepository();
         teamService = new TeamService(teamRepository);
     });
 
+    /**
+     * This function tests the getByCaptainId function in the teamService class
+     */
     describe('getTeamByTeamMateId', () => {
         const mockTeamMateId = 1;
         const mockTeam = [
@@ -38,9 +38,6 @@ describe('teamService', () => {
                 }
             ]);
             const getTeam = await teamService.getTeamByTeamMateId(mockTeamMateId);
-            
-            console.log(getTeam);
-            console.log(mockTeam);
 
             expect(getTeam).toEqual(mockTeam);
         });
