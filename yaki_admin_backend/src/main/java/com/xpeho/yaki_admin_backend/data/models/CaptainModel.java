@@ -1,15 +1,9 @@
 package com.xpeho.yaki_admin_backend.data.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "captain", schema = "public")
 public class CaptainModel {
@@ -33,7 +27,6 @@ public class CaptainModel {
         this.captainId = captainId;
         this.userId = userId;
         this.customerId = customerId;
-
     }
 
     public CaptainModel(int userId, int customerId) {
@@ -81,6 +74,4 @@ public class CaptainModel {
     public void setCaptainId(int captainId) {
         this.captainId = captainId;
     }
-
-
 }

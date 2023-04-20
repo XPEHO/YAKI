@@ -41,7 +41,6 @@ public class CaptainServiceImplTest {
         assertEquals(1, (int) captainDto.id());
         assertEquals(captainDto.userId(), 1);
         assertEquals(captainDto.customerId(), 2);
-
     }
 
     @Test
@@ -63,7 +62,6 @@ public class CaptainServiceImplTest {
         assertEquals(1, (int) captainEntities.get(0).id());
         assertEquals(2, (int) captainEntities.get(2).userId());
         assertEquals(2, (int) captainEntities.get(1).customerId());
-
     }
 
     @Test

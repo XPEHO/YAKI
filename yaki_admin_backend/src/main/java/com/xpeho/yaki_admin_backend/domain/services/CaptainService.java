@@ -15,5 +15,4 @@ public interface CaptainService {
     CaptainEntity deleteById(Integer id);
 
     CaptainEntity saveOrUpdate(CaptainEntity entity, int captainId);
-
 }
