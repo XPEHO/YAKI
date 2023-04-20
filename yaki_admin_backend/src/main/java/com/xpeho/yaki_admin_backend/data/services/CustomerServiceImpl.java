@@ -51,7 +51,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public CustomerEntity getCustomer(int id) {
         Optional<CustomerModel> customerModelOpt = customerJpaRepository.findById(id);
-        if (!customerModelOpt.isPresent()) {
+        if (customerModelOpt.isEmpty()) {
             throw new EntityNotFoundException("Entity Customer with id " + id + " has not been found");
         }
         CustomerModel customerModel = customerModelOpt.get();
@@ -81,10 +81,8 @@ public class CustomerServiceImpl implements CustomerService {
         } else {
             throw new EntityNotFoundException("Entity customer with id " + id + " not found");
         }
-        CustomerEntity entitySaved = new CustomerEntity(id, entity.customerName(),
+        return new CustomerEntity(id, entity.customerName(),
                 entity.ownerId(), entity.locationId());
-
-        return entitySaved;
 
     }
 

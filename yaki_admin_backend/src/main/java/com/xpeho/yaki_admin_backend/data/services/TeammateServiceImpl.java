@@ -35,14 +35,14 @@ public class TeammateServiceImpl implements TeammateService {
     public TeammateEntity createTeammate(TeammateEntity teammateEntity) {
         final TeammateModel teammateModel = new TeammateModel(teammateEntity.teamId(), teammateEntity.userId());
         TeammateModel savedModel = teammateJpaRepository.save(teammateModel);
-        //teammateEntity.id could be null so we use autogenerate id
+        //teammateEntity.id could be null, so we are using autogenerate id
         return new TeammateEntity(savedModel.getId(), savedModel.getTeamId(), savedModel.getUserId());
     }
 
     @Override
     public TeammateEntity getTeammate(int id) {
         Optional<TeammateModel> teammateModelOpt = teammateJpaRepository.findById(id);
-        if (!teammateModelOpt.isPresent()) {
+        if (teammateModelOpt.isEmpty()) {
             throw new EntityNotFoundException("The teammate with id " + id + " not found.");
         }
         TeammateModel teammateModel = teammateModelOpt.get();

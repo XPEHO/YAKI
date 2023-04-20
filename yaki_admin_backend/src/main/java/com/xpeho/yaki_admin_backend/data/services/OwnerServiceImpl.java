@@ -24,8 +24,8 @@ public class OwnerServiceImpl implements OwnerService {
         List<OwnerModel> ownerModels = ownerJpaRepository.findAll();
         List<OwnerEntity> ownerEntities = new ArrayList<>();
         for (OwnerModel ownerModel : ownerModels) {
-            OwnerEntity ownerEntitie = new OwnerEntity(ownerModel.getId(), ownerModel.getUserId());
-            ownerEntities.add(ownerEntitie);
+            OwnerEntity ownerEntity = new OwnerEntity(ownerModel.getId(), ownerModel.getUserId());
+            ownerEntities.add(ownerEntity);
         }
         return ownerEntities;
     }

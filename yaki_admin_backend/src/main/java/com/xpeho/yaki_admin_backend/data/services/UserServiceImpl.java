@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserEntity save(String lastname, String firstname, String email, String login) {
         final UserModel userModel = new UserModel(lastname, firstname, email, login);
-        final UserModel savedModel = userJpaRepository.save(userModel);
+        userJpaRepository.save(userModel);
         return new UserEntity(lastname, firstname, email, login);
     }
 

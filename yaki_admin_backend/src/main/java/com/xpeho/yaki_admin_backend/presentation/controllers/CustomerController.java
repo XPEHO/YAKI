@@ -44,7 +44,6 @@ public class CustomerController {
 
     @PutMapping("{id}")
     private CustomerEntity update(@RequestBody CustomerEntity entity, @PathVariable int id) {
-        CustomerEntity entitySaved = customerService.saveOrUpdate(entity, id);
-        return entitySaved;
+        return customerService.saveOrUpdate(entity, id);
     }
 }

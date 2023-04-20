@@ -22,9 +22,7 @@ import static org.mockito.BDDMockito.willDoNothing;
 public class OwnerServiceImplTests {
     private final ObjectMapper objectMapper = new ObjectMapper();
     private OwnerModel owner1;
-    private OwnerModel owner2;
     private OwnerEntity ownerE1;
-    private OwnerEntity ownerE2;
     @InjectMocks
     private OwnerServiceImpl ownerService;
     @Mock
@@ -33,9 +31,7 @@ public class OwnerServiceImplTests {
     @BeforeEach
     void setup() {
         owner1 = new OwnerModel(1);
-        owner2 = new OwnerModel(10);
         ownerE1 = new OwnerEntity(owner1.getId(), owner1.getUserId());
-        ownerE2 = new OwnerEntity(owner2.getId(), owner2.getUserId());
     }
 
     @Test

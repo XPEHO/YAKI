@@ -13,6 +13,7 @@ public class TeammateController {
     final TeammateService teammateService;
 
     public TeammateController(TeammateService teammateService) {
+
         this.teammateService = teammateService;
     }
 
@@ -32,17 +33,18 @@ public class TeammateController {
 
     @DeleteMapping("{id}")
     public TeammateEntity deleteTeammate(@PathVariable int id) {
+
         return teammateService.deleteById(id);
     }
 
     @PutMapping("{id}")
     private TeammateEntity update(@RequestBody TeammateEntity entity, @PathVariable int id) {
-        TeammateEntity entitySaved = teammateService.saveOrUpdate(entity, id);
-        return entitySaved;
+        return teammateService.saveOrUpdate(entity, id);
     }
 
     @GetMapping("team/{id}")
     public List<TeammateEntity> getAllWithinTeam(@PathVariable int id) {
+
         return teammateService.findAllByTeam(id);
     }
 }
