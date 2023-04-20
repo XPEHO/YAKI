@@ -19,7 +19,7 @@ const teamController = new TeamController(teamService);
 
 // Creating a new route for the teamRouter object.
 teamRouter.get(
-    "/teams/:teamMateId",
+    "/teams",
     (req, res, next) => 
   
     authService.verifyToken(req, res, next),
