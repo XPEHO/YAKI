@@ -16,13 +16,13 @@ public class TeamController {
 
     @PostMapping
     public TeamEntity createTeam(@RequestBody TeamEntity teamEntity) {
-        
+
         return teamService.createTeam(teamEntity);
     }
 
 
     @GetMapping("{id}")
-    public TeamEntity getCaptain(@PathVariable int id) {
+    public TeamEntity getTeam(@PathVariable int id) {
 
         return teamService.getTeam(id);
     }
@@ -34,7 +34,6 @@ public class TeamController {
 
     @PutMapping("{id}")
     private TeamEntity update(@RequestBody TeamEntity entity, @PathVariable int id) {
-        TeamEntity entitySaved = teamService.saveOrUpdate(entity, id);
-        return entitySaved;
+        return teamService.saveOrUpdate(entity, id);
     }
 }

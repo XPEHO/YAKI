@@ -15,7 +15,6 @@ public class TeamServiceImpl implements TeamService {
     final TeamJpaRepository teamJpaRepository;
 
     public TeamServiceImpl(TeamJpaRepository teamJpaRepository) {
-
         this.teamJpaRepository = teamJpaRepository;
     }
 
@@ -30,7 +29,7 @@ public class TeamServiceImpl implements TeamService {
     @Override
     public TeamEntity getTeam(int id) {
         Optional<TeamModel> teamModelOpt = teamJpaRepository.findById(id);
-        if (!teamModelOpt.isPresent()) {
+        if (teamModelOpt.isEmpty()) {
             throw new EntityNotFoundException("The team with id " + id + " not found.");
         }
         TeamModel teamModel = teamModelOpt.get();
@@ -54,12 +53,10 @@ public class TeamServiceImpl implements TeamService {
             teamModel.setCaptainId(entity.captainId());
             teamModel.setTeamName(entity.teamName());
             teamJpaRepository.save(teamModel);
-
         } else {
             throw new EntityNotFoundException("Entity team with id " + id + " not found");
         }
         //id and entity.id() could be different
-        TeamEntity entitySaved = new TeamEntity(id, entity.captainId(), entity.teamName());
-        return entitySaved;
+        return new TeamEntity(id, entity.captainId(), entity.teamName());
     }
 }

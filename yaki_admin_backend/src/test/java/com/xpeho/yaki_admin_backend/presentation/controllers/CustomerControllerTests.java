@@ -12,7 +12,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -33,13 +32,14 @@ import static org.mockito.BDDMockito.given;
 public class CustomerControllerTests {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
-    CustomerEntity customer1 = new CustomerEntity(1, "La reine du bricolage", 1, 1);
-    CustomerEntity customer2 = new CustomerEntity(2, "A la ferme", 1, 2);
-    List<CustomerEntity> customers = Arrays.asList(customer1, customer2);
-    private JacksonTester<CustomerEntity> jacksonEntities;
+    private final CustomerEntity customer1 = new CustomerEntity(1, "La reine du bricolage", 1, 1);
+    private final CustomerEntity customer2 = new CustomerEntity(2, "A la ferme", 1, 2);
+    private final List<CustomerEntity> customers = Arrays.asList(customer1, customer2);
     private MockMvc mvc;
+
     @Mock
     private CustomerService customerService;
+
     @InjectMocks
     private CustomerController customerController;
 
@@ -55,6 +55,7 @@ public class CustomerControllerTests {
     //testing the customerController.getCustomers() method
     @Test
     public void mustGetCustomers() throws Exception {
+
         //given
         given(customerService.getCustomers()).willReturn(customers);
 
@@ -63,12 +64,12 @@ public class CustomerControllerTests {
                         MockMvcRequestBuilders.get("/customers")
                                 .accept(MediaType.APPLICATION_JSON))
                 .andReturn().getResponse();
+
         //then
         assertThat(response.getStatus(), is(equalTo(HttpStatus.OK.value())));
         String expectedResponse = objectMapper.writeValueAsString(customers);
         assertThat(response.getContentAsString(), is(equalTo(
                 expectedResponse)));
-
     }
 
     //testing the customerController.getCustomer(id) method
@@ -126,7 +127,6 @@ public class CustomerControllerTests {
         assertThat(response.getStatus(), is(equalTo(HttpStatus.OK.value())));
         JsonNode returnedResponse = objectMapper.readTree(response.getContentAsString());
         assertThat(returnedResponse.get("customerName").asText(), is(equalTo("A la ferme")));
-
     }
 
     //testing the customerController.deleteCustomer() method
@@ -146,7 +146,6 @@ public class CustomerControllerTests {
         String expectedResponse = objectMapper.writeValueAsString(customer2);
         assertThat(response.getContentAsString(), is(equalTo(
                 expectedResponse)));
-
     }
 
     //testing the customerController.update() method
@@ -168,7 +167,5 @@ public class CustomerControllerTests {
         String expectedResponse = objectMapper.writeValueAsString(customer3);
         assertThat(response.getContentAsString(), is(equalTo(
                 expectedResponse)));
-
     }
 }
-

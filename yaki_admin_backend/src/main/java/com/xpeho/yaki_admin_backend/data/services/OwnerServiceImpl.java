@@ -12,10 +12,10 @@ import java.util.Optional;
 
 @Service
 public class OwnerServiceImpl implements OwnerService {
+
     OwnerJpaRepository ownerJpaRepository;
 
     public OwnerServiceImpl(OwnerJpaRepository ownerJpaRepository) {
-
         this.ownerJpaRepository = ownerJpaRepository;
     }
 
@@ -24,8 +24,8 @@ public class OwnerServiceImpl implements OwnerService {
         List<OwnerModel> ownerModels = ownerJpaRepository.findAll();
         List<OwnerEntity> ownerEntities = new ArrayList<>();
         for (OwnerModel ownerModel : ownerModels) {
-            OwnerEntity ownerEntitie = new OwnerEntity(ownerModel.getId(), ownerModel.getUserId());
-            ownerEntities.add(ownerEntitie);
+            OwnerEntity ownerEntity = new OwnerEntity(ownerModel.getId(), ownerModel.getUserId());
+            ownerEntities.add(ownerEntity);
         }
         return ownerEntities;
     }
@@ -46,12 +46,10 @@ public class OwnerServiceImpl implements OwnerService {
 
     @Override
     public OwnerEntity deleteById(Integer id) {
-
         if (ownerJpaRepository.existsById(id)) {
             OwnerModel ownerModel = ownerJpaRepository.findById(id).get();
             ownerJpaRepository.deleteById(id);
             return new OwnerEntity(ownerModel.getId(), ownerModel.getUserId());
         } else return null;
-
     }
 }

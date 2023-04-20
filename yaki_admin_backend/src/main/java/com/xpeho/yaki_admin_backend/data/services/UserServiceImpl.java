@@ -11,10 +11,10 @@ import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
+
     final UserJpaRepository userJpaRepository;
 
     public UserServiceImpl(UserJpaRepository userJpaRepository) {
-
         this.userJpaRepository = userJpaRepository;
     }
 
@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserEntity save(String lastname, String firstname, String email, String login) {
         final UserModel userModel = new UserModel(lastname, firstname, email, login);
-        final UserModel savedModel = userJpaRepository.save(userModel);
+        userJpaRepository.save(userModel);
         return new UserEntity(lastname, firstname, email, login);
     }
 
@@ -36,6 +36,4 @@ public class UserServiceImpl implements UserService {
                     userModel.getEmail(), userModel.getLogin());
         } else throw new EntityNotFoundException("Entity User with id " + id + " not found");
     }
-
-
 }

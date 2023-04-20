@@ -19,15 +19,15 @@ public class CustomerModel {
     @ManyToOne()
     @JoinColumn(name = "customer_owner_id", insertable = false, updatable = false)
     private OwnerModel owner;
+
     @Column(name = "customer_name")
     private String name;
+
     @Column(name = "customer_owner_id")
     private int ownerId;
 
     @ManyToMany
-    @JoinTable(name = "customer_rights",
-            joinColumns = @JoinColumn(name = "customer_rights_customer_id"),
-            inverseJoinColumns = @JoinColumn(name = "customer_rights_user_id"))
+    @JoinTable(name = "customer_rights", joinColumns = @JoinColumn(name = "customer_rights_customer_id"), inverseJoinColumns = @JoinColumn(name = "customer_rights_user_id"))
     private List<UserModel> users = new ArrayList<>();
 
     @Column(name = "customer_location_id")

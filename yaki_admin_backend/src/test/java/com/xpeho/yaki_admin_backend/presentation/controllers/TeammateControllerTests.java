@@ -2,8 +2,8 @@ package com.xpeho.yaki_admin_backend.presentation.controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.xpeho.yaki_admin_backend.domain.entities.TeamEntity;
-import com.xpeho.yaki_admin_backend.domain.services.TeamService;
+import com.xpeho.yaki_admin_backend.domain.entities.TeammateEntity;
+import com.xpeho.yaki_admin_backend.domain.services.TeammateService;
 import com.xpeho.yaki_admin_backend.errorHandling.CustomExceptionHandler;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,59 +28,58 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
-public class TeamControllerTests {
+public class TeammateControllerTests {
     private final ObjectMapper objectMapper = new ObjectMapper();
-    private final TeamEntity team1 = new TeamEntity(1, 1, "teamFeliz");
-    private final TeamEntity team2 = new TeamEntity(2, 1, "teamHappy");
-    private final List<TeamEntity> teams = Arrays.asList(team1, team2);
+    private final TeammateEntity teammate1 = new TeammateEntity(1, 1, 5);
+    private final TeammateEntity teammate2 = new TeammateEntity(2, 1, 8);
+    private final TeammateEntity teammate3 = new TeammateEntity(3, 2, 6);
+    private final List<TeammateEntity> teammates = Arrays.asList(teammate1, teammate2, teammate3);
+    private final List<TeammateEntity> teammatesFromTeamOne = Arrays.asList(teammate1, teammate2);
     private MockMvc mvc;
-
     @Mock
-    private TeamService teamService;
-
+    private TeammateService teammateService;
     @InjectMocks
-    private TeamController teamController;
+    private TeammateController teammateController;
 
     //creating a mock of the controller before each test
     @BeforeEach
     public void setup() {
 
-        mvc = MockMvcBuilders.standaloneSetup(teamController)
+        mvc = MockMvcBuilders.standaloneSetup(teammateController)
                 .setControllerAdvice(new CustomExceptionHandler())
                 .build();
     }
 
-
-    //testing the teamController.getTeam(id) method
+    //testing the teammateController.getTeammate(id) method
     @Test
-    public void mustGetATeam() throws Exception {
+    public void mustGetATeammate() throws Exception {
 
         //given
-        given(teamService.getTeam(2)).willReturn(team2);
+        given(teammateService.getTeammate(2)).willReturn(teammate2);
 
         //when
         MockHttpServletResponse response = mvc.perform(
-                        MockMvcRequestBuilders.get("/teams/2")
+                        MockMvcRequestBuilders.get("/teammates/2")
                                 .accept(MediaType.APPLICATION_JSON))
                 .andReturn().getResponse();
 
         //then
         assertThat(response.getStatus(), is(equalTo(HttpStatus.OK.value())));
-        String expectedResponse = objectMapper.writeValueAsString(team2);
+        String expectedResponse = objectMapper.writeValueAsString(teammate2);
         assertThat(response.getContentAsString(), is(equalTo(
                 expectedResponse)));
     }
 
-    /* testing if the teamController.getTeam(id) return an EntityNotFound exception
+    /* testing if the teammateController.getTeammate(id) return an EntityNotFound exception
     in case we have a nonexistent id. */
     @Test
     public void mustGetANotFoundStatus() throws Exception {
 
         //given
-        given(teamService.getTeam(250)).willThrow(EntityNotFoundException.class);
+        given(teammateService.getTeammate(250)).willThrow(EntityNotFoundException.class);
 
         //when
-        MockHttpServletResponse result = mvc.perform(MockMvcRequestBuilders.get("/teams/250")
+        MockHttpServletResponse result = mvc.perform(MockMvcRequestBuilders.get("/teammates/250")
                         .accept(MediaType.APPLICATION_JSON))
                 .andReturn().getResponse();
 
@@ -88,65 +87,84 @@ public class TeamControllerTests {
         assertThat(result.getStatus(), is(equalTo(HttpStatus.NOT_FOUND.value())));
     }
 
-    //testing the teamController.createTeam() method
+    //testing the teammateController.createTeammate() method
     @Test
-    public void mustCreateANewTeam() throws Exception {
+    public void mustCreateANewTeammate() throws Exception {
 
         //given
-        given(teamService.createTeam(team2)).willReturn(team2);
+        given(teammateService.createTeammate(teammate2)).willReturn(teammate2);
 
         //when
         MockHttpServletResponse response = mvc.perform(
-                        MockMvcRequestBuilders.post("/teams")
+                        MockMvcRequestBuilders.post("/teammates")
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content(objectMapper.writeValueAsString(team2)))
+                                .content(objectMapper.writeValueAsString(teammate2)))
                 .andReturn().getResponse();
 
         //then
         assertThat(response.getStatus(), is(equalTo(HttpStatus.OK.value())));
         JsonNode returnedResponse = objectMapper.readTree(response.getContentAsString());
-        assertThat(returnedResponse.get("teamName").asText(), is(equalTo("teamHappy")));
+        assertThat(returnedResponse.get("teamId").asText(), is(equalTo("1")));
+        assertThat(returnedResponse.get("userId").asText(), is(equalTo("8")));
+
     }
 
-    //testing the teamController.deleteTeam() method
+    //testing the teammateController.deleteTeammate() method
     @Test
-    public void mustDeleteATeam() throws Exception {
+    public void mustDeleteATeammate() throws Exception {
 
         //given
-        given(teamService.deleteById(2)).willReturn(team2);
+        given(teammateService.deleteById(2)).willReturn(teammate2);
 
         //when
         MockHttpServletResponse response = mvc.perform(
-                        MockMvcRequestBuilders.delete("/teams/2")
+                        MockMvcRequestBuilders.delete("/teammates/2")
                                 .accept(MediaType.APPLICATION_JSON))
                 .andReturn().getResponse();
-
         //then
         assertThat(response.getStatus(), is(equalTo(HttpStatus.OK.value())));
-        String expectedResponse = objectMapper.writeValueAsString(team2);
+        String expectedResponse = objectMapper.writeValueAsString(teammate2);
         assertThat(response.getContentAsString(), is(equalTo(
                 expectedResponse)));
     }
 
-    //testing the teamController.update() method
+    //testing the teammateController.update() method
     @Test
-    public void mustPutATeam() throws Exception {
-        TeamEntity team3 = new TeamEntity(
-                2, team1.captainId(), team1.teamName());
+    public void mustPutATeammate() throws Exception {
+        TeammateEntity teammate3 = new TeammateEntity(
+                2, teammate1.teamId(), teammate1.userId());
 
         //given
-        given(teamService.saveOrUpdate(team1, 2)).willReturn(team3);
+        given(teammateService.saveOrUpdate(teammate1, 2)).willReturn(teammate3);
 
         //when
         MockHttpServletResponse response = mvc.perform(
-                        MockMvcRequestBuilders.put("/teams/2")
+                        MockMvcRequestBuilders.put("/teammates/2")
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content(objectMapper.writeValueAsString(team1)))
+                                .content(objectMapper.writeValueAsString(teammate1)))
                 .andReturn().getResponse();
 
         //then
         assertThat(response.getStatus(), is(equalTo(HttpStatus.OK.value())));
-        String expectedResponse = objectMapper.writeValueAsString(team3);
+        String expectedResponse = objectMapper.writeValueAsString(teammate3);
+        assertThat(response.getContentAsString(), is(equalTo(
+                expectedResponse)));
+    }
+
+    @Test
+    public void getAllWithinTeam() throws Exception {
+
+        //given
+        given(teammateService.findAllByTeam(1)).willReturn(teammatesFromTeamOne);
+
+        //when
+        MockHttpServletResponse response = mvc.perform(
+                        MockMvcRequestBuilders.get("/teammates/team/1")
+                                .accept(MediaType.APPLICATION_JSON))
+                .andReturn().getResponse();
+        //then
+        assertThat(response.getStatus(), is(equalTo(HttpStatus.OK.value())));
+        String expectedResponse = objectMapper.writeValueAsString(teammatesFromTeamOne);
         assertThat(response.getContentAsString(), is(equalTo(
                 expectedResponse)));
     }
