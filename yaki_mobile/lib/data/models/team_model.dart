@@ -4,8 +4,11 @@ part 'team_model.g.dart';
 
 @JsonSerializable()
 class TeamModel {
+  @JsonKey(name: 'team_id')
   int? teamId;
+  @JsonKey(name: 'team_captain_id')
   int? teamCaptainId;
+  @JsonKey(name: 'team_name')
   String? teamName;
 
   TeamModel({

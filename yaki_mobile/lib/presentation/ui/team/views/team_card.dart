@@ -1,21 +1,16 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-
-
 class CardTeam extends StatefulWidget {
-  /// Card with the Team Mate's avatar, name, update date and status
+  /// Card with the Team's id, name
   const CardTeam({
     super.key,
     required this.teamId,
     required this.teamName,
-
   });
 
   final int? teamId;
   final String? teamName;
-
 
   @override
   State<CardTeam> createState() => _CardTeamState();
@@ -26,10 +21,6 @@ class _CardTeamState extends State<CardTeam> {
   Widget build(BuildContext context) {
     // recovers device dimensions
     var size = MediaQuery.of(context).size;
-
-    // Format Date.nom
-    // var dateDec = DateFormat('dd/MM/yyyy HH:mm')
-    //     .format(widget.dateActu ?? DateTime.now());
 
     return Card(
       child: Column(

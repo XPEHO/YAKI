@@ -21,7 +21,9 @@ class HeaderDeclaration extends StatelessWidget {
     required this.headerHint,
   });
 
-  void onAvatarIconPress(BuildContext context) {}
+  void onAvatarIconPress(BuildContext context) {
+    context.go('/team');
+  }
 
   /// Called when the picto switch button is tapped.
   /// Checks the current route and navigates to the corresponding route.

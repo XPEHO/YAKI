@@ -8,6 +8,7 @@ class DeclarationModel {
   DateTime declarationDateStart;
   DateTime declarationDateEnd;
   int? declarationTeamMateId;
+  int? declarationTeamId;
   String declarationStatus;
 
   // Remote, On site, Vacation, Other
@@ -16,6 +17,7 @@ class DeclarationModel {
     required this.declarationDateStart,
     required this.declarationDateEnd,
     required this.declarationTeamMateId,
+    required this.declarationTeamId,
     required this.declarationStatus,
   });
 

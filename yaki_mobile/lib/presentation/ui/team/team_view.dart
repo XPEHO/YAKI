@@ -1,11 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:yaki/presentation/ui/captain/views/team_body.dart';
-
-import '../shared/pages_layout.dart';
-import '../shared/views/header.dart';
-
+import 'package:yaki/presentation/ui/team/views/team_body.dart';
+import 'package:yaki/presentation/ui/shared/pages_layout.dart';
+import 'package:yaki/presentation/ui/shared/views/header.dart';
 
 class TeamView extends StatefulWidget {
   const TeamView({super.key});

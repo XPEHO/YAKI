@@ -18,14 +18,28 @@ class DeclarationBody extends ConsumerWidget {
   /// * pass the selected status String.
   /// ( get the StatusEnum text from card content, as its the format that need to be send to the back )
   /// * Then invoke the statusNotifier getSelectedStatus change the state to set displayed data in the status page.
-  /// * Finaly trigger router to change to the status page.
+  /// * Finally trigger router to change to the status page.
   Future<void> _onStatusSelected({
     required WidgetRef ref,
     required String status,
     required Function goToStatusPage,
-  }) async {
-    await ref.read(declarationProvider.notifier).createAllDay(status);
+    required BuildContext context,
+  })  async {
+    ref.read(declarationProvider.notifier).createAllDay(status);
     ref.read(statusPageProvider.notifier).getSelectedStatus();
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text("Status Selected"),
+        content: Text("You have selected $status"),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text("OK"),
+          )
+        ],
+      ),
+    );
     goToStatusPage();
   }
 
@@ -48,16 +62,17 @@ class DeclarationBody extends ConsumerWidget {
           children: statusCardsContent
               .map(
                 (cardContent) => StatusCard(
-                  statusName: tr(cardContent['text']),
-                  statusPicto: cardContent['image'],
-                  onPress: () => _onStatusSelected(
-                    ref: ref,
-                    status: StatusEnum.values.byName(cardContent['text']).text,
-                    goToStatusPage: () => context.go('/status'),
-                  ),
-                  isSelected: false,
-                ),
-              )
+              statusName: tr(cardContent['text']),
+              statusPicto: cardContent['image'],
+              onPress: () => _onStatusSelected(
+                ref: ref,
+                status: StatusEnum.values.byName(cardContent['text']).text,
+                goToStatusPage: () => context.go('/status'),
+                context: context,
+              ),
+              isSelected: false,
+            ),
+          )
               .toList(),
         ),
       ),

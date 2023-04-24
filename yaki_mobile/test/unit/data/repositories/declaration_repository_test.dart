@@ -82,6 +82,7 @@ void main() {
         declarationDateStart: DateTime.parse('2023-03-20T00:00:00.000Z'),
         declarationDateEnd: DateTime.parse('2023-03-20T23:59:59.950Z'),
         declarationTeamMateId: 1,
+        declarationTeamId: 2,
         declarationStatus: "REMOTE",
       );
       test(
@@ -171,6 +172,7 @@ void main() {
         declarationDateStart: DateTime.utc(2023, 4, 17, 00),
         declarationDateEnd: DateTime.utc(2023, 4, 17, 12),
         declarationTeamMateId: 123,
+        declarationTeamId: 2,
         declarationStatus: 'remote',
       );
       final DeclarationModel declarationAfternoon = DeclarationModel(
@@ -178,6 +180,7 @@ void main() {
         declarationDateStart: DateTime.utc(2023, 4, 17, 13),
         declarationDateEnd: DateTime.utc(2023, 4, 17, 23),
         declarationTeamMateId: 123,
+        declarationTeamId: 2,
         declarationStatus: 'other',
       );
       final List<DeclarationModel> declarations = [

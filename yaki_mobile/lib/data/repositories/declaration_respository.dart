@@ -90,6 +90,7 @@ class DeclarationRepository {
       final createHttpResponse =
           await _declarationApi.create([declaration], StatusEnum.fullDay.text);
       final statusCode = createHttpResponse.response.statusCode;
+      print('data repo, ${createHttpResponse.data}');
       switch (statusCode) {
         case 200 | 201:
           // convert HttpResponse<dynamic> (Map<String, dynamic>) into Model using .fromJson method
@@ -127,7 +128,8 @@ class DeclarationRepository {
       final statusCode = createHttpResponse.response.statusCode;
       switch (statusCode) {
         case 200 | 201:
-          // convert HttpResponse<dynamic> (Map<String, dynamic>) into Model using .fromJson method
+          // convert HttpResponse<dynamic> (Map<String, dynamic>) into Model
+        // using .fromJson method
           final createdDeclarationInMorning = DeclarationModelIn.fromJson(
             createHttpResponse.data[0],
           );
