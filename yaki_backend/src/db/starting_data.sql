@@ -67,7 +67,7 @@ INSERT INTO public.team_mate(
 -- INSERT DECLARATIONS
 
 INSERT INTO public.declaration(
-	declaration_team_mate_id, declaration_date,declaration_date_start, declaration_date_end, declaration_status)
+	declaration_team_mate_id, declaration_date,declaration_date_start, declaration_date_end, declaration_status, declaration_team_id)
 	VALUES -- for team_mate 1
 		   (1, '2023-02-20','2023-02-20','2023-02-20', 'on site', 1),
 		   (1, '2023-02-19','2023-02-19','2023-02-19', 'on site', 1),

@@ -32,7 +32,7 @@ export class DeclarationService {
       declarationList[0].declarationDateEnd &&
       declarationList[0].declarationStatus !== undefined &&
       declarationList[0].declarationStatus.trim() !== "" &&
-      declarationList[0].declarationTeamId === null
+      declarationList[0].declarationTeamId
     ) {
       return await this.declarationRepository.createDeclaration(declarationList);
     } else {
@@ -73,7 +73,7 @@ export class DeclarationService {
         declaration.declarationDateEnd &&
         declaration.declarationStatus !== undefined &&
         declaration.declarationStatus.trim() !== "" &&
-        declaration.declarationTeamId === null
+        declaration.declarationTeamId
       ) {
         isObjectsValid = true;
       }

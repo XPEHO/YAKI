@@ -16,7 +16,7 @@ describe("DeclarationService", () => {
   /* The above code is testing the declarationService.createDeclaration method. */
   describe("create a declaration ", () => {
     const declarationDtoIn: DeclarationDtoIn[] = [
-      new DeclarationDtoIn(1, 1, new Date(), new Date(), new Date(), StatusDeclaration.REMOTE),
+      new DeclarationDtoIn(1, 1, new Date(), new Date(), new Date(), StatusDeclaration.REMOTE, 1),
     ];
 
     /* This test is checking if the declarationService.createDeclaration method returns a new
@@ -47,7 +47,7 @@ describe("DeclarationService", () => {
     const dateEnd: Date = new Date(new Date().setHours(18));
 
     const declarationDtoIn: DeclarationDtoIn[] = [
-      new DeclarationDtoIn(1, 1, new Date(), dateStart, dateEnd, StatusDeclaration.REMOTE),
+      new DeclarationDtoIn(1, 1, new Date(), dateStart, dateEnd, StatusDeclaration.REMOTE, 1),
     ];
 
     it("should get and return declaration of teamMate 1", async () => {
