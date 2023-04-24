@@ -12,7 +12,8 @@ class DeclarationNotifier extends StateNotifier<String> {
   final TeamRepository teamRepository;
 
   DeclarationNotifier(this.declarationRepository, this.loginRepository,
-      this.teamRepository)
+      this.teamRepository
+      )
       : super("");
 
   /// Invoked at authentication "sign in" button press.
@@ -63,7 +64,7 @@ class DeclarationNotifier extends StateNotifier<String> {
   /// Then send it to declarationRepository's function
   Future<void> createHalfDay(String morning, String afternoon) async {
     final todayDate = DateTime.now();
-    final teamId = teamRepository.teamEntity?.teamId;
+    final teamId = teamRepository.teamlist.first.teamId;
     DeclarationModel newDeclarationMorning = DeclarationModel(
       declarationDate: todayDate,
       declarationDateStart: DateTime.parse(

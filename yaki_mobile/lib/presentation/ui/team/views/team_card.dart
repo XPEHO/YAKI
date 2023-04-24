@@ -36,17 +36,17 @@ class _CardTeamState extends State<CardTeam> {
                   height: 90,
                   width: 100,
                   child: Stack(
-                    children: <Widget>[
-                      Material(
+                    //children: <Widget>[
+                      //Material(
                         // Circle with the avatar of the Team Mate
-                        shape: const CircleBorder(),
-                        child: SvgPicture.asset(
-                          'assets/images/avatar1.svg',
-                          width: 80,
-                          height: 80,
-                        ),
-                      ),
-                    ],
+                       // shape: const CircleBorder(),
+                        //child: SvgPicture.asset(
+                        //  'assets/images/avatar1.svg',
+                         // width: 80,
+                        //  height: 80,
+                        //),
+                     // ),
+                    //],
                   ),
                 ),
                 Padding(
@@ -57,7 +57,7 @@ class _CardTeamState extends State<CardTeam> {
                       Row(
                         children: [
                           Text(
-                            // Name of the Team Mate
+                            // Name of the Team
                             '${widget.teamId} ${widget.teamName}',
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
