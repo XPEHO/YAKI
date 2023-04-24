@@ -50,22 +50,6 @@ declarationRouter.get(
     declarationController.getDeclarationsForTeamMate(req, res);
   }
 );
-declarationRouter.put(
-  "/declarations/:declarationId",
-  (req, res, next) =>
-    /*#swagger.parameters['declarationBody'] = {
-                in: 'body',
-                description: 'Declaration body',
-                required: true,
-                type: 'object',
-                schema: { declarationStatus: 'string', declarationDate: 'string', declarationTeamMateId: 1}
-}
-  */
-    authService.verifyToken(req, res, next),
-  (req, res) => {
-    declarationController.updateDeclarationStatus(req, res);
-  }
-);
 
 
 /* Exporting the declarationRouter object. */

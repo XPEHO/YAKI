@@ -65,26 +65,4 @@ export class DeclarationController {
       }
     }
   }
-
-  /**
-   * Updating the declaration status.
-   * @param req The incoming HTTP request.
-   * @param res The HTTP response to be sent.
-   */
-  async updateDeclarationStatus(req: Request, res: Response) {
-    const declarationId = parseInt(req.params.declarationId);
-    const declaration: DeclarationDtoIn[] = req.body;
-    try {
-      await this.declarationService.updateDeclarationStatus(declarationId, declaration);
-      res.status(200).json(declaration);
-    } catch (error: any) {
-      if (error instanceof TypeError) {
-        // catch not found errors
-        res.status(404).json({message: error.message});
-      } else {
-        // catch server errors
-        res.status(500).json({message: error.message});
-      }
-    }
-  }
 }
