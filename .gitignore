@@ -46,3 +46,7 @@ app.*.map.json
 yaki_karate/target/
 
 yaki_admin_backend/src/main/resources/application.properties
+
+android/key.properties
+yaki_mobile/assets/cer/*.cer
+target/

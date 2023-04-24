@@ -1,7 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:yaki/app.dart';
+import 'package:flutter/services.dart';
+import 'package:yaki/presentation/state/dio/dio_interceptor.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,7 +25,23 @@ void main() async {
       // its a bridge from widget to data stored in state. It make possible to use any declared provider globally
       // Any widget(converted as consumerWidget, for the statelessWidget)
       // will have access to the WidgetRef objet, making the widget able to have access to any provider, so state.
-      child: const ProviderScope(child: YakiApp()),
+      child: ProviderScope(
+        overrides: await _overrides(),
+        child: const YakiApp(),
+      ),
     ),
   );
+}
+
+Future<List<Override>> _overrides() async {
+  if (kDebugMode) {
+    return [];
+  }
+  String serverCertificate =
+      await rootBundle.loadString("assets/cer/server.cer");
+  return [
+    certificateProvider.overrideWithValue(
+      serverCertificate,
+    ),
+  ];
 }
