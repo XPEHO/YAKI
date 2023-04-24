@@ -1,0 +1,28 @@
+version: "3.9"
+services:
+  admin:
+    build:
+      context: .
+      dockerfile: dockerfile
+    env_file: .env
+    environment:
+      DB_HOST: bdd
+    ports:
+      - "8080:8080"
+    depends_on:
+      - bdd
+  bdd:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_DB: ${DB_DATABASE}
+    ports:
+      - "${DB_PORT}:5432"
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+      #copy the sql script to create tables
+      - ../yaki_database/create_user.sql:/docker-entrypoint-initdb.d/create_user.sql
+      - ../yaki_database/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
+      #copy the sql script to fill tables
+      - ../yaki_database/starting_data.sql:/docker-entrypoint-initdb.d/starting_data.sql
