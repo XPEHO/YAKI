@@ -277,6 +277,7 @@ CREATE TABLE IF NOT EXISTS public.declaration
     declaration_date_start timestamp with time zone,
     declaration_date_end timestamp with time zone,
     declaration_status character varying(30),
+    declaration_team_id integer NOT NULL,
     CONSTRAINT declaration_pkey PRIMARY KEY (declaration_id),
     CONSTRAINT declaration_team_mate_id_fkey FOREIGN KEY (declaration_team_mate_id)
         REFERENCES public.team_mate (team_mate_id) MATCH SIMPLE
