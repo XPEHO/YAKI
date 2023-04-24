@@ -17,11 +17,10 @@ class PagesLayoutDeclaration extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          Expanded(
-            flex: 6,
-            child: header,
+          header,
+          SingleChildScrollView(
+            child: bodyContent,
           ),
-          Expanded(flex: 7, child: bodyContent),
         ],
       ),
     );

@@ -17,17 +17,14 @@ class DeclarationBody extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     var width = MediaQuery.of(context).size.width;
     return Padding(
-      padding: EdgeInsets.symmetric(
-        vertical: width * 0.12,
-        horizontal: width * 0.09,
-      ),
+      padding: const EdgeInsets.all(16.0),
       child: Center(
         child: Wrap(
           alignment: WrapAlignment.center,
           // horizontal
-          spacing: width * 0.07,
+          spacing: 16.0,
           // vertical
-          runSpacing: width * 0.12,
+          runSpacing: 16.0,
           children: statusCardsContent
               .map(
                 (cardContent) => StatusCard(

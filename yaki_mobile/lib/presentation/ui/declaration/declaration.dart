@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:look/look.dart';
 import 'package:yaki/presentation/ui/declaration/views/declaration_body.dart';
 import 'package:yaki/presentation/ui/shared/views/header_declaration.dart';
 import 'package:yaki/presentation/ui/shared/pages_layout_declaration.dart';
 
+@Look(builder: buildDeclarationLook)
 class Declaration extends StatelessWidget {
   const Declaration({super.key});
 
@@ -18,10 +20,10 @@ class Declaration extends StatelessWidget {
           headerTitle: tr('headerTitleDecla'),
           headerHint: tr('headerHintDecla'),
         ),
-        bodyContent: const SingleChildScrollView(
-          child: DeclarationBody(),
-        ),
+        bodyContent: const DeclarationBody(),
       ),
     );
   }
 }
+
+buildDeclarationLook() => const Declaration();
