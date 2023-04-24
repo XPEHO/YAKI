@@ -8,6 +8,7 @@ export class DeclarationDtoIn {
   declarationDateStart: Date;
   declarationDateEnd: Date;
   declarationStatus: StatusDeclaration;
+  declarationTeamId: number;
 
   constructor(
     declarationId: number,
@@ -15,7 +16,8 @@ export class DeclarationDtoIn {
     declarationDate: Date,
     declarationDateStart: Date,
     declarationDateEnd: Date,
-    declarationStatus: StatusDeclaration
+    declarationStatus: StatusDeclaration,
+    declarationTeamId: number
   ) {
     this.declarationId = declarationId;
     this.declarationTeamMateId = declarationTeamMateId;
@@ -23,5 +25,6 @@ export class DeclarationDtoIn {
     this.declarationDateStart = declarationDateStart;
     this.declarationDateEnd = declarationDateEnd;
     this.declarationStatus = declarationStatus;
+    this.declarationTeamId = declarationTeamId;
   }
 }

@@ -37,7 +37,8 @@ export class DeclarationRepository {
             declaration_date_start, 
             declaration_date_end, 
             declaration_team_mate_id, 
-            declaration_status
+            declaration_status,
+            declaration_team_id
           ) 
         VALUES ${valuesString} RETURNING *`,
         declarationValuesList
@@ -49,7 +50,8 @@ export class DeclarationRepository {
           result.rows[0].declaration_date,
           result.rows[0].declaration_date_start,
           result.rows[0].declaration_date_end,
-          result.rows[0].declaration_status
+          result.rows[0].declaration_status,
+          result.rows[0].declaration_team_id
         ),
       ];
       return declarationToFront;
@@ -77,7 +79,8 @@ export class DeclarationRepository {
           declaration_date_start, 
           declaration_date_end, 
           declaration_team_mate_id, 
-          declaration_status
+          declaration_status,
+          declaration_team_id
         )
         VALUES ${valuesString} RETURNING *`,
         declarationsValuesList
@@ -90,7 +93,8 @@ export class DeclarationRepository {
           item.declaration_date,
           item.declaration_date_start,
           item.declaration_date_end,
-          item.declaration_status
+          item.declaration_status,
+          item.declaration_team_id
         );
       });
 
@@ -138,7 +142,8 @@ export class DeclarationRepository {
             declaration.declaration_date,
             declaration.declaration_date_start,
             declaration.declaration_date_end,
-            declaration.declaration_status
+            declaration.declaration_status,
+            declaration.declaration_team_id
           )
         );
       }

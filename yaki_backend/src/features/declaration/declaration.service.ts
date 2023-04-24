@@ -31,7 +31,8 @@ export class DeclarationService {
       declarationList[0].declarationDateStart &&
       declarationList[0].declarationDateEnd &&
       declarationList[0].declarationStatus !== undefined &&
-      declarationList[0].declarationStatus.trim() !== ""
+      declarationList[0].declarationStatus.trim() !== "" &&
+      declarationList[0].declarationTeamId
     ) {
       return await this.declarationRepository.createDeclaration(declarationList);
     } else {
@@ -71,7 +72,8 @@ export class DeclarationService {
         declaration.declarationDateStart &&
         declaration.declarationDateEnd &&
         declaration.declarationStatus !== undefined &&
-        declaration.declarationStatus.trim() !== ""
+        declaration.declarationStatus.trim() !== "" &&
+        declaration.declarationTeamId
       ) {
         isObjectsValid = true;
       }
@@ -147,5 +149,4 @@ export class DeclarationService {
 
     return listToReturn;
   };
-
 }
