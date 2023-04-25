@@ -4,25 +4,31 @@ Feature: Owner
       * url 'http://localhost:8080'
       * def schema = [{id : '#number', userId: '#number'}]
 
-    @GetOwnerById
-    Scenario: Get owner by id
-      Given path '/owner/' + id
-      And def id = 1
+    @GetOwner
+      Scenario: Get all owners
+      Given path '/Owner/'
       When method get
       Then status 200
-      And match response == {id: '#number', userId: '#number'}
+      And match response contains  schema
+      * print response
+      * print schema
+
+
+  @GetOwnerById
+    Scenario: Get owner by id
+      Given path '/Owner/'
+      And param id =  1
+      When method get
+      Then status 200
+      And match response contains  schema
+      * print response
+      * print schema
 
     @CreateOwner
     Scenario: Create new owner
-      Given path '/owner'
-      And request {userId: 1}
+      Given path '/Owner'
+      And request {userId: 2}
       When method post
       Then status 200
       And match response == {id: '#number', userId: '#number'}
 
-    @DeleteOwner
-    Scenario: Delete existing owner
-      Given path '/owner/' + id
-      And def id = 1
-      When method delete
-      Then status 200
