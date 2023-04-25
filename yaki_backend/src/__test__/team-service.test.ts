@@ -17,9 +17,9 @@ describe("teamService", () => {
     const mockTeamMateId = 1;
     const mockTeam = [
       {
-        team_id: 2,
-        team_captain_id: 2,
-        team_name: "Equipe 2",
+        teamId: 2,
+        teamCaptainId: 2,
+        teamName: "Equipe 2",
       },
     ];
 
