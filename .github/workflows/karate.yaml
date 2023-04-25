@@ -21,6 +21,9 @@ jobs:
           npm i
           echo "Generate swagger.json file"
           npm run swagger
+          echo "build java"
+          cd ../yaki_admin_backend
+          ./gradlew clean build
           echo "Starting docker containers"
           cd ../yaki_docker
           docker compose up --build --quiet-pull -d
