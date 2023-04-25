@@ -2,9 +2,9 @@ version: "3.9"
 services:
    api:
     build:
-      context: .
+      context: ../yaki_backend
       dockerfile: dockerfile
-    env_file: .env
+    env_file: ../yaki_backend/.env
     environment:
        DB_HOST: bdd
     ports:
@@ -12,6 +12,7 @@ services:
     depends_on:
       - bdd
    bdd:
+    env_file: ../yaki_backend/.env
     image: postgres
     environment:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
@@ -23,7 +24,7 @@ services:
     build:
       context: ../yaki_admin_backend
       dockerfile: dockerfile
-    env_file: .env
+    env_file: ../yaki_backend/.env
     environment:
       DB_HOST: bdd
     ports:

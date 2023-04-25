@@ -19,10 +19,11 @@ jobs:
           echo "Generate swagger.json file"
           npm run swagger
           echo "Starting docker containers"
+          cd ../yaki_docker
           docker compose up --build --quiet-pull -d
           cd ../yaki_karate
           echo "Running karate tests"
           mvn test --quiet
-          cd ../yaki_backend
+          cd ../yaki_docker
           echo "Stopping docker containers"
           docker compose down

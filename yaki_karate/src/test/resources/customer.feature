@@ -18,4 +18,4 @@ Feature: GetAllCaptain
   Scenario: Get the latest declaration fail
     Given path '/customers/205'
     When method get
-    Then status 403
+    Then status 404
