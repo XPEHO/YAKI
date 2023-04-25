@@ -61,7 +61,6 @@ public class OwnerServiceImplTests {
         assertNotEquals(savedOwner, (null));
     }
 
-
     @Test
     void deleteByIdTest() throws Exception {
         //given
@@ -78,6 +77,5 @@ public class OwnerServiceImplTests {
         assertEquals(ownerMateDeleted,
                 new OwnerEntity(deletedModel.getId(),
                         deletedModel.getUserId()));
-
     }
 }

@@ -27,7 +27,7 @@ import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
 public class OwnerControllerTests {
-    
+
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final OwnerEntity owner1 = new OwnerEntity(1, 1);
     private final OwnerEntity owner2 = new OwnerEntity(2, 5);
@@ -121,5 +121,25 @@ public class OwnerControllerTests {
         String expectedResponse = objectMapper.writeValueAsString(owner2);
         assertThat(response.getContentAsString(), is(equalTo(
                 expectedResponse)));
+    }
+
+    @Test
+    public void mustPutAOwner() throws Exception {
+        OwnerEntity owner4 = new OwnerEntity(4, owner1.userId());
+
+        //given
+        given(ownerService.saveOrUpdate(owner1, 2)).willReturn(owner4);
+
+        //when
+        MockHttpServletResponse response = mvc.perform(
+                        MockMvcRequestBuilders.put("/Owner/2")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(owner1)))
+                .andReturn().getResponse();
+
+        //then
+        assertThat(response.getStatus(), is(equalTo(HttpStatus.OK.value())));
+        String expectedResponse = objectMapper.writeValueAsString(owner4);
+        assertThat(response.getContentAsString(), is(equalTo(expectedResponse)));
     }
 }
