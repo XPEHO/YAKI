@@ -48,19 +48,6 @@ jest.mock("../features/team/team.service", () => {
   };
 });
 
-// jest.mock("../features/team/team.repository", () => {
-//   return {
-//     TeamRepository: jest.fn().mockImplementation(() => {
-//       return {
-//         getTeamByCaptainId: async (captain_id: number) => {
-//           const team = await mockTeam.filter((elm) => elm.teamCaptainId == captain_id);
-//           return team[0];
-//         },
-//       };
-//     }),
-//   };
-// });
-
 describe("get teammate by userId", () => {
   const teamRepo = new TeamRepository();
   const teamService = new TeamService(teamRepo);
