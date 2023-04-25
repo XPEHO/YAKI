@@ -6,7 +6,7 @@ class HeaderColor {
 
 TextStyle textStyleTemp() {
   return const TextStyle(
-    fontSize: 23,
+    fontSize: 20,
     fontWeight: FontWeight.bold,
     color: Colors.white,
   );

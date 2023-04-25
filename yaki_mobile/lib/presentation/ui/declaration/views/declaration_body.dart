@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yaki/presentation/displaydata/declaration_card_content.dart';
@@ -17,14 +17,14 @@ class DeclarationBody extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     var width = MediaQuery.of(context).size.width;
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(25.0),
       child: Center(
         child: Wrap(
           alignment: WrapAlignment.center,
           // horizontal
-          spacing: 16.0,
+          spacing: 20.0,
           // vertical
-          runSpacing: 16.0,
+          runSpacing: 20.0,
           children: statusCardsContent
               .map(
                 (cardContent) => StatusCard(

@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:look/look.dart';
 import 'package:yaki/presentation/styles/header_text_style.dart';
 import 'package:yaki/presentation/ui/shared/views/avatar_icon.dart';
-import 'package:yaki/presentation/ui/shared/views/circle_avatar_svg.dart';
 
 @Look(builder: buildHeaderLook)
 class HeaderDeclaration extends StatelessWidget {
@@ -45,6 +44,7 @@ class HeaderDeclaration extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 360,
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(16),
@@ -59,67 +59,71 @@ class HeaderDeclaration extends StatelessWidget {
           ),
         ],
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(15),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                Text(
-                  headerTitle,
-                  style: textStyleTemp(),
-                ),
-
-                const Spacer(),
-                // top right circle avatar
-                AvatarIcon(
-                  pictoIcon: pictoIcon,
-                  onPressed: () => onAvatarIconPress(context),
-                ),
-              ],
-            ),
-            Stack(
-              children: [
-                Center(
-                  child: Material(
-                    color: Colors.transparent,
-                    shape: const CircleBorder(),
-                    child: SvgPicture.asset(
-                      pictoPath,
-                      height: 96.0,
-                      width: 96.0,
-                    ),
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.only(left: 15, right: 15),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Text(
+                    headerTitle,
+                    style: textStyleTemp(),
                   ),
-                ),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 35),
-                    child: Material(
-                      elevation: 10,
+
+                  const Spacer(),
+                  // top right circle avatar
+                  AvatarIcon(
+                    pictoIcon: pictoIcon,
+                    onPressed: () => onAvatarIconPress(context),
+                  ),
+                ],
+              ),
+              SizedBox(
+                width: 200.0,
+                height: 200.0,
+                child: Stack(
+                  children: [
+                    Material(
                       color: Colors.transparent,
                       shape: const CircleBorder(),
+                      child: SvgPicture.asset(
+                        pictoPath,
+                        height: 200.0,
+                        width: 200.0,
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.bottomRight,
                       child: Padding(
-                        padding: const EdgeInsets.all(0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: HeaderColor.yellowApp,
-                            border: Border.all(
-                              color: Colors.deepOrangeAccent,
-                              width: 3.0,
-                            ),
-                            shape: BoxShape.circle,
-                          ),
-                          width: 60,
-                          height: 60,
-                          child: Center(
-                            child: SizedBox(
-                              width: 40,
-                              height: 40,
-                              child: InkWell(
-                                onTap: () => onPictoSwitchTap(context),
-                                child: SvgPicture.asset(
-                                  pictoSwitch,
+                        padding: const EdgeInsets.only(top: 35),
+                        child: Material(
+                          elevation: 10,
+                          color: Colors.transparent,
+                          shape: const CircleBorder(),
+                          child: Padding(
+                            padding: const EdgeInsets.all(0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: HeaderColor.yellowApp,
+                                border: Border.all(
+                                  color: Colors.deepOrangeAccent,
+                                  width: 3.0,
+                                ),
+                                shape: BoxShape.circle,
+                              ),
+                              width: 60,
+                              height: 60,
+                              child: Center(
+                                child: SizedBox(
+                                  width: 40,
+                                  height: 40,
+                                  child: InkWell(
+                                    onTap: () => onPictoSwitchTap(context),
+                                    child: SvgPicture.asset(
+                                      pictoSwitch,
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
@@ -127,21 +131,21 @@ class HeaderDeclaration extends StatelessWidget {
                         ),
                       ),
                     ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 45,
-              child: Padding(
-                padding: const EdgeInsets.only(top: 15),
-                child: Text(
-                  headerHint,
-                  style: textStyleTemp(),
+                  ],
                 ),
               ),
-            ),
-          ],
+              SizedBox(
+                height: 50,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: Text(
+                    headerHint,
+                    style: textStyleTemp(),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
