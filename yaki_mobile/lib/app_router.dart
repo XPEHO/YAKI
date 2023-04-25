@@ -75,7 +75,7 @@ final goRouterProvider = Provider<GoRouter>(
                 if (await SharedPref.isTokenPresent()) {
                   return '/status';
                 } else {
-                  return '/';
+                  return '/declaration';
                 }
               },
             ),

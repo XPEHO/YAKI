@@ -113,6 +113,7 @@ class DeclarationRepository {
             "Invalid statusCode from server : ${createHttpResponse.response.statusCode}",
           );
       }
+      //print('repo status: $statusValue');
       setAllDayDeclaration(statusValue);
     } catch (err) {
       debugPrint("error during creation : $err");

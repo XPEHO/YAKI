@@ -8,6 +8,9 @@ import 'package:yaki/presentation/state/providers/declaration_provider.dart';
 import 'package:yaki/presentation/state/providers/halfday_status_provider.dart';
 import 'package:yaki/presentation/ui/declaration/views/status_card.dart';
 
+import '../../../../domain/entities/team_entity.dart';
+import '../../../state/providers/team_provider.dart';
+
 /// using ConsumerStatefulWidget (statefullWidget) to have access to the WidgetRef object
 /// allowing the current widget to have access to any provider.
 class AfternoonDeclarationBody extends ConsumerWidget {
@@ -18,13 +21,47 @@ class AfternoonDeclarationBody extends ConsumerWidget {
     required String morningStatus,
     required String afternoonStatus,
     required Function goToStatusPage,
-  }) async {
-    await ref
-        .read(declarationProvider.notifier)
-        .createHalfDay(morningStatus, afternoonStatus);
-    // set la state dans le status_notifier.dart avec la valeur du morning
-    ref.read(halfdayStatusPageProvider.notifier).getHalfdayDeclaration();
-    goToStatusPage();
+    required BuildContext context,
+  }) {
+    final List<TeamEntity> listTeam = ref.watch(teamProvider);
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text("Select a team"),
+        content: Container(
+          height: 300.0, // Change as per your requirement
+          width: 300.0, // Change as per your requirement
+          child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: listTeam.length,
+            itemBuilder: (BuildContext context, int index) {
+              return InkWell(
+                onTap: () async{
+
+                  await ref
+                      .read(declarationProvider.notifier)
+                      .createHalfDay(morningStatus, afternoonStatus);
+                  // set la state dans le status_notifier.dart avec la valeur du morning
+                  ref.read(halfdayStatusPageProvider.notifier).getHalfdayDeclaration();
+                  goToStatusPage();
+                },
+                child: ListTile(
+                  title: Text(listTeam[index].teamName ?? "No name available"),
+                ),
+              );
+            },
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(null),
+            child: const Text("Cancel"),
+          ),
+        ],
+      ),
+    );
+
+
   }
 
   @override
@@ -56,10 +93,9 @@ class AfternoonDeclarationBody extends ConsumerWidget {
                     afternoonStatus:
                         StatusEnum.values.byName(cardContent['text']).text,
                     goToStatusPage: () => context.go('/halfdayStatus'),
+                    context: context,
                   ),
-                  isSelected:
-                      StatusEnum.values.byName(cardContent['text']).text ==
-                          morningDeclaration,
+
                 ),
               )
               .toList(),

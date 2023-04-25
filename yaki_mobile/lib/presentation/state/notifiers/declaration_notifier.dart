@@ -51,10 +51,11 @@ class DeclarationNotifier extends StateNotifier<String> {
         '${DateFormat('yyyy-MM-dd').format(todayDate)} 23:59:59Z',
       ),
       declarationTeamMateId: loginRepository.teamMateId,
-      declarationStatus: status,
       declarationTeamId: teamId,
+      declarationStatus: status,
     );
     print('teamId notifier: $teamId');
+    print('notifier : ${newDeclaration.toJson()}');
 
     await declarationRepository.createAllDay(newDeclaration);
   }

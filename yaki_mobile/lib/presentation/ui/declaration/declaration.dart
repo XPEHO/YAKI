@@ -4,6 +4,8 @@ import 'package:yaki/presentation/ui/declaration/views/declaration_body.dart';
 import 'package:yaki/presentation/ui/shared/views/header_declaration.dart';
 import 'package:yaki/presentation/ui/shared/pages_layout_declaration.dart';
 
+import 'package:yaki/presentation/ui/shared/views/Team_Selection_Dialog.dart';
+
 class Declaration extends StatelessWidget {
   const Declaration({super.key});
 

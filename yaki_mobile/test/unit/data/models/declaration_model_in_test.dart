@@ -15,7 +15,10 @@ void main() {
   DeclarationModelIn declarationModelIn = DeclarationModelIn(
     declarationId: 83,
     declarationTeamMateId: 15,
+    declarationTeamId: 2,
     declarationDate: DateTime.parse('2023-03-20T10:00:00.950Z'),
+    declarationDateStart: DateTime.parse('2023-03-20T00:00:00.950Z'),
+    declarationDateEnd: DateTime.parse('2023-03-20T23:59:59.950Z'),
     declarationStatus: "REMOTE",
   );
 

@@ -13,8 +13,8 @@ DeclarationModel _$DeclarationModelFromJson(Map<String, dynamic> json) =>
           DateTime.parse(json['declarationDateStart'] as String),
       declarationDateEnd: DateTime.parse(json['declarationDateEnd'] as String),
       declarationTeamMateId: json['declarationTeamMateId'] as int?,
-      declarationTeamId: json['declarationTeamId'] as int?,
       declarationStatus: json['declarationStatus'] as String,
+      declarationTeamId: json['declarationTeamId'] as int?,
     );
 
 Map<String, dynamic> _$DeclarationModelToJson(DeclarationModel instance) =>
@@ -23,6 +23,6 @@ Map<String, dynamic> _$DeclarationModelToJson(DeclarationModel instance) =>
       'declarationDateStart': instance.declarationDateStart.toIso8601String(),
       'declarationDateEnd': instance.declarationDateEnd.toIso8601String(),
       'declarationTeamMateId': instance.declarationTeamMateId,
-      'declarationTeamId': instance.declarationTeamId,
       'declarationStatus': instance.declarationStatus,
+      'declarationTeamId': instance.declarationTeamId,
     };
