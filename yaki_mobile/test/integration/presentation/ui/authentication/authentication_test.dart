@@ -68,7 +68,27 @@ void main() async {
           await tester.tap(find.byType(ElevatedButton).first);
           await tester.pumpAndSettle();
 
-          expect(find.text('Captain'), findsOneWidget);
+          expect(find.text('captainHeader'), findsOneWidget);
+        },
+      );
+      testWidgets(
+        'Show Login Page',
+        (WidgetTester tester) async {
+          HttpOverrides.global = null;
+
+          await initAppWidgetTest(tester);
+
+          expect(find.text('Sign In'), findsOneWidget);
+
+          // Enter login details
+          await tester.enterText(find.byType(TextField).first, 'lavigne');
+          await tester.enterText(find.byType(TextField).at(1), 'lavigne');
+
+          // Tap the "Connect" button
+          await tester.tap(find.byType(ElevatedButton).first);
+          await tester.pumpAndSettle();
+
+          expect(find.text('captainHeader'), findsOneWidget);
         },
       );
     },
