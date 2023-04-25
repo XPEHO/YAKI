@@ -11,6 +11,9 @@ jobs:
           java-version: '17'
       - name: Run karate tests
         run: |
+          cd yaki_docker
+          echo "Creating .env file"
+          echo ${{ secrets.ENV_FILE }} | base64 -d > .env
           cd yaki_backend
           echo "Creating .env file"
           echo ${{ secrets.ENV_FILE }} | base64 -d > .env
