@@ -1,3 +1,4 @@
+import {TeamDtoIn} from "./team.dtoIn";
 import {TeamRepository} from "./team.repository";
 
 export class TeamService {
@@ -7,10 +8,12 @@ export class TeamService {
     this.teamRepository = teamRepository;
   }
 
-  getTeamByCaptainId = async (captain_id: number) => {
-    const captain = await this.teamRepository.getTeamByCaptainId(captain_id);
-    if (captain !== undefined) {
-      return captain;
+  getTeamByCaptainId = async (captain_id: number): Promise<TeamDtoIn> => {
+    const team = await this.teamRepository.getTeamByCaptainId(captain_id);
+    const teamDto: TeamDtoIn = new TeamDtoIn(team.team_id, team.team_captain_id, team.team_name);
+
+    if (teamDto !== undefined) {
+      return teamDto;
     } else {
       throw new TypeError("No team with this captain exists");
     }

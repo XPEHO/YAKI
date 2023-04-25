@@ -42,9 +42,10 @@ export class TeamRepository {
     try {
       const result = await client.query(
         `
-          SELECT * FROM public.team_mate
-          INNER JOIN public.team ON team_id = team_mate_team_id
-          WHERE team_mate_id = $1;
+        SELECT team_id, team_captain_id, team_name FROM public.team_mate
+        INNER JOIN public.team 
+        ON team_id = team_mate_team_id
+        WHERE team_mate_id = $1;
         `,
         [teamMateId]
       );
@@ -52,16 +53,7 @@ export class TeamRepository {
       const teamListToReturn: TeamDtoIn[] = [];
 
       for (let team of result.rows) {
-        teamListToReturn.push(
-          new TeamDtoIn(
-            team.team_mate_id,
-            team.team_mate_team_id,
-            team.team_mate_user_id,
-            team.team_id,
-            team.team_captain_id,
-            team.team_name
-          )
-        );
+        teamListToReturn.push(new TeamDtoIn(team.team_id, team.team_captain_id, team.team_name));
       }
 
       return teamListToReturn;

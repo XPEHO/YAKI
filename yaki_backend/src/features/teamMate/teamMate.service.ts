@@ -16,8 +16,9 @@ export class TeamMateService {
     return await this.teamMateRepository.getByUserId(user_id);
   };
 
-  getByTeamIdWithLastDeclaration = async (captain_id: number) => {
-    const team: TeamDtoIn = await this.teamService.getTeamByCaptainId(captain_id);
+  getByTeamIdWithLastDeclaration = async (captainId: number) => {
+    const team: TeamDtoIn = await this.teamService.getTeamByCaptainId(captainId);
+
     const getTeamMates: any[] = await this.teamMateRepository.getByTeamIdWithLastDeclaration(team.teamId);
 
     let result: TeamMateWithDeclaration[] = [];

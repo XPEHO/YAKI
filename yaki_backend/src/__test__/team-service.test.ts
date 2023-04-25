@@ -17,9 +17,6 @@ describe("teamService", () => {
     const mockTeamMateId = 1;
     const mockTeam = [
       {
-        team_mate_id: 3,
-        team_mate_team_id: 2,
-        team_mate_user_id: 3,
         team_id: 2,
         team_captain_id: 2,
         team_name: "Equipe 2",
@@ -29,9 +26,6 @@ describe("teamService", () => {
     it("should return a team", async () => {
       jest.spyOn(teamRepository, "getTeamByTeamMateId").mockResolvedValueOnce([
         {
-          teamMateId: 3,
-          teamMateTeamId: 2,
-          teamMateUserId: 3,
           teamId: 2,
           teamCaptainId: 2,
           teamName: "Equipe 2",
