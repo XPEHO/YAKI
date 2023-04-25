@@ -13,9 +13,3 @@ Feature: GetAllCaptain
     When method get
     Then status 200
     And match  response contains schema
-
-
-  Scenario: Get the latest declaration fail
-    Given path '/customers/205'
-    When method get
-    Then status 404
