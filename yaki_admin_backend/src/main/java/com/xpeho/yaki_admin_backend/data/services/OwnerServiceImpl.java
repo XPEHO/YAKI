@@ -4,6 +4,7 @@ import com.xpeho.yaki_admin_backend.data.models.OwnerModel;
 import com.xpeho.yaki_admin_backend.data.sources.OwnerJpaRepository;
 import com.xpeho.yaki_admin_backend.domain.entities.OwnerEntity;
 import com.xpeho.yaki_admin_backend.domain.services.OwnerService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -51,5 +52,18 @@ public class OwnerServiceImpl implements OwnerService {
             ownerJpaRepository.deleteById(id);
             return new OwnerEntity(ownerModel.getId(), ownerModel.getUserId());
         } else return null;
+    }
+
+    @Override
+    public OwnerEntity saveOrUpdate(OwnerEntity entity, int id) {
+        Optional<OwnerModel> ownerModelOptional = ownerJpaRepository.findById(id);
+        if (ownerModelOptional.isPresent()) {
+            OwnerModel ownerModel = ownerModelOptional.get();
+            ownerModel.setUserId(entity.userId());
+            ownerJpaRepository.save(ownerModel);
+        } else {
+            throw new EntityNotFoundException("Entity owner with id" + id + "not found");
+        }
+        return new OwnerEntity(id, entity.userId());
     }
 }

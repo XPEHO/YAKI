@@ -13,13 +13,11 @@ public class OwnerController {
     final OwnerService ownerService;
 
     public OwnerController(OwnerService ownerService) {
-
         this.ownerService = ownerService;
     }
 
     @GetMapping
     public List<OwnerEntity> findAll() {
-
         return ownerService.findAll();
     }
 
@@ -38,5 +36,10 @@ public class OwnerController {
     public OwnerEntity deleteById(@PathVariable Integer id) {
         return ownerService.deleteById(id);
 
+    }
+
+    @PutMapping("{id}")
+    private OwnerEntity update(@RequestBody OwnerEntity entity, @PathVariable int id) {
+        return ownerService.saveOrUpdate(entity, id);
     }
 }

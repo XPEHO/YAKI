@@ -13,4 +13,6 @@ public interface OwnerService {
     OwnerEntity findById(Integer integer);
 
     OwnerEntity deleteById(Integer integer);
+
+    OwnerEntity saveOrUpdate(OwnerEntity entity, int id);
 }
