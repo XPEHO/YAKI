@@ -8,7 +8,7 @@ import mockTeam from "./__mocks__/team";
 import mockTeamMatesWithDeclaration from "./__mocks__/teamMateWithDeclaration";
 
 const mockedTeamMateRepo = jest.mocked(TeamMateRepository, {shallow: true});
-const mockedTeamRepo = jest.mocked(TeamRepository, {shallow: true});
+const mockedTeamService = jest.mocked(TeamService, {shallow: true});
 
 jest.mock("../features/teamMate/teamMate.repository", () => {
   return {
@@ -35,9 +35,9 @@ jest.mock("../features/teamMate/teamMate.repository", () => {
   };
 });
 
-jest.mock("../features/team/team.repository", () => {
+jest.mock("../features/team/team.service", () => {
   return {
-    TeamRepository: jest.fn().mockImplementation(() => {
+    TeamService: jest.fn().mockImplementation(() => {
       return {
         getTeamByCaptainId: async (captain_id: number) => {
           const team = await mockTeam.filter((elm) => elm.teamCaptainId == captain_id);
@@ -47,6 +47,19 @@ jest.mock("../features/team/team.repository", () => {
     }),
   };
 });
+
+// jest.mock("../features/team/team.repository", () => {
+//   return {
+//     TeamRepository: jest.fn().mockImplementation(() => {
+//       return {
+//         getTeamByCaptainId: async (captain_id: number) => {
+//           const team = await mockTeam.filter((elm) => elm.teamCaptainId == captain_id);
+//           return team[0];
+//         },
+//       };
+//     }),
+//   };
+// });
 
 describe("get teammate by userId", () => {
   const teamRepo = new TeamRepository();
@@ -69,7 +82,7 @@ describe("get teammate by team id with last declaration", () => {
   const teamMateRepo = new TeamMateRepository();
   const teamMateService = new TeamMateService(teamMateRepo, teamService);
   beforeEach(() => {
-    mockedTeamRepo.mockClear();
+    mockedTeamService.mockClear();
     mockedTeamMateRepo.mockClear();
   });
 
