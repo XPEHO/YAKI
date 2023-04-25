@@ -21,8 +21,10 @@ jest.mock("../features/teamMate/teamMate.repository", () => {
           }
           return user[0];
         },
-        getByTeamIdWithLastDeclaration: async (team_id: number) => {
-          const teamMates = await mockTeamMates.filter((elm) => elm.team_mate_team_id == team_id);
+        getByTeamIdWithLastDeclaration: async (teamId: number) => {
+          console.log(teamId);
+          const teamMates = await mockTeamMates.filter((elm) => elm.team_mate_team_id == teamId);
+
           const teamMateWithDeclaration = await mockTeamMatesWithDeclaration.filter(
             (elm) => elm.team_mate_id == teamMates[0].team_mate_id
           );
@@ -37,7 +39,7 @@ jest.mock("../features/team/team.repository", () => {
   return {
     TeamRepository: jest.fn().mockImplementation(() => {
       return {
-        getByCaptainId: async (captain_id: number) => {
+        getTeamByCaptainId: async (captain_id: number) => {
           const team = await mockTeam.filter((elm) => elm.teamCaptainId == captain_id);
           return team[0];
         },
