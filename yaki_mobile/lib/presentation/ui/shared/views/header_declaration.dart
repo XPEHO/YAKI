@@ -68,7 +68,7 @@ class HeaderDeclaration extends StatelessWidget {
                 children: [
                   Text(
                     headerTitle,
-                    style: textStyleTemp(),
+                    style: textStyleHeader(),
                   ),
 
                   const Spacer(),
@@ -140,7 +140,7 @@ class HeaderDeclaration extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 20),
                   child: Text(
                     headerHint,
-                    style: textStyleTemp(),
+                    style: textStyleHeader(),
                   ),
                 ),
               ),

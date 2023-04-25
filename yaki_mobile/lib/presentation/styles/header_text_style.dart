@@ -4,7 +4,7 @@ class HeaderColor {
   static const Color yellowApp = Color.fromARGB(255, 245, 205, 61);
 }
 
-TextStyle textStyleTemp() {
+TextStyle textStyleHeader() {
   return const TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.bold,
