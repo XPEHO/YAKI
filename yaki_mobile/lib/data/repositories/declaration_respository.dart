@@ -90,7 +90,6 @@ class DeclarationRepository {
       final createHttpResponse =
           await _declarationApi.create([declaration], StatusEnum.fullDay.text);
       final statusCode = createHttpResponse.response.statusCode;
-      print('data repo, ${createHttpResponse.data}');
       switch (statusCode) {
         case 200 | 201:
           // convert HttpResponse<dynamic> (Map<String, dynamic>) into Model using .fromJson method
@@ -113,7 +112,6 @@ class DeclarationRepository {
             "Invalid statusCode from server : ${createHttpResponse.response.statusCode}",
           );
       }
-      //print('repo status: $statusValue');
       setAllDayDeclaration(statusValue);
     } catch (err) {
       debugPrint("error during creation : $err");

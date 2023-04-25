@@ -25,10 +25,8 @@ class DeclarationNotifier extends StateNotifier<String> {
   /// return the declarationStatus, used in authentication page to determine the redirection.
   Future<String> getDeclaration() async {
     final teamMateId = loginRepository.teamMateId.toString();
-
     final declarationStatus =
         await declarationRepository.getDeclaration(teamMateId);
-
     return declarationStatus;
   }
 
@@ -54,9 +52,6 @@ class DeclarationNotifier extends StateNotifier<String> {
       declarationTeamId: teamId,
       declarationStatus: status,
     );
-    print('teamId notifier: $teamId');
-    print('notifier : ${newDeclaration.toJson()}');
-
     await declarationRepository.createAllDay(newDeclaration);
   }
 

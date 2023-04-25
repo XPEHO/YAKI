@@ -4,57 +4,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yaki/presentation/displaydata/declaration_card_content.dart';
 import 'package:yaki/presentation/displaydata/status_page_content.dart';
-import 'package:yaki/presentation/state/providers/declaration_provider.dart';
 import 'package:yaki/presentation/ui/declaration/views/status_card.dart';
-import 'package:yaki/domain/entities/team_entity.dart';
-import 'package:yaki/presentation/state/providers/team_provider.dart';
+import 'package:yaki/presentation/ui/shared/views/Team_Selection_Dialog.dart';
 
 /// using ConsumerStatefulWidget (statefullWidget) to have access to the WidgetRef object
 /// allowing the current widget to have access to any provider.
 class MorningDeclarationBody extends ConsumerWidget {
   const MorningDeclarationBody({Key? key}) : super(key: key);
-
-  _onStatusSelected({
-    required WidgetRef ref,
-    required String status,
-    required Function goToAfternoonDeclaration,
-    required BuildContext context,
-  }) {
-    final List<TeamEntity> listTeam = ref.watch(teamProvider);
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text("Select a team"),
-        content: Container(
-          height: 300.0, // Change as per your requirement
-          width: 300.0, // Change as per your requirement
-          child: ListView.builder(
-            shrinkWrap: true,
-            itemCount: listTeam.length,
-            itemBuilder: (BuildContext context, int index) {
-              return InkWell(
-                onTap: () {
-
-                  ref.read(declarationProvider.notifier).setMorningDeclaration(status);
-                  goToAfternoonDeclaration();
-                },
-                child: ListTile(
-                  title: Text(listTeam[index].teamName ?? "No name available"),
-                ),
-              );
-            },
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(null),
-            child: const Text("Cancel"),
-          ),
-        ],
-      ),
-    );
-
-  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -77,14 +33,15 @@ class MorningDeclarationBody extends ConsumerWidget {
                 (cardContent) => StatusCard(
                   statusName: tr(cardContent['text']),
                   statusPicto: cardContent['image'],
-                  onPress: () => _onStatusSelected(
+                  onPress: () => TeamSelectionDialog.show(
                     ref: ref,
-                    status: StatusEnum.values.byName(cardContent['text']).text,
-                    goToAfternoonDeclaration: () =>
-                        context.go('/afternoonDeclaration'),
+                    morningStatus:
+                        StatusEnum.values.byName(cardContent['text']).text,
                     context: context,
+                    goToPage: () => context.go('/afternoonDeclaration'),
+                    allDayStatus: null,
+                    afternoonStatus: null,
                   ),
-
                 ),
               )
               .toList(),

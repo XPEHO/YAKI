@@ -6,6 +6,7 @@ class TeamEntity {
     required this.teamId,
     required this.teamName,
   });
+
   @override
   int get hashCode => Object.hash(
         teamId.hashCode,
