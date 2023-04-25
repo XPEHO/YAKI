@@ -32,3 +32,10 @@ Feature: Owner
       Then status 200
       And match response == {id: '#number', userId: '#number'}
 
+    @DeleteOwner
+    Scenario: Delete existing owner
+      Given path '/Owner'
+      And request {userId: 2}
+      When method delete
+      Then status 200
+
