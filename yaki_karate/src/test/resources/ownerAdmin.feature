@@ -13,7 +13,6 @@ Feature: Owner
       * print response
       * print schema
 
-
   @GetOwnerById
     Scenario: Get owner by id
       Given path '/Owner/'
