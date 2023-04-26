@@ -6,20 +6,23 @@ void main() {
   // simulate json send by API
   Map<String, dynamic> declarationInAsJson = {
     "declarationId": 83,
-    "declarationTeamMateId": 15,
     "declarationDate": "2023-03-20T10:00:00.950Z",
-    "declarationStatus": "REMOTE"
+    "declarationDateStart": "2023-03-20T00:00:00.950Z",
+    "declarationDateEnd": "2023-03-20T23:59:59.950Z",
+    "declarationTeamMateId": 15,
+    "declarationStatus": "REMOTE",
+    "declarationTeamId": 2,
   };
 
   // model instance once json is parsed into dart usable model
   DeclarationModelIn declarationModelIn = DeclarationModelIn(
     declarationId: 83,
-    declarationTeamMateId: 15,
-    declarationTeamId: 2,
     declarationDate: DateTime.parse('2023-03-20T10:00:00.950Z'),
     declarationDateStart: DateTime.parse('2023-03-20T00:00:00.950Z'),
     declarationDateEnd: DateTime.parse('2023-03-20T23:59:59.950Z'),
+    declarationTeamMateId: 15,
     declarationStatus: "REMOTE",
+    declarationTeamId: 2,
   );
 
   group(
