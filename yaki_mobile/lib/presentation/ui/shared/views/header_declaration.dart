@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:look/look.dart';
 import 'package:yaki/presentation/styles/header_text_style.dart';
 import 'package:yaki/presentation/ui/shared/views/avatar_icon.dart';
-import 'package:yaki/presentation/ui/shared/views/circle_avatar_svg.dart';
 
+@Look(builder: buildHeaderLook)
 class HeaderDeclaration extends StatelessWidget {
   final String pictoIcon;
   final String pictoPath;
@@ -43,6 +44,7 @@ class HeaderDeclaration extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 360,
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(16),
@@ -57,17 +59,16 @@ class HeaderDeclaration extends StatelessWidget {
           ),
         ],
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(15),
-        child: Column(
-          children: [
-            Expanded(
-              flex: 3,
-              child: Row(
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.only(left: 15, right: 15),
+          child: Column(
+            children: [
+              Row(
                 children: [
                   Text(
                     headerTitle,
-                    style: textStyleTemp(),
+                    style: textStyleHeader(),
                   ),
 
                   const Spacer(),
@@ -78,48 +79,50 @@ class HeaderDeclaration extends StatelessWidget {
                   ),
                 ],
               ),
-            ),
-            Expanded(
-              flex: 4,
-              child: Stack(
-                children: [
-                  Positioned.fill(
-                    child: Material(
+              SizedBox(
+                width: 200.0,
+                height: 200.0,
+                child: Stack(
+                  children: [
+                    Material(
                       color: Colors.transparent,
                       shape: const CircleBorder(),
-                      child: CircleAvatarSVG(iconPath: pictoPath, radius: 100),
+                      child: SvgPicture.asset(
+                        pictoPath,
+                        height: 200.0,
+                        width: 200.0,
+                      ),
                     ),
-                  ),
-                  Positioned(
-                    right: 120,
-                    top: 40,
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 35),
-                      child: Material(
-                        elevation: 10,
-                        color: Colors.transparent,
-                        shape: const CircleBorder(),
-                        child: Padding(
-                          padding: const EdgeInsets.all(0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: HeaderColor.yellowApp,
-                              border: Border.all(
-                                color: Colors.deepOrangeAccent,
-                                width: 3.0,
+                    Align(
+                      alignment: Alignment.bottomRight,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 35),
+                        child: Material(
+                          elevation: 10,
+                          color: Colors.transparent,
+                          shape: const CircleBorder(),
+                          child: Padding(
+                            padding: const EdgeInsets.all(0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: HeaderColor.yellowApp,
+                                border: Border.all(
+                                  color: Colors.deepOrangeAccent,
+                                  width: 3.0,
+                                ),
+                                shape: BoxShape.circle,
                               ),
-                              shape: BoxShape.circle,
-                            ),
-                            width: 60,
-                            height: 60,
-                            child: Center(
-                              child: SizedBox(
-                                width: 40,
-                                height: 40,
-                                child: InkWell(
-                                  onTap: () => onPictoSwitchTap(context),
-                                  child: SvgPicture.asset(
-                                    pictoSwitch,
+                              width: 60,
+                              height: 60,
+                              child: Center(
+                                child: SizedBox(
+                                  width: 40,
+                                  height: 40,
+                                  child: InkWell(
+                                    onTap: () => onPictoSwitchTap(context),
+                                    child: SvgPicture.asset(
+                                      pictoSwitch,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -128,24 +131,21 @@ class HeaderDeclaration extends StatelessWidget {
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            SizedBox(
-              height: 45,
-              child: Expanded(
-                flex: 2,
+              SizedBox(
+                height: 50,
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 15),
+                  padding: const EdgeInsets.only(top: 20),
                   child: Text(
                     headerHint,
-                    style: textStyleTemp(),
+                    style: textStyleHeader(),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -171,3 +171,11 @@ class CircleAvatarPNG extends StatelessWidget {
     );
   }
 }
+
+buildHeaderLook() => const HeaderDeclaration(
+      pictoIcon: 'assets/images/avatar1.svg',
+      pictoPath: 'assets/images/day.svg',
+      pictoSwitch: 'assets/images/pm.svg',
+      headerTitle: 'header title',
+      headerHint: 'header hint',
+    );

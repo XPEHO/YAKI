@@ -16,8 +16,8 @@ class StatusCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.37,
-      height: MediaQuery.of(context).size.width * 0.37,
+      width: 150,
+      height: 150,
       child: ElevatedButton(
         onPressed: onPress,
         style: ElevatedButton.styleFrom(

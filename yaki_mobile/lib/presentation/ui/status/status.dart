@@ -48,7 +48,7 @@ class Status extends ConsumerWidget {
                 child: Center(
                   child: Text(
                     selectedStatus.text,
-                    style: textStyleTemp(),
+                    style: textStyleHeader(),
                   ),
                 ),
               ),
