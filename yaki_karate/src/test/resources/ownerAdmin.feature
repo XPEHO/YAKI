@@ -33,8 +33,16 @@ Feature: Owner
 
     @DeleteOwner
     Scenario: Delete existing owner
-      Given path '/Owner'
-      And request {userId: 2}
+      Given path '/Owner/'
+      And param id =  1
       When method delete
       Then status 200
+
+    @UpdateOwner
+    Scenario: Update existing owner
+      Given path '/Owner/'
+      And param id = 7
+      When method update
+      Then status 200
+      And match response == {id: '#number', userId: '#number'}
 
