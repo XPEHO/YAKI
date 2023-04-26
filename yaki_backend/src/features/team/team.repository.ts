@@ -45,7 +45,7 @@ export class TeamRepository {
         SELECT team_id, team_captain_id, team_name FROM public.team_mate
         INNER JOIN public.team 
         ON team_id = team_mate_team_id
-        WHERE team_mate_id = $1;
+        WHERE team_mate_user_id = $1;
         `,
         [teamMateId]
       );
