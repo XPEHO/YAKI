@@ -5,14 +5,12 @@ class StatusCard extends StatelessWidget {
   final String statusPicto;
   final String statusName;
   final VoidCallback onPress;
-  final bool isSelected;
 
   const StatusCard({
     super.key,
     required this.statusName,
     required this.statusPicto,
     required this.onPress,
-    required this.isSelected,
   });
 
   @override
@@ -21,7 +19,7 @@ class StatusCard extends StatelessWidget {
       width: MediaQuery.of(context).size.width * 0.37,
       height: MediaQuery.of(context).size.width * 0.37,
       child: ElevatedButton(
-        onPressed: isSelected ? null : onPress,
+        onPressed: onPress,
         style: ElevatedButton.styleFrom(
           elevation: 5,
           shadowColor: Colors.black,

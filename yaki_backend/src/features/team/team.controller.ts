@@ -20,7 +20,7 @@ export class TeamController {
         try {
             const team = await this.teamService.getTeamByTeamMateId(teamMateId);
             res.status(200).json(team);
-        } catch (error : any) {
+        } catch (error: any) {
             if (error instanceof TypeError) {
                 // catch not found errors
                 res.status(404).json({ message: error.message });
@@ -30,7 +30,4 @@ export class TeamController {
             }
         }
     }
-
-
-
 }

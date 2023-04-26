@@ -1,0 +1,63 @@
+import 'package:flutter/material.dart';
+import 'package:retrofit/retrofit.dart';
+import 'package:yaki/data/sources/remote/team_api.dart';
+import 'package:yaki/domain/entities/team_entity.dart';
+import 'package:yaki/data/models/team_model.dart';
+
+/// A repository class that retrieves data from the API and returns a list of
+/// TeamEntity objects
+class TeamRepository {
+  final TeamApi teamApi;
+  List<TeamEntity> teamlist;
+  TeamEntity? teamEntity;
+
+  TeamRepository(
+    this.teamApi, {
+    this.teamlist = const [],
+    this.teamEntity,
+  });
+
+  /// Asynchronous method that retrieves a list of teams from the API and
+  /// returns a list of TeamEntity objects
+  Future<List<TeamEntity>> getTeam(String teamMateId) async {
+    try {
+      // Send a GET request to the API to retrieve a list of teams
+      final listHttpResponse = await teamApi.getTeam(teamMateId);
+      // Get the status code of the response
+      final statusCode = listHttpResponse.response.statusCode;
+      // Handle the response based on the status code
+      switch (statusCode) {
+        case 200:
+          // If the response status code is 200, parse the response data and
+          // return a list of TeamEntity objects
+          final modelList = setTeamModelList(listHttpResponse);
+          teamlist = modelList.map((e) {
+            return TeamEntity(
+              teamId: e.teamId,
+              teamName: e.teamName,
+            );
+          }).toList();
+          return teamlist;
+        default:
+          // If the response status code is not 200, throw an exception
+          throw Exception('Invalid statusCode : $statusCode');
+      }
+    } catch (err) {
+      // Handle any errors that occur during the API request
+      debugPrint('error during team list get : $err');
+      return [];
+    }
+  }
+
+  /// Helper method that parses the API response data and returns a list of
+  /// TeamModel objects
+  List<TeamModel> setTeamModelList(HttpResponse response) {
+    final dynamicList = response.data.map(
+      (team) {
+        return TeamModel.fromJson(team);
+      },
+    ).toList();
+    List<TeamModel> modelList = List<TeamModel>.from(dynamicList);
+    return modelList;
+  }
+}

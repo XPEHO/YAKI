@@ -74,7 +74,7 @@ final goRouterProvider = Provider<GoRouter>(
                 if (await SharedPref.isTokenPresent()) {
                   return '/status';
                 } else {
-                  return '/';
+                  return '/declaration';
                 }
               },
             ),
@@ -92,6 +92,13 @@ final goRouterProvider = Provider<GoRouter>(
             GoRoute(
               path: 'halfdayStatus',
               builder: (context, state) => const HalfDayStatus(),
+              redirect: (BuildContext context, GoRouterState state) async {
+                if (await SharedPref.isTokenPresent()) {
+                  return '/halfdayStatus';
+                } else {
+                  return '/';
+                }
+              },
             ),
           ],
         ),

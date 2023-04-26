@@ -4,22 +4,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yaki/presentation/displaydata/declaration_card_content.dart';
 import 'package:yaki/presentation/displaydata/status_page_content.dart';
-import 'package:yaki/presentation/state/providers/declaration_provider.dart';
 import 'package:yaki/presentation/ui/declaration/views/status_card.dart';
+import 'package:yaki/presentation/ui/shared/views/team_selection_dialog.dart';
 
 /// using ConsumerStatefulWidget (statefullWidget) to have access to the WidgetRef object
 /// allowing the current widget to have access to any provider.
 class MorningDeclarationBody extends ConsumerWidget {
   const MorningDeclarationBody({Key? key}) : super(key: key);
-
-  _onStatusSelected({
-    required WidgetRef ref,
-    required String status,
-    required Function goToAfternoonDeclaration,
-  }) async {
-    ref.read(declarationProvider.notifier).setMorningDeclaration(status);
-    goToAfternoonDeclaration();
-  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -42,13 +33,15 @@ class MorningDeclarationBody extends ConsumerWidget {
                 (cardContent) => StatusCard(
                   statusName: tr(cardContent['text']),
                   statusPicto: cardContent['image'],
-                  onPress: () => _onStatusSelected(
+                  onPress: () => TeamSelectionDialog(
                     ref: ref,
-                    status: StatusEnum.values.byName(cardContent['text']).text,
-                    goToAfternoonDeclaration: () =>
-                        context.go('/afternoonDeclaration'),
-                  ),
-                  isSelected: false,
+                    morningStatus:
+                        StatusEnum.values.byName(cardContent['text']).text,
+                    context: context,
+                    goToPage: () => context.go('/afternoonDeclaration'),
+                    allDayStatus: null,
+                    afternoonStatus: null,
+                  ).show(),
                 ),
               )
               .toList(),

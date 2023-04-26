@@ -3,20 +3,22 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:yaki/data/repositories/declaration_respository.dart';
 import 'package:yaki/data/repositories/login_repository.dart';
+import 'package:yaki/data/repositories/team_repository.dart';
 import 'package:yaki/presentation/state/notifiers/declaration_notifier.dart';
 
 import 'declaration_notifier_test.mocks.dart';
 
-@GenerateMocks([
-  DeclarationRepository,
-  LoginRepository,
-])
+@GenerateMocks([DeclarationRepository, LoginRepository, TeamRepository])
 void main() {
   final declarationRepository = MockDeclarationRepository();
   final loginRepository = MockLoginRepository();
+  final teamRepository = MockTeamRepository();
 
-  final declarationNotifier =
-      DeclarationNotifier(declarationRepository, loginRepository);
+  final declarationNotifier = DeclarationNotifier(
+    declarationRepository,
+    loginRepository,
+    teamRepository,
+  );
 
   int returnedTeamMateId = 1;
   String declarationStatus = "REMOTE";

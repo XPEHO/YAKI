@@ -9,6 +9,7 @@ class DeclarationModel {
   DateTime declarationDateEnd;
   int? declarationTeamMateId;
   String declarationStatus;
+  int? declarationTeamId;
 
   // Remote, On site, Vacation, Other
   DeclarationModel({
@@ -17,6 +18,7 @@ class DeclarationModel {
     required this.declarationDateEnd,
     required this.declarationTeamMateId,
     required this.declarationStatus,
+    required this.declarationTeamId,
   });
 
   factory DeclarationModel.fromJson(Map<String, dynamic> json) =>

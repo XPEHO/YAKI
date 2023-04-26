@@ -4,13 +4,18 @@ import 'package:yaki/data/models/declaration_model.dart';
 import 'package:yaki/data/repositories/declaration_respository.dart';
 import 'package:yaki/data/repositories/login_repository.dart';
 import 'package:yaki/domain/entities/declaration_status.dart';
+import 'package:yaki/data/repositories/team_repository.dart';
 
 class DeclarationNotifier extends StateNotifier<String> {
   final DeclarationRepository declarationRepository;
   final LoginRepository loginRepository;
+  final TeamRepository teamRepository;
 
-  DeclarationNotifier(this.declarationRepository, this.loginRepository)
-      : super("");
+  DeclarationNotifier(
+    this.declarationRepository,
+    this.loginRepository,
+    this.teamRepository,
+  ) : super("");
 
   /// Invoked at authentication "sign in" button press.
   ///
@@ -23,7 +28,6 @@ class DeclarationNotifier extends StateNotifier<String> {
     final teamMateId = loginRepository.teamMateId.toString();
     final declarationStatus =
         await declarationRepository.getDeclaration(teamMateId);
-
     return declarationStatus;
   }
 
@@ -36,7 +40,7 @@ class DeclarationNotifier extends StateNotifier<String> {
   /// then invoke the declarationRepository.createAllDay(), that will send the newly declaration to the API (via _api.dart)
   Future<void> createAllDay(String status) async {
     final todayDate = DateTime.now();
-
+    final teamId = teamRepository.teamlist.first.teamId;
     DeclarationModel newDeclaration = DeclarationModel(
       declarationDate: todayDate,
       declarationDateStart: DateTime.parse(
@@ -46,9 +50,9 @@ class DeclarationNotifier extends StateNotifier<String> {
         '${DateFormat('yyyy-MM-dd').format(todayDate)} 23:59:59Z',
       ),
       declarationTeamMateId: loginRepository.teamMateId,
+      declarationTeamId: teamId,
       declarationStatus: status,
     );
-
     await declarationRepository.createAllDay(newDeclaration);
   }
 
@@ -57,7 +61,7 @@ class DeclarationNotifier extends StateNotifier<String> {
   /// Then send it to declarationRepository's function
   Future<void> createHalfDay(String morning, String afternoon) async {
     final todayDate = DateTime.now();
-
+    final teamId = teamRepository.teamlist.first.teamId;
     DeclarationModel newDeclarationMorning = DeclarationModel(
       declarationDate: todayDate,
       declarationDateStart: DateTime.parse(
@@ -68,6 +72,7 @@ class DeclarationNotifier extends StateNotifier<String> {
       ),
       declarationTeamMateId: loginRepository.teamMateId,
       declarationStatus: morning,
+      declarationTeamId: teamId,
     );
 
     DeclarationModel newDeclarationAfternoon = DeclarationModel(
@@ -80,6 +85,7 @@ class DeclarationNotifier extends StateNotifier<String> {
       ),
       declarationTeamMateId: loginRepository.teamMateId,
       declarationStatus: afternoon,
+      declarationTeamId: teamId,
     );
 
     List<DeclarationModel> declarations = [
