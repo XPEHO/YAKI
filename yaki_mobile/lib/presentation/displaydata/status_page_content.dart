@@ -54,7 +54,7 @@ class StatusUtils {
     String link = 'assets/images/unknown.svg';
     String keyFormat = toCamelCase(toFormat: status, splitChar: ' ');
 
-    if (status != emptyDeclarationStatus) {
+    if (status != emptyDeclarationStatus.first) {
       if (keyFormat == StatusEnum.other.name) {
         link = 'assets/images/dots.svg';
       } else {
@@ -73,7 +73,7 @@ class StatusUtils {
     String translationKey = "StatusError";
     String keyFormat = toCamelCase(toFormat: status, splitChar: ' ');
 
-    if (status != emptyDeclarationStatus) {
+    if (status != emptyDeclarationStatus.first) {
       keyFormat = keyFormat[0].toUpperCase() + keyFormat.substring(1);
       translationKey = "Status$keyFormat$mode";
     }

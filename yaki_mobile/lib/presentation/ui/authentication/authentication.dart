@@ -157,15 +157,16 @@ class Authentication extends ConsumerWidget {
                           ),
                         ),
                         onPressed: () => onPressAuthent(
-                            ref: ref,
-                            login: loginController.text,
-                            password: passwordController.text,
-                            goToDeclarationPage: () =>
-                                context.push('/declaration'),
-                            goToStatusPage: () => context.go('/status'),
-                            goToCaptain: () => context.go('/captain'),
-                            goToHalfdayStatusPage: () =>
-                                context.go('/halfdayStatus')),
+                          ref: ref,
+                          login: loginController.text,
+                          password: passwordController.text,
+                          goToDeclarationPage: () =>
+                              context.push('/declaration'),
+                          goToStatusPage: () => context.go('/status'),
+                          goToCaptain: () => context.go('/captain'),
+                          goToHalfdayStatusPage: () =>
+                              context.go('/halfdayStatus'),
+                        ),
                         child: Text(tr('signIn')),
                       ),
                     ),
