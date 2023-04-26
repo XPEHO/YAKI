@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:retrofit/retrofit.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yaki/data/sources/remote/team_api.dart';
 import 'package:yaki/domain/entities/team_entity.dart';
 import 'package:yaki/data/models/team_model.dart';
@@ -21,8 +22,11 @@ class TeamRepository {
   /// returns a list of TeamEntity objects
   Future<List<TeamEntity>> getTeam(String teamMateId) async {
     try {
+      // Get userId stored in the sharedPreferences
+      final SharedPreferences pref = await SharedPreferences.getInstance();
+      final int userId = pref.getInt('userId') ?? 0;
       // Send a GET request to the API to retrieve a list of teams
-      final listHttpResponse = await teamApi.getTeam(teamMateId);
+      final listHttpResponse = await teamApi.getTeam(userId.toString());
       // Get the status code of the response
       final statusCode = listHttpResponse.response.statusCode;
       // Handle the response based on the status code

@@ -10,14 +10,17 @@ INSERT INTO public.user(
            ('Lavigne', 'Valentin', 'valentin.lavigne@mail.com', 'lavigne', '$5$rounds=10000$abcdefghijklmnop$aVV68ybbmry88mMGXU1snZOfwd0pKbYFTQbzrv.7n44'),
            ('Lazard', 'Arnaud', 'arnaud.lazard@mail.com', 'lazard', '$5$rounds=10000$abcdefghijklmnop$FwrCge3JnXlGV1xkCrOnyT5QDBQb//f6oGmyjQ6nDc0'),
            ('Bain', 'Aaron', 'aaron.bain@mail.com', 'bain', '$5$rounds=10000$abcdefghijklmnop$flxzos/1DN13hD1e0Wjji3clwr.cL7jZqfuimgtVO80'),
-           ('Valverde', 'Paul', 'paul.valverde@mail.com', 'valverde', '$5$rounds=10000$abcdefghijklmnop$RMO84AgIIe8yMm8I4mdbFWBRUrikpr7XdPIpMVnOE4C');
+           ('Valverde', 'Paul', 'paul.valverde@mail.com', 'valverde', '$5$rounds=10000$abcdefghijklmnop$RMO84AgIIe8yMm8I4mdbFWBRUrikpr7XdPIpMVnOE4C'),
+		   ('Dupres', 'Robert', 'dupres.robert@mail.com', 'robert', '$5$rounds=10000$abcdefghijklmnop$eby/Dmj1lBSaDuo3J8OkVihJ4luXlEl8oIv/q3pknD/'),
+           ('Deschamps', 'Marguerite', 'marguerite.deschamps@mail.com', 'marguerite', '$5$rounds=10000$abcdefghijklmnop$gGJ46NV78ChlprosW4iQFgDv294/t3gynRtx2Lxxa2B');
 -- INSERT LOCATIONS
 
 INSERT INTO public.locations(
 	location_name, location_adress)
 	VALUES ('Leroy merlin', 'Rue de Versailles, 59650 Villeneuve-d''Ascq'),
 		   ('XPEHO', '1 Boulevard de Valmy, 59650 Villeneuve d Ascq'),
-		   ('ADEO', '135 Rue Sadi Carnot, 59790 Ronchin');
+		   ('ADEO', '135 Rue Sadi Carnot, 59790 Ronchin'),
+		   ('NADEO', '40 Rue de la voiture, 59000 Lille');
 
 -- INSERT OWNERS
 
@@ -31,7 +34,8 @@ INSERT INTO public.customer(
 	customer_name,customer_owner_id,customer_location_id)
 	VALUES ('customer0',1,1),
 		   ('Customer1',1,2),
-		   ('Customer2',1,3);
+		   ('Customer2',1,3),
+		   ('Customer3',1,3);
 
 -- INSERT CUSTOMER_RIGHTS
 
@@ -42,16 +46,20 @@ INSERT INTO public.customer_rights(
 -- INSERT CAPTAINS
 
 INSERT INTO public.captain(
-	captain_user_id,captain_customer_id)
+	captain_user_id,captain_customer_id )
 	VALUES (6,1),
-		   (4,2);
+		   (4,2),
+		   (10,3),
+		   (11,4);
 
 -- INSERT TEAM
 
 INSERT INTO public.team(
 	team_captain_id, team_name)
 	VALUES (1, 'Equipe 1'),
-	       (2, 'Equipe 2');
+	       (2, 'Equipe 2'),
+		   (3, 'Equipe 3'),
+		   (4, 'Equipe 4');
 
 -- INSERT TEAM MATES
 
@@ -60,7 +68,11 @@ INSERT INTO public.team_mate(
 	VALUES (1, 1),
 		   (1, 2),
 		   (2, 3),
-		   (2, 5);
+		   (2, 5),
+		   (3, 1),
+		   (3, 2),
+		   (4, 3),
+		   (4, 5);
 
 -- INSERT DECLARATIONS
 
@@ -92,4 +104,3 @@ INSERT INTO public.declaration(
 		   (4, '2023-02-18','2023-02-19','2023-02-19', 'remote', 2),
 		   (4, '2023-02-17','2023-02-17','2023-02-17', 'remote', 2),
 		   (4, '2023-02-16','2023-02-16','2023-02-16', 'remote', 2);
-
