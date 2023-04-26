@@ -28,13 +28,15 @@ dependencies {
     testImplementation 'com.h2database:h2'
 
     test {
+        useJUnitPlatform()
+        systemProperty 'spring.config.name', 'application-test'
         // Configure H2 database for tests
-        systemProperty 'spring.datasource.url', 'jdbc:h2:mem:testdb'
-        systemProperty 'spring.datasource.driver-class-name', 'org.h2.Driver'
-        systemProperty 'spring.datasource.username', 'sa'
-        systemProperty 'spring.datasource.password', ''
-        systemProperty 'spring.jpa.show-sql', 'true'
-        systemProperty 'spring.jpa.hibernate.ddl-auto', 'create-drop'
+        //systemProperty 'spring.datasource.url', 'jdbc:h2:mem:testdb'
+        //systemProperty 'spring.datasource.driver-class-name', 'org.h2.Driver'
+        //systemProperty 'spring.datasource.username', 'sa'
+        //systemProperty 'spring.datasource.password', ''
+        //systemProperty 'spring.jpa.show-sql', 'true'
+        //systemProperty 'spring.jpa.hibernate.ddl-auto', 'create-drop'
     }
 }
 
