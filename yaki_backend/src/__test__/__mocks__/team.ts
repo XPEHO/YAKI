@@ -1,15 +1,15 @@
-import { TeamDtoIn } from '../../features/team/team.dtoIn';
+import {TeamDtoIn} from "../../features/team/team.dtoIn";
 
 const mockTeam: TeamDtoIn[] = [
   {
-    team_id: 1,
-    team_captain_id: 1,
-    team_name: 'Red Team',
+    teamId: 1,
+    teamCaptainId: 1,
+    teamName: "Red Team",
   },
   {
-    team_id: 2,
-    team_captain_id: 2,
-    team_name: 'Blue Team',
+    teamId: 2,
+    teamCaptainId: 2,
+    teamName: "Blue Team",
   },
 ];
 
