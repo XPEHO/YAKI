@@ -9,6 +9,7 @@ import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yaki/app.dart';
 import 'package:yaki/data/models/login_model.dart';
+import 'package:yaki/data/models/user.dart';
 import 'package:yaki/data/repositories/login_repository.dart';
 
 import '../../../../unit/data/repositories/login_repository_test.mocks.dart';
@@ -16,11 +17,19 @@ import '../../../../unit/mocking.mocks.dart';
 
 void main() async {
   // Mock HTTPResponse
-  final httpResponse = MockHttpResponse();
-  final response = MockResponse();
+  // final httpResponse = MockHttpResponse();
+  // final response = MockResponse();
 
-  final mockedLoginApi = MockLoginApi();
-  final loginRepository = LoginRepository(mockedLoginApi);
+  final mockedCaptain = User(
+    captainId: 1,
+    teamMateId: null,
+    teamId: 1,
+    userId: 4,
+    lastName: 'lavigne',
+    firstName: 'lavigne',
+    email: '',
+    token: '',
+  );
 
   Future<void> initAppWidgetTest(WidgetTester tester) async {
     WidgetsFlutterBinding.ensureInitialized();
@@ -51,10 +60,26 @@ void main() async {
   group(
     'Authentification',
     () {
+      // testWidgets(
+      //   'Show Login Page',
+      //   (WidgetTester tester) async {
+      //     HttpOverrides.global = null;
+
+      //     await initAppWidgetTest(tester);
+
+      //     expect(find.text('Sign In'), findsOneWidget);
+      //   },
+      // );
       testWidgets(
-        'Show Login Page',
+        'Show Captain Page',
         (WidgetTester tester) async {
           HttpOverrides.global = null;
+
+          final mockedLoginApi = MockLoginApi();
+          final loginRepository = LoginRepository(mockedLoginApi);
+
+          when(await loginRepository.userAuthentication('lavigne', 'lavigne'))
+              .thenReturn(true);
 
           await initAppWidgetTest(tester);
 
@@ -63,32 +88,13 @@ void main() async {
           // Enter login details
           await tester.enterText(find.byType(TextField).first, 'lavigne');
           await tester.enterText(find.byType(TextField).at(1), 'lavigne');
+          await tester.pumpAndSettle(const Duration(seconds: 2));
 
           // Tap the "Connect" button
           await tester.tap(find.byType(ElevatedButton).first);
-          await tester.pumpAndSettle();
+          await tester.pumpAndSettle(const Duration(seconds: 2));
 
-          expect(find.text('captainHeader'), findsOneWidget);
-        },
-      );
-      testWidgets(
-        'Show Login Page',
-        (WidgetTester tester) async {
-          HttpOverrides.global = null;
-
-          await initAppWidgetTest(tester);
-
-          expect(find.text('Sign In'), findsOneWidget);
-
-          // Enter login details
-          await tester.enterText(find.byType(TextField).first, 'lavigne');
-          await tester.enterText(find.byType(TextField).at(1), 'lavigne');
-
-          // Tap the "Connect" button
-          await tester.tap(find.byType(ElevatedButton).first);
-          await tester.pumpAndSettle();
-
-          expect(find.text('captainHeader'), findsOneWidget);
+          expect(find.text('Captain'), findsOneWidget);
         },
       );
     },
