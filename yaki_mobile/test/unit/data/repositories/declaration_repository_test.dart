@@ -39,9 +39,11 @@ void main() {
           when(httpResponse.response).thenReturn(response);
           when(response.statusCode).thenReturn(200);
           when(httpResponse.data).thenReturn(createResponseApi);
-          final String status =
+
+          final List<String> status =
               await declarationRepository.getDeclaration(teammateId);
-          expect(status, "REMOTE");
+
+          expect(status, ["REMOTE"]);
         },
       );
       test(
@@ -54,9 +56,11 @@ void main() {
           when(httpResponse.response).thenReturn(response);
           when(response.statusCode).thenReturn(404);
           when(httpResponse.data).thenReturn(getErrorResponse);
-          final String status =
+
+          final List<String> status =
               await declarationRepository.getDeclaration(teammateId);
-          expect(status, "");
+
+          expect(status, []);
         },
       );
       test(
@@ -68,9 +72,11 @@ void main() {
           when(httpResponse.response).thenReturn(response);
           when(response.statusCode).thenReturn(418);
           when(httpResponse.data).thenReturn(getErrorResponse);
-          final String status =
+
+          final List<String> status =
               await declarationRepository.getDeclaration(teammateId);
-          expect(status, "");
+
+          expect(status, []);
         },
       );
     },

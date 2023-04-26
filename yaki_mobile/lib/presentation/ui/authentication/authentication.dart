@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:yaki/data/sources/local/shared_preference.dart';
 import 'package:yaki/domain/entities/declaration_status.dart';
 import 'package:yaki/presentation/state/providers/declaration_provider.dart';
+import 'package:yaki/presentation/state/providers/halfday_status_provider.dart';
 import 'package:yaki/presentation/state/providers/login_provider.dart';
 import 'package:yaki/presentation/state/providers/status_provider.dart';
 import 'package:yaki/presentation/styles/header_text_style.dart';
@@ -43,6 +44,7 @@ class Authentication extends ConsumerWidget {
     required String password,
     required Function goToDeclarationPage,
     required Function goToStatusPage,
+    required Function goToHalfdayStatusPage,
     required Function goToCaptain,
   }) async {
     await SharedPref.deleteToken();
@@ -56,7 +58,11 @@ class Authentication extends ConsumerWidget {
         ref.read(teamProvider.notifier).fetchTeams();
         final declarationStatus =
             await ref.read(declarationProvider.notifier).getDeclaration();
-        if (declarationStatus != emptyDeclarationStatus) {
+        if (declarationStatus.length > 1) {
+          ref.read(halfdayStatusPageProvider.notifier).getHalfdayDeclaration();
+          goToHalfdayStatusPage();
+        } else if (declarationStatus.length == 1 &&
+            declarationStatus != emptyDeclarationStatus) {
           ref.read(statusPageProvider.notifier).getSelectedStatus();
           goToStatusPage();
         } else {
@@ -158,6 +164,8 @@ class Authentication extends ConsumerWidget {
                               context.push('/declaration'),
                           goToStatusPage: () => context.go('/status'),
                           goToCaptain: () => context.go('/captain'),
+                          goToHalfdayStatusPage: () =>
+                              context.go('/halfdayStatus'),
                         ),
                         child: Text(tr('signIn')),
                       ),

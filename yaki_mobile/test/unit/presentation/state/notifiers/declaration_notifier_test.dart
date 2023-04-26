@@ -21,7 +21,7 @@ void main() {
   );
 
   int returnedTeamMateId = 1;
-  String declarationStatus = "REMOTE";
+  List<String> declarationStatus = ["REMOTE"];
 
   group(
     'declaration notifier method test',
@@ -37,7 +37,8 @@ void main() {
           ).thenAnswer(
             (realInvocation) => Future.value(declarationStatus),
           );
-          String notifierStatus = await declarationNotifier.getDeclaration();
+          List<String> notifierStatus =
+              await declarationNotifier.getDeclaration();
 
           expect(notifierStatus, declarationStatus);
         },

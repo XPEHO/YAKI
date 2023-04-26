@@ -22,4 +22,4 @@ class DeclarationStatus {
   }
 }
 
-const String emptyDeclarationStatus = "";
+const List<String> emptyDeclarationStatus = [""];

@@ -95,13 +95,14 @@ class MockDeclarationRepository extends _i1.Mock
         ),
       ) as _i2.DeclarationStatus);
   @override
-  _i5.Future<String> getDeclaration(String? teamMateId) => (super.noSuchMethod(
+  _i5.Future<List<String>> getDeclaration(String? teamMateId) =>
+      (super.noSuchMethod(
         Invocation.method(
           #getDeclaration,
           [teamMateId],
         ),
-        returnValue: _i5.Future<String>.value(''),
-      ) as _i5.Future<String>);
+        returnValue: _i5.Future<List<String>>.value(<String>[]),
+      ) as _i5.Future<List<String>>);
   @override
   _i5.Future<void> createAllDay(_i6.DeclarationModel? declaration) =>
       (super.noSuchMethod(
