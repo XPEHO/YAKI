@@ -8,18 +8,17 @@ import 'package:yaki/presentation/state/notifiers/declaration_notifier.dart';
 
 import 'declaration_notifier_test.mocks.dart';
 
-@GenerateMocks([
-  DeclarationRepository,
-  LoginRepository,
-  TeamRepository
-])
+@GenerateMocks([DeclarationRepository, LoginRepository, TeamRepository])
 void main() {
   final declarationRepository = MockDeclarationRepository();
   final loginRepository = MockLoginRepository();
   final teamRepository = MockTeamRepository();
 
-  final declarationNotifier =
-      DeclarationNotifier(declarationRepository, loginRepository, teamRepository);
+  final declarationNotifier = DeclarationNotifier(
+    declarationRepository,
+    loginRepository,
+    teamRepository,
+  );
 
   int returnedTeamMateId = 1;
   String declarationStatus = "REMOTE";

@@ -11,10 +11,11 @@ class DeclarationNotifier extends StateNotifier<String> {
   final LoginRepository loginRepository;
   final TeamRepository teamRepository;
 
-  DeclarationNotifier(this.declarationRepository, this.loginRepository,
-      this.teamRepository
-      )
-      : super("");
+  DeclarationNotifier(
+    this.declarationRepository,
+    this.loginRepository,
+    this.teamRepository,
+  ) : super("");
 
   /// Invoked at authentication "sign in" button press.
   ///

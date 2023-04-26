@@ -10,8 +10,7 @@ import 'package:yaki/presentation/state/providers/status_provider.dart';
 import 'package:yaki/presentation/styles/header_text_style.dart';
 import 'package:yaki/presentation/ui/shared/views/header.dart';
 import 'package:yaki/presentation/ui/shared/views/input_app.dart';
-
-import '../../state/providers/team_provider.dart';
+import 'package:yaki/presentation/state/providers/team_provider.dart';
 
 /// using ConsumerWidget (statelessWidget) to have access to the WidgetRef object
 /// allowing the current widget to have access to any provider.

@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:yaki/presentation/displaydata/declaration_card_content.dart';
 import 'package:yaki/presentation/displaydata/status_page_content.dart';
 import 'package:yaki/presentation/ui/declaration/views/status_card.dart';
-import 'package:yaki/presentation/ui/shared/views/Team_Selection_Dialog.dart';
+import 'package:yaki/presentation/ui/shared/views/team_selection_dialog.dart';
 
 /// using ConsumerStatefulWidget (statefullWidget) to have access to
 /// the WidgetRef object
@@ -33,7 +33,7 @@ class DeclarationBody extends ConsumerWidget {
                 (cardContent) => StatusCard(
                   statusName: tr(cardContent['text']),
                   statusPicto: cardContent['image'],
-                  onPress: () => TeamSelectionDialog.show(
+                  onPress: () => TeamSelectionDialog(
                     ref: ref,
                     context: context,
                     allDayStatus:
@@ -41,7 +41,7 @@ class DeclarationBody extends ConsumerWidget {
                     goToPage: () => context.go('/status'),
                     morningStatus: null,
                     afternoonStatus: null,
-                  ),
+                  ).show(),
                 ),
               )
               .toList(),

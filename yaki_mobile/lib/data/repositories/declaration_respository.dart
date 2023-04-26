@@ -128,7 +128,7 @@ class DeclarationRepository {
       switch (statusCode) {
         case 200 | 201:
           // convert HttpResponse<dynamic> (Map<String, dynamic>) into Model
-        // using .fromJson method
+          // using .fromJson method
           final createdDeclarationInMorning = DeclarationModelIn.fromJson(
             createHttpResponse.data[0],
           );
