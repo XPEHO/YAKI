@@ -1,4 +1,4 @@
-Feature: GetAllCaptain
+Feature: GetACustomer
 
   Background:
     * url 'http://localhost:8080'
