@@ -16,10 +16,12 @@ lookGoldens() => group(
               400.0,
               600.0,
             );
-            await tester.pumpWidget(MaterialApp(
-              theme: ThemeData(),
-              home: buildDeclarationLook(),
-            ));
+            await tester.pumpWidget(
+              MaterialApp(
+                theme: ThemeData(),
+                home: buildDeclarationLook(),
+              ),
+            );
             await expectLater(
               find.byType(Declaration),
               matchesGoldenFile('goldens/declaration_golden_400x600_.png'),
@@ -33,10 +35,12 @@ lookGoldens() => group(
               800.0,
               600.0,
             );
-            await tester.pumpWidget(MaterialApp(
-              theme: ThemeData(),
-              home: buildDeclarationLook(),
-            ));
+            await tester.pumpWidget(
+              MaterialApp(
+                theme: ThemeData(),
+                home: buildDeclarationLook(),
+              ),
+            );
             await expectLater(
               find.byType(Declaration),
               matchesGoldenFile('goldens/declaration_golden_800x600_.png'),
@@ -50,10 +54,12 @@ lookGoldens() => group(
               800.0,
               1200.0,
             );
-            await tester.pumpWidget(MaterialApp(
-              theme: ThemeData(),
-              home: buildDeclarationLook(),
-            ));
+            await tester.pumpWidget(
+              MaterialApp(
+                theme: ThemeData(),
+                home: buildDeclarationLook(),
+              ),
+            );
             await expectLater(
               find.byType(Declaration),
               matchesGoldenFile('goldens/declaration_golden_800x1200_.png'),
@@ -67,10 +73,12 @@ lookGoldens() => group(
               1600.0,
               1200.0,
             );
-            await tester.pumpWidget(MaterialApp(
-              theme: ThemeData(),
-              home: buildDeclarationLook(),
-            ));
+            await tester.pumpWidget(
+              MaterialApp(
+                theme: ThemeData(),
+                home: buildDeclarationLook(),
+              ),
+            );
             await expectLater(
               find.byType(Declaration),
               matchesGoldenFile('goldens/declaration_golden_1600x1200_.png'),

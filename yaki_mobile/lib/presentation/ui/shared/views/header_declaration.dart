@@ -172,7 +172,7 @@ class CircleAvatarPNG extends StatelessWidget {
   }
 }
 
-buildHeaderLook() => HeaderDeclaration(
+buildHeaderLook() => const HeaderDeclaration(
       pictoIcon: 'assets/images/avatar1.svg',
       pictoPath: 'assets/images/day.svg',
       pictoSwitch: 'assets/images/pm.svg',
