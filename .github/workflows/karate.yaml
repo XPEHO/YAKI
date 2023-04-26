@@ -25,7 +25,7 @@ jobs:
           cd ../yaki_admin_backend
           mkdir src/main/resources
           echo ${{ secrets.APPLICATION_PROPERTIES }} | base64 -d > src/main/resources/application.properties
-          ./gradlew clean build
+          gradle clean build
           echo "Starting docker containers"
           cd ../yaki_docker
           docker compose up --build --quiet-pull -d
