@@ -6,10 +6,8 @@
 
 import 'dart:core';
 
-
 import 'package:flutter/material.dart';
 import 'package:yaki/presentation/ui/declaration/declaration.dart';
-
 
 void main() => runApp(const LookDeclarationApp());
 
