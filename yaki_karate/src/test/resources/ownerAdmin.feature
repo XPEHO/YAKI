@@ -42,7 +42,9 @@ Feature: Owner
     Scenario: Update existing owner
       Given path '/Owner/'
       And param id = 7
-      When method update
+      When method put
       Then status 200
-      And match response == {id: '#number', userId: '#number'}
+      And match response contains  schema
+      * print response
+      * print schema
 
