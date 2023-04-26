@@ -9,42 +9,33 @@ Feature: Owner
       Given path '/Owner/'
       When method get
       Then status 200
-      And match response contains  schema
+      And match response contains schema
       * print response
       * print schema
 
-  @GetOwnerById
-    Scenario: Get owner by id
-      Given path '/Owner/'
-      And param id =  1
-      When method get
-      Then status 200
-      And match response contains  schema
-      * print response
-      * print schema
 
-    @CreateOwner
-    Scenario: Create new owner
+    Scenario: Create, GetById, Update and Delete owner
       Given path '/Owner'
       And request {userId: 2}
       When method post
       Then status 200
+      And match response.id != null
+      And def ownerId = response.id
       And match response == {id: '#number', userId: '#number'}
 
-    @DeleteOwner
-    Scenario: Delete existing owner
-      Given path '/Owner/'
-      And param id =  1
-      When method delete
+      Given path '/Owner/' + ownerId
+      When method get
       Then status 200
+      And match response == {id: '#number', userId: '#number'}
 
-    @UpdateOwner
-    Scenario: Update existing owner
-      Given path '/Owner/'
-      And param id = 7
+      Given path '/Owner/' + ownerId
       When method put
       Then status 200
-      And match response contains  schema
-      * print response
-      * print schema
+      And match response == {id: '#number', userId: '#number'}
+
+      Given path '/Owner/' + ownerId
+      When method delete
+      Then status 200
+      And print response
+
 
