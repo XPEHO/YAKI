@@ -13,7 +13,6 @@ Feature: Owner
       * print response
       * print schema
 
-
     Scenario: Create, GetById, Update and Delete owner
       Given path '/Owner'
       And request {userId: 2}
@@ -29,6 +28,7 @@ Feature: Owner
       And match response == {id: '#number', userId: '#number'}
 
       Given path '/Owner/' + ownerId
+      And request {userId: 3}
       When method put
       Then status 200
       And match response == {id: '#number', userId: '#number'}
