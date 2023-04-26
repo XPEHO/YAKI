@@ -25,6 +25,7 @@ class TeamSelectionDialog {
 
   /// Shows the dialog with a list of teams to select from.
   Future<void> show() async {
+    // Get the team list from the provider
     final teamList = ref.watch(teamProvider);
     await showDialog(
       context: context,
@@ -36,12 +37,15 @@ class TeamSelectionDialog {
           child: ListView.builder(
             shrinkWrap: true,
             itemCount: teamList.length,
+            // Use a ListTile for each team in the list
             itemBuilder: (BuildContext context, int index) {
               return InkWell(
                 onTap: () async {
+                  // Call _handleTeamSelection when a team is tapped
                   await _handleTeamSelection(teamList[index]);
                 },
                 child: ListTile(
+                  // Show the name of the team in the ListTile
                   title: Text(teamList[index].teamName ?? 'No name available'),
                 ),
               );

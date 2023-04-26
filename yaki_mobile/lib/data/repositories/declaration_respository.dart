@@ -48,7 +48,7 @@ class DeclarationRepository {
           final getDeclarationIn = DeclarationModelIn.fromJson(
             getHttpResponse.data.first,
           );
-          statusValue = getDeclarationIn.declarationStatus ?? "";
+          statusValue = getDeclarationIn.declarationStatus;
           break;
         case 404:
           debugPrint("No declaration for this day");
@@ -96,7 +96,7 @@ class DeclarationRepository {
           final createdDeclarationIn = DeclarationModelIn.fromJson(
             createHttpResponse.data.first,
           );
-          statusValue = createdDeclarationIn.declarationStatus ?? "";
+          statusValue = createdDeclarationIn.declarationStatus;
           break;
         case 400 | 500:
           debugPrint("Code error : $statusCode");
@@ -135,10 +135,9 @@ class DeclarationRepository {
           final createdDeclarationInAfternoon = DeclarationModelIn.fromJson(
             createHttpResponse.data[1],
           );
-          statusValueMorning =
-              createdDeclarationInMorning.declarationStatus ?? "";
+          statusValueMorning = createdDeclarationInMorning.declarationStatus;
           statusValueAfternoon =
-              createdDeclarationInAfternoon.declarationStatus ?? "";
+              createdDeclarationInAfternoon.declarationStatus;
           break;
         case 400 | 500:
           debugPrint("Code error : $statusCode");
