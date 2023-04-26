@@ -10,6 +10,7 @@ void main() {
     "declarationDateEnd": '2023-03-20T23:59:59.950Z',
     "declarationTeamMateId": 3,
     "declarationStatus": 'VACATION',
+    "declarationTeamId": 2,
   };
   // model instance once json is parsed into dart usable model
   DeclarationModel declarationModel = DeclarationModel(
@@ -17,8 +18,8 @@ void main() {
     declarationDateStart: DateTime.parse('2023-03-20T00:00:00.000Z'),
     declarationDateEnd: DateTime.parse('2023-03-20T23:59:59.950Z'),
     declarationTeamMateId: 3,
-    declarationTeamId: 2,
     declarationStatus: 'VACATION',
+    declarationTeamId: 2,
   );
 
   group(

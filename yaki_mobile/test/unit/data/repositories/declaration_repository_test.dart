@@ -20,7 +20,8 @@ void main() {
       "declarationDateStart": DateTime.now().toIso8601String(),
       "declarationDateEnd": DateTime.now().toIso8601String(),
       "declarationTeamMateId": 3,
-      "declarationStatus": "REMOTE"
+      "declarationStatus": "REMOTE",
+      "declarationTeamId": 2,
     },
   ];
   group(
@@ -82,8 +83,8 @@ void main() {
         declarationDateStart: DateTime.parse('2023-03-20T00:00:00.000Z'),
         declarationDateEnd: DateTime.parse('2023-03-20T23:59:59.950Z'),
         declarationTeamMateId: 1,
-        declarationTeamId: 2,
         declarationStatus: "REMOTE",
+        declarationTeamId: 2,
       );
       test(
         'Successfully create declaration.',
@@ -168,20 +169,20 @@ void main() {
     'Declaration halfDay respository create()',
     () {
       final DeclarationModel declarationMorning = DeclarationModel(
-        declarationDate: DateTime.utc(2023, 4, 17),
-        declarationDateStart: DateTime.utc(2023, 4, 17, 00),
-        declarationDateEnd: DateTime.utc(2023, 4, 17, 12),
+        declarationDate: DateTime.utc(2023, 4, 26),
+        declarationDateStart: DateTime.utc(2023, 4, 26, 00),
+        declarationDateEnd: DateTime.utc(2023, 4, 26, 12),
         declarationTeamMateId: 123,
-        declarationTeamId: 2,
         declarationStatus: 'remote',
+        declarationTeamId: 2,
       );
       final DeclarationModel declarationAfternoon = DeclarationModel(
-        declarationDate: DateTime.utc(2023, 4, 17),
-        declarationDateStart: DateTime.utc(2023, 4, 17, 13),
-        declarationDateEnd: DateTime.utc(2023, 4, 17, 23),
+        declarationDate: DateTime.utc(2023, 4, 26),
+        declarationDateStart: DateTime.utc(2023, 4, 26, 13),
+        declarationDateEnd: DateTime.utc(2023, 4, 26, 23),
         declarationTeamMateId: 123,
-        declarationTeamId: 2,
         declarationStatus: 'other',
+        declarationTeamId: 2,
       );
       final List<DeclarationModel> declarations = [
         declarationMorning,
