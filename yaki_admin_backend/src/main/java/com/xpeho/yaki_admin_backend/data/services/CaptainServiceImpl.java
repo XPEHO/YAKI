@@ -31,8 +31,8 @@ public class CaptainServiceImpl implements CaptainService {
     @Override
     public CaptainEntity createCaptain(CaptainEntity captainEntity) {
         final CaptainModel captainModel = new CaptainModel(captainEntity.userId(), captainEntity.customerId());
-        captainJpaRepository.save(captainModel);
-        return captainEntity;
+        final CaptainModel savedCaptain = captainJpaRepository.save(captainModel);
+        return new CaptainEntity(savedCaptain.getCaptainId(), savedCaptain.getUserId(), savedCaptain.getCustomerId());
     }
 
     @Override
