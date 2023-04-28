@@ -6,7 +6,7 @@ Feature: Owner
 
     @GetOwner
       Scenario: Get all owners
-      Given path '/Owner/'
+      Given path '/owners/'
       When method get
       Then status 200
       And match response contains schema
@@ -14,7 +14,7 @@ Feature: Owner
       * print schema
 
     Scenario: Create, GetById, Update and Delete owner
-      Given path '/Owner'
+      Given path '/owners'
       And request {userId: 2}
       When method post
       Then status 200
@@ -22,18 +22,18 @@ Feature: Owner
       And def ownerId = response.id
       And match response == {id: '#number', userId: '#number'}
 
-      Given path '/Owner/' + ownerId
+      Given path '/owners/' + ownerId
       When method get
       Then status 200
       And match response == {id: '#number', userId: '#number'}
 
-      Given path '/Owner/' + ownerId
+      Given path '/owners/' + ownerId
       And request {userId: 3}
       When method put
       Then status 200
       And match response == {id: '#number', userId: '#number'}
 
-      Given path '/Owner/' + ownerId
+      Given path '/owners/' + ownerId
       When method delete
       Then status 200
       And print response
