@@ -18,9 +18,7 @@ class AfternoonDeclaration extends StatelessWidget {
           headerTitle: tr('headerTitleDecla'),
           headerHint: tr('headerHintDeclaAfternoon'),
         ),
-        bodyContent: const SingleChildScrollView(
-          child: AfternoonDeclarationBody(),
-        ),
+        bodyContent: const AfternoonDeclarationBody(),
       ),
     );
   }

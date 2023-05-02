@@ -54,7 +54,7 @@ class HalfDayStatus extends ConsumerWidget {
                 child: Center(
                   child: Text(
                     halfdayDeclarations.morning.text,
-                    style: textStyleHeader(),
+                    style: textStyleHeaderBig(),
                   ),
                 ),
               ),
@@ -72,7 +72,7 @@ class HalfDayStatus extends ConsumerWidget {
                 child: Center(
                   child: Text(
                     halfdayDeclarations.afternoon.text,
-                    style: textStyleHeader(),
+                    style: textStyleHeaderBig(),
                   ),
                 ),
               ),
