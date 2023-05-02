@@ -1,29 +1,25 @@
 <script setup lang="ts">
 import {reactive} from "vue";
-import AddTeamButton from "@/shared/components/AddTeamButton.vue";
+import TeamListing from "./TeamListing.vue";
+import SideBarSelector from "@/shared/components/SideBarSelector.vue";
 
 const teams = reactive({
-  list: [1, 2, 3, 4, 5],
+  list: ["team 1", "team 2", "team 3", "team 4", "team 5"],
 });
 
 const addTeam = () => {
-  teams.list.push(teams.list.length + 1);
+  teams.list.push("team " + teams.list.length + 1);
 };
 </script>
 
 <template>
-  <p>My Team</p>
+  <SideBarSelector />
 
-  <div v-for="number in teams.list">{{ number }}</div>
-
-  <AddTeamButton />
+  <section class="team-list">
+    <TeamListing
+      v-for="team in teams.list"
+      v-bind:teamName="team" />
+  </section>
 </template>
 
-<style lang="scss">
-p {
-  text-decoration: none;
-  color: rgb(186, 182, 182);
-  font-size: 1.2rem;
-  font-weight: 900;
-}
-</style>
+<style lang="scss"></style>

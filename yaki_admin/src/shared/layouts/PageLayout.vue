@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import HeaderYaki from "../../shared/components/HeaderYaki.vue";
 import SideBar from "../components/SideBar.vue";
-import ContentCaptain from "@/features/captain/layouts/ContentCaptain.vue";
+import AddTeamButton from "@/shared/components/AddTeamButton.vue";
 </script>
 
 <template>
@@ -9,6 +9,7 @@ import ContentCaptain from "@/features/captain/layouts/ContentCaptain.vue";
   <section class="sidebar-content-container-grid">
     <SideBar>
       <slot name="slidebarContent"></slot>
+      <AddTeamButton />
     </SideBar>
     <slot name="content"></slot>
   </section>
