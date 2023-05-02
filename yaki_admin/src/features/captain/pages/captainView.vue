@@ -1,8 +1,9 @@
 <template>
-   <div>
+  <div class="captainView">
     <h1 class="title">Team Members</h1>
-    <p class="text">Manage your team members here</p>
-    <ul>
+    <h2 class="text">Manage your team members here</h2>
+    <hr class="line">
+    <ul class="teamMateList">
       <li v-for="teamMate in teamMates" :key="teamMate.id">
         <TeamMate :team-mate="teamMate" />
       </li>
@@ -32,3 +33,28 @@ export default defineComponent({
   },
 });
 </script>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap');
+
+.captainView {
+  font-family: 'Inter', sans-serif;
+}
+.title {
+  font-size: 48px;
+}
+.text{
+  font-size: 20px;
+  color: #787878;
+  margin-bottom: 20px;
+}
+.line{
+  width: 50%;
+  background-color: #E5E5E5;
+
+margin: 0px;
+}
+.teamMateList{ 
+  list-style-type: none;
+}
+</style>
