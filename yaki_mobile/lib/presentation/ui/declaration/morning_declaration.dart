@@ -18,9 +18,7 @@ class MorningDeclaration extends StatelessWidget {
           headerTitle: tr('headerTitleDecla'),
           headerHint: tr('headerHintDeclaMorning'),
         ),
-        bodyContent: const SingleChildScrollView(
-          child: MorningDeclarationBody(),
-        ),
+        bodyContent: const MorningDeclarationBody(),
       ),
     );
   }
