@@ -2,6 +2,7 @@ package com.xpeho.yaki_admin_backend.data.services;
 
 import com.xpeho.yaki_admin_backend.data.models.TeammateModel;
 import com.xpeho.yaki_admin_backend.data.sources.TeammateJpaRepository;
+import com.xpeho.yaki_admin_backend.domain.entities.TeammateDetailsEntity;
 import com.xpeho.yaki_admin_backend.domain.entities.TeammateEntity;
 import com.xpeho.yaki_admin_backend.domain.services.TeammateService;
 import jakarta.persistence.EntityNotFoundException;
@@ -21,11 +22,18 @@ public class TeammateServiceImpl implements TeammateService {
         this.teammateJpaRepository = teammateJpaRepository;
     }
 
-    public List<TeammateEntity> findAllByTeam(int teamId) {
-        List<TeammateModel> TeammateModels = teammateJpaRepository.findAllByTeam(teamId);
-        List<TeammateEntity> teammateEntities = new ArrayList<>();
-        for (TeammateModel teammateModel : TeammateModels) {
-            TeammateEntity teammateEntity = new TeammateEntity(teammateModel.getId(), teammateModel.getTeamId(), teammateModel.getUserId());
+    public List<TeammateDetailsEntity> findAllByTeam(int teamIdF) {
+        List<Object[]> results = teammateJpaRepository.findAllByTeam(teamIdF);
+        List<TeammateDetailsEntity> teammateEntities = new ArrayList<>();
+        for (Object[] result : results) {
+            int id = (int) result[0];
+            int teamId = (int) result[1];
+            int userId = (int) result[2];
+            String firstName = (String) result[3];
+            String lastName = (String) result[4];
+            String email = (String) result[5];
+
+            TeammateDetailsEntity teammateEntity = new TeammateDetailsEntity(id, teamId, userId, firstName, lastName, email);
             teammateEntities.add(teammateEntity);
         }
         return teammateEntities;

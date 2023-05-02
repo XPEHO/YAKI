@@ -2,6 +2,7 @@ package com.xpeho.yaki_admin_backend.presentation.controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.xpeho.yaki_admin_backend.domain.entities.TeammateDetailsEntity;
 import com.xpeho.yaki_admin_backend.domain.entities.TeammateEntity;
 import com.xpeho.yaki_admin_backend.domain.services.TeammateService;
 import com.xpeho.yaki_admin_backend.errorHandling.CustomExceptionHandler;
@@ -34,7 +35,9 @@ public class TeammateControllerTests {
     private final TeammateEntity teammate2 = new TeammateEntity(2, 1, 8);
     private final TeammateEntity teammate3 = new TeammateEntity(3, 2, 6);
     private final List<TeammateEntity> teammates = Arrays.asList(teammate1, teammate2, teammate3);
-    private final List<TeammateEntity> teammatesFromTeamOne = Arrays.asList(teammate1, teammate2);
+    private final TeammateDetailsEntity teammate4 = new TeammateDetailsEntity(4, 1, 7, "Dupond", "Jack", "dupond.jack@mail.com");
+    private final TeammateDetailsEntity teammate5 = new TeammateDetailsEntity(4, 1, 7, "Dugrond", "Jean", "dugrond.jean@mail.com");
+    private final List<TeammateDetailsEntity> teammatesFromTeamOne = Arrays.asList(teammate4, teammate5);
     private MockMvc mvc;
     @Mock
     private TeammateService teammateService;

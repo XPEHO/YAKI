@@ -4,6 +4,8 @@ import com.xpeho.yaki_admin_backend.domain.entities.TeamEntity;
 import com.xpeho.yaki_admin_backend.domain.services.TeamService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin
 @RestController
 @RequestMapping("/teams")
@@ -33,7 +35,12 @@ public class TeamController {
     }
 
     @PutMapping("{id}")
-    private TeamEntity update(@RequestBody TeamEntity entity, @PathVariable int id) {
+    public TeamEntity update(@RequestBody TeamEntity entity, @PathVariable int id) {
         return teamService.saveOrUpdate(entity, id);
+    }
+
+    @GetMapping({"captain/{id}"})
+    public List<TeamEntity> getAllWithinCaptain(@PathVariable int id) {
+        return teamService.findAllByCaptain(id);
     }
 }

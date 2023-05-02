@@ -1,5 +1,6 @@
 package com.xpeho.yaki_admin_backend.domain.services;
 
+import com.xpeho.yaki_admin_backend.domain.entities.TeammateDetailsEntity;
 import com.xpeho.yaki_admin_backend.domain.entities.TeammateEntity;
 
 import java.util.List;
@@ -14,5 +15,5 @@ public interface TeammateService {
 
     TeammateEntity saveOrUpdate(TeammateEntity entity, int id);
 
-    List<TeammateEntity> findAllByTeam(int id);
+    List<TeammateDetailsEntity> findAllByTeam(int id);
 }
