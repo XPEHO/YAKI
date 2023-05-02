@@ -1,12 +1,16 @@
 <template>
   <div class="teamMate">
-    <img class="avatar" src="../../../assets/avatar.png" alt="Avatar">
-    <div class="teamMateInfo">
-      <h1 class="name">{{ teamMate.firstName }} {{ teamMate.lastName }}</h1>
-      <h2 class="email">{{ teamMate.email }}</h2>
+    <div class="teamMateAvatarInfo">
+      <img class="avatar" src="../../../assets/avatar.png" alt="Avatar">
+      <div class="teamMateInfo">
+        <h1 class="name">{{ teamMate.firstName }} {{ teamMate.lastName }}</h1>
+        <h2 class="email">{{ teamMate.email }}</h2>
+      </div>
     </div>
-    <img src="../../../assets/Edit.png" alt="">
-    <img src="../../../assets/Delete.png" alt="">
+    <div class="deleteEditIcon">
+      <img class="teamMateIcon" src="../../../assets/Edit.png" alt="">
+      <img class="teamMateIcon" src="../../../assets/Delete.png" alt="">
+    </div>
   </div>
 </template>
   
@@ -26,25 +30,46 @@ export default defineComponent({
 </script>
 
 <style>
-.teamMate{
+.teamMate {
   display: flex;
   flex-direction: row;
+  align-items: flex-end;
+  width: 500px;
+  justify-content: space-between;
+  padding-bottom: 22px;
 }
-.teamMateInfo{
+
+.teamMateInfo {
   display: flex;
   flex-direction: column;
-
+  /* justify-content: space-between; */
 }
+
 .name {
-  font-size: 20px;
+  font-size: 18px;
 }
 
 .email {
   font-size: 15px;
   color: #787878;
 }
-.avatar{
-  width: 56px;
-  height: 56px;
+
+.avatar {
+  width: 44px;
+  height: 44px;
+}
+.teamMateIcon{
+  width: 24px;
+  height: 24px;
+}
+
+.teamMateAvatarInfo {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 20px;
+}
+.deleteEditIcon{
+  gap: 20px;
 }
 </style>
