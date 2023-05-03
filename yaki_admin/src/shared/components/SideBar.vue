@@ -2,18 +2,17 @@ PageCaptain
 <script setup lang="ts"></script>
 
 <template>
-  <nav class="router">
+  <nav class="navbar">
     <slot></slot>
   </nav>
 </template>
 
 <style lang="scss">
-// see asset/style.scss for #app { style }
+.navbar {
+  background-color: #fafafa;
 
-.router {
-  background-color: rgb(43, 41, 41);
+  padding-block: 2rem;
 
-  padding: 2rem;
   display: flex;
   flex-direction: column;
   gap: 2rem;

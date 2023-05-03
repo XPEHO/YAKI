@@ -1,0 +1,45 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap");
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100svh;
+}
+
+.sidebar_element_generic_style {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+}
+.sidebar_element_generic_style div {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+.sidebar_element_generic_style figure {
+  width: 1.8rem;
+}
+.sidebar_element_generic_style figure img {
+  width: 100%;
+}
+.sidebar_element_generic_style p {
+  font-size: 1.4rem;
+  letter-spacing: 0.05rem;
+}
+.sidebar_element_generic_style:hover {
+  cursor: pointer;
+}
+
+.sidebar_active-class {
+  background-color: #59a9b5;
+}/*# sourceMappingURL=style.css.map */
