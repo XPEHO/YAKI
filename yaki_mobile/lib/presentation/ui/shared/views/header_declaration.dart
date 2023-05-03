@@ -93,7 +93,7 @@ class HeaderDeclaration extends StatelessWidget {
                           pictoPath: pictoPath,
                           pictoSwitch: pictoSwitch,
                           onPictoSwitchTap: onPictoSwitchTap,
-                          size: 160.0,
+                          size: 200.0,
                         ),
                   SizedBox(
                     height: 60,
