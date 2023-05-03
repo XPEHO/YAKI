@@ -1,25 +1,40 @@
 <script setup lang="ts">
-import {reactive} from "vue";
-import TeamListing from "./TeamListing.vue";
-import SideBarSelector from "@/shared/components/SideBarSelector.vue";
+import {onBeforeMount, onMounted, onUpdated, reactive, ref} from "vue";
+import TeamListElement from "@/features/captain/components/TeamListElement.vue";
+import SideBarElement from "@/shared/components/SideBarElement.vue";
+import isTeamSelected from "../services/isActiveTeam";
+
+import vector from "@/assets/Vector.png";
 
 const teams = reactive({
-  list: ["team 1", "team 2", "team 3", "team 4", "team 5"],
+  list: ["Team 1", "Team 2", "Team 3", "Team 4", "Team 5"],
 });
 
-const addTeam = () => {
-  teams.list.push("team " + teams.list.length + 1);
+const selectedTeam = (teamName: string) => {
+  isTeamSelected.setTeam(teamName);
 };
 </script>
 
 <template>
-  <SideBarSelector />
+  <SideBarElement
+    v-bind:innerText="'My teams'"
+    v-bind:iconPath="vector"
+    v-bind:isSelected="true" />
 
   <section class="team-list">
-    <TeamListing
-      v-for="team in teams.list"
-      v-bind:teamName="team" />
+    <TeamListElement
+      v-for="(team, index) in teams.list"
+      :key="index"
+      v-bind:teamName="team"
+      @click="() => selectedTeam(team)" />
   </section>
 </template>
 
-<style lang="scss"></style>
+<style lang="scss">
+.team-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+</style>
