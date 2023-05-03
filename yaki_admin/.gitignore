@@ -28,5 +28,6 @@ coverage
 *.sln
 *.sw?
 
-.assets/
+.assets/style
 style.css.map
+

@@ -6,11 +6,11 @@ import ContentCaptain from "@/features/captain/layouts/ContentCaptain.vue";
 
 <template>
   <PageLayout>
-    <template v-slot:slidebarContent>
+    <template v-slot:sidebarContent>
       <SideBarCaptainContent />
     </template>
 
-    <template v-slot:content>
+    <template v-slot:pageContent>
       <ContentCaptain />
     </template>
   </PageLayout>
