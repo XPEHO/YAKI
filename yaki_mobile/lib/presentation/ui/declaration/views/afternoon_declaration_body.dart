@@ -15,8 +15,6 @@ class AfternoonDeclarationBody extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var width = MediaQuery.of(context).size.width;
-
     /// Retrieves the morning declaration
     var morningDeclaration =
         ref.watch(declarationProvider.notifier).getMorningDeclaration();

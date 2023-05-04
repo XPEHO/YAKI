@@ -14,8 +14,6 @@ class MorningDeclarationBody extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var width = MediaQuery.of(context).size.width;
-
     return Padding(
       padding: const EdgeInsets.all(20),
       child: Center(
