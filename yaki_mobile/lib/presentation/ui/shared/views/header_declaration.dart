@@ -43,110 +43,144 @@ class HeaderDeclaration extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 360,
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.only(
-          bottomLeft: Radius.circular(16),
-          bottomRight: Radius.circular(16),
-        ),
-        color: HeaderColor.yellowApp,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.7),
-            spreadRadius: 5,
-            blurRadius: 4,
+    return LayoutBuilder(
+      builder: (context, constraint) {
+        return Container(
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.only(
+              bottomLeft: Radius.circular(16),
+              bottomRight: Radius.circular(16),
+            ),
+            color: HeaderColor.yellowApp,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.7),
+                spreadRadius: 5,
+                blurRadius: 4,
+              ),
+            ],
           ),
-        ],
-      ),
-      child: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 15, right: 15),
-          child: Column(
-            children: [
-              Row(
+          child: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.all(15),
+              child: Column(
                 children: [
-                  Text(
-                    headerTitle,
-                    style: textStyleHeader(),
+                  Row(
+                    children: [
+                      Text(
+                        headerTitle,
+                        style: textStyleHeaderBig(),
+                      ),
+                      const Spacer(),
+                      // top right circle avatar
+                      AvatarIcon(
+                        pictoIcon: pictoIcon,
+                        onPressed: () => onAvatarIconPress(context),
+                      ),
+                    ],
                   ),
-
-                  const Spacer(),
-                  // top right circle avatar
-                  AvatarIcon(
-                    pictoIcon: pictoIcon,
-                    onPressed: () => onAvatarIconPress(context),
+                  constraint.maxWidth < 350
+                      ? Logo(
+                          pictoPath: pictoPath,
+                          pictoSwitch: pictoSwitch,
+                          onPictoSwitchTap: onPictoSwitchTap,
+                          size: 130.0,
+                        )
+                      : Logo(
+                          pictoPath: pictoPath,
+                          pictoSwitch: pictoSwitch,
+                          onPictoSwitchTap: onPictoSwitchTap,
+                          size: 200.0,
+                        ),
+                  SizedBox(
+                    height: 60,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 20),
+                      child: Text(
+                        headerHint,
+                        style: constraint.maxWidth < 350
+                            ? textStyleHeaderSmall()
+                            : textStyleHeaderBig(),
+                      ),
+                    ),
                   ),
                 ],
               ),
-              SizedBox(
-                width: 200.0,
-                height: 200.0,
-                child: Stack(
-                  children: [
-                    Material(
-                      color: Colors.transparent,
-                      shape: const CircleBorder(),
-                      child: SvgPicture.asset(
-                        pictoPath,
-                        height: 200.0,
-                        width: 200.0,
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class Logo extends StatelessWidget {
+  final String pictoPath;
+  final String pictoSwitch;
+  final Function onPictoSwitchTap;
+  final double size;
+
+  const Logo({
+    super.key,
+    required this.pictoPath,
+    required this.pictoSwitch,
+    required this.onPictoSwitchTap,
+    required this.size,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: size,
+      height: size,
+      child: Stack(
+        children: [
+          Material(
+            color: Colors.transparent,
+            shape: const CircleBorder(),
+            child: SvgPicture.asset(
+              pictoPath,
+            ),
+          ),
+          Align(
+            alignment: Alignment.bottomRight,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 35),
+              child: Material(
+                elevation: 10,
+                color: Colors.transparent,
+                shape: const CircleBorder(),
+                child: Padding(
+                  padding: const EdgeInsets.all(0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: HeaderColor.yellowApp,
+                      border: Border.all(
+                        color: Colors.deepOrangeAccent,
+                        width: 3.0,
                       ),
+                      shape: BoxShape.circle,
                     ),
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 35),
-                        child: Material(
-                          elevation: 10,
-                          color: Colors.transparent,
-                          shape: const CircleBorder(),
-                          child: Padding(
-                            padding: const EdgeInsets.all(0),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: HeaderColor.yellowApp,
-                                border: Border.all(
-                                  color: Colors.deepOrangeAccent,
-                                  width: 3.0,
-                                ),
-                                shape: BoxShape.circle,
-                              ),
-                              width: 60,
-                              height: 60,
-                              child: Center(
-                                child: SizedBox(
-                                  width: 40,
-                                  height: 40,
-                                  child: InkWell(
-                                    onTap: () => onPictoSwitchTap(context),
-                                    child: SvgPicture.asset(
-                                      pictoSwitch,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
+                    width: 60,
+                    height: 60,
+                    child: Center(
+                      child: SizedBox(
+                        width: 40,
+                        height: 40,
+                        child: InkWell(
+                          onTap: () => onPictoSwitchTap(context),
+                          child: SvgPicture.asset(
+                            pictoSwitch,
                           ),
                         ),
                       ),
                     ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 50,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 20),
-                  child: Text(
-                    headerHint,
-                    style: textStyleHeader(),
                   ),
                 ),
               ),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

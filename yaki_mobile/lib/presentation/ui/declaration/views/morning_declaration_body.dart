@@ -14,20 +14,15 @@ class MorningDeclarationBody extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var width = MediaQuery.of(context).size.width;
-
     return Padding(
-      padding: EdgeInsets.symmetric(
-        vertical: width * 0.12,
-        horizontal: width * 0.09,
-      ),
+      padding: const EdgeInsets.all(20),
       child: Center(
         child: Wrap(
           alignment: WrapAlignment.center,
           // horizontal
-          spacing: width * 0.07,
+          spacing: 20.0,
           // vertical
-          runSpacing: width * 0.12,
+          runSpacing: 20.0,
           children: statusCardsContent
               .map(
                 (cardContent) => StatusCard(

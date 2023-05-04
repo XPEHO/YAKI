@@ -15,50 +15,54 @@ class StatusCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 150,
-      height: 150,
-      child: ElevatedButton(
-        onPressed: onPress,
-        style: ElevatedButton.styleFrom(
-          elevation: 5,
-          shadowColor: Colors.black,
-          backgroundColor: Colors.white,
-          foregroundColor: Colors.amber.shade400,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8.0),
-          ),
-        ),
-        child: Stack(
-          children: [
-            Center(
-              child: FractionallySizedBox(
-                widthFactor: 0.55,
-                heightFactor: 0.55,
-                alignment: FractionalOffset.center,
-                child: FittedBox(
-                  fit: BoxFit.cover,
-                  child: SvgPicture.asset(statusPicto),
-                ),
+    return LayoutBuilder(
+      builder: (context, constraint) {
+        return SizedBox(
+          height: constraint.maxWidth < 350 ? 120 : 160,
+          width: constraint.maxWidth < 350 ? 120 : 160,
+          child: ElevatedButton(
+            onPressed: onPress,
+            style: ElevatedButton.styleFrom(
+              elevation: 5,
+              shadowColor: Colors.black,
+              backgroundColor: Colors.white,
+              foregroundColor: Colors.amber.shade400,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8.0),
               ),
             ),
-            Align(
-              alignment: Alignment.bottomLeft,
-              child: FittedBox(
-                fit: BoxFit.fitWidth,
-                child: Text(
-                  statusName,
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 24,
+            child: Stack(
+              children: [
+                Center(
+                  child: FractionallySizedBox(
+                    widthFactor: 0.55,
+                    heightFactor: 0.55,
+                    alignment: FractionalOffset.center,
+                    child: FittedBox(
+                      fit: BoxFit.cover,
+                      child: SvgPicture.asset(statusPicto),
+                    ),
                   ),
                 ),
-              ),
+                Align(
+                  alignment: Alignment.bottomLeft,
+                  child: FittedBox(
+                    fit: BoxFit.fitWidth,
+                    child: Text(
+                      statusName,
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 24,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }
