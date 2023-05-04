@@ -53,7 +53,7 @@ public class OwnerControllerTests {
 
         //when
         MockHttpServletResponse response = mvc.perform(
-                        MockMvcRequestBuilders.get("/Owner")
+                        MockMvcRequestBuilders.get("/owners")
                                 .accept(MediaType.APPLICATION_JSON))
                 .andReturn().getResponse();
         //then
@@ -72,7 +72,7 @@ public class OwnerControllerTests {
 
         //when
         MockHttpServletResponse response = mvc.perform(
-                        MockMvcRequestBuilders.get("/Owner/2")
+                        MockMvcRequestBuilders.get("/owners/2")
                                 .accept(MediaType.APPLICATION_JSON))
                 .andReturn().getResponse();
 
@@ -92,7 +92,7 @@ public class OwnerControllerTests {
 
         //when
         MockHttpServletResponse response = mvc.perform(
-                        MockMvcRequestBuilders.post("/Owner")
+                        MockMvcRequestBuilders.post("/owners")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsString(owner2)))
                 .andReturn().getResponse();
@@ -112,7 +112,7 @@ public class OwnerControllerTests {
 
         //when
         MockHttpServletResponse response = mvc.perform(
-                        MockMvcRequestBuilders.delete("/Owner/2")
+                        MockMvcRequestBuilders.delete("/owners/2")
                                 .accept(MediaType.APPLICATION_JSON))
                 .andReturn().getResponse();
 
@@ -132,7 +132,7 @@ public class OwnerControllerTests {
 
         //when
         MockHttpServletResponse response = mvc.perform(
-                        MockMvcRequestBuilders.put("/Owner/2")
+                        MockMvcRequestBuilders.put("/owners/2")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsString(owner1)))
                 .andReturn().getResponse();

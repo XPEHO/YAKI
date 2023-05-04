@@ -178,6 +178,6 @@ Build docker image
 ```docker build .```
 
 Run as docker with server + database
-
+```cd ../yaki_docker```
 ```docker compose build```
 ```docker compose up```

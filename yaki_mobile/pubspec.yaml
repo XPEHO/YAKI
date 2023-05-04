@@ -43,7 +43,7 @@ dependencies:
   # This dependency allows for dependency injection and manage states
   # import 'package:hooks_riverpod/hooks_riverpod.dart'
   # link : https://riverpod.dev/docs/getting_started
-  flutter_riverpod: ^2.3.5
+  flutter_riverpod: ^2.3.6
 
   # // Retrofit dependency //
   # this dependency allows to make api requests thanks to annotations
@@ -143,6 +143,7 @@ flutter:
   assets:
     - assets/translations/
     - assets/images/
+    - assets/cer/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

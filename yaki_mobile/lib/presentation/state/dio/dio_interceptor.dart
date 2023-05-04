@@ -1,6 +1,21 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:dio/dio.dart';
+import 'package:dio/io.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+final certificateProvider = Provider((ref) => "");
+
+final securityContextProvider = Provider((ref) {
+  final data = ref.read(certificateProvider);
+  List<int> bytes = utf8.encode(data);
+  var sccontext = SecurityContext.defaultContext;
+  sccontext.setTrustedCertificatesBytes(bytes);
+  return sccontext;
+});
 
 // Dio is a flutter http client,
 /// Interceptor are meant to be intercept request / response / error before they are handled by then or catch
@@ -17,6 +32,20 @@ final dioInterceptor = Provider(
             addDataToHeader.onRequest(options, handler),
       ),
     );
+    if (!kDebugMode) {
+      final sccontext = ref.read(securityContextProvider);
+      //final cer = ref.read(certificateProvider);
+      dio.httpClientAdapter = IOHttpClientAdapter(
+        onHttpClientCreate: (_) {
+          return HttpClient(context: sccontext)
+            ..badCertificateCallback = (_, __, ___) => true;
+        },
+        validateCertificate: (certificate, host, port) {
+          return true;
+          //certificate.pem == cer;
+        },
+      );
+    }
     return dio;
   },
 );

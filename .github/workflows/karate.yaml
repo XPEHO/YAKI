@@ -11,18 +11,26 @@ jobs:
           java-version: '17'
       - name: Run karate tests
         run: |
-          cd yaki_backend
+          cd yaki_docker
+          echo "Creating .env file"
+          echo ${{ secrets.ENV_FILE }} | base64 -d > .env
+          cd ../yaki_backend
           echo "Creating .env file"
           echo ${{ secrets.ENV_FILE }} | base64 -d > .env
           echo "Install dependencies"
           npm i
           echo "Generate swagger.json file"
           npm run swagger
+          echo "build java"
+          cd ../yaki_admin_backend
+          echo ${{ secrets.APPLICATION_PROPERTIES }} | base64 -d > src/main/resources/application.properties
+          gradle clean build
           echo "Starting docker containers"
+          cd ../yaki_docker
           docker compose up --build --quiet-pull -d
           cd ../yaki_karate
           echo "Running karate tests"
           mvn test --quiet
-          cd ../yaki_backend
+          cd ../yaki_docker
           echo "Stopping docker containers"
           docker compose down
