@@ -28,8 +28,8 @@ public class TeammateServiceImplTest {
     private TeammateModel teammate2;
     private TeammateEntity teammateE1;
     private TeammateEntity teammateE2;
-    private List<TeammateModel> teammatesFromTeamOne;
-    private List<TeammateEntity> teammatesEFromTeamOne;
+    private List<Object[]> teammatesFromTeamOne;
+    private List<TeammateDetailsEntity> teammatesEFromTeamOne;
 
     @InjectMocks
     private TeammateServiceImpl teammateService;
@@ -42,8 +42,13 @@ public class TeammateServiceImplTest {
         teammate2 = new TeammateModel(1, 8);
         teammateE1 = new TeammateEntity(teammate1.getId(), 1, 5);
         teammateE2 = new TeammateEntity(teammate2.getId(), 1, 8);
-        teammatesFromTeamOne = Arrays.asList(teammate1, teammate2);
-        teammatesEFromTeamOne = Arrays.asList(teammateE1, teammateE2);
+        TeammateDetailsEntity teammateUserE1 = new TeammateDetailsEntity(1, 2, 5, "Albert", "Redmont", "albert.redmont@mail.com");
+        TeammateDetailsEntity teammateUserE2 = new TeammateDetailsEntity(2, 2, 6, "Michel", "Bertrand", "michel.bertrand@mail.com");
+
+        Object[] teammateUser1 = new Object[]{1, 2, 5, "Albert", "Redmont", "albert.redmont@mail.com"};
+        Object[] teammateUser2 = new Object[]{2, 2, 6, "Michel", "Bertrand", "michel.bertrand@mail.com"};
+        teammatesEFromTeamOne = Arrays.asList(teammateUserE1, teammateUserE2);
+        teammatesFromTeamOne = Arrays.asList(teammateUser1, teammateUser2);
     }
 
     @Test
@@ -89,6 +94,22 @@ public class TeammateServiceImplTest {
         TeammateEntity teammateE3 = new TeammateEntity(
                 idUsed, expectedModel.getTeamId(), expectedModel.getUserId());
         String expectedResponse = objectMapper.writeValueAsString(teammateE3);
+        assertEquals(returnedResponse,
+                expectedResponse);
+    }
+
+    @Test
+    void findAllByTeamTest() throws Exception {
+
+        //given
+        given(teammateJpaRepository.findAllByTeam(1)).willReturn(teammatesFromTeamOne);
+
+        //when
+        List<TeammateDetailsEntity> teammateDto = teammateService.findAllByTeam(1);
+
+        //then
+        String returnedResponse = objectMapper.writeValueAsString(teammateDto);
+        String expectedResponse = objectMapper.writeValueAsString(teammatesEFromTeamOne);
         assertEquals(returnedResponse,
                 expectedResponse);
     }
