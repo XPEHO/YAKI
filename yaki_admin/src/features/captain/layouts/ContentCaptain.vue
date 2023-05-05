@@ -44,7 +44,6 @@ export default defineComponent({
   padding: 20px;
   font-family: 'Inter', sans-serif;
 }
-
 .title {
   font-size: 38px;
 }
