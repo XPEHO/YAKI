@@ -7,6 +7,8 @@ import com.xpeho.yaki_admin_backend.domain.services.TeamService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -58,5 +60,15 @@ public class TeamServiceImpl implements TeamService {
         }
         //id and entity.id() could be different
         return new TeamEntity(id, entity.captainId(), entity.teamName());
+    }
+
+    public List<TeamEntity> findAllByCaptain(int captainId) {
+        List<TeamModel> results = teamJpaRepository.findAllByCaptain(captainId);
+        List<TeamEntity> teamEntities = new ArrayList<>();
+        for (TeamModel result : results) {
+            TeamEntity teammEntity = new TeamEntity(result.getId(), result.getCaptainId(), result.getTeamName());
+            teamEntities.add(teammEntity);
+        }
+        return teamEntities;
     }
 }

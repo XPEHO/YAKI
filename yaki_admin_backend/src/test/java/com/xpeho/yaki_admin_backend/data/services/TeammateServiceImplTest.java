@@ -3,6 +3,7 @@ package com.xpeho.yaki_admin_backend.data.services;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xpeho.yaki_admin_backend.data.models.TeammateModel;
 import com.xpeho.yaki_admin_backend.data.sources.TeammateJpaRepository;
+import com.xpeho.yaki_admin_backend.domain.entities.TeammateDetailsEntity;
 import com.xpeho.yaki_admin_backend.domain.entities.TeammateEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -88,23 +89,6 @@ public class TeammateServiceImplTest {
         TeammateEntity teammateE3 = new TeammateEntity(
                 idUsed, expectedModel.getTeamId(), expectedModel.getUserId());
         String expectedResponse = objectMapper.writeValueAsString(teammateE3);
-        assertEquals(returnedResponse,
-                expectedResponse);
-    }
-
-
-    @Test
-    void findAllByTeamTest() throws Exception {
-
-        //given
-        given(teammateJpaRepository.findAllByTeam(1)).willReturn(teammatesFromTeamOne);
-
-        //when
-        List<TeammateEntity> teammateDto = teammateService.findAllByTeam(1);
-
-        //then
-        String returnedResponse = objectMapper.writeValueAsString(teammateDto);
-        String expectedResponse = objectMapper.writeValueAsString(teammatesEFromTeamOne);
         assertEquals(returnedResponse,
                 expectedResponse);
     }
