@@ -42,7 +42,6 @@ export default defineComponent({
 .teamMateInfo {
   display: flex;
   flex-direction: column;
-  /* justify-content: space-between; */
 }
 
 .name {
@@ -58,7 +57,8 @@ export default defineComponent({
   width: 44px;
   height: 44px;
 }
-.teamMateIcon{
+
+.teamMateIcon {
   width: 24px;
   height: 24px;
 }
@@ -69,7 +69,8 @@ export default defineComponent({
   align-items: flex-end;
   gap: 20px;
 }
-.deleteEditIcon{
+
+.deleteEditIcon {
   gap: 20px;
 }
 </style>

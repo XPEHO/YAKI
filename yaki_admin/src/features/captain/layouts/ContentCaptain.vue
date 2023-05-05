@@ -12,24 +12,26 @@
 </template>
 
 <script lang="ts">
+// Importing necessary modules and types
 import { teamMateService } from '../../../services/teamMate.service'
 import type { TeamMateType } from '../../../services/teamMate.type';
 import { defineComponent } from 'vue';
 import TeamMate from '../components/teamMate.vue';
-
+// Defining the Vue component
 export default defineComponent({
   name: "CaptainView",
+  // The components that this component uses
   components: {
     TeamMate,
   },
   data() {
     return {
-      teamMates: [] as TeamMateType[],
+      teamMates: [] as TeamMateType[],// An empty array of team mates
     };
   },
   async created() {
     const id = 1; // team Id to retreive
-    this.teamMates = await teamMateService.getAllWithinTeam(id);
+    this.teamMates = await teamMateService.getAllWithinTeam(id);// Retrieve the team mates for the given ID
   },
 });
 </script>
@@ -42,21 +44,25 @@ export default defineComponent({
   padding: 20px;
   font-family: 'Inter', sans-serif;
 }
+
 .title {
   font-size: 38px;
 }
-.text{
+
+.text {
   font-size: 18px;
   color: #787878;
   margin-bottom: 20px;
 }
-.line{
+
+.line {
   width: 70%;
   background-color: #E5E5E5;
 
-margin: 0px;
+  margin: 0px;
 }
-.teamMateList{ 
+
+.teamMateList {
   padding: 50px;
   list-style-type: none;
   display: flex;
