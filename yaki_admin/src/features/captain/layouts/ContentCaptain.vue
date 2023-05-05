@@ -44,24 +44,20 @@ export default defineComponent({
   padding: 20px;
   font-family: 'Inter', sans-serif;
 }
-
 .title {
   font-size: 38px;
 }
-
 .text {
   font-size: 18px;
   color: #787878;
   margin-bottom: 20px;
 }
-
 .line {
   width: 70%;
   background-color: #E5E5E5;
 
   margin: 0px;
 }
-
 .teamMateList {
   padding: 50px;
   list-style-type: none;
