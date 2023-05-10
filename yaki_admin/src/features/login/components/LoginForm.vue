@@ -119,7 +119,7 @@ form{
   top: 0;
   right: 0;
   bottom: 0;
-  width: 50px;
+  width: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
