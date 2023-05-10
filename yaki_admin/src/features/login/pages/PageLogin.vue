@@ -15,7 +15,6 @@ figure {
     .banner {
       width: 100%;
       height: 100%;
-      // aspect-ratio: 1/2;
       display: block;
     }
   }
