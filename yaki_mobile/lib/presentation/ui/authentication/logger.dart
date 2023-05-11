@@ -5,9 +5,9 @@ class Logger extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Column(
-        children: const [Text('Connecté')],
+        children: [Text('Connecté')],
       ),
     );
   }

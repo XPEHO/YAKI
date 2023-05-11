@@ -19,7 +19,7 @@ class _DeclarationApi implements DeclarationApi {
   String? baseUrl;
 
   @override
-  Future<HttpResponse<dynamic>> getDeclaration(id) async {
+  Future<HttpResponse<dynamic>> getDeclaration(String id) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'teamMateId': id};
     final _headers = <String, dynamic>{};
@@ -44,8 +44,8 @@ class _DeclarationApi implements DeclarationApi {
 
   @override
   Future<HttpResponse<dynamic>> create(
-    declaration,
-    mode,
+    List<DeclarationModel> declaration,
+    String mode,
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'mode': mode};
