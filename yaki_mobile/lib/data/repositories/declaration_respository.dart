@@ -107,14 +107,14 @@ class DeclarationRepository {
           await _declarationApi.create([declaration], StatusEnum.fullDay.text);
       final statusCode = createHttpResponse.response.statusCode;
       switch (statusCode) {
-        case 200 | 201:
+        case const (200 | 201):
           // convert HttpResponse<dynamic> (Map<String, dynamic>) into Model using .fromJson method
           final createdDeclarationIn = DeclarationModelIn.fromJson(
             createHttpResponse.data.first,
           );
           statusValue = createdDeclarationIn.declarationStatus;
           break;
-        case 400 | 500:
+        case const (400 | 500):
           debugPrint("Code error : $statusCode");
           break;
         case 401:
@@ -142,7 +142,7 @@ class DeclarationRepository {
           await _declarationApi.create(declarations, StatusEnum.halfDay.text);
       final statusCode = createHttpResponse.response.statusCode;
       switch (statusCode) {
-        case 200 | 201:
+        case const (200 | 201):
           // convert HttpResponse<dynamic> (Map<String, dynamic>) into Model
           // using .fromJson method
           final createdDeclarationInMorning = DeclarationModelIn.fromJson(
@@ -155,7 +155,7 @@ class DeclarationRepository {
           statusValueAfternoon =
               createdDeclarationInAfternoon.declarationStatus;
           break;
-        case 400 | 500:
+        case const (400 | 500):
           debugPrint("Code error : $statusCode");
           break;
         case 401:

@@ -19,7 +19,7 @@ class _TeamApi implements TeamApi {
   String? baseUrl;
 
   @override
-  Future<HttpResponse<dynamic>> getTeam(id) async {
+  Future<HttpResponse<dynamic>> getTeam(String id) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'teamMateId': id};
     final _headers = <String, dynamic>{};
