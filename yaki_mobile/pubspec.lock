@@ -949,10 +949,10 @@ packages:
     dependency: "direct main"
     description:
       name: very_good_cli
-      sha256: "7c568b2a9527d3c85af406ff2a0115967a3a27d1ae0a958d7ad9ceb7f5567588"
+      sha256: dc4a17b9493203228735b76f02e6c4b646c41998803969107c4bfbe0bf07e5ed
       url: "https://pub.dev"
     source: hosted
-    version: "0.13.1"
+    version: "0.14.0"
   very_good_test_runner:
     dependency: transitive
     description:
