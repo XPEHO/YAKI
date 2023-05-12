@@ -8,16 +8,16 @@ updates:
   - package-ecosystem: "npm"
     directory: "/yaki_backend"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
   - package-ecosystem: "pub"
     directory: "/yaki_mobile"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
   - package-ecosystem: "gradle"
     directory: "/yaki_admin_backend"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
   - package-ecosystem: "maven"
     directory: "/yaki_karate"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
