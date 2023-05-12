@@ -3,8 +3,32 @@ name: Sonarqube scan
 on: push
 
 jobs:
-  build:
-    name: Sonarqube scan
+  backend_scan:
+    name: Sonaqube backend scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: Run tests with coverage
+        run: |
+          cd yaki_backend
+          npm install
+          npm run test --coverage
+      - uses: sonarsource/sonarqube-scan-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        with:
+          projectBaseDir: yaki_backend/
+      # If you wish to fail your job when the Quality Gate is red, uncomment the
+      # following lines. This would typically be used to fail a deployment.
+      # - uses: sonarsource/sonarqube-quality-gate-action@master
+      #   timeout-minutes: 5
+      #   env:
+      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  admin_backend_scan:
+    name: Sonarqube admin backend scan
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
