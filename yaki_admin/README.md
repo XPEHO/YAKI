@@ -1,6 +1,6 @@
 # yaki_admin
 
-It is the part of Admin front-end of the Yaki application.
+Desktop front-end of the Admin Yaki application.
 
 ## Recommended IDE Setup
 

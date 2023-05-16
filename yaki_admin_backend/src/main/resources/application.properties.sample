@@ -1,0 +1,3 @@
+spring.datasource.url=exampleURL
+spring.datasource.username=exampleUserName
+spring.datasource.password=
