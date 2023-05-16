@@ -12,8 +12,8 @@ const router = createRouter({
       component: PageLogin,
     },
     {
-      path: "/",
-      name: "captain",
+      path: "/captain",
+      name: "Captain",
       component: PageCaptain,
     },
   ],

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import PageLayout from "../layouts/PageLoginLayout.vue";
+import LoginForm from "@/features/login/components/LoginForm.vue"
 </script>
 
 <template>
@@ -7,6 +8,8 @@ import PageLayout from "../layouts/PageLoginLayout.vue";
   </PageLayout>
   <figure>
       <img class="banner" src="../../../assets/banner2.png" />
+      <LoginForm>
+      </LoginForm>
     </figure>
 </template>
 
@@ -14,7 +17,6 @@ import PageLayout from "../layouts/PageLoginLayout.vue";
 figure {
     .banner {
       width: 100%;
-      height: 100%;
       display: block;
     }
   }
