@@ -8,43 +8,30 @@ const props = defineProps({
     type: String,
     required: true,
   },
-  isSelected: {
-    type: Boolean,
-    required: true,
-  },
 });
 </script>
 
 <template>
-  <button
-    class="sidebar_button-specific sidebar_element_generic_style"
-    :class="{'sidebar_active-class': isSelected}">
+  <button class="sidebar-button-specific sidebar-element-generic-style">
     <div>
-      <figure>
-        <img
-          v-bind:src="iconPath"
-          alt="" />
-      </figure>
+      <img v-bind:src="iconPath" alt="Plus icon" />
       <p>{{ innerText }}</p>
     </div>
   </button>
 </template>
 
 <style lang="scss">
-.sidebar_button-specific {
+.sidebar-button-specific {
   border: none;
   background-color: transparent;
   transition: background-color 0.2s;
   padding-block: 0.7rem;
-
   div {
     align-items: flex-start;
   }
-
   p {
     color: rgb(4, 3, 3);
   }
-
   &:active {
     background-color: rgb(218, 215, 215);
   }

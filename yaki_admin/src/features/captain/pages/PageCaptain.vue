@@ -1,19 +1,19 @@
 <script setup lang="ts">
-import PageLayout from "@/shared/layouts/PageLayout.vue";
-import SideBarCaptainContent from "../components/SideBarCaptainContent.vue";
-import ContentCaptain from "@/features/captain/layouts/ContentCaptain.vue";
+import PageLayout from '@/shared/layouts/PageLayout.vue';
+import SideBarCaptainContent from '../components/SideBarCaptainContent.vue';
+import ContentCaptain from '@/features/captain/layouts/ContentCaptain.vue';
 </script>
 
 <template>
-  <PageLayout>
+  <page-layout>
     <template v-slot:sidebarContent>
-      <SideBarCaptainContent />
+      <side-bar-captain-content />
     </template>
 
     <template v-slot:pageContent>
-      <ContentCaptain />
+      <content-captain />
     </template>
-  </PageLayout>
+  </page-layout>
 </template>
 
 <style lang="scss"></style>

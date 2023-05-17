@@ -1,11 +1,11 @@
 <template>
-  <div class="captainView">
+  <div class="captain-view">
     <h1 class="title">Team Members</h1>
     <h2 class="text">Manage your team members here</h2>
-    <hr class="line">
-    <ul class="teamMateList">
+    <hr class="line" />
+    <ul class="team-mate-list">
       <li v-for="teamMate in teamMates" :key="teamMate.id">
-        <TeamMate :team-mate="teamMate" />
+        <team-mate :team-mate="teamMate" />
       </li>
     </ul>
   </div>
@@ -13,25 +13,25 @@
 
 <script lang="ts">
 // Importing necessary modules and types
-import { teamMateService } from '../../../services/teamMate.service'
+import { teamMateService } from '../../../services/teamMate.service';
 import type { TeamMateType } from '../../../services/teamMate.type';
 import { defineComponent } from 'vue';
 import TeamMate from '../components/teamMate.vue';
 // Defining the Vue component
 export default defineComponent({
-  name: "CaptainView",
+  name: 'CaptainView',
   // The components that this component uses
   components: {
     TeamMate,
   },
   data() {
     return {
-      teamMates: [] as TeamMateType[],// An empty array of team mates
+      teamMates: [] as TeamMateType[], // An empty array of team mates
     };
   },
   async created() {
     const id = 1; // team Id to retreive
-    this.teamMates = await teamMateService.getAllWithinTeam(id);// Retrieve the team mates for the given ID
+    this.teamMates = await teamMateService.getAllWithinTeam(id); // Retrieve the team mates for the given ID
   },
 });
 </script>
@@ -39,7 +39,7 @@ export default defineComponent({
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap');
 
-.captainView {
+.captain-view {
   margin: 10px;
   padding: 20px;
   font-family: 'Inter', sans-serif;
@@ -54,11 +54,11 @@ export default defineComponent({
 }
 .line {
   width: 70%;
-  background-color: #E5E5E5;
+  background-color: #e5e5e5;
 
   margin: 0px;
 }
-.teamMateList {
+.team-mate-list {
   padding: 50px;
   list-style-type: none;
   display: flex;
@@ -66,4 +66,3 @@ export default defineComponent({
   align-items: center;
 }
 </style>
-

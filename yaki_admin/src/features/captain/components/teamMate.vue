@@ -1,15 +1,15 @@
 <template>
-  <div class="teamMate">
-    <div class="teamMateAvatarInfo">
+  <div class="team-mate">
+    <div class="team-mate-avatar-info">
       <img class="avatar" src="../../../assets/avatar.png" alt="Avatar">
-      <div class="teamMateInfo">
+      <div class="team-mate-info">
         <h1 class="name">{{ teamMate.firstName }} {{ teamMate.lastName }}</h1>
         <h2 class="email">{{ teamMate.email }}</h2>
       </div>
     </div>
-    <div class="deleteEditIcon">
-      <img class="teamMateIcon" src="../../../assets/Edit.png" alt="">
-      <img class="teamMateIcon" src="../../../assets/Delete.png" alt="">
+    <div class="delete-edit-icon">
+      <img class="team-mate-icon" src="../../../assets/Edit.png" alt="">
+      <img class="team-mate-icon" src="../../../assets/Delete.png" alt="">
     </div>
   </div>
 </template>
@@ -30,7 +30,7 @@ export default defineComponent({
 </script>
 
 <style>
-.teamMate {
+.team-mate {
   display: flex;
   flex-direction: row;
   align-items: flex-end;
@@ -38,7 +38,7 @@ export default defineComponent({
   justify-content: space-between;
   padding-bottom: 22px;
 }
-.teamMateInfo {
+.team-mate-info {
   display: flex;
   flex-direction: column;
 }
@@ -53,17 +53,17 @@ export default defineComponent({
   width: 44px;
   height: 44px;
 }
-.teamMateIcon {
+.team-mate-icon {
   width: 24px;
   height: 24px;
 }
-.teamMateAvatarInfo {
+.team-mate-avatar-info {
   display: flex;
   flex-direction: row;
   align-items: flex-end;
   gap: 20px;
 }
-.deleteEditIcon {
+.delete-edit-icon {
   gap: 20px;
 }
 </style>

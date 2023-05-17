@@ -1,13 +1,12 @@
 <script setup lang="ts">
-import {onBeforeMount, onMounted, onUpdated, reactive, ref} from "vue";
-import TeamListElement from "@/features/captain/components/TeamListElement.vue";
-import SideBarElement from "@/shared/components/SideBarElement.vue";
-import isTeamSelected from "../services/isActiveTeam";
-
-import vector from "@/assets/Vector.png";
+import { onBeforeMount, onMounted, onUpdated, reactive, ref } from 'vue';
+import TeamListElement from '@/features/captain/components/TeamListElement.vue';
+import SideBarElement from '@/shared/components/SideBarElement.vue';
+import isTeamSelected from '../services/isActiveTeam';
+import vector from '@/assets/Vector.png';
 
 const teams = reactive({
-  list: ["Team 1", "Team 2", "Team 3", "Team 4", "Team 5"],
+  list: ['Team 1', 'Team 2', 'Team 3', 'Team 4', 'Team 5'],
 });
 
 const selectedTeam = (teamName: string) => {
@@ -16,17 +15,19 @@ const selectedTeam = (teamName: string) => {
 </script>
 
 <template>
-  <SideBarElement
+  <side-bar-element
     v-bind:innerText="'My teams'"
     v-bind:iconPath="vector"
-    v-bind:isSelected="true" />
+    v-bind:isSelected="true"
+  />
 
   <section class="team-list">
-    <TeamListElement
+    <team-list-element
       v-for="(team, index) in teams.list"
       :key="index"
+      @click="() => selectedTeam(team)"
       v-bind:teamName="team"
-      @click="() => selectedTeam(team)" />
+    />
   </section>
 </template>
 
