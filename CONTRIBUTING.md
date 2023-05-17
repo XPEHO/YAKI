@@ -78,57 +78,57 @@ feat/authentication
 
 **Accepted prefix list**
 
-* feat
-* feature
-* fix
-* hotfix
-* docs
-* style
-* refactor
-* chore
-* test
+- feat
+- feature
+- fix
+- hotfix
+- docs
+- style
+- refactor
+- chore
+- test
 
 **Prefix list explaination**
 
-__feat__
+**feat**
 
 Branch containing small enhancement changes
 
-__feature__
+**feature**
 
 Branch containing multiple enhancement changes from multiple feat ones
 
-__fix__
+**fix**
 
 Branch containing only a bug fix
 
-__hotfix__
+**hotfix**
 
 Branch containing only a PROD hurry fix
 
-__docs__
+**docs**
 
 Branch containing only documentation changes
 
-__style__
+**style**
 
 Branch containing only UI style changes
 
-__refactor__
+**refactor**
 
 Branch containing breaking changes
 
-__chore__
+**chore**
 
 Branch containing tooling change like CI/CD, Issue templates, gitignore file etc...
 
-__test__
+**test**
 
 Branch containing test
 
 ### Commit convention
 
-We respect the `Angular Js Commit message` convention 
+We respect the `Angular Js Commit message` convention
 
 Full documentation at [https://gist.github.com/stephenparish/9941e89d80e2bc58a153](https://gist.github.com/stephenparish/9941e89d80e2bc58a153)
 
@@ -148,14 +148,14 @@ feat(authentication): Create authentication screen
 
 Accepted prefix list is the same as the branch prefix list
 
-* feat
-* fix
-* hotfix
-* docs
-* style
-* refactor
-* chore
-* test
+- feat
+- fix
+- hotfix
+- docs
+- style
+- refactor
+- chore
+- test
 
 ## Pull Requests
 
@@ -166,7 +166,7 @@ For more information about `Pull Request` creation please visit [https://docs.gi
 ## Naming Convention
 
 For this project, naming convention for all language use in this project should be on lower camelCase,
-except for Classes, enum types, typedefs, and type parameters these one should be on Upper CamelCase (PascalCase)
+except for Classes, enum types, typedefs, and type parameters these one should be on kebab-case.
 And files names and PostgreSQL, both should be name types using snake_case
 
 **Example**
@@ -176,7 +176,7 @@ For a new files : new_file_create.dart
 ```
 
 ```
-For a new Classes : class MyClasse
+For new class: title-presentation
 ```
 
 ```
@@ -222,3 +222,9 @@ divided into 2 main parts :
   - ./feature each feature containt controller, DTO, repository and service of its own folder
 
 - database is based on PostgreSQL
+
+- yaki_backend_admin is based on java:
+
+  - assets content all images we need to run the project and a translate file
+
+- yaki admin is based on vue.ts.
