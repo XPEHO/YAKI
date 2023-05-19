@@ -1,8 +1,12 @@
-# yaki_admin
+# yaki_admin_frontend
 
-Desktop front-end of the Admin Yaki application.
+Yaki is Working localization declaration app.
 
-Yaki admin frontend is the desktop version so that : - the owner can manage his customer - the customer can manage his captain - the captain can manage their teams and teamMates
+Yaki admin frontend is the desktop front-end of the Admin Yaki application, so that :
+
+- the owner can manage his customer
+- the customer can manage his captain
+- the captain can manage their teams and teamMates
 
 ## Recommended IDE Setup
 
