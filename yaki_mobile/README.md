@@ -1,13 +1,12 @@
 # Yaki Mobile
 
-Mobile front-end of the Yaki application
+Mobile front-end of the Yaki application.
+This mobile application allows users to connect and declare themselves on site, missing or remote.
 
 ## Requirement
 
 - An IDE : [Visual Studio Code](https://code.visualstudio.com/) or [Android Studio](https://developer.android.com/studio)
 - [Flutter](https://docs.flutter.dev/get-started/install)
-
-
 
 ## Used library :
 
