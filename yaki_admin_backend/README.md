@@ -1,14 +1,142 @@
-### YAKI_admin_backend
+## YAKI_admin_backend
 
-Desktop back-end of the Admin Yaki application.
+This project is the backend part of the YAKI admin application.
 
-## Contributing
+## Table of contents
 
-Contributions are always welcome!
+- [General info](#general-info)
+- [Client connection](#how-to-connect-with-the-client-side)
+- [Environment variables](#properties.sample)
+- [Getting started](#getting-started)
 
-## First Utilisation:
+## General info
 
-# application.properties:
+### Authentification
+
+No GAFAM will be used for authentification
+We will implement a home made authentification process
+We will use JWT authorization token in the Authorization header
+
+### Data format
+
+- captain: id, firstName, lastName, email, customer_name
+- customer: id, name, owner_name, location_name, location_adress
+- owner: id, firstName, lastName, email,
+- teamMate: id, firstName, lastName, email, team_name
+- team: id, captain_id, name
+- user: last_name, firstname, email, login, password
+
+### Path
+
+- GetMapping:
+
+  - getCaptains => get all captains
+  - getCustomers => get all customers
+  - findAll => get all owners
+
+- PostMapping :
+
+  - createCaptain => add a new captain
+  - createCustomer => add a new customer
+  - createOwner => add a new owner
+  - createTeam => add a new team
+  - createTeammate => add a new teamMate
+
+- GetMapping("{id}") :
+
+  - getCaptainById => get a captain by id
+  - getCustomer(id) => get a customer by id
+  - findById => get a owner by id
+  - getTeam(id) => get a team by id
+  - getTeammate(id)=> get a teamMate by id
+
+- DeleteMapping("{id}"):
+
+  - deleteById => delete a captain/customer/owner/team/teamMate by id
+
+- PutMapping("{id}"):
+
+  - saveOrUpdate => update a captain/customer/team/ teamMate by id
+
+- GetMapping({"captain/{id}"}):
+
+  - findAllByCaptain => find all team by captain id
+
+- GetMapping("team/{id}"):
+  - findAllByTeam(id) => find all teamMate by team id.
+
+<!-- add login path -->
+
+## How to connect with the client side
+
+### Authentication
+
+When a user tries to connect to the YAKI app, the client must provide a json object in the following format:
+
+```json
+{
+  "login": "user_login_value",
+  "password": "user_password_value"
+}
+```
+
+If the login and password values match any user in the database, the server will return the latter.
+Depending on the user's role (owner, customer or captain) it will return three differents json objects:
+
+**owner**
+
+```ts
+{
+    "token": string,
+    "owner_id": number,
+    "user_id" : number,
+    "last_name": string,
+    "first_name": string,
+    "email" : string,
+}
+```
+
+**customer**
+
+```ts
+{
+    "token": string,
+    "customer_id": number,
+    "name": string,
+    "owner_id" : number,
+    "user_id" : number,
+    "last_name": string,
+    "first_name": string,
+    "email" : string,
+    "location_id": number,
+    "location_name": string,
+    "location_adress": string,
+}
+```
+
+**captain**
+
+```ts
+{
+    "token": string,
+    "captain_id": number,
+    "user_id": number,
+    "last_name": string,
+    "first_name": string,
+    "email": string,
+    "customer_id": number
+}
+```
+
+The token is necessary on each request following the user login. If you don't provide the correct token, the server will withdraw the request and return an error.
+
+The token must be inside the request's headers like so :
+
+<!-- to add -->
+
+## Environment variables
+
+**application.properties**
 
 1 - The `application.properties` file provides a template for creating an environment configuration file. It contains a list of environment variables and their default values, which can be used as a starting point for creating a `application.properties` file.
 
