@@ -1,23 +1,23 @@
-## YAKI_admin_backend
+# YAKI_admin_backend
 
 This project is the backend part of the YAKI admin application.
 
-## Table of contents
+# Table of contents
 
 - [General info](#general-info)
 - [Client connection](#how-to-connect-with-the-client-side)
 - [Environment variables](#properties.sample)
 - [Getting started](#getting-started)
 
-## General info
+# General info
 
-### Authentification
+## Authentification
 
 No GAFAM will be used for authentification
 We will implement a home made authentification process
 We will use JWT authorization token in the Authorization header
 
-### Data format
+## Data format
 
 - captain: id, firstName, lastName, email, customer_name
 - customer: id, name, owner_name, location_name, location_adress
@@ -26,7 +26,7 @@ We will use JWT authorization token in the Authorization header
 - team: id, captain_id, name
 - user: last_name, firstname, email, login, password
 
-### Path
+## Path
 
 - GetMapping:
 
@@ -34,7 +34,7 @@ We will use JWT authorization token in the Authorization header
   - getCustomers => get all customers
   - findAll => get all owners
 
-- PostMapping :
+- PostMapping:
 
   - createCaptain => add a new captain
   - createCustomer => add a new customer
@@ -42,7 +42,7 @@ We will use JWT authorization token in the Authorization header
   - createTeam => add a new team
   - createTeammate => add a new teamMate
 
-- GetMapping("{id}") :
+- GetMapping("{id}"):
 
   - getCaptainById => get a captain by id
   - getCustomer(id) => get a customer by id
@@ -67,9 +67,9 @@ We will use JWT authorization token in the Authorization header
 
 <!-- add login path -->
 
-## How to connect with the client side
+# How to connect with the client side
 
-### Authentication
+## Authentication
 
 When a user tries to connect to the YAKI app, the client must provide a json object in the following format:
 
@@ -134,7 +134,7 @@ The token must be inside the request's headers like so :
 
 <!-- to add -->
 
-## Environment variables
+# Environment variables
 
 **application.properties**
 
@@ -142,17 +142,17 @@ The `application.properties` file provides a template for creating an environmen
 
 The `application.properties` file is used to store sensitive information such as API keys, database credentials, and other configuration settings that should not be hard-coded in the application code. We recommend that you copy `application.properties.sample` to `application.properties` and customize it with your own configuration settings
 
-## Recommended IDE Setup
+# Recommended IDE Setup
 
 - An IDE: [IntelliJ IDEA] https://www.jetbrains.com/idea/download/#section=windows
 
-## Used :
+# Used :
 
 [Java] https://www.java.com/fr/download/: Java is a programming language and computing platform launched by Sun Microsystems in 1995. Since its humble beginnings, Java has evolved significantly. Currently, a large portion of the digital world relies on Java: numerous services and applications are built on this dependable platform. Likewise, new innovative digital products and future-oriented services also depend on Java.
 
 [Docker] https://www.docker.com/ : Docker is an open-source software platform that allows you to create, deploy, and run applications in lightweight, self-contained containers. Docker containers are isolated execution units that encapsulate all the elements necessary to run an application, including code, libraries, dependencies, and environment variables. In summary, Docker is a technology that simplifies the deployment and management of applications by encapsulating them in lightweight and portable containers, offering greater flexibility, improved resource efficiency, and ease of cross-platform implementation.
 
-## Getting started
+# Getting started
 
 Run as docker with server + database
 `cd ../yaki_docker`
