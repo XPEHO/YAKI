@@ -2,13 +2,13 @@
   <form @submit.prevent="login">
     <div class="login">
         <label for="username">{{ text }}</label>
-      <input type="text" v-model="form.username" @input="onInputLogin" :placeholder="usernamePlaceholder" id="username">
+      <input type="text" v-model="form.username" @input="onInputLogin" :placeholder="usernamePlaceholder">
     
     </div>
     <div class="password">
           <label for="password">{{ text }}</label>
-      <div class="enterpassword">
-        <input v-model="form.password" :type="showPassword ? 'text' : 'password'" :placeholder="passwordPlaceholder" id="password" />
+      <div class="enter-password">
+        <input v-model="form.password" :type="showPassword ? 'text' : 'password'" :placeholder="passwordPlaceholder"/>
         <figure class = eye-box>
           <img class="eye" src="../../../assets/eye.png" @click.prevent="togglePasswordVisibility">
         </figure>
@@ -47,9 +47,7 @@ export default{
       this.usernameText = e.target.value
     },
     login(){
-      
       this.$router.push('/captain')
-      
     }
   }
 }
@@ -111,10 +109,10 @@ form{
 .password {
   padding-top: 10px;
 }
-.enterpassword {
+.enter-password {
   position: relative;
 }
-.enterpassword figure {
+.enter-password figure {
   position: absolute;
   top: 0;
   right: 0;

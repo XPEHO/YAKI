@@ -1,23 +1,17 @@
 <script setup lang="ts">
-import PageLayout from "../layouts/PageLoginLayout.vue";
-import LoginForm from "@/features/login/components/LoginForm.vue"
+import HeaderYaki from '@/shared/components/HeaderYaki.vue';
+import LoginForm from '@/features/login/components/LoginForm.vue';
 </script>
 
 <template>
-  <PageLayout>
-  </PageLayout>
-  <figure>
-      <img class="banner" src="../../../assets/banner2.png" />
-      <LoginForm>
-      </LoginForm>
-    </figure>
+  <header-yaki />
+  <img class="banner" src="../../../assets/banner2.png" />
+  <login-form />
 </template>
 
 <style lang="scss">
-figure {
-    .banner {
-      width: 100%;
-      display: block;
-    }
-  }
+.banner {
+  width: 100%;
+  display: block;
+}
 </style>

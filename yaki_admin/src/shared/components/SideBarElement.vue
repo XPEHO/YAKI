@@ -8,22 +8,16 @@ const props = defineProps({
     type: String,
     required: true,
   },
-  isSelected: {
-    type: Boolean,
-    required: true,
-  },
 });
 </script>
 
 <template>
   <section
-    class="sidebar_element_specific sidebar_element_generic_style"
-    :class="{'sidebar_active-class': isSelected}">
+    class="sidebar-element-specific sidebar-element-generic-style sidebar-active-class"
+  >
     <div>
       <figure>
-        <img
-          v-bind:src="iconPath"
-          alt="" />
+        <img v-bind:src="iconPath" alt="teams icons" />
       </figure>
       <p>{{ innerText }}</p>
     </div>
@@ -31,13 +25,12 @@ const props = defineProps({
 </template>
 
 <style lang="scss">
-.sidebar_element_specific {
+.sidebar-element-specific {
   padding-block: 1rem;
 
   div {
     align-items: center;
   }
-
   p {
     color: rgb(239, 237, 237);
   }

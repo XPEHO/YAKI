@@ -9,8 +9,8 @@ $yellow-color: #f5cd3d;
 }
 
 body {
-  @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap");
-  font-family: "Inter", sans-serif;
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap');
+  font-family: 'Inter', sans-serif;
 
   font-size: 16px;
 }
@@ -21,7 +21,7 @@ body {
   height: 100svh;
 }
 
-.sidebar_element_generic_style {
+.sidebar-element-generic-style {
   display: flex;
   justify-content: center;
   gap: 1rem;
@@ -51,6 +51,6 @@ body {
   }
 }
 
-.sidebar_active-class {
+.sidebar-active-class {
   background-color: #59a9b5;
 }
