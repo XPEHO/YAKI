@@ -4,13 +4,17 @@ import TeamListElement from '@/features/captain/components/TeamListElement.vue';
 import SideBarElement from '@/shared/components/SideBarElement.vue';
 import isTeamSelected from '../services/isActiveTeam';
 import vector from '@/assets/Vector.png';
+import type { TeamType } from '@/services/team.type';
+import { teamService } from '@/services/team.service';
 
 const teams = reactive({
-  list: ['Team 1', 'Team 2', 'Team 3', 'Team 4', 'Team 5'],
+  list: [] as TeamType[],
 });
-
-const selectedTeam = (teamName: string) => {
-  isTeamSelected.setTeam(teamName);
+onBeforeMount(async () => {
+  teams.list = await teamService.getAllTeamsWithinCaptain(3);
+});
+const selectedTeam = (id: number) => {
+  isTeamSelected.setTeam(id);
 };
 </script>
 
@@ -25,8 +29,9 @@ const selectedTeam = (teamName: string) => {
     <team-list-element
       v-for="(team, index) in teams.list"
       :key="index"
-      @click="() => selectedTeam(team)"
-      v-bind:teamName="team"
+      @click="() => selectedTeam(team.id)"
+      v-bind:id="team.id"
+      v-bind:teamName="team.teamName"
     />
   </section>
 </template>
