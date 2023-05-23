@@ -167,9 +167,9 @@ For more information about `Pull Request` creation please visit [https://docs.gi
 
 ## Naming Convention
 
-For this project, naming convention for all language use in this project should be on lower camelCase,
-except for Classes, enum types, typedefs, and type parameters these one should be on kebab-case.
-And files names and PostgreSQL, both should be name types using snake_case
+For this project, naming convention for all language use in this project should be on lower camelCase, except for Classes, enum types, typedefs, and type parameters these one should be on PascalCase.
+Components references in Yaki Admin (VueJS) should be on kebab-case.
+And files names and PostgreSQL, both should be name types using snake_case.
 
 **Example**
 
@@ -178,7 +178,8 @@ For a new files : new_file_create.dart
 ```
 
 ```
-For new class: title-presentation
+For new class: titlePresentation
+Components in the template in yaki-admin: title-presentation
 ```
 
 ```
@@ -195,7 +196,7 @@ The `.env` file is used to store sensitive information such as API keys, databas
 
 The `application.properties` file provides a template for creating an environment configuration file. It contains a list of environment variables and their default values, which can be used as a starting point for creating a `application.properties` file.
 
-The `application.properties` file is used to store sensitive information such as API keys, database credentials, and other configuration settings that should not be hard-coded in the application code. We recommend that you copy `application.properties.sample` to `application.properties` and customize it with your own configuration settings.
+The `application.properties` file is used to store sensitive information and other configuration settings that should not be hard-coded in the application code. We recommend that you copy `application.properties.sample` to `application.properties` and customize it with your own configuration settings.
 
 ## Getting started
 

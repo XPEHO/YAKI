@@ -187,7 +187,8 @@ For a new files : new_file_create.dart
 ```
 
 ```
-For new class: title-presentation
+For new class: titlePresentation
+Components in the template in yaki-admin: title-presentation
 ```
 
 ```

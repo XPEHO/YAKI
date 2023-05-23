@@ -170,9 +170,9 @@ For more information about `Pull Request` creation please visit [https://docs.gi
 
 ## Naming Convention
 
-For this project, naming convention for all language use in this project should be on lower camelCase,
-except for Classes, enum types, typedefs, and type parameters these one should be on kebab-case.
-And files names and PostgreSQL, both should be name types using snake_case
+For this project, naming convention for all language use in this project should be on lower camelCase, except for Classes, enum types, typedefs, and type parameters these one should be on PascalCase.
+Components references in Yaki Admin (VueJS) should be on kebab-case.
+And files names and PostgreSQL, both should be name types using snake_case.
 
 **Example**
 
@@ -181,7 +181,8 @@ For a new files : new_file_create.dart
 ```
 
 ```
-For new class: title-presentation
+For new class: titlePresentation
+Components in the template in yaki-admin: title-presentation
 ```
 
 ```
