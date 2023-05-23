@@ -166,8 +166,9 @@ For more information about `Pull Request` creation please visit [https://docs.gi
 ## Naming Convention
 
 For this project, naming convention for all language use in this project should be on lower camelCase,
-except for Classes, enum types, typedefs, and type parameters these one should be on kebab-case.
-And files names and PostgreSQL, both should be name types using snake_case
+except for Classes, enum types, typedefs, and type parameters these one should be on PascalCase.
+Components references in Yaki Admin (VueJS) should be on kebab-case.
+And files names and PostgreSQL, both should be name types using snake_case.
 
 **Example**
 
@@ -176,7 +177,8 @@ For a new files : new_file_create.dart
 ```
 
 ```
-For new class: title-presentation
+For new class: titlePresentation
+components in the template in yaki-admin: title-presentation
 ```
 
 ```
@@ -225,8 +227,9 @@ divided into 2 main parts :
 
 - yaki_backend_admin is based on java
 
-  - ./src will containt server, path and config file. To use don't forget to create your .application.properties file
-    -./test will containt all the test of the backend-end admin project
+  - ./src will containt server, path and config file. We sould create an application.properties.sample file if he not exist.
+
+    -./test will containt all the test of the backend-end admin project (JUnit)
 
 - yaki admin is based on vue.ts :
 
@@ -242,7 +245,7 @@ The `.env` file is used to store sensitive information such as API keys, databas
 
 The `application.properties` file provides a template for creating an environment configuration file. It contains a list of environment variables and their default values, which can be used as a starting point for creating a `application.properties` file.
 
-The `application.properties` file is used to store sensitive information such as API keys, database credentials, and other configuration settings that should not be hard-coded in the application code. We recommend that you copy `application.properties.sample` to `application.properties` and customize it with your own configuration settings.
+The `application.properties` file is used to store sensitive information and other configuration settings that should not be hard-coded in the application code. We recommend that you copy `application.properties.sample` to `application.properties` and customize it with your own configuration settings.
 
 ## Recommended
 
