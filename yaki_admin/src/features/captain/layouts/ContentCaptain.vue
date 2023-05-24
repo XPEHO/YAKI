@@ -4,7 +4,7 @@
     <h2 class="text">Manage your team members here</h2>
     <hr class="line" />
     <ul class="team-mate-list">
-      <li v-for="teamMate in teamMates" :key="teamMate.id">
+      <li v-for="teamMate in teamStore.teammate" :key="teamMate.id">
         <team-mate :team-mate="teamMate" />
       </li>
     </ul>
@@ -13,11 +13,10 @@
 
 <script lang="ts">
 // Importing necessary modules and types
-import { teamMateService } from '../../../services/teamMate.service';
-import type { TeamMateType } from '../../../services/teamMate.type';
+import {useTeamStore} from '@/stores/teamStore';
 import { defineComponent } from 'vue';
 import TeamMate from '../components/teamMate.vue';
-import isTeamSelected from '../services/isActiveTeam';
+
 // Defining the Vue component
 export default defineComponent({
   name: 'CaptainView',
@@ -25,14 +24,10 @@ export default defineComponent({
   components: {
     TeamMate,
   },
-  data() {
-    return {
-      teamMates: [] as TeamMateType[], // An empty array of team mates
-    };
-  },
-  async created() {
-    const id = isTeamSelected.id; // team Id to retreive
-    this.teamMates = await teamMateService.getAllWithinTeam(id); // Retrieve the team mates for the given ID
+  computed: {
+    teamStore(){
+      return useTeamStore()
+    }
   },
 });
 </script>

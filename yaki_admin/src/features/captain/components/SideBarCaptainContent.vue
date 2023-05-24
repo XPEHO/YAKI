@@ -6,15 +6,18 @@ import isTeamSelected from '../services/isActiveTeam';
 import vector from '@/assets/Vector.png';
 import type { TeamType } from '@/services/team.type';
 import { teamService } from '@/services/team.service';
-
+import {useTeamStore} from '@/stores/teamStore';
+const store = useTeamStore();
 const teams = reactive({
   list: [] as TeamType[],
 });
 onBeforeMount(async () => {
-  teams.list = await teamService.getAllTeamsWithinCaptain(3);
+  teams.list = await teamService.getAllTeamsWithinCaptain(2);
+  
 });
 const selectedTeam = (id: number) => {
   isTeamSelected.setTeam(id);
+  store.setTeam(id)
 };
 </script>
 
