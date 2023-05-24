@@ -1,6 +1,12 @@
-# yaki_admin
+# yaki_admin_frontend
 
-It is the part of Admin front-end of the Yaki application.
+Yaki is Working localization declaration app.
+
+Yaki admin frontend is the desktop front-end of the Admin Yaki application, so that :
+
+- the owner can manage his customer
+- the customer can manage his captain
+- the captain can manage their teams and teamMates
 
 ## Recommended IDE Setup
 
@@ -14,11 +20,19 @@ It is the part of Admin front-end of the Yaki application.
 
 [TypeScript](https://www.typescriptlang.org/docs/): The goal of TypeScript is to improve the quality and maintainability of large-scale JavaScript applications. By adding features such as static data types, classes, interfaces, and stronger type checking, TypeScript helps catch errors earlier in the development process and improve code readability. TypeScript also facilitates interoperability between different JavaScript libraries and frameworks. Ultimately, TypeScript aims to make JavaScript programming more enjoyable and productive.
 
+[Sass] : https://sass-lang.com/: SASS, an acronym for "Syntactically Awesome Style Sheets," is a powerful and popular extension of CSS (Cascading Style Sheets). It introduces various features and enhancements to the standard CSS syntax, making it more efficient and easier to work with when creating styles for websites or applications.
+
 ## env.sample
 
 The `env.sample` file provides a template for creating an environment configuration file. It contains a list of environment variables and their default values, which can be used as a starting point for creating a `.env` file.
 
 The `.env` file is used to store sensitive information such as API keys, database credentials, and other configuration settings that should not be hard-coded in the application code. We recommend that you copy `env.sample` to `.env` and customize it with your own configuration settings.
+
+# application.properties.sample
+
+The `application.properties` file provides a template for creating an environment configuration file. It contains a list of environment variables and their default values, which can be used as a starting point for creating a `application.properties` file.
+
+The `application.properties` file is used to store sensitive information and other configuration settings that should not be hard-coded in the application code. We recommend that you copy `application.properties.sample` to `application.properties` and customize it with your own configuration settings.
 
 ## Project Setup
 
