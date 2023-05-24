@@ -17,6 +17,7 @@ import { teamMateService } from '../../../services/teamMate.service';
 import type { TeamMateType } from '../../../services/teamMate.type';
 import { defineComponent } from 'vue';
 import TeamMate from '../components/teamMate.vue';
+import isTeamSelected from '../services/isActiveTeam';
 // Defining the Vue component
 export default defineComponent({
   name: 'CaptainView',
@@ -30,7 +31,7 @@ export default defineComponent({
     };
   },
   async created() {
-    const id = 1; // team Id to retreive
+    const id = isTeamSelected.id; // team Id to retreive
     this.teamMates = await teamMateService.getAllWithinTeam(id); // Retrieve the team mates for the given ID
   },
 });
