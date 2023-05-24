@@ -7,12 +7,12 @@ import {reactive} from "vue";
  * Apply css class if true, if false its not applied.
  */
 const isTeamSelected = reactive({
-  teamName: "Team 1",
-  setTeam(team: string) {
-    this.teamName = team;
+  id: 1,
+  setTeam(teamId: number) {
+    this.id = teamId;
   },
-  isSameIndex(team: string) {
-    if (this.teamName === team) {
+  isSameIndex(teamId: number) {
+    if (this.id === teamId) {
       return true;
     }
     return false;

@@ -8,6 +8,10 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  id:{
+    type: Number,
+    required : true,
+  }
 });
 </script>
 
@@ -15,7 +19,7 @@ const props = defineProps({
   <article
     class="team-list-unit"
     :class="{
-      'team-list-unit-selected': isTeamSelected.isSameIndex(props.teamName),
+      'team-list-unit-selected': isTeamSelected.isSameIndex(id),
     }"
   >
     <p>{{ teamName }}</p>

@@ -1,9 +1,9 @@
 import {defineStore} from 'pinia'
-
-export const useTeamStore = defineStore({
-  id: 'team',
+import { teamMateService } from '@/services/teamMate.service';
+export const useTeamStore = defineStore('teamStore',{
   state: () => ({
-    team: null,
+    team: 0,
+    teammate : []
   }),
   getters: {
     getTeam() {
@@ -11,8 +11,9 @@ export const useTeamStore = defineStore({
     },
   },
   actions: {
-    setTeam(team) {
+    async setTeam(team) {
       this.team = team
+      this.teammate = await teamMateService.getAllWithinTeam(this.team);
     },
   },
 })
