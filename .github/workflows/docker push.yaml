@@ -2,7 +2,7 @@ name: Create and publish all Docker images
 
 on:
   push:
-    branches: ['main', 'chore/docker_push']
+    branches: ['main', 'chore/publish_docker_mobile']
   release:
     types: [published]
   workflow_dispatch:
@@ -13,7 +13,7 @@ on:
         default: 'Manual trigger'
 
 jobs:
-  build-yaki-backend:
+  build-yaki-backend-mobile:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
@@ -23,5 +23,31 @@ jobs:
           echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io --username phanatic --password-stdin
           cd yaki_backend
           docker build -t yaki_backend .
-          docker tag yaki_backend ghcr.io/xpeho/yaki:latest
-          docker push ghcr.io/xpeho/yaki:latest
+          docker tag yaki_backend ghcr.io/xpeho/yaki:backend-mobile-latest
+          docker push ghcr.io/xpeho/yaki:backend-mobile-latest
+  build-yaki-front-mobile:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          java-version: '17.x'
+          distribution: 'temurin'
+      - uses: subosito/flutter-action@v2
+      - name: Install lcov
+        run: |
+          sudo apt update
+          sudo apt install lcov
+      - name: Build and publish Yaki front mobile Docker image
+        run: |
+          echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io --username phanatic --password-stdin
+          cd yaki_mobile
+          flutter upgrade
+          flutter pub get
+          dart format --set-exit-if-changed .
+          flutter analyze
+          flutter test
+          flutter build web
+          docker build -t yaki_mobile .
+          docker tag yaki_mobile ghcr.io/xpeho/yaki:front-mobile-latest
+          docker push ghcr.io/xpeho/yaki:front-mobile-latest
