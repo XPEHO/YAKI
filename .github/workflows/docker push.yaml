@@ -54,7 +54,8 @@ jobs:
   build-yaki-back-admin:
     runs-on: ubuntu-20.04
     steps:
-      - name: Java
+      - name: Checkout
+        - uses: actions/checkout@v2
         - uses: actions/setup-java@v3
         with:
           java-version: '17.x'
