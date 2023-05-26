@@ -50,3 +50,4 @@ yaki_admin_backend/src/main/resources/application.properties
 android/key.properties
 yaki_mobile/assets/cer/*.cer
 target/
+yaki_backend/.vscode/settings.json

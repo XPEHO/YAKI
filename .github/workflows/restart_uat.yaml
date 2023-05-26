@@ -1,0 +1,30 @@
+name: Restart UAT
+
+on:
+  push:
+    branches:
+      - main
+      - chore/restart_uat
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Reason for restart'
+        required: true
+        default: ''
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Restart UAT services
+      uses: garygrossgarten/github-action-ssh@release
+      with:
+        command: sh restart_uat.sh
+        host: ${{ secrets.SERVER_IP }}
+        username: debian
+        passphrase: ${{ secrets.SSH_PASS }}
+        privateKey: ${{ secrets.SSH_PRIVATE_KEY }}
