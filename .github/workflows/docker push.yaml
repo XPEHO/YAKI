@@ -61,6 +61,9 @@ jobs:
           distribution: 'temurin'
       - name: Setup Java
         uses: actions/setup-java@v3
+        with:
+          java-version: '17.x'
+          distribution: 'temurin'
       - name: Build and publish Yaki back admin Docker image
         run: |
           echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io --username phanatic --password-stdin
