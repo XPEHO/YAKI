@@ -2,7 +2,7 @@ name: Create and publish all Docker images
 
 on:
   push:
-    branches: ['main', 'chore/docker_push']
+    branches: ['main', 'chore/publish_docker_mobile']
   release:
     types: [published]
   workflow_dispatch:
