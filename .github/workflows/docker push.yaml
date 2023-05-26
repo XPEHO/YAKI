@@ -44,7 +44,7 @@ jobs:
           cd yaki_mobile
           flutter upgrade
           flutter pub get
-          flutter format --set-exit-if-changed .
+          dart format --set-exit-if-changed .
           flutter analyze
           flutter test
           flutter build web
