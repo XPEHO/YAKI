@@ -65,6 +65,7 @@ jobs:
         run: |
           echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io --username phanatic --password-stdin
           cd yaki_admin_backend
+          echo ${{ secrets.APPLICATION_PROPERTIES }} | base64 -d > src/main/resources/application.properties
           gradle clean build
           docker build -t yaki_admin_backend .
           docker tag yaki_admin_backend ghcr.io/xpeho/yaki:back-admin-latest
