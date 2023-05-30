@@ -40,8 +40,9 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public TeamEntity deleteById(int id) {
-        if (teamJpaRepository.existsById(id)) {
-            TeamModel teamModel = teamJpaRepository.findById(id).get();
+        final Optional<TeamModel> teamModelOpt = teamJpaRepository.findById(id);
+        if (teamModelOpt.isPresent()) {
+            TeamModel teamModel = teamModelOpt.get();
             teamJpaRepository.deleteById(id);
             return new TeamEntity(id, teamModel.getCaptainId(), teamModel.getTeamName());
         } else throw new EntityNotFoundException("The team with id " + id + " not found.");

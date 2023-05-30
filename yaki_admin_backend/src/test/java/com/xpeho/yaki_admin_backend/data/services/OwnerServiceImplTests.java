@@ -67,7 +67,6 @@ public class OwnerServiceImplTests {
         int deletedId = 1;
         OwnerModel deletedModel = new OwnerModel(deletedId, 25);
         willDoNothing().given(ownerJpaRepository).deleteById(deletedId);
-        given(ownerJpaRepository.existsById(deletedId)).willReturn(Boolean.TRUE);
         given(ownerJpaRepository.findById(deletedId)).willReturn(Optional.of(deletedModel));
 
         //when

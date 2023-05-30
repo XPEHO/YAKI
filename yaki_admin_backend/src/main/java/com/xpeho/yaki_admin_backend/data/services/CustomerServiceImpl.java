@@ -58,12 +58,15 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerEntity deleteById(int id) {
-        if (customerJpaRepository.existsById(id)) {
-            CustomerModel customerModel = customerJpaRepository.findById(id).get();
+        Optional<CustomerModel> customerModelOpt = customerJpaRepository.findById(id);
+        if (customerModelOpt.isEmpty()) {
+            throw new EntityNotFoundException("Entity Customer with id " + id + " has not been found");
+        } else {
+            CustomerModel customerModel = customerModelOpt.get();
             customerJpaRepository.deleteById(id);
             return new CustomerEntity(customerModel.getId(), customerModel.getName()
                     , customerModel.getOwnerId(), customerModel.getLocationId());
-        } else return null;
+        }
     }
 
     @Override

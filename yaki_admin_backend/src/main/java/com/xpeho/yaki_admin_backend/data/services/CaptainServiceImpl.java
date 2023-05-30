@@ -39,7 +39,7 @@ public class CaptainServiceImpl implements CaptainService {
     public CaptainEntity getCaptainById(Integer id) {
         Optional<CaptainModel> captainModelOptional = captainJpaRepository.findById(id);
         if (!captainModelOptional.isPresent()) {
-            throw new EntityNotFoundException("The entity with id" + id + "don't found.");
+            throw new EntityNotFoundException("The captain with id" + id + " cannot be found.");
         }
         CaptainModel captainModel = captainModelOptional.get();
         return new CaptainEntity(captainModel.getCaptainId(), captainModel.getUserId(), captainModel.getCustomerId());
@@ -47,10 +47,13 @@ public class CaptainServiceImpl implements CaptainService {
 
     @Override
     public CaptainEntity deleteById(Integer captainId) {
-        if (captainJpaRepository.existsById(captainId)) {
+        final Optional<CaptainModel> captainModelOpt = captainJpaRepository.findById(captainId);
+        if (captainModelOpt.isPresent()) {
             captainJpaRepository.deleteById(captainId);
-        }
-        return null;
+            CaptainModel captainModel = captainModelOpt.get();
+            return new CaptainEntity(captainModel.getCaptainId(), captainModel.getUserId()
+                    , captainModel.getCustomerId());
+        } else throw new EntityNotFoundException("The captain with id" + captainId + " cannot be found.");
     }
 
     @Override
@@ -62,7 +65,7 @@ public class CaptainServiceImpl implements CaptainService {
             captainModel.setCustomerId(entity.customerId());
             captainJpaRepository.save(captainModel);
         } else {
-            throw new EntityNotFoundException("Entity captain with id" + captainId + "not found");
+            throw new EntityNotFoundException("Entity captain with id" + captainId + " not found");
         }
         CaptainEntity entitySaved = new CaptainEntity(captainId, entity.userId(), entity.customerId());
         return entitySaved;

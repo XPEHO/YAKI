@@ -41,17 +41,21 @@ public class OwnerServiceImpl implements OwnerService {
     @Override
     public OwnerEntity findById(Integer id) {
         final Optional<OwnerModel> ownerModelOptional = ownerJpaRepository.findById(id);
-        OwnerModel ownerModel = ownerModelOptional.get();
-        return new OwnerEntity(ownerModel.getId(), ownerModel.getUserId());
+        if (ownerModelOptional.isPresent()) {
+            OwnerModel ownerModel = ownerModelOptional.get();
+            return new OwnerEntity(ownerModel.getId(), ownerModel.getUserId());
+        } else throw new EntityNotFoundException("Entity Owner with id " + id + " has not been found");
+
     }
 
     @Override
     public OwnerEntity deleteById(Integer id) {
-        if (ownerJpaRepository.existsById(id)) {
-            OwnerModel ownerModel = ownerJpaRepository.findById(id).get();
+        final Optional<OwnerModel> ownerModelOptional = ownerJpaRepository.findById(id);
+        if (ownerModelOptional.isPresent()) {
+            OwnerModel ownerModel = ownerModelOptional.get();
             ownerJpaRepository.deleteById(id);
             return new OwnerEntity(ownerModel.getId(), ownerModel.getUserId());
-        } else return null;
+        } else throw new EntityNotFoundException("Entity Owner with id " + id + " has not been found");
     }
 
     @Override
@@ -62,7 +66,7 @@ public class OwnerServiceImpl implements OwnerService {
             ownerModel.setUserId(entity.userId());
             ownerJpaRepository.save(ownerModel);
         } else {
-            throw new EntityNotFoundException("Entity owner with id" + id + "not found");
+            throw new EntityNotFoundException("Entity owner with id" + id + " not found");
         }
         return new OwnerEntity(id, entity.userId());
     }
