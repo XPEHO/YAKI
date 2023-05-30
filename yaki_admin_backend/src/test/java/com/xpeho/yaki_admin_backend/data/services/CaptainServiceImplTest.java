@@ -19,7 +19,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
-public class CaptainServiceImplTest {
+class CaptainServiceImplTest {
     @Autowired
     private CaptainServiceImpl captainService;
 
@@ -37,8 +37,8 @@ public class CaptainServiceImplTest {
 
         //then
         assertEquals(1, (int) captainDto.id());
-        assertEquals(captainDto.userId(), 1);
-        assertEquals(captainDto.customerId(), 2);
+        assertEquals(1, captainDto.userId());
+        assertEquals(2, captainDto.customerId());
     }
 
     @Test

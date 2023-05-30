@@ -21,7 +21,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willDoNothing;
 
 @ExtendWith(MockitoExtension.class)
-public class TeamServiceImplTests {
+class TeamServiceImplTests {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
     private TeamModel team1;

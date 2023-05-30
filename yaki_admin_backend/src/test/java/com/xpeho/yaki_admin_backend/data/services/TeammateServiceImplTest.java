@@ -22,7 +22,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willDoNothing;
 
 @ExtendWith(MockitoExtension.class)
-public class TeammateServiceImplTest {
+class TeammateServiceImplTest {
     private final ObjectMapper objectMapper = new ObjectMapper();
     private TeammateModel teammate1;
     private TeammateModel teammate2;

@@ -39,7 +39,7 @@ public class OwnerController {
     }
 
     @PutMapping("{id}")
-    private OwnerEntity update(@RequestBody OwnerEntity entity, @PathVariable int id) {
+    public OwnerEntity update(@RequestBody OwnerEntity entity, @PathVariable int id) {
         return ownerService.saveOrUpdate(entity, id);
     }
 }

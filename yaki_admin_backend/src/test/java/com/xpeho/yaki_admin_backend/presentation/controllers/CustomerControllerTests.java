@@ -29,7 +29,7 @@ import static org.mockito.BDDMockito.given;
 
 
 @ExtendWith(MockitoExtension.class)
-public class CustomerControllerTests {
+class CustomerControllerTests {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final CustomerEntity customer1 = new CustomerEntity(1, "La reine du bricolage", 1, 1);
@@ -54,7 +54,7 @@ public class CustomerControllerTests {
 
     //testing the customerController.getCustomers() method
     @Test
-    public void mustGetCustomers() throws Exception {
+    void mustGetCustomers() throws Exception {
 
         //given
         given(customerService.getCustomers()).willReturn(customers);
@@ -74,7 +74,7 @@ public class CustomerControllerTests {
 
     //testing the customerController.getCustomer(id) method
     @Test
-    public void mustGetACustomer() throws Exception {
+    void mustGetACustomer() throws Exception {
 
         //given
         given(customerService.getCustomer(2)).willReturn(customer2);
@@ -95,7 +95,7 @@ public class CustomerControllerTests {
     /* testing if the customerController.getCustomer(id) return an EntityNotFound exception
     in case we have a nonexistent id. */
     @Test
-    public void mustGetANotFoundStatus() throws Exception {
+    void mustGetANotFoundStatus() throws Exception {
 
         //given
         given(customerService.getCustomer(250)).willThrow(EntityNotFoundException.class);
@@ -111,7 +111,7 @@ public class CustomerControllerTests {
 
     //testing the customerController.createCustomer() method
     @Test
-    public void mustCreateANewCustomer() throws Exception {
+    void mustCreateANewCustomer() throws Exception {
 
         //given
         given(customerService.createCustomer(customer2)).willReturn(customer2);
@@ -131,7 +131,7 @@ public class CustomerControllerTests {
 
     //testing the customerController.deleteCustomer() method
     @Test
-    public void mustDeleteACustomer() throws Exception {
+    void mustDeleteACustomer() throws Exception {
 
         //given
         given(customerService.deleteById(2)).willReturn(customer2);
@@ -150,7 +150,7 @@ public class CustomerControllerTests {
 
     //testing the customerController.update() method
     @Test
-    public void mustPutACustomer() throws Exception {
+    void mustPutACustomer() throws Exception {
         CustomerEntity customer3 = new CustomerEntity(
                 2, customer1.customerName(), customer1.ownerId(), customer1.locationId());
         //given

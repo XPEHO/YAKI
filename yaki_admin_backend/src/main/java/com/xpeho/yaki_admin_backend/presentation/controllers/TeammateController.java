@@ -39,7 +39,7 @@ public class TeammateController {
     }
 
     @PutMapping("{id}")
-    private TeammateEntity update(@RequestBody TeammateEntity entity, @PathVariable int id) {
+    public TeammateEntity update(@RequestBody TeammateEntity entity, @PathVariable int id) {
         return teammateService.saveOrUpdate(entity, id);
     }
 

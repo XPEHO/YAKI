@@ -19,7 +19,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willDoNothing;
 
 @ExtendWith(MockitoExtension.class)
-public class OwnerServiceImplTests {
+class OwnerServiceImplTests {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
     private OwnerModel owner1;

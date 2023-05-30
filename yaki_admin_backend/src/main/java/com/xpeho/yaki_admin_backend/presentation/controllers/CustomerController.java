@@ -43,7 +43,7 @@ public class CustomerController {
     }
 
     @PutMapping("{id}")
-    private CustomerEntity update(@RequestBody CustomerEntity entity, @PathVariable int id) {
+    public CustomerEntity update(@RequestBody CustomerEntity entity, @PathVariable int id) {
         return customerService.saveOrUpdate(entity, id);
     }
 }
