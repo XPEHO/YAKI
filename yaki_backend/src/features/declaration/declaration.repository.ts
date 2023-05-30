@@ -25,21 +25,18 @@ export class DeclarationRepository {
     client.connect()
     const valuesString: string = YakiUtils.queryValuesString(declarationList, declarationList[0], 1);
     const declarationValuesList: Array<string> = YakiUtils.objectsListToValuesList(declarationList);
-
+    const query = `INSERT INTO declaration 
+    (
+      declaration_date, 
+      declaration_date_start, 
+      declaration_date_end, 
+      declaration_team_mate_id, 
+      declaration_status,
+      declaration_team_id
+    ) 
+  VALUES ${valuesString} RETURNING *`
     try {
-      const result = await client.query(
-        `INSERT INTO declaration 
-          (
-            declaration_date, 
-            declaration_date_start, 
-            declaration_date_end, 
-            declaration_team_mate_id, 
-            declaration_status,
-            declaration_team_id
-          ) 
-        VALUES ${valuesString} RETURNING *`,
-        declarationValuesList
-      );
+      const result = await client.query(query,declarationValuesList);
       const declarationToFront = [
         new DeclarationDtoIn(
           result.rows[0].declaration_id,
