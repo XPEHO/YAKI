@@ -1,23 +1,13 @@
-import {Pool} from "pg";
+import {Client} from "pg";
 import {DeclarationDtoIn} from "./declaration.dtoIn";
 import YakiUtils from "../../utils/yakiUtils";
 
 export class DeclarationRepository {
-  private pool: Pool;
-
   /**
    * Creates a new instance of DeclarationRepository.
    * Initializes the private field pool with a new instance of Pool using environment variables.
    */
-  constructor() {
-    this.pool = new Pool({
-      user: `${process.env.DB_USER}`,
-      host: `${process.env.DB_HOST}`,
-      database: `${process.env.DB_DATABASE}`,
-      password: `${process.env.DB_PASSWORD}`,
-      port: Number(process.env.DB_PORT),
-    });
-  }
+  
 
   /**
    * Inserts a new declaration into the database.
@@ -25,7 +15,14 @@ export class DeclarationRepository {
    * @returns A created declaration.
    */
   async createDeclaration(declarationList: DeclarationDtoIn[]) {
-    const client = await this.pool.connect();
+    const client = new Client({
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE,
+      port: Number(process.env.DB_PORT),
+    });
+    client.connect()
     const valuesString: string = YakiUtils.queryValuesString(declarationList, declarationList[0], 1);
     const declarationValuesList: Array<string> = YakiUtils.objectsListToValuesList(declarationList);
 
@@ -54,9 +51,10 @@ export class DeclarationRepository {
           result.rows[0].declaration_team_id
         ),
       ];
+      client.end()
       return declarationToFront;
     } finally {
-      client.release();
+      client.end();
     }
   }
 
@@ -66,8 +64,14 @@ export class DeclarationRepository {
    * @returns return the inserted halfDay declarations.
    */
   async createHalfDayDeclaration(declarationList: DeclarationDtoIn[]) {
-    const client = await this.pool.connect();
-
+    const client = new Client({
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE,
+      port: Number(process.env.DB_PORT),
+    });
+    client.connect()
     const valuesString: string = YakiUtils.queryValuesString(declarationList, declarationList[0], 1);
     const declarationsValuesList: Array<string> = YakiUtils.objectsListToValuesList(declarationList);
 
@@ -100,7 +104,7 @@ export class DeclarationRepository {
 
       return declarationListToFront;
     } finally {
-      client.release();
+      client.end();
     }
   }
 
@@ -111,7 +115,14 @@ export class DeclarationRepository {
    * @returns An array of Declaration objects.
    */
   async getDeclarationForTeamMate(teamMateId: number): Promise<DeclarationDtoIn[]> {
-    const client = await this.pool.connect();
+    const client = new Client({
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE,
+      port: Number(process.env.DB_PORT),
+    });
+    client.connect()
     try {
       // now()::date  =  YYYY-MM-dd
       const result = await client.query(
@@ -150,7 +161,7 @@ export class DeclarationRepository {
 
       return declarationListToFront;
     } finally {
-      client.release();
+      client.end();
     }
   }
 }
