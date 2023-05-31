@@ -2,7 +2,7 @@ name: Create and publish all Docker images
 
 on:
   push:
-    branches: ['main', 'chore/back_admin_docker_image']
+    branches: ['main', 'chore/published_docker_front_admin']
   release:
     types: [published]
   workflow_dispatch:
@@ -38,7 +38,7 @@ jobs:
         run: |
           sudo apt update
           sudo apt install lcov
-      - name: Build and publish Yaki front mobile Docker image
+      - name: Build and publish Yaki frontend mobile Docker image
         run: |
           echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io --username phanatic --password-stdin
           cd yaki_mobile
@@ -49,9 +49,9 @@ jobs:
           flutter test
           flutter build web
           docker build -t yaki_mobile .
-          docker tag yaki_mobile ghcr.io/xpeho/yaki:front-mobile-latest
-          docker push ghcr.io/xpeho/yaki:front-mobile-latest
-  build-yaki-back-admin:
+          docker tag yaki_mobile ghcr.io/xpeho/yaki:frontend-mobile-latest
+          docker push ghcr.io/xpeho/yaki:frontend-mobile-latest
+  build-yaki-backend-admin:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
@@ -64,12 +64,24 @@ jobs:
         with:
           java-version: '17.x'
           distribution: 'temurin'
-      - name: Build and publish Yaki back admin Docker image
+      - name: Build and publish Yaki backend admin Docker image
         run: |
           echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io --username phanatic --password-stdin
           cd yaki_admin_backend
           echo ${{ secrets.APPLICATION_PROPERTIES }} | base64 -d > src/main/resources/application.properties
           gradle clean build
           docker build -t yaki_admin_backend .
-          docker tag yaki_admin_backend ghcr.io/xpeho/yaki:back-admin-latest
-          docker push ghcr.io/xpeho/yaki:back-admin-latest
+          docker tag yaki_admin_backend ghcr.io/xpeho/yaki:backend-admin-latest
+          docker push ghcr.io/xpeho/yaki:backend-admin-latest
+  build-yaki-frontend-admin:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build and publish Yaki frontend admin Docker image
+        run: |
+          echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io --username phanatic --password-stdin
+          cd yaki_admin
+          docker build -t yaki_admin .
+          docker tag yaki_admin ghcr.io/xpeho/yaki:frontend-admin-latest
+          docker push ghcr.io/xpeho/yaki:frontend-admin-latest
