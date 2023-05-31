@@ -40,7 +40,7 @@ public class CaptainController {
     }
 
     @PutMapping("{id}")
-    private CaptainEntity update(@RequestBody CaptainEntity entity, @PathVariable int id) {
+    public CaptainEntity update(@RequestBody CaptainEntity entity, @PathVariable int id) {
         CaptainEntity entitySaved = captainService.saveOrUpdate(entity, id);
         return entitySaved;
     }

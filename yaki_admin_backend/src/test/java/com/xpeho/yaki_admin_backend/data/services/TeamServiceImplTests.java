@@ -21,7 +21,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willDoNothing;
 
 @ExtendWith(MockitoExtension.class)
-public class TeamServiceImplTests {
+class TeamServiceImplTests {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
     private TeamModel team1;
@@ -104,7 +104,6 @@ public class TeamServiceImplTests {
         int deletedId = 1;
         TeamModel deletedModel = new TeamModel(deletedId, 25, "team Cékoi");
         willDoNothing().given(teamJpaRepository).deleteById(deletedId);
-        given(teamJpaRepository.existsById(deletedId)).willReturn(Boolean.TRUE);
         given(teamJpaRepository.findById(deletedId)).willReturn(Optional.of(deletedModel));
 
         //when

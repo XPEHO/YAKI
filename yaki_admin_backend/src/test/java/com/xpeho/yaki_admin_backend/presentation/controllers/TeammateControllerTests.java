@@ -29,7 +29,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
-public class TeammateControllerTests {
+class TeammateControllerTests {
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final TeammateEntity teammate1 = new TeammateEntity(1, 1, 5);
     private final TeammateEntity teammate2 = new TeammateEntity(2, 1, 8);
@@ -55,7 +55,7 @@ public class TeammateControllerTests {
 
     //testing the teammateController.getTeammate(id) method
     @Test
-    public void mustGetATeammate() throws Exception {
+    void mustGetATeammate() throws Exception {
 
         //given
         given(teammateService.getTeammate(2)).willReturn(teammate2);
@@ -76,7 +76,7 @@ public class TeammateControllerTests {
     /* testing if the teammateController.getTeammate(id) return an EntityNotFound exception
     in case we have a nonexistent id. */
     @Test
-    public void mustGetANotFoundStatus() throws Exception {
+    void mustGetANotFoundStatus() throws Exception {
 
         //given
         given(teammateService.getTeammate(250)).willThrow(EntityNotFoundException.class);
@@ -92,7 +92,7 @@ public class TeammateControllerTests {
 
     //testing the teammateController.createTeammate() method
     @Test
-    public void mustCreateANewTeammate() throws Exception {
+    void mustCreateANewTeammate() throws Exception {
 
         //given
         given(teammateService.createTeammate(teammate2)).willReturn(teammate2);
@@ -114,7 +114,7 @@ public class TeammateControllerTests {
 
     //testing the teammateController.deleteTeammate() method
     @Test
-    public void mustDeleteATeammate() throws Exception {
+    void mustDeleteATeammate() throws Exception {
 
         //given
         given(teammateService.deleteById(2)).willReturn(teammate2);
@@ -133,7 +133,7 @@ public class TeammateControllerTests {
 
     //testing the teammateController.update() method
     @Test
-    public void mustPutATeammate() throws Exception {
+    void mustPutATeammate() throws Exception {
         TeammateEntity teammate3 = new TeammateEntity(
                 2, teammate1.teamId(), teammate1.userId());
 
@@ -155,7 +155,7 @@ public class TeammateControllerTests {
     }
 
     @Test
-    public void getAllWithinTeam() throws Exception {
+    void getAllWithinTeam() throws Exception {
 
         //given
         given(teammateService.findAllByTeam(1)).willReturn(teammatesFromTeamOne);

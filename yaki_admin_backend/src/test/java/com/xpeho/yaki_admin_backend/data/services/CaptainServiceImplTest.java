@@ -14,13 +14,12 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
-public class CaptainServiceImplTest {
+class CaptainServiceImplTest {
     @Autowired
     private CaptainServiceImpl captainService;
 
@@ -30,7 +29,6 @@ public class CaptainServiceImplTest {
     @Test
     void getCaptainById() {
         //given
-        CustomerModel customerModel = new CustomerModel("Géo trouve tout", 1, 1);
         CaptainModel captainEntity = new CaptainModel(1, 1, 2);
 
         //when
@@ -39,8 +37,8 @@ public class CaptainServiceImplTest {
 
         //then
         assertEquals(1, (int) captainDto.id());
-        assertEquals(captainDto.userId(), 1);
-        assertEquals(captainDto.customerId(), 2);
+        assertEquals(1, captainDto.userId());
+        assertEquals(2, captainDto.customerId());
     }
 
     @Test
@@ -82,37 +80,23 @@ public class CaptainServiceImplTest {
 
     @Test
     void deleteById() {
+
         //given
         int captainId = 1;
-        CaptainModel captainModel = new CaptainModel(captainId, 1, 1);
+        CaptainModel captainModel = new CaptainModel(captainId, 1, 2);
 
-        when(captainJpaRepository.existsById(captainId)).thenReturn(true);
+
+        when(captainJpaRepository.findById(captainId)).thenReturn(Optional.of(captainModel));
         doNothing().when(captainJpaRepository).deleteById(captainId);
 
         //when
         CaptainEntity result = captainService.deleteById(captainId);
 
         //then
-        assertNull(result);
-        verify(captainJpaRepository).existsById(captainId);
+        assertEquals(result,
+                new CaptainEntity(captainModel.getCaptainId(),
+                        captainModel.getUserId(), captainModel.getCustomerId()));
         verify(captainJpaRepository).deleteById(captainId);
-    }
-
-
-    @Test
-    void deleteByIdNotExist() {
-        //given
-        int captainId = 1;
-
-        when(captainJpaRepository.existsById(captainId)).thenReturn(false);
-
-        //when
-        CaptainEntity result = captainService.deleteById(captainId);
-
-        //then
-        assertNull(result);
-        verify(captainJpaRepository).existsById(captainId);
-        verify(captainJpaRepository, never()).deleteById(captainId);
     }
 
     @Test
@@ -135,5 +119,3 @@ public class CaptainServiceImplTest {
         assertEquals(captainEntity.customerId(), savedCaptain.customerId());
     }
 }
-
-

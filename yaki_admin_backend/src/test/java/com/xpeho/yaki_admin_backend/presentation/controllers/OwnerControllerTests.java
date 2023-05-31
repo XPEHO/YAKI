@@ -26,7 +26,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
-public class OwnerControllerTests {
+class OwnerControllerTests {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final OwnerEntity owner1 = new OwnerEntity(1, 1);
@@ -47,7 +47,7 @@ public class OwnerControllerTests {
 
     //testing the ownerController.getAll() method
     @Test
-    public void mustGetOwners() throws Exception {
+    void mustGetOwners() throws Exception {
         //given
         given(ownerService.findAll()).willReturn(owners);
 
@@ -65,7 +65,7 @@ public class OwnerControllerTests {
 
     //testing the ownerController.getById() method
     @Test
-    public void mustGetAOwners() throws Exception {
+    void mustGetAOwners() throws Exception {
 
         //given
         given(ownerService.findById(2)).willReturn(owner2);
@@ -85,7 +85,7 @@ public class OwnerControllerTests {
 
     //testing the ownerController.createOwner() method
     @Test
-    public void mustCreateANewOwner() throws Exception {
+    void mustCreateANewOwner() throws Exception {
 
         //given
         given(ownerService.createOwner(owner2)).willReturn(owner2);
@@ -105,7 +105,7 @@ public class OwnerControllerTests {
 
     //testing the ownerController.deleteById() method
     @Test
-    public void mustDeleteAOwner() throws Exception {
+    void mustDeleteAOwner() throws Exception {
 
         //given
         given(ownerService.deleteById(2)).willReturn(owner2);
@@ -124,7 +124,7 @@ public class OwnerControllerTests {
     }
 
     @Test
-    public void mustPutAOwner() throws Exception {
+    void mustPutAOwner() throws Exception {
         OwnerEntity owner4 = new OwnerEntity(4, owner1.userId());
 
         //given

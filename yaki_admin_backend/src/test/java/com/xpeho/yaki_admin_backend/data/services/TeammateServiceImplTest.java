@@ -22,7 +22,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willDoNothing;
 
 @ExtendWith(MockitoExtension.class)
-public class TeammateServiceImplTest {
+class TeammateServiceImplTest {
     private final ObjectMapper objectMapper = new ObjectMapper();
     private TeammateModel teammate1;
     private TeammateModel teammate2;
@@ -119,9 +119,8 @@ public class TeammateServiceImplTest {
 
         //given
         int deletedId = 1;
-        TeammateModel deletedModel = new TeammateModel(deletedId, 25, 86);
+        TeammateModel deletedModel = new TeammateModel(deletedId, 25, 87);
         willDoNothing().given(teammateJpaRepository).deleteById(deletedId);
-        given(teammateJpaRepository.existsById(deletedId)).willReturn(Boolean.TRUE);
         given(teammateJpaRepository.findById(deletedId)).willReturn(Optional.of(deletedModel));
 
         //when

@@ -28,7 +28,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
-public class TeamControllerTests {
+class TeamControllerTests {
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final TeamEntity team1 = new TeamEntity(1, 1, "teamFeliz");
     private final TeamEntity team2 = new TeamEntity(2, 1, "teamHappy");
@@ -53,7 +53,7 @@ public class TeamControllerTests {
 
     //testing the teamController.getTeam(id) method
     @Test
-    public void mustGetATeam() throws Exception {
+    void mustGetATeam() throws Exception {
 
         //given
         given(teamService.getTeam(2)).willReturn(team2);
@@ -74,7 +74,7 @@ public class TeamControllerTests {
     /* testing if the teamController.getTeam(id) return an EntityNotFound exception
     in case we have a nonexistent id. */
     @Test
-    public void mustGetANotFoundStatus() throws Exception {
+    void mustGetANotFoundStatus() throws Exception {
 
         //given
         given(teamService.getTeam(250)).willThrow(EntityNotFoundException.class);
@@ -90,7 +90,7 @@ public class TeamControllerTests {
 
     //testing the teamController.createTeam() method
     @Test
-    public void mustCreateANewTeam() throws Exception {
+    void mustCreateANewTeam() throws Exception {
 
         //given
         given(teamService.createTeam(team2)).willReturn(team2);
@@ -110,7 +110,7 @@ public class TeamControllerTests {
 
     //testing the teamController.deleteTeam() method
     @Test
-    public void mustDeleteATeam() throws Exception {
+    void mustDeleteATeam() throws Exception {
 
         //given
         given(teamService.deleteById(2)).willReturn(team2);
@@ -130,7 +130,7 @@ public class TeamControllerTests {
 
     //testing the teamController.update() method
     @Test
-    public void mustPutATeam() throws Exception {
+    void mustPutATeam() throws Exception {
         TeamEntity team3 = new TeamEntity(
                 2, team1.captainId(), team1.teamName());
 

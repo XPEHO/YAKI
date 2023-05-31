@@ -29,7 +29,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
-public class CaptainControllerTests {
+class CaptainControllerTests {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -60,7 +60,7 @@ public class CaptainControllerTests {
 
     //testing the customerController.getCustomers() method
     @Test
-    public void mustGetCustomers() throws Exception {
+    void mustGetCustomers() throws Exception {
         //given
         given(captainService.getCaptains()).willReturn(captains);
 
@@ -79,7 +79,7 @@ public class CaptainControllerTests {
 
     //testing the captainController.getCaptain(id) method
     @Test
-    public void mustGetACaptain() throws Exception {
+    void mustGetACaptain() throws Exception {
 
         //given
         given(captainService.getCaptainById(2)).willReturn(captain2);
@@ -100,7 +100,7 @@ public class CaptainControllerTests {
     /* testing if the captainController.getCaptain(id) return an EntityNotFound exception
     in case we have a nonexistent id. */
     @Test
-    public void mustGetANotFoundStatus() throws Exception {
+    void mustGetANotFoundStatus() throws Exception {
 
         //given
         given(captainService.getCaptainById(300)).willThrow(EntityNotFoundException.class);
@@ -116,7 +116,7 @@ public class CaptainControllerTests {
 
     //testing the captainController.createCaptain() method
     @Test
-    public void mustCreateANewCaptain() throws Exception {
+    void mustCreateANewCaptain() throws Exception {
 
         //given
         given(captainService.createCaptain(captain2)).willReturn(captain2);
@@ -136,7 +136,7 @@ public class CaptainControllerTests {
 
     //testing the captainController.deleteCaptain() method
     @Test
-    public void mustDeleteACaptain() throws Exception {
+    void mustDeleteACaptain() throws Exception {
         //given
         given(captainService.deleteById(2)).willReturn(captain2);
 
@@ -155,7 +155,7 @@ public class CaptainControllerTests {
 
     //testing the captainController.update() method
     @Test
-    public void mustPutACaptain() throws Exception {
+    void mustPutACaptain() throws Exception {
         CaptainEntity captain3 = new CaptainEntity(
                 2, captain1.userId(), captain1.customerId());
 

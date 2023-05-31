@@ -30,7 +30,7 @@ var corsOptions = {
 // Creating a new instance of the Express app
 const app: Express = express();
 app.use(cors(corsOptions));
-
+app.disable("x-powered-by")
 /* A middleware that parses the body of the request and makes it available in the `req.body` property. */
 app.use(express.json());
 

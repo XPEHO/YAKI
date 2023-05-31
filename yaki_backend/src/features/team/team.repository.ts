@@ -1,34 +1,23 @@
-import {Pool, QueryResult} from "pg";
+import {Client, QueryResult} from "pg";
 import {TeamDtoIn} from "./team.dtoIn";
 
 export class TeamRepository {
-  private pool: Pool;
 
-  constructor() {
-    this.pool = new Pool({
-      user: `${process.env.DB_USER}`,
-      host: `${process.env.DB_HOST}`,
-      database: `${process.env.DB_DATABASE}`,
-      password: `${process.env.DB_PASSWORD}`,
-      port: Number(process.env.DB_PORT),
-    });
-  }
 
   getTeamByCaptainId = async (captainId: number) => {
-    const pool = new Pool({
-      user: `${process.env.DB_USER}`,
-      host: `${process.env.DB_HOST}`,
-      database: `${process.env.DB_DATABASE}`,
-      password: `${process.env.DB_PASSWORD}`,
+    const client = new Client({
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE,
       port: Number(process.env.DB_PORT),
     });
-    const poolResult: QueryResult = await pool.query(
-      `
-        SELECT * FROM public.team
-        WHERE team_captain_id = ${captainId};
-      `
-    );
-    await pool.end();
+    const query = `
+    SELECT * FROM public.team
+    WHERE team_captain_id = $1;`
+    client.connect()
+    const poolResult: QueryResult = await client.query(query,[captainId]);
+    await client.end();
     return poolResult.rows[0];
   };
 
@@ -38,17 +27,22 @@ export class TeamRepository {
    * @returns a list of teams that the team mate is in
    */
   getTeamByTeamMateId = async (teamMateId: number) => {
-    const client = await this.pool.connect();
+    const client = new Client({
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE,
+      port: Number(process.env.DB_PORT),
+    });
+    const query = `
+    SELECT team_id, team_captain_id, team_name FROM public.team_mate
+    INNER JOIN public.team 
+    ON team_id = team_mate_team_id
+    WHERE team_mate_user_id = $1;
+    `;
+    client.connect()
     try {
-      const result = await client.query(
-        `
-        SELECT team_id, team_captain_id, team_name FROM public.team_mate
-        INNER JOIN public.team 
-        ON team_id = team_mate_team_id
-        WHERE team_mate_user_id = $1;
-        `,
-        [teamMateId]
-      );
+      const result = await client.query(query,[teamMateId]);
 
       const teamListToReturn: TeamDtoIn[] = [];
 
@@ -58,7 +52,7 @@ export class TeamRepository {
 
       return teamListToReturn;
     } finally {
-      client.release();
+      client.end();
     }
   };
 }

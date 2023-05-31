@@ -19,7 +19,7 @@ import static org.mockito.Mockito.when;
 
 
 @SpringBootTest
-public class CustomerServiceImplTest {
+class CustomerServiceImplTest {
     @Autowired
     private CustomerServiceImpl customerService;
     @MockBean
@@ -40,7 +40,7 @@ public class CustomerServiceImplTest {
         // then
         assertEquals(1, (int) customerDto.id());
         assertEquals("A la ferme", customerDto.customerName());
-        assertEquals(customerDto.ownerId(), 1);
-        assertEquals(customerDto.locationId(), 2);
+        assertEquals(1, customerDto.ownerId());
+        assertEquals(2, customerDto.locationId());
     }
 }
