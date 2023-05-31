@@ -8,5 +8,6 @@ class YakiAdminBackendApplicationTests {
 
     @Test
     void contextLoads() {
+        
     }
 }
