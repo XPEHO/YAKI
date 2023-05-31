@@ -104,7 +104,6 @@ class TeamServiceImplTests {
         int deletedId = 1;
         TeamModel deletedModel = new TeamModel(deletedId, 25, "team Cékoi");
         willDoNothing().given(teamJpaRepository).deleteById(deletedId);
-        //given(teamJpaRepository.existsById(deletedId)).willReturn(Boolean.TRUE);
         given(teamJpaRepository.findById(deletedId)).willReturn(Optional.of(deletedModel));
 
         //when
