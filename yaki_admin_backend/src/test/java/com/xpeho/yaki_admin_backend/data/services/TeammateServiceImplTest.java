@@ -119,7 +119,7 @@ class TeammateServiceImplTest {
 
         //given
         int deletedId = 1;
-        TeammateModel deletedModel = new TeammateModel(deletedId, 25, 86);
+        TeammateModel deletedModel = new TeammateModel(deletedId, 25, 87);
         willDoNothing().given(teammateJpaRepository).deleteById(deletedId);
         given(teammateJpaRepository.findById(deletedId)).willReturn(Optional.of(deletedModel));
 
