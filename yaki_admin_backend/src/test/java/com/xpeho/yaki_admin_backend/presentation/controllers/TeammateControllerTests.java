@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xpeho.yaki_admin_backend.domain.entities.TeammateDetailsEntity;
 import com.xpeho.yaki_admin_backend.domain.entities.TeammateEntity;
 import com.xpeho.yaki_admin_backend.domain.services.TeammateService;
-import com.xpeho.yaki_admin_backend.errorHandling.CustomExceptionHandler;
+import com.xpeho.yaki_admin_backend.error_handling.CustomExceptionHandler;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
