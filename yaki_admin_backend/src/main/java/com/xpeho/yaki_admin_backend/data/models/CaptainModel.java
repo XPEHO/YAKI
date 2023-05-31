@@ -2,8 +2,6 @@ package com.xpeho.yaki_admin_backend.data.models;
 
 import jakarta.persistence.*;
 
-import java.util.List;
-
 @Entity
 @Table(name = "captain", schema = "public")
 public class CaptainModel {
@@ -22,12 +20,6 @@ public class CaptainModel {
 
     @Column(name = "captain_customer_id")
     private int customerId;
-
-    public CaptainModel(int captainId, List<UserModel> users, int userId, CustomerModel customer, int customerId) {
-        this.captainId = captainId;
-        this.userId = userId;
-        this.customerId = customerId;
-    }
 
     public CaptainModel(int userId, int customerId) {
         this.userId = userId;

@@ -67,7 +67,6 @@ public class CaptainServiceImpl implements CaptainService {
         } else {
             throw new EntityNotFoundException("Entity captain with id" + captainId + " not found");
         }
-        CaptainEntity entitySaved = new CaptainEntity(captainId, entity.userId(), entity.customerId());
-        return entitySaved;
+        return new CaptainEntity(captainId, entity.userId(), entity.customerId());
     }
 }
