@@ -93,7 +93,7 @@ export class DeclarationService {
    * @param {number} teamMateId - number
    * @returns DeclarationDtoIn[] | String
    */
-  async getDeclarationForTeamMate(teamMateId: number): Promise<DeclarationDtoIn[] | String> {
+  async getDeclarationForTeamMate(teamMateId: number): Promise<DeclarationDtoIn[] | string> {
     const declarationList: DeclarationDtoIn[] = await this.declarationRepository.getDeclarationForTeamMate(teamMateId);
     if (declarationList.length !== 0 || declarationList !== null || declarationList !== undefined) {
       return this.selectDeclarationToReturn(declarationList);
