@@ -15,8 +15,8 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable()
-                .authorizeRequests()
+        http.cors().and().csrf().disable();
+        http.authorizeHttpRequests()
                 .requestMatchers("/**").permitAll() // Allow access to login URLs to everyone
                 .anyRequest().permitAll();
         //We can in the future require authentification for any other URL
