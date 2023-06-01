@@ -1,5 +1,4 @@
 import { StatusDeclaration } from '../../features/declaration/status.enum';
-// import { TeamMateWithDeclaration } from '../../features/teamMate/teamMateWithDeclaration.dtoOut';
 
 const mockTeamMatesWithDeclaration: any[] = [
   {

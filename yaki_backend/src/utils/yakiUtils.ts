@@ -37,10 +37,11 @@ export default class YakiUtils {
     const columns: Array<string> = Array(valuesCount).fill("0");
 
     const postgresValues = rows
-      .map(() => {
-        return `(${columns.map(() => `$${startValue++}`).join(", ")})`;
-      })
-      .join(", ");
+    .map(() => {
+      const values = columns.map(() => `$${startValue++}`).join(", ");
+      return "(" + values + ")";
+    })
+    .join(", ");
 
     return postgresValues;
   }
