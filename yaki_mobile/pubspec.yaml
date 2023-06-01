@@ -89,7 +89,7 @@ dependencies:
   # https://pub.dev/packages/crypt
   crypt: ^4.2.1
 
-  built_value: ^8.4.4
+  built_value: ^8.6.0
   json_annotation: ^4.8.0
   mockito: ^5.4.0
   very_good_cli: ^0.15.0
