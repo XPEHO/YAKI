@@ -2,7 +2,7 @@ import {Request, Response, NextFunction} from "express";
 import {CaptainDtoOut} from "../captain/captain.dtoOut";
 import {TeamMateDtoOut} from "../teamMate/teamMate.dtoOut";
 
-var jwt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 
 class Service {
   /**
