@@ -60,12 +60,11 @@ public class TeammateServiceImpl implements TeammateService {
     @Override
     public TeammateEntity deleteById(int id) {
         final Optional<TeammateModel> teammateModelOpt = teammateJpaRepository.findById(id);
-        if (teammateModelOpt.isPresent()) {
-            TeammateModel teammateModel = teammateJpaRepository.findById(id).get();
-            teammateJpaRepository.deleteById(id);
-            return new TeammateEntity(id, teammateModel.getTeamId(), teammateModel.getUserId());
-        } else throw new EntityNotFoundException("The teammate with id " + id + " not found.");
+        TeammateModel teammateModel = teammateModelOpt.orElseThrow(() -> new EntityNotFoundException("The teammate with id" + id + " is not found."));
+        teammateJpaRepository.deleteById(id);
+        return new TeammateEntity(id, teammateModel.getTeamId(), teammateModel.getUserId());
     }
+
 
     @Override
     public TeammateEntity saveOrUpdate(TeammateEntity entity, int id) {
