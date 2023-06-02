@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.BDDMockito.given;
 
 @SpringBootTest
-public class UserServiceImplTest {
+class UserServiceImplTest {
     private final ObjectMapper objectMapper = new ObjectMapper();
     private UserModel user1;
     private UserEntity userE1;
