@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xpeho.yaki_admin_backend.data.models.OwnerModel;
 import com.xpeho.yaki_admin_backend.data.sources.OwnerJpaRepository;
 import com.xpeho.yaki_admin_backend.domain.entities.OwnerEntity;
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,8 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willDoNothing;
@@ -113,5 +113,28 @@ class OwnerServiceImplTests {
         assertEquals(ownerResult,
                 new OwnerEntity(1,
                         ownerE2.userId()));
+    }
+
+    @Test
+    void deleteByIdNotFoundTest() {
+        // given
+        int nonExistingId = 100;
+        given(ownerJpaRepository.findById(nonExistingId)).willReturn(Optional.empty());
+
+        // when
+        assertThrows(EntityNotFoundException.class, () -> ownerService.deleteById(nonExistingId));
+        // then
+
+    }
+
+    @Test
+    void saveOrUpdateNonExistingIdTest() {
+        // given
+        int nonExistingId = 100;
+        OwnerEntity entity = new OwnerEntity(nonExistingId, 30);
+        given(ownerJpaRepository.findById(nonExistingId)).willReturn(Optional.empty());
+
+        //then
+        assertThrows(EntityNotFoundException.class, () -> ownerService.saveOrUpdate(entity, nonExistingId));
     }
 }
