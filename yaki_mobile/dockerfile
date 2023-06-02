@@ -4,7 +4,14 @@ FROM ubuntu:latest
 RUN mkdir /app/
 WORKDIR /app/
 
-EXPOSE 80 443
+# Install dependencies
+RUN  flutter upgrade
+RUN  flutter pub get
+RUN  dart format --set-exit-if-changed .
+RUN  flutter analyze
+RUN  flutter test
+
+EXPOSE 443
 
 # Deploy webserver
 FROM nginx:1.21.5

@@ -42,11 +42,6 @@ jobs:
         run: |
           echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io --username phanatic --password-stdin
           cd yaki_mobile
-          flutter upgrade
-          flutter pub get
-          dart format --set-exit-if-changed .
-          flutter analyze
-          flutter test
           flutter build web
           docker build -t yaki_mobile .
           docker tag yaki_mobile ghcr.io/xpeho/yaki:frontend-mobile-latest
