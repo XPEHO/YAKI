@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
         Optional<UserModel> userModelOptional = userJpaRepository.findById(id);
         if (userModelOptional.isPresent()) {
             UserModel userModel = userModelOptional.get();
-            return new UserEntity(userModel.getLastName(), userModel.getLastName(),
+            return new UserEntity(userModel.getLastName(), userModel.getFirstName(),
                     userModel.getEmail(), userModel.getLogin());
         } else throw new EntityNotFoundException("Entity User with id " + id + " not found");
     }

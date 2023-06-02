@@ -36,14 +36,13 @@ public class UserModel {
     @JoinTable(name = "customer_rights", joinColumns = @JoinColumn(name = "customer_rights_user_id"), inverseJoinColumns = @JoinColumn(name = "customer_rights_customer_id"))
     private List<CustomerModel> customers = new ArrayList<>();
 
-    public UserModel(int userId, String lastName, String firstName, String email, String login, String password, List<CustomerModel> customers) {
+    public UserModel(int userId, String lastName, String firstName, String email, String login, String password) {
         this.userId = userId;
         this.lastName = lastName;
         this.firstName = firstName;
         this.email = email;
         this.login = login;
         this.password = password;
-        this.customers = customers;
     }
 
     public UserModel() {
