@@ -13,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -102,4 +103,25 @@ class CustomerServiceImplTest {
                 new CustomerEntity(deletedModel.getId(),
                         deletedModel.getName(), deletedModel.getOwnerId(), deletedModel.getLocationId()));
     }
+
+    @Test
+    void getCustomers() {
+        //given
+        List<CustomerModel> customerModels = Arrays.asList(
+                new CustomerModel("Géo trouve tout", 1, 1),
+                new CustomerModel("Géo trouve rien", 1, 4),
+                new CustomerModel("Géo perd tout", 2, 2)
+        );
+
+        //when
+        given(customerJpaRepository.findAll()).willReturn(customerModels);
+        List<CustomerEntity> customerEntities = customerService.getCustomers();
+
+        //then
+        assertEquals(3, customerEntities.size());
+        assertEquals("Géo trouve tout", customerEntities.get(0).customerName());
+        assertEquals(2, (int) customerEntities.get(2).ownerId());
+        assertEquals(4, (int) customerEntities.get(1).locationId());
+    }
+
 }
