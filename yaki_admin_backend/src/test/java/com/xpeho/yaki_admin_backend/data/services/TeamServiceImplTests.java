@@ -13,6 +13,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -113,5 +115,26 @@ class TeamServiceImplTests {
         assertEquals(teamMateDeleted,
                 new TeamEntity(deletedModel.getId(),
                         deletedModel.getCaptainId(), deletedModel.getTeamName()));
+    }
+
+    @Test
+    void findAllByCaptainTest() throws Exception {
+        //given
+        List<TeamModel> teamList = Arrays.asList(
+                team2, team1,
+                new TeamModel(3, 1, "Team 1")
+        );
+        List<TeamEntity> teamEList = Arrays.asList(
+                teamE2, teamE1,
+                new TeamEntity(3, 1, "Team 1")
+        );
+
+        given(teamJpaRepository.findAllByCaptain(1)).willReturn(teamList);
+
+        //when
+        List<TeamEntity> teamEntities = teamService.findAllByCaptain(1);
+
+        //then
+        assertEquals(teamEntities, teamEList);
     }
 }
