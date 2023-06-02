@@ -17,6 +17,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willDoNothing;
 
@@ -98,5 +99,19 @@ class OwnerServiceImplTests {
         assertEquals(2, (int) ownerEntities.get(1).id());
 
 
+    }
+
+    @Test
+    void saveOrUpdateTest() {
+        //given
+        OwnerEntity ownerE2 = new OwnerEntity(34, 25);
+        given(ownerJpaRepository.findById(1)).willReturn(Optional.of(owner1));
+        given(ownerJpaRepository.save(any(OwnerModel.class))).willReturn(any(OwnerModel.class));
+        //when
+        OwnerEntity ownerResult = ownerService.saveOrUpdate(ownerE2, 1);
+        //then
+        assertEquals(ownerResult,
+                new OwnerEntity(1,
+                        ownerE2.userId()));
     }
 }

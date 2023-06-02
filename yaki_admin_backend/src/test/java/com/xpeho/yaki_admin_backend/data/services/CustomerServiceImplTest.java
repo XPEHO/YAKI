@@ -135,4 +135,18 @@ class CustomerServiceImplTest {
         customerService.addCustomerRight(users, 1);
     }
 
+    @Test
+    void saveOrUpdate() {
+        //given
+        CustomerEntity customerE2 = new CustomerEntity(34, "A la berge", 23, 16);
+        given(customerJpaRepository.findById(1)).willReturn(Optional.of(customer1));
+        given(customerJpaRepository.save(any(CustomerModel.class))).willReturn(any(CustomerModel.class));
+        //when
+        CustomerEntity customerResult = customerService.saveOrUpdate(customerE2, 1);
+        //then
+        assertEquals(customerResult,
+                new CustomerEntity(1,
+                        customerE2.customerName(), customerE2.ownerId(), customerE2.locationId()));
+    }
+
 }

@@ -98,7 +98,7 @@ class CaptainServiceImplTest {
     }
 
     @Test
-    void saveOrUpdate() {
+    void saveOrUpdateTest() {
 
         // given
         int captainId = 1;
