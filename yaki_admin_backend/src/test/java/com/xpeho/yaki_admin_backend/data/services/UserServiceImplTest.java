@@ -20,6 +20,7 @@ public class UserServiceImplTest {
     private final ObjectMapper objectMapper = new ObjectMapper();
     private UserModel user1;
     private UserEntity userE1;
+    private UserModel user2;
     @Autowired
     private UserServiceImpl userService;
 
@@ -30,6 +31,7 @@ public class UserServiceImplTest {
     void setup() {
         userE1 = new UserEntity("Beaumont", "Bertrand", "bertrand.beaumont@mail.com", "bertrand");
         user1 = new UserModel(1, "Beaumont", "Bertrand", "bertrand.beaumont@mail.com", "bertrand", "passwordHArd");
+        user2 = new UserModel("Balthazar", "Brigangnier", "Balthazar.Brigangnier@mail.com", "babri");
     }
 
     @Test
