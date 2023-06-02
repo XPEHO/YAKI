@@ -82,7 +82,8 @@ describe("authService", () => {
       /* This is a test that checks if the verifyToken function returns a 401 response when an invalid
       token is provided. */
       it("should return a 401 response when an invalid token is provided", async () => {
-        req.headers["x-access-token"] = "invalid-token";
+        req.headers["user_id"] = decodedToken.user_id;
+        req.headers["x-access-token"] = req.headers["user_id"];
         await authService.verifyToken(req, res, next);
         expect(res.status).toHaveBeenCalledWith(401);
         expect(res.send).toHaveBeenCalledWith("Invalid Token");
