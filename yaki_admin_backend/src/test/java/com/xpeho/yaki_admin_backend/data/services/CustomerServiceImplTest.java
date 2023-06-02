@@ -19,6 +19,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willDoNothing;
 import static org.mockito.Mockito.when;
@@ -40,7 +41,7 @@ class CustomerServiceImplTest {
     @BeforeEach
     void setup() {
         owner1 = new OwnerModel(1, 1);
-        List<UserModel> usersCustomer = new ArrayList<>(3);
+        this.usersCustomer = new ArrayList<>(3);
         customerE1 = new CustomerEntity(1, "A la ferme", 1, 2);
         customer1 = new CustomerModel(1, owner1, "A la ferme", 1, usersCustomer, 2);
     }
@@ -105,7 +106,7 @@ class CustomerServiceImplTest {
     }
 
     @Test
-    void getCustomers() {
+    void getCustomersTest() {
         //given
         List<CustomerModel> customerModels = Arrays.asList(
                 new CustomerModel("Géo trouve tout", 1, 1),
@@ -122,6 +123,16 @@ class CustomerServiceImplTest {
         assertEquals("Géo trouve tout", customerEntities.get(0).customerName());
         assertEquals(2, (int) customerEntities.get(2).ownerId());
         assertEquals(4, (int) customerEntities.get(1).locationId());
+    }
+
+    @Test
+    void addCustomersRight() {
+        //when
+        List<UserModel> users = List.of(
+                new UserModel());
+        given(customerJpaRepository.getReferenceById(1)).willReturn(customer1);
+        given(customerJpaRepository.save(any(CustomerModel.class))).willReturn(customer1);
+        customerService.addCustomerRight(users, 1);
     }
 
 }

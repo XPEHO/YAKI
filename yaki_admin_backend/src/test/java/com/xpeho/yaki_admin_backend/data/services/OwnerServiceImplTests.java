@@ -11,6 +11,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -76,5 +78,25 @@ class OwnerServiceImplTests {
         assertEquals(ownerMateDeleted,
                 new OwnerEntity(deletedModel.getId(),
                         deletedModel.getUserId()));
+    }
+
+    @Test
+    void findAllTest() throws Exception {
+        List<OwnerModel> customerModels = Arrays.asList(
+                new OwnerModel(1, 1),
+                new OwnerModel(2, 4),
+                new OwnerModel(3, 10)
+        );
+
+        //when
+        given(ownerJpaRepository.findAll()).willReturn(customerModels);
+        List<OwnerEntity> ownerEntities = ownerService.findAll();
+
+        //then
+        assertEquals(3, ownerEntities.size());
+        assertEquals(10, (int) ownerEntities.get(2).userId());
+        assertEquals(2, (int) ownerEntities.get(1).id());
+
+
     }
 }

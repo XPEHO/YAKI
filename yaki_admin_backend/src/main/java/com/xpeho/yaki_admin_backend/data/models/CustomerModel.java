@@ -28,7 +28,7 @@ public class CustomerModel {
 
     @ManyToMany
     @JoinTable(name = "customer_rights", joinColumns = @JoinColumn(name = "customer_rights_customer_id"), inverseJoinColumns = @JoinColumn(name = "customer_rights_user_id"))
-    private List<UserModel> users = new ArrayList<>();
+    private List<UserModel> users;
 
     @Column(name = "customer_location_id")
     private int locationId;
@@ -50,6 +50,7 @@ public class CustomerModel {
         this.ownerId = ownerId;
         this.name = customerName;
         this.locationId = locationId;
+        this.users = new ArrayList<>();
     }
 
     public void addUsers(List<UserModel> users) {
