@@ -4,7 +4,7 @@ FROM ubuntu:latest
 RUN mkdir /app/
 WORKDIR /app/
 
-EXPOSE 80 443
+EXPOSE 443
 
 # Deploy webserver
 FROM nginx:1.21.5

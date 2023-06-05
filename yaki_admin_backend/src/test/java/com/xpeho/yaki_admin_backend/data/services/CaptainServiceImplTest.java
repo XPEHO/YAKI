@@ -1,7 +1,6 @@
 package com.xpeho.yaki_admin_backend.data.services;
 
 import com.xpeho.yaki_admin_backend.data.models.CaptainModel;
-import com.xpeho.yaki_admin_backend.data.models.CustomerModel;
 import com.xpeho.yaki_admin_backend.data.sources.CaptainJpaRepository;
 import com.xpeho.yaki_admin_backend.domain.entities.CaptainEntity;
 import org.junit.jupiter.api.Test;
@@ -44,7 +43,6 @@ class CaptainServiceImplTest {
     @Test
     void getCaptains() {
         //given
-        CustomerModel customerModel = new CustomerModel("Géo trouve tout", 1, 1);
         List<CaptainModel> captainModels = Arrays.asList(
                 new CaptainModel(1, 1, 2),
                 new CaptainModel(2, 1, 2),
@@ -100,7 +98,7 @@ class CaptainServiceImplTest {
     }
 
     @Test
-    void saveOrUpdate() {
+    void saveOrUpdateTest() {
 
         // given
         int captainId = 1;

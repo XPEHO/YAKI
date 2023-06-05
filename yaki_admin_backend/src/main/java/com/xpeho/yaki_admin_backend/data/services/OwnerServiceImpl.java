@@ -70,4 +70,5 @@ public class OwnerServiceImpl implements OwnerService {
         }
         return new OwnerEntity(id, entity.userId());
     }
+    
 }
