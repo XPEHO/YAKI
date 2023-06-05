@@ -39,7 +39,7 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.3'
     testImplementation 'com.h2database:h2'
     // ad jacoco for sonar scan coverage
-    testImplementation 'org.jacoco:org.jacoco.core:0.8.8'
+    testImplementation 'org.jacoco:org.jacoco.core:0.8.10'
 
     test {
         useJUnitPlatform()
