@@ -672,10 +672,10 @@ packages:
     dependency: transitive
     description:
       name: pub_updater
-      sha256: "42890302ab2672adf567dc2b20e55b4ecc29d7e19c63b6b98143ab68dd717d3a"
+      sha256: "05ae70703e06f7fdeb05f7f02dd680b8aad810e87c756a618f33e1794635115c"
       url: "https://pub.dev"
     source: hosted
-    version: "0.2.4"
+    version: "0.3.0"
   pubspec_parse:
     dependency: transitive
     description:
@@ -949,10 +949,10 @@ packages:
     dependency: "direct main"
     description:
       name: very_good_cli
-      sha256: dc4a17b9493203228735b76f02e6c4b646c41998803969107c4bfbe0bf07e5ed
+      sha256: "795fa14f97c0b2940a43fe9bf9985f51dd22fc914900021f9c2c509dcdc88393"
       url: "https://pub.dev"
     source: hosted
-    version: "0.14.0"
+    version: "0.15.0"
   very_good_test_runner:
     dependency: transitive
     description:
