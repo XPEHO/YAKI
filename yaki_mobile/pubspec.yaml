@@ -92,7 +92,7 @@ dependencies:
   built_value: ^8.4.4
   json_annotation: ^4.8.0
   mockito: ^5.4.0
-  very_good_cli: ^0.14.0
+  very_good_cli: ^0.15.0
   look: ^2.0.0
   golden_toolkit: ^0.15.0
   # A librairy that handle your application icon 
@@ -115,8 +115,9 @@ dev_dependencies:
 
   # Retrofit dependency
   retrofit_generator: ^6.0.0+1
-  build_runner: ^2.4.4
-  json_serializable: ^6.6.1
+  build_runner: ">=2.3.0 <4.0.0"
+  json_serializable: ^6.7.0
+
 
   # Mockito 5.0.0 supports Dart's new null safety language feature in Dart 2.12, primarily
   # with code generation.
