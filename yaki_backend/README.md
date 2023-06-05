@@ -19,7 +19,7 @@ This project is the backend part of the YAKI application.
 
 No GAFAM will be used for authentification
 We will implement a home made authentification process
-We will use JWT authorization token in the Authorization header
+We will use JWT authorization token in the Authorization header.
 
 ### Data format
 
