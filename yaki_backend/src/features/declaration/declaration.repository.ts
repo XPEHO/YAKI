@@ -71,6 +71,7 @@ export class DeclarationRepository {
     client.connect()
     const valuesString: string = YakiUtils.queryValuesString(declarationList, declarationList[0], 1);
     const declarationsValuesList: Array<string> = YakiUtils.objectsListToValuesList(declarationList);
+    console.log(valuesString)
 
     try {
       const result = await client.query(
@@ -83,7 +84,7 @@ export class DeclarationRepository {
           declaration_status,
           declaration_team_id
         )
-        VALUES ${valuesString} RETURNING *`,
+        VALUES ($1, $2, $3, $4, $5, $6), ($7, $8, $9, $10, $11, $12) RETURNING *`,
         declarationsValuesList
       );
 
