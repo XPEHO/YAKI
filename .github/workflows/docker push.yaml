@@ -47,7 +47,7 @@ jobs:
           dart format --set-exit-if-changed .
           flutter analyze
           flutter test
-          flutter build web
+          flutter build web --base-href "/ui/"
           docker build -t yaki_mobile .
           docker tag yaki_mobile ghcr.io/xpeho/yaki:frontend-mobile-latest
           docker push ghcr.io/xpeho/yaki:frontend-mobile-latest
