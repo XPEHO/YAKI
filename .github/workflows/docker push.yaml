@@ -2,15 +2,15 @@ name: Create and publish all Docker images
 
 on:
   push:
-    branches: ['main', 'chore/published_docker_front_admin']
+    branches: ["main", "chore/published_docker_front_admin"]
   release:
     types: [published]
   workflow_dispatch:
     inputs:
       reason:
-        description: 'Reason'
+        description: "Reason"
         required: true
-        default: 'Manual trigger'
+        default: "Manual trigger"
 
 jobs:
   build-yaki-backend-mobile:
@@ -31,8 +31,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          java-version: '17.x'
-          distribution: 'temurin'
+          java-version: "17.x"
+          distribution: "temurin"
       - uses: subosito/flutter-action@v2
       - name: Install lcov
         run: |
@@ -57,13 +57,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          java-version: '17.x'
-          distribution: 'temurin'
+          java-version: "17.x"
+          distribution: "temurin"
       - name: Setup Java
         uses: actions/setup-java@v3
         with:
-          java-version: '17.x'
-          distribution: 'temurin'
+          java-version: "17.x"
+          distribution: "temurin"
       - name: Build and publish Yaki backend admin Docker image
         run: |
           echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io --username phanatic --password-stdin
@@ -82,6 +82,7 @@ jobs:
         run: |
           echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io --username phanatic --password-stdin
           cd yaki_admin
+          npm run build --base-href='/admin-ui/'
           docker build -t yaki_admin .
           docker tag yaki_admin ghcr.io/xpeho/yaki:frontend-admin-latest
           docker push ghcr.io/xpeho/yaki:frontend-admin-latest

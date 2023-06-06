@@ -5,7 +5,11 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "preserveValueImports": false,
+    "importsNotUsedAsValues": "remove",
+    "allowJs": true,
+    "verbatimModuleSyntax": true
   },
 
   "references": [
