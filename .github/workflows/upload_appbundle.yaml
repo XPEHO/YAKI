@@ -20,11 +20,14 @@ jobs:
       - name: Set up keystore from secrets
         run: |
           echo "${{ secrets.KEYSTORE }}" | base64 -d > yaki_mobile/android/app/keystore.jks
+      - name: Set up certificate from secrets
+        run: |
+          echo "${{ secrets.SERVER_CERTIFICATE }}" | base64 -d > yaki_mobile/assets/cer/server.cer
       - name: Build appbundle
         run: |
           cd yaki_mobile
           flutter pub get
-          flutter build appbundle --dart-define API_BASE_URL=https://yaki.uat.xpeho.fr/api/
+          flutter build appbundle --dart-define API_BASE_URL=https://yaki.uat.xpeho.fr/api/ --dart-define CRED_HASH_PASS=${{ secrets.CRED_HASH_PASS }}}
       - name: Upload appbundle to Play Console
         uses: r0adkll/upload-google-play@v1
         with:
