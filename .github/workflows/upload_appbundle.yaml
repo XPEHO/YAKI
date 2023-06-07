@@ -1,5 +1,7 @@
 name: Upload appbundle on internal test track
-on: push
+on:
+  release:
+    types: [published]
 
 jobs:
   upload:
