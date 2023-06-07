@@ -15,7 +15,7 @@ This project is the backend part of the YAKI admin application.
 
 No GAFAM will be used for authentification
 We will implement a home made authentification process
-We will use JWT authorization token in the Authorization header
+We will use JWT authorization token in the Authorization header.
 
 ## Data format
 
@@ -30,40 +30,40 @@ We will use JWT authorization token in the Authorization header
 
 - GetMapping:
 
-  - getCaptains => get all captains
-  - getCustomers => get all customers
-  - findAll => get all owners
+    - getCaptains => get all captains
+    - getCustomers => get all customers
+    - findAll => get all owners
 
 - PostMapping:
 
-  - createCaptain => add a new captain
-  - createCustomer => add a new customer
-  - createOwner => add a new owner
-  - createTeam => add a new team
-  - createTeammate => add a new teamMate
+    - createCaptain => add a new captain
+    - createCustomer => add a new customer
+    - createOwner => add a new owner
+    - createTeam => add a new team
+    - createTeammate => add a new teamMate
 
 - GetMapping("{id}"):
 
-  - getCaptainById => get a captain by id
-  - getCustomer(id) => get a customer by id
-  - findById => get a owner by id
-  - getTeam(id) => get a team by id
-  - getTeammate(id)=> get a teamMate by id
+    - getCaptainById => get a captain by id
+    - getCustomer(id) => get a customer by id
+    - findById => get a owner by id
+    - getTeam(id) => get a team by id
+    - getTeammate(id)=> get a teamMate by id
 
 - DeleteMapping("{id}"):
 
-  - deleteById => delete a captain/customer/owner/team/teamMate by id
+    - deleteById => delete a captain/customer/owner/team/teamMate by id
 
 - PutMapping("{id}"):
 
-  - saveOrUpdate => update a captain/customer/team/ teamMate by id
+    - saveOrUpdate => update a captain/customer/team/ teamMate by id
 
 - GetMapping({"captain/{id}"}):
 
-  - findAllByCaptain => find all team by captain id
+    - findAllByCaptain => find all team by captain id
 
 - GetMapping("team/{id}"):
-  - findAllByTeam(id) => find all teamMate by team id.
+    - findAllByTeam(id) => find all teamMate by team id.
 
 <!-- add login path -->
 
@@ -87,12 +87,24 @@ Depending on the user's role (owner, customer or captain) it will return three d
 
 ```ts
 {
-    "token": string,
-    "owner_id": number,
-    "user_id" : number,
-    "last_name": string,
-    "first_name": string,
-    "email" : string,
+    "token"
+:
+    string,
+        "owner_id"
+:
+    number,
+        "user_id"
+:
+    number,
+        "last_name"
+:
+    string,
+        "first_name"
+:
+    string,
+        "email"
+:
+    string,
 }
 ```
 
@@ -100,17 +112,39 @@ Depending on the user's role (owner, customer or captain) it will return three d
 
 ```ts
 {
-    "token": string,
-    "customer_id": number,
-    "name": string,
-    "owner_id" : number,
-    "user_id" : number,
-    "last_name": string,
-    "first_name": string,
-    "email" : string,
-    "location_id": number,
-    "location_name": string,
-    "location_adress": string,
+    "token"
+:
+    string,
+        "customer_id"
+:
+    number,
+        "name"
+:
+    string,
+        "owner_id"
+:
+    number,
+        "user_id"
+:
+    number,
+        "last_name"
+:
+    string,
+        "first_name"
+:
+    string,
+        "email"
+:
+    string,
+        "location_id"
+:
+    number,
+        "location_name"
+:
+    string,
+        "location_adress"
+:
+    string,
 }
 ```
 
@@ -118,17 +152,32 @@ Depending on the user's role (owner, customer or captain) it will return three d
 
 ```ts
 {
-    "token": string,
-    "captain_id": number,
-    "user_id": number,
-    "last_name": string,
-    "first_name": string,
-    "email": string,
-    "customer_id": number
+    "token"
+:
+    string,
+        "captain_id"
+:
+    number,
+        "user_id"
+:
+    number,
+        "last_name"
+:
+    string,
+        "first_name"
+:
+    string,
+        "email"
+:
+    string,
+        "customer_id"
+:
+    number
 }
 ```
 
-The token is necessary on each request following the user login. If you don't provide the correct token, the server will withdraw the request and return an error.
+The token is necessary on each request following the user login. If you don't provide the correct token, the server will
+withdraw the request and return an error.
 
 The token must be inside the request's headers like so :
 
@@ -138,9 +187,13 @@ The token must be inside the request's headers like so :
 
 **application.properties**
 
-The `application.properties` file provides a template for creating an environment configuration file. It contains a list of environment variables and their default values, which can be used as a starting point for creating a `application.properties` file.
+The `application.properties` file provides a template for creating an environment configuration file. It contains a list
+of environment variables and their default values, which can be used as a starting point for creating
+a `application.properties` file.
 
-The `application.properties` file is used to store sensitive information and other configuration settings that should not be hard-coded in the application code. We recommend that you copy `application.properties.sample` to `application.properties` and customize it with your own configuration settings.
+The `application.properties` file is used to store sensitive information and other configuration settings that should
+not be hard-coded in the application code. We recommend that you copy `application.properties.sample`
+to `application.properties` and customize it with your own configuration settings.
 
 # Recommended IDE Setup
 
@@ -148,9 +201,17 @@ The `application.properties` file is used to store sensitive information and oth
 
 # Used :
 
-[Java] https://www.java.com/fr/download/: Java is a programming language and computing platform launched by Sun Microsystems in 1995. Since its humble beginnings, Java has evolved significantly. Currently, a large portion of the digital world relies on Java: numerous services and applications are built on this dependable platform. Likewise, new innovative digital products and future-oriented services also depend on Java.
+[Java] https://www.java.com/fr/download/: Java is a programming language and computing platform launched by Sun
+Microsystems in 1995. Since its humble beginnings, Java has evolved significantly. Currently, a large portion of the
+digital world relies on Java: numerous services and applications are built on this dependable platform. Likewise, new
+innovative digital products and future-oriented services also depend on Java.
 
-[Docker] https://www.docker.com/ : Docker is an open-source software platform that allows you to create, deploy, and run applications in lightweight, self-contained containers. Docker containers are isolated execution units that encapsulate all the elements necessary to run an application, including code, libraries, dependencies, and environment variables. In summary, Docker is a technology that simplifies the deployment and management of applications by encapsulating them in lightweight and portable containers, offering greater flexibility, improved resource efficiency, and ease of cross-platform implementation.
+[Docker] https://www.docker.com/ : Docker is an open-source software platform that allows you to create, deploy, and run
+applications in lightweight, self-contained containers. Docker containers are isolated execution units that encapsulate
+all the elements necessary to run an application, including code, libraries, dependencies, and environment variables. In
+summary, Docker is a technology that simplifies the deployment and management of applications by encapsulating them in
+lightweight and portable containers, offering greater flexibility, improved resource efficiency, and ease of
+cross-platform implementation.
 
 # Getting started
 
