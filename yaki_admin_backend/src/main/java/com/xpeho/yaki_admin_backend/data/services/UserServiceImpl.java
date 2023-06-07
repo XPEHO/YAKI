@@ -19,7 +19,6 @@ public class UserServiceImpl implements UserService {
         this.userJpaRepository = userJpaRepository;
     }
 
-
     @Override
     public UserEntity save(UserEntityIn user) {
         final UserModel userModel = new UserModel(user.id(), user.lastname(), user.firstname(), user.email(), user.login(), user.password());
