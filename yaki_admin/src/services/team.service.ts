@@ -1,5 +1,4 @@
 import type {TeamType} from "./team.type";
-import * as dotenv from "dotenv";
 
 const URL: string | undefined = import.meta.env.VITE_API_URL;
 
