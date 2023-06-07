@@ -9,7 +9,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/captains")
 @CrossOrigin
-
 public class CaptainController {
     final CaptainService captainService;
 
