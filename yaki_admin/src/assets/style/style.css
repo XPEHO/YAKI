@@ -4,8 +4,8 @@
 }
 
 body {
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap');
-  font-family: 'Inter', sans-serif;
+  @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap");
+  font-family: "Inter", sans-serif;
   font-size: 16px;
 }
 
@@ -36,7 +36,10 @@ body {
   font-size: 1.4rem;
   letter-spacing: 0.05rem;
 }
+.sidebar-element-generic-style:hover {
+  cursor: pointer;
+}
 
 .sidebar-active-class {
   background-color: #59a9b5;
-} /*# sourceMappingURL=style.css.map */
+}/*# sourceMappingURL=style.css.map */

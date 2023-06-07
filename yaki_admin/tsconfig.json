@@ -1,11 +1,17 @@
 {
   "extends": "@vue/tsconfig/tsconfig.web.json",
   "include": ["env.d.ts", "src/**/*", "src/**/*.vue"],
+  "exclude": ["./build/**/*"],
   "compilerOptions": {
+    "outDir": "./build",
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "preserveValueImports": false,
+    "importsNotUsedAsValues": "remove",
+    "allowJs": true,
+    "verbatimModuleSyntax": true
   },
 
   "references": [
