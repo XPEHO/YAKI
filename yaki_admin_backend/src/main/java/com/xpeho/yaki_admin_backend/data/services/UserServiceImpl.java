@@ -3,6 +3,7 @@ package com.xpeho.yaki_admin_backend.data.services;
 import com.xpeho.yaki_admin_backend.data.models.UserModel;
 import com.xpeho.yaki_admin_backend.data.sources.UserJpaRepository;
 import com.xpeho.yaki_admin_backend.domain.entities.UserEntity;
+import com.xpeho.yaki_admin_backend.domain.entities.UserEntityIn;
 import com.xpeho.yaki_admin_backend.domain.services.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
@@ -20,11 +21,12 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public UserEntity save(String lastname, String firstname, String email, String login) {
-        final UserModel userModel = new UserModel(lastname, firstname, email, login);
+    public UserEntity save(UserEntityIn user) {
+        final UserModel userModel = new UserModel(user.lastname(), user.firstname(), user.email(), user.login(), user.password());
         userJpaRepository.save(userModel);
-        return new UserEntity(lastname, firstname, email, login);
+        return new UserEntity(user.lastname(), user.firstname(), user.email(), user.login());
     }
+
 
     @Override
     public UserEntity findById(int id) {
