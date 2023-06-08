@@ -10,8 +10,7 @@
     },
     "preserveValueImports": false,
     "importsNotUsedAsValues": "remove",
-    "allowJs": true,
-    "verbatimModuleSyntax": true
+    "allowJs": true
   },
 
   "references": [

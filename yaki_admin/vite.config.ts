@@ -23,5 +23,10 @@ export default defineConfig(({mode}) => {
       // mode  preview
       port: parseInt(env.VITE_PORT),
     },
+    test: {
+      coverage: {
+        provider: 'istanbul' // or 'v8'
+      },
+    }
   };
 });

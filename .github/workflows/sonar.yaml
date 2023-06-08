@@ -60,3 +60,21 @@ jobs:
         run: |
           cd yaki_admin_backend
           ./gradlew build sonar --info
+  admin_scan:
+    name: Sonaqube admin scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: Run tests with coverage
+        run: |
+          cd yaki_admin
+          npm install
+          npm run coverage
+      - uses: sonarsource/sonarqube-scan-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        with:
+          projectBaseDir: yaki_admin/
