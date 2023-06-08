@@ -13,7 +13,8 @@ import java.util.List;
 public class UserModel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "user_seq")
+    @SequenceGenerator(name = "user_seq", sequenceName = "user_id_seq", allocationSize = 1)
     @Column(name = "user_id")
     private int userId;
 
@@ -46,6 +47,13 @@ public class UserModel {
     }
 
     public UserModel() {
+    }
+
+    public UserModel(String lastName, String firstName, String email, String login, String password) {
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.login = login;
     }
 
     public UserModel(String lastName, String firstName, String email, String login) {
