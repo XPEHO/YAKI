@@ -47,10 +47,10 @@ jobs:
           dart format --set-exit-if-changed .
           flutter analyze
           flutter test
-          flutter build web --dart-define API_BASE_URL=https://yaki.uat.xpeho.fr/ --dart-define CRED_HASH_PASS=${{ secrets.CRED_HASH_PASS }} --base-href "/api/"
+          flutter build web --dart-define API_BASE_URL=https://yaki.uat.xpeho.fr/ --dart-define CRED_HASH_PASS=${{ secrets.CRED_HASH_PASS }} --base-href "/ui/"
           docker build -t yaki_mobile .
           docker tag yaki_mobile ghcr.io/xpeho/yaki:frontend-mobile-latest
-          docker push ghcr.io/xpeho/yaki:frontend-mobile-latest
+          docker push ghcr.io/xpeho/yaki:frontend-mobile-latest 
   build-yaki-backend-admin:
     runs-on: ubuntu-20.04
     steps:
