@@ -32,7 +32,7 @@
     </div>
     <div class="forgotten">
       <a
-        href="http://localhost:5173/"
+        href=""
         target="_blank"
         rel="noopener"
         >Forgot password ?</a
