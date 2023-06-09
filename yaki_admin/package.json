@@ -9,7 +9,6 @@
     "build": "run-p type-check build-only",
     "build-uat": "run-p type-check build-only-uat",
     "preview": "vite preview",
-    "build-only-uat": "vite build --base=/admin-ui/",
     "build-only": "vite build",
     "build-only-uat": "vite build --base=/admin-ui/",
     "type-check": "vue-tsc --noEmit",
