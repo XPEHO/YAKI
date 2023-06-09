@@ -1,22 +1,22 @@
-on: pull_request 
+on: pull_request
 name: Test and build
-jobs: 
+jobs:
   flutter-mobile:
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: yaki_mobile
-    steps: 
+    steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-java@v3
         with:
-          java-version: '17.x'
-          distribution: 'temurin'
+          java-version: "17.x"
+          distribution: "temurin"
       - uses: subosito/flutter-action@v2
       - name: Install lcov
         run: |
           sudo apt update
-          sudo apt install lcov 
+          sudo apt install lcov
       - name: Build apk
         run: |
           flutter upgrade
@@ -27,7 +27,7 @@ jobs:
           flutter build apk --debug
   flutter-web:
     runs-on: ubuntu-latest
-    defaults: 
+    defaults:
       run:
         working-directory: yaki_mobile
     steps:
@@ -43,13 +43,13 @@ jobs:
           flutter build web
   nodejs:
     runs-on: ubuntu-latest
-    defaults: 
+    defaults:
       run:
         working-directory: yaki_backend
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
-        with: 
+        with:
           node-version: 18
       - name: Build
         run: |
@@ -57,3 +57,34 @@ jobs:
           npm run swagger
           npm run test
           npm run build
+  admin-front:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: yaki_admin
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Build an test Admin FrontEnd
+        run: |
+          npm ci
+          npm run build
+          npm run coverage
+          npm run lint
+  admin-back:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: yaki_admin_backend
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          distribution: "temurin"
+          java-version: "17"
+      - name: Build and test Admin backEnd
+        run: |
+          gradle clean build
+          gradle clean test
