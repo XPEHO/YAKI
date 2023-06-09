@@ -9,8 +9,6 @@ COPY ["package.json", "package-lock.json*", "./"]
 # install project dependencies
 RUN npm install --silent 
 RUN npm install -g http-server 
-RUN npm install vite
-RUN npm install --global npm-run-all
 
 # copy project files and folders to the current working directory (i.e. 'app' folder)
 COPY . .
