@@ -2,7 +2,7 @@ name: Create and publish all Docker images
 
 on:
   push:
-    branches: ["main", "chore/published_docker_front_admin"]
+    branches: ["main", "fix/github_image_front_admin"]
   release:
     types: [published]
   workflow_dispatch:
