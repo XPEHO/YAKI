@@ -1,4 +1,4 @@
-FROM node:lts-alpine
+FROM node:lts-alpine as build
 # install simple http server for serving static content
 # make the 'app' folder the current working directory
 RUN mkdir /app
@@ -12,6 +12,8 @@ RUN npm install -g http-server
 RUN npm install --global npm-run-all
 
 # copy project files and folders to the current working directory (i.e. 'app' folder)
+COPY .eslintrc.js ./
+COPY babel.config.js ./
 COPY . .
 # build app for production with minification
 RUN npm run build
