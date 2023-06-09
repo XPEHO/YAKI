@@ -14,7 +14,6 @@ COPY .eslintrc.js ./
 COPY babel.config.js ./
 COPY . .
 # build app for production with minification
-RUN npm run build
 
 FROM nginx:1.19.6-alpine
 
