@@ -8,6 +8,7 @@
     "coverage": "vitest run --coverage",
     "build": "run-p type-check build-only",
     "preview": "vite preview",
+    "build-only-uat": "vite build --base=/admin-ui/",
     "build-only": "vite build",
     "type-check": "vue-tsc --noEmit",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
