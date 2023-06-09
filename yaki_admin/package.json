@@ -7,7 +7,7 @@
     "test": "vitest",
     "coverage": "vitest run --coverage",
     "build": "run-p type-check build-only",
-    "build-uat": "run-p type-check vite build-only-uat",
+    "build-uat": "run-p type-check build-only-uat",
     "preview": "vite preview",
     "build-only": "vite build",
     "build-only-uat": "vite build --base=/admin-ui/",
