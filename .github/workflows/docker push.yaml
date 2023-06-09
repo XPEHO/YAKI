@@ -79,6 +79,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Install node
+        uses: actions/setup-node@v2
       - name: Build and publish Yaki frontend admin Docker image
         run: |
           echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io --username phanatic --password-stdin
