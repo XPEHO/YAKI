@@ -1,4 +1,4 @@
-FROM node:lts-alpine as build
+FROM node:lts-alpine
 # install simple http server for serving static content
 # make the 'app' folder the current working directory
 RUN mkdir /app
