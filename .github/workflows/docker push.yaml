@@ -84,7 +84,6 @@ jobs:
         run: |
           echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io --username phanatic --password-stdin
           cd yaki_admin
-          npm run build --base-href='/admin-ui/'
           docker build -t yaki_admin .
           docker tag yaki_admin ghcr.io/xpeho/yaki:frontend-admin-latest
           docker push ghcr.io/xpeho/yaki:frontend-admin-latest
