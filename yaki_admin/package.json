@@ -6,10 +6,11 @@
     "dev": "vite",
     "test": "vitest",
     "coverage": "vitest run --coverage",
-    "build": "run-p type-check build-only-uat",
+    "build": "run-p type-check build-only",
+    "build-uat": "run-p type-check vite build-only-uat",
     "preview": "vite preview",
-    "build-only-uat": "run-p type-check vite build --base=/admin-ui/",
     "build-only": "vite build",
+    "build-only-uat": "vite build --base=/admin-ui/",
     "type-check": "vue-tsc --noEmit",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
