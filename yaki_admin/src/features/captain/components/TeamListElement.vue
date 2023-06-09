@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import isTeamSelected from '../services/isActiveTeam';
-import editIcon from '@/assets/Edit.png';
-import deleteIcon from '@/assets/Delete.png';
+import isTeamSelected from "../services/isActiveTeam";
+import editIcon from "@/assets/Edit.png";
+import deleteIcon from "@/assets/Delete.png";
 
 const props = defineProps({
   teamName: {
     type: String,
     required: true,
   },
-  id:{
+  id: {
     type: Number,
-    required : true,
-  }
+    required: true,
+  },
 });
 </script>
 
@@ -20,8 +20,7 @@ const props = defineProps({
     class="team-list-unit"
     :class="{
       'team-list-unit-selected': isTeamSelected.isSameIndex(id),
-    }"
-  >
+    }">
     <p>{{ teamName }}</p>
     <figure>
       <img v-bind:src="editIcon" />

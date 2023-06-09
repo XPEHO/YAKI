@@ -9,6 +9,7 @@ import {reactive} from "vue";
 const isTeamSelected = reactive({
   id: 1,
   setTeam(teamId: number) {
+    console.log(teamId);
     this.id = teamId;
   },
   isSameIndex(teamId: number) {

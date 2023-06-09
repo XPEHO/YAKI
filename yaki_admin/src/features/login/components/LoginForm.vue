@@ -1,56 +1,72 @@
 <template>
   <form @submit.prevent="login">
     <div class="login">
-        <label for="username">{{ text }}</label>
-      <input type="text" v-model="form.username" @input="onInputLogin" :placeholder="usernamePlaceholder">
-    
+      <label for="username">{{ text }}</label>
+      <input
+        type="text"
+        v-model="form.username"
+        @input="onInputLogin"
+        :placeholder="usernamePlaceholder" />
     </div>
     <div class="password">
-          <label for="password">{{ text }}</label>
+      <label for="password">{{ text }}</label>
       <div class="enter-password">
-        <input v-model="form.password" :type="showPassword ? 'text' : 'password'" :placeholder="passwordPlaceholder"/>
-        <figure class = eye-box>
-          <img class="eye" src="../../../assets/eye.png" @click.prevent="togglePasswordVisibility">
+        <input
+          v-model="form.password"
+          :type="showPassword ? 'text' : 'password'"
+          :placeholder="passwordPlaceholder" />
+        <figure class="eye-box">
+          <img
+            class="eye"
+            src="../../../assets/eye.png"
+            @click.prevent="togglePasswordVisibility" />
         </figure>
       </div>
     </div>
     <div class="submit-button">
-      <button type="submit" class="signin">Sign In</button>
+      <button
+        type="submit"
+        class="signin">
+        Sign In
+      </button>
     </div>
     <div class="forgotten">
-      <a href="http://localhost:5173/" target="_blank" rel="noopener">Forgot password ?</a>
+      <a
+        href="http://localhost:5173/"
+        target="_blank"
+        rel="noopener"
+        >Forgot password ?</a
+      >
     </div>
-    
-</form>
+  </form>
 </template>
 
 <script>
-import router from "@/router/router.ts"
-export default{
-  data(){
+export default {
+  data() {
     return {
-      usernamePlaceholder: 'Enter your login',
-      passwordPlaceholder: 'Enter your password',
-      showPassword : false,
-      form:{
-        username : '',
-        password : '',
-      }
-    }
+      usernamePlaceholder: "Enter your login",
+      passwordPlaceholder: "Enter your password",
+      showPassword: false,
+      form: {
+        username: "",
+        password: "",
+      },
+    };
   },
-  methods:{
+  methods: {
     togglePasswordVisibility() {
       this.showPassword = !this.showPassword;
-      console.log("show")
+      console.log("show");
     },
-    onInputLogin(e){
-      this.usernameText = e.target.value
+    onInputLogin(e) {
+      this.usernameText = e.target.value;
     },
-    login(){
-      this.$router.push('/captain')
-    }
-  }
-}
+    login() {
+      this.$router.push("/captain");
+    },
+  },
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -66,10 +82,10 @@ li {
   display: inline-block;
   margin: 0 10px;
 }
-div{
-  .signin{
+div {
+  .signin {
     margin: auto;
-    background-color: #F5CD3D;
+    background-color: #f5cd3d;
     color: black;
     font-size: calc(var(--size-height) / 25);
     font-weight: 600;
@@ -77,26 +93,25 @@ div{
     box-shadow: 0 5px 0 0 rgba(0, 0, 0, 0.2);
     padding: 10px 50px;
   }
-  .submit-button{
+  .submit-button {
     margin: auto;
     padding-top: 10px;
   }
-  
 }
-label{
+label {
   display: block;
   font-size: 1.5rem;
   font-weight: bold;
   margin-bottom: 1rem;
 }
 input {
-    width: 95%;
-    padding: 0.5rem;
-    font-size: 1.2rem;
-    border-radius: 0.25rem;
-    border: 1px solid #ccc;
+  width: 95%;
+  padding: 0.5rem;
+  font-size: 1.2rem;
+  border-radius: 0.25rem;
+  border: 1px solid #ccc;
 }
-form{
+form {
   margin: auto;
   width: 30%;
   display: flex;
@@ -122,18 +137,16 @@ form{
   align-items: center;
   justify-content: center;
 }
-.forgotten{
+.forgotten {
   margin: auto;
   color: #0b57d0;
   font-size: 1rem;
   letter-spacing: 0.005rem;
   line-height: 1.5rem;
-  font-family: 'Helvetica Neue', Helvetica, sans-serif;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
 }
-.eye{
+.eye {
   margin-top: 30%;
   margin-bottom: 30%;
 }
-
-
 </style>
