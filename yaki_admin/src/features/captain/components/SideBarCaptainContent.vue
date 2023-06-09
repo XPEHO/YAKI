@@ -1,23 +1,22 @@
 <script setup lang="ts">
-import { onBeforeMount, onMounted, onUpdated, reactive, ref } from 'vue';
-import TeamListElement from '@/features/captain/components/TeamListElement.vue';
-import SideBarElement from '@/shared/components/SideBarElement.vue';
-import isTeamSelected from '../services/isActiveTeam';
-import vector from '@/assets/Vector.png';
-import type { TeamType } from '@/services/team.type';
-import { teamService } from '@/services/team.service';
-import {useTeamStore} from '@/stores/teamStore';
+import {onBeforeMount, reactive} from "vue";
+import TeamListElement from "@/features/captain/components/TeamListElement.vue";
+import SideBarElement from "@/shared/components/SideBarElement.vue";
+import isTeamSelected from "../services/isActiveTeam";
+import vector from "@/assets/Vector.png";
+import type {TeamType} from "@/services/team.type";
+import {teamService} from "@/services/team.service";
+import {useTeamStore} from "@/stores/teamStore.js";
 const store = useTeamStore();
 const teams = reactive({
   list: [] as TeamType[],
 });
 onBeforeMount(async () => {
   teams.list = await teamService.getAllTeamsWithinCaptain(2);
-  
 });
 const selectedTeam = (id: number) => {
   isTeamSelected.setTeam(id);
-  store.setTeam(id)
+  store.setTeam(id);
 };
 </script>
 
@@ -25,8 +24,7 @@ const selectedTeam = (id: number) => {
   <side-bar-element
     v-bind:innerText="'My teams'"
     v-bind:iconPath="vector"
-    v-bind:isSelected="true"
-  />
+    v-bind:isSelected="true" />
 
   <section class="team-list">
     <team-list-element
@@ -34,8 +32,7 @@ const selectedTeam = (id: number) => {
       :key="index"
       @click="() => selectedTeam(team.id)"
       v-bind:id="team.id"
-      v-bind:teamName="team.teamName"
-    />
+      v-bind:teamName="team.teamName" />
   </section>
 </template>
 
