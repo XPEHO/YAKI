@@ -12,6 +12,7 @@ const teams = reactive({
   list: [] as TeamType[],
 });
 onBeforeMount(async () => {
+  console.log("testComponent")
   teams.list = await teamService.getAllTeamsWithinCaptain(343);
 });
 const selectedTeam = (id: number) => {
