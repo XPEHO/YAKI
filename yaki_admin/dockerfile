@@ -16,4 +16,4 @@ COPY . .
 RUN npm run build-uat
 
 EXPOSE $VITE_PORT
-CMD ["http-server", "dist", "-p", "4173"]
+CMD ["http-server", "dist"]
