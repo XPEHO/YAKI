@@ -8,6 +8,7 @@ WORKDIR /app
 COPY ["package.json", "package-lock.json*", "./"]
 # install project dependencies
 RUN npm ci --silent 
+RUN npm install -g http-server
 
 # copy project files and folders to the current working directory (i.e. 'app' folder)
 COPY . .
@@ -15,4 +16,4 @@ COPY . .
 RUN npm run build-uat
 
 EXPOSE $VITE_PORT
-CMD ["http-server", "dist", "-p", $VITE_PORT]
+CMD ["http-server", "dist", "-p", "4173"]
