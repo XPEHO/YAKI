@@ -5,8 +5,8 @@ test("isTeamSelected", () => {
   test("isSameIndex", () => {
     it("should return true if the given team ID is the same as the selected team ID", () => {
       // Arrange
-      isTeamSelected.id = 1;
-      const teamId = 1;
+      isTeamSelected.id = 343;
+      const teamId = 343;
 
       // Act
       const result = isTeamSelected.isSameIndex(teamId);
@@ -18,7 +18,7 @@ test("isTeamSelected", () => {
     it("should return false if the given team ID is different from the selected team ID", () => {
       // Arrange
       isTeamSelected.id = 1;
-      const teamId = 2;
+      const teamId = 343;
 
       // Act
       const result = isTeamSelected.isSameIndex(teamId);

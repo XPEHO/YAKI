@@ -7,7 +7,7 @@ import {reactive} from "vue";
  * Apply css class if true, if false its not applied.
  */
 const isTeamSelected = reactive({
-  id: 1,
+  id: 343,
   setTeam(teamId: number) {
     this.id = teamId;
   },
