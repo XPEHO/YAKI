@@ -15,5 +15,9 @@ COPY . .
 # build app for production with minification
 RUN npm run build-uat
 
+FROM nginx:1.21.5 as production-build
+
+COPY --from=builder /vue-ui/dist /usr/share/nginx/html
+
 EXPOSE $VITE_PORT
-CMD ["http-server", "dist", "-p", "4173"]
+ENTRYPOINT  ["nginx", "-g", "daemon off;"]
