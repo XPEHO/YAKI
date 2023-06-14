@@ -18,7 +18,6 @@ class MobileOrientedAdapter extends CustomAdapter {
       },
       validateCertificate: (certificate, host, port) {
         return true;
-        //certificate.pem == cer;
       },
     );
   }
