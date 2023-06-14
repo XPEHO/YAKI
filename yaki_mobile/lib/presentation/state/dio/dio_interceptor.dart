@@ -33,7 +33,10 @@ final dioInterceptor = Provider(
       ),
     );
     if (!kDebugMode) {
-      dio.httpClientAdapter = CustomAdapter.instance!.getHttpClientAdapter();
+      CustomAdapter? customAdapter = CustomAdapter.instance;
+      if (customAdapter != null) {
+        dio.httpClientAdapter = customAdapter.getHttpClientAdapter();
+      }
     }
     return dio;
   },
