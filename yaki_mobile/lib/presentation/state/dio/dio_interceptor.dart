@@ -2,10 +2,10 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:dio/io.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:yaki/presentation/state/dio/custom_adapter.dart';
 
 final certificateProvider = Provider((ref) => "");
 
@@ -33,18 +33,10 @@ final dioInterceptor = Provider(
       ),
     );
     if (!kDebugMode) {
-      final sccontext = ref.read(securityContextProvider);
-      //final cer = ref.read(certificateProvider);
-      dio.httpClientAdapter = IOHttpClientAdapter(
-        onHttpClientCreate: (_) {
-          return HttpClient(context: sccontext)
-            ..badCertificateCallback = (_, __, ___) => true;
-        },
-        validateCertificate: (certificate, host, port) {
-          return true;
-          //certificate.pem == cer;
-        },
-      );
+      CustomAdapter? customAdapter = CustomAdapter.instance;
+      if (customAdapter != null) {
+        dio.httpClientAdapter = customAdapter.getHttpClientAdapter();
+      }
     }
     return dio;
   },
