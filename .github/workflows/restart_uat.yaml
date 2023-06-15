@@ -1,10 +1,11 @@
 name: Restart UAT
 
 on:
-  push:
-    branches:
-      - main
-      - chore/restart_uat
+  workflow_run:
+    workflows:
+      - Create and publish all Docker images
+    types:
+      - completed
   workflow_dispatch:
     inputs:
       branch:
@@ -15,7 +16,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
