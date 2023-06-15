@@ -22,10 +22,6 @@ class HeaderDeclaration extends StatelessWidget {
     required this.headerHint,
   });
 
-  void onAvatarIconPress(BuildContext context) {
-    context.go('/team');
-  }
-
   /// Called when the picto switch button is tapped.
   /// Checks the current route and navigates to the corresponding route.
   void onPictoSwitchTap(BuildContext context) {
@@ -75,7 +71,7 @@ class HeaderDeclaration extends StatelessWidget {
                       // top right circle avatar
                       AvatarIcon(
                         pictoIcon: pictoIcon,
-                        onPressed: () => onAvatarIconPress(context),
+                        onPressed: () => {},
                       ),
                     ],
                   ),

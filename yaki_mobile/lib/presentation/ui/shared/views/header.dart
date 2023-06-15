@@ -17,8 +17,6 @@ class Header extends StatelessWidget {
     required this.headerHint,
   });
 
-  void onAvatarIconPress() {}
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -53,7 +51,7 @@ class Header extends StatelessWidget {
                   // top right circle avatar
                   AvatarIcon(
                     pictoIcon: pictoIcon,
-                    onPressed: onAvatarIconPress,
+                    onPressed: () {},
                   ),
                 ],
               ),
