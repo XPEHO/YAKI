@@ -84,6 +84,8 @@ jobs:
         run: |
           echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io --username phanatic --password-stdin
           cd yaki_admin
-          docker build -t yaki_admin .
+          mkdir .env
+          echo ${{ secrets.VITE_ENV }} | base64 -d > .env
+          docker build --build-arg -t yaki_admin .
           docker tag yaki_admin ghcr.io/xpeho/yaki:frontend-admin-latest
           docker push ghcr.io/xpeho/yaki:frontend-admin-latest
