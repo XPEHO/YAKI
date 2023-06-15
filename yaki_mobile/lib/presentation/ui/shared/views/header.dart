@@ -63,7 +63,7 @@ class Header extends StatelessWidget {
             Expanded(
               flex: 2,
               child: Padding(
-                padding: const EdgeInsets.only(top: 40),
+                padding: const EdgeInsets.only(top: 20),
                 child: Text(
                   headerHint,
                   style: textStyleHeaderBig(),

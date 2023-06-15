@@ -38,19 +38,17 @@ class _CaptainBodyState extends ConsumerState<CaptainBody> {
 
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 20, left: 10, right: 10),
-          child: InputApp(
-            // Field for search by name or status
-            inputText: tr('inputCaptain'),
-            inputHint: tr('hintCaptain'),
-            password: false,
-            controller: captainInputController,
-          ),
-        ),
-        SizedBox(
-          width: size.width * 0.95,
-          height: size.height * 0.4,
+        // Padding(
+        //   padding: const EdgeInsets.only(top: 20, left: 10, right: 10),
+        //   child: InputApp(
+        //     // Field for search by name or status
+        //     inputText: tr('inputCaptain'),
+        //     inputHint: tr('hintCaptain'),
+        //     password: false,
+        //     controller: captainInputController,
+        //   ),
+        // ),
+        Expanded(
           child: ListView.builder(
             // This widget allows you to create a list object and iterate on it
             itemCount: listTeamMate.length,

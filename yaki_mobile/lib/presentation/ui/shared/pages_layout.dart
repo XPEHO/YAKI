@@ -18,7 +18,7 @@ class PagesLayout extends StatelessWidget {
       body: Column(
         children: [
           Expanded(
-            flex: 6,
+            flex: 5,
             child: header,
           ),
           Expanded(flex: 7, child: bodyContent),

@@ -15,14 +15,18 @@ class _CaptainView extends State<CaptainView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PagesLayout(
-        header: Header(
-          pictoIcon: 'assets/images/captain.svg',
-          pictoPath: 'assets/images/captain.svg',
-          headerTitle: tr('captainTitle'),
-          headerHint: tr('captainHeaderTitle'),
+      body: RefreshIndicator(
+        triggerMode: RefreshIndicatorTriggerMode.anywhere,
+        onRefresh: () async => print('oui'),
+        child: PagesLayout(
+          header: Header(
+            pictoIcon: 'assets/images/captain.svg',
+            pictoPath: 'assets/images/captain.svg',
+            headerTitle: tr('captainTitle'),
+            headerHint: tr('captainHeaderTitle'),
+          ),
+          bodyContent: const CaptainBody(),
         ),
-        bodyContent: const CaptainBody(),
       ),
     );
   }
