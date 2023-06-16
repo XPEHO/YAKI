@@ -28,10 +28,6 @@ public class AuthenticationControllers {
     public ResponseEntity<AuthenticationResponse> authenticate(
             @RequestBody AuthenticationRequest request
     ) {
-<<<<<<< HEAD
         return ResponseEntity.ok(authenticationService.authenticate(request));
-=======
-        return ResponseEntity.ok(service.authenticate(request));
->>>>>>> 16bb00b (feat(athentication): configuration security jwt authent)
     }
 }
