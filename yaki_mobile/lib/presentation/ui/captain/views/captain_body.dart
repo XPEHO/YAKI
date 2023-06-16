@@ -1,10 +1,7 @@
-import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yaki/presentation/state/providers/team_mate_provider.dart';
 import 'package:yaki/presentation/ui/captain/views/team_mate_card.dart';
-import 'package:yaki/presentation/ui/shared/views/input_app.dart';
 
 /// using ConsumerStatefulWidget (statefullWidget) to have access to the WidgetRef object
 /// allowing the current widget to have access to any provider.
@@ -33,37 +30,26 @@ class _CaptainBodyState extends ConsumerState<CaptainBody> {
     // Monitors changes in card status
     final listTeamMate = ref.watch(teamMateProvider);
 
-    // recovers device dimensions
-    var size = MediaQuery.of(context).size;
-
-    return Column(
-      children: [
-        // Padding(
-        //   padding: const EdgeInsets.only(top: 20, left: 10, right: 10),
-        //   child: InputApp(
-        //     // Field for search by name or status
-        //     inputText: tr('inputCaptain'),
-        //     inputHint: tr('hintCaptain'),
-        //     password: false,
-        //     controller: captainInputController,
-        //   ),
-        // ),
-        Expanded(
-          child: ListView.builder(
-            // This widget allows you to create a list object and iterate on it
-            itemCount: listTeamMate.length,
-            itemBuilder: (context, index) {
-              return CardTeamMate(
-                // Cards of the Team Mate
-                firstName: (listTeamMate[index].userFirstName),
-                lastName: (listTeamMate[index].userLastName),
-                dateActu: (listTeamMate[index].declarationDate),
-                status: (listTeamMate[index].declarationStatus),
-              );
-            },
-          ),
-        ),
-      ],
+    return RefreshIndicator(
+      onRefresh: () async {
+        await Future.delayed(const Duration(seconds: 1));
+        setState(() {
+          ref.read(teamMateProvider.notifier).fetchTeamMates();
+        });
+      },
+      child: ListView.builder(
+        // This widget allows you to create a list object and iterate on it
+        itemCount: listTeamMate.length,
+        itemBuilder: (context, index) {
+          return CardTeamMate(
+            // Cards of the Team Mate
+            firstName: (listTeamMate[index].userFirstName),
+            lastName: (listTeamMate[index].userLastName),
+            dateActu: (listTeamMate[index].declarationDate),
+            status: (listTeamMate[index].declarationStatus),
+          );
+        },
+      ),
     );
   }
 }

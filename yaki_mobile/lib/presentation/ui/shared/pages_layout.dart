@@ -21,7 +21,10 @@ class PagesLayout extends StatelessWidget {
             flex: 5,
             child: header,
           ),
-          Expanded(flex: 7, child: bodyContent),
+          Expanded(
+            flex: 7,
+            child: bodyContent,
+          ),
         ],
       ),
     );
