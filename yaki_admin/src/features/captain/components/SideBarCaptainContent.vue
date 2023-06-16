@@ -12,7 +12,7 @@ const teams = reactive({
   list: [] as TeamType[],
 });
 onBeforeMount(async () => {
-  teams.list = await teamService.getAllTeamsWithinCaptain(2);
+  teams.list = await teamService.getAllTeamsWithinCaptain(343);
 });
 const selectedTeam = (id: number) => {
   isTeamSelected.setTeam(id);
