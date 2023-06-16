@@ -1,21 +1,16 @@
-FROM node:lts-alpine
-# install simple http server for serving static content
-# make the 'app' folder the current working directory
+FROM node:lts-alpine as build-stage
 RUN mkdir /app
-
 WORKDIR /app
-# copy both 'package.json' and 'package-lock.json' (if available)
-COPY ["package.json", "package-lock.json*", "./"]
-# install project dependencies
-RUN npm install --silent 
-RUN npm install -g http-server 
-RUN npm install --global npm-run-all
-
-# copy project files and folders to the current working directory (i.e. 'app' folder)
+COPY package*.json ./
+RUN npm install
 COPY . .
-# build app for production with minification
-RUN npm run build
+RUN npm run build-uat
 
+FROM nginx:stable-alpine as production-stage
+COPY --from=build-stage /app/dist /usr/share/nginx/html
 
-EXPOSE 4173
-CMD ["http-server", "dist", "-p", "4173"]
+COPY ./substitute_environment_variables.sh /substitute_environment_variables.sh
+RUN chmod +x /substitute_environment_variables.sh
+ENTRYPOINT ["/substitute_environment_variables.sh"]
+
+EXPOSE 80

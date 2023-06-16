@@ -1,6 +1,7 @@
 import type {TeamMateType} from "./teamMate.type";
+import {environmentVar} from "@/envPlaceholder";
 
-const URL: string | undefined = import.meta.env.VITE_API_URL;
+const URL: string = environmentVar.baseURL;
 
 // Defining a TeamMateService class to handle HTTP requests to the API
 export class TeamMateService {
