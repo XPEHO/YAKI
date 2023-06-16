@@ -5,6 +5,7 @@ import com.xpeho.yaki_admin_backend.data.sources.UserJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -17,13 +18,14 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
 
 
-    public AuthenticationResponse register(RegisterRequest request) {
-        UserModel user = new UserModel(
-                request.getLastname(),
-                request.getFirstname(),
-                request.getEmail(),
-                request.getLogin(),
-                request.getPassword());
+    public AuthenticationResponse register(AuthenticationRequest request) {
+        var user = User.builder()
+                .firstname(request.getFirstname())
+                .lastname(request.getLastname())
+                .email(request.getEmail())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .role(Role.USER)
+                .build();
         repository.save(user);
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
@@ -38,7 +40,7 @@ public class AuthenticationService {
                         request.getPassword()
                 )
         );
-        UserModel user = repository.findByEmail(request.getEmail())
+        var user = repository.findByEmail(request.getEmail())
                 .orElseThrow();
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
