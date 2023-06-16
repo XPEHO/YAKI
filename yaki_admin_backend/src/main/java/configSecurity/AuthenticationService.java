@@ -38,7 +38,11 @@ public class AuthenticationService {
                         request.getPassword()
                 )
         );
+<<<<<<< HEAD
         UserModel user = repository.findByEmail(request.getEmail())
+=======
+        var user = repository.findByEmail(request.getEmail())
+>>>>>>> c273ed2 (feat(athentication): configuration security jwt authent)
                 .orElseThrow();
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
