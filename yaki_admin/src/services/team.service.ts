@@ -2,7 +2,6 @@ import type {TeamType} from "./team.type";
 import {environmentVar} from "@/envPlaceholder";
 
 const URL: string = environmentVar.baseURL;
-console.log(URL);
 
 export class TeamService {
   /* `getAllTeamsWithinCaptain` is a method of the `TeamService` class that takes in a `number`
