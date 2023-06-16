@@ -3,6 +3,7 @@ package com.xpeho.yaki_admin_backend.presentation.controllers;
 import configSecurity.AuthenticationRequest;
 import configSecurity.AuthenticationResponse;
 import configSecurity.AuthenticationService;
+import configSecurity.RegisterRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,7 +20,7 @@ public class AuthenticationControllers {
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(
-            @RequestBody AuthenticationRequest request
+            @RequestBody RegisterRequest request
     ) {
         return ResponseEntity.ok(service.register(request));
     }
