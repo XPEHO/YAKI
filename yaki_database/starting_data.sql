@@ -1,6 +1,6 @@
 -- INSERT USERS
 
-INSERT INTO public.user(
+INSERT INTO "public.user"(
 	user_last_name, user_first_name, user_email, user_login, user_password)
 	VALUES ('DuGrand', 'Jacques', 'dugrand.jacques@mail.com', 'dugrand', '$5$rounds=10000$abcdefghijklmnop$OA65zl2VDjeMzN.O3S/2pSV4eWCglNv9o4nVabmkQz5'),
            ('Sauvagneau', 'Benjamin', 'benjamin.sauvagneau@mail.com', 'sauvagneau', '$5$rounds=10000$abcdefghijklmnop$xlREmQbTt/diimOXnxUzDQaWJx8CPvKtJFL5EH8jAE7'),

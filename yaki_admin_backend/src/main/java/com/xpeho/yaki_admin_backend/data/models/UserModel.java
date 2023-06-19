@@ -11,7 +11,7 @@ import java.util.List;
 
 
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "user", schema = "public")
+@Table(name = "\"user\"", schema = "public")
 @Entity
 public class UserModel implements UserDetails {
 
