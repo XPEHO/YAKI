@@ -1,5 +1,6 @@
 package configSecurity;
 
+import com.xpeho.yaki_admin_backend.data.sources.UserJpaRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,7 +15,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class ApplicationConfig {
-    
+
+    private final UserJpaRepository jpaRepository;
+
+    public ApplicationConfig(UserJpaRepository jpaRepository) {
+        this.jpaRepository = jpaRepository;
+    }
+
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> (UserDetails) jpaRepository.findByEmail(username)
