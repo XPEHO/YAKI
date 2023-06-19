@@ -30,13 +30,13 @@ void main() {
               "userFirstName": "Dupond",
               "userLastName": "Dupond",
               "declarationDate": '2023-03-20T10:00:00.950Z',
-              "declarationStatus": "VACATION",
+              "declarationStatus": "vacation",
             },
             {
               "userFirstName": "Jean",
               "userLastName": "Val",
               "declarationDate": '2023-03-20T10:00:00.950Z',
-              "declarationStatus": "REMOTE",
+              "declarationStatus": "remote",
             }
           ];
 
@@ -45,13 +45,13 @@ void main() {
               userFirstName: "Dupond",
               userLastName: "Dupond",
               declarationDate: DateTime.parse('2023-03-20T10:00:00.950Z'),
-              declarationStatus: "VACATION",
+              declarationStatus: "vacation",
             ),
             TeamMateEntity(
               userFirstName: "Jean",
               userLastName: "Val",
               declarationDate: DateTime.parse('2023-03-20T10:00:00.950Z'),
-              declarationStatus: "REMOTE",
+              declarationStatus: "remote",
             )
           ];
 
@@ -64,6 +64,8 @@ void main() {
 
           List<TeamMateEntity> teamMatelist =
               await teamMateRepository.getTeamMate(captainId);
+
+          printOnFailure(teamMatelist[0].toString());
 
           expect(listEquals(teamMatelist, teamMatelistReturned), true);
         },
