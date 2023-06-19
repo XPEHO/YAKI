@@ -27,7 +27,8 @@ class CaptainView extends ConsumerWidget {
           pictoIcon: 'assets/images/captain.svg',
           pictoPath: 'assets/images/captain.svg',
           headerTitle: tr('captainHeaderTitle'),
-          headerHint: '${user!.firstName} ${user.lastName}',
+          headerHint:
+              user != null ? '${user.firstName} ${user.lastName}' : 'captain',
         ),
         bodyContent: const CaptainBody(),
       ),
