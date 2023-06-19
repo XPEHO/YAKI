@@ -11,7 +11,8 @@ enum StatusEnum {
   halfDay('halfDay'),
   fullDay('fullDay'),
   morningTr('Morning'),
-  afternoonTr('Afternoon');
+  afternoonTr('Afternoon'),
+  undeclared('undeclared');
 
   final String text;
   const StatusEnum(this.text);
@@ -52,14 +53,14 @@ class StatusUtils {
   /// the selected 'error' image.
   static String getImage(String status) {
     String link = 'assets/images/unknown.svg';
-    String keyFormat = toCamelCase(toFormat: status, splitChar: ' ');
 
     if (status != emptyDeclarationStatus.first) {
-      if (keyFormat == StatusEnum.other.name) {
+      if (status == StatusEnum.other.name) {
         link = 'assets/images/dots.svg';
+      } else if (status == StatusEnum.undeclared.name) {
+        link = 'assets/images/unknown.svg';
       } else {
-        String key = StatusEnum.values.byName(keyFormat).name;
-        link = 'assets/images/$key.svg';
+        link = 'assets/images/$status.svg';
       }
     }
     return link;
@@ -75,7 +76,7 @@ class StatusUtils {
 
     if (status != emptyDeclarationStatus.first) {
       keyFormat = keyFormat[0].toUpperCase() + keyFormat.substring(1);
-      translationKey = "Status$keyFormat$mode";
+      translationKey = "status$keyFormat$mode";
     }
     return translationKey;
   }

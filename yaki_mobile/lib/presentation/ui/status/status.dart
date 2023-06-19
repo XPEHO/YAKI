@@ -67,7 +67,7 @@ class Status extends ConsumerWidget {
                         backgroundColor: Colors.grey[400],
                       ),
                       child: Text(
-                        tr("StatusButton"),
+                        tr("statusButton"),
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 16,
