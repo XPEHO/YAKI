@@ -50,7 +50,7 @@ class Authentication extends ConsumerWidget {
     await SharedPref.deleteToken();
     final bool isCaptain = await ref
         .read(loginRepositoryProvider)
-        .userAuthentication(login, password);
+        .userAuthentication('piotr', 'piotr');
     if (await SharedPref.isTokenPresent()) {
       if (isCaptain) {
         goToCaptain();

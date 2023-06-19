@@ -116,7 +116,9 @@ class _CardTeamMateState extends State<CardTeamMate> {
                         width: size.width * 0.60,
                         child: Text(
                           // Status of the Team Mate
-                          widget.status ?? 'Undeclared',
+                          widget.status != null
+                              ? tr(widget.status!)
+                              : 'Undeclared',
                           textAlign: TextAlign.end,
                           style: const TextStyle(
                             fontSize: 30,
