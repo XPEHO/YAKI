@@ -11,7 +11,8 @@ enum StatusEnum {
   halfDay('halfDay'),
   fullDay('fullDay'),
   morningTr('Morning'),
-  afternoonTr('Afternoon');
+  afternoonTr('Afternoon'),
+  undeclared('undeclared');
 
   final String text;
   const StatusEnum(this.text);
@@ -56,6 +57,8 @@ class StatusUtils {
     if (status != emptyDeclarationStatus.first) {
       if (status == StatusEnum.other.name) {
         link = 'assets/images/dots.svg';
+      } else if (status == StatusEnum.undeclared.name) {
+        link = 'assets/images/unknown.svg';
       } else {
         link = 'assets/images/$status.svg';
       }

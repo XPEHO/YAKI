@@ -29,15 +29,15 @@ class TeamMateRepository {
 
           teamMatelist = modelList.map(
             (e) {
-              final camelCase = StatusUtils.toCamelCase(
-                toFormat: e.declarationStatus!,
+              final statusInCamelCase = StatusUtils.toCamelCase(
+                toFormat: e.declarationStatus ?? 'undeclared',
                 splitChar: ' ',
               );
               return TeamMateEntity(
                 userFirstName: e.userFirstName,
                 userLastName: e.userLastName,
                 declarationDate: e.declarationDate,
-                declarationStatus: camelCase,
+                declarationStatus: statusInCamelCase,
               );
             },
           ).toList();

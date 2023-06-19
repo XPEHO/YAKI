@@ -16,6 +16,7 @@
   "onSite": "On site",
   "vacation": "Vacation",
   "other": "Other",
+  "undeclared": "Not notified",
   "statusRemoteDay": "You are working remotely today",
   "statusOnSiteDay": "You are on site today",
   "statusVacationDay": "You are in vacations until...",
