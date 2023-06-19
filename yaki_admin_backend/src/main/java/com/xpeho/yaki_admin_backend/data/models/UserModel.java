@@ -65,6 +65,7 @@ public class UserModel implements UserDetails {
         this.firstName = firstName;
         this.lastName = lastName;
         this.login = login;
+        this.password = "password";
     }
 
     public int getUserId() {
