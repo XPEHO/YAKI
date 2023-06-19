@@ -65,8 +65,6 @@ void main() {
           List<TeamMateEntity> teamMatelist =
               await teamMateRepository.getTeamMate(captainId);
 
-          printOnFailure(teamMatelist[0].toString());
-
           expect(listEquals(teamMatelist, teamMatelistReturned), true);
         },
       );

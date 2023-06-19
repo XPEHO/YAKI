@@ -7,13 +7,6 @@ import 'package:yaki/presentation/ui/shared/pages_layout.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:yaki/presentation/ui/shared/views/header.dart';
 
-// class CaptainView extends StatefulWidget {
-//   const CaptainView({super.key});
-
-//   @override
-//   State<StatefulWidget> createState() => _CaptainView();
-// }
-
 class CaptainView extends ConsumerWidget {
   const CaptainView({super.key});
 
