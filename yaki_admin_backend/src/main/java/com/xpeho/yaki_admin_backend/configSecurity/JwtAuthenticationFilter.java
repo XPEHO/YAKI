@@ -1,4 +1,4 @@
-package configSecurity;
+package com.xpeho.yaki_admin_backend.configSecurity;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
