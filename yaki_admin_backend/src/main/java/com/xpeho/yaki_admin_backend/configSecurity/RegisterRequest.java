@@ -1,6 +1,11 @@
 package com.xpeho.yaki_admin_backend.configSecurity;
 
 public class RegisterRequest {
+import lombok.Builder;
+
+@Builder
+public class RegisterRequest {
+
     private String firstname;
     private String lastname;
     private String login;
