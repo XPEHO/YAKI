@@ -46,10 +46,6 @@ public class ApplicationConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        String encodingId = "sha256";
-        Map<String, PasswordEncoder> encoders = new HashMap<>();
-        encoders.put(encodingId, new BCryptPasswordEncoder());
-
-        return new DelegatingPasswordEncoder(encodingId, encoders);
+        return new BCryptPasswordEncoder();
     }
 }
