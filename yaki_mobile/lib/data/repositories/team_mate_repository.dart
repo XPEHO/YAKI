@@ -3,6 +3,7 @@ import 'package:retrofit/retrofit.dart';
 import 'package:yaki/data/models/team_mate_model.dart';
 import 'package:yaki/data/sources/remote/team_mate_api.dart';
 import 'package:yaki/domain/entities/team_mate_entity.dart';
+import 'package:yaki/presentation/displaydata/status_page_content.dart';
 
 class TeamMateRepository {
   final TeamMateApi teamMateApi;
@@ -32,7 +33,10 @@ class TeamMateRepository {
                 userFirstName: e.userFirstName,
                 userLastName: e.userLastName,
                 declarationDate: e.declarationDate,
-                declarationStatus: e.declarationStatus,
+                declarationStatus: StatusUtils.toCamelCase(
+                  toFormat: e.declarationStatus!,
+                  splitChar: ' ',
+                ),
               );
             },
           ).toList();
