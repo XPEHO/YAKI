@@ -1,5 +1,8 @@
 package com.xpeho.yaki_admin_backend.configSecurity;
 
+import lombok.Builder;
+
+@Builder
 public class AuthenticationResponse {
     private String token;
 

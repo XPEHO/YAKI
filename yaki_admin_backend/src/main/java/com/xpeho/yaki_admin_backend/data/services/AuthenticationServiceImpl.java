@@ -24,7 +24,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         this.jwtService = jwtService;
         this.authenticationManager = authenticationManager;
         this.passwordEncoder = passwordEncoder;
-
     }
 
     @Override
