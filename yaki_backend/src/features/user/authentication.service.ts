@@ -1,6 +1,7 @@
 import {Request, Response, NextFunction} from "express";
 import {CaptainDtoOut} from "../captain/captain.dtoOut";
 import {TeamMateDtoOut} from "../teamMate/teamMate.dtoOut";
+import EncryptionService from "./encryption.service";
 
 const jwt = require("jsonwebtoken");
 
@@ -12,7 +13,7 @@ class Service {
    * @returns
    */
   checkPasswords = async (passwordDb: string, passwordClient: string) => {
-    if (passwordDb === passwordClient) {
+    if (passwordDb === EncryptionService.hash(passwordClient)) {
       return true;
     }
     return false;
