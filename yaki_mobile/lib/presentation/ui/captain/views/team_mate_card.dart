@@ -117,7 +117,10 @@ class _CardTeamMateState extends State<CardTeamMate> {
                         child: Text(
                           // Status of the Team Mate
                           widget.status != null
-                              ? tr(widget.status!)
+                              ? tr(
+                                  StatusUtils.toCamelCase(
+                                      toFormat: widget.status!, splitChar: ' '),
+                                )
                               : 'Undeclared',
                           textAlign: TextAlign.end,
                           style: const TextStyle(
