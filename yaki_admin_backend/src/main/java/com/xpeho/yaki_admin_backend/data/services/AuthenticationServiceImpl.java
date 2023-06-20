@@ -33,10 +33,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 request.getFirstname(),
                 request.getEmail(),
                 request.getLogin(),
-                passwordEncoder.encode(request.getPassword()));
+                request.getPassword());
         repository.save(user);
         var jwtToken = jwtService.generateToken(user);
-        return new AuthenticationResponse(jwtToken,user.getUserId());
+        return new AuthenticationResponse(jwtToken);
     }
 
     @Override
