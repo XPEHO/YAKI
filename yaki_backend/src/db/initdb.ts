@@ -7,7 +7,7 @@ const readSqlFile = (file: string) => {
 };
 
 export const initdb = async () => {
-  createUser + readSqlFile("./src/db/create_tables.sql");
+  let createTable = createUser + readSqlFile("./src/db/create_tables.sql");
 
   const pool = new Pool({
     user: `${process.env.DB_USER}`,
@@ -16,6 +16,8 @@ export const initdb = async () => {
     password: `${process.env.DB_PASSWORD}`,
     port: Number(process.env.DB_PORT),
   });
+
+  await pool.query(createTable);
 
   await pool.end();
 };
