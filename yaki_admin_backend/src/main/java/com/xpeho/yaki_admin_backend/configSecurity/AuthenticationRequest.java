@@ -1,5 +1,8 @@
 package com.xpeho.yaki_admin_backend.configSecurity;
 
+import lombok.Builder;
+
+@Builder
 public class AuthenticationRequest {
     private String password;
     private String email;
@@ -17,12 +20,6 @@ public class AuthenticationRequest {
         this.password = password;
     }
 
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
     public String getEmail() {
         return email;
     }
