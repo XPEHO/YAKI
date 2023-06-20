@@ -32,7 +32,7 @@ class LoginRepository {
   /// * setSharedPreference() save token & userId to the sharedPreference
   /// * setLoggedUser() create the LoggedUser instance: front available information's.
   /// * change isCaptain value depending of the User model captainId attribute.
-  Future<bool> userAuthentication(String login, String password) async {
+  Future<bool> userAuthentications(String login, String password) async {
     // isCaptain determine redirection after login.
     bool isCaptain = false;
 
@@ -70,6 +70,48 @@ class LoginRepository {
       debugPrint('error during userAuthentication : $err');
     }
     return isCaptain;
+  }
+
+  // Send user's login information to the server and check if they are
+  // linked to an account registered in database.
+  Future<bool> userAuthentication(String login, String password) async {
+    LoginModel newLog =
+        LoginModel(login: login, password: hashPassword(password));
+
+    try {
+      final authenticationResponse = await _loginApi.postLogin(newLog);
+
+      final statusCode = authenticationResponse.response.statusCode;
+
+      if (statusCode == 200) {
+        // convert HttpResponse<dynamic> (Map<String, dynamic>) into Model using .fromJson method
+        final userResponse = User.fromJson(authenticationResponse.data);
+        setSharedPreference(userResponse);
+        setLoggedUser(userResponse);
+        return true;
+      } else {
+        switch (statusCode) {
+          case 204:
+            debugPrint("invalid login informations, code : $statusCode");
+            break;
+          case 401:
+            debugPrint("Invalid token, code : $statusCode");
+            break;
+          default:
+            throw Exception('Invalid statusCode : $statusCode');
+        }
+      }
+    } catch (err) {
+      debugPrint('error during userAuthentication : $err');
+    }
+    return false;
+  }
+
+  bool isCaptain() {
+    if (loggedUser!.captainId != null) {
+      return true;
+    }
+    return false;
   }
 
   /// Attributes from User model,

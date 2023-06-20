@@ -21,63 +21,79 @@ class Authentication extends ConsumerWidget {
   final loginController = TextEditingController();
   final passwordController = TextEditingController();
 
-  /// on 'Sign in' button press/tap :
-  /// * delete the previously saved token in the sharedPreferences
-  /// * POST to the API the login information's, by invoking the loginRepositoryProvider.userAuthentication() method,
-  /// then retrieve the boolean to know if the logged user is a captain.
-  ///
-  /// Depending of the newly saved token and if the user is a captain or not :
-  /// * route to the captain page
-  ///
-  /// Or
-  /// * route to the declaration page
-  /// fetch the latest declaration and retrieve the status,
-  ///
-  /// if not null
-  /// route to the status page directly
-  ///
-  /// if null
-  /// route to the declaration page
-  void onPressAuthent({
-    required WidgetRef ref,
-    required String login,
-    required String password,
-    required Function goToDeclarationPage,
-    required Function goToStatusPage,
-    required Function goToHalfdayStatusPage,
-    required Function goToCaptain,
-  }) async {
-    await SharedPref.deleteToken();
-    final bool isCaptain = await ref
-        .read(loginRepositoryProvider)
-        .userAuthentication(login, password);
-    if (await SharedPref.isTokenPresent()) {
-      if (isCaptain) {
-        goToCaptain();
-      } else {
-        ref.read(teamProvider.notifier).fetchTeams();
-        final declarationStatus =
-            await ref.read(declarationProvider.notifier).getDeclaration();
-        if (declarationStatus.length > 1) {
-          ref.read(halfdayStatusPageProvider.notifier).getHalfdayDeclaration();
-          goToHalfdayStatusPage();
-        } else if (declarationStatus.length == 1 &&
-            declarationStatus != emptyDeclarationStatus) {
-          ref.read(statusPageProvider.notifier).getSelectedStatus();
-          goToStatusPage();
-        } else {
-          goToDeclarationPage();
-        }
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     bool isChecked = false;
 
     // Size of the device
     var size = MediaQuery.of(context).size;
+
+    // Show a snackbar at the bottom of the screen to notice the user that
+    // the login information he put are wrong
+    showSnackBar() {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(tr('authenticationFailed')),
+          duration: const Duration(seconds: 3),
+        ),
+      );
+    }
+
+    /// on 'Sign in' button press/tap :
+    /// * delete the previously saved token in the sharedPreferences
+    /// * POST to the API the login information's, by invoking the loginRepositoryProvider.userAuthentication() method,
+    /// then retrieve the boolean to know if the logged user is a captain.
+    ///
+    /// Depending of the newly saved token and if the user is a captain or not :
+    /// * route to the captain page
+    ///
+    /// Or
+    /// * route to the declaration page
+    /// fetch the latest declaration and retrieve the status,
+    ///
+    /// if not null
+    /// route to the status page directly
+    ///
+    /// if null
+    /// route to the declaration page
+    void onPressAuthent({
+      required WidgetRef ref,
+      required String login,
+      required String password,
+      required Function goToDeclarationPage,
+      required Function goToStatusPage,
+      required Function goToHalfdayStatusPage,
+      required Function goToCaptain,
+    }) async {
+      await SharedPref.deleteToken();
+      final bool authenticationResult = await ref
+          .read(loginRepositoryProvider)
+          .userAuthentication(login, password);
+      if (authenticationResult && await SharedPref.isTokenPresent()) {
+        final bool isCaptain = ref.read(loginRepositoryProvider).isCaptain();
+        if (isCaptain) {
+          goToCaptain();
+        } else {
+          ref.read(teamProvider.notifier).fetchTeams();
+          final declarationStatus =
+              await ref.read(declarationProvider.notifier).getDeclaration();
+          if (declarationStatus.length > 1) {
+            ref
+                .read(halfdayStatusPageProvider.notifier)
+                .getHalfdayDeclaration();
+            goToHalfdayStatusPage();
+          } else if (declarationStatus.length == 1 &&
+              declarationStatus != emptyDeclarationStatus) {
+            ref.read(statusPageProvider.notifier).getSelectedStatus();
+            goToStatusPage();
+          } else {
+            goToDeclarationPage();
+          }
+        }
+      } else {
+        showSnackBar();
+      }
+    }
 
     return Scaffold(
       body: Column(
@@ -175,7 +191,7 @@ class Authentication extends ConsumerWidget {
                       child: Text(
                         tr('forgotPassword'),
                         style: const TextStyle(
-                          color: Colors.purple,
+                          color: Colors.black,
                         ),
                       ),
                     ),

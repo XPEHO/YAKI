@@ -53,6 +53,7 @@ class StatusUtils {
   /// the selected 'error' image.
   static String getImage(String status) {
     String link = 'assets/images/unknown.svg';
+    status = toCamelCase(toFormat: status, splitChar: ' ');
 
     if (status != emptyDeclarationStatus.first) {
       if (status == StatusEnum.other.name) {
@@ -63,6 +64,7 @@ class StatusUtils {
         link = 'assets/images/$status.svg';
       }
     }
+
     return link;
   }
 
