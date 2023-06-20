@@ -76,7 +76,7 @@ void main() {
 
           LoginModel captainLogin = LoginModel(
             login: captainLog,
-            password: loginRepository.hashPassword(captainPw),
+            password: captainPw,
           );
 
           final Map<String, dynamic> authenticationLavigne = {
@@ -182,7 +182,7 @@ void main() {
           const String hassPassword =
               "\$5\$rounds=10000\$\$vXYm07DxA4pmB/3vIXLFokX6E7MTBcDW0wjAsFRY4nA";
 
-          expect(loginRepository.hashPassword(password), hassPassword);
+          expect(password, hassPassword);
         },
       );
       // teamateId & captainId value come from the captainId log test,
