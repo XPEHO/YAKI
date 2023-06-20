@@ -5,16 +5,13 @@ import configSecurity.AuthenticationResponse;
 import configSecurity.AuthenticationService;
 import configSecurity.RegisterRequest;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/login")
 public class AuthenticationControllers {
-
-    private final AuthenticationService authenticationService;
+    final AuthenticationService authenticationService;
 
     public AuthenticationControllers(AuthenticationService authenticationService) {
         this.authenticationService = authenticationService;

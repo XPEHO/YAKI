@@ -17,7 +17,6 @@ import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfiguration {
-
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
 
@@ -62,7 +61,10 @@ public class SecurityConfiguration {
                                 .logoutUrl("/login/logout")
                                 .logoutSuccessUrl("/logout-success")
                                 .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
-                )
-                .build();
+                );
+
+
+        return http.build();
     }
+
 }
