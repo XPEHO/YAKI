@@ -23,11 +23,9 @@ public class SecurityConfiguration {
         this.authenticationProvider = authenticationProvider;
     }
 
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .csrf((csrf) -> csrf.disable())
+        return http
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(
                                 "/login/**",
@@ -58,10 +56,7 @@ public class SecurityConfiguration {
                                 .logoutUrl("/login/logout")
                                 .logoutSuccessUrl("/logout-success")
                                 .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
-                );
-
-
-        return http.build();
+                )
+                .build();
     }
-
 }
