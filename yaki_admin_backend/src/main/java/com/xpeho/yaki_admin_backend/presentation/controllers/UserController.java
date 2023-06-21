@@ -19,7 +19,7 @@ public class UserController {
 
     @PostMapping
     public UserEntity createUser(@RequestBody UserEntityIn userEntity) {
-
+        System.out.println("-------------------- try post a new user --------------------------------------------------");
         return userService.save(userEntity);
     }
 }
