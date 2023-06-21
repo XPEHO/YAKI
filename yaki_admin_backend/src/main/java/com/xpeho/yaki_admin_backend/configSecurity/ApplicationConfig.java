@@ -15,7 +15,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class ApplicationConfig {
-
     private final UserJpaRepository jpaRepository;
 
     public ApplicationConfig(UserJpaRepository jpaRepository) {
