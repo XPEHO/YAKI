@@ -31,50 +31,9 @@ class LoginRepository {
   /// * convert the HttpResponse.data into a User model instance,
   /// * setSharedPreference() save token & userId to the sharedPreference
   /// * setLoggedUser() create the LoggedUser instance: front available information's.
-  /// * change isCaptain value depending of the User model captainId attribute.
-  Future<bool> userAuthentications(String login, String password) async {
-    // isCaptain determine redirection after login.
-    bool isCaptain = false;
-
-    // for hash password, replace
-    // password: password
-    // with :
-    // password: hashPassword(password)
-    LoginModel newLog =
-        LoginModel(login: login, password: hashPassword(password));
-
-    try {
-      final authenticationResponse = await _loginApi.postLogin(newLog);
-
-      final statusCode = authenticationResponse.response.statusCode;
-      switch (statusCode) {
-        case 200:
-          // convert HttpResponse<dynamic> (Map<String, dynamic>) into Model using .fromJson method
-          final userResponse = User.fromJson(authenticationResponse.data);
-          setSharedPreference(userResponse);
-          setLoggedUser(userResponse);
-          if (userResponse.captainId != null) {
-            isCaptain = true;
-          }
-          break;
-        case 204:
-          debugPrint("invalid login informations, code : $statusCode");
-          break;
-        case 401:
-          debugPrint("Invalid token, code : $statusCode");
-          break;
-        default:
-          throw Exception('Invalid statusCode : $statusCode');
-      }
-    } catch (err) {
-      debugPrint('error during userAuthentication : $err');
-    }
-    return isCaptain;
-  }
-
-  // Send user's login information to the server and check if they are
-  // linked to an account registered in database.
   Future<bool> userAuthentication(String login, String password) async {
+    bool authenticationSuccess = false;
+
     LoginModel newLog =
         LoginModel(login: login, password: hashPassword(password));
 
@@ -88,7 +47,7 @@ class LoginRepository {
         final userResponse = User.fromJson(authenticationResponse.data);
         setSharedPreference(userResponse);
         setLoggedUser(userResponse);
-        return true;
+        authenticationSuccess = true;
       } else {
         switch (statusCode) {
           case 204:
@@ -104,9 +63,10 @@ class LoginRepository {
     } catch (err) {
       debugPrint('error during userAuthentication : $err');
     }
-    return false;
+    return authenticationSuccess;
   }
 
+  // Check if the user stored in the repository is a captain or a teamMate
   bool isCaptain() {
     if (loggedUser!.captainId != null) {
       return true;
