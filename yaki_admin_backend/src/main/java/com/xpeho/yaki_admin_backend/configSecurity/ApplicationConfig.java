@@ -11,17 +11,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-<<<<<<< HEAD
 import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.HashMap;
 import java.util.Map;
 
-=======
-import org.springframework.security.crypto.password.PasswordEncoder;
-
->>>>>>> a11520d (feat(athentication): resolve bug and add swagger accessibility)
 @Configuration
 public class ApplicationConfig {
     private final UserJpaRepository jpaRepository;
