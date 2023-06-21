@@ -15,13 +15,10 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl implements UserService {
 
-
     final UserJpaRepository userJpaRepository;
-
 
     public UserServiceImpl(UserJpaRepository userJpaRepository) {
         this.userJpaRepository = userJpaRepository;
-
     }
 
     @Override
@@ -44,7 +41,6 @@ public class UserServiceImpl implements UserService {
                 user.email(),
                 user.login());
     }
-
 
     @Override
     public UserEntity findById(int id) {
