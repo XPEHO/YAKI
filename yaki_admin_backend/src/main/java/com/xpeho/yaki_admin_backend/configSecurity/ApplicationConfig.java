@@ -12,6 +12,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableWebSecurity
 public class ApplicationConfig {
 
+    // temporary disabler springsecurity for Bcrypt usage, must be remove
+    // when proper authentication is setup
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring()
