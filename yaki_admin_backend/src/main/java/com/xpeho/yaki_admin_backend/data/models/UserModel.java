@@ -4,6 +4,7 @@ package com.xpeho.yaki_admin_backend.data.models;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.codec.Hex;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -114,7 +115,7 @@ public class UserModel implements UserDetails {
     }
 
     public String getPassword() {
-        return password;
+        return new String(Hex.encode(this.password.getBytes()));
     }
 
     public void setPassword(String password) {
