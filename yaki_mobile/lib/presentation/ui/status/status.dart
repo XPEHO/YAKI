@@ -38,7 +38,7 @@ class Status extends ConsumerWidget {
                 flex: 5,
                 child: Center(
                   child: CircleAvatarSVG(
-                    iconPath: selectedStatus.image,
+                    iconPath: tr(selectedStatus.image),
                     radius: 80,
                   ),
                 ),
