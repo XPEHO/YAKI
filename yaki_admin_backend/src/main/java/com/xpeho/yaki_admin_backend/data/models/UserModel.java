@@ -115,7 +115,7 @@ public class UserModel implements UserDetails {
     }
 
     public String getPassword() {
-        return new String(Hex.encode(this.password.getBytes()));
+        return this.password;
     }
 
     public void setPassword(String password) {
