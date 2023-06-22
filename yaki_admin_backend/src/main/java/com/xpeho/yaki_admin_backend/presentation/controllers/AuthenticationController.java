@@ -1,5 +1,9 @@
 package com.xpeho.yaki_admin_backend.presentation.controllers;
 
+import configSecurity.AuthenticationRequest;
+import configSecurity.AuthenticationResponse;
+import configSecurity.AuthenticationService;
+import configSecurity.RegisterRequest;
 import com.xpeho.yaki_admin_backend.configSecurity.AuthenticationRequest;
 import com.xpeho.yaki_admin_backend.configSecurity.AuthenticationResponse;
 import com.xpeho.yaki_admin_backend.configSecurity.RegisterRequest;
@@ -11,14 +15,14 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 @RequestMapping("/login")
 public class AuthenticationController {
-    static AuthenticationService authenticationService;
+    final AuthenticationService authenticationService;
 
     public AuthenticationController(AuthenticationService authenticationService) {
-        AuthenticationController.authenticationService = authenticationService;
+        this.authenticationService = authenticationService;
     }
 
     @PostMapping("/register")
-    public static ResponseEntity<AuthenticationResponse> register(
+    public ResponseEntity<AuthenticationResponse> register(
             @RequestBody RegisterRequest request
     ) {
         return ResponseEntity.ok(authenticationService.register(request));
