@@ -1,6 +1,7 @@
 package com.xpeho.yaki_admin_backend.configSecurity;
 
 public class AuthenticationResponse {
+    @Autowired
     private String token;
     private int id;
     public AuthenticationResponse(String token,int id) {
