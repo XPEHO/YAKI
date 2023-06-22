@@ -17,6 +17,7 @@ import java.util.function.Function;
 
 @Service
 public class JwtService {
+
     @Value("${token.signing.key}")
     private String secretKey;
 
@@ -51,7 +52,7 @@ public class JwtService {
         final String userName = extractUserName(token);
         return (userName.equals(userDetails.getUsername())) && !isTokenExpired(token);
     }
- 
+
     private boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
@@ -60,7 +61,7 @@ public class JwtService {
         return extractClaim(token, Claims::getExpiration);
     }
 
-    private Claims extractAllClaims(String token) {
+    public Claims extractAllClaims(String token) {
         return Jwts
                 .parserBuilder()
                 .setSigningKey(getSignInKey())
