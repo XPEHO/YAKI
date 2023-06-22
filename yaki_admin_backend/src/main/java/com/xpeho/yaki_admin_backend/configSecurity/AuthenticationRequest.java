@@ -1,8 +1,6 @@
 package com.xpeho.yaki_admin_backend.configSecurity;
 
-import lombok.Builder;
 
-@Builder
 public class AuthenticationRequest {
     private String password;
     private String login;
