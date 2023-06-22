@@ -33,7 +33,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 request.getFirstname(),
                 request.getEmail(),
                 request.getLogin(),
-                request.getPassword());
+                passwordEncoder.encode(request.getPassword()));
         repository.save(user);
         var jwtToken = jwtService.generateToken(user);
         return new AuthenticationResponse(jwtToken);
