@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin
 @RequestMapping("/login")
-public class AuthenticationControllers {
+public class AuthenticationController {
     final AuthenticationService authenticationService;
 
-    public AuthenticationControllers(AuthenticationService authenticationService) {
+    public AuthenticationController(AuthenticationService authenticationService) {
         this.authenticationService = authenticationService;
     }
- 
+
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(
             @RequestBody RegisterRequest request
