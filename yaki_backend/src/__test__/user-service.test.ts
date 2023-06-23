@@ -44,7 +44,7 @@ describe("check login details", () => {
   });
 
   it("login is good but not password", () => {
-    expect(userService.checkUserLoginDetails({login: "lavigne", password: "lavign"})).rejects.toThrowError(
+    expect(userService.checkUserLoginDetails({login: "lavigne", password: "wrongpassword"})).rejects.toThrowError(
       "Bad authentification details"
     );
   });
