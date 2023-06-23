@@ -25,14 +25,38 @@ class InputApp extends StatefulWidget {
 class _InputAppState extends State<InputApp> {
   TextEditingController controller = TextEditingController();
 
+  // state used to choose the password display mode (hidden or visible)
+  late bool _passwordVisible;
+
+  @override
+  void initState() {
+    super.initState();
+    _passwordVisible = widget.password;
+  }
+
   @override
   Widget build(BuildContext context) {
     return TextField(
       controller: widget.controller,
-      obscureText: widget.password,
+      obscureText: _passwordVisible,
       decoration: InputDecoration(
         hintText: widget.inputText,
         border: const OutlineInputBorder(),
+        suffixIconColor: Colors.grey,
+        suffixIcon: widget.password
+            ? IconButton(
+                icon: Icon(
+                  _passwordVisible ? Icons.visibility : Icons.visibility_off,
+                ),
+                onPressed: () {
+                  setState(
+                    () {
+                      _passwordVisible = !_passwordVisible;
+                    },
+                  );
+                },
+              )
+            : null,
       ),
     );
   }
