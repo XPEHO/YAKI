@@ -2,6 +2,7 @@ import {authService} from "../features/user/authentication.service";
 import {CaptainDtoOut} from "../features/captain/captain.dtoOut";
 const jwt = require("jsonwebtoken");
 import {Request, Response, NextFunction} from "express";
+import bcrypt from "bcrypt";
 
 /* This is a Jest function that clears all mocks after each test to ensure they don't affect other
 tests. */
@@ -11,20 +12,20 @@ afterEach(() => {
 
 /* Creating a test suite for the authService. */
 describe("authService", () => {
-  const passwordDb = "password123";
-  const correctPassword = "password123";
-  const incorrectPassword = "wrongPassword";
-  describe("checkPasswords", () => {
-    /* This is a test that checks if the passwords match. */
-    it("returns true if the passwords match", async () => {
-      const result = await authService.checkPasswords(passwordDb, correctPassword);
-      expect(result).toBe(true);
-    });
+  describe("compare password", () => {
+    let bcryptCompare: jest.Mock;
 
-    /* This is a test that checks if the passwords do not match. */
-    it("returns false if the passwords do not match", async () => {
-      const result = await authService.checkPasswords(passwordDb, incorrectPassword);
-      expect(result).toBe(false);
+    const password = "password123";
+    const saltTest = bcrypt.genSaltSync(5);
+    const hash = bcrypt.hashSync(password, saltTest);
+
+    beforeEach(async () => {
+      bcryptCompare = jest.fn().mockReturnValue(true);
+      (bcrypt.compare as jest.Mock) = bcryptCompare;
+    });
+    it("returns true if the passwords match", async () => {
+      const result = await authService.comparePw(password, hash);
+      expect(result).toBe(true);
     });
   });
 

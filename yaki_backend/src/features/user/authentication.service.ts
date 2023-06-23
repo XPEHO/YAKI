@@ -7,19 +7,13 @@ const jwt = require("jsonwebtoken");
 
 class Service {
   /**
-   * use Bcrypt to compare planeText password with the hashed password version saved in database
+   * use Bcrypt scync to compare planeText password with the hashed password version saved in database
    * @param password coming from login
    * @param hashedpw hash password coming from database
-   * @returns
+   * @returns boolean
    */
   comparePw = (password: string, hashedpw: string) => {
-    let isSamePassWord: boolean = false;
-    bcrypt.compare(password, hashedpw, function (_, result) {
-      if (result) {
-        isSamePassWord = true;
-      }
-    });
-    return isSamePassWord;
+    return bcrypt.compareSync(password, hashedpw);
   };
 
   /**

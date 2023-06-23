@@ -33,8 +33,7 @@ class LoginRepository {
   Future<bool> userAuthentication(String login, String password) async {
     bool authenticationSuccess = false;
 
-    LoginModel newLog =
-        LoginModel(login: login, password: password);
+    LoginModel newLog = LoginModel(login: login, password: password);
 
     try {
       final authenticationResponse = await _loginApi.postLogin(newLog);
