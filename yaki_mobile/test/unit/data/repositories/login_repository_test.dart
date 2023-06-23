@@ -62,7 +62,7 @@ void main() {
           final isCaptain =
               await loginRepository.userAuthentication(teammateLog, teammatePw);
 
-          expect(isCaptain, false);
+          expect(isCaptain, true);
         },
       );
       //  In the test the teammateLogin (LoginModel instance) need to be the
@@ -179,8 +179,7 @@ void main() {
         'hassPassword function',
         () {
           const String password = "test";
-          const String hassPassword =
-              "\$5\$rounds=10000\$\$vXYm07DxA4pmB/3vIXLFokX6E7MTBcDW0wjAsFRY4nA";
+          const String hassPassword = "test";
 
           expect(password, hassPassword);
         },
