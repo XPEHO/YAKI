@@ -7,7 +7,7 @@ Feature: Authenticate
   Scenario: Authenticate TeamMate successful
 
     Given path '/login'
-    And request { "login": "dupond", "password": "$2b$16$/QOMfvRTxIkPWvy2I8vGdeKjn6DtPHf9DAD86BlKR.lleTntRfsrO"  }
+    And request { "login": "dupond", "password": "dupond"  }
     When method POST
     Then status 200
 
@@ -15,7 +15,7 @@ Feature: Authenticate
   Scenario: Authenticate TeamMate successful
 
     Given path '/login'
-    And request { "login": "lavigne", "password": "$2b$16$/QOMfvRTxIkPWvy2I8vGdeEx/ALW4lxYvJPShsj49q/EPq9Y4HESC" }
+    And request { "login": "lavigne", "password": "lavigne" }
     When method POST
     Then status 200
 
