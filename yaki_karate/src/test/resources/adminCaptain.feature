@@ -2,7 +2,6 @@ Feature: Captain
 
   Background:
     * url 'http://localhost:8080'
-    * def createData = call read('classpath:createData.feature')
     * def schema = [{id : '#number', userId : '#number', customerId : '#number' }]
 
   Scenario: Get all captains

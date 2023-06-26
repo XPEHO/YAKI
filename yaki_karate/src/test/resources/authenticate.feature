@@ -2,7 +2,7 @@ Feature: Authenticate
 
   Background:
     * url 'http://localhost:3000'
-    * def login = call read('classpath:createUsers.feature')
+    * def createData = call read('classpath:createData.feature')
 
   @AuthenticateTeamMateSuccess
   Scenario: Authenticate TeamMate successful

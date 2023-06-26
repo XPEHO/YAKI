@@ -2,7 +2,6 @@ Feature: Team
 
   Background:
     * url 'http://localhost:8080'
-    * def createData = call read('classpath:createData.feature')
     * def schema = {id : '#number', captainId: '#number', teamName: '#string'}
 
   @GetOwner

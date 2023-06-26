@@ -10,7 +10,7 @@ Feature: GetTeamMates
   @GetAllTeamMateSuccessful
   Scenario: Get all teamMate
     Given path '/teamMates'
-    And param captainId = 1
+    And param captainId = 2
     When method get
     Then status 200
     And match response contains  schema
