@@ -1,9 +1,7 @@
 package com.xpeho.yaki_admin_backend.configSecurity;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 public class AuthenticationRequest {
-    @Autowired
+
     private String password;
     private String login;
 
