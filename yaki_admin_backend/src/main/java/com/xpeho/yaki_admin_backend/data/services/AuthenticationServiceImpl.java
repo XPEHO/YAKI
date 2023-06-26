@@ -9,6 +9,7 @@ import com.xpeho.yaki_admin_backend.data.sources.UserJpaRepository;
 import com.xpeho.yaki_admin_backend.domain.services.AuthenticationService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,11 +17,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final UserJpaRepository repository;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private final PasswordEncoder passwordEncoder;
 
-    public AuthenticationServiceImpl(UserJpaRepository repository, JwtService jwtService, AuthenticationManager authenticationManager) {
+    public AuthenticationServiceImpl(UserJpaRepository repository, JwtService jwtService, AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder) {
         this.repository = repository;
         this.jwtService = jwtService;
         this.authenticationManager = authenticationManager;
+        this.passwordEncoder = passwordEncoder;
+
     }
 
     @Override
@@ -30,7 +34,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 request.getFirstname(),
                 request.getEmail(),
                 request.getLogin(),
-                request.getPassword());
+                passwordEncoder.encode(request.getPassword()));
         repository.save(user);
         var jwtToken = jwtService.generateToken(user);
         return new AuthenticationResponse(jwtToken);
@@ -40,11 +44,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        request.getEmail(),
+                        request.getLogin(),
                         request.getPassword()
                 )
         );
-        UserModel user = repository.findByEmail(request.getEmail())
+        UserModel user = repository.findByLogin(request.getLogin())
                 .orElseThrow();
         var jwtToken = jwtService.generateToken(user);
         return new AuthenticationResponse(jwtToken);

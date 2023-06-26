@@ -11,11 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Configuration
 public class ApplicationConfig {
@@ -28,7 +24,7 @@ public class ApplicationConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return username -> (UserDetails) jpaRepository.findByEmail(username)
+        return username -> (UserDetails) jpaRepository.findByLogin(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
@@ -47,9 +43,7 @@ public class ApplicationConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        String encodingId = "sha256";
-        Map<String, PasswordEncoder> encoders = new HashMap<>();
-        encoders.put(encodingId, new BCryptPasswordEncoder());
         return new BCryptPasswordEncoder();
     }
 }
+
