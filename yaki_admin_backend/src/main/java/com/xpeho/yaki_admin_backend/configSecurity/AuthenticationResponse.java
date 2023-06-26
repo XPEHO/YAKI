@@ -1,9 +1,6 @@
 package com.xpeho.yaki_admin_backend.configSecurity;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 public class AuthenticationResponse {
-    @Autowired
     private String token;
     private int id;
     public AuthenticationResponse(String token,int id) {

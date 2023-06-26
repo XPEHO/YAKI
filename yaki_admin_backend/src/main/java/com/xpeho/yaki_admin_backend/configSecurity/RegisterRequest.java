@@ -1,17 +1,10 @@
 package com.xpeho.yaki_admin_backend.configSecurity;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 public class RegisterRequest {
-    @Autowired
     private String firstname;
-    @Autowired
     private String lastname;
-    @Autowired
     private String login;
-    @Autowired
     private String email;
-    @Autowired
     private String password;
 
     public RegisterRequest(String firstname, String lastname, String login, String email, String password) {
