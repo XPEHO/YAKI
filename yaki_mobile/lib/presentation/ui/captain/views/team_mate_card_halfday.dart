@@ -6,9 +6,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:yaki/presentation/displaydata/status_page_content.dart';
 import 'package:yaki/presentation/styles/header_text_style.dart';
 
-class CardTeamMate extends StatefulWidget {
+class CardTeamMateHalfday extends StatefulWidget {
   /// Card with the Team Mate's avatar, name, update date and status
-  const CardTeamMate({
+  const CardTeamMateHalfday({
     super.key,
     required this.firstName,
     required this.lastName,
@@ -18,14 +18,14 @@ class CardTeamMate extends StatefulWidget {
 
   final String? firstName;
   final String? lastName;
-  final String? status;
+  final List<String>? status;
   final DateTime? dateActu;
 
   @override
-  State<CardTeamMate> createState() => _CardTeamMateState();
+  State<CardTeamMateHalfday> createState() => _CardTeamMateState();
 }
 
-class _CardTeamMateState extends State<CardTeamMate> {
+class _CardTeamMateState extends State<CardTeamMateHalfday> {
   @override
   Widget build(BuildContext context) {
     // recovers device dimensions
@@ -70,7 +70,7 @@ class _CardTeamMateState extends State<CardTeamMate> {
                             child: Padding(
                               padding: const EdgeInsets.all(10),
                               child: SvgPicture.asset(
-                                StatusUtils.getImage(widget.status ?? ""),
+                                StatusUtils.getImage(widget.status!.first),
                                 width: 40,
                                 height: 40,
                               ),
@@ -94,7 +94,6 @@ class _CardTeamMateState extends State<CardTeamMate> {
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 20,
-                              color: Colors.black,
                             ),
                           )
                         ],
@@ -120,7 +119,7 @@ class _CardTeamMateState extends State<CardTeamMate> {
                           children: [
                             const Text(
                               // Status of the Team Mate
-                              'Journée :',
+                              'Matin :',
                               style: TextStyle(
                                 fontSize: 22,
                                 fontWeight: FontWeight.w700,
@@ -130,7 +129,7 @@ class _CardTeamMateState extends State<CardTeamMate> {
                             Text(
                               // Status of the Team Mate
                               widget.status != null
-                                  ? tr(widget.status!)
+                                  ? tr(widget.status!.first)
                                   : 'Undeclared',
                               style: const TextStyle(
                                 fontSize: 22,
@@ -140,7 +139,35 @@ class _CardTeamMateState extends State<CardTeamMate> {
                             ),
                           ],
                         ),
-                      )
+                      ),
+                      SizedBox(
+                        width: size.width * 0.60,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              // Status of the Team Mate
+                              'Aprem :',
+                              style: TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.black45,
+                              ),
+                            ),
+                            Text(
+                              // Status of the Team Mate
+                              widget.status != null
+                                  ? tr(widget.status!.last)
+                                  : 'Undeclared',
+                              style: const TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.w700,
+                                color: HeaderColor.yellowApp,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),

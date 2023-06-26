@@ -27,20 +27,28 @@ class TeamMateRepository {
         case 200:
           final modelList = setTeamMateModelList(listHttpResponse);
 
-          teamMatelist = modelList.map(
-            (e) {
-              final statusInCamelCase = StatusUtils.toCamelCase(
-                toFormat: e.declarationStatus ?? 'undeclared',
-                splitChar: ' ',
+          List<TeamMateEntity> teamMatelist = <TeamMateEntity>[];
+
+          for (var i = 0; i < modelList.length; i++) {
+            final statusInCamelCase = StatusUtils.toCamelCase(
+              toFormat: modelList[i].declarationStatus ?? 'undeclared',
+              splitChar: ' ',
+            );
+
+            if (i != 0 && modelList[i].userId == modelList[i - 1].userId) {
+              teamMatelist.last.addHalfDayDeclaration(statusInCamelCase);
+            } else {
+              teamMatelist.add(
+                TeamMateEntity(
+                  userFirstName: modelList[i].userFirstName,
+                  userLastName: modelList[i].userLastName,
+                  declarationDate: modelList[i].declarationDate,
+                  declarationStatus: statusInCamelCase,
+                ),
               );
-              return TeamMateEntity(
-                userFirstName: e.userFirstName,
-                userLastName: e.userLastName,
-                declarationDate: e.declarationDate,
-                declarationStatus: statusInCamelCase,
-              );
-            },
-          ).toList();
+            }
+          }
+
           return teamMatelist;
         default:
           throw Exception('Invalid statusCode : $statusCode');

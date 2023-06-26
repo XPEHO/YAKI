@@ -3,13 +3,19 @@ class TeamMateEntity {
   String? userLastName;
   DateTime? declarationDate;
   String? declarationStatus;
+  List<String>? halfDayDeclarationStatus;
 
   TeamMateEntity({
     required this.userFirstName,
     required this.userLastName,
     required this.declarationDate,
-    required this.declarationStatus,
+    this.declarationStatus,
   });
+
+  addHalfDayDeclaration(String afternoonDeclaration) {
+    halfDayDeclarationStatus = [declarationStatus!, afternoonDeclaration];
+    declarationStatus = null;
+  }
 
   // method override for unit test purpose,
   // allow to compare instance with == operator
@@ -19,6 +25,7 @@ class TeamMateEntity {
         userLastName.hashCode,
         declarationDate.hashCode,
         declarationStatus.hashCode,
+        halfDayDeclarationStatus.hashCode,
       );
 
   // method override for unit test purpose,

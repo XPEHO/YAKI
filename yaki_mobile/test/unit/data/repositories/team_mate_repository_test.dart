@@ -27,12 +27,14 @@ void main() {
           String captainId = "1";
           List<Map<String, dynamic>> getResponseAsJson = [
             {
+              "userId": 1,
               "userFirstName": "Dupond",
               "userLastName": "Dupond",
               "declarationDate": '2023-03-20T10:00:00.950Z',
               "declarationStatus": "vacation",
             },
             {
+              "userId": 2,
               "userFirstName": "Jean",
               "userLastName": "Val",
               "declarationDate": '2023-03-20T10:00:00.950Z',
