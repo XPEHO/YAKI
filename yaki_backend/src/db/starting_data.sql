@@ -2,17 +2,17 @@
 
 INSERT INTO public.user(
 	user_last_name, user_first_name, user_email, user_login, user_password)
-	VALUES ('DuGrand', 'Jacques', 'dugrand.jacques@mail.com', 'dugrand', '$5$rounds=10000$abcdefghijklmnop$OA65zl2VDjeMzN.O3S/2pSV4eWCglNv9o4nVabmkQz5'),
-           ('Sauvagneau', 'Benjamin', 'benjamin.sauvagneau@mail.com', 'sauvagneau', '$5$rounds=10000$abcdefghijklmnop$xlREmQbTt/diimOXnxUzDQaWJx8CPvKtJFL5EH8jAE7'),
-           ('Dupond', 'Michel', 'dupond.michel@mail.com', 'dupond', '$5$rounds=10000$abcdefghijklmnop$5nP0MR35CzShPTl9K3Vl5gEF2kBc6cDKoQ2LEtG18FB'),
-           ('Marquez', 'Auguste', 'auguste.marquez@mail.com', 'marquez', '$5$rounds=10000$abcdefghijklmnop$RPAmnJzQd9oz41ZHa/w/irK73ragHk6.coDwjarc8PB'),
-           ('Leclerc', 'Megane', 'megane.leclerc@mail.com', 'leclerc', '$5$rounds=10000$abcdefghijklmnop$86rpsyu697b0vfHinaeAwhJ7bXwRPXM7JifCH41sgt9'),
-           ('Lavigne', 'Valentin', 'valentin.lavigne@mail.com', 'lavigne', '$5$rounds=10000$abcdefghijklmnop$aVV68ybbmry88mMGXU1snZOfwd0pKbYFTQbzrv.7n44'),
-           ('Lazard', 'Arnaud', 'arnaud.lazard@mail.com', 'lazard', '$5$rounds=10000$abcdefghijklmnop$FwrCge3JnXlGV1xkCrOnyT5QDBQb//f6oGmyjQ6nDc0'),
-           ('Bain', 'Aaron', 'aaron.bain@mail.com', 'bain', '$5$rounds=10000$abcdefghijklmnop$flxzos/1DN13hD1e0Wjji3clwr.cL7jZqfuimgtVO80'),
-           ('Valverde', 'Paul', 'paul.valverde@mail.com', 'valverde', '$5$rounds=10000$abcdefghijklmnop$RMO84AgIIe8yMm8I4mdbFWBRUrikpr7XdPIpMVnOE4C'),
-		   ('Dupres', 'Robert', 'dupres.robert@mail.com', 'robert', '$5$rounds=10000$abcdefghijklmnop$eby/Dmj1lBSaDuo3J8OkVihJ4luXlEl8oIv/q3pknD/'),
-           ('Deschamps', 'Marguerite', 'marguerite.deschamps@mail.com', 'marguerite', '$5$rounds=10000$abcdefghijklmnop$gGJ46NV78ChlprosW4iQFgDv294/t3gynRtx2Lxxa2B');
+	VALUES ('DuGrand', 'Jacques', 'dugrand.jacques@mail.com', 'dugrand', '$2b$16$/QOMfvRTxIkPWvy2I8vGdeoui4jDGURA4U0LyJcQ4DsuqebxQLrDy'),
+           ('Sauvagneau', 'Benjamin', 'benjamin.sauvagneau@mail.com', 'sauvagneau', '$2b$16$/QOMfvRTxIkPWvy2I8vGde6V9.myezzhttR7dAlM58MRM8h.TOVFW'),
+           ('Dupond', 'Michel', 'dupond.michel@mail.com', 'dupond', '$2b$16$/QOMfvRTxIkPWvy2I8vGdeKjn6DtPHf9DAD86BlKR.lleTntRfsrO'),
+           ('Marquez', 'Auguste', 'auguste.marquez@mail.com', 'marquez', '$2b$16$/QOMfvRTxIkPWvy2I8vGdeuxFXCKyQkcLoKKuNpzqRalDEDp5.fRS'),
+           ('Leclerc', 'Megane', 'megane.leclerc@mail.com', 'leclerc', '$2b$16$/QOMfvRTxIkPWvy2I8vGdes2QzfMbDr.Ur0PV6oqZjCvbxS.hw73W'),
+           ('Lavigne', 'Valentin', 'valentin.lavigne@mail.com', 'lavigne', '$2b$16$/QOMfvRTxIkPWvy2I8vGdeEx/ALW4lxYvJPShsj49q/EPq9Y4HESC'),
+           ('Lazard', 'Arnaud', 'arnaud.lazard@mail.com', 'lazard', '$2b$16$/QOMfvRTxIkPWvy2I8vGdeUkRfce0nFk1JavtSc.A75fy3M0DDwTi'),
+           ('Bain', 'Aaron', 'aaron.bain@mail.com', 'bain', '$2b$16$/QOMfvRTxIkPWvy2I8vGde74f0VcXHYHQZVRyGYldOfnSXxzVny5W'),
+           ('Valverde', 'Paul', 'paul.valverde@mail.com', 'valverde', '$2b$16$/QOMfvRTxIkPWvy2I8vGdeT2Eik.XKZvxcaxvNnD05e6X1y3JeWWu'),
+		   ('Dupres', 'Robert', 'dupres.robert@mail.com', 'robert', '$2b$16$/QOMfvRTxIkPWvy2I8vGdeJY3SUPgjnWNQ2b0t.a0XDr7.n/U2gEu'),
+           ('Deschamps', 'Marguerite', 'marguerite.deschamps@mail.com', 'marguerite', '$2b$16$/QOMfvRTxIkPWvy2I8vGdeVdGbYs4rtQovOMFHUEndBtWAlblrhcq');
 -- INSERT LOCATIONS
 
 INSERT INTO public.locations(

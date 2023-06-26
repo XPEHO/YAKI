@@ -4,6 +4,7 @@ import mockDb from "./__mocks__/user";
 import UserModel from "../features/user/user.dtoIn";
 import {TeamMateDtoOut} from "../features/teamMate/teamMate.dtoOut";
 import {CaptainDtoOut} from "../features/captain/captain.dtoOut";
+import bcrypt from "bcrypt";
 
 // Mock of UserRepository
 jest.mock("../features/user/user.repository", () => {

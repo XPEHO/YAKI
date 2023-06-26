@@ -16,16 +16,21 @@ describe("authService", () => {
     let bcryptCompare: jest.Mock;
 
     const password = "password123";
-    const saltTest = bcrypt.genSaltSync(5);
+    const saltTest = bcrypt.genSaltSync(1);
     const hash = bcrypt.hashSync(password, saltTest);
+    const incorrectHash = "incorrect password";
 
     beforeEach(async () => {
-      bcryptCompare = jest.fn().mockReturnValue(true);
       (bcrypt.compare as jest.Mock) = bcryptCompare;
     });
     it("returns true if the passwords match", async () => {
       const result = await authService.comparePw(password, hash);
       expect(result).toBe(true);
+    });
+
+    it("returns false if the passwords do not match", async () => {
+      const result = await authService.comparePw(password, incorrectHash);
+      expect(result).toBe(false);
     });
   });
 
