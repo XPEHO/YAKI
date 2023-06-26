@@ -33,6 +33,21 @@ class SharedPref {
     }
   }
 
+  static Future<void> setRememberMe(bool value) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('rememberMe', value);
+  }
+
+  static Future<bool> getRememberMe() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (prefs.containsKey('rememberMe')) {
+      return prefs.getBool('rememberMe')!;
+    } else {
+      await setRememberMe(false);
+      return false;
+    }
+  }
+
   /// Clear all values saved in sharedPreference
   static void clearAll() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();

@@ -15,16 +15,35 @@ import 'package:yaki/presentation/state/providers/team_provider.dart';
 
 /// using ConsumerWidget (statelessWidget) to have access to the WidgetRef object
 /// allowing the current widget to have access to any provider.
-class Authentication extends ConsumerWidget {
+class Authentication extends ConsumerStatefulWidget {
   Authentication({super.key});
 
+  @override
+  ConsumerState<Authentication> createState() => _AuthenticationState();
+}
+
+class _AuthenticationState extends ConsumerState<Authentication> {
   final loginController = TextEditingController();
   final passwordController = TextEditingController();
 
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    bool isChecked = false;
+  bool isChecked = false;
 
+  void _getRememberMe() async {
+    var rememberMe = await SharedPref.getRememberMe();
+
+    setState(() {
+      isChecked = rememberMe;
+    });
+  }
+
+  @override
+  void initState() {
+    _getRememberMe();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     // Size of the device
     var size = MediaQuery.of(context).size;
 
@@ -66,6 +85,9 @@ class Authentication extends ConsumerWidget {
       required Function goToCaptain,
     }) async {
       await SharedPref.deleteToken();
+      // regarde si le checkbox est true
+      // Si c'est le cas, sauvegarde les infos de login dans les
+      // shared pref
       final bool authenticationResult = await ref
           .read(loginRepositoryProvider)
           .userAuthentication(login, password);
@@ -143,7 +165,12 @@ class Authentication extends ConsumerWidget {
                           Checkbox(
                             value: isChecked,
                             activeColor: HeaderColor.yellowApp,
-                            onChanged: (bool? value) {},
+                            onChanged: (bool? value) async {
+                              setState(() {
+                                isChecked = value ?? false;
+                              });
+                              await SharedPref.setRememberMe(value ?? false);
+                            },
                           ),
                           Text(
                             tr('rememberMe'),
