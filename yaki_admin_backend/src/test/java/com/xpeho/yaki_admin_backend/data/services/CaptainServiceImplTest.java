@@ -35,7 +35,7 @@ class CaptainServiceImplTest {
         CaptainEntity captainDto = captainService.getCaptainById(1);
 
         //then
-        assertEquals(1, (int) captainDto.id());
+        assertEquals(1, captainDto.id());
         assertEquals(1, captainDto.userId());
         assertEquals(2, captainDto.customerId());
     }
@@ -55,9 +55,9 @@ class CaptainServiceImplTest {
 
         //then
         assertEquals(3, captainEntities.size());
-        assertEquals(1, (int) captainEntities.get(0).id());
-        assertEquals(2, (int) captainEntities.get(2).userId());
-        assertEquals(2, (int) captainEntities.get(1).customerId());
+        assertEquals(1, captainEntities.get(0).id());
+        assertEquals(2, captainEntities.get(2).userId());
+        assertEquals(2, captainEntities.get(1).customerId());
     }
 
     @Test
@@ -70,7 +70,7 @@ class CaptainServiceImplTest {
         CaptainEntity createCaptain = captainService.createCaptain(captainEntity);
 
         //then
-        assertEquals(1, (int) createCaptain.id());
+        assertEquals(1, createCaptain.id());
         assertEquals(captainEntity.userId(), createCaptain.userId());
         assertEquals(captainEntity.customerId(), createCaptain.customerId());
         verify(captainJpaRepository).save(any());
