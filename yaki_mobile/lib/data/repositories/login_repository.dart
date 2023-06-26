@@ -1,4 +1,3 @@
-import 'package:crypt/crypt.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:yaki/data/models/login_model.dart';
 import 'package:yaki/data/models/user.dart';
@@ -34,8 +33,7 @@ class LoginRepository {
   Future<bool> userAuthentication(String login, String password) async {
     bool authenticationSuccess = false;
 
-    LoginModel newLog =
-        LoginModel(login: login, password: hashPassword(password));
+    LoginModel newLog = LoginModel(login: login, password: password);
 
     try {
       final authenticationResponse = await _loginApi.postLogin(newLog);
@@ -92,17 +90,6 @@ class LoginRepository {
       firstName: user.firstName ?? "",
       email: user.email ?? "",
     );
-  }
-
-  /// hash password received from authentication page
-  /// using crypt.dart library
-  String hashPassword(String password) {
-    final hashPass = Crypt.sha256(
-      password,
-      rounds: 10000,
-      salt: const String.fromEnvironment('CRED_HASH_PASS'),
-    );
-    return hashPass.toString();
   }
 
   /// teamMateId getter, used at declaration object creation, in order to POST it.

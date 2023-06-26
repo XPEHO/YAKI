@@ -6,7 +6,7 @@ Feature: Login
   Scenario: Login successful
 
     Given path '/login'
-    And request { "login": "lavigne", "password": "$5$rounds=10000$abcdefghijklmnop$aVV68ybbmry88mMGXU1snZOfwd0pKbYFTQbzrv.7n44"}
+    And request { "login": "lavigne", "password": "lavigne"}
     When method POST
     Then status 200
     * def token = response.token

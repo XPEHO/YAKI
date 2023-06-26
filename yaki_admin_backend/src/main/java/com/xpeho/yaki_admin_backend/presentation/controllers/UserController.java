@@ -16,10 +16,8 @@ public class UserController {
         this.userService = userService;
     }
 
-
     @PostMapping
     public UserEntity createUser(@RequestBody UserEntityIn userEntity) {
-
         return userService.save(userEntity);
     }
 }

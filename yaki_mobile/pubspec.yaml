@@ -19,7 +19,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 1.2.2+6
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
+  sdk: ">=3.0.0 <4.0.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -79,30 +79,19 @@ dependencies:
   # https://pub.dev/packages/shared_preferences
   shared_preferences: ^2.0.17
 
-  # // Crypt //.
-  # One-way string hashing for salted passwords using the Unix crypt format.
-  # This package implements the SHA-256 crypt hash and SHA-512 crypt hash,
-  # cryptographic hash formats that are specified in "Unix crypt using SHA-256
-  # and SHA-512" (version: 0.6 2016-08-31).
-  #These hashes are commonly used in Unix and POSIX systems,
-  # and in LDAP entries as authentication credentials for POSIX accounts.
-  # https://pub.dev/packages/crypt
-  crypt: ^4.2.1
-
   built_value: ^8.6.0
   json_annotation: ^4.8.0
   mockito: ^5.4.0
   very_good_cli: ^0.15.0
   look: ^2.0.0
   golden_toolkit: ^0.15.0
-  # A librairy that handle your application icon 
+  # A librairy that handle your application icon
   flutter_launcher_icons: ^0.13.1
-
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  
+
   integration_test:
     sdk: flutter
 
@@ -117,7 +106,6 @@ dev_dependencies:
   retrofit_generator: ^6.0.0+1
   build_runner: ">=2.3.0 <4.0.0"
   json_serializable: ^6.7.0
-
 
   # Mockito 5.0.0 supports Dart's new null safety language feature in Dart 2.12, primarily
   # with code generation.

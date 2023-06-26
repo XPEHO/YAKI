@@ -1,21 +1,19 @@
 import {Request, Response, NextFunction} from "express";
 import {CaptainDtoOut} from "../captain/captain.dtoOut";
 import {TeamMateDtoOut} from "../teamMate/teamMate.dtoOut";
+import bcrypt from "bcrypt";
 
 const jwt = require("jsonwebtoken");
 
 class Service {
   /**
-   * Check if the password send by the client match the one from the database
-   * @param password
-   * @param hash
-   * @returns
+   * use Bcrypt scync to compare planeText password with the hashed password version saved in database
+   * @param password coming from login
+   * @param hashedpw hash password coming from database
+   * @returns boolean
    */
-  checkPasswords = async (passwordDb: string, passwordClient: string) => {
-    if (passwordDb === passwordClient) {
-      return true;
-    }
-    return false;
+  comparePw = (password: string, hashedpw: string) => {
+    return bcrypt.compareSync(password, hashedpw);
   };
 
   /**
