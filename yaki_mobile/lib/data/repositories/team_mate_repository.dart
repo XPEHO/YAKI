@@ -49,23 +49,6 @@ class TeamMateRepository {
             }
           }
 
-          // modelList.map(
-          //   (e) {
-          //     final statusInCamelCase = StatusUtils.toCamelCase(
-          //       toFormat: e.declarationStatus ?? 'undeclared',
-          //       splitChar: ' ',
-          //     );
-          //     teamMatelist.add(
-          //       TeamMateEntity(
-          //         userFirstName: e.userFirstName,
-          //         userLastName: e.userLastName,
-          //         declarationDate: e.declarationDate,
-          //         declarationStatus: statusInCamelCase,
-          //       ),
-          //     );
-          //   },
-          // ).toList();
-
           return teamMatelist;
         default:
           throw Exception('Invalid statusCode : $statusCode');
