@@ -2,12 +2,13 @@ Feature: Authenticate
 
   Background:
     * url 'http://localhost:3000'
+    * def login = call read('classpath:createUsers.feature')
 
   @AuthenticateTeamMateSuccess
   Scenario: Authenticate TeamMate successful
 
     Given path '/login'
-    And request { "login": "dupond", "password": "$5$rounds=10000$abcdefghijklmnop$5nP0MR35CzShPTl9K3Vl5gEF2kBc6cDKoQ2LEtG18FB"  }
+    And request { "login": "roger", "password": "roger"  }
     When method POST
     Then status 200
 
@@ -15,7 +16,7 @@ Feature: Authenticate
   Scenario: Authenticate TeamMate successful
 
     Given path '/login'
-    And request { "login": "lavigne", "password": "$5$rounds=10000$abcdefghijklmnop$aVV68ybbmry88mMGXU1snZOfwd0pKbYFTQbzrv.7n44" }
+    And request { "login": "sean", "password": "sean" }
     When method POST
     Then status 200
 

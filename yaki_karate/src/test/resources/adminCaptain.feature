@@ -2,6 +2,7 @@ Feature: Captain
 
   Background:
     * url 'http://localhost:8080'
+    * def createData = call read('classpath:createData.feature')
     * def schema = [{id : '#number', userId : '#number', customerId : '#number' }]
 
   Scenario: Get all captains
@@ -12,27 +13,19 @@ Feature: Captain
       * print response
       * print schema
 
-  Scenario: Create, GetById, Update and Delete captain
-    Given path '/captains'
-    And request {userId: 10, customerId: 3}
-    When method post
-    Then status 200
-    And match response.id != null
-    And def captainId = response.id
-    And match response == {id: '#number', userId: '#number', customerId : '#number'}
-
-    Given path '/captains/' + captainId
+  Scenario: GetById, Update and Delete captain
+    Given path '/captains/' + 1
     When method get
     Then status 200
     And match response == {id: '#number', userId: '#number', customerId : '#number'}
 
-    Given path '/captains/' + captainId
+    Given path '/captains/' + 1
     And request {userId: 3, customerId: 1}
     When method put
     Then status 200
     And match response == {id: '#number', userId: '#number', customerId : '#number'}
 
-    Given path '/captains/' + captainId
+    Given path '/captains/' + 1
     When method delete
     Then status 200
     And print response

@@ -2,6 +2,7 @@ Feature: Owner
 
     Background:
       * url 'http://localhost:8080'
+      * def createData = call read('classpath:createData.feature')
       * def schema = [{id : '#number', userId: '#number'}]
 
     @GetOwner
@@ -13,27 +14,19 @@ Feature: Owner
       * print response
       * print schema
 
-    Scenario: Create, GetById, Update and Delete owner
-      Given path '/owners'
-      And request {userId: 2}
-      When method post
-      Then status 200
-      And match response.id != null
-      And def ownerId = response.id
-      And match response == {id: '#number', userId: '#number'}
-
-      Given path '/owners/' + ownerId
+    Scenario: GetById, Update and Delete owner
+      Given path '/owners/' + 1
       When method get
       Then status 200
       And match response == {id: '#number', userId: '#number'}
 
-      Given path '/owners/' + ownerId
+      Given path '/owners/' + 1
       And request {userId: 3}
       When method put
       Then status 200
       And match response == {id: '#number', userId: '#number'}
 
-      Given path '/owners/' + ownerId
+      Given path '/owners/' + 1
       When method delete
       Then status 200
       And print response
