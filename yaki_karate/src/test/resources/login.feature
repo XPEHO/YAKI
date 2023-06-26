@@ -2,7 +2,6 @@ Feature: Login
 
   Background:
     * url 'http://localhost:3000'
-    * def createData = call read('classpath:createData.feature')
 
   Scenario: Login successful
 
