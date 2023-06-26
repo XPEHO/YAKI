@@ -8,9 +8,5 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 public class YakiAdminBackendApplication {
     public static void main(String[] args) {
         SpringApplication.run(YakiAdminBackendApplication.class, args);
-
-
     }
-
-
 }
