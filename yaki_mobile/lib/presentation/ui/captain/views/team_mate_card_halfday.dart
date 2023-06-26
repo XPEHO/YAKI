@@ -167,7 +167,7 @@ class _CardTeamMateState extends State<CardTeamMateHalfday> {
                             ),
                           ],
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),

@@ -124,7 +124,7 @@ class _CardTeamMateState extends State<CardTeamMate> {
                               style: TextStyle(
                                 fontSize: 22,
                                 fontWeight: FontWeight.w700,
-                                color: Colors.grey,
+                                color: Colors.black45,
                               ),
                             ),
                             Text(
