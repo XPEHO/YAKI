@@ -16,7 +16,7 @@ import 'package:yaki/presentation/state/providers/team_provider.dart';
 /// using ConsumerWidget (statelessWidget) to have access to the WidgetRef object
 /// allowing the current widget to have access to any provider.
 class Authentication extends ConsumerStatefulWidget {
-  Authentication({super.key});
+  const Authentication({super.key});
 
   @override
   ConsumerState<Authentication> createState() => _AuthenticationState();

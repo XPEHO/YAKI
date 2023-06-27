@@ -45,18 +45,18 @@ Feature: Captain
     * print schema
 
   Scenario: 04 GetById Update and Delete captain
-    Given path '/captains' + 1
+    Given path '/captains/' + 1
     When method get
     Then status 200
     And match response == {id: '#number', userId: '#number', customerId : '#number'}
 
-    Given path '/captains' + 1
+    Given path '/captains/' + 1
     And request {userId: 3, customerId: 1}
     When method put
     Then status 200
     And match response == {id: '#number', userId: '#number', customerId : '#number'}
 
-    Given path '/captains' + 1
+    Given path '/captains/' + 1
     When method delete
     Then status 200
     And print response
