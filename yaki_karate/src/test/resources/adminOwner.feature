@@ -17,7 +17,7 @@ Feature: Owner
 
   @GetOwner
   Scenario: 03 Get all owners
-    Given path '/owners/'
+    Given path '/owners'
     When method get
     Then status 200
     And match response contains schema

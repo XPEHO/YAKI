@@ -5,12 +5,12 @@ Feature: Captain
     * def schema = {id : '#number', userId : '#number', customerId : '#number' }
 
   Scenario: 01 Create users
-    Given path '/users/'
+    Given path '/users'
     And request {id : 1, lastname: 'owner', firstname: 'owner', email: 'owner@gmail.com', login: 'owner', password: 'owner'}
     When method post
     Then status 200
 
-    Given path '/users/'
+    Given path '/users'
     And request {id : 2, lastname: 'customer', firstname: 'customer', email: 'customer@gmail.com', login: 'customer', password: 'customer'}
     When method post
     Then status 200

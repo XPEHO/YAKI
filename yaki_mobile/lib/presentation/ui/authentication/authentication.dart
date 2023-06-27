@@ -15,16 +15,45 @@ import 'package:yaki/presentation/state/providers/team_provider.dart';
 
 /// using ConsumerWidget (statelessWidget) to have access to the WidgetRef object
 /// allowing the current widget to have access to any provider.
-class Authentication extends ConsumerWidget {
-  Authentication({super.key});
-
-  final loginController = TextEditingController();
-  final passwordController = TextEditingController();
+class Authentication extends ConsumerStatefulWidget {
+  const Authentication({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    bool isChecked = false;
+  ConsumerState<Authentication> createState() => _AuthenticationState();
+}
 
+class _AuthenticationState extends ConsumerState<Authentication> {
+  final loginController = TextEditingController();
+  final passwordController = TextEditingController();
+  // store the value of the 'rememberMe' checkbox
+  bool isChecked = false;
+  // store the user default login details
+  List<String> loginDetails = ["", ""];
+
+  // function that retrieve from the shared preferences the user default
+  // login details and the 'rememberMe' checkbox default value before
+  // the widgets are mounted
+  void _initiateCheckboxValue() async {
+    var rememberMe = await SharedPref.getRememberMe();
+    var storedLoginDetails = await SharedPref.getLoginDetails();
+
+    setState(() {
+      isChecked = rememberMe;
+      loginDetails = storedLoginDetails;
+    });
+
+    loginController.text = storedLoginDetails.first;
+    passwordController.text = storedLoginDetails.last;
+  }
+
+  @override
+  void initState() {
+    _initiateCheckboxValue();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     // Size of the device
     var size = MediaQuery.of(context).size;
 
@@ -66,6 +95,11 @@ class Authentication extends ConsumerWidget {
       required Function goToCaptain,
     }) async {
       await SharedPref.deleteToken();
+      // if the rememberMe checkbox value is true, store the login details
+      // in the shared preferences
+      if (await SharedPref.getRememberMe()) {
+        await SharedPref.setLoginDetails(login, password);
+      }
       final bool authenticationResult = await ref
           .read(loginRepositoryProvider)
           .userAuthentication(login, password);
@@ -120,6 +154,7 @@ class Authentication extends ConsumerWidget {
                         left: 50,
                       ),
                       child: InputApp(
+                        defaultValue: loginDetails.first,
                         inputText: tr('inputLogin'),
                         inputHint: tr('hintLogin'),
                         password: false,
@@ -130,6 +165,7 @@ class Authentication extends ConsumerWidget {
                       padding:
                           const EdgeInsets.only(top: 20, right: 50, left: 50),
                       child: InputApp(
+                        defaultValue: loginDetails.last,
                         inputText: tr('inputPassword'),
                         inputHint: tr('hintPassword'),
                         password: true,
@@ -143,7 +179,12 @@ class Authentication extends ConsumerWidget {
                           Checkbox(
                             value: isChecked,
                             activeColor: HeaderColor.yellowApp,
-                            onChanged: (bool? value) {},
+                            onChanged: (bool? value) async {
+                              setState(() {
+                                isChecked = value ?? false;
+                              });
+                              await SharedPref.setRememberMe(value ?? false);
+                            },
                           ),
                           Text(
                             tr('rememberMe'),

@@ -17,7 +17,7 @@ final goRouterProvider = Provider<GoRouter>(
       routes: <GoRoute>[
         GoRoute(
           path: '/',
-          builder: (context, state) => Authentication(),
+          builder: (context, state) => const Authentication(),
           routes: [
             GoRoute(
               path: 'declaration',
