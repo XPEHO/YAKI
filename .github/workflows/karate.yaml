@@ -28,6 +28,8 @@ jobs:
           echo "Starting docker containers"
           cd ../yaki_docker
           docker compose up --build --quiet-pull -d
+          echo "Sleep 10s to wait backend admin initialization"
+          sleep 10s
           cd ../yaki_karate
           echo "Running karate tests"
           mvn test --quiet
