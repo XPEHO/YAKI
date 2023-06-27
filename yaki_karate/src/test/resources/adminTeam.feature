@@ -43,19 +43,19 @@ Feature: Team
     Then status 200
 
   @GetOwner
-  Scenario: GetById, Update and Delete owner
-    Given path '/teams/' + 1
+  Scenario: GetById Update and Delete owner
+    Given path '/teams/' + 2
     When method get
     Then status 200
     And match response == schema
 
-    Given path '/teams/' + 1
+    Given path '/teams/' + 2
     And request {captainId: 2, teamName: 'Team Red'}
     When method put
     Then status 200
     And match response == schema
 
-    Given path '/teams/' + 1
+    Given path '/teams/' + 2
     When method delete
     Then status 200
     And print response
