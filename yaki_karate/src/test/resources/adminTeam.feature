@@ -6,17 +6,17 @@ Feature: Team
 
   Scenario: 01 Create users
     Given path '/users'
-    And request {id : 1, lastname: 'adTeamOwner', firstname: 'adTeamOwner', email: 'owner@gmail.com', login: 'adTeamowner', password: 'adTeamowner'}
+    And request {id : 1, lastname: 'owner', firstname: 'owner', email: 'owner@gmail.com', login: 'owner', password: 'owner'}
     When method post
     Then status 200
 
     Given path '/users'
-    And request {id : 2, lastname: 'adTeamCustomer', firstname: 'adTeamCustomer', email: 'customer@gmail.com', login: 'adTeamcustomer', password: 'adTeamcustomer'}
+    And request {id : 2, lastname: 'customer', firstname: 'customer', email: 'customer@gmail.com', login: 'customer', password: 'customer'}
     When method post
     Then status 200
 
     Given path '/users'
-    And request {id : 3, lastname: 'adTeamcaptain', firstname: 'adTeamcaptain', email: 'captain@gmail.com', login: 'adTeamcaptain', password: 'adTeamcaptain'}
+    And request {id : 3, lastname: 'captain', firstname: 'captain', email: 'captain@gmail.com', login: 'captain', password: 'captain'}
     When method post
     Then status 200
 
@@ -27,7 +27,7 @@ Feature: Team
     Then status 200
 
     Given path '/customers'
-    And request { id : 2, customerName: "adTeamcustomer", ownerId : 1, locationId : 1}
+    And request { id : 2, customerName: "customer", ownerId : 1, locationId : 1}
     When method post
     Then status 200
 

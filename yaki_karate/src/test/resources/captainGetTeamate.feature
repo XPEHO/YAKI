@@ -1,22 +1,18 @@
 Feature: Captain
 
-#  Background:
-#    * def result = call read('authenticate.feature@AuthenticateCaptainSuccess')
-#    * def token = result.response.token
-
   Scenario: 01 Create user
     Given url 'http://localhost:8080/users'
-    And request {id : 1, lastname: 'adfetchTOwner', firstname: 'adfetchTOwner', email: 'owner@gmail.com', login: 'adfetchTowner', password: 'adfetchTowner'}
+    And request {id : 1, lastname: 'owner', firstname: 'owner', email: 'owner@gmail.com', login: 'owner', password: 'owner'}
     When method post
     Then status 200
 
     Given url 'http://localhost:8080/users'
-    And request {id : 2, lastname: 'adfetchTCustomer', firstname: 'adfetchTCustomer', email: 'customer@gmail.com', login: 'adfetchTcustomer', password: 'adfetchTcustomer'}
+    And request {id : 2, lastname: 'customer', firstname: 'customer', email: 'customer@gmail.com', login: 'customer', password: 'customer'}
     When method post
     Then status 200
 
     Given url 'http://localhost:8080/users'
-    And request {id : 3, lastname: 'adfetchTcaptain', firstname: 'adfetchTcaptain', email: 'captain@gmail.com', login: 'adfetchTcaptain', password: 'adfetchTcaptain'}
+    And request {id : 3, lastname: 'captain', firstname: 'captain', email: 'captain@gmail.com', login: 'captain', password: 'captain'}
     When method post
     Then status 200
 
@@ -32,7 +28,7 @@ Feature: Captain
     Then status 200
 
     Given url 'http://localhost:8080/customers'
-    And request { id : 2, customerName: "adTeamcustomer", ownerId : 1, locationId : 1}
+    And request { id : 2, customerName: "customer", ownerId : 1, locationId : 1}
     When method post
     Then status 200
 
@@ -53,7 +49,7 @@ Feature: Captain
 
   Scenario: Request all team mates from a team takes less than 300 ms
     Given url 'http://localhost:3000/login'
-    And request { "login": "adfetchTcaptain", "password": "adfetchTcaptain" }
+    And request { "login": "captain", "password": "captain" }
     When method POST
     Then status 200
     And def token = response.token

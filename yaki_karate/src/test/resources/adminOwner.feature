@@ -6,7 +6,7 @@ Feature: Owner
 
   Scenario: 01 Create owner
     Given url 'http://localhost:8080/users'
-    And request {id : 1, lastname: 'adOwnOwner', firstname: 'adOwnOwner', email: 'owner@gmail.com', login: 'adOwnowner', password: 'adOwnowner'}
+    And request {id : 1, lastname: 'owner', firstname: 'owner', email: 'owner@gmail.com', login: 'owner', password: 'owner'}
     When method post
     Then status 200
 
