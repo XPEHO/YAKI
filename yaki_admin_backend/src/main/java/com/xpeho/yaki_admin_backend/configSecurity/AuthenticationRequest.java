@@ -3,14 +3,12 @@ package com.xpeho.yaki_admin_backend.configSecurity;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class AuthenticationRequest {
-    @Autowired
     private String password;
-    @Autowired
-    private String email;
+    private String login;
 
-    public AuthenticationRequest(String password, String email) {
+    public AuthenticationRequest(String password, String login) {
         this.password = password;
-        this.email = email;
+        this.login = login;
     }
 
     public String getPassword() {
@@ -21,11 +19,11 @@ public class AuthenticationRequest {
         this.password = password;
     }
 
-    public String getEmail() {
-        return email;
+    public String getLogin() {
+        return login;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setLogin(String login) {
+        this.login = login;
     }
 }

@@ -1,7 +1,9 @@
 package com.xpeho.yaki_admin_backend.data.services;
 
+import com.xpeho.yaki_admin_backend.data.models.TeamModel;
 import com.xpeho.yaki_admin_backend.data.models.UserModel;
 import com.xpeho.yaki_admin_backend.data.sources.UserJpaRepository;
+import com.xpeho.yaki_admin_backend.domain.entities.TeamEntity;
 import com.xpeho.yaki_admin_backend.domain.entities.UserEntity;
 import com.xpeho.yaki_admin_backend.domain.entities.UserEntityIn;
 import com.xpeho.yaki_admin_backend.domain.services.UserService;
@@ -54,5 +56,16 @@ public class UserServiceImpl implements UserService {
                     userModel.getEmail(),
                     userModel.getLogin());
         } else throw new EntityNotFoundException("Entity User with id " + id + " not found");
+    }
+
+    @Override
+    public UserEntity deleteById(int id) {
+        final Optional<UserModel> userModelOpt = userJpaRepository.findById(id);
+        if (userModelOpt.isPresent()) {
+            UserModel userModel = userModelOpt.get();
+            userJpaRepository.deleteById(id);
+            return new UserEntity(userModel.getLastName(), userModel.getFirstName(),userModel.getEmail(),userModel.getLogin());
+        } else throw new EntityNotFoundException("The team with id " + id + " not found.");
+
     }
 }
