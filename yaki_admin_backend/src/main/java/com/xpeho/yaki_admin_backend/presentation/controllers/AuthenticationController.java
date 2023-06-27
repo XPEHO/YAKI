@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 @RequestMapping("/login")
 public class AuthenticationController {
-    final AuthenticationService authenticationService;
+    static AuthenticationService authenticationService;
 
     public AuthenticationController(AuthenticationService authenticationService) {
-        this.authenticationService = authenticationService;
+        AuthenticationController.authenticationService = authenticationService;
     }
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(
+    public static ResponseEntity<AuthenticationResponse> register(
             @RequestBody RegisterRequest request
     ) {
         return ResponseEntity.ok(authenticationService.register(request));
