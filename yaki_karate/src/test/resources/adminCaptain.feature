@@ -1,4 +1,4 @@
-Feature: Captain
+Feature: adminCaptain
 
   Background:
     * url 'http://localhost:8080'
