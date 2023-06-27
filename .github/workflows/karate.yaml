@@ -29,8 +29,16 @@ jobs:
           cd ../yaki_docker
           docker compose up --build --quiet-pull -d
           cd ../yaki_karate
-          echo "Running karate tests"
-          mvn test --quiet
-          cd ../yaki_docker
-          echo "Stopping docker containers"
-          docker compose down
+
+      
+      - name: Sleep for 10 seconds
+          run: sleep 10s
+          shell: bash  
+
+      - name: Run karate testing
+          run: |
+            echo "Running karate tests"
+            mvn test --quiet
+            cd ../yaki_docker
+            echo "Stopping docker containers"
+            docker compose down
