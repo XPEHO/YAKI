@@ -9,4 +9,5 @@ public interface UserService {
 
     UserEntity findById(int id);
 
+    UserEntity deleteById(int id);
 }
