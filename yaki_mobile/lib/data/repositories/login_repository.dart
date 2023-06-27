@@ -1,4 +1,3 @@
-import 'package:crypt/crypt.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:yaki/data/models/login_model.dart';
 import 'package:yaki/data/models/user.dart';
@@ -31,45 +30,46 @@ class LoginRepository {
   /// * convert the HttpResponse.data into a User model instance,
   /// * setSharedPreference() save token & userId to the sharedPreference
   /// * setLoggedUser() create the LoggedUser instance: front available information's.
-  /// * change isCaptain value depending of the User model captainId attribute.
   Future<bool> userAuthentication(String login, String password) async {
-    // isCaptain determine redirection after login.
-    bool isCaptain = false;
+    bool authenticationSuccess = false;
 
-    // for hash password, replace
-    // password: password
-    // with :
-    // password: hashPassword(password)
-    LoginModel newLog =
-        LoginModel(login: login, password: hashPassword(password));
+    LoginModel newLog = LoginModel(login: login, password: password);
 
     try {
       final authenticationResponse = await _loginApi.postLogin(newLog);
 
       final statusCode = authenticationResponse.response.statusCode;
-      switch (statusCode) {
-        case 200:
-          // convert HttpResponse<dynamic> (Map<String, dynamic>) into Model using .fromJson method
-          final userResponse = User.fromJson(authenticationResponse.data);
-          setSharedPreference(userResponse);
-          setLoggedUser(userResponse);
-          if (userResponse.captainId != null) {
-            isCaptain = true;
-          }
-          break;
-        case 204:
-          debugPrint("invalid login informations, code : $statusCode");
-          break;
-        case 401:
-          debugPrint("Invalid token, code : $statusCode");
-          break;
-        default:
-          throw Exception('Invalid statusCode : $statusCode');
+
+      if (statusCode == 200) {
+        // convert HttpResponse<dynamic> (Map<String, dynamic>) into Model using .fromJson method
+        final userResponse = User.fromJson(authenticationResponse.data);
+        setSharedPreference(userResponse);
+        setLoggedUser(userResponse);
+        authenticationSuccess = true;
+      } else {
+        switch (statusCode) {
+          case 204:
+            debugPrint("invalid login informations, code : $statusCode");
+            break;
+          case 401:
+            debugPrint("Invalid token, code : $statusCode");
+            break;
+          default:
+            throw Exception('Invalid statusCode : $statusCode');
+        }
       }
     } catch (err) {
       debugPrint('error during userAuthentication : $err');
     }
-    return isCaptain;
+    return authenticationSuccess;
+  }
+
+  // Check if the user stored in the repository is a captain or a teamMate
+  bool isCaptain() {
+    if (loggedUser!.captainId != null) {
+      return true;
+    }
+    return false;
   }
 
   /// Attributes from User model,
@@ -90,17 +90,6 @@ class LoginRepository {
       firstName: user.firstName ?? "",
       email: user.email ?? "",
     );
-  }
-
-  /// hash password received from authentication page
-  /// using crypt.dart library
-  String hashPassword(String password) {
-    final hashPass = Crypt.sha256(
-      password,
-      rounds: 10000,
-      salt: const String.fromEnvironment('CRED_HASH_PASS'),
-    );
-    return hashPass.toString();
   }
 
   /// teamMateId getter, used at declaration object creation, in order to POST it.

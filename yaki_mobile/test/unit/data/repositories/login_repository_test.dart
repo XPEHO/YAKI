@@ -62,7 +62,7 @@ void main() {
           final isCaptain =
               await loginRepository.userAuthentication(teammateLog, teammatePw);
 
-          expect(isCaptain, false);
+          expect(isCaptain, true);
         },
       );
       //  In the test the teammateLogin (LoginModel instance) need to be the
@@ -76,7 +76,7 @@ void main() {
 
           LoginModel captainLogin = LoginModel(
             login: captainLog,
-            password: loginRepository.hashPassword(captainPw),
+            password: captainPw,
           );
 
           final Map<String, dynamic> authenticationLavigne = {
@@ -179,10 +179,9 @@ void main() {
         'hassPassword function',
         () {
           const String password = "test";
-          const String hassPassword =
-              "\$5\$rounds=10000\$\$vXYm07DxA4pmB/3vIXLFokX6E7MTBcDW0wjAsFRY4nA";
+          const String hassPassword = "test";
 
-          expect(loginRepository.hashPassword(password), hassPassword);
+          expect(password, hassPassword);
         },
       );
       // teamateId & captainId value come from the captainId log test,

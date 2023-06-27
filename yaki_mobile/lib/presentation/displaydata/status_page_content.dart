@@ -63,6 +63,7 @@ class StatusUtils {
         link = 'assets/images/$status.svg';
       }
     }
+
     return link;
   }
 

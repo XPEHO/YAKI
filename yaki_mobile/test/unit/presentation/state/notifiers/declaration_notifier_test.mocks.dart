@@ -203,14 +203,6 @@ class MockLoginRepository extends _i1.Mock implements _i7.LoginRepository {
         ),
         returnValueForMissingStub: null,
       );
-  @override
-  String hashPassword(String? password) => (super.noSuchMethod(
-        Invocation.method(
-          #hashPassword,
-          [password],
-        ),
-        returnValue: '',
-      ) as String);
 }
 
 /// A class which mocks [TeamRepository].

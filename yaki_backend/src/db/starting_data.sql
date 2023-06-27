@@ -1,4 +1,3 @@
-
 INSERT INTO public.locations(
 	location_name, location_adress)
 	VALUES ('Leroy merlin', 'Rue de Versailles, 59650 Villeneuve-d''Ascq'),

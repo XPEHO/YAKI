@@ -11,7 +11,6 @@ Feature: Authenticate
     When method post
     Then status 200
 
-
   @AuthenticateTeamMateSuccess
   Scenario: 08 Authenticate TeamMate successful
     Given url 'http://localhost:3000/login'

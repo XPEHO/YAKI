@@ -10,7 +10,6 @@ Feature: Login
     Then status 200
 
   Scenario: Login successful
-
     Given url 'http://localhost:3000/login'
     And request { "login": "user", "password": "user"}
     When method POST

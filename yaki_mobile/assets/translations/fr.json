@@ -34,5 +34,6 @@
   "captainTitle": "Capitaine",
   "captainHeaderTitle": "Capitaine",
   "inputCaptain": "Nom, Statut...",
-  "hintCaptain": "Entrez un nom ou un statut"
+  "hintCaptain": "Entrez un nom ou un statut",
+  "authenticationFailed": "Identifiant ou mot de passe inconnu"
 }
