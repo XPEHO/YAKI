@@ -1,16 +1,33 @@
 Feature: GetTeamMates
 
   Background:
-    * url 'http://localhost:3000'
-    * def login = call read('classpath:login.feature')
-    * header x-access-token = login.token
-    * header user_id = login.userId
     * def schema = [{userId : '#number', teamMateId: '#number', userLastName: '#string', userFirstName: '#string', declarationDate: "#string", declarationStatus: "#string"}]
+
+  Scenario: 01 Create user
+    Given url 'http://localhost:8080/users'
+    And request {id : 4, lastname: 'user', firstname: 'user', email: 'owner@gmail.com', login: 'user', password: 'user'}
+    When method post
+    Then status 200
+
+  Scenario: 02 Attribute role & create team
+    Given url 'http://localhost:8080/teammates'
+    And request { teamId : 2, userId: 4 }
+    When method post
+    Then status 200
 
   @GetAllTeamMateSuccessful
   Scenario: Get all teamMate
-    Given path '/teamMates'
-    And param captainId = 1
+    Given url 'http://localhost:3000/login'
+    And request { "login": "user", "password": "user" }
+    When method POST
+    Then status 200
+    And def token = response.token
+    And def userId = response.userId
+
+    Given url 'http://localhost:3000/teamMates'
+    And header x-access-token = token
+    And header user_id = userId
+    And param captainId = 2
     When method get
     Then status 200
     And match response contains  schema
@@ -18,6 +35,6 @@ Feature: GetTeamMates
     * print schema
 
   Scenario: Get the latest declaration fail
-    Given path '/teamMate'
+    Given url 'http://localhost:3000/teamMate'
     When method get
     Then status 404
