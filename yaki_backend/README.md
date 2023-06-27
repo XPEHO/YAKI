@@ -1,6 +1,6 @@
 # node-server
 
-this is nodeJs api YAKI.
+this is nodeJs api YAKI..
 
 ## Purpose
 
