@@ -25,18 +25,18 @@ Feature: Owner
     * print schema
 
   Scenario: 04 GetById Update and Delete owner
-    Given path '/owners/' + 1
+    Given path '/owners/' + 2
     When method get
     Then status 200
     And match response == {id: '#number', userId: '#number'}
 
-    Given path '/owners/' + 1
+    Given path '/owners/' + 2
     And request {userId: 1}
     When method put
     Then status 200
     And match response == {id: '#number', userId: '#number'}
 
-    Given path '/owners/' + 1
+    Given path '/owners/' + 2
     When method delete
     Then status 200
     And print response
