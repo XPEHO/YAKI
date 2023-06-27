@@ -4,6 +4,12 @@ Feature: Team
     * url 'http://localhost:8080'
     * def schema = {id : '#number', captainId: '#number', teamName: '#string'}
 
+  Scenario: 01 Create users
+    Given path '/users'
+    And request {id : 1, lastname: 'owner', firstname: 'owner', email: 'owner@gmail.com', login: 'owner', password: 'owner'}
+    When method post
+    Then status 200
+
   @GetOwner
   Scenario: Create, GetById, Update and Delete owner
     Given path '/teams'
