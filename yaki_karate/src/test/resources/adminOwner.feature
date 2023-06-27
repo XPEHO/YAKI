@@ -5,12 +5,12 @@ Feature: Owner
     * def schema = {id : '#number', userId: '#number'}
 
   Scenario: 01 Create owner
-    Given url 'http://localhost:8080/users'
+    Given path '/users'
     And request {id : 1, lastname: 'owner', firstname: 'owner', email: 'owner@gmail.com', login: 'owner', password: 'owner'}
     When method post
     Then status 200
 
-    Given url 'http://localhost:8080/owners'
+    Given path '/owners'
     And request { userId : 1 }
     When method post
     Then status 200
