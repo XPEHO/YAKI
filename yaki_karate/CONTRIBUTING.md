@@ -1,6 +1,6 @@
 ## yaki_karate
 
-# Contributing to YAKI
+# Contributing to YAKI.
 
 This file contains all the rules to follow in order to add your contribution to YAKI project.
 
