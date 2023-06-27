@@ -48,6 +48,21 @@ class SharedPref {
     }
   }
 
+  static Future<void> setLoginDetails(String login, String password) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setStringList('loginDetails', [login, password]);
+  }
+
+  static Future<List<String>> getLoginDetails() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (prefs.containsKey('loginDetails')) {
+      return prefs.getStringList('loginDetails')!;
+    } else {
+      await setLoginDetails('', '');
+      return ['', ''];
+    }
+  }
+
   /// Clear all values saved in sharedPreference
   static void clearAll() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();

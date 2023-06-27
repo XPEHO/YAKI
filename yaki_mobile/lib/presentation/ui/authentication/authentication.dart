@@ -25,20 +25,30 @@ class Authentication extends ConsumerStatefulWidget {
 class _AuthenticationState extends ConsumerState<Authentication> {
   final loginController = TextEditingController();
   final passwordController = TextEditingController();
-
+  // store the value of the 'rememberMe' checkbox
   bool isChecked = false;
+  // store the user default login details
+  List<String> loginDetails = ["", ""];
 
-  void _getRememberMe() async {
+  // function that retrieve from the shared preferences the user default
+  // login details and the 'rememberMe' checkbox default value before
+  // the widgets are mounted
+  void _initiateCheckboxValue() async {
     var rememberMe = await SharedPref.getRememberMe();
+    var storedLoginDetails = await SharedPref.getLoginDetails();
 
     setState(() {
       isChecked = rememberMe;
+      loginDetails = storedLoginDetails;
     });
+
+    loginController.text = storedLoginDetails.first;
+    passwordController.text = storedLoginDetails.last;
   }
 
   @override
   void initState() {
-    _getRememberMe();
+    _initiateCheckboxValue();
     super.initState();
   }
 
@@ -85,9 +95,11 @@ class _AuthenticationState extends ConsumerState<Authentication> {
       required Function goToCaptain,
     }) async {
       await SharedPref.deleteToken();
-      // regarde si le checkbox est true
-      // Si c'est le cas, sauvegarde les infos de login dans les
-      // shared pref
+      // if the rememberMe checkbox value is true, store the login details
+      // in the shared preferences
+      if (await SharedPref.getRememberMe()) {
+        await SharedPref.setLoginDetails(login, password);
+      }
       final bool authenticationResult = await ref
           .read(loginRepositoryProvider)
           .userAuthentication(login, password);
@@ -142,6 +154,7 @@ class _AuthenticationState extends ConsumerState<Authentication> {
                         left: 50,
                       ),
                       child: InputApp(
+                        defaultValue: loginDetails.first,
                         inputText: tr('inputLogin'),
                         inputHint: tr('hintLogin'),
                         password: false,
@@ -152,6 +165,7 @@ class _AuthenticationState extends ConsumerState<Authentication> {
                       padding:
                           const EdgeInsets.only(top: 20, right: 50, left: 50),
                       child: InputApp(
+                        defaultValue: loginDetails.last,
                         inputText: tr('inputPassword'),
                         inputHint: tr('hintPassword'),
                         password: true,

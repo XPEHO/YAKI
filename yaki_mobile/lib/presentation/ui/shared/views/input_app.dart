@@ -5,6 +5,7 @@ class InputApp extends StatefulWidget {
   final String inputHint;
   final bool password;
   final TextEditingController controller;
+  final String defaultValue;
 
   /// Generic input component with 3 args : <br>
   /// inputText (String): text in the input
@@ -16,6 +17,7 @@ class InputApp extends StatefulWidget {
     required this.inputHint,
     required this.password,
     required this.controller,
+    required this.defaultValue,
   });
 
   @override
@@ -36,7 +38,7 @@ class _InputAppState extends State<InputApp> {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       controller: widget.controller,
       obscureText: _passwordVisible,
       decoration: InputDecoration(
