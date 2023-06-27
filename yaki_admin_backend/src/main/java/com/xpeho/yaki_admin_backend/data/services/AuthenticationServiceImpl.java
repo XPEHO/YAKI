@@ -36,7 +36,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 passwordEncoder.encode(request.getPassword()));
         repository.save(user);
         var jwtToken = jwtService.generateToken(user);
-        return new AuthenticationResponse(jwtToken);
+        return new AuthenticationResponse(jwtToken,user.getUserId());
     }
 
     @Override
