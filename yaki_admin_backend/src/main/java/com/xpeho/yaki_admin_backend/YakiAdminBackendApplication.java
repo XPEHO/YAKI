@@ -10,4 +10,3 @@ public class YakiAdminBackendApplication {
         SpringApplication.run(YakiAdminBackendApplication.class, args);
     }
 }
-// just for the push
