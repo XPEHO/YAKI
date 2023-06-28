@@ -10,14 +10,29 @@ Feature: GetACustomer
 
   @GetOneCustomerSuccessfull
   Scenario: 01 Get one customer
+    Given path '/login/register'
+    And request { lastname: 'owner', firstname: 'owner', email: 'owner@gmail.com', login: 'owner', password: 'owner' }
+    When method post
+    Then status 200
+    And def token = 'Bearer ' + response.token
+
     Given path '/customers/1'
+    And header Authorization = token
     When method get
     Then status 200
     And match  response contains schema
 
   @Cleanup
-  Scenario: 02 Delete registered user
-    Given path '/users'
+  Scenario: 05 Delete registered user
+    Given path '/login/authenticate'
+    And request { login: 'owner', password: 'owner' }
+    When method post
+    Then status 200
+    And def token = 'Bearer ' + response.token
+    And def userId = response.id
+    And print userId
+
+    Given path '/users/' + userId
+    And header Authorization = token
     When method delete
-    And param id = result.response.userId
     Then status 200
