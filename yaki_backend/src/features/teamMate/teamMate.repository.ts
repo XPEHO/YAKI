@@ -1,10 +1,10 @@
-import { Client, QueryResult } from "pg";
+import {Client, QueryResult} from "pg";
 
 export class TeamMateRepository {
   /**
    * Seek a user in the database by its user_id
-   * @param user_id 
-   * @returns 
+   * @param user_id
+   * @returns
    */
   getByUserId = async (user_id: string) => {
     const client = new Client({
@@ -14,12 +14,12 @@ export class TeamMateRepository {
       database: process.env.DB_DATABASE,
       port: Number(process.env.DB_PORT),
     });
-    const query = `SELECT * FROM public.team_mate INNER JOIN public.user ON team_mate_user_id = user_id WHERE team_mate_user_id = $1;`
-    client.connect() 
-    const poolResult: QueryResult = await client.query(query,[user_id]);
+    const query = `SELECT * FROM public.team_mate INNER JOIN public.user ON team_mate_user_id = user_id WHERE team_mate_user_id = $1;`;
+    client.connect();
+    const poolResult: QueryResult = await client.query(query, [user_id]);
     await client.end();
     return poolResult.rows[0];
-  }
+  };
 
   getByTeamIdWithLastDeclaration = async (team_id: number) => {
     const client = new Client({
@@ -46,11 +46,12 @@ export class TeamMateRepository {
       WHERE rank = 1
     ) as max_decl
     ON declaration_team_mate_id = team_mate.team_mate_id
-    WHERE team_mate_team_id = $1;
-  `
-    client.connect()
-    const poolResult: QueryResult = await client.query(query,[team_id]);
+    WHERE team_mate_team_id = $1
+    AND declaration_date::date = now()::date;
+  `;
+    client.connect();
+    const poolResult: QueryResult = await client.query(query, [team_id]);
     await client.end();
     return poolResult.rows;
-  }
+  };
 }
