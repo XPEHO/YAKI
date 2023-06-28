@@ -30,40 +30,40 @@ We will use JWT authorization token in the Authorization header.
 
 - GetMapping:
 
-    - getCaptains => get all captains
-    - getCustomers => get all customers
-    - findAll => get all owners
+  - getCaptains => get all captains
+  - getCustomers => get all customers
+  - findAll => get all owners
 
 - PostMapping:
 
-    - createCaptain => add a new captain
-    - createCustomer => add a new customer
-    - createOwner => add a new owner
-    - createTeam => add a new team
-    - createTeammate => add a new teamMate
+  - createCaptain => add a new captain
+  - createCustomer => add a new customer
+  - createOwner => add a new owner
+  - createTeam => add a new team
+  - createTeammate => add a new teamMate
 
 - GetMapping("{id}"):
 
-    - getCaptainById => get a captain by id
-    - getCustomer(id) => get a customer by id
-    - findById => get a owner by id
-    - getTeam(id) => get a team by id
-    - getTeammate(id)=> get a teamMate by id
+  - getCaptainById => get a captain by id
+  - getCustomer(id) => get a customer by id
+  - findById => get a owner by id
+  - getTeam(id) => get a team by id
+  - getTeammate(id)=> get a teamMate by id
 
 - DeleteMapping("{id}"):
 
-    - deleteById => delete a captain/customer/owner/team/teamMate by id
+  - deleteById => delete a captain/customer/owner/team/teamMate by id
 
 - PutMapping("{id}"):
 
-    - saveOrUpdate => update a captain/customer/team/ teamMate by id
+  - saveOrUpdate => update a captain/customer/team/ teamMate by id
 
 - GetMapping({"captain/{id}"}):
 
-    - findAllByCaptain => find all team by captain id
+  - findAllByCaptain => find all team by captain id
 
 - GetMapping("team/{id}"):
-    - findAllByTeam(id) => find all teamMate by team id.
+  - findAllByTeam(id) => find all teamMate by team id.
 
 <!-- add login path -->
 
