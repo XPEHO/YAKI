@@ -71,7 +71,9 @@ class HeaderDeclaration extends StatelessWidget {
                       // top right circle avatar
                       AvatarIcon(
                         pictoIcon: pictoIcon,
-                        onPressed: () => {},
+                        onPressed: () => {
+                          context.go('/profile'),
+                        },
                       ),
                     ],
                   ),

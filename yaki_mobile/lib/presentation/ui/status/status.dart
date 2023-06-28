@@ -11,8 +11,6 @@ void _routeHandling(BuildContext context) {
   context.go('/declaration');
 }
 
-void onAvatarIconPress() {}
-
 class Status extends ConsumerWidget {
   const Status({Key? key}) : super(key: key);
 
@@ -27,11 +25,13 @@ class Status extends ConsumerWidget {
           padding: const EdgeInsets.all(15.0),
           child: Column(
             children: [
-              const Align(
+              Align(
                 alignment: Alignment.centerRight,
                 child: AvatarIcon(
                   pictoIcon: 'assets/images/avatar1.svg',
-                  onPressed: onAvatarIconPress,
+                  onPressed: () {
+                    context.go('/profile');
+                  },
                 ),
               ),
               Expanded(

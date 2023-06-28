@@ -30,13 +30,15 @@ class HalfDayStatus extends ConsumerWidget {
           padding: const EdgeInsets.all(15.0),
           child: Column(
             children: [
-              const Expanded(
+              Expanded(
                 flex: 2,
                 child: Align(
                   alignment: Alignment.topRight,
                   child: AvatarIcon(
                     pictoIcon: 'assets/images/avatar1.svg',
-                    onPressed: onAvatarIconPress,
+                    onPressed: () {
+                      context.go('/profile');
+                    },
                   ),
                 ),
               ),
