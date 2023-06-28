@@ -86,5 +86,6 @@ jobs:
           java-version: "17"
       - name: Build and test Admin backEnd
         run: |
+          echo ${{ secrets.APPLICATION_TEST_PROPERTIES }} | base64 -d > src/main/test/resources/application-test.properties
           gradle clean build
           gradle clean test
