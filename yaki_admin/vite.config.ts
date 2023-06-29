@@ -5,9 +5,6 @@ import vue from "@vitejs/plugin-vue";
 
 // https://vitejs.dev/config/
 export default defineConfig(({mode}) => {
-  // Load env file based on `mode` in the current working directory.
-  // Set the third parameter to '' to load all env regardless of the `VITE_` prefix.
-  const env = loadEnv(mode, process.cwd(), "");
   return {
     plugins: [vue()],
     resolve: {
@@ -15,18 +12,10 @@ export default defineConfig(({mode}) => {
         "@": fileURLToPath(new URL("./src", import.meta.url)),
       },
     },
-    server: {
-      // mode dev
-      port: 5173,
-    },
-    preview: {
-      // mode  preview
-      port: parseInt(env.VITE_PORT),
-    },
     test: {
       coverage: {
-        provider: 'istanbul' // or 'v8'
+        provider: "istanbul", // or 'v8'
       },
-    }
+    },
   };
 });
