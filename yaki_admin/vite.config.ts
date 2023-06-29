@@ -15,14 +15,6 @@ export default defineConfig(({mode}) => {
         "@": fileURLToPath(new URL("./src", import.meta.url)),
       },
     },
-    server: {
-      // mode dev
-      port: 5173,
-    },
-    preview: {
-      // mode  preview
-      port: 4173,
-    },
     test: {
       coverage: {
         provider: "istanbul", // or 'v8'
