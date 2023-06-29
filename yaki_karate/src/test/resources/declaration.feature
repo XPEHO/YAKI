@@ -1,48 +1,62 @@
 Feature: CreationDeclaration
-
+  Background:
+    Given url 'http://localhost:8080/login/authenticate'
+    And request { login: 'owner', password: 'owner' }
+    When method post
+    Then status 200
+    And def token = 'Bearer ' + response.token
   Scenario: 01 Create user
     Given url 'http://localhost:8080/users'
+    And header Authorization = token
     And request {id : 1, lastname: 'owner', firstname: 'owner', email: 'owner@gmail.com', login: 'owner', password: 'owner'}
     When method post
     Then status 200
 
     Given url 'http://localhost:8080/users'
+    And header Authorization = token
     And request {id : 2, lastname: 'customer', firstname: 'customer', email: 'customer@gmail.com', login: 'customer', password: 'customer'}
     When method post
     Then status 200
 
     Given url 'http://localhost:8080/users'
+    And header Authorization = token
     And request {id : 3, lastname: 'captain', firstname: 'captain', email: 'captain@gmail.com', login: 'captain', password: 'captain'}
     When method post
     Then status 200
 
     Given url 'http://localhost:8080/users'
+    And header Authorization = token
     And request {id : 4, lastname: 'user', firstname: 'user', email: 'owner@gmail.com', login: 'user', password: 'user'}
     When method post
     Then status 200
 
   Scenario: 02 Attribute role & create team
     Given url 'http://localhost:8080/owners'
+    And header Authorization = token
     And request { userId : 1 }
     When method post
     Then status 200
 
     Given url 'http://localhost:8080/customers'
+    And header Authorization = token
     And request { id : 2, customerName: "adTeamcustomer", ownerId : 1, locationId : 1}
     When method post
     Then status 200
 
     Given url 'http://localhost:8080/captains'
+    And header Authorization = token
     And request { userId : 3, customerId: 1 }
     When method post
     Then status 200
 
     Given url 'http://localhost:8080/teams'
+    And header Authorization = token
     And request { captainId : 2, teamName: "adTeam_team_name" }
     When method post
     Then status 200
 
     Given url 'http://localhost:8080/teammates'
+    And header Authorization = token
     And request { teamId : 2, userId: 4 }
     When method post
     Then status 200

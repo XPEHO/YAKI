@@ -4,6 +4,6 @@ public class KarateRunner {
 
     @Karate.Test
     Karate runAllTests() {
-        return Karate.run("classpath:adminCaptain.feature").relativeTo(getClass());
+        return Karate.run().relativeTo(getClass());
     }
 }

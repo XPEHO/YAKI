@@ -3,14 +3,13 @@ Feature: Captain
   Background:
     * url 'http://localhost:8080'
     * def schema = {id : '#number', userId : '#number', customerId : '#number' }
-
-  Scenario: 01 Create users
-    Given path '/login/register'
-    And request { lastname: 'owner', firstname: 'owner', email: 'owner@gmail.com', login: 'owner', password: 'owner' }
+    Given path '/login/authenticate'
+    And request { login: 'owner', password: 'owner' }
     When method post
     Then status 200
     And def token = 'Bearer ' + response.token
 
+  Scenario: 01 Create users
     Given path '/users'
     And header Authorization = token
     And request {id : 2, lastname: 'customer', firstname: 'customer', email: 'customer@gmail.com', login: 'customer', password: 'customer'}
@@ -30,11 +29,7 @@ Feature: Captain
     Then status 200
 
   Scenario: 02 Attribute roles (owner / customer / captain)
-    Given path '/login/authenticate'
-    And request { login: 'owner', password: 'owner' }
-    When method post
-    Then status 200
-    And def token = 'Bearer ' + response.token
+
 
     Given path '/owners'
     And header Authorization = token
@@ -55,12 +50,6 @@ Feature: Captain
     Then status 200
 
   Scenario: 03 Get all captains
-    Given path '/login/authenticate'
-    And request { login: 'owner', password: 'owner' }
-    When method post
-    Then status 200
-    And def token = 'Bearer ' + response.token
-
     Given path '/captains'
     And header Authorization = token
     When method get
@@ -70,12 +59,6 @@ Feature: Captain
     * print schema
 
   Scenario: 04 GetById Update and Delete captain
-    Given path '/login/authenticate'
-    And request { login: 'owner', password: 'owner' }
-    When method post
-    Then status 200
-    And def token = 'Bearer ' + response.token
-
     Given path '/captains/' + 1
     And header Authorization = token
     When method get
@@ -94,18 +77,3 @@ Feature: Captain
     When method delete
     Then status 200
     And print response
-
-  @Cleanup
-  Scenario: 05 Delete registered user
-    Given path '/login/authenticate'
-    And request { login: 'owner', password: 'owner' }
-    When method post
-    Then status 200
-    And def token = 'Bearer ' + response.token
-    And def userId = response.id
-    And print userId
-
-    Given path '/users/' + userId
-    And header Authorization = token
-    When method delete
-    Then status 200
