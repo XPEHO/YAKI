@@ -17,11 +17,14 @@ class Profile extends ConsumerWidget {
     return Scaffold(
       body: PagesLayout(
         header: Header(
-          pictoIcon: 'assets/images/dots.svg',
+          pictoIcon: 'assets/images/exit.svg',
           pictoPath: 'assets/images/avatar1.svg',
           headerTitle: 'Profile',
           headerHint:
               user != null ? '${user.firstName} ${user.lastName}' : 'teamMate',
+          onPressed: () {
+            context.pop();
+          },
         ),
         bodyContent: Center(
           child: TextButton(

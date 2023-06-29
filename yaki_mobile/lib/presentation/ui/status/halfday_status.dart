@@ -46,7 +46,7 @@ class HalfDayStatus extends ConsumerWidget {
                 flex: 2,
                 child: Center(
                   child: CircleAvatarSVG(
-                    iconPath: halfdayDeclarations.morning.image,
+                    iconPath: tr(halfdayDeclarations.morning.image),
                     radius: 80,
                   ),
                 ),
@@ -64,7 +64,7 @@ class HalfDayStatus extends ConsumerWidget {
                 flex: 2,
                 child: Center(
                   child: CircleAvatarSVG(
-                    iconPath: halfdayDeclarations.afternoon.image,
+                    iconPath: tr(halfdayDeclarations.afternoon.image),
                     radius: 80,
                   ),
                 ),

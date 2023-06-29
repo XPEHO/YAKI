@@ -29,6 +29,7 @@ void main() {
           pictoPath: 'assets/images/captain.svg',
           headerTitle: tr('captainTitle'),
           headerHint: tr('captainHeaderTitle'),
+          onPressed: () {},
         ),
       )
       ..addScenario(
@@ -39,6 +40,7 @@ void main() {
           pictoPath: 'assets/images/unknown.svg',
           headerTitle: tr('headerTitleDecla'),
           headerHint: tr('headerHintDecla'),
+          onPressed: () {},
         ),
       )
       ..addScenario(
@@ -49,6 +51,7 @@ void main() {
           pictoPath: 'assets/images/authent.svg',
           headerTitle: tr('headerTitle'),
           headerHint: tr('headerHint'),
+          onPressed: () {},
         ),
       );
 

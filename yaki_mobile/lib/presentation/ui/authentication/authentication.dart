@@ -139,6 +139,7 @@ class _AuthenticationState extends ConsumerState<Authentication> {
               pictoPath: 'assets/images/authent.svg',
               headerTitle: tr('headerTitle'),
               headerHint: tr('headerHint'),
+              onPressed: () {},
             ),
           ),
           Expanded(

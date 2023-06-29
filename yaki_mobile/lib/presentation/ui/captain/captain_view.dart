@@ -22,6 +22,7 @@ class CaptainView extends ConsumerWidget {
           headerTitle: tr('captainHeaderTitle'),
           headerHint:
               user != null ? '${user.firstName} ${user.lastName}' : 'captain',
+          onPressed: () {},
         ),
         bodyContent: const CaptainBody(),
       ),
