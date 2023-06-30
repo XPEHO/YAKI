@@ -37,7 +37,7 @@ class HalfDayStatus extends ConsumerWidget {
                   child: AvatarIcon(
                     pictoIcon: 'assets/images/avatar1.svg',
                     onPressed: () {
-                      context.go('/profile');
+                      context.push('/profile');
                     },
                   ),
                 ),

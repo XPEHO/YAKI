@@ -36,5 +36,8 @@
   "inputCaptain": "Name, Status...",
   "hintCaptain": "Enter a name or a status",
   "authenticationFailed": "Unknown username or password",
-  "logOutButton": "Log out"
+  "logOutButton": "Log out",
+  "headerHintProfile": "Your profile",
+  "inputLabelLastName": "Name",
+  "inputLabelFirstName": "First name"
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:yaki/domain/entities/logged_user.dart';
 import 'package:yaki/presentation/state/providers/login_provider.dart';
 import 'package:yaki/presentation/ui/captain/views/captain_body.dart';
@@ -22,7 +23,9 @@ class CaptainView extends ConsumerWidget {
           headerTitle: tr('captainHeaderTitle'),
           headerHint:
               user != null ? '${user.firstName} ${user.lastName}' : 'captain',
-          onPressed: () {},
+          onPressed: () {
+            context.push('/profile');
+          },
         ),
         bodyContent: const CaptainBody(),
       ),

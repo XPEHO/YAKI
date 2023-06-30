@@ -8,15 +8,16 @@ class Header extends StatelessWidget {
   final String pictoPath;
   final String headerTitle;
   final String headerHint;
-  final void Function() onPressed;
+  final void Function()? onPressed;
 
-  const Header(
-      {super.key,
-      required this.pictoIcon,
-      required this.pictoPath,
-      required this.headerTitle,
-      required this.headerHint,
-      required this.onPressed});
+  const Header({
+    super.key,
+    required this.pictoIcon,
+    required this.pictoPath,
+    required this.headerTitle,
+    required this.headerHint,
+    this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +53,7 @@ class Header extends StatelessWidget {
                   // top right circle avatar
                   AvatarIcon(
                     pictoIcon: pictoIcon,
-                    onPressed: onPressed,
+                    onPressed: onPressed ?? () {},
                   ),
                 ],
               ),

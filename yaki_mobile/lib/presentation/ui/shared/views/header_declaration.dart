@@ -72,7 +72,7 @@ class HeaderDeclaration extends StatelessWidget {
                       AvatarIcon(
                         pictoIcon: pictoIcon,
                         onPressed: () => {
-                          context.go('/profile'),
+                          context.push('/profile'),
                         },
                       ),
                     ],
