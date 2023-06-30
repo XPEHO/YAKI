@@ -18,8 +18,8 @@ import java.util.function.Function;
 @Service
 public class JwtService {
 
-    //@Value("${token.signing.key}")
-    private String secretKey= "test11630a7bf78cd11eb951faacf3d1a57sdofknspdofivnspozie876543598535";
+    @Value("${token.signing.key}")
+    String secretKey;
 
     public String extractUserName(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -53,7 +53,7 @@ public class JwtService {
         return (userName.equals(userDetails.getUsername())) && !isTokenExpired(token);
     }
 
-    private boolean isTokenExpired(String token) {
+    public boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
 
@@ -70,7 +70,7 @@ public class JwtService {
                 .getBody();
     }
 
-    private Key getSignInKey() {
+    public Key getSignInKey() {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(keyBytes);
     }
