@@ -7,6 +7,7 @@ import 'package:yaki/presentation/ui/captain/captain_view.dart';
 import 'package:yaki/presentation/ui/declaration/declaration.dart';
 import 'package:yaki/presentation/ui/declaration/afternoon_declaration.dart';
 import 'package:yaki/presentation/ui/declaration/morning_declaration.dart';
+import 'package:yaki/presentation/ui/profile/profile.dart';
 import 'package:yaki/presentation/ui/status/status.dart';
 import 'package:yaki/presentation/ui/status/halfday_status.dart';
 
@@ -100,6 +101,17 @@ final goRouterProvider = Provider<GoRouter>(
                 }
               },
             ),
+            GoRoute(
+              path: 'profile',
+              builder: (context, state) => const Profile(),
+              redirect: (BuildContext context, GoRouterState state) async {
+                if (await SharedPref.isTokenPresent()) {
+                  return '/profile';
+                } else {
+                  return '/';
+                }
+              },
+            )
           ],
         ),
       ],

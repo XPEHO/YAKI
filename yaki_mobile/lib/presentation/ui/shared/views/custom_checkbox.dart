@@ -14,7 +14,6 @@ class _CustomCheckboxState extends State<CustomCheckbox> {
 
   @override
   void initState() async {
-    // TODO: implement initState
     super.initState();
     isChecked = await SharedPref.getRememberMe();
   }
