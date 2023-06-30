@@ -38,6 +38,7 @@
   "authenticationFailed": "Unknown username or password",
   "logOutButton": "Log out",
   "headerHintProfile": "Your profile",
+  "headerTitleProfile": "Profile",
   "inputLabelLastName": "Name",
   "inputLabelFirstName": "First name"
 }

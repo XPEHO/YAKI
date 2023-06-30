@@ -37,7 +37,8 @@
   "hintCaptain": "Entrez un nom ou un statut",
   "authenticationFailed": "Identifiant ou mot de passe inconnu",
   "logOutButton": "Se déconnecter",
-  "headerHintProfile": "Votre profile",
+  "headerHintProfile": "Votre profil",
+  "headerTitleProfile": "Profil",
   "inputLabelLastName": "Nom",
   "inputLabelFirstName": "Prénom"
 }

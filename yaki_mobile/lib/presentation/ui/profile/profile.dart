@@ -24,7 +24,7 @@ class Profile extends ConsumerWidget {
           pictoPath: user?.captainId != null
               ? 'assets/images/captain.svg'
               : 'assets/images/avatar1.svg',
-          headerTitle: 'Profile',
+          headerTitle: tr('headerTitleProfile'),
           headerHint: tr('headerHintProfile'),
           onPressed: () {
             context.pop();
