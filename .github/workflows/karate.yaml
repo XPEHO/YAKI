@@ -23,6 +23,7 @@ jobs:
           npm run swagger
           echo "build java"
           cd ../yaki_admin_backend
+          echo ${{ secrets.APPLICATION_TEST_PROPERTIES }} | base64 -d > src/test/resources/application-test.properties
           echo ${{ secrets.APPLICATION_PROPERTIES }} | base64 -d > src/main/resources/application.properties
           gradle clean build
           echo "Starting docker containers"
