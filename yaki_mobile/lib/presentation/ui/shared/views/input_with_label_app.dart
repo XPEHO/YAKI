@@ -16,6 +16,7 @@ class _InputWithLabelAppState extends State<InputWithLabelApp> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        // add a label above the input
         Align(
           alignment: Alignment.centerLeft,
           child: Padding(
@@ -50,6 +51,7 @@ class _InputWithLabelAppState extends State<InputWithLabelApp> {
             ),
           ),
           initialValue: widget.initialValue,
+          // temporarily set to true until we can edit the profile
           readOnly: true,
         ),
       ],
