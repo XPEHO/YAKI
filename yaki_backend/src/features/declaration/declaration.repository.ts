@@ -7,7 +7,6 @@ export class DeclarationRepository {
    * Creates a new instance of DeclarationRepository.
    * Initializes the private field pool with a new instance of Pool using environment variables.
    */
-  
 
   /**
    * Inserts a new declaration into the database.
@@ -22,7 +21,7 @@ export class DeclarationRepository {
       database: process.env.DB_DATABASE,
       port: Number(process.env.DB_PORT),
     });
-    client.connect()
+    client.connect();
     const valuesString: string = YakiUtils.queryValuesString(declarationList, declarationList[0], 1);
     const declarationValuesList: Array<string> = YakiUtils.objectsListToValuesList(declarationList);
     const query = `INSERT INTO declaration 
@@ -34,9 +33,9 @@ export class DeclarationRepository {
       declaration_status,
       declaration_team_id
     ) 
-  VALUES ${valuesString} RETURNING *`
+  VALUES ${valuesString} RETURNING *`;
     try {
-      const result = await client.query(query,declarationValuesList);
+      const result = await client.query(query, declarationValuesList);
       const declarationToFront = [
         new DeclarationDtoIn(
           result.rows[0].declaration_id,
@@ -48,7 +47,7 @@ export class DeclarationRepository {
           result.rows[0].declaration_team_id
         ),
       ];
-      client.end()
+      client.end();
       return declarationToFront;
     } finally {
       client.end();
@@ -68,10 +67,8 @@ export class DeclarationRepository {
       database: process.env.DB_DATABASE,
       port: Number(process.env.DB_PORT),
     });
-    client.connect()
-    const valuesString: string = YakiUtils.queryValuesString(declarationList, declarationList[0], 1);
+    client.connect();
     const declarationsValuesList: Array<string> = YakiUtils.objectsListToValuesList(declarationList);
-    console.log(valuesString)
 
     try {
       const result = await client.query(
@@ -120,7 +117,7 @@ export class DeclarationRepository {
       database: process.env.DB_DATABASE,
       port: Number(process.env.DB_PORT),
     });
-    client.connect()
+    client.connect();
     try {
       // now()::date  =  YYYY-MM-dd
       const result = await client.query(
