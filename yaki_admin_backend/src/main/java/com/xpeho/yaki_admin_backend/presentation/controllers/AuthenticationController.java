@@ -1,10 +1,9 @@
 package com.xpeho.yaki_admin_backend.presentation.controllers;
 
-import com.xpeho.yaki_admin_backend.configSecurity.AuthenticationRequest;
-import com.xpeho.yaki_admin_backend.configSecurity.AuthenticationResponse;
-import com.xpeho.yaki_admin_backend.configSecurity.RegisterRequest;
+import com.xpeho.yaki_admin_backend.domain.entities.AuthenticationRequestEntity;
+import com.xpeho.yaki_admin_backend.domain.entities.AuthenticationResponseEntity;
+import com.xpeho.yaki_admin_backend.domain.entities.RegisterRequestEntity;
 import com.xpeho.yaki_admin_backend.domain.services.AuthenticationService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,16 +17,16 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(
-            @RequestBody RegisterRequest request
+    public AuthenticationResponseEntity register(
+            @RequestBody RegisterRequestEntity request
     ) {
-        return ResponseEntity.ok(authenticationService.register(request));
+        return authenticationService.register(request);
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticationResponse> authenticate(
-            @RequestBody AuthenticationRequest request
+    public AuthenticationResponseEntity authenticate(
+            @RequestBody AuthenticationRequestEntity request
     ) {
-        return ResponseEntity.ok(authenticationService.authenticate(request));
+        return authenticationService.authenticate(request);
     }
 }

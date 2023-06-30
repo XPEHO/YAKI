@@ -1,14 +1,11 @@
 package com.xpeho.yaki_admin_backend.data.services;
 
-import com.xpeho.yaki_admin_backend.data.models.TeamModel;
 import com.xpeho.yaki_admin_backend.data.models.UserModel;
 import com.xpeho.yaki_admin_backend.data.sources.UserJpaRepository;
-import com.xpeho.yaki_admin_backend.domain.entities.TeamEntity;
 import com.xpeho.yaki_admin_backend.domain.entities.UserEntity;
 import com.xpeho.yaki_admin_backend.domain.entities.UserEntityIn;
 import com.xpeho.yaki_admin_backend.domain.services.UserService;
 import jakarta.persistence.EntityNotFoundException;
-
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -64,8 +61,7 @@ public class UserServiceImpl implements UserService {
         if (userModelOpt.isPresent()) {
             UserModel userModel = userModelOpt.get();
             userJpaRepository.deleteById(id);
-            return new UserEntity(userModel.getLastName(), userModel.getFirstName(),userModel.getEmail(),userModel.getLogin());
+            return new UserEntity(userModel.getLastName(), userModel.getFirstName(), userModel.getEmail(), userModel.getLogin());
         } else throw new EntityNotFoundException("The team with id " + id + " not found.");
-
     }
 }
