@@ -1,18 +1,24 @@
 <script setup lang="ts">
 import {onBeforeMount, reactive} from "vue";
 import TeamListElement from "@/features/captain/components/TeamListElement.vue";
-import SideBarElement from "@/shared/components/SideBarElement.vue";
-import isTeamSelected from "../services/isActiveTeam";
-import vector from "@/assets/Vector.png";
-import type {TeamType} from "@/services/team.type";
+import SideBarElement from "@/features/shared/components/SideBarElement.vue";
+import SideBarButton from "@/features/shared/components/SideBarButton.vue";
+
+import type {TeamType} from "@/models/team.type";
 import {teamService} from "@/services/team.service";
 import {useTeamStore} from "@/stores/teamStore.js";
+
+import isTeamSelected from "../services/isActiveTeam";
+
+import vector from "@/assets/Vector.png";
+import plusIcon from "@/assets/plus.png";
+
 const store = useTeamStore();
 const teams = reactive({
   list: [] as TeamType[],
 });
 onBeforeMount(async () => {
-  teams.list = await teamService.getAllTeamsWithinCaptain(343);
+  teams.list = await teamService.getAllTeamsWithinCaptain(2);
 });
 const selectedTeam = (id: number) => {
   isTeamSelected.setTeam(id);
@@ -34,6 +40,9 @@ const selectedTeam = (id: number) => {
       v-bind:id="team.id"
       v-bind:teamName="team.teamName" />
   </section>
+  <side-bar-button
+    v-bind:inner-text="'Add team'"
+    v-bind:icon-path="plusIcon" />
 </template>
 
 <style lang="scss">
@@ -44,3 +53,4 @@ const selectedTeam = (id: number) => {
   gap: 0.5rem;
 }
 </style>
+@/models/team.type

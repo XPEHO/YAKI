@@ -1,3 +1,4 @@
 export const environmentVar = {
-  baseURL: "URL_PLACEHOLDER",
+  baseURL: "http://localhost:8080",
 };
+// baseURL: "URL_PLACEHOLDER",

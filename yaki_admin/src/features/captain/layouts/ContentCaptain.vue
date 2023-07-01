@@ -1,23 +1,15 @@
-<script lang="ts">
+<script setup lang="ts">
 // Importing necessary modules and types
-import {useTeamStore} from "@/stores/teamStore.js";
-import {defineComponent} from "vue";
 import TeamMate from "../components/teamMate.vue";
-import type {TeamMateType} from "@/services/teamMate.type";
+import SideBarButton from "@/features/shared/components/SideBarButton.vue";
 
-// Defining the Vue component
-export default defineComponent({
-  name: "CaptainView",
-  // The components that this component uses
-  components: {
-    TeamMate,
-  },
-  computed: {
-    teamStore() {
-      return useTeamStore();
-    },
-  },
-});
+import type {TeamMateType} from "@/models/teamMate.type";
+import {useTeamStore} from "@/stores/teamStore.js";
+
+import plusIcon from "@/assets/plus.png";
+//
+
+const teamStore = useTeamStore();
 </script>
 
 <template>
@@ -25,6 +17,9 @@ export default defineComponent({
     <h1 class="title">Team Members</h1>
     <h2 class="text">Manage your team members here</h2>
     <hr class="line" />
+    <side-bar-button
+      v-bind:inner-text="'Add Teammate'"
+      v-bind:icon-path="plusIcon" />
     <ul class="team-mate-list">
       <li
         v-for="teamMate in (teamStore.teammate as TeamMateType[])"
@@ -52,10 +47,10 @@ export default defineComponent({
   margin-bottom: 20px;
 }
 .line {
-  width: 70%;
-  background-color: #e5e5e5;
+  width: 80%;
+  background-color: #efefefed;
 
-  margin: 0px;
+  margin-bottom: 1rem;
 }
 .team-mate-list {
   padding: 50px;

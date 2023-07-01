@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import PageLayout from '@/shared/layouts/PageLayout.vue';
-import SideBarCaptainContent from '../components/SideBarCaptainContent.vue';
-import ContentCaptain from '@/features/captain/layouts/ContentCaptain.vue';
+import PageLayout from "@/features/shared/layouts/PageLayout.vue";
+import SideBarCaptainContent from "../components/SideBarCaptainContent.vue";
+import ContentCaptain from "@/features/captain/layouts/ContentCaptain.vue";
 </script>
 
 <template>
