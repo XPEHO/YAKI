@@ -14,7 +14,9 @@ const props = defineProps({
 <template>
   <button class="sidebar-button-specific sidebar-element-generic-style">
     <div>
-      <img v-bind:src="iconPath" alt="Plus icon" />
+      <img
+        v-bind:src="iconPath"
+        alt="Plus icon" />
       <p>{{ innerText }}</p>
     </div>
   </button>

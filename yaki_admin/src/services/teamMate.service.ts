@@ -1,4 +1,4 @@
-import type {TeamMateType} from "./teamMate.type";
+import type {TeamMateType} from "@/models/teamMate.type";
 import {environmentVar} from "@/envPlaceholder";
 
 const URL: string = environmentVar.baseURL;

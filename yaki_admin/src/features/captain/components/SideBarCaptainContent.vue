@@ -19,6 +19,10 @@ const teams = reactive({
 });
 onBeforeMount(async () => {
   teams.list = await teamService.getAllTeamsWithinCaptain(2);
+  // automaticaly select first team right after team fetch
+  isTeamSelected.setTeam(teams.list[0].id);
+  //directly fetch teammate from the first team
+  store.setTeam(teams.list[0].id);
 });
 const selectedTeam = (id: number) => {
   isTeamSelected.setTeam(id);

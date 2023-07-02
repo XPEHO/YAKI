@@ -8,9 +8,16 @@ import {reactive} from "vue";
  */
 const isTeamSelected = reactive({
   id: 1,
+  name: "",
+
   setTeam(teamId: number) {
     this.id = teamId;
   },
+
+  setTeamName(teamName: string) {
+    this.name = teamName;
+  },
+
   isSameIndex(teamId: number) {
     if (this.id === teamId) {
       return true;

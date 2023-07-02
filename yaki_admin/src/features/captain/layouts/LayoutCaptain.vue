@@ -7,9 +7,15 @@ import type {TeamMateType} from "@/models/teamMate.type";
 import {useTeamStore} from "@/stores/teamStore.js";
 
 import plusIcon from "@/assets/plus.png";
+import router from "@/router/router";
+import isTeamSelected from "../services/isActiveTeam";
 //
 
 const teamStore = useTeamStore();
+
+const goToInvitation = () => {
+  router.push({path: `invitation`});
+};
 </script>
 
 <template>
@@ -19,7 +25,8 @@ const teamStore = useTeamStore();
     <hr class="line" />
     <side-bar-button
       v-bind:inner-text="'Add Teammate'"
-      v-bind:icon-path="plusIcon" />
+      v-bind:icon-path="plusIcon"
+      @click="goToInvitation" />
     <ul class="team-mate-list">
       <li
         v-for="teamMate in (teamStore.teammate as TeamMateType[])"
@@ -34,8 +41,7 @@ const teamStore = useTeamStore();
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap");
 
 .captain-view {
-  margin: 10px;
-  padding: 20px;
+  padding: 30px;
   font-family: "Inter", sans-serif;
 }
 .title {
