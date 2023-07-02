@@ -8,7 +8,6 @@ import {useTeamStore} from "@/stores/teamStore.js";
 
 import plusIcon from "@/assets/plus.png";
 import router from "@/router/router";
-import isTeamSelected from "../services/isActiveTeam";
 //
 
 const teamStore = useTeamStore();
@@ -27,13 +26,12 @@ const goToInvitation = () => {
       v-bind:inner-text="'Add Teammate'"
       v-bind:icon-path="plusIcon"
       @click="goToInvitation" />
-    <ul class="team-mate-list">
-      <li
+    <div class="team-mate-list">
+      <team-mate
+        :team-mate="teamMate"
         v-for="teamMate in (teamStore.teammate as TeamMateType[])"
-        :key="teamMate.id">
-        <team-mate :team-mate="teamMate" />
-      </li>
-    </ul>
+        :key="teamMate.id" />
+    </div>
   </div>
 </template>
 
@@ -60,9 +58,10 @@ const goToInvitation = () => {
 }
 .team-mate-list {
   padding: 50px;
-  list-style-type: none;
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  gap: 3rem;
 }
 </style>

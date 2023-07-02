@@ -1,14 +1,22 @@
 <script setup lang="ts">
-import UserComponent from "@/features/invitation/components/UserComponent.vue";
-
-import YakiButton from "@/features/shared/components/YakiButton.vue";
 import router from "@/router/router";
+import {onBeforeMount, reactive} from "vue";
 
-const numberTest = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+import type {UserWithIdType} from "@/models/userWithId.type";
+import {usersService} from "@/services/users.service";
 
-const acceptClick = () => {
-  router.go(-1);
-};
+import isTeamSelected from "@/features/captain/services/isActiveTeam";
+import UserComponent from "@/features/invitation/components/UserComponent.vue";
+import SideBarButton from "@/features/shared/components/SideBarButton.vue";
+import backIcon from "@/assets/arrow-back.png";
+
+const users = reactive({
+  list: [] as UserWithIdType[],
+});
+
+onBeforeMount(async () => {
+  users.list = await usersService.fetchUserInRange(1, 11);
+});
 
 const goToCaptain = () => {
   router.go(-1);
@@ -20,23 +28,20 @@ const goToCaptain = () => {
     <div class="invitation__container">
       <article class="header">
         <h1 class="title">Invite Teammate</h1>
-        <h2 class="text">Select teammates to add to the team</h2>
+        <h2 class="text">Select teammates to add to the team : {{ isTeamSelected.name }}</h2>
         <hr class="line" />
       </article>
-      <div class="buttons_container">
-        <yaki-button
-          text="Accept"
-          css-class="button_style button_accept"
-          @click="acceptClick" />
-        <yaki-button
-          text="Cancel"
-          css-class="button_style button_cancel"
-          @click="goToCaptain" />
-      </div>
+
+      <side-bar-button
+        v-bind:inner-text="'Return to teammate list'"
+        v-bind:icon-path="backIcon"
+        @click="goToCaptain" />
+
       <div class="user_list_container">
         <user-component
-          v-for="number in numberTest"
-          class="user_unit" />
+          v-for="user in users.list"
+          class="user_unit"
+          v-bind:user="user" />
       </div>
     </div>
   </section>
@@ -55,7 +60,7 @@ const goToCaptain = () => {
     width: 95%;
     padding-block: 30px;
 
-    gap: 1rem;
+    gap: 0.2rem;
   }
 }
 
@@ -79,13 +84,6 @@ const goToCaptain = () => {
   }
 }
 
-.buttons_container {
-  width: 80%;
-
-  display: flex;
-  justify-content: space-between;
-}
-
 .user_list_container {
   width: 65%;
   padding-block-start: 2rem;
@@ -93,37 +91,5 @@ const goToCaptain = () => {
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
-}
-
-.button_style {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  border: none;
-  border-radius: 5rem;
-  background-color: #bad26e;
-  height: 90%;
-
-  padding-block: 1rem;
-
-  color: #000;
-  font-size: 1rem;
-  font-family: Inter;
-  font-weight: 900;
-
-  width: min(8rem, 15rem);
-
-  &:active {
-    transform: scale(0.97);
-  }
-}
-
-.button_accept {
-  background-color: #b3d26bba;
-}
-
-.button_cancel {
-  background-color: #f86d63;
 }
 </style>

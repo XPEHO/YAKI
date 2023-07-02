@@ -19,14 +19,24 @@ const teams = reactive({
 });
 onBeforeMount(async () => {
   teams.list = await teamService.getAllTeamsWithinCaptain(2);
-  // automaticaly select first team right after team fetch
+  // automaticaly select first team right after team fetch, and save name
   isTeamSelected.setTeam(teams.list[0].id);
+  isTeamSelected.setTeamName(teams.list[0].teamName);
   //directly fetch teammate from the first team
-  store.setTeam(teams.list[0].id);
+  store.getTeammateWithinTeam(teams.list[0].id);
 });
+
 const selectedTeam = (id: number) => {
   isTeamSelected.setTeam(id);
-  store.setTeam(id);
+  store.getTeammateWithinTeam(id);
+
+  //save team name on click
+  for (const team of teams.list) {
+    if (team.id === id) {
+      isTeamSelected.setTeamName(team.teamName);
+      break;
+    }
+  }
 };
 </script>
 

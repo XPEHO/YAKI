@@ -1,6 +1,15 @@
 <script setup lang="ts">
+import type {UserWithIdType} from "@/models/userWithId.type";
 import avatarIcon from "@/assets/avatar.png";
 import YakiButton from "@/features/shared/components/YakiButton.vue";
+import {PropType} from "vue";
+
+const props = defineProps({
+  user: {
+    type: Object as PropType<UserWithIdType>,
+    required: true,
+  },
+});
 </script>
 
 <template>
@@ -13,8 +22,7 @@ import YakiButton from "@/features/shared/components/YakiButton.vue";
             alt="Image de profil" />
         </figure>
         <article>
-          <p>Nom prénom</p>
-          <p>Email</p>
+          <p>{{ user.firstname }} {{ user.lastname }}</p>
         </article>
       </article>
 
@@ -47,26 +55,26 @@ import YakiButton from "@/features/shared/components/YakiButton.vue";
       gap: 2rem;
       flex-grow: 3;
 
+      figure {
+        width: 4rem;
+        img {
+          user-select: none;
+          width: 100%;
+          object-fit: cover;
+        }
+      }
+
       article {
         p:nth-child(1) {
-          font-size: 1.5rem;
+          font-size: 1.2rem;
           font-family: Inter;
           font-weight: 900;
         }
       }
     }
 
-    figure {
-      width: 4rem;
-      img {
-        user-select: none;
-        width: 100%;
-        object-fit: cover;
-      }
-    }
-
     .button-class-test {
-      flex-grow: 2;
+      flex-basis: 10rem;
 
       border: none;
       border-radius: 5rem;
@@ -76,7 +84,7 @@ import YakiButton from "@/features/shared/components/YakiButton.vue";
       padding-block: 1rem;
 
       color: #000;
-      font-size: 1rem;
+      font-size: 0.9rem;
       font-family: Inter;
       font-weight: 900;
 

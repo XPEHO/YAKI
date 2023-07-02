@@ -15,7 +15,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="team-mate">
+  <section class="team-mate">
     <div class="team-mate-avatar-info">
       <img
         class="avatar"
@@ -36,18 +36,26 @@ export default defineComponent({
         src="../../../assets/Delete.png"
         alt="" />
     </div>
-  </div>
+  </section>
 </template>
 
-<style>
+<style lang="scss">
 .team-mate {
   display: flex;
   flex-direction: row;
   align-items: flex-end;
-  width: 500px;
   justify-content: space-between;
-  padding-bottom: 22px;
+
+  width: 60%;
 }
+
+.team-mate-avatar-info {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 2rem;
+}
+
 .team-mate-info {
   display: flex;
   flex-direction: column;
@@ -67,13 +75,9 @@ export default defineComponent({
   width: 24px;
   height: 24px;
 }
-.team-mate-avatar-info {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
-  gap: 20px;
-}
+
 .delete-edit-icon {
-  gap: 20px;
+  display: flex;
+  gap: 2rem;
 }
 </style>
