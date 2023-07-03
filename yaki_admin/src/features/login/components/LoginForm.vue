@@ -63,7 +63,7 @@ export default {
       this.usernameText = e.target.value;
     },
     login() {
-      this.$router.push("/captain");
+      this.$router.push("/administration/captain");
     },
   },
 };

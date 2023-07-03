@@ -1,4 +1,4 @@
-import type {TeamType} from "./team.type";
+import type {TeamType} from "../models/team.type";
 import {environmentVar} from "@/envPlaceholder";
 
 const URL: string = environmentVar.baseURL;

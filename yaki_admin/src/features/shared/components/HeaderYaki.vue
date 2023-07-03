@@ -3,7 +3,7 @@
 <template>
   <header class="header-yaki">
     <figure>
-      <img src="../../assets/LOGO.png" />
+      <img src="../../../assets/LOGO.png" />
     </figure>
   </header>
 </template>

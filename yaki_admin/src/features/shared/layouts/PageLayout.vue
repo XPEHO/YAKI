@@ -1,9 +1,6 @@
 <script setup lang="ts">
-import HeaderYaki from '../../shared/components/HeaderYaki.vue';
-import SideBar from '../components/SideBar.vue';
-import SideBarButton from '@/shared/components/SideBarButton.vue';
-
-import plusIcon from '@/assets/plus.png';
+import HeaderYaki from "@/features/shared/components/HeaderYaki.vue";
+import SideBar from "@/features/shared/components/SideBar.vue";
 </script>
 
 <template>
@@ -11,10 +8,6 @@ import plusIcon from '@/assets/plus.png';
   <section class="sidebar-content-container-grid">
     <side-bar>
       <slot name="sidebarContent"></slot>
-      <side-bar-button
-        v-bind:inner-text="'Add team'"
-        v-bind:icon-path="plusIcon"
-      />
     </side-bar>
     <slot name="pageContent"></slot>
   </section>

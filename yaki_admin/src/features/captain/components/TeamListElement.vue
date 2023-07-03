@@ -19,9 +19,9 @@ const props = defineProps({
   <article
     class="team-list-unit"
     :class="{
-      'team-list-unit-selected': isTeamSelected.isSameIndex(id),
+      'team-list-unit-selected': isTeamSelected.isSameIndex(props.id),
     }">
-    <p>{{ teamName }}</p>
+    <p>{{ props.teamName }}</p>
     <figure>
       <img v-bind:src="editIcon" />
     </figure>

@@ -1,4 +1,4 @@
-import type {TeamMateType} from "./teamMate.type";
+import type {TeamMateType, TeammateToCreateType, TeammateReturnType} from "@/models/teamMate.type";
 import {environmentVar} from "@/envPlaceholder";
 
 const URL: string = environmentVar.baseURL;
@@ -11,6 +11,28 @@ export class TeamMateService {
     const res = await fetch(`${URL}/teammates/team/${id}`);
     // Parsing the response body as JSON and returning it as an array of TeamMateType objects
     return await res.json();
+  };
+
+  // assign a user to a team by "creating a teammate" : userID +
+  createTeammate = async (data: TeammateToCreateType): Promise<TeammateReturnType> => {
+    const response = await fetch(`${URL}/teammates`, {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+    })
+      .then((res) => res.json())
+      .catch((err) => console.warn(err));
+
+    return response;
+  };
+
+  deleteTeammate = async (id: number): Promise<TeammateReturnType> => {
+    return await fetch(`${URL}/teammates`, {
+      method: "DELETE",
+    }).then((res) => res.json());
   };
 }
 

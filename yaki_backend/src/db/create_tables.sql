@@ -282,7 +282,7 @@ CREATE TABLE IF NOT EXISTS public.declaration
     CONSTRAINT declaration_team_mate_id_fkey FOREIGN KEY (declaration_team_mate_id)
         REFERENCES public.team_mate (team_mate_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
         NOT VALID
 )
 
