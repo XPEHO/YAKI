@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {PropType, onBeforeMount, reactive, watch} from "vue";
+import {PropType, onBeforeMount, reactive} from "vue";
 import type {UserWithIdType} from "@/models/userWithId.type";
 
 import {useTeamStore} from "@/stores/teamStore.js";
@@ -15,10 +15,6 @@ const props = defineProps({
     type: Object as PropType<UserWithIdType>,
     required: true,
   },
-});
-
-watch(props.user, (first, second) => {
-  console.log("watch props.user function is called");
 });
 
 //Setting reactive with card and button configuration
@@ -50,9 +46,19 @@ const invitBtnClick = () => {
   if (!settings.isInvited) {
     emit("GetUserId", props.user.id);
 
-    settings.text = "Present";
-    settings.btnCSS = "button-class-test btn-bg-color-present";
-    settings.cardCSS = "user-invited";
+    // meant to be removed when mailing system is made, demo purpose
+    let time = Math.floor(Math.random() * (3000 - 1000)) + 1000;
+
+    settings.text = "Pending...";
+    settings.btnCSS = "button-class-test btn-bg-color-pending";
+    settings.cardCSS = "user-pending";
+
+    // meant to be removed when mailing system is made, demo purpose
+    setTimeout(() => {
+      settings.text = "Accepted";
+      settings.btnCSS = "button-class-test btn-bg-color-present";
+      settings.cardCSS = "user-invited";
+    }, time);
   }
   settings.isInvited = true;
 };
@@ -148,8 +154,16 @@ const invitBtnClick = () => {
   background-color: #bad26e;
 }
 
+.btn-bg-color-pending {
+  background-color: #e6e95d;
+}
+
 .btn-bg-color-present {
   background-color: #59a9b5;
+}
+
+.user-pending {
+  border-color: #e6e95d;
 }
 
 .user-invited {

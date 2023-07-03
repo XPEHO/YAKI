@@ -31,11 +31,6 @@ const router = createRouter({
         },
       ],
     },
-    // {
-    //   path: "/invitation",
-    //   name: "Invitation",
-    //   component: () => import("@/features/invitation/pages/PageInvitation.vue"),
-    // },
   ],
 });
 

@@ -43,6 +43,7 @@ const addUserToTeam = async (userId: number) => {
       <div class="user_list_container">
         <user-component
           v-for="user in users.list"
+          v-bind:key="user.id"
           class="user_unit"
           v-bind:user="user"
           v-bind:isInTeam="false"

@@ -28,6 +28,12 @@ export class TeamMateService {
 
     return response;
   };
+
+  deleteTeammate = async (id: number): Promise<TeammateReturnType> => {
+    return await fetch(`${URL}/teammates`, {
+      method: "DELETE",
+    }).then((res) => res.json());
+  };
 }
 
 // Creating an instance of the TeamMateService class and freezing it to prevent modification

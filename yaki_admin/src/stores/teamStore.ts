@@ -22,7 +22,7 @@ export const useTeamStore = defineStore("teamStore", {
     },
 
     async addUserToTeam(userId: number) {
-      let data = {teamId: this.team, userId: userId};
+      const data = {teamId: this.team, userId: userId};
       await teamMateService.createTeammate(data);
     },
   },

@@ -3,19 +3,19 @@
 import TeamMate from "../components/teamMate.vue";
 import SideBarButton from "@/features/shared/components/SideBarButton.vue";
 
-import type {TeamMateType} from "@/models/teamMate.type";
 import {useTeamStore} from "@/stores/teamStore.js";
 
 import plusIcon from "@/assets/plus.png";
 import router from "@/router/router";
-import {onBeforeMount, onMounted, reactive} from "vue";
-//
+import {onBeforeMount} from "vue";
 
 const teamStore = useTeamStore();
 
 onBeforeMount(async () => {
   await teamStore.getTeammateWithinTeam(teamStore.getCurrentTeam);
 });
+
+console.log(teamStore.getTeammateList);
 </script>
 
 <template>
