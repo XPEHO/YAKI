@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:yaki/presentation/styles/header_text_style.dart';
+import 'package:yaki/presentation/styles/color.dart';
 
 class InputWithLabelApp extends StatefulWidget {
   final String label;
@@ -42,7 +42,7 @@ class _InputWithLabelAppState extends State<InputWithLabelApp> {
             ),
             focusedBorder: const OutlineInputBorder(
               borderSide: BorderSide(
-                color: HeaderColor.yellowApp,
+                color: AppColors.yakiPrimaryColor,
                 width: 2.0,
               ),
               borderRadius: BorderRadius.all(

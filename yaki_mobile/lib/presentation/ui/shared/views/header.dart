@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yaki/presentation/styles/color.dart';
 import 'package:yaki/presentation/styles/header_text_style.dart';
 import 'package:yaki/presentation/ui/shared/views/avatar_icon.dart';
 import 'package:yaki/presentation/ui/shared/views/circle_avatar_svg.dart';
@@ -27,7 +28,7 @@ class Header extends StatelessWidget {
           bottomLeft: Radius.circular(16),
           bottomRight: Radius.circular(16),
         ),
-        color: HeaderColor.yellowApp,
+        color: AppColors.yakiPrimaryColor,
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.7),

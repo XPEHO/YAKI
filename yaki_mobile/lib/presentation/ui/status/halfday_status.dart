@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yaki/presentation/state/providers/halfday_status_provider.dart';
+import 'package:yaki/presentation/styles/color.dart';
 import 'package:yaki/presentation/styles/header_text_style.dart';
 import 'package:yaki/presentation/ui/shared/views/avatar_icon.dart';
 import 'package:yaki/presentation/ui/shared/views/circle_avatar_svg.dart';
@@ -24,7 +25,7 @@ class HalfDayStatus extends ConsumerWidget {
     debugPrint(halfdayDeclarations.afternoon.text);
 
     return Scaffold(
-      backgroundColor: HeaderColor.yellowApp,
+      backgroundColor: AppColors.yakiPrimaryColor,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(15.0),

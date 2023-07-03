@@ -24,6 +24,7 @@ class DeclarationBody extends ConsumerWidget {
           spacing: 20.0,
           // vertical
           runSpacing: 20.0,
+          // map on a list to create a status card for each status
           children: statusCardsContent
               .map(
                 (cardContent) => StatusCard(

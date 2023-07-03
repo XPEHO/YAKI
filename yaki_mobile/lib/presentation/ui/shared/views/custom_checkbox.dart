@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yaki/data/sources/local/shared_preference.dart';
-import 'package:yaki/presentation/styles/header_text_style.dart';
+import 'package:yaki/presentation/styles/color.dart';
 
 class CustomCheckbox extends StatefulWidget {
   const CustomCheckbox({super.key});
@@ -22,7 +22,7 @@ class _CustomCheckboxState extends State<CustomCheckbox> {
   Widget build(BuildContext context) {
     return Checkbox(
       value: isChecked,
-      activeColor: HeaderColor.yellowApp,
+      activeColor: AppColors.yakiPrimaryColor,
       onChanged: (bool? value) {
         setState(() async {
           isChecked = value ?? false;
