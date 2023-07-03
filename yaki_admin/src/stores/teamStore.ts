@@ -11,7 +11,7 @@ export const useTeamStore = defineStore("teamStore", {
     getCurrentTeam(): number {
       return this.team;
     },
-    getTeammateList(): any {
+    getTeammateList(): TeamMateType[] {
       return this.teammate;
     },
   },
