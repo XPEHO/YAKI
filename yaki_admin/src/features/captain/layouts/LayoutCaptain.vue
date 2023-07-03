@@ -8,7 +8,6 @@ import {useTeamStore} from "@/stores/teamStore.js";
 import plusIcon from "@/assets/plus.png";
 import router from "@/router/router";
 import {onBeforeMount} from "vue";
-import {TeamMateType} from "@/models/teamMate.type";
 
 const teamStore = useTeamStore();
 
