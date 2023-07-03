@@ -1,19 +1,67 @@
 <script setup lang="ts">
+import {PropType, onBeforeMount, reactive, watch} from "vue";
 import type {UserWithIdType} from "@/models/userWithId.type";
+
+import {useTeamStore} from "@/stores/teamStore.js";
+
 import avatarIcon from "@/assets/avatar.png";
 import YakiButton from "@/features/shared/components/YakiButton.vue";
-import {PropType} from "vue";
 
+const teamStore = useTeamStore();
+
+// props coming from LayoutInvitation, setting user from "v-for"
 const props = defineProps({
   user: {
     type: Object as PropType<UserWithIdType>,
     required: true,
   },
 });
+
+watch(props.user, (first, second) => {
+  console.log("watch props.user function is called");
+});
+
+//Setting reactive with card and button configuration
+// text and style
+const settings = reactive({
+  isInvited: false,
+  text: "Invite",
+  btnCSS: "button-class-test btn-bg-color-invite",
+  cardCSS: "",
+});
+
+// get teammate list before mount to check if current user already is in it before change settings
+
+onBeforeMount(() => {
+  for (const teammate of teamStore.getTeammateList) {
+    if (teammate.userId === props.user.id) {
+      settings.isInvited = true;
+      settings.text = "Present";
+      settings.btnCSS = "button-class-test btn-bg-color-present";
+      settings.cardCSS = "user-invited";
+    }
+  }
+});
+
+// emitter to send on invit btn click the userID (to create the teammate)
+const emit = defineEmits(["GetUserId"]);
+
+const invitBtnClick = () => {
+  if (!settings.isInvited) {
+    emit("GetUserId", props.user.id);
+
+    settings.text = "Present";
+    settings.btnCSS = "button-class-test btn-bg-color-present";
+    settings.cardCSS = "user-invited";
+  }
+  settings.isInvited = true;
+};
 </script>
 
 <template>
-  <section class="user-component__card">
+  <section
+    class="user-component__card"
+    :class="settings.cardCSS">
     <div>
       <article class="card__img-identity">
         <figure>
@@ -27,8 +75,9 @@ const props = defineProps({
       </article>
 
       <yaki-button
-        text="INVITE"
-        css-class="button-class-test" />
+        :text="settings.text"
+        :css-class="settings.btnCSS"
+        @click.prevent="invitBtnClick" />
     </div>
   </section>
 </template>
@@ -42,6 +91,7 @@ const props = defineProps({
   width: 100%;
 
   background-color: #d9d9d9;
+  border: 3px solid transparent;
 
   div {
     display: flex;
@@ -63,7 +113,6 @@ const props = defineProps({
           object-fit: cover;
         }
       }
-
       article {
         p:nth-child(1) {
           font-size: 1.2rem;
@@ -78,7 +127,7 @@ const props = defineProps({
 
       border: none;
       border-radius: 5rem;
-      background-color: #bad26e;
+
       height: 90%;
 
       padding-block: 1rem;
@@ -93,5 +142,17 @@ const props = defineProps({
       }
     }
   }
+}
+
+.btn-bg-color-invite {
+  background-color: #bad26e;
+}
+
+.btn-bg-color-present {
+  background-color: #59a9b5;
+}
+
+.user-invited {
+  border-color: #59a9b5;
 }
 </style>

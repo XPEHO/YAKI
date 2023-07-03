@@ -13,13 +13,14 @@ export class TeamMateService {
     return await res.json();
   };
 
-  // assign a user to a team by "creating a teammate" : userID + teamID
+  // assign a user to a team by "creating a teammate" : userID +
   createTeammate = async (data: TeammateToCreateType): Promise<TeammateReturnType> => {
-    const response = await fetch(`${URL}/teamates`, {
+    const response = await fetch(`${URL}/teammates`, {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
-        "content-type": "application/json; charset=UTF-8",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
       },
     })
       .then((res) => res.json())

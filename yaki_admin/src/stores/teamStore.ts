@@ -8,8 +8,11 @@ export const useTeamStore = defineStore("teamStore", {
     teammate: [] as TeamMateType[],
   }),
   getters: {
-    getTeam(): number {
+    getCurrentTeam(): number {
       return this.team;
+    },
+    getTeammateList(): any {
+      return this.teammate;
     },
   },
   actions: {
@@ -19,7 +22,8 @@ export const useTeamStore = defineStore("teamStore", {
     },
 
     async addUserToTeam(userId: number) {
-      await teamMateService.createTeammate({userId: userId, teamId: this.team});
+      let data = {teamId: this.team, userId: userId};
+      await teamMateService.createTeammate(data);
     },
   },
 });

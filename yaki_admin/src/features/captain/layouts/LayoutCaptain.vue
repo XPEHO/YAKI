@@ -8,13 +8,14 @@ import {useTeamStore} from "@/stores/teamStore.js";
 
 import plusIcon from "@/assets/plus.png";
 import router from "@/router/router";
+import {onBeforeMount, onMounted, reactive} from "vue";
 //
 
 const teamStore = useTeamStore();
 
-const goToInvitation = () => {
-  router.push({path: `invitation`});
-};
+onBeforeMount(async () => {
+  await teamStore.getTeammateWithinTeam(teamStore.getCurrentTeam);
+});
 </script>
 
 <template>
@@ -22,14 +23,16 @@ const goToInvitation = () => {
     <h1 class="title">Team Members</h1>
     <h2 class="text">Manage your team members here</h2>
     <hr class="line" />
+
     <side-bar-button
       v-bind:inner-text="'Add Teammate'"
       v-bind:icon-path="plusIcon"
-      @click="goToInvitation" />
+      @click="router.push({path: `invitation`})" />
+
     <div class="team-mate-list">
       <team-mate
         :team-mate="teamMate"
-        v-for="teamMate in (teamStore.teammate as TeamMateType[])"
+        v-for="teamMate in teamStore.getTeammateList"
         :key="teamMate.id" />
     </div>
   </div>

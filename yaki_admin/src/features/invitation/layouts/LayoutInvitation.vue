@@ -9,6 +9,9 @@ import isTeamSelected from "@/features/captain/services/isActiveTeam";
 import UserComponent from "@/features/invitation/components/UserComponent.vue";
 import SideBarButton from "@/features/shared/components/SideBarButton.vue";
 import backIcon from "@/assets/arrow-back.png";
+import {useTeamStore} from "@/stores/teamStore";
+
+const teamStore = useTeamStore();
 
 const users = reactive({
   list: [] as UserWithIdType[],
@@ -18,8 +21,8 @@ onBeforeMount(async () => {
   users.list = await usersService.fetchUserInRange(1, 11);
 });
 
-const goToCaptain = () => {
-  router.go(-1);
+const addUserToTeam = async (userId: number) => {
+  teamStore.addUserToTeam(userId);
 };
 </script>
 
@@ -28,20 +31,22 @@ const goToCaptain = () => {
     <div class="invitation__container">
       <article class="header">
         <h1 class="title">Invite Teammate</h1>
-        <h2 class="text">Select teammates to add to the team : {{ isTeamSelected.name }}</h2>
+        <h2 class="text">Select the teammate(s) you want to invit to : {{ isTeamSelected.name }}</h2>
         <hr class="line" />
       </article>
 
       <side-bar-button
         v-bind:inner-text="'Return to teammate list'"
         v-bind:icon-path="backIcon"
-        @click="goToCaptain" />
+        @click="router.go(-1)" />
 
       <div class="user_list_container">
         <user-component
           v-for="user in users.list"
           class="user_unit"
-          v-bind:user="user" />
+          v-bind:user="user"
+          v-bind:isInTeam="false"
+          @GetUserId="addUserToTeam" />
       </div>
     </div>
   </section>
