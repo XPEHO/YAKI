@@ -4,7 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:yaki/presentation/displaydata/status_page_content.dart';
-import 'package:yaki/presentation/styles/header_text_style.dart';
+import 'package:yaki/presentation/styles/color.dart';
 
 class CardTeamMate extends StatefulWidget {
   /// Card with the Team Mate's avatar, name, update date and status
@@ -135,7 +135,7 @@ class _CardTeamMateState extends State<CardTeamMate> {
                               style: const TextStyle(
                                 fontSize: 22,
                                 fontWeight: FontWeight.w700,
-                                color: HeaderColor.yellowApp,
+                                color: AppColors.yakiPrimaryColor,
                               ),
                             ),
                           ],

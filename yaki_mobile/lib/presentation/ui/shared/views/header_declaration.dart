@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:look/look.dart';
+import 'package:yaki/presentation/styles/color.dart';
 import 'package:yaki/presentation/styles/header_text_style.dart';
 import 'package:yaki/presentation/ui/shared/views/avatar_icon.dart';
 
@@ -47,7 +48,7 @@ class HeaderDeclaration extends StatelessWidget {
               bottomLeft: Radius.circular(16),
               bottomRight: Radius.circular(16),
             ),
-            color: HeaderColor.yellowApp,
+            color: AppColors.yakiPrimaryColor,
             boxShadow: [
               BoxShadow(
                 color: Colors.grey.withOpacity(0.7),
@@ -152,7 +153,7 @@ class Logo extends StatelessWidget {
                   padding: const EdgeInsets.all(0),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: HeaderColor.yellowApp,
+                      color: AppColors.yakiPrimaryColor,
                       border: Border.all(
                         color: Colors.deepOrangeAccent,
                         width: 3.0,

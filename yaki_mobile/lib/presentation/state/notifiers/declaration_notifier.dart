@@ -96,14 +96,17 @@ class DeclarationNotifier extends StateNotifier<String> {
     await declarationRepository.createHalfDay(declarations);
   }
 
+  /// set the morning declaration status stored in declarationRepository
   setMorningDeclaration(String status) {
     declarationRepository.setMorningDeclaration(status);
   }
 
+  /// get the morning declaration status stored in declarationRepository
   String getMorningDeclaration() {
     return declarationRepository.statusMorning;
   }
 
+  /// get all declarations stored in declarationRepository
   DeclarationStatus getAllDeclaration() {
     return declarationRepository.allDeclarations;
   }

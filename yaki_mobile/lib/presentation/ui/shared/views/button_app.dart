@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:yaki/presentation/styles/header_text_style.dart';
+import 'package:yaki/presentation/styles/color.dart';
 
 class ButtonApp extends StatefulWidget {
   final String textButton;
@@ -25,7 +25,7 @@ class _ButtonAppState extends State<ButtonApp> {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         elevation: 5,
-        backgroundColor: HeaderColor.yellowApp,
+        backgroundColor: AppColors.yakiPrimaryColor,
         textStyle: TextStyle(
           color: Colors.black,
           fontSize: size.height / 25,

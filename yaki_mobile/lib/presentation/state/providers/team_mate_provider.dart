@@ -14,6 +14,7 @@ final teamMateServiceProvider = Provider(
   ),
 );
 
+// Define a provider that creates an instance of the TeamMateRepository class
 final teamMateRepositoryProvider = Provider(
   (ref) => TeamMateRepository(ref.read(teamMateServiceProvider)),
 );

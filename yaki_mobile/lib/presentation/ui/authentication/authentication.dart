@@ -8,7 +8,7 @@ import 'package:yaki/presentation/state/providers/declaration_provider.dart';
 import 'package:yaki/presentation/state/providers/halfday_status_provider.dart';
 import 'package:yaki/presentation/state/providers/login_provider.dart';
 import 'package:yaki/presentation/state/providers/status_provider.dart';
-import 'package:yaki/presentation/styles/header_text_style.dart';
+import 'package:yaki/presentation/styles/color.dart';
 import 'package:yaki/presentation/ui/shared/views/header.dart';
 import 'package:yaki/presentation/ui/shared/views/input_app.dart';
 import 'package:yaki/presentation/state/providers/team_provider.dart';
@@ -70,6 +70,7 @@ class _AuthenticationState extends ConsumerState<Authentication> {
 
     /// on 'Sign in' button press/tap :
     /// * delete the previously saved token in the sharedPreferences
+    /// * if the rememberMe checkbox value is true, store the login details
     /// * POST to the API the login information's, by invoking the loginRepositoryProvider.userAuthentication() method,
     /// then retrieve the boolean to know if the logged user is a captain.
     ///
@@ -178,7 +179,7 @@ class _AuthenticationState extends ConsumerState<Authentication> {
                         children: [
                           Checkbox(
                             value: isChecked,
-                            activeColor: HeaderColor.yellowApp,
+                            activeColor: AppColors.yakiPrimaryColor,
                             onChanged: (bool? value) async {
                               setState(() {
                                 isChecked = value ?? false;
@@ -200,7 +201,7 @@ class _AuthenticationState extends ConsumerState<Authentication> {
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           elevation: 5,
-                          backgroundColor: HeaderColor.yellowApp,
+                          backgroundColor: AppColors.yakiPrimaryColor,
                           textStyle: TextStyle(
                             color: Colors.black,
                             fontSize: size.height / 25,
