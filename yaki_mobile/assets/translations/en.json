@@ -35,5 +35,10 @@
   "captainHeaderTitle": "Captain",
   "inputCaptain": "Name, Status...",
   "hintCaptain": "Enter a name or a status",
-  "authenticationFailed": "Unknown username or password"
+  "authenticationFailed": "Unknown username or password",
+  "logOutButton": "Log out",
+  "headerHintProfile": "Your profile",
+  "headerTitleProfile": "Profile",
+  "inputLabelLastName": "Name",
+  "inputLabelFirstName": "First name"
 }

@@ -6,6 +6,9 @@ import com.xpeho.yaki_admin_backend.configSecurity.JwtService;
 import com.xpeho.yaki_admin_backend.configSecurity.RegisterRequest;
 import com.xpeho.yaki_admin_backend.data.models.UserModel;
 import com.xpeho.yaki_admin_backend.data.sources.UserJpaRepository;
+import com.xpeho.yaki_admin_backend.domain.entities.AuthenticationRequestEntity;
+import com.xpeho.yaki_admin_backend.domain.entities.AuthenticationResponseEntity;
+import com.xpeho.yaki_admin_backend.domain.entities.RegisterRequestEntity;
 import com.xpeho.yaki_admin_backend.domain.services.AuthenticationService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -27,29 +30,29 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public AuthenticationResponse register(RegisterRequest request) {
+    public AuthenticationResponseEntity register(RegisterRequestEntity request) {
         UserModel user = new UserModel(
-                request.getLastname(),
-                request.getFirstname(),
-                request.getEmail(),
-                request.getLogin(),
-                passwordEncoder.encode(request.getPassword()));
+                request.lastname(),
+                request.firstname(),
+                request.email(),
+                request.login(),
+                passwordEncoder.encode(request.password()));
         repository.save(user);
         var jwtToken = jwtService.generateToken(user);
-        return new AuthenticationResponse(jwtToken,user.getUserId());
+        return new AuthenticationResponseEntity(jwtToken, user.getUserId());
     }
 
     @Override
-    public AuthenticationResponse authenticate(AuthenticationRequest request) {
+    public AuthenticationResponseEntity authenticate(AuthenticationRequestEntity request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        request.getLogin(),
-                        request.getPassword()
+                        request.login(),
+                        request.password()
                 )
         );
-        UserModel user = repository.findByLogin(request.getLogin())
+        UserModel user = repository.findByLogin(request.login())
                 .orElseThrow();
         var jwtToken = jwtService.generateToken(user);
-        return new AuthenticationResponse(jwtToken, user.getUserId());
+        return new AuthenticationResponseEntity(jwtToken, user.getUserId());
     }
 }
