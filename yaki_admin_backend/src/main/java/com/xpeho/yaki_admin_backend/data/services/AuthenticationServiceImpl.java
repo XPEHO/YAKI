@@ -27,29 +27,29 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public AuthenticationResponse register(RegisterRequest request) {
+    public AuthenticationResponseEntity register(RegisterRequestEntity request) {
         UserModel user = new UserModel(
-                request.getLastname(),
-                request.getFirstname(),
-                request.getEmail(),
-                request.getLogin(),
-                passwordEncoder.encode(request.getPassword()));
+                request.lastname(),
+                request.firstname(),
+                request.email(),
+                request.login(),
+                passwordEncoder.encode(request.password()));
         repository.save(user);
         var jwtToken = jwtService.generateToken(user);
-        return new AuthenticationResponse(jwtToken,user.getUserId());
+        return new AuthenticationResponseEntity(jwtToken, user.getUserId());
     }
 
     @Override
-    public AuthenticationResponse authenticate(AuthenticationRequest request) {
+    public AuthenticationResponseEntity authenticate(AuthenticationRequestEntity request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        request.getLogin(),
-                        request.getPassword()
+                        request.login(),
+                        request.password()
                 )
         );
-        UserModel user = repository.findByLogin(request.getLogin())
+        UserModel user = repository.findByLogin(request.login())
                 .orElseThrow();
         var jwtToken = jwtService.generateToken(user);
-        return new AuthenticationResponse(jwtToken, user.getUserId());
+        return new AuthenticationResponseEntity(jwtToken, user.getUserId());
     }
 }
