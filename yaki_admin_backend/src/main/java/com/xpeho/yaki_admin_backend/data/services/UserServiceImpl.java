@@ -1,15 +1,20 @@
 package com.xpeho.yaki_admin_backend.data.services;
 
+import com.xpeho.yaki_admin_backend.data.models.TeamModel;
 import com.xpeho.yaki_admin_backend.data.models.UserModel;
 import com.xpeho.yaki_admin_backend.data.sources.UserJpaRepository;
+import com.xpeho.yaki_admin_backend.domain.entities.TeamEntity;
 import com.xpeho.yaki_admin_backend.domain.entities.UserEntity;
 import com.xpeho.yaki_admin_backend.domain.entities.UserEntityIn;
+import com.xpeho.yaki_admin_backend.domain.entities.UserEntityWithID;
 import com.xpeho.yaki_admin_backend.domain.services.UserService;
 import jakarta.persistence.EntityNotFoundException;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -54,5 +59,21 @@ public class UserServiceImpl implements UserService {
                     userModel.getEmail(),
                     userModel.getLogin());
         } else throw new EntityNotFoundException("Entity User with id " + id + " not found");
+    }
+
+    @Override
+    public List<UserEntityWithID> FindUserByIdRange(int idStart, int idEnd) {
+        List<UserModel> userList = userJpaRepository.findByUserIdBetween(idStart, idEnd);
+
+        List<UserEntityWithID> userWithIdList = new ArrayList<>();
+        for (UserModel user : userList) {
+            UserEntityWithID newUserWIthId = new UserEntityWithID(
+                    user.getUserId(),
+                    user.getLastName(),
+                    user.getFirstName(),
+                    user.getEmail());
+            userWithIdList.add(newUserWIthId);
+        }
+        return userWithIdList;
     }
 }

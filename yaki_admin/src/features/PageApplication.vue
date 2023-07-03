@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import PageLayout from '@/shared/layouts/PageLayout.vue';
-import SideBarCaptainContent from '../components/SideBarCaptainContent.vue';
-import ContentCaptain from '@/features/captain/layouts/ContentCaptain.vue';
+import PageLayout from "@/features/shared/layouts/PageLayout.vue";
+import SideBarCaptainContent from "@/features/captain/components/SideBarCaptainContent.vue";
+
+import {RouterView} from "vue-router";
 </script>
 
 <template>
@@ -11,7 +12,7 @@ import ContentCaptain from '@/features/captain/layouts/ContentCaptain.vue';
     </template>
 
     <template v-slot:pageContent>
-      <content-captain />
+      <router-view></router-view>
     </template>
   </page-layout>
 </template>

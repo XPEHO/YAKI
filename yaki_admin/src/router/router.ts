@@ -1,6 +1,9 @@
 import {createRouter, createWebHistory} from "vue-router";
-import PageCaptain from "@/features/captain/pages/PageCaptain.vue";
 import PageLogin from "@/features/login/pages/PageLogin.vue";
+import LayoutCaptain from "@/features/captain/layouts/LayoutCaptain.vue";
+import LayoutInvitation from "@/features/invitation/layouts/LayoutInvitation.vue";
+
+import PageApplication from "@/features/PageApplication.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -10,11 +13,23 @@ const router = createRouter({
       path: "/",
       name: "Login",
       component: PageLogin,
+      meta: {transition: "slide-left"},
     },
     {
-      path: "/captain",
-      name: "Captain",
-      component: PageCaptain,
+      path: "/administration",
+      name: "Administration",
+      component: PageApplication,
+      meta: {transition: "slide-right"},
+      children: [
+        {
+          path: "captain",
+          component: LayoutCaptain,
+        },
+        {
+          path: "invitation",
+          component: LayoutInvitation,
+        },
+      ],
     },
   ],
 });

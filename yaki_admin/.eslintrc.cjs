@@ -1,14 +1,14 @@
 /* eslint-env node */
-require('@rushstack/eslint-patch/modern-module-resolution')
+require("@rushstack/eslint-patch/modern-module-resolution");
 
 module.exports = {
   root: true,
-  'extends': [
-    'plugin:vue/vue3-essential',
-    'eslint:recommended',
-    '@vue/eslint-config-typescript'
-  ],
+  extends: ["plugin:vue/vue3-essential", "eslint:recommended", "@vue/eslint-config-typescript"],
+  rules: {
+    // Enable vue/script-setup-uses-vars rule
+    "vue/script-setup-uses-vars": "error",
+  },
   parserOptions: {
-    ecmaVersion: 'latest'
-  }
-}
+    ecmaVersion: "latest",
+  },
+};
