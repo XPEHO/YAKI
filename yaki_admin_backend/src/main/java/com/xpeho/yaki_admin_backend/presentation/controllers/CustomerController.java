@@ -46,4 +46,6 @@ public class CustomerController {
     public CustomerEntity update(@RequestBody CustomerEntity entity, @PathVariable int id) {
         return customerService.saveOrUpdate(entity, id);
     }
+
+
 }

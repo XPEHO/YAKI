@@ -86,7 +86,7 @@ ALTER SEQUENCE public.declaration_id_seq
 -- CREATE TABLE FOR USERS
 
 
-CREATE TABLE IF NOT EXISTS public.user
+CREATE TABLE IF NOT EXISTS "public.user"
 (
     user_id integer NOT NULL DEFAULT nextval('user_id_seq'::regclass),
     user_last_name character varying(100),
@@ -99,7 +99,7 @@ CREATE TABLE IF NOT EXISTS public.user
 
 TABLESPACE pg_default;
 
-ALTER TABLE IF EXISTS public.user
+ALTER TABLE IF EXISTS "public.user"
     OWNER to yaki;
 
 

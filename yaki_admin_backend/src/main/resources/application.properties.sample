@@ -1,3 +1,5 @@
 spring.datasource.url=exampleURL
 spring.datasource.username=exampleUserName
-spring.datasource.password=
+spring.datasource.password=examplePassword
+springdoc.swagger-ui.csrf.enabled=exampleInfo
+token.signing.key=exampleToken
