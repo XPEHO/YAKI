@@ -11,6 +11,18 @@ export class UserService {
 
     return response;
   };
+  getUserById = async (id: number): Promise<UserWithIdType>=> {
+    const response = await fetch(`${URL}/users/${id}`,{
+      method: 'POST',
+        headers:{
+            'Content-Type': 'application/json',
+            'Authorization' : 'value'
+        },
+    })
+    .then((res) => res.json())
+    .catch((err) => console.warn(err));
+    return response;
+  };
 }
 
 export const usersService = Object.freeze(new UserService());
