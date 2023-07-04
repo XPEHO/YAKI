@@ -1,24 +1,24 @@
 import {reactive} from "vue";
 
 /**
- * Get the selected team from @click in v-for SideBarCaptainContent.
+ * Get the selected team from @click.prevent in v-for SideBarCaptainContent.
  * In TeamListElement compare the selected Team with the element teamName
  * If thoses are the same return true else false.
  * Apply css class if true, if false its not applied.
  */
 const isTeamSelected = reactive({
-  id: 1,
-  name: "",
+  id: 1 as number,
+  name: "" as String,
 
-  setTeam(teamId: number) {
+  setTeam(teamId: number): void {
     this.id = teamId;
   },
 
-  setTeamName(teamName: string) {
+  setTeamName(teamName: string): void {
     this.name = teamName;
   },
 
-  isSameIndex(teamId: number) {
+  isSameIndex(teamId: number): boolean {
     if (this.id === teamId) {
       return true;
     }

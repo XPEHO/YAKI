@@ -32,7 +32,7 @@ onBeforeMount(() => {
   for (const teammate of teamStore.getTeammateList) {
     if (teammate.userId === props.user.id) {
       settings.isInvited = true;
-      settings.text = "Present";
+      settings.text = "In Team";
       settings.btnCSS = "button-class-test btn-bg-color-present";
       settings.cardCSS = "user-invited";
     }
@@ -59,8 +59,9 @@ const invitBtnClick = () => {
       settings.btnCSS = "button-class-test btn-bg-color-present";
       settings.cardCSS = "user-invited";
     }, time);
+
+    settings.isInvited = true;
   }
-  settings.isInvited = true;
 };
 </script>
 

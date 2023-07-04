@@ -18,9 +18,10 @@ const users = reactive({
 });
 
 onBeforeMount(async () => {
-  users.list = await usersService.fetchUserInRange(1, 11);
+  users.list = await usersService.fetchUserInRange(151, 162);
 });
 
+// invit button from user-component
 const addUserToTeam = async (userId: number) => {
   teamStore.addUserToTeam(userId);
 };
@@ -38,7 +39,7 @@ const addUserToTeam = async (userId: number) => {
       <side-bar-button
         v-bind:inner-text="'Return to teammate list'"
         v-bind:icon-path="backIcon"
-        @click="router.go(-1)" />
+        @click.prevent="router.go(-1)" />
 
       <div class="user_list_container">
         <user-component

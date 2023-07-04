@@ -29,8 +29,9 @@ export class TeamMateService {
     return response;
   };
 
+  // delete user based on this ID
   deleteTeammate = async (id: number): Promise<TeammateReturnType> => {
-    return await fetch(`${URL}/teammates`, {
+    return await fetch(`${URL}/teammates/${id}`, {
       method: "DELETE",
     }).then((res) => res.json());
   };
