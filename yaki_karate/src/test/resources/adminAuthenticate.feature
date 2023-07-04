@@ -1,7 +1,7 @@
 Feature: Register
 
   Background:
-    * url 'https://localhost:8080'
+    * url 'http://localhost:8080'
     * def schema = {id : '#number', userId : '#number', customerId : '#number' }
 
   Scenario: Register
