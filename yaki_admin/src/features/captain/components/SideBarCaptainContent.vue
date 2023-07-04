@@ -4,8 +4,6 @@ import TeamListElement from "@/features/captain/components/TeamListElement.vue";
 import SideBarElement from "@/features/shared/components/SideBarElement.vue";
 import SideBarButton from "@/features/shared/components/SideBarButton.vue";
 
-import type {TeamType} from "@/models/team.type";
-import {teamService} from "@/services/team.service";
 import {useTeamStore} from "@/stores/teamStore.js";
 
 import isTeamSelected from "../services/isActiveTeam";
@@ -14,16 +12,15 @@ import vector from "@/assets/Vector.png";
 import plusIcon from "@/assets/plus.png";
 
 const store = useTeamStore();
-const teams = reactive({
-  list: [] as TeamType[],
-});
+
 onBeforeMount(async () => {
-  teams.list = await teamService.getAllTeamsWithinCaptain(2);
+  await store.getTeamsFromCaptain(155);
+
   // automaticaly select first team right after team fetch, and save name
-  isTeamSelected.setTeam(teams.list[0].id);
-  isTeamSelected.setTeamName(teams.list[0].teamName);
+  isTeamSelected.setTeam(store.getTeamList[0].id);
+  isTeamSelected.setTeamName(store.getTeamList[0].teamName);
   //directly fetch teammate from the first team
-  store.getTeammateWithinTeam(teams.list[0].id);
+  store.getTeammateWithinTeam(store.getTeamList[0].id);
 });
 
 const selectedTeam = (id: number) => {
@@ -31,7 +28,7 @@ const selectedTeam = (id: number) => {
   store.getTeammateWithinTeam(id);
 
   //save team name on click
-  for (const team of teams.list) {
+  for (const team of store.getTeamList) {
     if (team.id === id) {
       isTeamSelected.setTeamName(team.teamName);
       break;
@@ -48,9 +45,9 @@ const selectedTeam = (id: number) => {
 
   <section class="team-list">
     <team-list-element
-      v-for="(team, index) in teams.list"
+      v-for="(team, index) in store.getTeamList"
       :key="index"
-      @click="() => selectedTeam(team.id)"
+      @click.prevent="() => selectedTeam(team.id)"
       v-bind:id="team.id"
       v-bind:teamName="team.teamName" />
   </section>
@@ -67,4 +64,3 @@ const selectedTeam = (id: number) => {
   gap: 0.5rem;
 }
 </style>
-@/models/team.type

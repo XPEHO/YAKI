@@ -1,25 +1,33 @@
-<script lang="ts">
-import {defineComponent} from "vue";
+<script setup lang="ts">
+import {PropType} from "vue";
 import type {TeamMateType} from "@/models/teamMate.type";
 
-export default defineComponent({
-  name: "TeamMate",
-  props: {
-    // The prop 'teamMate' is of type 'TeamMateType' and is required.
-    teamMate: {
-      type: Object as () => TeamMateType,
-      required: true,
-    },
+import avatarIcon from "@/assets/avatar.png";
+import editIcon from "@/assets/Edit.png";
+import deleteIcon from "@/assets/Delete.png";
+
+const props = defineProps({
+  teamMate: {
+    type: Object as PropType<TeamMateType>,
+    required: true,
   },
 });
+
+const emit = defineEmits(["RemoteTeammate"]);
+
+const removeUserFromTeam = () => {
+  emit("RemoteTeammate", props.teamMate.id, `${props.teamMate.firstName} ${props.teamMate.lastName}`);
+};
 </script>
 
 <template>
+  <dialog></dialog>
+
   <section class="team-mate">
     <div class="team-mate-avatar-info">
       <img
         class="avatar"
-        src="../../../assets/avatar.png"
+        v-bind:src="avatarIcon"
         alt="Avatar" />
       <div class="team-mate-info">
         <h1 class="name">{{ teamMate.firstName }} {{ teamMate.lastName }}</h1>
@@ -27,14 +35,22 @@ export default defineComponent({
       </div>
     </div>
     <div class="delete-edit-icon">
-      <img
-        class="team-mate-icon"
-        src="../../../assets/Edit.png"
-        alt="" />
-      <img
-        class="team-mate-icon"
-        src="../../../assets/Delete.png"
-        alt="" />
+      <button>
+        <figure>
+          <img
+            class="team-mate-icon"
+            v-bind:src="editIcon"
+            alt="" />
+        </figure>
+      </button>
+      <button @click.prevent="removeUserFromTeam">
+        <figure>
+          <img
+            class="team-mate-icon"
+            v-bind:src="deleteIcon"
+            alt="" />
+        </figure>
+      </button>
     </div>
   </section>
 </template>
@@ -71,13 +87,26 @@ export default defineComponent({
   width: 44px;
   height: 44px;
 }
-.team-mate-icon {
-  width: 24px;
-  height: 24px;
-}
 
 .delete-edit-icon {
   display: flex;
   gap: 2rem;
+
+  button {
+    border: none;
+    background-color: transparent;
+
+    &:active {
+      transform: scale(0.95);
+    }
+
+    figure {
+      width: 1.6rem;
+      .team-mate-icon {
+        width: 100%;
+        object-fit: contain;
+      }
+    }
+  }
 }
 </style>

@@ -57,7 +57,6 @@ export default {
   methods: {
     togglePasswordVisibility() {
       this.showPassword = !this.showPassword;
-      console.log("show");
     },
     onInputLogin(e) {
       this.usernameText = e.target.value;

@@ -2,6 +2,8 @@
 // Importing necessary modules and types
 import TeamMate from "../components/teamMate.vue";
 import SideBarButton from "@/features/shared/components/SideBarButton.vue";
+import ConfirmModal from "@/features/shared/components/ConfirmModal.vue";
+import modalState from "@/features/shared/services/modalState";
 
 import {useTeamStore} from "@/stores/teamStore.js";
 
@@ -11,14 +13,32 @@ import {onBeforeMount} from "vue";
 
 const teamStore = useTeamStore();
 
-onBeforeMount(async () => {
+const fetchTeammates = async () => {
   await teamStore.getTeammateWithinTeam(teamStore.getCurrentTeam);
+};
+
+onBeforeMount(async () => {
+  fetchTeammates();
 });
 
-console.log(teamStore.getTeammateList);
+const removeUserFromTeam = (id: number, informations: string) => {
+  teamStore.setTeammateToDelete(id);
+  modalState.setInformation(informations);
+  modalState.changeVisibility();
+};
+
+const modalAccept = () => {
+  teamStore.deleteTeammateFromTeam(teamStore.getTeammateToDelete);
+  setTimeout(() => {
+    fetchTeammates();
+  }, 150);
+};
 </script>
 
 <template>
+  <confirm-modal
+    v-show="modalState.isShowed"
+    @modal-accept="modalAccept" />
   <div class="captain-view">
     <h1 class="title">Team Members</h1>
     <h2 class="text">Manage your team members here</h2>
@@ -27,13 +47,14 @@ console.log(teamStore.getTeammateList);
     <side-bar-button
       v-bind:inner-text="'Add Teammate'"
       v-bind:icon-path="plusIcon"
-      @click="router.push({path: `invitation`})" />
+      @click.prevent="router.push({path: `invitation`})" />
 
     <div class="team-mate-list">
       <team-mate
         :team-mate="teamMate"
         v-for="teamMate in teamStore.getTeammateList"
-        :key="teamMate.id" />
+        :key="teamMate.id"
+        @RemoteTeammate="removeUserFromTeam" />
     </div>
   </div>
 </template>
