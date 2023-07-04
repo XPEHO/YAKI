@@ -1,9 +1,6 @@
 package com.xpeho.yaki_admin_backend.data.services;
 
-import com.xpeho.yaki_admin_backend.configSecurity.AuthenticationRequest;
-import com.xpeho.yaki_admin_backend.configSecurity.AuthenticationResponse;
 import com.xpeho.yaki_admin_backend.configSecurity.JwtService;
-import com.xpeho.yaki_admin_backend.configSecurity.RegisterRequest;
 import com.xpeho.yaki_admin_backend.data.models.UserModel;
 import com.xpeho.yaki_admin_backend.data.sources.UserJpaRepository;
 import com.xpeho.yaki_admin_backend.domain.entities.AuthenticationRequestEntity;
