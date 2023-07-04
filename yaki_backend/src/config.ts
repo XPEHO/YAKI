@@ -7,10 +7,10 @@ import dotenv from 'dotenv';
  */
 const initConfig = (): void => {
     dotenv.config();
-    //console.log(`Postgres host is ${process.env.DB_HOST}`);
-    //console.log(`Postgres user is ${process.env.DB_USER}`);
-    //console.log(`Postgres database is ${process.env.DB_DATABASE}`);
-    //console.log(`Postgres port is ${process.env.DB_PORT}`);
+    console.debug(`Postgres host is ${process.env.DB_HOST}`);
+    console.debug(`Postgres user is ${process.env.DB_USER}`);
+    console.debug(`Postgres database is ${process.env.DB_DATABASE}`);
+    console.debug(`Postgres port is ${process.env.DB_PORT}`);
 }
 
 // Export the initConfig function so that it can be used in other modules
