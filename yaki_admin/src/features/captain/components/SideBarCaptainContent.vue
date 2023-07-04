@@ -14,7 +14,7 @@ import plusIcon from "@/assets/plus.png";
 const store = useTeamStore();
 
 onBeforeMount(async () => {
-  await store.getTeamsFromCaptain(155);
+  await store.getTeamsFromCaptain(343);
 
   // automaticaly select first team right after team fetch, and save name
   isTeamSelected.setTeam(store.getTeamList[0].id);
