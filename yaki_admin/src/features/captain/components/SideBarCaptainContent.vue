@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {onBeforeMount, reactive} from "vue";
+import {onBeforeMount} from "vue";
 import TeamListElement from "@/features/captain/components/TeamListElement.vue";
 import SideBarElement from "@/features/shared/components/SideBarElement.vue";
 import SideBarButton from "@/features/shared/components/SideBarButton.vue";
