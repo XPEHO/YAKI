@@ -9,6 +9,7 @@ import com.xpeho.yaki_admin_backend.domain.entities.UserEntityIn;
 import com.xpeho.yaki_admin_backend.domain.entities.UserEntityWithID;
 import com.xpeho.yaki_admin_backend.domain.services.UserService;
 import jakarta.persistence.EntityNotFoundException;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -61,14 +62,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserEntity deleteById(int id) {
-        final Optional<UserModel> userModelOpt = userJpaRepository.findById(id);
-        if (userModelOpt.isPresent()) {
-            UserModel userModel = userModelOpt.get();
-            userJpaRepository.deleteById(id);
-            return new UserEntity(userModel.getLastName(), userModel.getFirstName(),userModel.getEmail(),userModel.getLogin());
-        } else throw new EntityNotFoundException("The team with id " + id + " not found.");
-    }
     public List<UserEntityWithID> FindUserByIdRange(int idStart, int idEnd) {
         List<UserModel> userList = userJpaRepository.findByUserIdBetween(idStart, idEnd);
 

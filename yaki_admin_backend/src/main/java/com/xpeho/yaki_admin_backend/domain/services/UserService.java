@@ -13,7 +13,6 @@ public interface UserService {
 
     UserEntity findById(int id);
 
-    UserEntity deleteById(int id);
-
     List<UserEntityWithID> FindUserByIdRange(int idStart, int idEnd);
+
 }

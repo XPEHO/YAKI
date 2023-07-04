@@ -1,10 +1,15 @@
 Feature: GetAllCaptain
-
   Background:
+    Given url 'http://localhost:8080/login/authenticate'
+    And request { login: 'owner', password: 'owner' }
+    When method post
+    Then status 200
+    And def token = 'Bearer ' + response.token
     * def schema = [{captain_id : '#number', captain_user_id: '#number',captain_customer_id: '#number'}]
 
   Scenario: 01 Create user
     Given url 'http://localhost:8080/users'
+    And header Authorization = token
     And request {id : 4, lastname: 'user', firstname: 'user', email: 'owner@gmail.com', login: 'user', password: 'user'}
     When method post
     Then status 200

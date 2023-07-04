@@ -2,6 +2,7 @@ package com.xpeho.yaki_admin_backend.presentation.controllers;
 
 import com.xpeho.yaki_admin_backend.domain.entities.TeamEntity;
 import com.xpeho.yaki_admin_backend.domain.services.TeamService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @RequestMapping("/teams")
+@SecurityRequirement(name = "bearerAuth")
 public class TeamController {
     final TeamService teamService;
 
