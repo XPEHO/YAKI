@@ -14,5 +14,4 @@ public interface UserService {
     UserEntity findById(int id);
 
     List<UserEntityWithID> findUserByIdRange(int idStart, int idEnd);
-
 }

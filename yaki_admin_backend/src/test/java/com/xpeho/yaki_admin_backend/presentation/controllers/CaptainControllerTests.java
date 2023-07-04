@@ -49,7 +49,7 @@ class CaptainControllerTests {
     @InjectMocks
     private CaptainController captainController;
 
-    //creating a mock of the controller before each test
+    //creating mock of the controller before each test
 
     @BeforeEach
     public void setup() {
