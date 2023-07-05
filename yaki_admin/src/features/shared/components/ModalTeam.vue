@@ -126,15 +126,16 @@ const CancelModalBtn = () => {
     }
 
     button:nth-child(1) {
-      background-color: #dd6158;
-      &:active {
-        background-color: #b24c45;
-      }
-    }
-    button:nth-child(2) {
       background-color: #a2b75e;
       &:active {
         background-color: #899b4d;
+      }
+    }
+
+    button:nth-child(2) {
+      background-color: #dd6158;
+      &:active {
+        background-color: #b24c45;
       }
     }
   }
