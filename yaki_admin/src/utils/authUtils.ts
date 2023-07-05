@@ -8,9 +8,16 @@ export function authHeader(url:string) {
   const isApiUrl = url.startsWith(environmentVar.baseURL);
   if (isLoggedIn && isApiUrl && user.token != null) {
     return { 
-      'Authorization': `Bearer ${user.token}` };
+      'Authorization': `Bearer ${user.token}`,
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Headers': 'Authorization, Cache-Control',
+      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, DELETE',
+     };
   } else {
     return {
-      'Authorization': ''};
+      'Authorization': '',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Headers': 'Authorization, Cache-Control',
+      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, DELETE',};
   }
 }

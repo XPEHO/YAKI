@@ -22,39 +22,42 @@ export class TeamService {
   };
 
   createTeam = async (cptId: number, teamName: string): Promise<TeamType> => {
+    
     const newTeam: TeamTypeOut = {captainId: cptId, teamName: teamName};
-
-    const res = await fetch(`${URL}/teams`, {
-      method: "POST",
+    const requestOptions = {
+      method: 'POST',
       body: JSON.stringify(newTeam),
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-    }).then((res) => res.json());
+      headers: authHeader(`${URL}/teams`),
+    }
+    const res = await fetch(`${URL}/teams`, requestOptions)
+    .then(handleResponse)
+    .catch((err) => console.warn(err));
 
     return res;
   };
 
   updateTeam = async (teamId: number, cptId: number, teamName: string): Promise<TeamType> => {
     const newTeam: TeamTypeOut = {captainId: cptId, teamName: teamName};
-
-    const res = await fetch(`${URL}/teams/${teamId}`, {
-      method: "PUT",
+    const requestOptions = {
+      method: 'PUT',
       body: JSON.stringify(newTeam),
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-    }).then((res) => res.json());
+      headers: authHeader(`${URL}/teams/${teamId}`),
+    }
+    const res = await fetch(`${URL}/teams/${teamId}`, requestOptions)
+      .then(handleResponse)
+      .catch((err) => console.warn(err));
 
     return res;
   };
 
   deleteTeam = async (teamId: number): Promise<TeamType> => {
-    const res = await fetch(`${URL}/teams/${teamId}`, {
-      method: "DELETE",
-    }).then((res) => res.json());
+    const requestOptions = {
+      method: 'DELETE',
+      headers: authHeader(`${URL}/teams/${teamId}`),
+    }
+    const res = await fetch(`${URL}/teams/${teamId}`, requestOptions)
+      .then(handleResponse)
+      .catch((err) => console.warn(err));
 
     return res;
   };
