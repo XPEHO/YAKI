@@ -17,8 +17,8 @@ export const useAuthStore = defineStore("loginStore", {
         try{
             this.user = await loginService.login(login,password);
             localStorage.setItem('user', JSON.stringify(this.user));
-            this.captains = await captainService.getAllCaptainByUserId(this.user.user_id)
-            router.push(this.returnedUrl || '/');
+            this.captains = await captainService.getAllCaptainByUserId(this.user.id)
+            router.push(this.returnedUrl || '/administration/captain');
             return true;
         }
       catch{
@@ -29,7 +29,7 @@ export const useAuthStore = defineStore("loginStore", {
     logout() {
         this.user = null;
         localStorage.removeItem('user');
-        router.push('/login');
+        router.push('/');
     }
   },
 });

@@ -10,10 +10,10 @@ export class CaptainService {
     getAllCaptainByUserId = async (userId: number): Promise<CaptainType[]> => {
       const requestOptions = {
         method: 'GET',
-        headers: authHeader(`${URL}/captains/user?=${userId}`),
+        headers: authHeader(`${URL}/captains/user/${userId}`),
         
       }
-    const response = await fetch(`${URL}/captains/user?=${userId}`,requestOptions)
+    const response = await fetch(`${URL}/captains/user/${userId}`,requestOptions)
       .then(handleResponse)
       .catch((err) => console.warn(err));
 

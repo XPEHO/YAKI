@@ -7,12 +7,19 @@ const URL: string = environmentVar.baseURL;
 
 // Defining a TeamMateService class to handle HTTP requests to the API
 export class TeamMateService {
+  
   // Defining a method to retrieve all team mates within a given team
   getAllWithinTeam = async (id: number): Promise<TeamMateType[]> => {
+    const requestOptions = {
+      method: 'GET',
+      headers: authHeader(`${URL}/teammates/team/${id}`),
+    }
     // Sending a GET request to the API endpoint with the given team ID
-    const res = await fetch(`${URL}/teammates/team/${id}`);
+    const res = await fetch(`${URL}/teammates/team/${id}`,requestOptions)
+      .then(handleResponse)
+      .catch((err) => console.warn(err));
+    return res;
     // Parsing the response body as JSON and returning it as an array of TeamMateType objects
-    return await res.json();
   };
 
   // assign a user to a team by "creating a teammate" : userID +
