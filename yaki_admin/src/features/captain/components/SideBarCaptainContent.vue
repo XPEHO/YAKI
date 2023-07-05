@@ -82,8 +82,7 @@ const teamModalAccept = async (teamName: string) => {
       :key="index"
       v-bind:id="team.id"
       v-bind:teamName="team.teamName"
-      @click.prevent="() => onClickSelectTeam(team.id, team.teamName)"
-      @team-edit="" />
+      @click.prevent="() => onClickSelectTeam(team.id, team.teamName)" />
   </section>
   <side-bar-button
     v-bind:inner-text="'Add team'"
