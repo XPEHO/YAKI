@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserEntityWithID> FindUserByIdRange(int idStart, int idEnd) {
+    public List<UserEntityWithID> findUserByIdRange(int idStart, int idEnd) {
         List<UserModel> userList = userJpaRepository.findByUserIdBetween(idStart, idEnd);
 
         List<UserEntityWithID> userWithIdList = new ArrayList<>();

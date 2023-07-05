@@ -1,6 +1,6 @@
 import {reactive} from "vue";
 
-const modalState = reactive({
+const modalValidationState = reactive({
   isShowed: false as boolean,
   information: "" as string,
 
@@ -13,4 +13,4 @@ const modalState = reactive({
   },
 });
 
-export default modalState;
+export default modalValidationState;

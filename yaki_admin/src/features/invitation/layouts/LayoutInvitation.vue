@@ -11,6 +11,8 @@ import SideBarButton from "@/features/shared/components/SideBarButton.vue";
 import backIcon from "@/assets/arrow-back.png";
 import {useTeamStore} from "@/stores/teamStore";
 
+import {environmentVar} from "@/envPlaceholder";
+
 const teamStore = useTeamStore();
 
 const users = reactive({
@@ -18,7 +20,10 @@ const users = reactive({
 });
 
 onBeforeMount(async () => {
-  users.list = await usersService.fetchUserInRange(151, 162);
+  users.list = await usersService.fetchUserInRange(
+    environmentVar.tempUserIdRangeStart,
+    environmentVar.tempUserIdRAngeEnd
+  );
 });
 
 // invit button from user-component
@@ -32,7 +37,7 @@ const addUserToTeam = async (userId: number) => {
     <div class="invitation__container">
       <article class="header">
         <h1 class="title">Invite Teammate</h1>
-        <h2 class="text">Select the teammate(s) you want to invit to : {{ isTeamSelected.name }}</h2>
+        <h2 class="text">Select the teammate(s) you want to invit to : {{ teamStore.getTeamName }}</h2>
         <hr class="line" />
       </article>
 

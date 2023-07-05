@@ -12,7 +12,7 @@ import {RouterView} from "vue-router";
     </template>
 
     <template v-slot:pageContent>
-      <router-view></router-view>
+      <router-view />
     </template>
   </page-layout>
 </template>

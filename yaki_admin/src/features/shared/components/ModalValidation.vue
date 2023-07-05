@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import modalState from "@/features/shared/services/modalState";
+import modalValidationState from "@/features/shared/services/modalValidationState";
 
 const emit = defineEmits(["ModalAccept"]);
 
 const validateModalBtn = () => {
   emit("ModalAccept");
-  modalState.changeVisibility();
+  modalValidationState.changeVisibility();
 };
 
 const CancelModalBtn = () => {
-  modalState.changeVisibility();
+  modalValidationState.changeVisibility();
 };
 </script>
 
@@ -18,7 +18,7 @@ const CancelModalBtn = () => {
     <dialog class="modaltest">
       <article class="modal-text">
         <p>Do you want to remove :</p>
-        <p>{{ modalState.information }}</p>
+        <p>{{ modalValidationState.information }}</p>
         <p>from the team ?</p>
       </article>
       <section>
@@ -93,17 +93,18 @@ const CancelModalBtn = () => {
     }
 
     button:nth-child(1) {
-      background-color: #dd6158;
-      &:active {
-        background-color: #b24c45;
-      }
-    }
-    button:nth-child(2) {
       background-color: #a2b75e;
       &:active {
         background-color: #899b4d;
       }
     }
+    button:nth-child(2) {
+      background-color: #dd6158;
+      &:active {
+        background-color: #b24c45;
+      }
+    }
   }
 }
 </style>
+@/features/shared/services/modalValidationState

@@ -1,4 +1,4 @@
-import type {TeamMateType, TeammateToCreateType, TeammateReturnType} from "@/models/teamMate.type";
+import type {TeamMateType, TeammateTypeOut, TeammateTypeIn} from "@/models/teamMate.type";
 import {environmentVar} from "@/envPlaceholder";
 
 const URL: string = environmentVar.baseURL;
@@ -14,7 +14,7 @@ export class TeamMateService {
   };
 
   // assign a user to a team by "creating a teammate" : userID +
-  createTeammate = async (data: TeammateToCreateType): Promise<TeammateReturnType> => {
+  createTeammate = async (data: TeammateTypeOut): Promise<TeammateTypeIn> => {
     const response = await fetch(`${URL}/teammates`, {
       method: "POST",
       body: JSON.stringify(data),
@@ -30,7 +30,7 @@ export class TeamMateService {
   };
 
   // delete user based on this ID
-  deleteTeammate = async (id: number): Promise<TeammateReturnType> => {
+  deleteTeammate = async (id: number): Promise<TeammateTypeIn> => {
     return await fetch(`${URL}/teammates/${id}`, {
       method: "DELETE",
     }).then((res) => res.json());
