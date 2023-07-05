@@ -26,8 +26,8 @@ public class UserController {
     }
 
     @GetMapping("/inRange")
-    public List<UserEntityWithID> FindUserByIdRange(@RequestParam int idStart,
+    public List<UserEntityWithID> findUserByIdRange(@RequestParam int idStart,
                                                     @RequestParam int idEnd) {
-        return userService.FindUserByIdRange(idStart, idEnd);
+        return userService.findUserByIdRange(idStart, idEnd);
     }
 }
