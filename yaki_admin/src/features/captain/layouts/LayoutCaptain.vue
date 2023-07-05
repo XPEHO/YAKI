@@ -2,8 +2,8 @@
 // Importing necessary modules and types
 import TeamMate from "../components/teamMate.vue";
 import SideBarButton from "@/features/shared/components/SideBarButton.vue";
-import ConfirmModal from "@/features/shared/components/ConfirmModal.vue";
-import modalState from "@/features/shared/services/modalState";
+import ModalValidation from "@/features/shared/components/ModalValidation.vue";
+import modalValidationState from "@/features/shared/services/modalValidationState";
 
 import {useTeamStore} from "@/stores/teamStore.js";
 
@@ -14,7 +14,7 @@ import {onBeforeMount} from "vue";
 const teamStore = useTeamStore();
 
 const fetchTeammates = async () => {
-  await teamStore.getTeammateWithinTeam(teamStore.getCurrentTeam);
+  await teamStore.getTeammateWithinTeam(teamStore.getTeamId);
 };
 
 onBeforeMount(async () => {
@@ -23,11 +23,11 @@ onBeforeMount(async () => {
 
 const removeUserFromTeam = (id: number, informations: string) => {
   teamStore.setTeammateToDelete(id);
-  modalState.setInformation(informations);
-  modalState.changeVisibility();
+  modalValidationState.setInformation(informations);
+  modalValidationState.changeVisibility();
 };
 
-const modalAccept = () => {
+const validationModalAccept = () => {
   teamStore.deleteTeammateFromTeam(teamStore.getTeammateToDelete);
   setTimeout(() => {
     fetchTeammates();
@@ -36,9 +36,9 @@ const modalAccept = () => {
 </script>
 
 <template>
-  <confirm-modal
-    v-show="modalState.isShowed"
-    @modal-accept="modalAccept" />
+  <modal-validation
+    v-show="modalValidationState.isShowed"
+    @modal-accept="validationModalAccept" />
   <div class="captain-view">
     <h1 class="title">Team Members</h1>
     <h2 class="text">Manage your team members here</h2>

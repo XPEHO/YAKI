@@ -7,13 +7,13 @@ export type TeamMateType = {
   email: string;
 };
 
-export type TeammateReturnType = {
+export type TeammateTypeIn = {
   id: number;
   teamId: number;
   userId: number;
 };
 
-export type TeammateToCreateType = {
+export type TeammateTypeOut = {
   teamId: number;
   userId: number;
 };
