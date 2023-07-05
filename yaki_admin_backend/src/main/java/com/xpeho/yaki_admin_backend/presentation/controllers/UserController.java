@@ -26,10 +26,6 @@ public class UserController {
     public UserEntity createUser(@RequestBody UserEntityIn userEntity) {
         return userService.save(userEntity);
     }
-    @DeleteMapping("{id}")
-    public UserEntity deleteUser(@PathVariable int id) {
-        return userService.deleteById(id);
-    }
     @GetMapping("/inRange")
     public List<UserEntityWithID> findUserByIdRange(@RequestParam int idStart,
                                                     @RequestParam int idEnd) {

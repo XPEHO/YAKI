@@ -23,7 +23,7 @@ export class TeamMateService {
   };
 
   // assign a user to a team by "creating a teammate" : userID +
-  createTeammate = async (data: TeammateToCreateType): Promise<TeammateReturnType> => {
+  createTeammate = async (data: TeammateTypeOut): Promise<TeammateTypeIn> => {
     const requestOptions = {
       method: 'POST',
       body: JSON.stringify(data),
@@ -38,12 +38,12 @@ export class TeamMateService {
     return response;
   };
 
-  deleteTeammate = async (id: number): Promise<TeammateReturnType> => {
+  deleteTeammate = async (id: number): Promise<TeammateTypeIn> => {
     const requestOptions = {
       method: 'DELETE',
-      headers: authHeader(`${URL}/teammates`),
+      headers: authHeader(`${URL}/teammates/${id}`),
     }
-    return await fetch(`${URL}/teammates`,requestOptions)
+    return await fetch(`${URL}/teammates/${id}`,requestOptions)
       .then(handleResponse)
       .catch((err) => console.warn(err));
   };
