@@ -49,13 +49,13 @@ const onClickAddTeam = () => {
 // modal accept button press
 const teamModalAccept = async (teamName: string) => {
   switch (modalState.modalMode) {
-    case 1:
+    case 0:
       store.createTeam(store.getCaptainId, teamName);
       break;
-    case 2:
+    case 1:
       store.updateTeam(store.getTeamId, store.getCaptainId, teamName);
       break;
-    case 3:
+    case 2:
       store.deleteTeam(store.getTeamId);
       break;
   }
