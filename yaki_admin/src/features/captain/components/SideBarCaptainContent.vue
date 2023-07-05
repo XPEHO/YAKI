@@ -20,7 +20,7 @@ const fetchTeams = async () => {
   await store.getTeamsFromCaptain(store.getCaptainId);
 };
 
-//before mount, fetch teams, select first team from the saved list, get team name, fetch teammates
+//before mount, fetch teams, select first team from the saved list, get team name, fetch teammates.
 onBeforeMount(async () => {
   await fetchTeams();
   // automaticaly select first team right after team fetch, and save name
