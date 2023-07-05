@@ -37,7 +37,7 @@ const addUserToTeam = async (userId: number) => {
     <div class="invitation__container">
       <article class="header">
         <h1 class="title">Invite Teammate</h1>
-        <h2 class="text">Select the teammate(s) you want to invit to : {{ isTeamSelected.name }}</h2>
+        <h2 class="text">Select the teammate(s) you want to invit to : {{ teamStore.getTeamName }}</h2>
         <hr class="line" />
       </article>
 
