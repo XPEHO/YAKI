@@ -1,5 +1,7 @@
 import type {TeamMateType, TeammateTypeOut, TeammateTypeIn} from "@/models/teamMate.type";
 import {environmentVar} from "@/envPlaceholder";
+import { authHeader } from "@/utils/authUtils";
+import { handleResponse } from "@/utils/responseUtils";
 
 const URL: string = environmentVar.baseURL;
 
@@ -14,26 +16,29 @@ export class TeamMateService {
   };
 
   // assign a user to a team by "creating a teammate" : userID +
-  createTeammate = async (data: TeammateTypeOut): Promise<TeammateTypeIn> => {
-    const response = await fetch(`${URL}/teammates`, {
-      method: "POST",
+  createTeammate = async (data: TeammateToCreateType): Promise<TeammateReturnType> => {
+    const requestOptions = {
+      method: 'POST',
       body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-    })
-      .then((res) => res.json())
+      headers: authHeader(`${URL}/teammates`),
+      //"Access-Control-Allow-Origin": "*", needed ?
+      
+    }
+    const response = await fetch(`${URL}/teammates`,requestOptions )
+      .then(handleResponse)
       .catch((err) => console.warn(err));
 
     return response;
   };
 
-  // delete user based on this ID
-  deleteTeammate = async (id: number): Promise<TeammateTypeIn> => {
-    return await fetch(`${URL}/teammates/${id}`, {
-      method: "DELETE",
-    }).then((res) => res.json());
+  deleteTeammate = async (id: number): Promise<TeammateReturnType> => {
+    const requestOptions = {
+      method: 'DELETE',
+      headers: authHeader(`${URL}/teammates`),
+    }
+    return await fetch(`${URL}/teammates`,requestOptions)
+      .then(handleResponse)
+      .catch((err) => console.warn(err));
   };
 }
 

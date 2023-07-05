@@ -1,5 +1,7 @@
 import {environmentVar} from "@/envPlaceholder";
 import {UserWithIdType} from "@/models/userWithId.type";
+import { authHeader } from "@/utils/authUtils";
+import { handleResponse } from "@/utils/responseUtils";
 
 const URL: string = environmentVar.baseURL;
 
@@ -12,15 +14,14 @@ export class UserService {
     return response;
   };
   getUserById = async (id: number): Promise<UserWithIdType>=> {
-    const response = await fetch(`${URL}/users/${id}`,{
+    const requestOptions = {
       method: 'POST',
-        headers:{
-            'Content-Type': 'application/json',
-            'Authorization' : 'value'
-        },
-    })
-    .then((res) => res.json())
-    .catch((err) => console.warn(err));
+      headers: authHeader(`${URL}/users/${id}`),
+      
+    }
+    const response = await fetch(`${URL}/users/${id}`,requestOptions)
+      .then(handleResponse)
+      .catch((err) => console.warn(err));
     return response;
   };
 }
