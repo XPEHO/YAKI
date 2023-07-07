@@ -22,7 +22,13 @@ class CaptainServiceImpl(private val captainJpaRepository: CaptainJpaRepository)
     }
 
     override fun createCaptain(captainEntity: CaptainEntity): CaptainEntity {
-        val captainModel = CaptainModel(captainEntity.userId, captainEntity.customerId)
+        val captainModel: CaptainModel
+        if (captainEntity.id == 0) {//in case we id is not specified
+            captainModel = CaptainModel(captainEntity.userId, captainEntity.customerId)
+        }
+        else{
+            captainModel = CaptainModel(captainEntity.id,captainEntity.userId, captainEntity.customerId)
+        }
         val savedCaptain = captainJpaRepository.save(captainModel)
         return CaptainEntity(savedCaptain.captainId, savedCaptain.userId, savedCaptain.customerId)
     }
@@ -58,5 +64,17 @@ class CaptainServiceImpl(private val captainJpaRepository: CaptainJpaRepository)
             throw EntityNotFoundException("Entity captain with id$captainId not found")
         }
         return CaptainEntity(captainId, entity.userId, entity.customerId)
+    }
+    override fun getAllCaptainByUserId(userId : Int): List<CaptainEntity> {
+        return captainJpaRepository
+                .findAllByUserId(userId)
+                .map { captainModel: CaptainModel ->
+                    CaptainEntity(
+                            captainModel.captainId,
+                            captainModel.userId,
+                            captainModel.customerId
+                    )
+                }
+
     }
 }

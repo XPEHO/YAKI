@@ -1,12 +1,19 @@
 Feature: Authenticate
-
+  Background:
+    Given url 'http://localhost:8080/login/authenticate'
+    And request { login: 'owner', password: 'owner' }
+    When method post
+    Then status 200
+    And def token = 'Bearer ' + response.token
   Scenario: 01 Create users
     Given url 'http://localhost:8080/users'
+    And header Authorization = token
     And request {id : 20, lastname: 'roger', firstname: 'roger', email: 'roger@gmail.com', login: 'roger', password: 'roger'}
     When method post
     Then status 200
 
     Given url 'http://localhost:8080/users'
+    And header Authorization = token
     And request {id : 21, lastname: 'sean', firstname: 'sean', email: 'sean@gmail.com', login: 'sean', password: 'sean'}
     When method post
     Then status 200
