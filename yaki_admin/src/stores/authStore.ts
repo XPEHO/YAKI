@@ -19,6 +19,7 @@ export const useAuthStore = defineStore("loginStore", {
             this.user = await loginService.login(login,password);
             localStorage.setItem('user', JSON.stringify(this.user));
             this.captains = await captainService.getAllCaptainByUserId(this.user.id)
+            //if the user is not a captain he can't access to the admin part
             if(this.captains.length == 0){
               this.logout()
               return false
