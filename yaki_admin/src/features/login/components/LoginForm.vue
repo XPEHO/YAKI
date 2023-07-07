@@ -42,6 +42,7 @@
 </template>
 
 <script>
+import { useAuthStore } from '@/stores/authStore';
 export default {
   data() {
     return {
@@ -62,7 +63,9 @@ export default {
       this.usernameText = e.target.value;
     },
     login() {
-      this.$router.push("/administration/captain");
+      const authStore = useAuthStore();
+      return authStore.login(this.form.username, this.form.password)
+        .catch(error => setErrors({ apiError: error }));
     },
   },
 };

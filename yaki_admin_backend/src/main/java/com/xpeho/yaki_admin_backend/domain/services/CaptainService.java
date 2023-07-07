@@ -15,4 +15,6 @@ public interface CaptainService {
     CaptainEntity deleteById(Integer id);
 
     CaptainEntity saveOrUpdate(CaptainEntity entity, int captainId);
+
+    List<CaptainEntity> getAllCaptainByUserId(int userId);
 }

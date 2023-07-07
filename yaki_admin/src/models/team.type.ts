@@ -5,6 +5,6 @@ export type TeamType = {
 };
 
 export type TeamTypeOut = {
-  captainId: number;
-  teamName: string;
+  "captainId": number;
+  "teamName": string;
 };

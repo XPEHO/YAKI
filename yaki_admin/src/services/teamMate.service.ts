@@ -1,39 +1,51 @@
 import type {TeamMateType, TeammateTypeOut, TeammateTypeIn} from "@/models/teamMate.type";
 import {environmentVar} from "@/envPlaceholder";
+import { authHeader } from "@/utils/authUtils";
+import { handleResponse } from "@/utils/responseUtils";
 
 const URL: string = environmentVar.baseURL;
 
 // Defining a TeamMateService class to handle HTTP requests to the API
 export class TeamMateService {
+  
   // Defining a method to retrieve all team mates within a given team
   getAllWithinTeam = async (id: number): Promise<TeamMateType[]> => {
+    const requestOptions = {
+      method: 'GET',
+      headers: authHeader(`${URL}/teammates/team/${id}`),
+    }
     // Sending a GET request to the API endpoint with the given team ID
-    const res = await fetch(`${URL}/teammates/team/${id}`);
+    const res = await fetch(`${URL}/teammates/team/${id}`,requestOptions)
+      .then(handleResponse)
+      .catch((err) => console.warn(err));
+    return res;
     // Parsing the response body as JSON and returning it as an array of TeamMateType objects
-    return await res.json();
   };
 
   // assign a user to a team by "creating a teammate" : userID +
   createTeammate = async (data: TeammateTypeOut): Promise<TeammateTypeIn> => {
-    const response = await fetch(`${URL}/teammates`, {
-      method: "POST",
+    const requestOptions = {
+      method: 'POST',
       body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-    })
-      .then((res) => res.json())
+      headers: authHeader(`${URL}/teammates`),
+      //"Access-Control-Allow-Origin": "*", needed ?
+      
+    }
+    const response = await fetch(`${URL}/teammates`,requestOptions )
+      .then(handleResponse)
       .catch((err) => console.warn(err));
 
     return response;
   };
 
-  // delete user based on this ID
   deleteTeammate = async (id: number): Promise<TeammateTypeIn> => {
-    return await fetch(`${URL}/teammates/${id}`, {
-      method: "DELETE",
-    }).then((res) => res.json());
+    const requestOptions = {
+      method: 'DELETE',
+      headers: authHeader(`${URL}/teammates/${id}`),
+    }
+    return await fetch(`${URL}/teammates/${id}`,requestOptions)
+      .then(handleResponse)
+      .catch((err) => console.warn(err));
   };
 }
 
