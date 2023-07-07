@@ -23,7 +23,7 @@ export class TeamService {
 
   createTeam = async (cptId: number, teamName: string): Promise<TeamType> => {
     
-    const newTeam: TeamTypeOut = {captainId: cptId, teamName: teamName};
+    const newTeam: TeamTypeOut = {"captainId": cptId, "teamName": teamName};
     const requestOptions = {
       method: 'POST',
       body: JSON.stringify(newTeam),

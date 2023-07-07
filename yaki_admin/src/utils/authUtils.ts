@@ -9,6 +9,7 @@ export function authHeader(url:string) {
   if (isLoggedIn && isApiUrl && user.token != null) {
     return { 
       'Authorization': `Bearer ${user.token}`,
+      "Content-Type": "application/json",
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Headers': 'Authorization, Cache-Control',
       'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, DELETE',
@@ -16,6 +17,7 @@ export function authHeader(url:string) {
   } else {
     return {
       'Authorization': '',
+      "Content-Type": "application/json",
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Headers': 'Authorization, Cache-Control',
       'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, DELETE',};

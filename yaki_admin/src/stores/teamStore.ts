@@ -6,7 +6,7 @@ import {TeamType} from "@/models/team.type";
 
 export const useTeamStore = defineStore("teamStore", {
   state: () => ({
-    captainId: 343 as number,
+    captainsId: [343] as number[],
     teamId: 0 as number,
     teamName: "" as string,
     teammate: [] as TeamMateType[],
@@ -14,8 +14,8 @@ export const useTeamStore = defineStore("teamStore", {
     teammateToDelete: 0 as number,
   }),
   getters: {
-    getCaptainId(): number {
-      return this.captainId;
+    getCaptainId(): number[] {
+      return this.captainsId;
     },
     getTeamId(): number {
       return this.teamId;
@@ -37,10 +37,17 @@ export const useTeamStore = defineStore("teamStore", {
     setTeamName(name: string) {
       this.teamName = name;
     },
+    setCaptainsId(captainsId: number[]){
+      this.captainsId = captainsId;
+    },
 
     // get all teams of a captain
-    async getTeamsFromCaptain(captainId: number) {
-      this.teamList = await teamService.getAllTeamsWithinCaptain(captainId);
+    async getTeamsFromCaptain(captainsId: number[]) {
+      this.teamList = []
+      for (let captainId of captainsId){
+        let a =  await teamService.getAllTeamsWithinCaptain(captainId);
+        this.teamList = this.teamList.concat(a)
+      }
     },
 
     // get all teammate of a team
