@@ -29,4 +29,8 @@ public class AuthenticationController {
     ) {
         return authenticationService.authenticate(request);
     }
+    @GetMapping("/registerConfirm")
+    public boolean confirmRegister(@RequestParam("token") String token){
+        return authenticationService.confirmRegister(token);
+    }
 }

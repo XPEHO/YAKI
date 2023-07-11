@@ -8,6 +8,14 @@ CREATE SEQUENCE IF NOT EXISTS public.user_id_seq
     CACHE 1;
 ALTER SEQUENCE public.user_id_seq
     OWNER TO yaki;
+CREATE SEQUENCE IF NOT EXISTS public.verification_token_id_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    CACHE 1;
+ALTER SEQUENCE public.verification_token_id_seq
+    OWNER TO yaki;
 -- CREATE LOCATION IDs
 CREATE SEQUENCE IF NOT EXISTS public.location_id_seq
     INCREMENT 1
@@ -94,6 +102,7 @@ CREATE TABLE IF NOT EXISTS public.user
     user_email character varying(100),
     user_login character varying(100),
     user_password character varying(255),
+    user_enabled boolean NOT NULL,
     CONSTRAINT user_pkey PRIMARY KEY (user_id)
 )
 
@@ -289,4 +298,26 @@ CREATE TABLE IF NOT EXISTS public.declaration
 TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.declaration
+    OWNER to yaki;
+
+-- CREATE TABLE FOR VERIFICATION_TOKEN
+
+
+CREATE TABLE IF NOT EXISTS public.verification_token
+(
+    verification_token_id integer NOT NULL DEFAULT nextval('verification_token_id_seq'::regclass),
+    verification_token_user_id integer NOT NULL,
+    expiration_date timestamp with time zone,
+    token character varying(250),
+    CONSTRAINT "VERIFICATION_TOKEN_pkey" PRIMARY KEY (verification_token_id),
+    CONSTRAINT verification_token_user_id_fkey FOREIGN KEY (verification_token_user_id)
+        REFERENCES public.user (user_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.verification_token
     OWNER to yaki;

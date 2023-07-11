@@ -12,6 +12,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -31,14 +32,18 @@ public class AuthenticationServiceImplTest {
     private JwtService jwtService;
     @Mock
     private PasswordEncoder passwordEncoder;
-
+    @Mock
+    private VerificationTokenServiceImpl verificationTokenService;
+    @Mock
+    private ApplicationEventPublisher eventPublisher;
     @InjectMocks
     private AuthenticationServiceImpl authenticationServiceImpl;
 
     @BeforeEach
     void setUp() {
         repository = mock(UserJpaRepository.class);
-        authenticationServiceImpl = new AuthenticationServiceImpl(repository, jwtService, authenticationManager, passwordEncoder);
+
+        authenticationServiceImpl = new AuthenticationServiceImpl(repository, jwtService, authenticationManager, passwordEncoder,verificationTokenService,eventPublisher);
     }
 
     @Test

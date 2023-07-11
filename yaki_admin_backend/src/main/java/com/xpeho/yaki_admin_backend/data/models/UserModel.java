@@ -37,6 +37,13 @@ public class UserModel implements UserDetails {
     @Column(name = "user_password")
     private String password;
 
+    @Column(name = "user_enabled")
+    private boolean enabled;
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
     @ManyToMany
     @JoinTable(name = "customer_rights", joinColumns = @JoinColumn(name = "customer_rights_user_id"), inverseJoinColumns = @JoinColumn(name = "customer_rights_customer_id"))
     private List<CustomerModel> customers = new ArrayList<>();
@@ -48,9 +55,11 @@ public class UserModel implements UserDetails {
         this.email = email;
         this.login = login;
         this.password = password;
+        this.enabled = false;
     }
 
     public UserModel() {
+        this.enabled = false;
     }
 
     public UserModel(String lastName, String firstName, String email, String login, String password) {
@@ -59,6 +68,7 @@ public class UserModel implements UserDetails {
         this.lastName = lastName;
         this.login = login;
         this.password = password;
+        this.enabled = false;
     }
 
     public UserModel(String lastName, String firstName, String email, String login) {
@@ -67,6 +77,7 @@ public class UserModel implements UserDetails {
         this.lastName = lastName;
         this.login = login;
         this.password = "password";
+        this.enabled = false;
     }
 
     public int getUserId() {
