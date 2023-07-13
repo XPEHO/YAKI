@@ -32,6 +32,7 @@ jobs:
           echo "Sleep 10s to wait backend admin initialization"
           sleep 10s
           cd ../yaki_karate
+          echo ${{ secrets.KARATE_CONFIG }} | base64 -d > src/test/ressources/karate-config.js
           echo "Running karate tests"
           mvn test --quiet
           cd ../yaki_docker
