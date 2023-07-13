@@ -1,7 +1,12 @@
 import {UserRepository} from "./user.repository";
 import {authService} from "./authentication.service";
+import YakiUtils from "../../utils/yakiUtils";
+
 import {TeamMateDtoOut} from "../teamMate/teamMate.dtoOut";
 import {CaptainDtoOut} from "../captain/captain.dtoOut";
+import {UserToRegisterIn} from "./toRegister.dtoIn";
+import {UserToRegisterOut} from "./toRegister.dtoOut";
+import {RegisterResponse} from "./registerResponse";
 
 export class UserService {
   userRepository: UserRepository;
@@ -44,5 +49,38 @@ export class UserService {
     } else {
       throw new Error("Bad authentification details");
     }
+  };
+
+  /**
+   *
+   * @param user user send from mobile app registration process
+   * @returns response from admin api after email confirmation & successfull registration
+   */
+  registerUser = async (user: UserToRegisterIn): Promise<RegisterResponse> => {
+    const responseAfterRegister = new RegisterResponse(false);
+
+    const reference = new UserToRegisterIn("", "", "", "");
+    if (YakiUtils.objectSameStructureCheck(user, reference) === false) {
+      throw new TypeError("Incorrect data");
+    }
+    const isSomesAttributesEmpty = Object.values(user).some((value) => !value && value.trim() === "");
+    if (isSomesAttributesEmpty === true) {
+      throw new Error("Missing registration information(s)");
+    }
+
+    let userToRegister = new UserToRegisterOut(
+      user.lastname.trim(),
+      user.firstname.trim(),
+      user.email.trim(),
+      user.email.trim(),
+      user.password.trim()
+    );
+
+    const springResponse = await this.userRepository.registerUser(userToRegister);
+    if (springResponse.id !== 0 && springResponse.id !== null) {
+      responseAfterRegister.isRegistered = true;
+    }
+
+    return responseAfterRegister;
   };
 }
