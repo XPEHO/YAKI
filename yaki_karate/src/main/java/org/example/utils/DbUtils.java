@@ -10,14 +10,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 public class DbUtils {
 
     private final JdbcTemplate jdbc;
-
-    @Value("${DATABASE_URL}")
-    private String url;
-    @Value("${DB_USER}")
-    private String username;
-    @Value("${DB_PASSWORD}")
-    private String password;
-    public DbUtils() {
+    public DbUtils(String url,String username,String password) {
         String driver = "org.postgresql.Driver";
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(driver);
@@ -30,7 +23,9 @@ public class DbUtils {
     public Object readValue(String query) {
         return jdbc.queryForObject(query, Object.class);
     }
-
+    /*public String readValue(String query) {
+        return url + " " + username + " " + password;
+    }*/
     public Map<String, Object> readRow(String query) {
         return jdbc.queryForMap(query);
     }

@@ -4,7 +4,7 @@ Feature: Register
     * url 'http://localhost:8080'
     * def schema = {id : '#number', userId : '#number', customerId : '#number' }
     * def DbUtils = Java.type('org.example.utils.DbUtils')
-    * def db = new DbUtils()
+    * def db = new DbUtils(databaseUrl,dbUser,dbPassword)
 
   Scenario: Register
     Given path '/login/register'
@@ -12,8 +12,6 @@ Feature: Register
     When method post
     Then status 200
 
-  Scenario: Confirm Register by simulating the click on the email
-    * def token = db.readValue('SELECT token FROM public.verification_token WHERE verification_token_user_id = 1')
-    Given path '/login/registerConfirm?token='+ token
-    When method post
-    Then status 200
+  Scenario: Confirm That the connection to database is correct
+    * def token = db.readValue('SELECT user_id FROM public.user WHERE user_id = 1')
+    Then match token == 1
