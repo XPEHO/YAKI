@@ -64,7 +64,7 @@ export default class YakiUtils {
    * @param obj2 Object
    * @returns true or false.
    */
-  static objectSameStructureCheck(obj1: object, obj2: object): boolean {
+  static isSameObjStructure(obj1: object, obj2: object): boolean {
     // if data aren't object
     if (!this.isAnObject(obj1) || !this.isAnObject(obj2)) {
       throw new TypeError("incorrect data");

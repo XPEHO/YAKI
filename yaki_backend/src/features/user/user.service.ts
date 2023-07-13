@@ -60,7 +60,7 @@ export class UserService {
     const responseAfterRegister = new RegisterResponse(false);
 
     const reference = new UserToRegisterIn("", "", "", "");
-    if (YakiUtils.objectSameStructureCheck(user, reference) === false) {
+    if (YakiUtils.isSameObjStructure(user, reference) === false) {
       throw new TypeError("Incorrect data");
     }
     const isSomesAttributesEmpty = Object.values(user).some((value) => !value && value.trim() === "");
