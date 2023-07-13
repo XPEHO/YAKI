@@ -37,12 +37,45 @@ export default class YakiUtils {
     const columns: Array<string> = Array(valuesCount).fill("0");
 
     const postgresValues = rows
-    .map(() => {
-      const values = columns.map(() => `$${startValue++}`).join(", ");
-      return "(" + values + ")";
-    })
-    .join(", ");
+      .map(() => {
+        const values = columns.map(() => `$${startValue++}`).join(", ");
+        return "(" + values + ")";
+      })
+      .join(", ");
 
     return postgresValues;
+  }
+
+  /**
+   *  Check if the data passed as argument is an object
+   * @param toTest data to test
+   * @returns boolean
+   */
+  static isAnObject(toTest: any): boolean {
+    return typeof toTest === "object" && !Array.isArray(toTest) && toTest !== null;
+  }
+
+  /**
+   * Check if 2 objects have the same attributes count. And if attributes are the same.
+   * Prevent duck typing
+   *
+   * Return a boolean value
+   * @param obj1 Object
+   * @param obj2 Object
+   * @returns true or false.
+   */
+  static isSameObjStructure(obj1: object, obj2: object): boolean {
+    // if data aren't object
+    if (!this.isAnObject(obj1) || !this.isAnObject(obj2)) {
+      throw new TypeError("incorrect data");
+    }
+    const obj1Attr = Object.keys(obj1);
+    const obj2Attr = Object.keys(obj2);
+    // if empty object
+    if (obj1Attr.length === 0 || obj2Attr.length === 0) {
+      throw new TypeError("No data");
+    }
+    // else check if objects have the sames attributes & attributes count
+    return obj1Attr.length === obj2Attr.length && obj1Attr.every((key, index) => key === obj2Attr[index]);
   }
 }
