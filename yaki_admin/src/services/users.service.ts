@@ -8,7 +8,7 @@ const URL: string = environmentVar.baseURL;
 export class UserService {
   fetchUserInRange = async (idStart: number, idEnd: number): Promise<UserWithIdType[]> => {
     const requestOptions = {
-      method: 'POST',
+      method: 'GET',
       headers: authHeader(`${URL}/users/inRange?idStart=${idStart}&idEnd=${idEnd}`),
       
     }
@@ -20,7 +20,7 @@ export class UserService {
   };
   getUserById = async (id: number): Promise<UserWithIdType>=> {
     const requestOptions = {
-      method: 'POST',
+      method: 'GET',
       headers: authHeader(`${URL}/users/${id}`),
       
     }
