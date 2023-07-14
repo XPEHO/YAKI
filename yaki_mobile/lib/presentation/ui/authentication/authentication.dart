@@ -134,7 +134,7 @@ class _AuthenticationState extends ConsumerState<Authentication> {
       body: Column(
         children: [
           Expanded(
-            flex: 6,
+            flex: 5,
             child: Header(
               pictoIcon: 'assets/images/dots.svg',
               pictoPath: 'assets/images/authent.svg',
@@ -229,11 +229,22 @@ class _AuthenticationState extends ConsumerState<Authentication> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 20),
+                      padding: const EdgeInsets.only(top: 40),
                       child: Text(
-                        tr('forgotPassword'),
+                        tr('createAccountInvitFormule'),
                         style: const TextStyle(
+                          fontSize: 18,
                           color: Colors.black,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 15),
+                      child: Text(
+                        tr('createAccountLink'),
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.blue.shade900,
                         ),
                       ),
                     ),

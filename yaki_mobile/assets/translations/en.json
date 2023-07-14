@@ -40,5 +40,7 @@
   "headerHintProfile": "Your profile",
   "headerTitleProfile": "Profile",
   "inputLabelLastName": "Name",
-  "inputLabelFirstName": "First name"
+  "inputLabelFirstName": "First name",
+  "createAccountInvitFormule": "Don't have an account ?",
+  "createAccountLink": "sign up"
 }
