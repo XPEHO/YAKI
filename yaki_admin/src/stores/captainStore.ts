@@ -57,4 +57,3 @@ export const useCaptainStore = defineStore("captainStore", {
     },
   },
 });
-
