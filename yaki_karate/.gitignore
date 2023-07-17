@@ -1,0 +1,3 @@
+*.properties
+*.env
+*karate-config.js
