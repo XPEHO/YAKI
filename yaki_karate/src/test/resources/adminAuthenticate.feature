@@ -4,7 +4,7 @@ Feature: Register
     * url 'http://localhost:8080'
     * def schema = {id : '#number', userId : '#number', customerId : '#number' }
     * def DbUtils = Java.type('org.example.utils.DbUtils')
-    * def db = new DbUtils()
+    * def db = new DbUtils(databaseUrl,dbUser,dbPassword)
 
   Scenario: Register
     Given path '/login/register'
