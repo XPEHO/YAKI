@@ -36,7 +36,9 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
     String secretKey;
     //only for testing purposes, we need to give the email of the person
     @Value("${MAILJET_TEST_EMAIL}")
-    String testEmail;
+    String senderEmail;
+    @Value("${ADMIN_API_URL}")
+    String apiUrl;
 
     @Override
     public void onApplicationEvent(OnRegistrationCompleteEvent event) {
@@ -51,30 +53,29 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
 
     private void confirmRegistration(OnRegistrationCompleteEvent event) throws MailjetSocketTimeoutException, MailjetException {
         //need to add check if the email exist or not and check if the response is 200
+        //test that the email is not alredy used
         //maybe clean all of that because the request is huge
         UserModel user = event.getUser();
         String token = UUID.randomUUID().toString();
         service.createVerificationToken(user, token);
-
-        //String recipientAddress = user.getEmail();
         String confirmationUrl
                 =  "/login/registerConfirm?token=" + token;
-        String message = "Registration successful!";
+        String message = "Please follow the lonk below to verify your email address. If your email address is not verified in 24 hours, your account will be deleted.";
         MailjetClient client = new MailjetClient(apiKey,secretKey,new ClientOptions("v3.1"));
         // Create a Mailjet Request with the Emailv31 resource
         MailjetRequest request = new MailjetRequest(Emailv31.resource)
                 .property(Emailv31.MESSAGES, new JSONArray()
                         .put(new JSONObject()
                                 .put(Emailv31.Message.FROM, new JSONObject()
-                                        .put("Email", testEmail)
-                                        .put("Name", "Profotoce"))
+                                        .put("Email", senderEmail)
+                                        .put("Name", "Do not reply"))
                                 .put(Emailv31.Message.TO, new JSONArray()
                                         .put(new JSONObject()
-                                                .put("Email", testEmail)
-                                                .put("Name", "Profotoce")))
-                                .put(Emailv31.Message.SUBJECT, "Greetings from Mailjet.")
-                                .put(Emailv31.Message.TEXTPART, "My first Mailjet email")
-                                .put(Emailv31.Message.HTMLPART, "<html><body>" + message + "<br><a href=\"http://localhost:8080" + confirmationUrl + "\">Confirm Registration</a></body></html>")
+                                                .put("Email", user.getEmail())
+                                                .put("Name", "Do not reply")))
+                                .put(Emailv31.Message.SUBJECT, "Confirm your Yaki account")
+                                .put(Emailv31.Message.TEXTPART, "Yaki")
+                                .put(Emailv31.Message.HTMLPART, "<html><body>" + message + "<br><a href=" + apiUrl + confirmationUrl + ">Confirm Registration</a></body></html>")
                                 .put(Emailv31.Message.CUSTOMID, "AppGettingStartedTest")));
         MailjetResponse response = client.post(request);
 
