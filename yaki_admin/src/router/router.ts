@@ -1,8 +1,9 @@
-import {createRouter, createWebHistory} from "vue-router";
-import { useAuthStore } from '@/stores/authStore';
+import { createRouter, createWebHistory } from "vue-router";
+import { useAuthStore } from "@/stores/authStore";
 import PageLogin from "@/features/login/pages/PageLogin.vue";
 import LayoutCaptain from "@/features/captain/layouts/LayoutCaptain.vue";
 import LayoutInvitation from "@/features/invitation/layouts/LayoutInvitation.vue";
+import LayoutCustomer from "@/features/customer/layouts/LayoutCustomer.vue";
 
 import PageApplication from "@/features/PageApplication.vue";
 
@@ -14,13 +15,13 @@ const router = createRouter({
       path: "/",
       name: "Login",
       component: PageLogin,
-      meta: {transition: "slide-left"},
+      meta: { transition: "slide-left" },
     },
     {
       path: "/administration",
       name: "Administration",
       component: PageApplication,
-      meta: {transition: "slide-right"},
+      meta: { transition: "slide-right" },
       children: [
         {
           path: "captain",
@@ -30,6 +31,10 @@ const router = createRouter({
           path: "invitation",
           component: LayoutInvitation,
         },
+        {
+          path: " customer",
+          component: LayoutCustomer,
+        },
       ],
     },
   ],
@@ -37,13 +42,13 @@ const router = createRouter({
 
 router.beforeEach(async (to) => {
   // redirect to login page if not logged in and trying to access a restricted page
-  const publicPages = ['/'];
+  const publicPages = ["/"];
   const authRequired = !publicPages.includes(to.path);
   const auth = useAuthStore();
 
   if (authRequired && !auth.user) {
-      auth.returnedUrl = to.fullPath;
-      return '/';
+    auth.returnedUrl = to.fullPath;
+    return "/";
   }
 });
 

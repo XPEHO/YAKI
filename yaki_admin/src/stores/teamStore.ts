@@ -1,12 +1,12 @@
-import {defineStore} from "pinia";
-import {teamMateService} from "@/services/teamMate.service";
-import {TeamMateType} from "@/models/teamMate.type";
-import {teamService} from "@/services/team.service";
-import {TeamType} from "@/models/team.type";
+import { defineStore } from "pinia";
+import { teamMateService } from "@/services/teamMate.service";
+import { TeamMateType } from "@/models/teamMate.type";
+import { teamService } from "@/services/team.service";
+import { TeamType } from "@/models/team.type";
 
 export const useTeamStore = defineStore("teamStore", {
   state: () => ({
-    captainsId: [343] as number[],
+    captainsId: [] as number[],
     teamId: 0 as number,
     teamName: "" as string,
     teammate: [] as TeamMateType[],
@@ -37,16 +37,16 @@ export const useTeamStore = defineStore("teamStore", {
     setTeamName(name: string) {
       this.teamName = name;
     },
-    setCaptainsId(captainsId: number[]){
+    setCaptainsId(captainsId: number[]) {
       this.captainsId = captainsId;
     },
 
     // get all teams of a captain
     async getTeamsFromCaptain(captainsId: number[]) {
-      this.teamList = []
-      for (let captainId of captainsId){
-        let a =  await teamService.getAllTeamsWithinCaptain(captainId);
-        this.teamList = this.teamList.concat(a)
+      this.teamList = [];
+      for (const captainId of captainsId) {
+        const a = await teamService.getAllTeamsWithinCaptain(captainId);
+        this.teamList = this.teamList.concat(a);
       }
     },
 
@@ -58,7 +58,7 @@ export const useTeamStore = defineStore("teamStore", {
 
     // add a selected user to a team
     async addUserToTeam(userId: number): Promise<void> {
-      const data = {teamId: this.teamId, userId: userId};
+      const data = { teamId: this.teamId, userId: userId };
       await teamMateService.createTeammate(data);
     },
 
@@ -77,7 +77,11 @@ export const useTeamStore = defineStore("teamStore", {
     },
 
     // update the selected team (can change name or captainID)
-    async updateTeam(teamID: number, cptId: number, teamName: string): Promise<void> {
+    async updateTeam(
+      teamID: number,
+      cptId: number,
+      teamName: string
+    ): Promise<void> {
       await teamService.updateTeam(teamID, cptId, teamName);
     },
 
