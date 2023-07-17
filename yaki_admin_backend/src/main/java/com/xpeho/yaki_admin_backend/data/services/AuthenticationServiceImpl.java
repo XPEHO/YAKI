@@ -66,19 +66,19 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public boolean confirmRegister(String token) {
+    public String confirmRegister(String token) {
         VerificationTokenModel verificationToken = verificationTokenService.getVerificationToken(token);
         if(verificationToken == null){
-            return false;
+            return "badUser";
         }
         UserModel user = verificationToken.getUser();
         Calendar cal = Calendar.getInstance();
         //if the token has expired
         if ((verificationToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
-            return false;
+            return "try to register again, your token has expired";
         }
         user.setEnabled(true);
         repository.save(user);
-        return true;
+        return "Your account has been verified, you can now access to your account on the mobile application with your credential";
     }
 }

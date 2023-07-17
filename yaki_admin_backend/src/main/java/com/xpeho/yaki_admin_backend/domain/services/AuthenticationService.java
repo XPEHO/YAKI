@@ -10,5 +10,5 @@ public interface AuthenticationService {
 
     AuthenticationResponseEntity authenticate(AuthenticationRequestEntity request);
 
-    boolean confirmRegister(String token);
+    String confirmRegister(String token);
 }
