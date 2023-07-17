@@ -51,6 +51,17 @@ export class CaptainService {
 
     return data;
   };
+
+  //delete a captain
+  deleteCaptain = async (captainId: number): Promise<void> => {
+    const requestOptions = {
+      method: "DELETE",
+      headers: authHeader(`${URL}/captains/delete/${captainId}`),
+    };
+    await fetch(`${URL}/captains/delete/${captainId}`, requestOptions)
+      .then(handleResponse)
+      .catch((err) => console.warn(err));
+  } 
 }
 
 export const captainService = Object.freeze(new CaptainService());
