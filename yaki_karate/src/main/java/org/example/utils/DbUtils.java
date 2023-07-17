@@ -25,15 +25,5 @@ public class DbUtils {
     public Object readValue(String query) {
         return jdbc.queryForObject(query, Object.class);
     }
-    /*public String readValue(String query) {
-        return url + " " + username + " " + password;
-    }*/
-    public Map<String, Object> readRow(String query) {
-        return jdbc.queryForMap(query);
-    }
-
-    public List<Map<String, Object>> readRows(String query) {
-        return jdbc.queryForList(query);
-    }
 
 }
