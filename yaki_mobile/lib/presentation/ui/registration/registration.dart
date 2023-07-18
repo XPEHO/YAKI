@@ -23,7 +23,7 @@ class _RegistrationState extends ConsumerState<Registration> {
 
   void formButtonValidation() {
     if (_formKey.currentState!.validate()) {
-      debugPrint("c'est validé, outside function");
+      debugPrint("${firstNameController.text}, ${lastNameController.text}, ${emailController.text}, ${passwordController.text}");
     }
   }
 
@@ -36,27 +36,31 @@ class _RegistrationState extends ConsumerState<Registration> {
 
   String? emailValidator(String? value) {
     final emailRegex = RegExp(r"^[a-zA-Z0-9-_.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
-
     if (value != null && !emailRegex.hasMatch(value)) {
       return "Le format de l'email n'est pas correct";
     }
     return null;
   }
 
-  //&&
-
   String? passwordValidator(String? value) {
     final passwordRegex = RegExp(
       r'^(?=.*?[A-Z])(?=.*[a-z])(?=.*?[0-9])(?=.*?[$£ù^&§+=:;.?,()é!@#\><*~]).{10}',
     );
-
     if (!passwordRegex.hasMatch(value!)) {
       return "Password minimum, 10 caractères : \n - Une majuscule et minuscule \n - Un chiffre \n - Un caractère spécial";
     }
     return null;
   }
 
-  String? passwordConfirmation(String? value) {}
+  String? passwordConfirmation(String? value) {
+    if (value != null && value.isEmpty) {
+      return "Veuillez confirmer le passsword";
+    }
+    if (passwordController.text != value) {
+      return "Les mots de passe ne sont pas identique";
+    }
+    return null;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,6 +86,7 @@ class _RegistrationState extends ConsumerState<Registration> {
                 Form(
                   key: _formKey,
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       InputRegistration(
                         controller: firstNameController,
@@ -106,7 +111,7 @@ class _RegistrationState extends ConsumerState<Registration> {
                       InputRegistration(
                         controller: passwordConfirmController,
                         label: "Confirmer votre password :",
-                        validatorFunction: passwordValidator,
+                        validatorFunction: passwordConfirmation,
                       ),
                     ],
                   ),

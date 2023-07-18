@@ -20,7 +20,7 @@ class _InputRegistrationState extends State<InputRegistration> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 0),
+      padding: const EdgeInsets.symmetric(vertical: 15),
       child: TextFormField(
         controller: widget.controller,
         validator: widget.validatorFunction,
