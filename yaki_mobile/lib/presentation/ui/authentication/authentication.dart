@@ -52,83 +52,86 @@ class _AuthenticationState extends ConsumerState<Authentication> {
     super.initState();
   }
 
+  /// on 'Sign in' button press/tap :
+  /// * delete the previously saved token in the sharedPreferences
+  /// * if the rememberMe checkbox value is true, store the login details
+  /// * POST to the API the login information's, by invoking the loginRepositoryProvider.userAuthentication() method,
+  /// then retrieve the boolean to know if the logged user is a captain.
+  ///
+  /// Depending of the newly saved token and if the user is a captain or not :
+  /// * route to the captain page
+  ///
+  /// Or
+  /// * route to the declaration page
+  /// fetch the latest declaration and retrieve the status,
+  ///
+  /// if not null
+  /// route to the status page directly
+  ///
+  /// if null
+  /// route to the declaration page
+  void onPressAuthent({
+    required WidgetRef ref,
+    required String login,
+    required String password,
+    required Function goToDeclarationPage,
+    required Function goToStatusPage,
+    required Function goToHalfdayStatusPage,
+    required Function goToCaptain,
+  }) async {
+    await SharedPref.deleteToken();
+    // if the rememberMe checkbox value is true, store the login details
+    // in the shared preferences
+    if (await SharedPref.getRememberMe()) {
+      await SharedPref.setLoginDetails(login, password);
+    }
+    final bool authenticationResult = await ref
+        .read(loginRepositoryProvider)
+        .userAuthentication(login, password);
+    if (authenticationResult && await SharedPref.isTokenPresent()) {
+      final bool isCaptain = ref.read(loginRepositoryProvider).isCaptain();
+      if (isCaptain) {
+        goToCaptain();
+      } else {
+        ref.read(teamProvider.notifier).fetchTeams();
+        final declarationStatus =
+            await ref.read(declarationProvider.notifier).getDeclaration();
+        if (declarationStatus.length > 1) {
+          ref.read(halfdayStatusPageProvider.notifier).getHalfdayDeclaration();
+          goToHalfdayStatusPage();
+        } else if (declarationStatus.length == 1 &&
+            declarationStatus != emptyDeclarationStatus) {
+          ref.read(statusPageProvider.notifier).getSelectedStatus();
+          goToStatusPage();
+        } else {
+          goToDeclarationPage();
+        }
+      }
+    } else {
+      showSnackBar();
+    }
+  }
+
+  // Show a snackbar at the bottom of the screen to notice the user that
+  // the login information he put are wrong
+  showSnackBar() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(tr('authenticationFailed')),
+        duration: const Duration(seconds: 3),
+      ),
+    );
+  }
+
+  void onPressSignUp({required Function goToRegistrationPage}) {
+    debugPrint("sign up");
+    goToRegistrationPage();
+  }
+
   @override
   Widget build(BuildContext context) {
     // Size of the device
     var size = MediaQuery.of(context).size;
-
-    // Show a snackbar at the bottom of the screen to notice the user that
-    // the login information he put are wrong
-    showSnackBar() {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(tr('authenticationFailed')),
-          duration: const Duration(seconds: 3),
-        ),
-      );
-    }
-
-    /// on 'Sign in' button press/tap :
-    /// * delete the previously saved token in the sharedPreferences
-    /// * if the rememberMe checkbox value is true, store the login details
-    /// * POST to the API the login information's, by invoking the loginRepositoryProvider.userAuthentication() method,
-    /// then retrieve the boolean to know if the logged user is a captain.
-    ///
-    /// Depending of the newly saved token and if the user is a captain or not :
-    /// * route to the captain page
-    ///
-    /// Or
-    /// * route to the declaration page
-    /// fetch the latest declaration and retrieve the status,
-    ///
-    /// if not null
-    /// route to the status page directly
-    ///
-    /// if null
-    /// route to the declaration page
-    void onPressAuthent({
-      required WidgetRef ref,
-      required String login,
-      required String password,
-      required Function goToDeclarationPage,
-      required Function goToStatusPage,
-      required Function goToHalfdayStatusPage,
-      required Function goToCaptain,
-    }) async {
-      await SharedPref.deleteToken();
-      // if the rememberMe checkbox value is true, store the login details
-      // in the shared preferences
-      if (await SharedPref.getRememberMe()) {
-        await SharedPref.setLoginDetails(login, password);
-      }
-      final bool authenticationResult = await ref
-          .read(loginRepositoryProvider)
-          .userAuthentication(login, password);
-      if (authenticationResult && await SharedPref.isTokenPresent()) {
-        final bool isCaptain = ref.read(loginRepositoryProvider).isCaptain();
-        if (isCaptain) {
-          goToCaptain();
-        } else {
-          ref.read(teamProvider.notifier).fetchTeams();
-          final declarationStatus =
-              await ref.read(declarationProvider.notifier).getDeclaration();
-          if (declarationStatus.length > 1) {
-            ref
-                .read(halfdayStatusPageProvider.notifier)
-                .getHalfdayDeclaration();
-            goToHalfdayStatusPage();
-          } else if (declarationStatus.length == 1 &&
-              declarationStatus != emptyDeclarationStatus) {
-            ref.read(statusPageProvider.notifier).getSelectedStatus();
-            goToStatusPage();
-          } else {
-            goToDeclarationPage();
-          }
-        }
-      } else {
-        showSnackBar();
-      }
-    }
 
     return Scaffold(
       body: Column(
@@ -239,12 +242,24 @@ class _AuthenticationState extends ConsumerState<Authentication> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 15),
-                      child: Text(
-                        tr('createAccountLink'),
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.blue.shade900,
+                      padding: const EdgeInsets.only(top: 10),
+                      child: InkWell(
+                        onTap: () => onPressSignUp(
+                          goToRegistrationPage: () =>
+                              context.push('/registration'),
+                        ),
+                        borderRadius: BorderRadius.circular(5),
+                        highlightColor: const Color.fromARGB(103, 243, 194, 18),
+                        splashColor: const Color.fromARGB(125, 46, 46, 46),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Text(
+                            tr('createAccountLink'),
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.blue.shade900,
+                            ),
+                          ),
                         ),
                       ),
                     ),

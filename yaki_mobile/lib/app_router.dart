@@ -8,6 +8,7 @@ import 'package:yaki/presentation/ui/declaration/declaration.dart';
 import 'package:yaki/presentation/ui/declaration/afternoon_declaration.dart';
 import 'package:yaki/presentation/ui/declaration/morning_declaration.dart';
 import 'package:yaki/presentation/ui/profile/profile.dart';
+import 'package:yaki/presentation/ui/registration/registration.dart';
 import 'package:yaki/presentation/ui/status/status.dart';
 import 'package:yaki/presentation/ui/status/halfday_status.dart';
 
@@ -113,6 +114,10 @@ final goRouterProvider = Provider<GoRouter>(
               },
             )
           ],
+        ),
+        GoRoute(
+          path: '/registration',
+          builder: (context, state) => const Registration(),
         ),
       ],
     );
