@@ -19,17 +19,24 @@ class _RegistrationState extends ConsumerState<Registration> {
   final passwordController = TextEditingController();
   final passwordConfirmController = TextEditingController();
 
+  //form key
   final _formKey = GlobalKey<FormState>();
 
+  // when press register button
   void formButtonValidation() {
     if (_formKey.currentState!.validate()) {
-      debugPrint("${firstNameController.text}, ${lastNameController.text}, ${emailController.text}, ${passwordController.text}");
+      debugPrint(
+          "${firstNameController.text}, ${lastNameController.text}, ${emailController.text}, ${passwordController.text}");
     }
   }
 
   String? nameValidator(String? value) {
+    final nameRegex = RegExp(r"^[A-Za-z ]+$");
     if (value == null || value.isEmpty) {
       return "Ce champ doit être renseigné";
+    }
+    if (!nameRegex.hasMatch(value)) {
+      return "Ce champ ne doit contenir que des lettres";
     }
     return null;
   }
