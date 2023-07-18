@@ -109,6 +109,7 @@ CREATE TABLE IF NOT EXISTS public.user
 TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.user
+    ADD COLUMN IF NOT EXISTS user_enabled boolean DEFAULT true,
     OWNER to yaki;
 
 
