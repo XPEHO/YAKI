@@ -105,7 +105,7 @@ dev_dependencies:
   # Retrofit dependency
   retrofit_generator: ^6.0.0+1
   build_runner: ">=2.3.0 <4.0.0"
-  json_serializable: ^6.7.0
+  json_serializable: ^6.7.1
 
   # Mockito 5.0.0 supports Dart's new null safety language feature in Dart 2.12, primarily
   # with code generation.
