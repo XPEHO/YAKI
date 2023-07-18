@@ -56,9 +56,6 @@ public class AuthenticationServiceImplTest {
         UserModel savedUser = new UserModel("Vache", "Quirit", "vachequirit@example.com", "vachequirit", "encodedPassword");
         when(repository.save(any(UserModel.class))).thenReturn(savedUser);
 
-        // Mock jwtService.generateToken
-        String jwtToken = "mockedJwtToken";
-        when(jwtService.generateToken(any(UserModel.class))).thenReturn(jwtToken);
         when(passwordEncoder.encode("password")).thenReturn("encodedPassword");
         // Perform the register operation
         RegisterResponseEntity response = authenticationServiceImpl.register(request);
