@@ -41,6 +41,7 @@ We will use JWT authorization token in the Authorization header.
   - createOwner => add a new owner
   - createTeam => add a new team
   - createTeammate => add a new teamMate
+  - createUser => add a new user
 
 - GetMapping("{id}"):
 
