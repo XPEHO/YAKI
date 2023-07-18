@@ -45,7 +45,6 @@ public class OwnerServiceImpl implements OwnerService {
             OwnerModel ownerModel = ownerModelOptional.get();
             return new OwnerEntity(ownerModel.getId(), ownerModel.getUserId());
         } else throw new EntityNotFoundException("Entity Owner with id " + id + " has not been found");
-
     }
 
     @Override
