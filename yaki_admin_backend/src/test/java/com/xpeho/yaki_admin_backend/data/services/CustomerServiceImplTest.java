@@ -128,11 +128,10 @@ class CustomerServiceImplTest {
     @Test
     void addCustomersRight() {
         //when
-        List<UserModel> users = List.of(
-                new UserModel());
+        List<Integer> userId = List.of(Integer.valueOf(1));
         given(customerJpaRepository.getReferenceById(1)).willReturn(customer1);
         given(customerJpaRepository.save(any(CustomerModel.class))).willReturn(customer1);
-        CustomerEntity customersReturned = customerService.addCustomerRight(users, 1);
+        CustomerEntity customersReturned = customerService.addCustomerRight(userId, 1);
         assertEquals(customersReturned, customerE1);
     }
 

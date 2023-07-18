@@ -39,8 +39,10 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public CustomerEntity addCustomerRight(List<UserModel> users, int customerId) {
+    public CustomerEntity addCustomerRight(List<Integer> userId, int customerId) {
         CustomerModel model = customerJpaRepository.getReferenceById(customerId);
+        List<UserModel> users = customerJpaRepository.getUsersById(userId);
+
         model.addUsers(users);
         CustomerModel customerModel = customerJpaRepository.save(model);
         return new CustomerEntity(customerModel.getId(), customerModel.getName(), customerModel.getOwnerId(), customerModel.getLocationId());

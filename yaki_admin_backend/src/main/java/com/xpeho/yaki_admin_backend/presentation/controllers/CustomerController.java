@@ -31,16 +31,22 @@ public class CustomerController {
         return customerService.createCustomer(customerEntity);
     }
 
+    @PostMapping("/{customerId}/users")
+    public CustomerEntity addCustomerRight(
+            @RequestBody List<Integer> userId,
+            @PathVariable int customerId
+    ) {
+        return customerService.addCustomerRight(userId, customerId);
+    }
+
 
     @GetMapping("{id}")
     public CustomerEntity getCustomer(@PathVariable int id) {
-
         return customerService.getCustomer(id);
     }
 
     @DeleteMapping("{id}")
     public CustomerEntity deleteCustomer(@PathVariable int id) {
-
         return customerService.deleteById(id);
     }
 
@@ -48,4 +54,6 @@ public class CustomerController {
     public CustomerEntity update(@RequestBody CustomerEntity entity, @PathVariable int id) {
         return customerService.saveOrUpdate(entity, id);
     }
+
+
 }

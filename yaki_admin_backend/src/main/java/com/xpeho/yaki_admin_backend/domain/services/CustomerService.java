@@ -1,6 +1,5 @@
 package com.xpeho.yaki_admin_backend.domain.services;
 
-import com.xpeho.yaki_admin_backend.data.models.UserModel;
 import com.xpeho.yaki_admin_backend.domain.entities.CustomerEntity;
 
 import java.util.List;
@@ -11,7 +10,7 @@ public interface CustomerService {
 
     CustomerEntity createCustomer(CustomerEntity customerEntity);
 
-    CustomerEntity addCustomerRight(List<UserModel> users, int customerId);
+    CustomerEntity addCustomerRight(List<Integer> userId, int customerId);
 
     CustomerEntity getCustomer(int id);
 
