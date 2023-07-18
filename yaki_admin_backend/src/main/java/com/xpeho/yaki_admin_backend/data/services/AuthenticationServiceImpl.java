@@ -7,7 +7,9 @@ import com.xpeho.yaki_admin_backend.data.sources.UserJpaRepository;
 import com.xpeho.yaki_admin_backend.domain.entities.AuthenticationRequestEntity;
 import com.xpeho.yaki_admin_backend.domain.entities.AuthenticationResponseEntity;
 import com.xpeho.yaki_admin_backend.domain.entities.RegisterRequestEntity;
+import com.xpeho.yaki_admin_backend.domain.entities.RegisterResponseEntity;
 import com.xpeho.yaki_admin_backend.domain.services.AuthenticationService;
+import com.xpeho.yaki_admin_backend.error_handling.EmailAlreadyExistsException;
 import com.xpeho.yaki_admin_backend.events.OnRegistrationCompleteEvent;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -37,7 +39,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public AuthenticationResponseEntity register(RegisterRequestEntity request) {
+    public RegisterResponseEntity register(RegisterRequestEntity request) {
+        if (repository.existsByEmail(request.email())) {
+            throw new EmailAlreadyExistsException(
+                    "an account already exist with this email");
+        }
         UserModel user = new UserModel(
                 request.lastname(),
                 request.firstname(),
@@ -47,8 +53,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         repository.save(user);
         //not sure I need it does it is used to be redirected without logging in ?
         eventPublisher.publishEvent(new OnRegistrationCompleteEvent(user));
-        var jwtToken = jwtService.generateToken(user);
-        return new AuthenticationResponseEntity(jwtToken, user.getUserId());
+        return new RegisterResponseEntity(user.getUserId());
     }
 
     @Override

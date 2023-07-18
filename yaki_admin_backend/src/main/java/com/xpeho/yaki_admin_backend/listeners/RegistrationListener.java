@@ -27,15 +27,12 @@ import java.util.UUID;
 public class RegistrationListener implements ApplicationListener<OnRegistrationCompleteEvent> {
     @Autowired
     private VerificationTokenServiceImpl service;
-
-    @Autowired
-    private MessageSource messages;
     @Value("${MAILJET_API_KEY}")
     String apiKey;
     @Value("${MAILJET_SECRET_KEY}")
     String secretKey;
     //only for testing purposes, we need to give the email of the person
-    @Value("${MAILJET_TEST_EMAIL}")
+    @Value("${MAILJET_SENDER_EMAIL}")
     String senderEmail;
     @Value("${ADMIN_API_URL}")
     String apiUrl;

@@ -6,6 +6,7 @@ import com.xpeho.yaki_admin_backend.data.sources.UserJpaRepository;
 import com.xpeho.yaki_admin_backend.domain.entities.AuthenticationRequestEntity;
 import com.xpeho.yaki_admin_backend.domain.entities.AuthenticationResponseEntity;
 import com.xpeho.yaki_admin_backend.domain.entities.RegisterRequestEntity;
+import com.xpeho.yaki_admin_backend.domain.entities.RegisterResponseEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -60,10 +61,9 @@ public class AuthenticationServiceImplTest {
         when(jwtService.generateToken(any(UserModel.class))).thenReturn(jwtToken);
         when(passwordEncoder.encode("password")).thenReturn("encodedPassword");
         // Perform the register operation
-        AuthenticationResponseEntity response = authenticationServiceImpl.register(request);
+        RegisterResponseEntity response = authenticationServiceImpl.register(request);
 
         // Verify the response contains the expected values
-        assertEquals(jwtToken, response.token());
         assertEquals(savedUser.getUserId(), response.id());
     }
 
