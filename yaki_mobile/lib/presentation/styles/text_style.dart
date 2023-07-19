@@ -32,6 +32,14 @@ TextStyle registrationBtnTextStyle() {
   );
 }
 
+TextStyle registrationCancelTextStyle() {
+  return const TextStyle(
+    color: Color.fromARGB(255, 231, 229, 229),
+    fontSize: 25,
+    fontWeight: FontWeight.w600,
+  );
+}
+
 TextStyle registratonSnackTextStyle({required Color textColor}) {
   return TextStyle(
     fontSize: 15,

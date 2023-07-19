@@ -188,6 +188,16 @@ class _RegistrationState extends ConsumerState<Registration> {
                     btnTextStyle: registrationBtnTextStyle(),
                   ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 40),
+                  child: ConfirmationElevatedButton(
+                    text: tr('registrationCancelButton'),
+                    onPressed: () => context.go("/"),
+                    foregroundColor: const Color.fromARGB(212, 183, 146, 14),
+                    backgroundColor: const Color.fromARGB(255, 107, 97, 96),
+                    btnTextStyle: registrationCancelTextStyle(),
+                  ),
+                ),
               ],
             ),
           ),
