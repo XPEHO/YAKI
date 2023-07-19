@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yaki/presentation/state/providers/user_registration_provider.dart';
+import 'package:yaki/presentation/styles/color.dart';
 import 'package:yaki/presentation/styles/text_style.dart';
 import 'package:yaki/presentation/ui/registration/view/registration_snackbar.dart';
 import 'package:yaki/presentation/ui/shared/views/confirmation_elevated_button.dart';
@@ -130,7 +131,7 @@ class _RegistrationState extends ConsumerState<Registration> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 225, 194, 80),
+      backgroundColor: AppColors.yakiPrimaryColor,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(

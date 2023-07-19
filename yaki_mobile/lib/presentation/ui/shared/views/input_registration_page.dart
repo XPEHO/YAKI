@@ -37,7 +37,7 @@ class _InputRegistrationState extends State<InputRegistration> {
           ),
           border: UnderlineInputBorder(
             borderRadius: BorderRadius.circular(8),
-            borderSide: const BorderSide(width: 0),
+            borderSide: const BorderSide(width: 2),
           ),
           focusedBorder: const UnderlineInputBorder(
             borderSide: BorderSide(
