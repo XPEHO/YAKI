@@ -23,7 +23,7 @@ class ConfirmationElevatedButton extends StatelessWidget {
         foregroundColor: foregroundColor,
         backgroundColor: backgroundColor,
         elevation: 5,
-        minimumSize: Size(200, 45),
+        minimumSize: const Size(200, 45),
       ),
       onPressed: () => onPressed(),
       child: Text(
