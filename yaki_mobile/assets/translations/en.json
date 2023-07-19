@@ -58,5 +58,6 @@
   "registrationInputPassConfirmError2": "Password aren't identical",
   "registrationButton": "register",
   "registrationSnackSuccess": "Account creation sucess. Please check yours emails",
-  "registrationSnackError": "Oups, something went wrong, try again later"
+  "registrationSnackError": "Oups, something went wrong, try again later",
+  "registrationCancelButton": "Cancel"
 }

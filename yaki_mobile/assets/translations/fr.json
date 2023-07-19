@@ -58,5 +58,6 @@
   "registrationInputPassConfirmError": "Les mots de passe ne sont pas identiques",
   "registrationButton": "Créer",
   "registrationSnackSuccess": "Création de compte réussie. Veuillez vérifier vos emails",
-  "registrationSnackError": "Erreur lors de l'inscription, Veuillez réessayer"
+  "registrationSnackError": "Erreur lors de l'inscription, Veuillez réessayer",
+  "registrationCancelButton": "Annuler"
 }
