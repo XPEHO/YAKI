@@ -169,12 +169,6 @@ class Logo extends StatelessWidget {
                           blurRadius: 15.0,
                           spreadRadius: 2.8,
                         ), //BoxShadow
-                        BoxShadow(
-                          color: Colors.white,
-                          offset: Offset(0.0, 0.0),
-                          blurRadius: 0.0,
-                          spreadRadius: 0.0,
-                        ), //BoxShadow
                       ],
                     ),
                     width: 72,
