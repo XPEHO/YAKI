@@ -155,7 +155,7 @@ class Logo extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: const Color.fromARGB(255, 231, 230, 227),
                       border: Border.all(
-                        color: Color.fromARGB(255, 228, 146, 31),
+                        color: const Color.fromARGB(255, 228, 146, 31),
                         width: 4.0,
                       ),
                       shape: BoxShape.circle,
