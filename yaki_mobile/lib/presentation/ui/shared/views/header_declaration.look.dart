@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:look/look.dart';
+import 'package:yaki/presentation/styles/color.dart';
 import 'package:yaki/presentation/styles/header_text_style.dart';
 import 'package:yaki/presentation/ui/shared/views/avatar_icon.dart';
 import 'package:yaki/presentation/ui/shared/views/header_declaration.dart';

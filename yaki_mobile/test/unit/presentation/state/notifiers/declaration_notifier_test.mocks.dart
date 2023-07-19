@@ -188,6 +188,14 @@ class MockLoginRepository extends _i1.Mock implements _i7.LoginRepository {
         returnValue: _i5.Future<bool>.value(false),
       ) as _i5.Future<bool>);
   @override
+  bool isCaptain() => (super.noSuchMethod(
+        Invocation.method(
+          #isCaptain,
+          [],
+        ),
+        returnValue: false,
+      ) as bool);
+  @override
   void setSharedPreference(_i9.User? user) => super.noSuchMethod(
         Invocation.method(
           #setSharedPreference,

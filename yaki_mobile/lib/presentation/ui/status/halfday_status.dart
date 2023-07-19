@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yaki/presentation/state/providers/halfday_status_provider.dart';
 import 'package:yaki/presentation/styles/color.dart';
-import 'package:yaki/presentation/styles/header_text_style.dart';
+import 'package:yaki/presentation/styles/text_style.dart';
 import 'package:yaki/presentation/ui/shared/views/avatar_icon.dart';
 import 'package:yaki/presentation/ui/shared/views/circle_avatar_svg.dart';
 
