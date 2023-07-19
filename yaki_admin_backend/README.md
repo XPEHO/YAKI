@@ -15,7 +15,7 @@ This project is the backend part of the YAKI admin application.
 
 No GAFAM will be used for authentification
 We will implement a home made authentification process
-We will use JWT authorization token in the Authorization header.
+We are using JWT authorization token in the Authorization header.
 
 ## Data format
 
@@ -41,6 +41,7 @@ We will use JWT authorization token in the Authorization header.
   - createOwner => add a new owner
   - createTeam => add a new team
   - createTeammate => add a new teamMate
+  - createUser => add a new user
 
 - GetMapping("{id}"):
 

@@ -16,4 +16,9 @@ public class CustomExceptionHandler {
     public String handleEntityNotFoundException(EntityNotFoundException ex) {
         return ex.getMessage();
     }
+    @ExceptionHandler(EmailAlreadyExistsException.class)
+    @ResponseStatus(HttpStatus.ALREADY_REPORTED)
+    public String handleEmailAlreadyExistsException(EmailAlreadyExistsException ex){
+        return ex.getMessage();
+    }
 }

@@ -12,6 +12,10 @@ Feature: Register
     When method post
     Then status 200
 
-  Scenario: Confirm That the connection to database is correct
-    * def token = db.readValue('SELECT user_id FROM public.user WHERE user_id = 1')
-    Then match token == 1
+  Scenario: Confirm Register by simulating the click on the email
+    * def token = db.readValue('SELECT token FROM public.verification_token WHERE verification_token_user_id = 1')
+    * print token
+    Given path '/login/registerConfirm'
+    And param token = token
+    When method GET
+    Then status 200
