@@ -124,7 +124,6 @@ class _AuthenticationState extends ConsumerState<Authentication> {
   }
 
   void onPressSignUp({required Function goToRegistrationPage}) {
-    debugPrint("sign up");
     goToRegistrationPage();
   }
 

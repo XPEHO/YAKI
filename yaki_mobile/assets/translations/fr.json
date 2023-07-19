@@ -42,5 +42,21 @@
   "inputLabelLastName": "Nom",
   "inputLabelFirstName": "Prénom",
   "createAccountInvitFormule": "Pas encore de compte ?",
-  "createAccountLink": "Vous enregistrer"
+  "createAccountLink": "Vous enregistrer",
+  "registrationPageTitle": "Création de compte",
+  "registrationInputFirstnameLabel": "Ajouter votre nom :",
+  "registrationInputLastnameLabel": "Ajouter your prénom :",
+  "registrationInputNameError1": "Ce champ doit être renseigné",
+  "registrationInputNameError2": "Ce champ ne doit contenir que des lettres",
+  "registrationInputEmailLabel": "Ajouter votre email :",
+  "registrationInputEmailError": "Le format de l'email est incorrect",
+  "registrationInputPasswordLabel": "Créer votre mot de passe :",
+  "registrationInputPasswordError1": "Veuillez renseigner un mot de passe",
+  "registrationInputPasswordError": "- Minimum : 10 caractères : \n - Une majuscule et minuscule \n - Un chiffre \n - Un caractère spécial",
+  "registrationInputPassConfirmLabel": "Confirmer votre mot de passe :",
+  "registrationInputPassConfirmError1": "Veuillez confirmer le mot de passe",
+  "registrationInputPassConfirmError": "Les mots de passe ne sont pas identique",
+  "registrationButton": "Créer",
+  "registrationSnackSuccess": "Création de compte réussie. Veuillez vérifier vos emails",
+  "registrationSnackError": "Erreur lors de l'inscription, Veuillez réessayer"
 }

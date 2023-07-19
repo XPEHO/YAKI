@@ -27,5 +27,7 @@ final loginApiProvider = Provider(
 ///
 /// As LoginRepository use instance of LoginApi to access his methods.
 final loginRepositoryProvider = Provider<LoginRepository>(
-  (ref) => LoginRepository(ref.read(loginApiProvider)),
+  (ref) => LoginRepository(
+    ref.read(loginApiProvider),
+  ),
 );

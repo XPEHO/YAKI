@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'register_repository.dart';
+part of 'user_register_repository.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,8 +8,8 @@ part of 'register_repository.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
-class _RegisterRepository implements RegisterRepository {
-  _RegisterRepository(
+class _UserRegisterRepository implements UserRegisterRepository {
+  _UserRegisterRepository(
     this._dio, {
     this.baseUrl,
   });
@@ -19,7 +19,7 @@ class _RegisterRepository implements RegisterRepository {
   String? baseUrl;
 
   @override
-  Future<HttpResponse<dynamic>> postLogin(
+  Future<HttpResponse<dynamic>> userResgistration(
       UserRegistrationModel userToRegister) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};

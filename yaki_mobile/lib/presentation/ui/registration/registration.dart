@@ -1,9 +1,12 @@
-//import 'package:easy_localization/easy_localization.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:yaki/presentation/state/providers/user_registration_provider.dart';
+import 'package:yaki/presentation/styles/text_style.dart';
+import 'package:yaki/presentation/ui/registration/view/registration_snackbar.dart';
+import 'package:yaki/presentation/ui/shared/views/confirmation_elevated_button.dart';
 import 'package:yaki/presentation/ui/shared/views/input_registration_page.dart';
-// import 'package:flutter_riverpod/flutter_riverpod.dart';
-// import 'package:go_router/go_router.dart';
 
 class Registration extends ConsumerStatefulWidget {
   const Registration({super.key});
@@ -19,32 +22,83 @@ class _RegistrationState extends ConsumerState<Registration> {
   final passwordController = TextEditingController();
   final passwordConfirmController = TextEditingController();
 
-  //form key
+  //form state
   final _formKey = GlobalKey<FormState>();
 
+  // function calling the snackbar
+  showSnackBar({
+    required String content,
+    required TextStyle textStyle,
+    required Function barAction,
+  }) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      registrationSnack(
+        content: content,
+        textStyle: textStyle,
+        barAction: barAction,
+      ),
+    );
+  }
+
   // when press register button
-  void formButtonValidation() {
+  Future<void> formButtonValidation() async {
     if (_formKey.currentState!.validate()) {
-      debugPrint(
-          "${firstNameController.text}, ${lastNameController.text}, ${emailController.text}, ${passwordController.text}");
+      await ref.read(userRegisterServiceProvider).registerUser(
+            firstname: firstNameController.text,
+            lastname: lastNameController.text,
+            email: emailController.text,
+            password: passwordConfirmController.text,
+          );
+
+      // after registration response get "isRegistered" value, being the object send from mobile API
+      // confirming the registration was a success (no need others data)
+      final bool registrationResult =
+          ref.watch(userRegisterServiceProvider).userRegistered.isRegistered;
+
+      // depending of true of false (will be changed to true only if code200) change snachbar message and message color
+      if (registrationResult) {
+        showSnackBar(
+          content: tr("registrationSnackSuccess"),
+          textStyle: registratonSnackTextStyle(
+            textColor: const Color.fromARGB(255, 21, 76, 8),
+          ),
+          barAction: () {
+            context.go('/');
+          },
+        );
+      } else {
+        showSnackBar(
+          content: tr("registrationSnackError"),
+          textStyle: registratonSnackTextStyle(
+            textColor: const Color.fromARGB(255, 123, 5, 5),
+          ),
+          barAction: () {
+            context.go('/');
+          },
+        );
+      }
     }
   }
 
+  // Validators for each input
   String? nameValidator(String? value) {
     final nameRegex = RegExp(r"^[A-Za-z ]+$");
     if (value == null || value.isEmpty) {
-      return "Ce champ doit être renseigné";
+      return tr('registrationInputNameError1');
     }
     if (!nameRegex.hasMatch(value)) {
-      return "Ce champ ne doit contenir que des lettres";
+      return tr('registrationInputNameError2');
     }
     return null;
   }
 
   String? emailValidator(String? value) {
     final emailRegex = RegExp(r"^[a-zA-Z0-9-_.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
-    if (value != null && !emailRegex.hasMatch(value)) {
-      return "Le format de l'email n'est pas correct";
+    if (value == null || value.isEmpty) {
+      return tr('registrationInputNameError1');
+    }
+    if (!emailRegex.hasMatch(value)) {
+      return tr('registrationInputEmailError');
     }
     return null;
   }
@@ -53,18 +107,22 @@ class _RegistrationState extends ConsumerState<Registration> {
     final passwordRegex = RegExp(
       r'^(?=.*?[A-Z])(?=.*[a-z])(?=.*?[0-9])(?=.*?[$£ù^&§+=:;.?,()é!@#\><*~]).{10}',
     );
+    if (value != null && value.isEmpty) {
+      return tr('registrationInputPasswordError1');
+    }
+
     if (!passwordRegex.hasMatch(value!)) {
-      return "Password minimum, 10 caractères : \n - Une majuscule et minuscule \n - Un chiffre \n - Un caractère spécial";
+      return tr('registrationInputPasswordError2');
     }
     return null;
   }
 
-  String? passwordConfirmation(String? value) {
+  String? pwConfirmationValidator(String? value) {
     if (value != null && value.isEmpty) {
-      return "Veuillez confirmer le passsword";
+      return tr('registrationInputPassConfirmError1');
     }
     if (passwordController.text != value) {
-      return "Les mots de passe ne sont pas identique";
+      return tr('registrationInputPassConfirmError2');
     }
     return null;
   }
@@ -79,15 +137,11 @@ class _RegistrationState extends ConsumerState<Registration> {
             padding: const EdgeInsets.symmetric(horizontal: 30),
             child: Column(
               children: [
-                const Padding(
-                  padding: EdgeInsets.only(top: 40, bottom: 30),
+                Padding(
+                  padding: const EdgeInsets.only(top: 40, bottom: 30),
                   child: Text(
-                    "Creation de compte",
-                    style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 0, 0, 0),
-                    ),
+                    tr('registrationPageTitle'),
+                    style: registrationPageTitleTextStyle(),
                   ),
                 ),
                 Form(
@@ -97,55 +151,40 @@ class _RegistrationState extends ConsumerState<Registration> {
                     children: [
                       InputRegistration(
                         controller: firstNameController,
-                        label: "Entrez votre nom :",
+                        label: tr('registrationInputFirstnameLabel'),
                         validatorFunction: nameValidator,
                       ),
                       InputRegistration(
                         controller: lastNameController,
-                        label: "Entrez votre prenom :",
+                        label: tr('registrationInputLastnameLabel'),
                         validatorFunction: nameValidator,
                       ),
                       InputRegistration(
                         controller: emailController,
-                        label: "Entrez votre email :",
+                        label: tr('registrationInputEmailLabel'),
                         validatorFunction: emailValidator,
                       ),
                       InputRegistration(
                         controller: passwordController,
-                        label: "Créer votre password :",
+                        label: tr('registrationInputPasswordLabel'),
                         validatorFunction: passwordValidator,
                       ),
                       InputRegistration(
                         controller: passwordConfirmController,
-                        label: "Confirmer votre password :",
-                        validatorFunction: passwordConfirmation,
+                        label: tr('registrationInputPassConfirmLabel'),
+                        validatorFunction: pwConfirmationValidator,
                       ),
                     ],
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 40),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: const Color.fromARGB(212, 183, 146, 14),
-                      elevation: 5,
-                      backgroundColor: const Color.fromARGB(255, 220, 219, 219),
-                      padding: const EdgeInsets.only(
-                        top: 10,
-                        bottom: 10,
-                        right: 50,
-                        left: 50,
-                      ),
-                    ),
+                  child: ConfirmationElevatedButton(
+                    text: tr('registrationButton'),
                     onPressed: formButtonValidation,
-                    child: const Text(
-                      "register",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 25,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
+                    foregroundColor: const Color.fromARGB(212, 183, 146, 14),
+                    backgroundColor: const Color.fromARGB(255, 220, 219, 219),
+                    btnTextStyle: registrationBtnTextStyle(),
                   ),
                 ),
               ],
