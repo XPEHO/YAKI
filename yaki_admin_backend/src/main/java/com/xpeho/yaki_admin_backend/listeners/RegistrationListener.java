@@ -57,7 +57,8 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
         service.createVerificationToken(user, token);
         String confirmationUrl
                 =  "/login/registerConfirm?token=" + token;
-        String message = "Please follow the lonk below to verify your email address. If your email address is not verified in 24 hours, your account will be deleted.";
+        String message = "Please follow the link below to verify your email address." +
+                " If your email address is not verified in 24 hours, your account will be deleted.";
         MailjetClient client = new MailjetClient(apiKey,secretKey,new ClientOptions("v3.1"));
         // Create a Mailjet Request with the Emailv31 resource
         MailjetRequest request = new MailjetRequest(Emailv31.resource)
@@ -73,7 +74,7 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
                                 .put(Emailv31.Message.SUBJECT, "Confirm your Yaki account")
                                 .put(Emailv31.Message.TEXTPART, "Yaki")
                                 .put(Emailv31.Message.HTMLPART, "<html><body>" + message + "<br><a href=" + apiUrl + confirmationUrl + ">Confirm Registration</a></body></html>")
-                                .put(Emailv31.Message.CUSTOMID, "AppGettingStartedTest")));
+                                .put(Emailv31.Message.CUSTOMID, "RegisterTest")));
         MailjetResponse response = client.post(request);
 
     }
