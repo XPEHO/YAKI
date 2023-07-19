@@ -194,7 +194,7 @@ class _RegistrationState extends ConsumerState<Registration> {
                     text: tr('registrationCancelButton'),
                     onPressed: () => context.go("/"),
                     foregroundColor: const Color.fromARGB(212, 183, 146, 14),
-                    backgroundColor: Color.fromARGB(255, 107, 97, 96),
+                    backgroundColor: const Color.fromARGB(255, 107, 97, 96),
                     btnTextStyle: registrationCancelTextStyle(),
                   ),
                 ),
