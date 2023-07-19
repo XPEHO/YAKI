@@ -146,26 +146,43 @@ class Logo extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(top: 35),
               child: Material(
-                elevation: 10,
+                elevation: 15,
                 color: Colors.transparent,
                 shape: const CircleBorder(),
                 child: Padding(
                   padding: const EdgeInsets.all(0),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: AppColors.yakiPrimaryColor,
+                      color: const Color.fromARGB(255, 231, 230, 227),
                       border: Border.all(
-                        color: Colors.deepOrangeAccent,
-                        width: 3.0,
+                        color: Color.fromARGB(255, 228, 146, 31),
+                        width: 4.0,
                       ),
                       shape: BoxShape.circle,
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Color.fromARGB(139, 54, 30, 8),
+                          offset: Offset(
+                            5.0,
+                            5.0,
+                          ),
+                          blurRadius: 15.0,
+                          spreadRadius: 2.8,
+                        ), //BoxShadow
+                        BoxShadow(
+                          color: Colors.white,
+                          offset: Offset(0.0, 0.0),
+                          blurRadius: 0.0,
+                          spreadRadius: 0.0,
+                        ), //BoxShadow
+                      ],
                     ),
-                    width: 60,
-                    height: 60,
+                    width: 72,
+                    height: 72,
                     child: Center(
                       child: SizedBox(
-                        width: 40,
-                        height: 40,
+                        width: 50,
+                        height: 50,
                         child: InkWell(
                           onTap: () => onPictoSwitchTap(context),
                           child: SvgPicture.asset(
