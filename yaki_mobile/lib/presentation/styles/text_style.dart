@@ -32,10 +32,10 @@ TextStyle registrationBtnTextStyle() {
   );
 }
 
-  TextStyle registratonSnackTextStyle({required Color textColor}) {
-    return TextStyle(
-      fontSize: 15,
-      fontWeight: FontWeight.bold,
-      color: textColor,
-    );
-  }
+TextStyle registratonSnackTextStyle({required Color textColor}) {
+  return TextStyle(
+    fontSize: 15,
+    fontWeight: FontWeight.bold,
+    color: textColor,
+  );
+}

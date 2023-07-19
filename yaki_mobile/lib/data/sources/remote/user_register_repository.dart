@@ -6,8 +6,11 @@ part 'user_register_repository.g.dart';
 
 @RestApi()
 abstract class UserRegisterRepository {
-  factory UserRegisterRepository(Dio dio, {required String baseUrl}) = _UserRegisterRepository;
+  factory UserRegisterRepository(Dio dio, {required String baseUrl}) =
+      _UserRegisterRepository;
 
   @POST('/register')
-  Future<HttpResponse> userResgistration(@Body() UserRegistrationModel userToRegister);
+  Future<HttpResponse> userResgistration(
+    @Body() UserRegistrationModel userToRegiste,
+  );
 }

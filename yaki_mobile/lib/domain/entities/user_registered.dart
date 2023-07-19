@@ -8,7 +8,7 @@ class UserRegistered {
 
   UserRegistered({required this.isRegistered});
 
-    factory UserRegistered.fromJson(Map<String, dynamic> json) =>
+  factory UserRegistered.fromJson(Map<String, dynamic> json) =>
       _$UserRegisteredFromJson(json);
   Map<String, dynamic> toJson() => _$UserRegisteredToJson(this);
 }

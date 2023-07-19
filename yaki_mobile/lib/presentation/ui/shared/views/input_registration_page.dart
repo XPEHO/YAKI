@@ -44,7 +44,6 @@ class _InputRegistrationState extends State<InputRegistration> {
               color: Color.fromARGB(153, 0, 0, 0),
             ),
           ),
-          
         ),
       ),
     );
