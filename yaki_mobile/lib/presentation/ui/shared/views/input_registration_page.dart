@@ -31,8 +31,9 @@ class _InputRegistrationState extends State<InputRegistration> {
           // Label info
           labelText: widget.label,
           labelStyle: const TextStyle(
-            fontSize: 18,
-            color: Color.fromARGB(255, 0, 0, 0),
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+            color: Color.fromARGB(255, 90, 90, 90),
           ),
           border: UnderlineInputBorder(
             borderRadius: BorderRadius.circular(8),

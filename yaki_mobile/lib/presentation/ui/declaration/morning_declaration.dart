@@ -14,7 +14,7 @@ class MorningDeclaration extends StatelessWidget {
         header: HeaderDeclaration(
           pictoIcon: 'assets/images/avatar1.svg',
           pictoPath: 'assets/images/sun.svg',
-          pictoSwitch: 'assets/images/day.svg',
+          pictoSwitch: 'assets/images/switch.svg',
           headerTitle: tr('headerTitleDecla'),
           headerHint: tr('headerHintDeclaMorning'),
         ),
