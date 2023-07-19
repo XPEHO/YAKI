@@ -4,7 +4,6 @@ package com.xpeho.yaki_admin_backend.data.models;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.codec.Hex;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -164,5 +163,10 @@ public class UserModel implements UserDetails {
 
     public void setCustomers(List<CustomerModel> customers) {
         this.customers = customers;
+    }
+
+    public int getId() {
+        return userId;
+        
     }
 }

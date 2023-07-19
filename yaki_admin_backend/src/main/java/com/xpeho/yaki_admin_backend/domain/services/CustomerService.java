@@ -10,11 +10,15 @@ public interface CustomerService {
 
     CustomerEntity createCustomer(CustomerEntity customerEntity);
 
-    CustomerEntity addCustomerRight(List<Integer> userId, int customerId);
+    CustomerEntity addCustomerRight(int userId, int customerId);
 
     CustomerEntity getCustomer(int id);
 
     CustomerEntity deleteById(int id);
 
     CustomerEntity saveOrUpdate(CustomerEntity entity, int id);
+
+    CustomerEntity findById(int customerId);
+
+    CustomerEntity save(CustomerEntity customer);
 }
