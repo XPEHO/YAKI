@@ -1,8 +1,8 @@
 import 'package:yaki/domain/entities/declaration_status.dart';
 
-///  Enum name match the json object's keys from assets/translations/*.json files format
+///  Enum 'name' (key) match the json object's keys from assets/translations/*.json files format
 ///
-///  Enum text match the status format to be send to the API.
+///  Enum 'text' (value) match the status format to be send to the API.
 enum StatusEnum {
   remote('remote'),
   onSite('on site'),
@@ -63,7 +63,6 @@ class StatusUtils {
         link = 'assets/images/$status.svg';
       }
     }
-
     return link;
   }
 
