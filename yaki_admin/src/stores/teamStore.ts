@@ -6,14 +6,19 @@ import { TeamType } from "@/models/team.type";
 
 export const useTeamStore = defineStore("teamStore", {
   state: () => ({
+    customerId: [] as number[],
     captainsId: [] as number[],
     teamId: 0 as number,
     teamName: "" as string,
     teammate: [] as TeamMateType[],
     teamList: [] as TeamType[],
     teammateToDelete: 0 as number,
+    teamToDelete: 0 as number,
   }),
   getters: {
+    getCustomerId(): number[] {
+      return this.customerId;
+    },
     getCaptainId(): number[] {
       return this.captainsId;
     },
@@ -37,6 +42,9 @@ export const useTeamStore = defineStore("teamStore", {
     setTeamName(name: string) {
       this.teamName = name;
     },
+    setCustomerId(customerId: number[]) {
+      this.customerId = customerId;
+    },
     setCaptainsId(captainsId: number[]) {
       this.captainsId = captainsId;
     },
@@ -46,6 +54,15 @@ export const useTeamStore = defineStore("teamStore", {
       this.teamList = [];
       for (const captainId of captainsId) {
         const a = await teamService.getAllTeamsWithinCaptain(captainId);
+        this.teamList = this.teamList.concat(a);
+      }
+    },
+
+    // get all teams of a customer
+    async getTeamsFromCustomer(customerId: number[]): Promise<void> {
+      this.teamList = [];
+      for (const id of customerId) {
+        const a = await teamService.getAllTeamsWithinCustomer(id);
         this.teamList = this.teamList.concat(a);
       }
     },
@@ -66,11 +83,15 @@ export const useTeamStore = defineStore("teamStore", {
     async deleteTeammateFromTeam(id: number): Promise<void> {
       await teamMateService.deleteTeammate(id);
     },
-    // get the teamId to delete
+    // get the teamMateId to delete
     setTeammateToDelete(id: number) {
       this.teammateToDelete = id;
     },
 
+    //get the teamId to delete
+    setTeamToDelete(teamId: number) {
+      this.teamToDelete = teamId;
+    },
     // create a team (use captain id and team name)
     async createTeam(cptId: number, teamName: string): Promise<void> {
       await teamService.createTeam(cptId, teamName);

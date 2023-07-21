@@ -32,7 +32,7 @@ const router = createRouter({
           component: LayoutInvitation,
         },
         {
-          path: " customer",
+          path: "customer",
           component: LayoutCustomer,
         },
       ],
