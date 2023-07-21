@@ -18,10 +18,11 @@ public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerJpaRepository customerJpaRepository;
 
-    private UserJpaRepository userJpaRepository;
+    private final UserJpaRepository userJpaRepository;
 
-    public CustomerServiceImpl(CustomerJpaRepository customerJpaRepository) {
+    public CustomerServiceImpl(CustomerJpaRepository customerJpaRepository, UserJpaRepository userJpaRepository) {
         this.customerJpaRepository = customerJpaRepository;
+        this.userJpaRepository = userJpaRepository;
     }
 
     @Override
@@ -90,5 +91,5 @@ public class CustomerServiceImpl implements CustomerService {
         return new CustomerEntity(id, entity.customerName(),
                 entity.ownerId(), entity.locationId());
     }
-    
+
 }
