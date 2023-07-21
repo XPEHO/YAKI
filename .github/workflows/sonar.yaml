@@ -7,7 +7,7 @@ jobs:
     name: Sonaqube backend scan
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
       - name: Run tests with coverage
@@ -31,7 +31,7 @@ jobs:
     name: Sonarqube admin backend scan
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
       - name: Set up JDK 17
@@ -65,9 +65,7 @@ jobs:
     name: Sonaqube admin scan
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
+      - uses: actions/checkout@v3
       - name: Run tests with coverage
         run: |
           cd yaki_admin
@@ -79,3 +77,34 @@ jobs:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         with:
           projectBaseDir: yaki_admin/
+  mobile_scan:
+    name: Sonaqube mobile scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
+      - uses: subosito/flutter-action@v2
+      - name: Run tests with coverage
+        run: |
+          cd yaki_mobile
+          # Download dependencies 
+          flutter pub get 
+          # Run analysis
+          flutter analyze
+          # Run tests without user feedback regeneration tests.output and coverage/lcov.info
+          flutter test --machine --coverage > tests.output
+      - name: Sonar-scanner
+        env:
+          SONAR_SCANNER_VER: sonar-scanner-cli-4.8.0.2856-linux
+          SONAR_SCANNER_PATH: sonar-scanner-4.8.0.2856-linux/bin
+        run: |
+          wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.8.0.2856-linux.zip
+          unzip sonar-scanner-cli-4.8.0.2856-linux.zip
+
+          cd yaki_mobile
+
+          ../$SONAR_SCANNER_PATH/sonar-scanner -v
+          ../$SONAR_SCANNER_PATH/sonar-scanner \
+            -Dsonar.token=${{ secrets.SONAR_TOKEN }} \
+            -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }}
