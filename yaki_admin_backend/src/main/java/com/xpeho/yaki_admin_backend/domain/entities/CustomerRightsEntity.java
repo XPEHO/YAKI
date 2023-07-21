@@ -1,4 +1,6 @@
 package com.xpeho.yaki_admin_backend.domain.entities;
 
-public record CustomerRightsEntity(Integer id, Integer userId) {
+import java.util.List;
+
+public record CustomerRightsEntity(Integer customerId, List<Integer> userId) {
 }

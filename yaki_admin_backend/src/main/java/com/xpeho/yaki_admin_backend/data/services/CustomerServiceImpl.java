@@ -5,6 +5,7 @@ import com.xpeho.yaki_admin_backend.data.models.UserModel;
 import com.xpeho.yaki_admin_backend.data.sources.CustomerJpaRepository;
 import com.xpeho.yaki_admin_backend.data.sources.UserJpaRepository;
 import com.xpeho.yaki_admin_backend.domain.entities.CustomerEntity;
+import com.xpeho.yaki_admin_backend.domain.entities.CustomerRightsEntity;
 import com.xpeho.yaki_admin_backend.domain.services.CustomerService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
@@ -42,21 +43,10 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public CustomerEntity addCustomerRight(int userId, int customerId) {
-        CustomerModel model = customerJpaRepository.getReferenceById(customerId);
-        List<UserModel> users = model.getUsers();
-
-        UserModel user = userJpaRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("Entity User with id " + userId + " has not been found"));
-
-        // Check if the user already has rights for this client
-        for (UserModel u : users) {
-            if (u.getId() == userId) {
-                throw new IllegalArgumentException("User with id " + userId + " already has rights for customer with id " + customerId);
-            }
-        }
-
-        users.add(user);
-        model.setUsers(users);
+    public CustomerEntity addCustomerRight(CustomerRightsEntity customerRightsEntity) {
+        CustomerModel model = customerJpaRepository.getReferenceById(customerRightsEntity.customerId());
+        List<UserModel> users = userJpaRepository.findAllById(customerRightsEntity.userId());
+        model.addUsers(users);
 
         CustomerModel customerModel = customerJpaRepository.save(model);
         return new CustomerEntity(customerModel.getId(), customerModel.getName(), customerModel.getOwnerId(), customerModel.getLocationId());
@@ -100,4 +90,5 @@ public class CustomerServiceImpl implements CustomerService {
         return new CustomerEntity(id, entity.customerName(),
                 entity.ownerId(), entity.locationId());
     }
+    
 }
