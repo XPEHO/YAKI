@@ -3,7 +3,9 @@ package com.xpeho.yaki_admin_backend.data.services;
 import com.xpeho.yaki_admin_backend.data.models.CustomerModel;
 import com.xpeho.yaki_admin_backend.data.models.UserModel;
 import com.xpeho.yaki_admin_backend.data.sources.CustomerJpaRepository;
+import com.xpeho.yaki_admin_backend.data.sources.UserJpaRepository;
 import com.xpeho.yaki_admin_backend.domain.entities.CustomerEntity;
+import com.xpeho.yaki_admin_backend.domain.entities.CustomerRightsEntity;
 import com.xpeho.yaki_admin_backend.domain.services.CustomerService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
@@ -16,8 +18,11 @@ public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerJpaRepository customerJpaRepository;
 
-    public CustomerServiceImpl(CustomerJpaRepository customerJpaRepository) {
+    private final UserJpaRepository userJpaRepository;
+
+    public CustomerServiceImpl(CustomerJpaRepository customerJpaRepository, UserJpaRepository userJpaRepository) {
         this.customerJpaRepository = customerJpaRepository;
+        this.userJpaRepository = userJpaRepository;
     }
 
     @Override
@@ -39,9 +44,11 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public CustomerEntity addCustomerRight(List<UserModel> users, int customerId) {
-        CustomerModel model = customerJpaRepository.getReferenceById(customerId);
+    public CustomerEntity addCustomerRight(CustomerRightsEntity customerRightsEntity) {
+        CustomerModel model = customerJpaRepository.getReferenceById(customerRightsEntity.customerId());
+        List<UserModel> users = userJpaRepository.findAllById(customerRightsEntity.usersId());
         model.addUsers(users);
+
         CustomerModel customerModel = customerJpaRepository.save(model);
         return new CustomerEntity(customerModel.getId(), customerModel.getName(), customerModel.getOwnerId(), customerModel.getLocationId());
     }
@@ -84,4 +91,5 @@ public class CustomerServiceImpl implements CustomerService {
         return new CustomerEntity(id, entity.customerName(),
                 entity.ownerId(), entity.locationId());
     }
+
 }

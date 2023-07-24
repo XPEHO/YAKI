@@ -6,16 +6,14 @@ import com.xpeho.yaki_admin_backend.data.models.OwnerModel;
 import com.xpeho.yaki_admin_backend.data.models.UserModel;
 import com.xpeho.yaki_admin_backend.data.sources.CustomerJpaRepository;
 import com.xpeho.yaki_admin_backend.domain.entities.CustomerEntity;
+import com.xpeho.yaki_admin_backend.domain.entities.CustomerRightsEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -126,14 +124,19 @@ class CustomerServiceImplTest {
     }
 
     @Test
-    void addCustomersRight() {
+    void addCustomerRightTest() {
+        //given
+        CustomerRightsEntity customerRightsEntity = new CustomerRightsEntity(1, Collections.singletonList(1));
+        CustomerModel customerModel = new CustomerModel(1, owner1, "A la ferme", 1, usersCustomer, 2);
+        given(customerJpaRepository.getReferenceById(customerRightsEntity.customerId())).willReturn(customerModel);
+        given(customerJpaRepository.save(customerModel)).willReturn(customerModel);
         //when
-        List<UserModel> users = List.of(
-                new UserModel());
-        given(customerJpaRepository.getReferenceById(1)).willReturn(customer1);
-        given(customerJpaRepository.save(any(CustomerModel.class))).willReturn(customer1);
-        CustomerEntity customersReturned = customerService.addCustomerRight(users, 1);
-        assertEquals(customersReturned, customerE1);
+        CustomerEntity customerEntity = customerService.addCustomerRight(customerRightsEntity);
+        //then
+        assertEquals(customerEntity,
+                new CustomerEntity(1,
+                        customerModel.getName(), customerModel.getOwnerId(), customerModel.getLocationId()));
+
     }
 
     @Test
