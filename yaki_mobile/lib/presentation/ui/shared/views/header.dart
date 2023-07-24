@@ -49,13 +49,14 @@ class Header extends StatelessWidget {
                     headerTitle,
                     style: textStyleHeaderBig(),
                   ),
-
                   const Spacer(),
                   // top right circle avatar
-                  AvatarIcon(
-                    pictoIcon: pictoIcon,
-                    onPressed: onPressed ?? () {},
-                  ),
+                  if (pictoIcon != "") ...[
+                    AvatarIcon(
+                      pictoIcon: pictoIcon,
+                      onPressed: onPressed ?? () {},
+                    ),
+                  ]
                 ],
               ),
             ),
