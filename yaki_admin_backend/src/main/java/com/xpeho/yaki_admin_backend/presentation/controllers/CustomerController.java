@@ -32,13 +32,11 @@ public class CustomerController {
         return customerService.createCustomer(customerEntity);
     }
 
-    @PostMapping("/add-customer-right")
+    @PostMapping("/rights")
     public CustomerEntity addCustomerRight(
             @RequestBody CustomerRightsEntity customerRightsEntity) {
         return customerService.addCustomerRight(customerRightsEntity);
-
     }
-
 
     @GetMapping("{id}")
     public CustomerEntity getCustomer(@PathVariable int id) {

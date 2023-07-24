@@ -38,11 +38,6 @@ public class UserModel implements UserDetails {
 
     @Column(name = "user_enabled")
     private boolean enabled;
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
     @ManyToMany
     @JoinTable(name = "customer_rights", joinColumns = @JoinColumn(name = "customer_rights_user_id"), inverseJoinColumns = @JoinColumn(name = "customer_rights_customer_id"))
     private List<CustomerModel> customers = new ArrayList<>();
@@ -157,16 +152,15 @@ public class UserModel implements UserDetails {
         return true;
     }
 
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
     public List<CustomerModel> getCustomers() {
         return customers;
     }
 
     public void setCustomers(List<CustomerModel> customers) {
         this.customers = customers;
-    }
-
-    public int getId() {
-        return userId;
-        
     }
 }
