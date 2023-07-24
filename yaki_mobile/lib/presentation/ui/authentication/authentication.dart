@@ -138,7 +138,6 @@ class _AuthenticationState extends ConsumerState<Authentication> {
           Expanded(
             flex: 5,
             child: Header(
-              pictoIcon: '',
               pictoPath: 'assets/images/authent.svg',
               headerTitle: tr('headerTitle'),
               headerHint: tr('headerHint'),
