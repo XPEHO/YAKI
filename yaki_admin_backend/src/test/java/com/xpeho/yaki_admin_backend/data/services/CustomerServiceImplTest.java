@@ -6,16 +6,14 @@ import com.xpeho.yaki_admin_backend.data.models.OwnerModel;
 import com.xpeho.yaki_admin_backend.data.models.UserModel;
 import com.xpeho.yaki_admin_backend.data.sources.CustomerJpaRepository;
 import com.xpeho.yaki_admin_backend.domain.entities.CustomerEntity;
+import com.xpeho.yaki_admin_backend.domain.entities.CustomerRightsEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -125,35 +123,21 @@ class CustomerServiceImplTest {
         assertEquals(4, (int) customerEntities.get(1).locationId());
     }
 
-    //@Test
-    //void addCustomerRight() {
-    // Arrange
-    //int userId = 1;
-    // int customerId = 1;
-    // CustomerModel customerModel = new CustomerModel();
-    //  customerModel.setId(customerId);
-    //  customerModel.setName("Test Customer");
-    //  customerModel.setOwnerId(1);
-    //  customerModel.setLocationId(1);
-    //  List<UserModel> users = new ArrayList<>();
-    //  UserModel user1 = new UserModel();
-    //  user1.setUserId(1);
-    //  user1.setFirstName("John");
-    //  user1.setLastName("Doe");
-    //  users.add(user1);
-    //  customerModel.setUsers(users);
-    //  given(customerJpaRepository.getReferenceById(customerId)).willReturn(customerModel);
-    //  given(customerJpaRepository.save(any(CustomerModel.class))).willReturn(customerModel);
-    //
-    //  // Act
-    //  CustomerEntity result = customerService.addCustomerRight(userId, customerId);
-    //
-    // Assert
-    //  assertEquals(customerModel.getId(), result.getId());
-    //  assertEquals(customerModel.getName(), result.getName());
-    //  assertEquals(customerModel.getOwnerId(), result.getOwnerId());
-    //  assertEquals(customerModel.getLocationId(), result.getLocationId());
-    //}
+    @Test
+    void addCustomerRightTest() {
+        //given
+        CustomerRightsEntity customerRightsEntity = new CustomerRightsEntity(1, Collections.singletonList(1));
+        CustomerModel customerModel = new CustomerModel(1, owner1, "A la ferme", 1, usersCustomer, 2);
+        given(customerJpaRepository.getReferenceById(customerRightsEntity.customerId())).willReturn(customerModel);
+        given(customerJpaRepository.save(customerModel)).willReturn(customerModel);
+        //when
+        CustomerEntity customerEntity = customerService.addCustomerRight(customerRightsEntity);
+        //then
+        assertEquals(customerEntity,
+                new CustomerEntity(1,
+                        customerModel.getName(), customerModel.getOwnerId(), customerModel.getLocationId()));
+
+    }
 
     @Test
     void saveOrUpdate() {
