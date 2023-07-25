@@ -5,7 +5,7 @@ import 'package:yaki/presentation/ui/shared/views/avatar_icon.dart';
 import 'package:yaki/presentation/ui/shared/views/circle_avatar_svg.dart';
 
 class Header extends StatelessWidget {
-  final String pictoIcon;
+  final String? pictoIcon;
   final String pictoPath;
   final String headerTitle;
   final String headerHint;
@@ -13,7 +13,7 @@ class Header extends StatelessWidget {
 
   const Header({
     super.key,
-    required this.pictoIcon,
+    this.pictoIcon,
     required this.pictoPath,
     required this.headerTitle,
     required this.headerHint,
@@ -49,13 +49,16 @@ class Header extends StatelessWidget {
                     headerTitle,
                     style: textStyleHeaderBig(),
                   ),
-
                   const Spacer(),
                   // top right circle avatar
-                  AvatarIcon(
-                    pictoIcon: pictoIcon,
-                    onPressed: onPressed ?? () {},
-                  ),
+                  if (pictoIcon != null) ...[
+                    AvatarIcon(
+                      pictoIcon: pictoIcon != ""
+                          ? pictoIcon!
+                          : "assets/images/dots.svg",
+                      onPressed: onPressed ?? () {},
+                    ),
+                  ]
                 ],
               ),
             ),
