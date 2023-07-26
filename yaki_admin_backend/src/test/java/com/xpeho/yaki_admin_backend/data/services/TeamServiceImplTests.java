@@ -1,6 +1,7 @@
 package com.xpeho.yaki_admin_backend.data.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.xpeho.yaki_admin_backend.data.models.CaptainModel;
 import com.xpeho.yaki_admin_backend.data.models.TeamModel;
 import com.xpeho.yaki_admin_backend.data.sources.TeamJpaRepository;
 import com.xpeho.yaki_admin_backend.domain.entities.TeamEntity;
@@ -13,6 +14,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -31,18 +33,23 @@ class TeamServiceImplTests {
     private TeamEntity teamE1;
     private TeamEntity teamE2;
 
+    private List<CaptainModel> captains = new ArrayList<>();
+
     @InjectMocks
     private TeamServiceImpl teamService;
 
     @Mock
     private TeamJpaRepository teamJpaRepository;
+    @Mock
+    private CaptainsTeamsServiceImpl captainsTeamsService;
 
     @BeforeEach
     void setup() {
-        team1 = new TeamModel(1, 1, "Team Yaki");
-        team2 = new TeamModel(2, 1, "Team Yakoi");
-        teamE1 = new TeamEntity(team1.getId(), 1, "Team Yaki");
-        teamE2 = new TeamEntity(team2.getId(), 1, "Team Yakoi");
+        captains.add( new CaptainModel(1, 1));
+        team1 = new TeamModel(1,captains, "Team Yaki",1);
+        team2 = new TeamModel(2, captains, "Team Yakoi",1);
+        teamE1 = new TeamEntity(team1.getId(),Arrays.asList(1), "Team Yaki",1);
+        teamE2 = new TeamEntity(team2.getId(),Arrays.asList(1), "Team Yakoi",1);
     }
 
     @Test
@@ -81,9 +88,9 @@ class TeamServiceImplTests {
 
         //given
         int idUsed = 3;
-        TeamModel replacedModel = new TeamModel(idUsed, 235, "Team Céou");
+        TeamModel replacedModel = new TeamModel(idUsed, this.captains, "Team Céou",1);
         TeamModel expectedModel = new TeamModel(
-                idUsed, team2.getCaptainId(), team2.getTeamName());
+                idUsed, team2.getCaptains(), team2.getTeamName(),1);
         given(teamJpaRepository.save(expectedModel)).willReturn(expectedModel);
         given(teamJpaRepository.findById(idUsed)).willReturn(Optional.of(replacedModel));
 
@@ -93,7 +100,7 @@ class TeamServiceImplTests {
         //then
         String returnedResponse = objectMapper.writeValueAsString(teamDto);
         TeamEntity teamE3 = new TeamEntity(
-                idUsed, expectedModel.getCaptainId(), expectedModel.getTeamName());
+                idUsed, Arrays.asList(1), expectedModel.getTeamName(),1);
         String expectedResponse = objectMapper.writeValueAsString(teamE3);
         assertEquals(returnedResponse,
                 expectedResponse);
@@ -104,7 +111,7 @@ class TeamServiceImplTests {
 
         //given
         int deletedId = 1;
-        TeamModel deletedModel = new TeamModel(deletedId, 25, "team Cékoi");
+        TeamModel deletedModel = new TeamModel(deletedId, this.captains, "team Cékoi",1);
         willDoNothing().given(teamJpaRepository).deleteById(deletedId);
         given(teamJpaRepository.findById(deletedId)).willReturn(Optional.of(deletedModel));
 
@@ -114,7 +121,7 @@ class TeamServiceImplTests {
         //then
         assertEquals(teamMateDeleted,
                 new TeamEntity(deletedModel.getId(),
-                        deletedModel.getCaptainId(), deletedModel.getTeamName()));
+                        Arrays.asList(1), deletedModel.getTeamName(),1));
     }
 
     @Test
@@ -122,14 +129,14 @@ class TeamServiceImplTests {
         //given
         List<TeamModel> teamList = Arrays.asList(
                 team2, team1,
-                new TeamModel(3, 1, "Team 1")
+                new TeamModel(3, captains, "Team 1",1)
         );
         List<TeamEntity> teamEList = Arrays.asList(
                 teamE2, teamE1,
-                new TeamEntity(3, 1, "Team 1")
+                new TeamEntity(3, Arrays.asList(1), "Team 1",1)
         );
 
-        given(teamJpaRepository.findAllByCaptain(1)).willReturn(teamList);
+        given(captainsTeamsService.findAllTeamsByCaptain(1)).willReturn(teamList);
 
         //when
         List<TeamEntity> teamEntities = teamService.findAllByCaptain(1);

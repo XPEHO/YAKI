@@ -2,6 +2,7 @@ package com.xpeho.yaki_admin_backend.data.models;
 
 import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -12,26 +13,53 @@ public class TeamModel {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "team_seq")
     @SequenceGenerator(name = "team_seq", sequenceName = "team_id_seq", allocationSize = 1)
     @Column(name = "team_id")
-    int id;
+    private int id;
 
-    @Column(name = "team_captain_id")
-    int captainId;
+    @ManyToMany
+    @JoinTable(name = "captains_teams", joinColumns = @JoinColumn(name = "captains_teams_team_id"), inverseJoinColumns = @JoinColumn(name = "captains_teams_captain_id"))
+    private List<CaptainModel> captains;
 
     @Column(name = "team_name")
-    String teamName;
+    private String teamName;
 
-    public TeamModel(int captainId, String teamName) {
-        this.captainId = captainId;
+    @Column(name = "team_actif_flag")
+    private boolean actif;
+
+    @Column(name = "team_customer_id")
+    private int customerId;
+
+    public int getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
+    }
+
+    public TeamModel(List<CaptainModel> captainsModel, String teamName, int customerId) {
+        captains= captainsModel;
         this.teamName = teamName;
+        this.actif = true;
+        this.customerId = customerId;
     }
 
     public TeamModel() {
     }
 
-    public TeamModel(int id, int captainId, String teamName) {
+    public TeamModel(int id, List<CaptainModel> captainsModel, String teamName, int customerId) {
         this.teamName = teamName;
         this.id = id;
-        this.captainId = captainId;
+        captains = captainsModel;
+        this.actif = true;
+        this.customerId = customerId;
+    }
+
+    public boolean isActif() {
+        return actif;
+    }
+
+    public void setActif(boolean actif) {
+        this.actif = actif;
     }
 
     public String getTeamName() {
@@ -50,12 +78,12 @@ public class TeamModel {
         this.id = id;
     }
 
-    public int getCaptainId() {
-        return captainId;
+    public List<CaptainModel> getCaptains() {
+        return this.captains;
     }
 
-    public void setCaptainId(int captainId) {
-        this.captainId = captainId;
+    public void setCaptainId(List<CaptainModel> captains) {
+        this.captains = captains;
     }
 
     @Override
@@ -63,11 +91,11 @@ public class TeamModel {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TeamModel teamModel = (TeamModel) o;
-        return id == teamModel.id && captainId == teamModel.captainId && Objects.equals(teamName, teamModel.teamName);
+        return id == teamModel.id && captains == teamModel.captains && Objects.equals(teamName, teamModel.teamName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, captainId, teamName);
+        return Objects.hash(id, captains, teamName);
     }
 }

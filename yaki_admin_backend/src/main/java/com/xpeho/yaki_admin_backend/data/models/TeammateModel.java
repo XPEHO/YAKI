@@ -18,10 +18,15 @@ public class TeammateModel {
     @Column(name = "team_mate_user_id")
     private int userId;
 
+    @Column(name = "team_mate_actif_flag")
+    private boolean actif;
+
+
 
     public TeammateModel(int teamId, int userId) {
         this.teamId = teamId;
         this.userId = userId;
+        this.actif = true;
     }
 
     public TeammateModel() {
@@ -31,8 +36,15 @@ public class TeammateModel {
         this.id = id;
         this.teamId = teamId;
         this.userId = userId;
+        this.actif = true;
+    }
+    public boolean isActif() {
+        return actif;
     }
 
+    public void setActif(boolean actif) {
+        this.actif = actif;
+    }
     public int getTeamId() {
         return teamId;
     }

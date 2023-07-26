@@ -1,8 +1,11 @@
 package com.xpeho.yaki_admin_backend.data.services;
 
+import com.xpeho.yaki_admin_backend.data.models.CaptainModel;
 import com.xpeho.yaki_admin_backend.data.models.TeamModel;
+import com.xpeho.yaki_admin_backend.data.sources.CaptainJpaRepository;
 import com.xpeho.yaki_admin_backend.data.sources.TeamJpaRepository;
 import com.xpeho.yaki_admin_backend.domain.entities.TeamEntity;
+import com.xpeho.yaki_admin_backend.domain.services.CaptainsTeamsService;
 import com.xpeho.yaki_admin_backend.domain.services.TeamService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
@@ -15,17 +18,25 @@ import java.util.Optional;
 public class TeamServiceImpl implements TeamService {
 
     final TeamJpaRepository teamJpaRepository;
-
-    public TeamServiceImpl(TeamJpaRepository teamJpaRepository) {
+    final CaptainJpaRepository captainJpaRepository;
+    final CaptainsTeamsServiceImpl captainsTeamsService;
+    public TeamServiceImpl(TeamJpaRepository teamJpaRepository, CaptainJpaRepository captainJpaRepository, CaptainsTeamsServiceImpl captainsTeamsService) {
         this.teamJpaRepository = teamJpaRepository;
+        this.captainJpaRepository = captainJpaRepository;
+        this.captainsTeamsService = captainsTeamsService;
     }
 
     @Override
     public TeamEntity createTeam(TeamEntity teamEntity) {
-        final TeamModel teamModel = new TeamModel(teamEntity.captainId(), teamEntity.teamName());
+
+        List<CaptainModel> captainModel = captainJpaRepository.findAllById(teamEntity.captainsId());
+        final TeamModel teamModel = new TeamModel(captainModel, teamEntity.teamName(), teamEntity.customerId());
         teamJpaRepository.save(teamModel);
         //teamEntity.id could be null so we use autogenerate id
-        return new TeamEntity(teamModel.getId(), teamEntity.captainId(), teamEntity.teamName());
+        List<Integer> captainsId = teamModel.getCaptains().stream()
+                .map(CaptainModel::getCaptainId).toList();
+        return new TeamEntity(teamModel.getId(), captainsId, teamModel.getTeamName(),teamModel.getCustomerId());
+
     }
 
     @Override
@@ -35,7 +46,9 @@ public class TeamServiceImpl implements TeamService {
             throw new EntityNotFoundException("The team with id " + id + " not found.");
         }
         TeamModel teamModel = teamModelOpt.get();
-        return new TeamEntity(teamModel.getId(), teamModel.getCaptainId(), teamModel.getTeamName());
+        List<Integer> captainsId = teamModel.getCaptains().stream()
+                .map(CaptainModel::getCaptainId).toList();
+        return new TeamEntity(teamModel.getId(), captainsId, teamModel.getTeamName(),teamModel.getCustomerId());
     }
 
     @Override
@@ -44,30 +57,38 @@ public class TeamServiceImpl implements TeamService {
         if (teamModelOpt.isPresent()) {
             TeamModel teamModel = teamModelOpt.get();
             teamJpaRepository.deleteById(id);
-            return new TeamEntity(id, teamModel.getCaptainId(), teamModel.getTeamName());
+            List<Integer> captainsId = teamModel.getCaptains().stream()
+                    .map(CaptainModel::getCaptainId).toList();
+            return new TeamEntity(id, captainsId, teamModel.getTeamName(),teamModel.getCustomerId());
         } else throw new EntityNotFoundException("The team with id " + id + " not found.");
     }
 
     @Override
     public TeamEntity saveOrUpdate(TeamEntity entity, int id) {
+        List<CaptainModel> captainModel = captainJpaRepository.findAllById(entity.captainsId());
         Optional<TeamModel> teamModelOpt = teamJpaRepository.findById(id);
         if (teamModelOpt.isPresent()) {
             TeamModel teamModel = teamModelOpt.get();
-            teamModel.setCaptainId(entity.captainId());
+            teamModel.setCaptainId(captainModel);
             teamModel.setTeamName(entity.teamName());
             teamJpaRepository.save(teamModel);
+            List<Integer> captainsId = teamModel.getCaptains().stream()
+                    .map(CaptainModel::getCaptainId).toList();
+            return new TeamEntity(teamModel.getId(), captainsId, teamModel.getTeamName(),teamModel.getCustomerId());
         } else {
             throw new EntityNotFoundException("Entity team with id " + id + " not found");
         }
         //id and entity.id() could be different
-        return new TeamEntity(id, entity.captainId(), entity.teamName());
+
     }
 
     public List<TeamEntity> findAllByCaptain(int captainId) {
-        List<TeamModel> results = teamJpaRepository.findAllByCaptain(captainId);
+        List<TeamModel> results = captainsTeamsService.findAllTeamsByCaptain(captainId);
         List<TeamEntity> teamEntities = new ArrayList<>();
         for (TeamModel result : results) {
-            TeamEntity teammEntity = new TeamEntity(result.getId(), result.getCaptainId(), result.getTeamName());
+            List<Integer> captainsId = result.getCaptains().stream()
+                    .map(CaptainModel::getCaptainId).toList();
+            TeamEntity teammEntity = new TeamEntity(result.getId(), captainsId, result.getTeamName(),result.getCustomerId());
             teamEntities.add(teammEntity);
         }
         return teamEntities;

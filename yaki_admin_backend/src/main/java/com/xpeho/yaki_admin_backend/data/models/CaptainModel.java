@@ -21,9 +21,21 @@ public class CaptainModel {
     @Column(name = "captain_customer_id")
     private int customerId;
 
+    @Column(name = "captain_actif_flag")
+    private boolean actif;
+
+    public boolean isActif() {
+        return actif;
+    }
+
+    public void setActif(boolean actif) {
+        this.actif = actif;
+    }
+
     public CaptainModel(int userId, int customerId) {
         this.userId = userId;
         this.customerId = customerId;
+        this.actif = true;
     }
 
     public CaptainModel() {
@@ -33,6 +45,7 @@ public class CaptainModel {
         this.captainId = captainId;
         this.userId = userId;
         this.customerId = customerId;
+        this.actif = true;
     }
 
     public UserModel getUser() {
