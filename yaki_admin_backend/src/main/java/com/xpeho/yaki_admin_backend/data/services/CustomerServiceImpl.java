@@ -1,11 +1,13 @@
 package com.xpeho.yaki_admin_backend.data.services;
 
 import com.xpeho.yaki_admin_backend.data.models.CustomerModel;
+import com.xpeho.yaki_admin_backend.data.models.TeammateModel;
 import com.xpeho.yaki_admin_backend.data.models.UserModel;
 import com.xpeho.yaki_admin_backend.data.sources.CustomerJpaRepository;
 import com.xpeho.yaki_admin_backend.data.sources.UserJpaRepository;
 import com.xpeho.yaki_admin_backend.domain.entities.CustomerEntity;
 import com.xpeho.yaki_admin_backend.domain.entities.CustomerRightsEntity;
+import com.xpeho.yaki_admin_backend.domain.entities.TeammateEntity;
 import com.xpeho.yaki_admin_backend.domain.services.CustomerService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
@@ -90,6 +92,19 @@ public class CustomerServiceImpl implements CustomerService {
         }
         return new CustomerEntity(id, entity.customerName(),
                 entity.ownerId(), entity.locationId());
+    }
+    //disable the teammate but keep in log
+    @Override
+    public CustomerEntity disabled(int customerId){
+        Optional<CustomerModel> customerModelOpt = customerJpaRepository.findById(customerId);
+        if (customerModelOpt.isEmpty()) {
+            throw new EntityNotFoundException("The customer with id " + customerId + " not found.");
+        }
+        CustomerModel customerModel = customerModelOpt.get();
+        customerModel.setActif(false);
+        customerJpaRepository.save(customerModel);
+        return new CustomerEntity(customerModel.getId(),customerModel.getName()
+                ,customerModel.getOwnerId(),customerModel.getLocationId());
     }
 
 }

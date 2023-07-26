@@ -1,5 +1,6 @@
 package com.xpeho.yaki_admin_backend.domain.services;
 
+import com.xpeho.yaki_admin_backend.domain.entities.CaptainEntity;
 import com.xpeho.yaki_admin_backend.domain.entities.CustomerEntity;
 import com.xpeho.yaki_admin_backend.domain.entities.CustomerRightsEntity;
 
@@ -16,6 +17,8 @@ public interface CustomerService {
     CustomerEntity getCustomer(int id);
 
     CustomerEntity deleteById(int id);
+
+    CustomerEntity disabled(int id);
 
     CustomerEntity saveOrUpdate(CustomerEntity entity, int id);
     

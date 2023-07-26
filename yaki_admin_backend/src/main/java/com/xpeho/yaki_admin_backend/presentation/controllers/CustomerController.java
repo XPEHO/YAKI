@@ -1,5 +1,6 @@
 package com.xpeho.yaki_admin_backend.presentation.controllers;
 
+import com.xpeho.yaki_admin_backend.domain.entities.CaptainEntity;
 import com.xpeho.yaki_admin_backend.domain.entities.CustomerEntity;
 import com.xpeho.yaki_admin_backend.domain.entities.CustomerRightsEntity;
 import com.xpeho.yaki_admin_backend.domain.services.CustomerService;
@@ -51,6 +52,11 @@ public class CustomerController {
     @PutMapping("{id}")
     public CustomerEntity update(@RequestBody CustomerEntity entity, @PathVariable int id) {
         return customerService.saveOrUpdate(entity, id);
+    }
+
+    @PutMapping("/disabled/{id}")
+    public CustomerEntity disabled(@PathVariable int id){
+        return customerService.disabled(id);
     }
 
 

@@ -37,7 +37,7 @@ public class TeamModel {
     }
 
     public TeamModel(List<CaptainModel> captainsModel, String teamName, int customerId) {
-        captains= captainsModel;
+        this.captains= captainsModel;
         this.teamName = teamName;
         this.actif = true;
         this.customerId = customerId;
@@ -49,7 +49,7 @@ public class TeamModel {
     public TeamModel(int id, List<CaptainModel> captainsModel, String teamName, int customerId) {
         this.teamName = teamName;
         this.id = id;
-        captains = captainsModel;
+        this.captains = captainsModel;
         this.actif = true;
         this.customerId = customerId;
     }

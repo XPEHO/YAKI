@@ -40,10 +40,10 @@ export class TeamMateService {
 
   deleteTeammate = async (id: number): Promise<TeammateTypeIn> => {
     const requestOptions = {
-      method: 'DELETE',
-      headers: authHeader(`${URL}/teammates/${id}`),
+      method: 'PUT',
+      headers: authHeader(`${URL}/teammates/disabled/${id}`),
     }
-    return await fetch(`${URL}/teammates/${id}`,requestOptions)
+    return await fetch(`${URL}/teammates/disabled/${id}`,requestOptions)
       .then(handleResponse)
       .catch((err) => console.warn(err));
   };

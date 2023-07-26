@@ -11,7 +11,7 @@ public interface TeammateJpaRepository extends JpaRepository<TeammateModel, Inte
             SELECT tm.id, tm.teamId, tm.userId, u.firstName, u.lastName, u.email
             FROM TeammateModel tm 
             JOIN UserModel u ON tm.userId = u.userId
-            WHERE tm.teamId = ?1
+            WHERE tm.teamId = ?1 and tm.actif = true
             """)
     List<Object[]> findAllByTeam(int id);
 }

@@ -48,4 +48,8 @@ public class CaptainController {
     public List<CaptainEntity> getAllCaptainByUserId(@PathVariable int id){
         return captainService.getAllCaptainByUserId(id);
     }
+    @PutMapping("/disabled/{id}")
+    public CaptainEntity disabled(@PathVariable int id){
+        return captainService.disabled(id);
+    }
 }

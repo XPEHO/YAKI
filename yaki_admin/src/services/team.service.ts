@@ -53,10 +53,10 @@ export class TeamService {
 
   deleteTeam = async (teamId: number): Promise<TeamType> => {
     const requestOptions = {
-      method: 'DELETE',
-      headers: authHeader(`${URL}/teams/${teamId}`),
+      method: 'PUT',
+      headers: authHeader(`${URL}/teams/disabled/${teamId}`),
     }
-    const res = await fetch(`${URL}/teams/${teamId}`, requestOptions)
+    const res = await fetch(`${URL}/teams/disabled/${teamId}`, requestOptions)
       .then(handleResponse)
       .catch((err) => console.warn(err));
 

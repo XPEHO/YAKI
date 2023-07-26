@@ -7,6 +7,4 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface TeamJpaRepository extends JpaRepository<TeamModel, Integer> {
-    //@Query("SELECT DISTINCT team FROM TeamModel team WHERE ?1 in team.captains")
-    //List<TeamModel> findAllTeamByCaptain(int id);
 }
