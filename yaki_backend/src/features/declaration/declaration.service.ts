@@ -26,7 +26,7 @@ export class DeclarationService {
       throw new TypeError("Invalid declaration status.");
     }
     if (
-      declarationList[0].declarationTeamMateId &&
+      declarationList[0].declarationUserId &&
       declarationList[0].declarationDate &&
       declarationList[0].declarationDateStart &&
       declarationList[0].declarationDateEnd &&
@@ -67,7 +67,7 @@ export class DeclarationService {
       // check  if all values are true,  therefore  no null, nor undefined, nor empty string.
 
       if (
-        declaration.declarationTeamMateId &&
+        declaration.declarationUserId &&
         declaration.declarationDate &&
         declaration.declarationDateStart &&
         declaration.declarationDateEnd &&

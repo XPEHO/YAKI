@@ -26,10 +26,10 @@ export class DeclarationRepository {
     const declarationValuesList: Array<string> = YakiUtils.objectsListToValuesList(declarationList);
     const query = `INSERT INTO declaration 
     (
+      declaration_user_id, 
       declaration_date, 
       declaration_date_start, 
       declaration_date_end, 
-      declaration_team_mate_id, 
       declaration_status,
       declaration_team_id
     ) 
@@ -39,7 +39,7 @@ export class DeclarationRepository {
       const declarationToFront = [
         new DeclarationDtoIn(
           result.rows[0].declaration_id,
-          result.rows[0].declaration_team_mate_id,
+          result.rows[0].declaration_user_id,
           result.rows[0].declaration_date,
           result.rows[0].declaration_date_start,
           result.rows[0].declaration_date_end,
@@ -74,10 +74,10 @@ export class DeclarationRepository {
       const result = await client.query(
         `INSERT INTO declaration
         (
+          declaration_user_id, 
           declaration_date, 
           declaration_date_start, 
           declaration_date_end, 
-          declaration_team_mate_id, 
           declaration_status,
           declaration_team_id
         )
@@ -88,7 +88,7 @@ export class DeclarationRepository {
       const declarationListToFront = result.rows.map((item) => {
         return new DeclarationDtoIn(
           item.declaration_id,
-          item.declaration_team_mate_id,
+          item.declaration_user_id,
           item.declaration_date,
           item.declaration_date_start,
           item.declaration_date_end,
@@ -123,7 +123,7 @@ export class DeclarationRepository {
       const result = await client.query(
         `SELECT *
         FROM declaration
-        WHERE declaration_team_mate_id = $1
+        WHERE declaration_user_id = $1
         AND declaration_date::date = now()::date
         OR (
             declaration_date_start::date <= now()::date
@@ -144,7 +144,7 @@ export class DeclarationRepository {
         declarationListToFront.push(
           new DeclarationDtoIn(
             declaration.declaration_id,
-            declaration.declaration_team_mate_id,
+            declaration.declaration_user_id,
             declaration.declaration_date,
             declaration.declaration_date_start,
             declaration.declaration_date_end,

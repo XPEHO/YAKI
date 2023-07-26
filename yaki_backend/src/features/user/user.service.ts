@@ -23,6 +23,7 @@ export class UserService {
    */
   checkUserLoginDetails = async (object: any) => {
     const searchUser = await this.userRepository.getByLogin(object.login);
+
     if (await authService.comparePw(object.password, searchUser.user_password)) {
       let user = undefined;
       // if captain_id column is null, create a team_mate

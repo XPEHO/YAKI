@@ -3,7 +3,7 @@ import {StatusDeclaration} from "./status.enum";
 /* Defining the interface for the declaration object. */
 export class DeclarationDtoIn {
   declarationId: number;
-  declarationTeamMateId: number;
+  declarationUserId: number;
   declarationDate: Date;
   declarationDateStart: Date;
   declarationDateEnd: Date;
@@ -12,7 +12,7 @@ export class DeclarationDtoIn {
 
   constructor(
     declarationId: number,
-    declarationTeamMateId: number,
+    declarationUserId: number,
     declarationDate: Date,
     declarationDateStart: Date,
     declarationDateEnd: Date,
@@ -20,7 +20,7 @@ export class DeclarationDtoIn {
     declarationTeamId: number
   ) {
     this.declarationId = declarationId;
-    this.declarationTeamMateId = declarationTeamMateId;
+    this.declarationUserId = declarationUserId;
     this.declarationDate = declarationDate;
     this.declarationDateStart = declarationDateStart;
     this.declarationDateEnd = declarationDateEnd;

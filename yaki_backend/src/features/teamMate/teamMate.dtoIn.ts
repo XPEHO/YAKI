@@ -1,7 +1,7 @@
-export  interface TeamMateDtoIn {
-  team_mate_id: number;
-  team_mate_team_id: number;
-  team_mate_user_id: number;
+export interface TeamMateDtoIn {
+  teammate_id: number;
+  teammate_team_id: number;
+  teammate_user_id: number;
   user_id: number;
   user_last_name: string;
   user_first_name: string;
