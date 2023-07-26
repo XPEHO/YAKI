@@ -53,7 +53,7 @@ const teamModalAccept = async (teamName: string) => {
       store.createTeam(store.getCaptainId[0], teamName,);
       break;
     case 1:
-      store.updateTeam(store.getTeamId, store.getCaptainId[0], teamName);
+      store.updateTeam(store.getTeamId, teamName);
       break;
     case 2:
       store.deleteTeam(store.getTeamId);

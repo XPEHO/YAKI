@@ -64,12 +64,21 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public TeamEntity saveOrUpdate(TeamEntity entity, int id) {
-        List<CaptainModel> captainModel = captainService.findAllById(entity.captainsId());
+
         Optional<TeamModel> teamModelOpt = teamJpaRepository.findById(id);
         if (teamModelOpt.isPresent()) {
             TeamModel teamModel = teamModelOpt.get();
-            teamModel.setCaptainId(captainModel);
-            teamModel.setTeamName(entity.teamName());
+            //not mandatory to fill everything in the request (can be only to change the name)
+            if(entity.captainsId() != null) {
+                List<CaptainModel> captainModel = captainService.findAllById(entity.captainsId());
+                teamModel.setCaptainId(captainModel);
+            }
+            if(entity.teamName() != null) {
+                teamModel.setTeamName(entity.teamName());
+            }
+            if(entity.customerId() != null){
+                teamModel.setCustomerId(entity.customerId());
+            }
             teamJpaRepository.save(teamModel);
             List<Integer> captainsId = teamModel.getCaptains().stream()
                     .map(CaptainModel::getCaptainId).toList();

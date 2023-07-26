@@ -37,11 +37,10 @@ export class TeamService {
     return res;
   };
 
-  updateTeam = async (teamId: number, cptIds: number[], teamName: string, customerId: number): Promise<TeamType> => {
-    const newTeam: TeamTypeOut = {"captainsId": cptIds, "teamName": teamName,"customerId": customerId};
+  updateTeam = async (teamId: number, teamName: string, customerId: number): Promise<TeamType> => {
     const requestOptions = {
       method: 'PUT',
-      body: JSON.stringify(newTeam),
+      body: JSON.stringify({"teamName": teamName}),
       headers: authHeader(`${URL}/teams/${teamId}`),
     }
     const res = await fetch(`${URL}/teams/${teamId}`, requestOptions)

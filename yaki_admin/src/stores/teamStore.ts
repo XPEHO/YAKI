@@ -80,8 +80,8 @@ export const useTeamStore = defineStore("teamStore", {
     },
 
     // update the selected team (can change name or captainID)
-    async updateTeam(teamID: number, cptId: number[], teamName: string): Promise<void> {
-      await teamService.updateTeam(teamID, cptId, teamName,this.customerId);
+    async updateTeam(teamID: number, teamName: string): Promise<void> {
+      await teamService.updateTeam(teamID, teamName,this.customerId);
     },
 
     async deleteTeam(teamId: number): Promise<void> {
