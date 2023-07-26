@@ -2,7 +2,7 @@ Feature: Team
 
   Background:
     * url 'http://localhost:8080'
-    * def schema = {id : '#number', captainId: '#number', teamName: '#string'}
+    * def schema = {id : '#number', captainsId: '#array', teamName: '#string',customerId: '#number'}
     Given path '/login/authenticate'
     And request { login: 'owner', password: 'owner' }
     When method post
@@ -61,7 +61,7 @@ Feature: Team
 
     Given path '/teams'
     And header Authorization = token
-    And request { captainId : 2, teamName: "adTeam_team_name" }
+    And request { captainsId : [2], teamName: "adTeam_team_name", customerId: 2 }
     When method post
     Then status 200
 
@@ -81,7 +81,7 @@ Feature: Team
 
     Given path '/teams/' + 1
     And header Authorization = token
-    And request {captainId: 2, teamName: 'Team Red'}
+    And request {captainsId: [2], teamName: 'Team Red',customerId: 2}
     When method put
     Then status 200
     And match response == schema
