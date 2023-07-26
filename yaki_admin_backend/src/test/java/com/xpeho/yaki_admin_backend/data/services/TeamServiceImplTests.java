@@ -41,11 +41,13 @@ class TeamServiceImplTests {
     @Mock
     private TeamJpaRepository teamJpaRepository;
     @Mock
+    private CaptainServiceImpl captainService;
+    @Mock
     private CaptainsTeamsServiceImpl captainsTeamsService;
 
     @BeforeEach
     void setup() {
-        captains.add( new CaptainModel(1, 1));
+        captains.add( new CaptainModel(1,1, 1));
         team1 = new TeamModel(1,captains, "Team Yaki",1);
         team2 = new TeamModel(2, captains, "Team Yakoi",1);
         teamE1 = new TeamEntity(team1.getId(),Arrays.asList(1), "Team Yaki",1);
@@ -73,7 +75,9 @@ class TeamServiceImplTests {
     void createTeamTest() throws Exception {
 
         //given
+        given(captainService.findAllById(Arrays.asList(1))).willReturn(captains);
         given(teamJpaRepository.save(team1)).willReturn(team1);
+
 
         // when
         TeamEntity savedTeam = teamService.createTeam(teamE1);
@@ -91,6 +95,7 @@ class TeamServiceImplTests {
         TeamModel replacedModel = new TeamModel(idUsed, this.captains, "Team Céou",1);
         TeamModel expectedModel = new TeamModel(
                 idUsed, team2.getCaptains(), team2.getTeamName(),1);
+        given(captainService.findAllById(Arrays.asList(1))).willReturn(captains);
         given(teamJpaRepository.save(expectedModel)).willReturn(expectedModel);
         given(teamJpaRepository.findById(idUsed)).willReturn(Optional.of(replacedModel));
 

@@ -77,4 +77,8 @@ class CaptainServiceImpl(private val captainJpaRepository: CaptainJpaRepository)
                 }
 
     }
+
+    fun findAllById(id: MutableList<Int> ): MutableList<CaptainModel> {
+        return captainJpaRepository.findAllById(id)
+    }
 }

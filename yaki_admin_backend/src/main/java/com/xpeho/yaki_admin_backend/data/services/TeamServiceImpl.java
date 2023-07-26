@@ -2,10 +2,8 @@ package com.xpeho.yaki_admin_backend.data.services;
 
 import com.xpeho.yaki_admin_backend.data.models.CaptainModel;
 import com.xpeho.yaki_admin_backend.data.models.TeamModel;
-import com.xpeho.yaki_admin_backend.data.sources.CaptainJpaRepository;
 import com.xpeho.yaki_admin_backend.data.sources.TeamJpaRepository;
 import com.xpeho.yaki_admin_backend.domain.entities.TeamEntity;
-import com.xpeho.yaki_admin_backend.domain.services.CaptainsTeamsService;
 import com.xpeho.yaki_admin_backend.domain.services.TeamService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
@@ -18,19 +16,19 @@ import java.util.Optional;
 public class TeamServiceImpl implements TeamService {
 
     final TeamJpaRepository teamJpaRepository;
-    final CaptainJpaRepository captainJpaRepository;
+    final CaptainServiceImpl captainService;
     final CaptainsTeamsServiceImpl captainsTeamsService;
-    public TeamServiceImpl(TeamJpaRepository teamJpaRepository, CaptainJpaRepository captainJpaRepository, CaptainsTeamsServiceImpl captainsTeamsService) {
+    public TeamServiceImpl(TeamJpaRepository teamJpaRepository, CaptainServiceImpl captainService, CaptainsTeamsServiceImpl captainsTeamsService) {
         this.teamJpaRepository = teamJpaRepository;
-        this.captainJpaRepository = captainJpaRepository;
+        this.captainService = captainService;
         this.captainsTeamsService = captainsTeamsService;
     }
 
     @Override
     public TeamEntity createTeam(TeamEntity teamEntity) {
 
-        List<CaptainModel> captainModel = captainJpaRepository.findAllById(teamEntity.captainsId());
-        final TeamModel teamModel = new TeamModel(captainModel, teamEntity.teamName(), teamEntity.customerId());
+        List<CaptainModel> captainModels = captainService.findAllById(teamEntity.captainsId());
+        final TeamModel teamModel = new TeamModel(captainModels, teamEntity.teamName(), teamEntity.customerId());
         teamJpaRepository.save(teamModel);
         //teamEntity.id could be null so we use autogenerate id
         List<Integer> captainsId = teamModel.getCaptains().stream()
@@ -65,7 +63,7 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public TeamEntity saveOrUpdate(TeamEntity entity, int id) {
-        List<CaptainModel> captainModel = captainJpaRepository.findAllById(entity.captainsId());
+        List<CaptainModel> captainModel = captainService.findAllById(entity.captainsId());
         Optional<TeamModel> teamModelOpt = teamJpaRepository.findById(id);
         if (teamModelOpt.isPresent()) {
             TeamModel teamModel = teamModelOpt.get();
