@@ -30,6 +30,9 @@ export const useAuthStore = defineStore("loginStore", {
             }
             const teamStore = useTeamStore();
             teamStore.setCaptainsId(ids)
+            //temporary
+            teamStore.setCustomerId(this.captains[0].customerId)
+ 
             router.push(this.returnedUrl || '/administration/captain');
             return true;
         }

@@ -50,7 +50,7 @@ const onClickAddTeam = () => {
 const teamModalAccept = async (teamName: string) => {
   switch (modalState.modalMode) {
     case 0:
-      store.createTeam(store.getCaptainId[0], teamName);
+      store.createTeam(store.getCaptainId[0], teamName,);
       break;
     case 1:
       store.updateTeam(store.getTeamId, store.getCaptainId[0], teamName);

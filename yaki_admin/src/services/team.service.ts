@@ -21,9 +21,10 @@ export class TeamService {
     return response;
   };
 
-  createTeam = async (cptId: number, teamName: string): Promise<TeamType> => {
+  createTeam = async (cptId: number, teamName: string, customerId: number): Promise<TeamType> => {
     
-    const newTeam: TeamTypeOut = {"captainId": cptId, "teamName": teamName};
+    const newTeam: TeamTypeOut = {"captainsId": [cptId], "teamName": teamName, "customerId": customerId};
+    console.log(customerId)
     const requestOptions = {
       method: 'POST',
       body: JSON.stringify(newTeam),
@@ -36,8 +37,8 @@ export class TeamService {
     return res;
   };
 
-  updateTeam = async (teamId: number, cptId: number, teamName: string): Promise<TeamType> => {
-    const newTeam: TeamTypeOut = {captainId: cptId, teamName: teamName};
+  updateTeam = async (teamId: number, cptIds: number[], teamName: string, customerId: number): Promise<TeamType> => {
+    const newTeam: TeamTypeOut = {"captainsId": cptIds, "teamName": teamName,"customerId": customerId};
     const requestOptions = {
       method: 'PUT',
       body: JSON.stringify(newTeam),
