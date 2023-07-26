@@ -13,9 +13,11 @@ export class TeamRepository {
     const query = `
     SELECT t.team_id, t.team_name, ct.captains_teams_captain_id, t.team_customer_id, t.team_actif_flag 
     FROM public.team t
-    inner join public.captains_teams ct
-    on ct.captains_teams_team_id = t.team_id
-    where ct.captains_teams_captain_id = $1;`;
+    INNER JOIN public.captains_teams ct
+    ON ct.captains_teams_team_id = t.team_id
+    WHERE ct.captains_teams_captain_id = $1
+	  AND team_actif_flag = true;
+    `;
     client.connect();
     const poolResult: QueryResult = await client.query(query, [captainId]);
     await client.end();
@@ -52,7 +54,8 @@ export class TeamRepository {
     SELECT team_id, team_name, team_actif_flag FROM public.teammate
     INNER JOIN public.team 
     ON team_id = teammate_team_id
-    WHERE teammate_user_id = $1;
+    WHERE teammate_user_id = $1
+    AND team_actif_flag = true;
     `;
     client.connect();
     try {

@@ -13,7 +13,7 @@ import * as swaggerDocument from "./dev/swagger.json";
 import {router} from "./router";
 import {initdb} from "./db/initdb";
 /* Importing the declaration router from the declaration.router.ts file. */
-import declarationRouter from "./features/declaration/declaration.router";
+import declarationRouter from "./declaration.router";
 
 import cors from "cors";
 import teamRouter from "./features/team/team.router";

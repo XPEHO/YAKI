@@ -1,3 +1,4 @@
+// DTO coming to the controller, sent by the front-end
 export class UserToRegisterIn {
   lastname: string;
   firstname: string;

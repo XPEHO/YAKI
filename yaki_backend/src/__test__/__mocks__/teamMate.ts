@@ -1,6 +1,6 @@
-import {TeamMateDtoIn} from "../../features/teamMate/teamMate.dtoIn";
+import {TeammateDtoIn} from "../../features/teammate/teamate.dtoIn";
 
-const teamMatesMock: TeamMateDtoIn[] = [
+const teammatesMock: TeammateDtoIn[] = [
   {
     teammate_id: 1,
     teammate_team_id: 1,
@@ -25,4 +25,4 @@ const teamMatesMock: TeamMateDtoIn[] = [
   },
 ];
 
-export default teamMatesMock;
+export default teammatesMock;

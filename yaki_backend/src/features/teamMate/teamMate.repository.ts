@@ -1,27 +1,6 @@
 import {Client, QueryResult} from "pg";
 
-export class TeamMateRepository {
-  // NOT USED
-  /**
-   * Seek a user in the database by its user_id
-   * @param user_id
-   * @returns
-   */
-  getByUserId = async (user_id: string) => {
-    const client = new Client({
-      host: process.env.DB_HOST,
-      user: process.env.DB_USER,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_DATABASE,
-      port: Number(process.env.DB_PORT),
-    });
-    const query = `SELECT * FROM public.teammate INNER JOIN public.user ON teammate_user_id = user_id WHERE teammate_user_id = 1;`;
-    client.connect();
-    const poolResult: QueryResult = await client.query(query, [user_id]);
-    await client.end();
-    return poolResult.rows[0];
-  };
-
+export class TeammateRepository {
   getByTeamIdWithLastDeclaration = async (team_id: number) => {
     const client = new Client({
       host: process.env.DB_HOST,

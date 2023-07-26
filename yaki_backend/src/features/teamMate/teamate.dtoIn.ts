@@ -1,4 +1,4 @@
-export interface TeamMateDtoIn {
+export interface TeammateDtoIn {
   teammate_id: number;
   teammate_team_id: number;
   teammate_user_id: number;

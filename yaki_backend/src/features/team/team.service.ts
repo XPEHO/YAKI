@@ -9,10 +9,10 @@ export class TeamService {
   }
 
   // return a team list managed by a selected captain id
-  getTeamByCaptainId = async (captain_id: number): Promise<TeamDtoIn[]> => {
+  getTeamByCaptainId = async (captain_id: number): Promise<TeamDtoIn> => {
     const teams: TeamDtoIn[] = await this.teamRepository.getTeamByCaptainId(captain_id);
     if (teams !== undefined) {
-      return teams;
+      return teams[0];
     } else {
       throw new TypeError("No team with this captain exists");
     }

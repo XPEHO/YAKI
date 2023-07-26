@@ -2,7 +2,7 @@ import {UserRepository} from "./user.repository";
 import {authService} from "./authentication.service";
 import YakiUtils from "../../utils/yakiUtils";
 
-import {TeamMateDtoOut} from "../teamMate/teamMate.dtoOut";
+import {TeammateDtoOut} from "../teammate/teammate.dtoOut";
 import {CaptainDtoOut} from "../captain/captain.dtoOut";
 import {UserToRegisterIn} from "./toRegister.dtoIn";
 import {UserToRegisterOut} from "./toRegister.dtoOut";
@@ -28,10 +28,9 @@ export class UserService {
       let user = undefined;
       // if captain_id column is null, create a team_mate
       if (searchUser.captain_id === null) {
-        user = new TeamMateDtoOut(
-          searchUser.team_mate_id,
+        user = new TeammateDtoOut(
+          searchUser.teammate_id,
           searchUser.user_id,
-          searchUser.team_mate_team_id,
           searchUser.user_last_name,
           searchUser.user_first_name,
           searchUser.user_email

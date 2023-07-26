@@ -19,21 +19,32 @@ export class UserRepository {
       password: `${process.env.DB_ROLE_PWD}`,
       port: Number(process.env.DB_PORT),
     });
-    const query = `SELECT * FROM public.user u
-                  LEFT JOIN public.teammate tm
-                  ON u.user_id = tm.teammate_user_id
-                  LEFT JOIN public.captain c
-                  ON u.user_id = c.captain_user_id
-                  WHERE user_login = $1;`;
 
+    // selected attribut do not work ?
+    // user_id, user_last_name, user_first_name, user_email, teammate_id, captain_id, user_enabled
+
+    const query = `
+        SELECT *
+        FROM public.user u
+        LEFT JOIN public.teammate tm
+        ON u.user_id = tm.teammate_user_id
+        LEFT JOIN public.captain c
+        ON u.user_id = c.captain_user_id
+        WHERE user_login = $1
+      `;
     const poolResult: QueryResult = await pool.query(query, [username]);
     await pool.end();
-    // If the user was found in the database
-    if (poolResult.rowCount > 0) {
-      return poolResult.rows[0];
-    } else {
+
+    // If the user wasn't found in the DB
+    if (poolResult.rowCount === 0) {
       throw new Error("Bad authentification details");
     }
+    // If the user still hasn't confirmed his account
+    if (poolResult.rows[0].user_enabled === false) {
+      throw new Error("This account isn't activated");
+    }
+    // "else" return the user
+    return poolResult.rows[0];
   };
 
   /**
