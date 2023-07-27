@@ -38,27 +38,30 @@ class _InputAppState extends State<InputApp> {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: widget.controller,
-      obscureText: _passwordVisible,
-      decoration: InputDecoration(
-        hintText: widget.inputText,
-        border: const OutlineInputBorder(),
-        suffixIconColor: Colors.grey,
-        suffixIcon: widget.password
-            ? IconButton(
-                icon: Icon(
-                  _passwordVisible ? Icons.visibility : Icons.visibility_off,
-                ),
-                onPressed: () {
-                  setState(
-                    () {
-                      _passwordVisible = !_passwordVisible;
-                    },
-                  );
-                },
-              )
-            : null,
+    return Semantics(
+      label: widget.inputHint,
+      child: TextFormField(
+        controller: widget.controller,
+        obscureText: _passwordVisible,
+        decoration: InputDecoration(
+          hintText: widget.inputText,
+          border: const OutlineInputBorder(),
+          suffixIconColor: Colors.grey,
+          suffixIcon: widget.password
+              ? IconButton(
+                  icon: Icon(
+                    _passwordVisible ? Icons.visibility : Icons.visibility_off,
+                  ),
+                  onPressed: () {
+                    setState(
+                      () {
+                        _passwordVisible = !_passwordVisible;
+                      },
+                    );
+                  },
+                )
+              : null,
+        ),
       ),
     );
   }
