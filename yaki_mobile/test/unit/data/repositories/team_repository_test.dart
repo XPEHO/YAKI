@@ -1,0 +1,59 @@
+import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
+import 'package:mockito/mockito.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:yaki/data/repositories/team_repository.dart';
+import 'package:yaki/data/sources/remote/team_api.dart';
+import '../../mocking.mocks.dart';
+import './team_repository_test.mocks.dart';
+
+@GenerateMocks([
+  TeamApi,
+])
+void main() {
+  const teamMateId = 42;
+  SharedPreferences.setMockInitialValues(
+    {
+      'token': '',
+      'userId': teamMateId,
+    },
+  );
+  final teamApi = MockTeamApi();
+  final teamRepository = TeamRepository(
+    teamApi,
+  );
+  test('getTeam', () async {
+    // GIVEN
+
+    // Mock HttpResponse
+    final httpResponse = MockHttpResponseList();
+
+    // Mock Response
+    final response = MockResponse();
+    when(response.statusCode).thenReturn(200);
+    when(httpResponse.response).thenReturn(response);
+
+    // Mock data
+    final data = <Map<String, dynamic>>[
+      {
+        'teamId': 1,
+        'teamName': 'teamName',
+      },
+    ];
+    when(httpResponse.data).thenReturn(data);
+
+    when(teamApi.getTeam(teamMateId.toString())).thenAnswer(
+      (realInvocation) => Future.value(
+        httpResponse,
+      ),
+    );
+
+    // WHEN
+    final teamList = await teamRepository.getTeam(teamMateId.toString());
+
+    // THEN
+    expect(teamList.length, 1);
+    expect(teamList[0].teamId, 1);
+    expect(teamList[0].teamName, 'teamName');
+  });
+}
