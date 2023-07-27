@@ -1,7 +1,5 @@
 package com.xpeho.yaki_admin_backend.presentation.controllers;
 
-import com.xpeho.yaki_admin_backend.domain.entities.TeammateEntity;
-import com.xpeho.yaki_admin_backend.data.models.UserModel;
 import com.xpeho.yaki_admin_backend.domain.entities.UserEntity;
 import com.xpeho.yaki_admin_backend.domain.entities.UserEntityIn;
 import com.xpeho.yaki_admin_backend.domain.entities.UserEntityWithID;
@@ -26,6 +24,7 @@ public class UserController {
     public UserEntity createUser(@RequestBody UserEntityIn userEntity) {
         return userService.save(userEntity);
     }
+
     @GetMapping("/inRange")
     public List<UserEntityWithID> findUserByIdRange(@RequestParam int idStart,
                                                     @RequestParam int idEnd) {

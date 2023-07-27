@@ -1,6 +1,9 @@
 export type CustomerType = {
   id: number;
-  customerName: string;
-  
-};
+  userId: number;
+  name: string;
+  ownerId: number;
+  locationId: number;
+  users: [],
 
+};

@@ -44,8 +44,9 @@ public class CaptainController {
     public CaptainEntity update(@RequestBody CaptainEntity entity, @PathVariable int id) {
         return captainService.saveOrUpdate(entity, id);
     }
+
     @GetMapping("/user/{id}")
-    public List<CaptainEntity> getAllCaptainByUserId(@PathVariable int id){
+    public List<CaptainEntity> getAllCaptainByUserId(@PathVariable int id) {
         return captainService.getAllCaptainByUserId(id);
     }
 }

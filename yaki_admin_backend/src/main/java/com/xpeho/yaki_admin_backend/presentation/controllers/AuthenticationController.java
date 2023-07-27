@@ -30,8 +30,9 @@ public class AuthenticationController {
     ) {
         return authenticationService.authenticate(request);
     }
+
     @GetMapping("/registerConfirm")
-    public String confirmRegister(@RequestParam("token") String token){
+    public String confirmRegister(@RequestParam("token") String token) {
         return authenticationService.confirmRegister(token);
     }
 }
