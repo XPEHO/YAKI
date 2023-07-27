@@ -2,6 +2,7 @@ package com.xpeho.yaki_admin_backend.data.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xpeho.yaki_admin_backend.data.models.CustomerModel;
+import com.xpeho.yaki_admin_backend.data.models.EntityLogModel;
 import com.xpeho.yaki_admin_backend.data.models.OwnerModel;
 import com.xpeho.yaki_admin_backend.data.models.UserModel;
 import com.xpeho.yaki_admin_backend.data.sources.CustomerJpaRepository;
@@ -29,6 +30,7 @@ class CustomerServiceImplTest {
     private CustomerModel customer1;
     private CustomerEntity customerE1;
     private List<UserModel> usersCustomer;
+    private EntityLogModel entityLogModel;
     private OwnerModel owner1;
     @Autowired
     private CustomerServiceImpl customerService;
@@ -36,12 +38,19 @@ class CustomerServiceImplTest {
     @MockBean
     private CustomerJpaRepository customerJpaRepository;
 
+    @MockBean
+    private EntityLogServiceImpl entityLogService;
+
+
+
     @BeforeEach
     void setup() {
         owner1 = new OwnerModel(1, 1);
         this.usersCustomer = new ArrayList<>(3);
+        entityLogModel = new EntityLogModel();
         customerE1 = new CustomerEntity(1, "A la ferme", 1, 2);
-        customer1 = new CustomerModel(1, owner1, "A la ferme", 1, usersCustomer, 2,1);
+        customer1 = new CustomerModel(1, owner1, "A la ferme", 1, usersCustomer, 2,entityLogModel.getId());
+
     }
 
     @Test
@@ -75,9 +84,10 @@ class CustomerServiceImplTest {
     }
 
     @Test
-    void createOwnerTest() throws Exception {
+    void createCustomerTest() throws Exception {
         //given
         given(customerJpaRepository.save(customer1)).willReturn(customer1);
+        given(entityLogService.createEntityLog()).willReturn(entityLogModel);
 
         // when
         CustomerEntity savedOwner = customerService.createCustomer(customerE1);
