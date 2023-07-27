@@ -9,13 +9,13 @@ import router from "@/router/router";
 import { useTeamStore } from "@/stores/teamStore.js";
 import { useCustomerRightsStore } from "@/stores/customerRightsStore.js";
 
-import { CustomerType } from "@/models/customer.type";
+import { CustomersRightsType } from "@/models/customersRights.type";
 import { CaptainType } from "@/models/captain.type";
 
 export const useAuthStore = defineStore("loginStore", {
   state: () => ({
     captains: [] as CaptainType[],
-    customersRights: [] as CustomerType[],
+    customersRights: [] as CustomersRightsType[],
     user: (() => {
       const userString = localStorage.getItem("user");
       return userString ? JSON.parse(userString) : "";
@@ -30,19 +30,14 @@ export const useAuthStore = defineStore("loginStore", {
         this.captains = await captainService.getAllCaptainByUserId(
           this.user.id
         );
-        this.customersRights =
-          await customerService.getAllCustomersRightByUserId(this.user.id);
+        this.customersRights = await customerService.getAllCustomersRightById(
+          this.user.id
+        );
         //if the user is not a captain or a customer, he can't access to the admin part
         if (this.customersRights.length === 0 && this.captains.length === 0) {
           console.log("not captain or customer");
           this.logout();
           return false;
-        }
-        if (this.customersRights.length >= 1) {
-          this.returnedUrl = "/administration/customer";
-        } else {
-          //if not a customer it's necessarily a captain
-          this.returnedUrl = "/administration/captain";
         }
         let idsCust = [];
         let idsCap = [];
@@ -56,7 +51,11 @@ export const useAuthStore = defineStore("loginStore", {
         const customerRightsStore = useCustomerRightsStore();
         teamStore.setCaptainsId(idsCap);
         customerRightsStore.setCustomersRightsId(idsCust);
-        router.push(this.returnedUrl);
+        router.push(
+          this.returnedUrl ||
+            "/administration/captain" ||
+            "/administration/customer"
+        );
         return true;
       } catch {
         return false;
