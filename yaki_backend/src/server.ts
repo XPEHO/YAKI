@@ -11,7 +11,6 @@ import swaggerUi from "swagger-ui-express";
 import * as swaggerDocument from "./dev/swagger.json";
 
 import {router} from "./router";
-import {initdb} from "./db/initdb";
 /* Importing the declaration router from the declaration.router.ts file. */
 import declarationRouter from "./declaration.router";
 
@@ -20,7 +19,6 @@ import teamRouter from "./features/team/team.router";
 
 // Call the initConfig function to load environment variables and log their values to the console
 initConfig();
-initdb();
 
 const corsOptions = {
   origin: "*",
