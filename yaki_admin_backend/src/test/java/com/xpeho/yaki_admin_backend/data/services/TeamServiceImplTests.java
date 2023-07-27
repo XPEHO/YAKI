@@ -78,7 +78,6 @@ class TeamServiceImplTests {
         given(captainService.findAllById(Arrays.asList(1))).willReturn(captains);
         given(teamJpaRepository.save(team1)).willReturn(team1);
 
-
         // when
         TeamEntity savedTeam = teamService.createTeam(teamE1);
 

@@ -24,7 +24,6 @@ export class TeamService {
   createTeam = async (cptId: number, teamName: string, customerId: number): Promise<TeamType> => {
     
     const newTeam: TeamTypeOut = {"captainsId": [cptId], "teamName": teamName, "customerId": customerId};
-    console.log(customerId)
     const requestOptions = {
       method: 'POST',
       body: JSON.stringify(newTeam),
