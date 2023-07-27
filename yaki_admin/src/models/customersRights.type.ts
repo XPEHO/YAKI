@@ -1,4 +1,4 @@
-export type CaptainType = {
+export type CustomersRightsType = {
   id: number;
   userId: number;
   customerId: number;
