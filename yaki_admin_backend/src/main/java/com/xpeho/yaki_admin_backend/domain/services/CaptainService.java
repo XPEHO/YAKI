@@ -21,5 +21,6 @@ public interface CaptainService {
 
     List<UserEntityWithID> getAllCaptainByCustomerId(int customerId);
 
+    CaptainEntity disabled(int id);
 
 }

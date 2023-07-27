@@ -71,13 +71,13 @@ CREATE SEQUENCE IF NOT EXISTS public.team_id_seq
 ALTER SEQUENCE public.team_id_seq
     OWNER TO yaki;
 -- CREATE TEAM MATE IDs
-CREATE SEQUENCE IF NOT EXISTS public.team_mate_id_seq
+CREATE SEQUENCE IF NOT EXISTS public.teammate_id_seq
     INCREMENT 1
     START 1
     MINVALUE 1
     MAXVALUE 9223372036854775807
     CACHE 1;
-ALTER SEQUENCE public.team_mate_id_seq
+ALTER SEQUENCE public.teammate_id_seq
     OWNER TO yaki;
 -- CREATE DECLARATION IDs
 CREATE SEQUENCE IF NOT EXISTS public.declaration_id_seq
@@ -263,32 +263,32 @@ TABLESPACE pg_default;
 ALTER TABLE IF EXISTS public.team
     OWNER to yaki;
 --- CREATE TABLE FOR TEAM MATES
-CREATE TABLE IF NOT EXISTS public.team_mate
+CREATE TABLE IF NOT EXISTS public.teammate
 (
-    team_mate_id integer NOT NULL DEFAULT nextval('team_mate_id_seq'::regclass),
-    team_mate_team_id integer NOT NULL,
-    team_mate_user_id integer NOT NULL,
-    team_mate_entity_log_id integer,
-    team_mate_actif_flag boolean NOT NULL,
-    CONSTRAINT "TEAM_MATE_pkey" PRIMARY KEY (team_mate_id),
-    CONSTRAINT team_mate_team_id_fkey FOREIGN KEY (team_mate_team_id)
+    teammate_id integer NOT NULL DEFAULT nextval('teammate_id_seq'::regclass),
+    teammate_team_id integer NOT NULL,
+    teammate_user_id integer NOT NULL,
+    teammate_entity_log_id integer,
+    teammate_actif_flag boolean NOT NULL,
+    CONSTRAINT "TEAMMATE_pkey" PRIMARY KEY (teammate_id),
+    CONSTRAINT teammate_team_id_fkey FOREIGN KEY (teammate_team_id)
         REFERENCES public.team (team_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
         NOT VALID,
-    CONSTRAINT team_mate_user_id_fkey FOREIGN KEY (team_mate_user_id)
+    CONSTRAINT teammate_user_id_fkey FOREIGN KEY (teammate_user_id)
         REFERENCES public.user (user_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
         NOT VALID,
-    CONSTRAINT team_mate_entity_log_id_fkey FOREIGN KEY (team_mate_entity_log_id)
+    CONSTRAINT teammate_entity_log_id_fkey FOREIGN KEY (teammate_entity_log_id)
     REFERENCES public.entity_log (entity_log_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
         NOT VALID
 )
 TABLESPACE pg_default;
-ALTER TABLE IF EXISTS public.team_mate
+ALTER TABLE IF EXISTS public.teammate
     OWNER to yaki;
 -- CREATE TABLE FOR DECLARATIONS
 CREATE TABLE IF NOT EXISTS public.declaration

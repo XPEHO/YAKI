@@ -14,6 +14,7 @@ export const useTeamStore = defineStore("teamStore", {
     teamList: [] as TeamType[],
     teammateToDelete: 0 as number,
     teamToDelete: 0 as number,
+    customerId: 0 as number,
   }),
   getters: {
     getCustomersId(): number[] {
@@ -48,7 +49,9 @@ export const useTeamStore = defineStore("teamStore", {
     setCaptainsId(captainsId: number[]) {
       this.captainsId = captainsId;
     },
-
+    setCustomerId(customerId: number){
+      this.customerId = customerId;
+    },
     // get all teams of a captain
     async getTeamsFromCaptain(captainsId: number[]) {
       this.teamList = [];
@@ -94,16 +97,12 @@ export const useTeamStore = defineStore("teamStore", {
     },
     // create a team (use captain id and team name)
     async createTeam(cptId: number, teamName: string): Promise<void> {
-      await teamService.createTeam(cptId, teamName);
+      await teamService.createTeam(cptId, teamName,this.customerId);
     },
 
     // update the selected team (can change name or captainID)
-    async updateTeam(
-      teamID: number,
-      cptId: number,
-      teamName: string
-    ): Promise<void> {
-      await teamService.updateTeam(teamID, cptId, teamName);
+    async updateTeam(teamID: number, teamName: string): Promise<void> {
+      await teamService.updateTeam(teamID, teamName,this.customerId);
     },
 
     async deleteTeam(teamId: number): Promise<void> {

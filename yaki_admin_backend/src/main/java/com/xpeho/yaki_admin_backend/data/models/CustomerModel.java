@@ -33,6 +33,17 @@ public class CustomerModel {
     @Column(name = "customer_location_id")
     private int locationId;
 
+    @Column(name = "customer_actif_flag")
+    private boolean actif;
+
+    public boolean isActif() {
+        return actif;
+    }
+
+    public void setActif(boolean actif) {
+        this.actif = actif;
+    }
+
     public CustomerModel() {
 
     }
@@ -44,6 +55,7 @@ public class CustomerModel {
         this.ownerId = ownerId;
         this.users = users;
         this.locationId = locationId;
+        this.actif = true;
     }
 
     public CustomerModel(String customerName, int ownerId, int locationId) {
@@ -51,6 +63,7 @@ public class CustomerModel {
         this.name = customerName;
         this.locationId = locationId;
         this.users = new ArrayList<>();
+        this.actif = true;
     }
 
     public void addUsers(List<UserModel> users) {

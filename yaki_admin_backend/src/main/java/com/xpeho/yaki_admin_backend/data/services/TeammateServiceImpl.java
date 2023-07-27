@@ -1,7 +1,10 @@
 package com.xpeho.yaki_admin_backend.data.services;
 
+import com.xpeho.yaki_admin_backend.data.models.CaptainModel;
+import com.xpeho.yaki_admin_backend.data.models.TeamModel;
 import com.xpeho.yaki_admin_backend.data.models.TeammateModel;
 import com.xpeho.yaki_admin_backend.data.sources.TeammateJpaRepository;
+import com.xpeho.yaki_admin_backend.domain.entities.TeamEntity;
 import com.xpeho.yaki_admin_backend.domain.entities.TeammateDetailsEntity;
 import com.xpeho.yaki_admin_backend.domain.entities.TeammateEntity;
 import com.xpeho.yaki_admin_backend.domain.services.TeammateService;
@@ -61,8 +64,9 @@ public class TeammateServiceImpl implements TeammateService {
     public TeammateEntity deleteById(int id) {
         final Optional<TeammateModel> teammateModelOpt = teammateJpaRepository.findById(id);
         TeammateModel teammateModel = teammateModelOpt.orElseThrow(() -> new EntityNotFoundException("The teammate with id" + id + " is not found."));
+        TeammateEntity returnedEntity = new TeammateEntity(id, teammateModel.getTeamId(), teammateModel.getUserId());
         teammateJpaRepository.deleteById(id);
-        return new TeammateEntity(id, teammateModel.getTeamId(), teammateModel.getUserId());
+        return returnedEntity;
     }
 
 
@@ -83,5 +87,18 @@ public class TeammateServiceImpl implements TeammateService {
 
         //id and entity.id() could be different
         return entitySaved;
+    }
+
+    //disable the teammate but keep in log
+    @Override
+    public TeammateEntity disabled(int teammateId){
+        Optional<TeammateModel> teammateModelOpt = teammateJpaRepository.findById(teammateId);
+        if (teammateModelOpt.isEmpty()) {
+            throw new EntityNotFoundException("The teammate with id " + teammateId + " not found.");
+        }
+        TeammateModel teammateModel = teammateModelOpt.get();
+        teammateModel.setActif(false);
+        teammateJpaRepository.save(teammateModel);
+        return new TeammateEntity(teammateModel.getId(),teammateModel.getTeamId(),teammateModel.getUserId());
     }
 }

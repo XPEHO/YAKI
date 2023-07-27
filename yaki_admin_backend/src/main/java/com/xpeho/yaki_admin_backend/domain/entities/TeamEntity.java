@@ -1,4 +1,6 @@
 package com.xpeho.yaki_admin_backend.domain.entities;
 
-public record TeamEntity(Integer id, Integer captainId, String teamName) {
+import java.util.List;
+
+public record TeamEntity(Integer id, List<Integer> captainsId, String teamName,Integer customerId) {
 }

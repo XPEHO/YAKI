@@ -1,5 +1,6 @@
 package com.xpeho.yaki_admin_backend.presentation.controllers;
 
+import com.xpeho.yaki_admin_backend.domain.entities.CaptainEntity;
 import com.xpeho.yaki_admin_backend.domain.entities.TeamEntity;
 import com.xpeho.yaki_admin_backend.domain.services.TeamService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -49,5 +50,8 @@ public class TeamController {
     @GetMapping({"customer/{id}"})
     public List<TeamEntity> findAllTeamByCustomerId(@PathVariable int id) {
         return teamService.findAllTeamByCustomerId(id);
+    @PutMapping("/disabled/{id}")
+    public TeamEntity disabled(@PathVariable int id){
+        return teamService.disabled(id);
     }
 }
