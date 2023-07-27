@@ -1,15 +1,15 @@
 import { authHeader } from "@/utils/authUtils";
 import { handleResponse } from "@/utils/responseUtils";
 import { CustomerType } from "@/models/customer.type";
+import { CustomersRightsType } from "@/models/customersRights.type";
 import { environmentVar } from "@/envPlaceholder";
 
 const URL: string = environmentVar.baseURL;
 
 export class CustomerService {
-  // get all customers by user id
-  getAllCustomersRightByUserId = async (
+  getAllCustomersRightById = async (
     userId: number
-  ): Promise<CustomerType[]> => {
+  ): Promise<CustomersRightsType[]> => {
     const requestOptions = {
       method: "GET",
       headers: authHeader(`${URL}/customers/rights/${userId}`),

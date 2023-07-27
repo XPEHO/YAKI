@@ -6,7 +6,7 @@ import { TeamType } from "@/models/team.type";
 
 export const useTeamStore = defineStore("teamStore", {
   state: () => ({
-    customerId: [] as number[],
+    customersId: [] as number[],
     captainsId: [] as number[],
     teamId: 0 as number,
     teamName: "" as string,
@@ -17,7 +17,7 @@ export const useTeamStore = defineStore("teamStore", {
   }),
   getters: {
     getcustomerId(): number[] {
-      return this.customerId;
+      return this.customersId;
     },
     getCaptainId(): number[] {
       return this.captainsId;
@@ -42,8 +42,8 @@ export const useTeamStore = defineStore("teamStore", {
     setTeamName(name: string) {
       this.teamName = name;
     },
-    setCustomerId(customerId: number[]) {
-      this.customerId = customerId;
+    setCustomersId(customersId: number[]) {
+      this.customersId = customersId;
     },
     setCaptainsId(captainsId: number[]) {
       this.captainsId = captainsId;

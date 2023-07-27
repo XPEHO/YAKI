@@ -7,4 +7,3 @@ export type CustomerType = {
   users: [],
 
 };
-
