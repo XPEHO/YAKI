@@ -21,22 +21,27 @@ public class TeammateModel {
     @Column(name = "teammate_actif_flag")
     private boolean actif;
 
+    @Column(name = "teammate_entity_log_id")
+    private int entityLogId;
 
 
-    public TeammateModel(int teamId, int userId) {
+
+    public TeammateModel(int teamId, int userId, int entityLogId) {
         this.teamId = teamId;
         this.userId = userId;
         this.actif = true;
+        this.entityLogId = entityLogId;
     }
 
     public TeammateModel() {
     }
 
-    public TeammateModel(int id, int teamId, int userId) {
+    public TeammateModel(int id, int teamId, int userId,int entityLogId) {
         this.id = id;
         this.teamId = teamId;
         this.userId = userId;
         this.actif = true;
+        this.entityLogId = entityLogId;
     }
     public boolean isActif() {
         return actif;
@@ -67,6 +72,13 @@ public class TeammateModel {
 
     public void setId(int id) {
         this.id = id;
+    }
+    public int getEntityLogId() {
+        return entityLogId;
+    }
+
+    public void setEntityLogId(int entityLogId) {
+        this.entityLogId = entityLogId;
     }
 
     //used for test servicesImpl for create and save methods

@@ -1,6 +1,7 @@
 package com.xpeho.yaki_admin_backend.data.services;
 
 import com.xpeho.yaki_admin_backend.data.models.CaptainModel;
+import com.xpeho.yaki_admin_backend.data.models.EntityLogModel;
 import com.xpeho.yaki_admin_backend.data.models.TeamModel;
 import com.xpeho.yaki_admin_backend.data.sources.TeamJpaRepository;
 import com.xpeho.yaki_admin_backend.domain.entities.TeamEntity;
@@ -18,17 +19,22 @@ public class TeamServiceImpl implements TeamService {
     final TeamJpaRepository teamJpaRepository;
     final CaptainServiceImpl captainService;
     final CaptainsTeamsServiceImpl captainsTeamsService;
-    public TeamServiceImpl(TeamJpaRepository teamJpaRepository, CaptainServiceImpl captainService, CaptainsTeamsServiceImpl captainsTeamsService) {
+    final EntityLogServiceImpl entityLogService;
+    public TeamServiceImpl(TeamJpaRepository teamJpaRepository, CaptainServiceImpl captainService, CaptainsTeamsServiceImpl captainsTeamsService, EntityLogServiceImpl entityLogService) {
         this.teamJpaRepository = teamJpaRepository;
         this.captainService = captainService;
         this.captainsTeamsService = captainsTeamsService;
+        this.entityLogService = entityLogService;
     }
 
     @Override
     public TeamEntity createTeam(TeamEntity teamEntity) {
 
         List<CaptainModel> captainModels = captainService.findAllById(teamEntity.captainsId());
-        final TeamModel teamModel = new TeamModel(captainModels, teamEntity.teamName(), teamEntity.customerId());
+
+        EntityLogModel entityLogModel = entityLogService.createEntityLog();
+        final TeamModel teamModel = new TeamModel(captainModels, teamEntity.teamName(), teamEntity.customerId()
+                ,entityLogModel.getId());
         teamJpaRepository.save(teamModel);
         //teamEntity.id could be null so we use autogenerate id
         List<Integer> captainsId = teamModel.getCaptains().stream()
@@ -120,6 +126,7 @@ public class TeamServiceImpl implements TeamService {
             throw new EntityNotFoundException("The team with id " + teamId + " not found.");
         }
         TeamModel teamModel = teamModelOpt.get();
+        entityLogService.disabledEntity(teamModel.getEntityLogId());
         teamModel.setActif(false);
         teamJpaRepository.save(teamModel);
         List<Integer> captainsId = teamModel.getCaptains().stream()

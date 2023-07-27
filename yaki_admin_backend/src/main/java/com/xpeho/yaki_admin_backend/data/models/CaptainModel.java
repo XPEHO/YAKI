@@ -24,6 +24,9 @@ public class CaptainModel {
     @Column(name = "captain_actif_flag")
     private boolean actif;
 
+    @Column(name = "captain_entity_log_id")
+    private int entityLogId;
+
     public boolean isActif() {
         return actif;
     }
@@ -32,20 +35,30 @@ public class CaptainModel {
         this.actif = actif;
     }
 
-    public CaptainModel(int userId, int customerId) {
+    public CaptainModel(int userId, int customerId,int entityLogId) {
         this.userId = userId;
         this.customerId = customerId;
         this.actif = true;
+        this.entityLogId = entityLogId;
     }
 
     public CaptainModel() {
     }
 
-    public CaptainModel(int captainId, int userId, int customerId) {
+    public CaptainModel(int captainId, int userId, int customerId,int entityLogId) {
         this.captainId = captainId;
         this.userId = userId;
         this.customerId = customerId;
         this.actif = true;
+        this.entityLogId = entityLogId;
+    }
+
+    public int getEntityLogId() {
+        return entityLogId;
+    }
+
+    public void setEntityLogId(int entityLogId) {
+        this.entityLogId = entityLogId;
     }
 
     public UserModel getUser() {
