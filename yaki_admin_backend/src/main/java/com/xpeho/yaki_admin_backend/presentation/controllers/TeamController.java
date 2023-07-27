@@ -50,6 +50,7 @@ public class TeamController {
     @GetMapping({"customer/{id}"})
     public List<TeamEntity> findAllTeamByCustomerId(@PathVariable int id) {
         return teamService.findAllTeamByCustomerId(id);
+    }
     @PutMapping("/disabled/{id}")
     public TeamEntity disabled(@PathVariable int id){
         return teamService.disabled(id);
