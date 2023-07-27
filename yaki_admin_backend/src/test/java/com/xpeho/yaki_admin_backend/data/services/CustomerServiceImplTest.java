@@ -41,7 +41,7 @@ class CustomerServiceImplTest {
         owner1 = new OwnerModel(1, 1);
         this.usersCustomer = new ArrayList<>(3);
         customerE1 = new CustomerEntity(1, "A la ferme", 1, 2);
-        customer1 = new CustomerModel(1, owner1, "A la ferme", 1, usersCustomer, 2);
+        customer1 = new CustomerModel(1, owner1, "A la ferme", 1, usersCustomer, 2,1);
     }
 
     @Test
@@ -90,7 +90,7 @@ class CustomerServiceImplTest {
     void deleteByIdTest() throws Exception {
         //given
         int deletedId = 1;
-        CustomerModel deletedModel = new CustomerModel(deletedId, owner1, "A la cantine", 1, usersCustomer, 1);
+        CustomerModel deletedModel = new CustomerModel(deletedId, owner1, "A la cantine", 1, usersCustomer, 1,1);
         willDoNothing().given(customerJpaRepository).deleteById(deletedId);
         given(customerJpaRepository.findById(deletedId)).willReturn(Optional.of(deletedModel));
 
@@ -107,9 +107,9 @@ class CustomerServiceImplTest {
     void getCustomersTest() {
         //given
         List<CustomerModel> customerModels = Arrays.asList(
-                new CustomerModel("Géo trouve tout", 1, 1),
-                new CustomerModel("Géo trouve rien", 1, 4),
-                new CustomerModel("Géo perd tout", 2, 2)
+                new CustomerModel("Géo trouve tout", 1, 1,1),
+                new CustomerModel("Géo trouve rien", 1, 4,1),
+                new CustomerModel("Géo perd tout", 2, 2,1)
         );
 
         //when
@@ -127,7 +127,7 @@ class CustomerServiceImplTest {
     void addCustomerRightTest() {
         //given
         CustomerRightsEntity customerRightsEntity = new CustomerRightsEntity(1, Collections.singletonList(1));
-        CustomerModel customerModel = new CustomerModel(1, owner1, "A la ferme", 1, usersCustomer, 2);
+        CustomerModel customerModel = new CustomerModel(1, owner1, "A la ferme", 1, usersCustomer, 2,1);
         given(customerJpaRepository.getReferenceById(customerRightsEntity.customerId())).willReturn(customerModel);
         given(customerJpaRepository.save(customerModel)).willReturn(customerModel);
         //when
