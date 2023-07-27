@@ -6,7 +6,7 @@ import { TeamType } from "@/models/team.type";
 
 export const useTeamStore = defineStore("teamStore", {
   state: () => ({
-    customerId: [] as number[],
+    customersId: [] as number[],
     captainsId: [] as number[],
     teamId: 0 as number,
     teamName: "" as string,
@@ -16,8 +16,8 @@ export const useTeamStore = defineStore("teamStore", {
     teamToDelete: 0 as number,
   }),
   getters: {
-    getCustomerId(): number[] {
-      return this.customerId;
+    getcustomersId(): number[] {
+      return this.customersId;
     },
     getCaptainId(): number[] {
       return this.captainsId;
@@ -42,8 +42,8 @@ export const useTeamStore = defineStore("teamStore", {
     setTeamName(name: string) {
       this.teamName = name;
     },
-    setCustomerId(customerId: number[]) {
-      this.customerId = customerId;
+    setCustomersId(customersId: number[]) {
+      this.customersId = customersId;
     },
     setCaptainsId(captainsId: number[]) {
       this.captainsId = captainsId;
@@ -59,9 +59,9 @@ export const useTeamStore = defineStore("teamStore", {
     },
 
     // get all teams of a customer
-    async getTeamsFromCustomer(customerId: number[]): Promise<void> {
+    async getTeamsFromCustomer(customersId: number[]): Promise<void> {
       this.teamList = [];
-      for (const id of customerId) {
+      for (const id of customersId) {
         const a = await teamService.getAllTeamsWithinCustomer(id);
         this.teamList = this.teamList.concat(a);
       }

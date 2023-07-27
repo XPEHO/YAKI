@@ -92,4 +92,6 @@ public class CustomerServiceImpl implements CustomerService {
                 entity.ownerId(), entity.locationId());
     }
 
+
 }
+
