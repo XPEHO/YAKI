@@ -7,9 +7,9 @@ import { environmentVar } from "@/envPlaceholder";
 const URL: string = environmentVar.baseURL;
 
 export class CustomerService {
-  getAllCustomersRightById = async (
+  getAllCustomersRightByUserId = async (
     userId: number
-  ): Promise<CustomersRightsType[]> => {
+  ): Promise<CustomerType[]> => {
     const requestOptions = {
       method: "GET",
       headers: authHeader(`${URL}/customers/rights/${userId}`),

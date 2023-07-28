@@ -18,5 +18,6 @@ public interface CustomerService {
     CustomerEntity deleteById(int id);
 
     CustomerEntity saveOrUpdate(CustomerEntity entity, int id);
-    
+
+    List<CustomerEntity> getAllCustomersRightByUserId(int id);
 }
