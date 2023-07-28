@@ -41,6 +41,7 @@ class _RegistrationState extends ConsumerState<Registration> {
     );
   }
 
+
   // when press register button
   Future<void> formButtonValidation() async {
     if (_formKey.currentState!.validate()) {
@@ -58,15 +59,18 @@ class _RegistrationState extends ConsumerState<Registration> {
 
       // depending of true of false (will be changed to true only if code200) change snachbar message and message color
       if (registrationResult) {
+        context.go('/');
         showSnackBar(
           content: tr("registrationSnackSuccess"),
           textStyle: registratonSnackTextStyle(
             textColor: const Color.fromARGB(255, 21, 76, 8),
+
           ),
           barAction: () {
             context.go('/');
           },
         );
+        context.go('/');
       } else {
         showSnackBar(
           content: tr("registrationSnackError"),
