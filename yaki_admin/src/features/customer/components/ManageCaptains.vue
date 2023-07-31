@@ -1,11 +1,9 @@
 <script setup="ts">
-import router from "../../../../src/router/router";
-
 import modalValidationState from "@/features/shared/services/modalValidationState";
 import ModalValidation from "@/features/shared/components/ModalValidation.vue";
 
 import { onBeforeMount } from "vue";
-import { useCaptainStore } from "../../../../src/stores/captainStore.js";
+import { useCaptainStore } from "../../../../src/stores/captainStore.ts";
 
 const captainStore = useCaptainStore();
 
@@ -29,7 +27,6 @@ const validationModalAccept = () => {
     fetchCaptains();
   }, 150);
 };
-
 </script>
 
 <template>
@@ -38,7 +35,7 @@ const validationModalAccept = () => {
     @modal-accept="validationModalAccept" />
 
   <div class="customer-view-captains">
-    <h1 class="title">Customer</h1>
+    <h1 class="title">Captains List</h1>
     <h2 class="text">Manage your captains here</h2>
     <hr class="line" />
 
@@ -54,28 +51,5 @@ const validationModalAccept = () => {
 
 <style lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap");
-.customer-view-captains {
-  padding: 30px;
-  font-family: "Inter", sans-serif;
-}
-.title {
-  font-size: 38px;
-}
-.text {
-  font-size: 18px;
-  color: #787878;
-  margin-bottom: 20px;
-}
-.line {
-  width: 80%;
-  background-color: #efefefed;
-  margin-bottom: 1rem;
-}
-.captain-list {
-  padding: 50px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 3rem;
-}
+
 </style>

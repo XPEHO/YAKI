@@ -31,15 +31,24 @@ const router = createRouter({
           path: "invitation",
           component: LayoutInvitation,
         },
+      ],
+    },
+    {
+      path: "/customer",
+      name: "Customer",
+      component: LayoutCustomer,
+      meta: { transition: "slide-left" },
+      children: [
         {
-          path: "customer",
-          component: LayoutCustomer,
+          path: "invitation",
+          component: LayoutInvitation,
         },
       ],
     },
   ],
 });
 
+// BEGIN: be15d9bcejpp
 router.beforeEach(async (to) => {
   // redirect to login page if not logged in and trying to access a restricted page
   const publicPages = ["/"];

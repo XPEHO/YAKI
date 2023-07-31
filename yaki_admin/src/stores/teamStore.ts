@@ -59,7 +59,7 @@ export const useTeamStore = defineStore("teamStore", {
     },
 
     // get all teams of a customer
-    async getTeamsFromCustomer(customersId: number[]): Promise<void> {
+    async getTeamsFromCustomer(customersId: number[]) {
       this.teamList = [];
       for (const id of customersId) {
         const a = await teamService.getAllTeamsWithinCustomer(id);
