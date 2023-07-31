@@ -1,8 +1,8 @@
 {
   "headerTitle": "Authentication",
   "headerHint": "Who are you ?",
-  "inputLogin": "Login",
-  "hintLogin": "Enter your login",
+  "inputLogin": "Email",
+  "hintLogin": "Enter your email",
   "inputPassword": "Password",
   "hintPassword": "Enter your password",
   "rememberMe": "Remember me",

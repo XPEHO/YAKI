@@ -109,7 +109,7 @@ class _RegistrationState extends ConsumerState<Registration> {
 
   String? passwordValidator(String? value) {
     final passwordRegex = RegExp(
-      r'^(?=.*?[A-Z])(?=.*[a-z])(?=.*?[0-9])(?=.*?[$£ù^&§+=:;.?,()é!@#\><*~]).{10}',
+      r'^(?=.*?[A-Z])(?=.*[a-z])(?=.*?[0-9])(?=.*?[$£€µù^&§+=:;.?,()é!@#\><*~"%\-_/\[\]\{\}\|ç]).{10}',
     );
     if (value != null && value.isEmpty) {
       return tr('registrationInputPasswordError1');
@@ -158,30 +158,35 @@ class _RegistrationState extends ConsumerState<Registration> {
                         label: tr('registrationInputFirstnameLabel'),
                         validatorFunction: nameValidator,
                         isShown: false,
+                        textCapitalization: TextCapitalization.words,
                       ),
                       InputRegistration(
                         controller: lastNameController,
                         label: tr('registrationInputLastnameLabel'),
                         validatorFunction: nameValidator,
                         isShown: false,
+                        textCapitalization: TextCapitalization.characters,
                       ),
                       InputRegistration(
                         controller: emailController,
                         label: tr('registrationInputEmailLabel'),
                         validatorFunction: emailValidator,
                         isShown: false,
+                        textCapitalization: TextCapitalization.none,
                       ),
                       InputRegistration(
                         controller: passwordController,
                         label: tr('registrationInputPasswordLabel'),
                         validatorFunction: passwordValidator,
                         isShown: true,
+                        textCapitalization: TextCapitalization.none,
                       ),
                       InputRegistration(
                         controller: passwordConfirmController,
                         label: tr('registrationInputPassConfirmLabel'),
                         validatorFunction: pwConfirmationValidator,
                         isShown: true,
+                        textCapitalization: TextCapitalization.none,
                       ),
                     ],
                   ),
