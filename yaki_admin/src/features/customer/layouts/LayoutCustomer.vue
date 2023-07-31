@@ -1,25 +1,35 @@
 <script setup lang="ts">
-
-import SideBarButton from "@/features/shared/components/SideBarButton.vue";
-import plusIcon from "@/assets/plus.png";
-import SideBarElement from "@/features/shared/components/SideBarElement.vue";
+import { ref } from "vue";
 import router from "@/router/router";
+import plusIcon from "@/assets/plus.png";
+
+const currentComponentTeams = ref("");
+const currentComponentCaptains = ref("");
+
+const handleClickTeams = () => {
+  currentComponentTeams.value = "ManageTeams";
+};
+
+const handleClickCaptains = () => {
+  currentComponentCaptains.value = "ManageCaptains";
+};
 </script>
+
 <template>
   <div class="customer-view">
-    <side-bar-element
+    <SideBarElement
       v-bind:inner-text="'Manage teams'"
-      v-bind:icon-path="plusIcon"
-      @click="currentComponent = 'ManageTeams'" />
-    <side-bar-element
+      @click="currentComponentTeams = 'ManageTeams'" />
+
+    <SideBarElement
       v-bind:inner-text="'Manage captains'"
-      v-bind:icon-path="plusIcon"
-      @click="currentComponent = 'ManageCaptains'" />
+      @click="currentComponentCaptains = 'ManageCaptains'" />
+
     <SideBarButton
       v-bind:inner-text="'Add captains'"
       v-bind:icon-path="plusIcon"
-      @click.prevent="router.push({ path: `invitation` })" />
-    <component :is="currentComponent" />
+      @click.prevent="router.push({ path: 'invitation' })" />
   </div>
 </template>
+
 <style lang="scss"></style>

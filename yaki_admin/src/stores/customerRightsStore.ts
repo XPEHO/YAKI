@@ -1,10 +1,10 @@
 import { defineStore } from "pinia";
-import { CustomersRightsType } from "@/models/customersRights.type";
+import { CustomerType } from "@/models/customer.type";
 
 export const useCustomerRightsStore = defineStore("customerRightsStore", {
   state: () => ({
     customersRigthsId: [] as number[],
-    customersRights: [] as CustomersRightsType[],
+    customersRights: [] as CustomerType[],
   }),
   getters: {
     getCustomersRightsId(): number[] {
