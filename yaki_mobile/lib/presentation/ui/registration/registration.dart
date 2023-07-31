@@ -59,7 +59,6 @@ class _RegistrationState extends ConsumerState<Registration> {
 
       // depending of true of false (will be changed to true only if code200) change snachbar message and message color
       if (registrationResult) {
-        context.go('/');
         showSnackBar(
           content: tr("registrationSnackSuccess"),
           textStyle: registratonSnackTextStyle(
@@ -67,9 +66,9 @@ class _RegistrationState extends ConsumerState<Registration> {
 
           ),
           barAction: () {
-            context.go('/');
           },
         );
+        // ignore: use_build_context_synchronously
         context.go('/');
       } else {
         showSnackBar(
@@ -158,26 +157,31 @@ class _RegistrationState extends ConsumerState<Registration> {
                         controller: firstNameController,
                         label: tr('registrationInputFirstnameLabel'),
                         validatorFunction: nameValidator,
+                        isShown: false,
                       ),
                       InputRegistration(
                         controller: lastNameController,
                         label: tr('registrationInputLastnameLabel'),
                         validatorFunction: nameValidator,
+                        isShown: false,
                       ),
                       InputRegistration(
                         controller: emailController,
                         label: tr('registrationInputEmailLabel'),
                         validatorFunction: emailValidator,
+                        isShown: false,
                       ),
                       InputRegistration(
                         controller: passwordController,
                         label: tr('registrationInputPasswordLabel'),
                         validatorFunction: passwordValidator,
+                        isShown: true,
                       ),
                       InputRegistration(
                         controller: passwordConfirmController,
                         label: tr('registrationInputPassConfirmLabel'),
                         validatorFunction: pwConfirmationValidator,
+                        isShown: true,
                       ),
                     ],
                   ),
