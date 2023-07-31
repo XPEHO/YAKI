@@ -5,7 +5,7 @@ class InputRegistration extends StatefulWidget {
   final String label;
   final bool isShown;
   final String? Function(String?) validatorFunction;
-  final TextCapitalization textCapitalization;
+  final String Function(String) textCapitalization;
 
   const InputRegistration({
     super.key,
@@ -13,8 +13,9 @@ class InputRegistration extends StatefulWidget {
     required this.isShown,
     required this.label,
     required this.validatorFunction,
-    required this.textCapitalization,
+    required this.textCapitalization
   });
+  
 
   @override
   State<InputRegistration> createState() => _InputRegistrationState();
@@ -33,9 +34,12 @@ class _InputRegistrationState extends State<InputRegistration> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 15),
+      padding: const EdgeInsets.symmetric(vertical: 15), 
       child: TextFormField(
-        keyboardType: TextInputType.text,
+        onChanged: (value) {
+          widget.controller.value = TextEditingValue(text: widget.textCapitalization(value),
+          selection: widget.controller.selection );
+        },
         obscureText: _passwordVisible,
         controller: widget.controller,
         validator: widget.validatorFunction,
@@ -76,8 +80,10 @@ class _InputRegistrationState extends State<InputRegistration> {
                 )
             : null,
         ),
-        textCapitalization: widget.textCapitalization,  
+
+        
       ),
     );
   }
 }
+
