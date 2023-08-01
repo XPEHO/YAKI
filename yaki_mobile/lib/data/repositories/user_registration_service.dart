@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:yaki/data/models/user_registration_model.dart';
 import 'package:yaki/data/sources/remote/user_register_repository.dart';
@@ -36,16 +37,29 @@ class UserRegistrationService {
           status = "registrationFailed";
           debugPrint("Error during account creation");
           break;
-        case 417:
-          status = "registrationInputEmailError";
         default:
           status = "registrationFailed";
+          debugPrint('statusCode :  $statusCode');
           throw Exception(
             "Invalid statusCode : $statusCode",
           );
       }
     } catch (err) {
-      debugPrint('Error during user registration : $err');
+      if(err is DioError){
+        final responseStatusCode = err.response?.statusCode ?? -1;
+        if (responseStatusCode == 417) {
+          status = "registrationInputEmailError";
+          debugPrint("registrationInputEmailError");
+          }
+        else {
+          status = "registrationFailed";
+          debugPrint('Error during user registration : $err');
+        }
+      }
+      else {
+        status = "registrationFailed";
+        debugPrint('Error during user registration : $err');
+      }
     }
   }
 }

@@ -79,7 +79,7 @@ class _RegistrationState extends ConsumerState<Registration> {
         );
       }else if(registrationResult == "registrationInputEmailError"){
         showSnackBar(
-          content: tr("registrationResult"),
+          content: tr("registrationSnackEmailError"),
           textStyle: registratonSnackTextStyle(
             textColor: const Color.fromARGB(255, 123, 5, 5),
           ),

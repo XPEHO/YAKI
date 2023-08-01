@@ -50,6 +50,7 @@ export class UserRepository {
     });
       if(!registerResponse.ok){
         if(registerResponse.status === 417)
+        //handle the email already used error
           throw new TypeError("email already used")
       }
       let jsonResponse =  await registerResponse.json();

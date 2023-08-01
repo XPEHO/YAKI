@@ -75,10 +75,20 @@ export class UserService {
       user.email.trim(),
       user.password.trim()
     );
+    try{
       const springResponse = await this.userRepository.registerUser(userToRegister);
       if (springResponse.id !== 0 && springResponse.id !== null) {
         responseAfterRegister.isRegistered = true;
       }
       return responseAfterRegister;
+    }
+    catch (error: any) {
+      if (error instanceof TypeError) {
+        throw new TypeError("email already used")
+      } else {
+        // catch server errors
+        throw Error
+      }
+    }
   };
 }

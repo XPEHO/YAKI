@@ -60,5 +60,6 @@
   "registrationButton": "Créer",
   "registrationSnackSuccess": "Création de compte réussie. Veuillez vérifier vos emails",
   "registrationSnackError": "Erreur lors de l'inscription, Veuillez réessayer",
+  "registrationSnackEmailError": "Cet email est déjà utilisé",
   "registrationCancelButton": "Annuler"
 }
