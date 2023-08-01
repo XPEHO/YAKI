@@ -4,8 +4,10 @@ import PageLogin from "@/features/login/pages/PageLogin.vue";
 import LayoutCaptain from "@/features/captain/layouts/LayoutCaptain.vue";
 import LayoutInvitation from "@/features/invitation/layouts/LayoutInvitation.vue";
 import LayoutCustomer from "@/features/customer/layouts/LayoutCustomer.vue";
+import LayoutCaptainByCustomer from "@/features/customer/layouts/LayoutCaptainByCustomer.vue";
 
 import PageApplication from "@/features/PageApplication.vue";
+import LayoutTeamByCustomer from "@/features/customer/layouts/LayoutTeamByCustomer.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -39,6 +41,14 @@ const router = createRouter({
       component: LayoutCustomer,
       meta: { transition: "slide-left" },
       children: [
+        {
+          path: "manage-captain",
+          component: LayoutCaptainByCustomer,
+        },
+        {
+          path: "manage-team",
+          component: LayoutTeamByCustomer,
+        },
         {
           path: "invitation",
           component: LayoutInvitation,

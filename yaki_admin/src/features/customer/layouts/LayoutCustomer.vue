@@ -1,25 +1,14 @@
 <script setup lang="ts">
-import router from "@/router/router";
-import plusIcon from "@/assets/plus.png";
-import ManageTeams from "../components/ManageTeams.vue";
-import ManageCaptains from "../components/ManageCaptains.vue";
-import SideBarButton from "@/features/shared/components/SideBarButton.vue";
 import HeaderYaki from "@/features/shared/components/HeaderYaki.vue";
 import SideBarCustomer from "../components/SideBarCustomer.vue";
+import { RouterView } from "vue-router";
 </script>
 
 <template>
   <header-yaki />
   <div class="layout-customer">
     <SideBarCustomer />
-    <div class="customer-view">
-      <SideBarButton
-        v-bind:inner-text="'Add captain'"
-        v-bind:icon-path="plusIcon"
-        @click.prevent="router.push({ path: 'invitation' })" />
-      <ManageCaptains />
-      <ManageTeams />
-    </div>
+    <router-view />
   </div>
 </template>
 
