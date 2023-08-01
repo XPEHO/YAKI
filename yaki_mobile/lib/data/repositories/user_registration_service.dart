@@ -5,7 +5,7 @@ import 'package:yaki/domain/entities/user_registered.dart';
 
 class UserRegistrationService {
   UserRegistered userRegistered = UserRegistered(isRegistered: false);
-
+  String status = '';
   final UserRegisterRepository _userRegisterRepository;
   UserRegistrationService(this._userRegisterRepository);
 
@@ -29,12 +29,17 @@ class UserRegistrationService {
 
       switch (statusCode) {
         case 200:
+          status = "OK";
           userRegistered = UserRegistered.fromJson(getHttpResponse.data);
           break;
         case 400:
+          status = "registrationFailed";
           debugPrint("Error during account creation");
           break;
+        case 417:
+          status = "registrationInputEmailError";
         default:
+          status = "registrationFailed";
           throw Exception(
             "Invalid statusCode : $statusCode",
           );

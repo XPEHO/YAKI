@@ -17,7 +17,7 @@ public class CustomExceptionHandler {
         return ex.getMessage();
     }
     @ExceptionHandler(EmailAlreadyExistsException.class)
-    @ResponseStatus(HttpStatus.ALREADY_REPORTED)
+    @ResponseStatus(HttpStatus.EXPECTATION_FAILED)
     public String handleEmailAlreadyExistsException(EmailAlreadyExistsException ex){
         return ex.getMessage();
     }

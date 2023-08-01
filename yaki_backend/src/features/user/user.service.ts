@@ -75,12 +75,10 @@ export class UserService {
       user.email.trim(),
       user.password.trim()
     );
-
-    const springResponse = await this.userRepository.registerUser(userToRegister);
-    if (springResponse.id !== 0 && springResponse.id !== null) {
-      responseAfterRegister.isRegistered = true;
-    }
-
-    return responseAfterRegister;
+      const springResponse = await this.userRepository.registerUser(userToRegister);
+      if (springResponse.id !== 0 && springResponse.id !== null) {
+        responseAfterRegister.isRegistered = true;
+      }
+      return responseAfterRegister;
   };
 }
