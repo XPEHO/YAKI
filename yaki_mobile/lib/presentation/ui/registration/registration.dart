@@ -41,7 +41,6 @@ class _RegistrationState extends ConsumerState<Registration> {
     );
   }
 
-
   // when press register button
   Future<void> formButtonValidation() async {
     if (_formKey.currentState!.validate()) {
@@ -63,10 +62,8 @@ class _RegistrationState extends ConsumerState<Registration> {
           content: tr("registrationSnackSuccess"),
           textStyle: registratonSnackTextStyle(
             textColor: const Color.fromARGB(255, 21, 76, 8),
-
           ),
-          barAction: () {
-          },
+          barAction: () {},
         );
         // ignore: use_build_context_synchronously
         context.go('/');
@@ -131,6 +128,15 @@ class _RegistrationState extends ConsumerState<Registration> {
     return null;
   }
 
+  String toUpperCase(String s) {
+    return s.toUpperCase();
+  }
+
+  String capitalize(String s) {
+    //first letter uppercase only
+    return "${s[0].toUpperCase()}${s.substring(1).toLowerCase()}";
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -158,35 +164,35 @@ class _RegistrationState extends ConsumerState<Registration> {
                         label: tr('registrationInputFirstnameLabel'),
                         validatorFunction: nameValidator,
                         isShown: false,
-                        textCapitalization: TextCapitalization.words,
+                        textCapitalization: capitalize,
                       ),
                       InputRegistration(
                         controller: lastNameController,
                         label: tr('registrationInputLastnameLabel'),
                         validatorFunction: nameValidator,
                         isShown: false,
-                        textCapitalization: TextCapitalization.characters,
+                        textCapitalization: toUpperCase,
                       ),
                       InputRegistration(
                         controller: emailController,
                         label: tr('registrationInputEmailLabel'),
                         validatorFunction: emailValidator,
                         isShown: false,
-                        textCapitalization: TextCapitalization.none,
+                        textCapitalization: (s) => (s),
                       ),
                       InputRegistration(
                         controller: passwordController,
                         label: tr('registrationInputPasswordLabel'),
                         validatorFunction: passwordValidator,
                         isShown: true,
-                        textCapitalization: TextCapitalization.none,
+                        textCapitalization: (s) => (s),
                       ),
                       InputRegistration(
                         controller: passwordConfirmController,
                         label: tr('registrationInputPassConfirmLabel'),
                         validatorFunction: pwConfirmationValidator,
                         isShown: true,
-                        textCapitalization: TextCapitalization.none,
+                        textCapitalization: (s) => (s),
                       ),
                     ],
                   ),

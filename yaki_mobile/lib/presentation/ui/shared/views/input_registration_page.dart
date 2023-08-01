@@ -13,16 +13,14 @@ class InputRegistration extends StatefulWidget {
     required this.isShown,
     required this.label,
     required this.validatorFunction,
-    required this.textCapitalization
+    required this.textCapitalization,
   });
-  
 
   @override
   State<InputRegistration> createState() => _InputRegistrationState();
 }
 
 class _InputRegistrationState extends State<InputRegistration> {
-
   late bool _passwordVisible;
 
   @override
@@ -34,11 +32,13 @@ class _InputRegistrationState extends State<InputRegistration> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 15), 
+      padding: const EdgeInsets.symmetric(vertical: 15),
       child: TextFormField(
         onChanged: (value) {
-          widget.controller.value = TextEditingValue(text: widget.textCapitalization(value),
-          selection: widget.controller.selection );
+          widget.controller.value = TextEditingValue(
+            text: widget.textCapitalization(value),
+            selection: widget.controller.selection,
+          );
         },
         obscureText: _passwordVisible,
         controller: widget.controller,
@@ -78,12 +78,9 @@ class _InputRegistrationState extends State<InputRegistration> {
                     );
                   },
                 )
-            : null,
+              : null,
         ),
-
-        
       ),
     );
   }
 }
-
