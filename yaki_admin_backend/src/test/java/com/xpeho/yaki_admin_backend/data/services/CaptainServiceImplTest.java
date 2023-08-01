@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -116,4 +117,39 @@ class CaptainServiceImplTest {
         assertEquals(captainEntity.userId(), savedCaptain.userId());
         assertEquals(captainEntity.customerId(), savedCaptain.customerId());
     }
+
+    @Test
+    public void testGetAllCaptainByUserId() {
+        int userId = 1;
+        List<CaptainModel> captainModels = new ArrayList<>();
+        captainModels.add(new CaptainModel(1, 1, 1));
+        captainModels.add(new CaptainModel(2, 1, 2));
+        when(captainJpaRepository.findAllByUserId(userId)).thenReturn(captainModels);
+
+        List<CaptainEntity> expectedCaptainEntities = new ArrayList<>();
+        expectedCaptainEntities.add(new CaptainEntity(1, 1, 1));
+        expectedCaptainEntities.add(new CaptainEntity(2, 1, 2));
+
+        List<CaptainEntity> actualCaptainEntities = captainService.getAllCaptainByUserId(userId);
+
+        assertEquals(expectedCaptainEntities, actualCaptainEntities);
+    }
+
+    @Test
+    public void testGetAllCaptainByCustomerId() {
+        int customerId = 1;
+        List<CaptainModel> captainModels = new ArrayList<>();
+        captainModels.add(new CaptainModel(1, 1, 1));
+        captainModels.add(new CaptainModel(2, 2, 1));
+        when(captainJpaRepository.findAllByCustomerId(customerId)).thenReturn(captainModels);
+
+        List<CaptainEntity> expectedCaptainEntities = new ArrayList<>();
+        expectedCaptainEntities.add(new CaptainEntity(1, 1, 1));
+        expectedCaptainEntities.add(new CaptainEntity(2, 2, 1));
+
+        List<CaptainEntity> actualCaptainEntities = captainService.getAllCaptainByCustomerId(customerId);
+
+        assertEquals(expectedCaptainEntities, actualCaptainEntities);
+    }
+
 }
