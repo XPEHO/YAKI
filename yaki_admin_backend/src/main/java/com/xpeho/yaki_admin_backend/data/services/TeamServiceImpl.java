@@ -72,4 +72,15 @@ public class TeamServiceImpl implements TeamService {
         }
         return teamEntities;
     }
+
+    @Override
+    public List<TeamEntity> findAllTeamByCustomerId(int customerId) {
+        List<TeamModel> results = teamJpaRepository.findAllTeamByCustomerId(customerId);
+        List<TeamEntity> teamEntities = new ArrayList<>();
+        for (TeamModel result : results) {
+            TeamEntity teamEntity = new TeamEntity(result.getId(), result.getCaptainId(), result.getTeamName());
+            teamEntities.add(teamEntity);
+        }
+        return teamEntities;
+    }
 }
