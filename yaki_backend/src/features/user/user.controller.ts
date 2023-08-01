@@ -4,7 +4,7 @@ import EmailAlreadyExistsError from "../../errors/EmailAlreadyExistError"
 
 export class UserController {
   service: UserService;
-
+  //const EmailAlreadyExistsError = require('../../errors')
   constructor(service: UserService) {
     this.service = service;
   }

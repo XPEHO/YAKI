@@ -2,6 +2,7 @@ import {Pool, QueryResult} from "pg";
 import "dotenv/config";
 import {UserToRegisterOut} from "./toRegister.dtoOut";
 import ToRegisterRes from "./toRegisterRes.dto";
+import EmailAlreadyExistsError from "../../errors/EmailAlreadyExistError"
 
 export class UserRepository {
   /**
@@ -51,7 +52,7 @@ export class UserRepository {
       if(!registerResponse.ok){
         if(registerResponse.status === 417)
         //handle the email already used error
-          throw new TypeError("email already used")
+          throw new EmailAlreadyExistsError("email already used")
       }
       let jsonResponse =  await registerResponse.json();
       console.log(registerResponse)

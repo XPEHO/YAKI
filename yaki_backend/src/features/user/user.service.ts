@@ -7,6 +7,7 @@ import {CaptainDtoOut} from "../captain/captain.dtoOut";
 import {UserToRegisterIn} from "./toRegister.dtoIn";
 import {UserToRegisterOut} from "./toRegister.dtoOut";
 import {RegisterResponse} from "./registerResponse";
+import EmailAlreadyExistsError from "../../errors/EmailAlreadyExistError"
 
 export class UserService {
   userRepository: UserRepository;
@@ -83,11 +84,11 @@ export class UserService {
       return responseAfterRegister;
     }
     catch (error: any) {
-      if (error instanceof TypeError) {
-        throw new TypeError("email already used")
+      if (error instanceof EmailAlreadyExistsError) {
+        throw new EmailAlreadyExistsError(error.message)
       } else {
         // catch server errors
-        throw Error
+        throw TypeError
       }
     }
   };
