@@ -45,18 +45,16 @@ class UserRegistrationService {
           );
       }
     } catch (err) {
-      if(err is DioError){
+      if (err is DioError) {
         final responseStatusCode = err.response?.statusCode ?? -1;
         if (responseStatusCode == 417) {
           status = "registrationInputEmailError";
           debugPrint("registrationInputEmailError");
-          }
-        else {
+        } else {
           status = "registrationFailed";
           debugPrint('Error during user registration : $err');
         }
-      }
-      else {
+      } else {
         status = "registrationFailed";
         debugPrint('Error during user registration : $err');
       }

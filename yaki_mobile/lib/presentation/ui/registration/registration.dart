@@ -67,7 +67,7 @@ class _RegistrationState extends ConsumerState<Registration> {
         );
         // ignore: use_build_context_synchronously
         context.go('/');
-      } else if(registrationResult == "registrationFailed"){
+      } else if (registrationResult == "registrationFailed") {
         showSnackBar(
           content: tr("registrationSnackError"),
           textStyle: registratonSnackTextStyle(
@@ -77,7 +77,7 @@ class _RegistrationState extends ConsumerState<Registration> {
             context.go('/');
           },
         );
-      }else if(registrationResult == "registrationInputEmailError"){
+      } else if (registrationResult == "registrationInputEmailError") {
         showSnackBar(
           content: tr("registrationSnackEmailError"),
           textStyle: registratonSnackTextStyle(
@@ -235,4 +235,3 @@ class _RegistrationState extends ConsumerState<Registration> {
     );
   }
 }
-
