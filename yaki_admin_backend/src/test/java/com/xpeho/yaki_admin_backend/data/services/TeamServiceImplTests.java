@@ -9,10 +9,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -137,4 +139,25 @@ class TeamServiceImplTests {
         //then
         assertEquals(teamEntities, teamEList);
     }
+
+    @Test
+    public void testFindAllTeamByCustomerId() {
+        //given
+        int customerId = 1;
+        List<TeamModel> teamModels = new ArrayList<>();
+        teamModels.add(new TeamModel(1, 1, "Team 1"));
+        teamModels.add(new TeamModel(2, 2, "Team 2"));
+        Mockito.when(teamJpaRepository.findAllTeamByCustomerId(customerId)).thenReturn(teamModels);
+
+        //when
+        List<TeamEntity> expectedTeamEntities = new ArrayList<>();
+        expectedTeamEntities.add(new TeamEntity(1, 1, "Team 1"));
+        expectedTeamEntities.add(new TeamEntity(2, 2, "Team 2"));
+
+        List<TeamEntity> actualTeamEntities = teamService.findAllTeamByCustomerId(customerId);
+        //then
+        assertEquals(expectedTeamEntities, actualTeamEntities);
+    }
+
 }
+
