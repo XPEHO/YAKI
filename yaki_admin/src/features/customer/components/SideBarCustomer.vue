@@ -39,7 +39,7 @@ const navigateTo = (route: string) => {
 
 <style lang="scss">
 .navbar {
-  max-width: 30vw;
+  min-width: 20vw;
   height: 100vh;
   background-color: #fafafa;
   padding-block: 2rem;
@@ -47,5 +47,6 @@ const navigateTo = (route: string) => {
   flex-direction: column;
   gap: 2rem;
   font-size: 1rem;
+  text-decoration: none;
 }
 </style>

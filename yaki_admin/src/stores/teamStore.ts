@@ -16,7 +16,7 @@ export const useTeamStore = defineStore("teamStore", {
     teamToDelete: 0 as number,
   }),
   getters: {
-    getcustomerId(): number[] {
+    getCustomersId(): number[] {
       return this.customersId;
     },
     getCaptainId(): number[] {
@@ -62,7 +62,7 @@ export const useTeamStore = defineStore("teamStore", {
     async getTeamsFromCustomer(customersId: number[]) {
       this.teamList = [];
       for (const id of customersId) {
-        const a = await teamService.getAllTeamsWithinCustomer(id);
+        const a = await teamService.getAllTeamsByCustomerId(id);
         this.teamList = this.teamList.concat(a);
       }
     },
