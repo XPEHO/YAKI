@@ -19,14 +19,14 @@ const navigateTo = (route: string) => {
         v-bind:innerText="'Manage Captains'"
         v-bind:iconPath="security"
         v-bind:isSelected="true"
-        @Click="" />
+        @Click="() => {}" />
     </router-link>
     <router-link to="/customer/manage-team">
       <side-bar-element
         v-bind:innerText="'Manage Teams'"
         v-bind:iconPath="vector"
         v-bind:isSelected="true"
-        @Click="" />
+        @Click="() => {}" />
     </router-link>
     <router-link to="/customer/invitation">
       <side-bar-button
