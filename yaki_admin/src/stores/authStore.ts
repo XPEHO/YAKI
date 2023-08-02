@@ -38,7 +38,7 @@ export const useAuthStore = defineStore("loginStore", {
           return false;
         }
         if (this.customersRights.length >= 1) {
-          this.returnedUrl = "/customer";
+          this.returnedUrl = "/customer/manage-captain";
         } else {
           //if not a customer it's necessarily a captain
           this.returnedUrl = "/administration/captain";
