@@ -48,7 +48,7 @@ onBeforeMount(async () => {
 .captain-list {
   display: flex;
   flex-direction: column;
-  gap: 3rem;
+  gap: 2rem;
   padding: 2rem;
   align-items: center;
 }

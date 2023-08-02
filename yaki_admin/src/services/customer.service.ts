@@ -1,7 +1,6 @@
 import { authHeader } from "@/utils/authUtils";
 import { handleResponse } from "@/utils/responseUtils";
 import { CustomerType } from "@/models/customer.type";
-import { CustomersRightsType } from "@/models/customersRights.type";
 import { environmentVar } from "@/envPlaceholder";
 
 const URL: string = environmentVar.baseURL;
