@@ -52,13 +52,14 @@ export class UserRepository {
       if(!registerResponse.ok){
         if(registerResponse.status === 417)
         //handle the email already used error
+          console.log("email error 0")
           throw new EmailAlreadyExistsError("email already used")
       }
       let jsonResponse =  await registerResponse.json();
-      console.log(registerResponse)
       return jsonResponse;
     }
     catch(err){
+      console.log("catch error 0")
       console.warn(err)
       throw err;
     }
