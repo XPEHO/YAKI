@@ -63,10 +63,10 @@ class _RegistrationState extends ConsumerState<Registration> {
           textStyle: registratonSnackTextStyle(
             textColor: const Color.fromARGB(255, 21, 76, 8),
           ),
-          barAction: () {
-            context.go('/');
-          },
+          barAction: () {},
         );
+        // ignore: use_build_context_synchronously
+        context.go('/');
       } else {
         showSnackBar(
           content: tr("registrationSnackError"),
@@ -106,7 +106,7 @@ class _RegistrationState extends ConsumerState<Registration> {
 
   String? passwordValidator(String? value) {
     final passwordRegex = RegExp(
-      r'^(?=.*?[A-Z])(?=.*[a-z])(?=.*?[0-9])(?=.*?[$£ù^&§+=:;.?,()é!@#\><*~]).{10}',
+      r'^(?=.*?[A-Z])(?=.*[a-z])(?=.*?[0-9])(?=.*?[$£€µù^&§+=:;.?,()é!@#\><*~"%\-_/\[\]\{\}\|ç]).{10}',
     );
     if (value != null && value.isEmpty) {
       return tr('registrationInputPasswordError1');
@@ -126,6 +126,15 @@ class _RegistrationState extends ConsumerState<Registration> {
       return tr('registrationInputPassConfirmError2');
     }
     return null;
+  }
+
+  String toUpperCase(String s) {
+    return s.toUpperCase();
+  }
+
+  String capitalize(String s) {
+    //first letter uppercase only
+    return "${s[0].toUpperCase()}${s.substring(1).toLowerCase()}";
   }
 
   @override
@@ -154,26 +163,36 @@ class _RegistrationState extends ConsumerState<Registration> {
                         controller: firstNameController,
                         label: tr('registrationInputFirstnameLabel'),
                         validatorFunction: nameValidator,
+                        isShown: false,
+                        textCapitalization: capitalize,
                       ),
                       InputRegistration(
                         controller: lastNameController,
                         label: tr('registrationInputLastnameLabel'),
                         validatorFunction: nameValidator,
+                        isShown: false,
+                        textCapitalization: toUpperCase,
                       ),
                       InputRegistration(
                         controller: emailController,
                         label: tr('registrationInputEmailLabel'),
                         validatorFunction: emailValidator,
+                        isShown: false,
+                        textCapitalization: (s) => (s),
                       ),
                       InputRegistration(
                         controller: passwordController,
                         label: tr('registrationInputPasswordLabel'),
                         validatorFunction: passwordValidator,
+                        isShown: true,
+                        textCapitalization: (s) => (s),
                       ),
                       InputRegistration(
                         controller: passwordConfirmController,
                         label: tr('registrationInputPassConfirmLabel'),
                         validatorFunction: pwConfirmationValidator,
+                        isShown: true,
+                        textCapitalization: (s) => (s),
                       ),
                     ],
                   ),

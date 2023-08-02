@@ -1,8 +1,8 @@
 {
   "headerTitle": "Authentication",
   "headerHint": "Who are you ?",
-  "inputLogin": "Login",
-  "hintLogin": "Enter your login",
+  "inputLogin": "Email",
+  "hintLogin": "Enter your email",
   "inputPassword": "Password",
   "hintPassword": "Enter your password",
   "rememberMe": "Remember me",
@@ -50,6 +50,7 @@
   "registrationInputNameError2": "This field must only contain letters",
   "registrationInputEmailLabel": "Email :",
   "registrationInputEmailError": "Incorrect email format",
+  "registrationAlreadyUsedEmail" : "This email is already used",
   "registrationInputPasswordLabel": "Password :",
   "registrationInputPasswordError1": "Please create a password",
   "registrationInputPasswordError2": "Minimum : 10 characters \n- One Upper and lowercase \n- A number \n- A special character",

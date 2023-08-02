@@ -7,7 +7,7 @@ SnackBar registrationSnack({
 }) {
   return SnackBar(
     behavior: SnackBarBehavior.floating,
-    duration: const Duration(minutes: 1),
+    duration: const Duration(seconds: 10),
     backgroundColor: const Color.fromARGB(255, 220, 219, 219),
     content: Padding(
       padding: const EdgeInsets.symmetric(vertical: 15),
