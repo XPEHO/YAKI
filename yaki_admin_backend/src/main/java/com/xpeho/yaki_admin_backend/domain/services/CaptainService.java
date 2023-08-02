@@ -1,6 +1,7 @@
 package com.xpeho.yaki_admin_backend.domain.services;
 
 import com.xpeho.yaki_admin_backend.domain.entities.CaptainEntity;
+import com.xpeho.yaki_admin_backend.domain.entities.UserEntityWithID;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ public interface CaptainService {
 
     List<CaptainEntity> getAllCaptainByUserId(int userId);
 
-    List<CaptainEntity> getAllCaptainByCustomerId(int customerId);
+    List<UserEntityWithID> getAllCaptainByCustomerId(int customerId);
 
 
 }
