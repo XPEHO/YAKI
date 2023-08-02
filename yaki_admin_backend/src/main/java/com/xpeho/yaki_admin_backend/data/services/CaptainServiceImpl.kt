@@ -1,8 +1,10 @@
 package com.xpeho.yaki_admin_backend.data.services
 
 import com.xpeho.yaki_admin_backend.data.models.CaptainModel
+import com.xpeho.yaki_admin_backend.data.models.UserModel
 import com.xpeho.yaki_admin_backend.data.sources.CaptainJpaRepository
 import com.xpeho.yaki_admin_backend.domain.entities.CaptainEntity
+import com.xpeho.yaki_admin_backend.domain.entities.UserEntityWithID
 import com.xpeho.yaki_admin_backend.domain.services.CaptainService
 import jakarta.persistence.EntityNotFoundException
 import org.springframework.stereotype.Service
@@ -78,14 +80,15 @@ class CaptainServiceImpl(private val captainJpaRepository: CaptainJpaRepository)
 
     }
 
-    override fun getAllCaptainByCustomerId(customerId: Int): List<CaptainEntity> {
+    override fun getAllCaptainByCustomerId(customerId: Int): List<UserEntityWithID> {
         return captainJpaRepository
-                .findAllByCustomerId(customerId)
-                .map { captainModel: CaptainModel ->
-                    CaptainEntity(
-                            captainModel.captainId,
-                            captainModel.userId,
-                            captainModel.customerId
+                .findAllCaptainByCustomerId(customerId)
+                .map { userModel: UserModel ->
+                    UserEntityWithID(
+                            userModel.userId,
+                            userModel.lastName,
+                            userModel.firstName,
+                            userModel.email
                     )
                 }
     }
