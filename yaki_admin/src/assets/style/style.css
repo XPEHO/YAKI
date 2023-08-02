@@ -1,6 +1,7 @@
 * {
   margin: 0;
   padding: 0;
+  text-decoration: none;
 }
 
 body {
@@ -42,4 +43,4 @@ body {
 
 .sidebar-active-class {
   background-color: #59a9b5;
-}/*# sourceMappingURL=style.css.map */
+} /*# sourceMappingURL=style.css.map */

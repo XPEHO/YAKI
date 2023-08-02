@@ -20,9 +20,9 @@ export class TeamService {
     return response;
   };
 
-  /* getAllTeamsWithinCustomer is a method of the TeamService class that takes in a number *
+  /* getAllTeamsByCustomerId is a method of the TeamService class that takes in a number *
   parameter id and returns a Promise that resolves to an array of TeamType objects.*/
-  getAllTeamsWithinCustomer = async (id: number): Promise<TeamType[]> => {
+  getAllTeamsByCustomerId = async (id: number): Promise<TeamType[]> => {
     const requestOptions = {
       method: "GET",
       headers: authHeader(`${URL}/teams/customer/${id}`),

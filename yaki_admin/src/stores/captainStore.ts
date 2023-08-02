@@ -1,12 +1,13 @@
 import { defineStore } from "pinia";
 import { CaptainType } from "@/models/captain.type";
 import { captainService } from "@/services/captain.service";
+import { UserWithIdType } from "@/models/userWithId.type";
 
 export const useCaptainStore = defineStore("captainStore", {
   state: () => ({
     customerId: [] as number[],
     captainId: 0 as number,
-    captainList: [] as CaptainType[],
+    captainList: [] as UserWithIdType[],
     captainToDelete: 0 as number,
   }),
   getters: {
@@ -16,7 +17,7 @@ export const useCaptainStore = defineStore("captainStore", {
     getCaptainId(): number {
       return this.captainId;
     },
-    getCaptainList(): CaptainType[] {
+    getCaptainList(): UserWithIdType[] {
       return this.captainList;
     },
     getCaptainToDelete(): number {
@@ -34,11 +35,13 @@ export const useCaptainStore = defineStore("captainStore", {
 
     // get all captains of a customer
     async getAllCaptainsByCustomerId(customerId: number[]) {
-      this.captainList = [];
-      for (const id of customerId) {
-        const result = await captainService.getAllCaptainsByCustomerId(id);
-        this.captainList = this.captainList.concat(result);
-      }
+      this.captainList = await captainService.getAllCaptainsByCustomerId(1);
+
+      // for (const id of customerId) {
+      //   const result = await captainService.getAllCaptainsByCustomerId(id);
+      //   this.captainList = this.captainList.concat(result);
+      // }
+      // console.log(this.captainList);
     },
 
     // create a captain
