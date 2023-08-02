@@ -2,8 +2,9 @@
 import router from "@/router/router";
 import plusIcon from "@/assets/plus.png";
 import { onBeforeMount } from "vue";
-
+import SideBarButton from "@/features/shared/components/SideBarButton.vue";
 import { useCaptainStore } from "@/stores/captainStore";
+import CaptainElement from "../components/CaptainElement.vue";
 
 const captainStore = useCaptainStore();
 
@@ -22,21 +23,17 @@ onBeforeMount(async () => {
       <h1 class="title">Captains List</h1>
       <h2 class="text">Manage your captains here</h2>
       <hr class="line" />
-
-      <div class="captain-list">
-        <div
-          :captain="captain"
-          v-for="captain in captainStore.getCaptainList"
-          :key="captain.id">
-          {{ captain.firstname }}
-          {{ captain.lastname }}
-          {{ captain.email }}
-        </div>
-      </div>
       <SideBarButton
         v-bind:inner-text="'To invite a captain'"
         v-bind:icon-path="plusIcon"
         @click.prevent="router.push({ path: 'invitation' })" />
+
+      <div class="captain-list">
+        <captain-element
+          :captain="captain"
+          v-for="captain in captainStore.getCaptainList"
+          :key="captain.id" />
+      </div>
     </div>
   </div>
 </template>
@@ -49,10 +46,10 @@ onBeforeMount(async () => {
   padding: 2rem;
 }
 .captain-list {
-  padding: 2rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 3rem;
+  padding: 2rem;
+  align-items: center;
 }
 </style>

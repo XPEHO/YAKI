@@ -36,12 +36,6 @@ export const useCaptainStore = defineStore("captainStore", {
     // get all captains of a customer
     async getAllCaptainsByCustomerId(customerId: number[]) {
       this.captainList = await captainService.getAllCaptainsByCustomerId(1);
-
-      // for (const id of customerId) {
-      //   const result = await captainService.getAllCaptainsByCustomerId(id);
-      //   this.captainList = this.captainList.concat(result);
-      // }
-      // console.log(this.captainList);
     },
 
     // create a captain

@@ -24,11 +24,11 @@ onBeforeMount(async () => {
       <hr class="line" />
 
       <div class="team-list">
-        <div 
-        :team="team" 
-        v-for="team 
-        in teamStore.getTeamList" 
-        :key="team.id">
+        <div
+          class="team-item"
+          :team="team"
+          v-for="team in teamStore.getTeamList"
+          :key="team.id">
           {{ team.teamName }}
         </div>
       </div>
@@ -39,16 +39,24 @@ onBeforeMount(async () => {
 <style lang="scss">
 .customer-view {
   padding: 2rem;
-  width: 70vw;
 }
 .customer-view-teams {
   padding: 2rem;
 }
 .team-list {
-  padding: 2rem;
   display: flex;
   flex-direction: column;
+  gap: 0, 5rem;
+  padding: 2rem;
   align-items: center;
-  gap: 3rem;
+  max-width: 70vw;
+}
+.team-item {
+  border: 1px solid #ccc;
+  background-color: rgb(177, 173, 173);
+  border-radius: 10px;
+  padding: 1rem;
+  width: 20vw;
+  text-align: center;
 }
 </style>

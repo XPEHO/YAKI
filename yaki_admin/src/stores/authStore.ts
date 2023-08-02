@@ -34,7 +34,6 @@ export const useAuthStore = defineStore("loginStore", {
           await customerService.getAllCustomersRightByUserId(this.user.id);
         //if the user is not a captain or a customer, he can't access to the admin part
         if (this.customersRights.length === 0 && this.captains.length === 0) {
-          console.log("not captain or customer");
           this.logout();
           return false;
         }
