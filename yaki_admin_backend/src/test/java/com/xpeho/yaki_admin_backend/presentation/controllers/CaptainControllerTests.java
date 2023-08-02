@@ -3,6 +3,7 @@ package com.xpeho.yaki_admin_backend.presentation.controllers;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xpeho.yaki_admin_backend.domain.entities.CaptainEntity;
+import com.xpeho.yaki_admin_backend.domain.entities.UserEntityWithID;
 import com.xpeho.yaki_admin_backend.domain.services.CaptainService;
 import com.xpeho.yaki_admin_backend.error_handling.CustomExceptionHandler;
 import jakarta.persistence.EntityNotFoundException;
@@ -200,13 +201,13 @@ class CaptainControllerTests {
     public void testGetAllCaptainByCustomerId() {
         //given
         int customerId = 1;
-        List<CaptainEntity> expectedCaptains = new ArrayList<>();
-        expectedCaptains.add(new CaptainEntity(1, 3, 5));
-        expectedCaptains.add(new CaptainEntity(2, 5, 3));
+        List<UserEntityWithID> expectedCaptains = new ArrayList<>();
+        expectedCaptains.add(new UserEntityWithID(1, "Barbie", "Chette", "barbie@email.com"));
+        expectedCaptains.add(new UserEntityWithID(2, "Jean", "sérien", "jean@email.com"));
 
         //when
         when(captainService.getAllCaptainByCustomerId(customerId)).thenReturn(expectedCaptains);
-        List<CaptainEntity> actualCaptains = captainController.getAllCaptainByCustomerId(customerId);
+        List<UserEntityWithID> actualCaptains = captainController.getAllCaptainByCustomerId(customerId);
 
         //then
         assertEquals(expectedCaptains, actualCaptains);
