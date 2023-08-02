@@ -60,5 +60,6 @@
   "registrationButton": "register",
   "registrationSnackSuccess": "Account creation sucess. Please check yours emails",
   "registrationSnackError": "Oups, something went wrong, try again later",
+  "registrationSnackEmailError": "eamil already used",
   "registrationCancelButton": "Cancel"
 }

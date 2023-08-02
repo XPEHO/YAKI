@@ -2,6 +2,7 @@ import {Pool, QueryResult} from "pg";
 import "dotenv/config";
 import {UserToRegisterOut} from "./toRegister.dtoOut";
 import ToRegisterRes from "./toRegisterRes.dto";
+import EmailAlreadyExistsError from "../../errors/EmailAlreadyExistError"
 
 export class UserRepository {
   /**
@@ -40,16 +41,25 @@ export class UserRepository {
    * @returns response from admin api after email confirmation & successfull registration
    */
   registerUser = async (user: UserToRegisterOut): Promise<ToRegisterRes> => {
-    const registerResponse = fetch(`${process.env.ADMIN_API}/login/register`, {
+    try{
+    const registerResponse = await fetch(`${process.env.ADMIN_API}/login/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(user),
-    })
-      .then((res) => res.json())
-      .catch((err) => console.warn(err));
-
-    return registerResponse;
+    });
+      if(!registerResponse.ok){
+        if(registerResponse.status === 417)
+        //handle the email already used error
+          throw new EmailAlreadyExistsError("email already used")
+      }
+      let jsonResponse =  await registerResponse.json();
+      return jsonResponse;
+    }
+    catch(err){
+      console.warn(err)
+      throw err;
+    }
   };
 }

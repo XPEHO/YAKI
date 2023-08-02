@@ -53,11 +53,11 @@ class _RegistrationState extends ConsumerState<Registration> {
 
       // after registration response get "isRegistered" value, being the object send from mobile API
       // confirming the registration was a success (no need others data)
-      final bool registrationResult =
-          ref.watch(userRegisterServiceProvider).userRegistered.isRegistered;
+      final String registrationResult =
+          ref.watch(userRegisterServiceProvider).status;
 
       // depending of true of false (will be changed to true only if code200) change snachbar message and message color
-      if (registrationResult) {
+      if (registrationResult == "OK") {
         showSnackBar(
           content: tr("registrationSnackSuccess"),
           textStyle: registratonSnackTextStyle(
@@ -67,9 +67,19 @@ class _RegistrationState extends ConsumerState<Registration> {
         );
         // ignore: use_build_context_synchronously
         context.go('/');
-      } else {
+      } else if (registrationResult == "registrationFailed") {
         showSnackBar(
           content: tr("registrationSnackError"),
+          textStyle: registratonSnackTextStyle(
+            textColor: const Color.fromARGB(255, 123, 5, 5),
+          ),
+          barAction: () {
+            context.go('/');
+          },
+        );
+      } else if (registrationResult == "registrationInputEmailError") {
+        showSnackBar(
+          content: tr("registrationSnackEmailError"),
           textStyle: registratonSnackTextStyle(
             textColor: const Color.fromARGB(255, 123, 5, 5),
           ),

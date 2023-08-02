@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 
-@ResponseStatus(HttpStatus.ALREADY_REPORTED)
+@ResponseStatus(HttpStatus.EXPECTATION_FAILED)
 public class EmailAlreadyExistsException extends DuplicateKeyException {
     public EmailAlreadyExistsException(String msg) {
         super(msg);

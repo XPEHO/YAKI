@@ -7,6 +7,7 @@ import {CaptainDtoOut} from "../captain/captain.dtoOut";
 import {UserToRegisterIn} from "./toRegister.dtoIn";
 import {UserToRegisterOut} from "./toRegister.dtoOut";
 import {RegisterResponse} from "./registerResponse";
+import EmailAlreadyExistsError from "../../errors/EmailAlreadyExistError"
 
 export class UserService {
   userRepository: UserRepository;
@@ -75,12 +76,20 @@ export class UserService {
       user.email.trim(),
       user.password.trim()
     );
-
-    const springResponse = await this.userRepository.registerUser(userToRegister);
-    if (springResponse.id !== 0 && springResponse.id !== null) {
-      responseAfterRegister.isRegistered = true;
+    try{
+      const springResponse = await this.userRepository.registerUser(userToRegister);
+      if (springResponse.id !== 0 && springResponse.id !== null) {
+        responseAfterRegister.isRegistered = true;
+      }
+      return responseAfterRegister;
     }
-
-    return responseAfterRegister;
+    catch (error: any) {
+      if (error instanceof EmailAlreadyExistsError) {
+        throw new EmailAlreadyExistsError(error.message)
+      } else {
+        // catch server errors
+        throw TypeError
+      }
+    }
   };
 }
