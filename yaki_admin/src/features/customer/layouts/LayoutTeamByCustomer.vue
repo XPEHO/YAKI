@@ -44,7 +44,7 @@ onBeforeMount(async () => {
 .team-list {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 1rem;
   padding: 2rem;
   align-items: center;
   max-width: 70vw;
