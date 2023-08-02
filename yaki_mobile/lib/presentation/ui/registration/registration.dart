@@ -137,7 +137,7 @@ class _RegistrationState extends ConsumerState<Registration> {
     }
     return null;
   }
-  
+
   String toUpperCase(String s) {
     return s.toUpperCase();
   }
