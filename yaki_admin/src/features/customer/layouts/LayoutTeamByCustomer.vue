@@ -37,9 +37,7 @@ onBeforeMount(async () => {
 </template>
 
 <style lang="scss">
-.customer-view {
-  padding: 2rem;
-}
+.customer-view,
 .customer-view-teams {
   padding: 2rem;
 }
