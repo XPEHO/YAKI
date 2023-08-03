@@ -3,6 +3,7 @@ package com.xpeho.yaki_admin_backend.presentation.controllers;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xpeho.yaki_admin_backend.domain.entities.CaptainEntity;
+import com.xpeho.yaki_admin_backend.domain.entities.UserEntityWithID;
 import com.xpeho.yaki_admin_backend.domain.services.CaptainService;
 import com.xpeho.yaki_admin_backend.error_handling.CustomExceptionHandler;
 import jakarta.persistence.EntityNotFoundException;
@@ -20,13 +21,16 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class CaptainControllerTests {
@@ -174,5 +178,41 @@ class CaptainControllerTests {
         String expectedResponse = objectMapper.writeValueAsString(captain3);
         assertThat(response.getContentAsString(), is(equalTo(
                 expectedResponse)));
+
     }
+
+    @Test
+    public void testGetAllCaptainByUserId() {
+        // given
+        CaptainEntity captain = new CaptainEntity(1, 1, 1);
+        List<CaptainEntity> captainList = new ArrayList<>();
+        captainList.add(captain);
+
+        // when
+        when(captainService.getAllCaptainByUserId(1)).thenReturn(captainList);
+        List<CaptainEntity> result = captainController.getAllCaptainByUserId(1);
+        verify(captainService, times(1)).getAllCaptainByUserId(1);
+
+        // then
+        assertEquals(captainList, result);
+    }
+
+    @Test
+    public void testGetAllCaptainByCustomerId() {
+        //given
+        int customerId = 1;
+        List<UserEntityWithID> expectedCaptains = new ArrayList<>();
+        expectedCaptains.add(new UserEntityWithID(1, "Barbie", "Chette", "barbie@email.com"));
+        expectedCaptains.add(new UserEntityWithID(2, "Jean", "sérien", "jean@email.com"));
+
+        //when
+        when(captainService.getAllCaptainByCustomerId(customerId)).thenReturn(expectedCaptains);
+        List<UserEntityWithID> actualCaptains = captainController.getAllCaptainByCustomerId(customerId);
+
+        //then
+        assertEquals(expectedCaptains, actualCaptains);
+    }
+
+
 }
+

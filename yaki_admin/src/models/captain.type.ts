@@ -1,6 +1,5 @@
-export type CaptainType = 
-{
-    id : number,
-    userId : number, 
-    customerId : number
-}
+export type CaptainType = {
+  id: number;
+  userId: number;
+  customerId: number;
+};

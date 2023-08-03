@@ -92,4 +92,24 @@ public class CustomerServiceImpl implements CustomerService {
                 entity.ownerId(), entity.locationId());
     }
 
+    @Override
+    public List<CustomerEntity> getAllCustomersRightByUserId(int userId) {
+        Optional<UserModel> userModelOpt = userJpaRepository.findById(userId);
+        if(!userModelOpt.isPresent()){
+            throw new EntityNotFoundException("Entity user with id " + userId + " not found");
+        }
+        else{
+            UserModel userModel = userModelOpt.get();
+            List<CustomerModel> customersModels = userModel.getCustomers();
+            return customersModels
+                    .stream()
+                    .map(customerModel -> new CustomerEntity(customerModel.getId(),
+                            customerModel.getName(),customerModel.getOwnerId(),
+                            customerModel.getLocationId()))
+                    .toList();
+        }
+    }
+
+
 }
+

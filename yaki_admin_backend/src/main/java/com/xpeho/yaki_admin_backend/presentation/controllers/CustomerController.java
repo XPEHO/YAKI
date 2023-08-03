@@ -32,11 +32,6 @@ public class CustomerController {
         return customerService.createCustomer(customerEntity);
     }
 
-    @PostMapping("/rights")
-    public CustomerEntity addCustomerRight(
-            @RequestBody CustomerRightsEntity customerRightsEntity) {
-        return customerService.addCustomerRight(customerRightsEntity);
-    }
 
     @GetMapping("{id}")
     public CustomerEntity getCustomer(@PathVariable int id) {
@@ -53,5 +48,12 @@ public class CustomerController {
         return customerService.saveOrUpdate(entity, id);
     }
 
-
+    @PostMapping("/addCustomerRights")
+    public CustomerEntity addCustomerRight(@RequestBody CustomerRightsEntity entity) {
+        return customerService.addCustomerRight(entity);
+    }
+    @GetMapping("/rights/{id}")
+    public List<CustomerEntity> getAllCustomersRightByUserId(@PathVariable int id){
+        return customerService.getAllCustomersRightByUserId(id);
+    }
 }

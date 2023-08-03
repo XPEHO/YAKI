@@ -1,8 +1,10 @@
 package com.xpeho.yaki_admin_backend.data.services
 
 import com.xpeho.yaki_admin_backend.data.models.CaptainModel
+import com.xpeho.yaki_admin_backend.data.models.UserModel
 import com.xpeho.yaki_admin_backend.data.sources.CaptainJpaRepository
 import com.xpeho.yaki_admin_backend.domain.entities.CaptainEntity
+import com.xpeho.yaki_admin_backend.domain.entities.UserEntityWithID
 import com.xpeho.yaki_admin_backend.domain.services.CaptainService
 import jakarta.persistence.EntityNotFoundException
 import org.springframework.stereotype.Service
@@ -11,23 +13,22 @@ import org.springframework.stereotype.Service
 class CaptainServiceImpl(private val captainJpaRepository: CaptainJpaRepository) : CaptainService {
     override fun getCaptains(): List<CaptainEntity> {
         return captainJpaRepository
-            .findAll()
-            .map { captainModel: CaptainModel ->
-                CaptainEntity(
-                    captainModel.captainId,
-                    captainModel.userId,
-                    captainModel.customerId
-                )
-            }
+                .findAll()
+                .map { captainModel: CaptainModel ->
+                    CaptainEntity(
+                            captainModel.captainId,
+                            captainModel.userId,
+                            captainModel.customerId
+                    )
+                }
     }
 
     override fun createCaptain(captainEntity: CaptainEntity): CaptainEntity {
         val captainModel: CaptainModel
         if (captainEntity.id == 0) {//in case we id is not specified
             captainModel = CaptainModel(captainEntity.userId, captainEntity.customerId)
-        }
-        else{
-            captainModel = CaptainModel(captainEntity.id,captainEntity.userId, captainEntity.customerId)
+        } else {
+            captainModel = CaptainModel(captainEntity.id, captainEntity.userId, captainEntity.customerId)
         }
         val savedCaptain = captainJpaRepository.save(captainModel)
         return CaptainEntity(savedCaptain.captainId, savedCaptain.userId, savedCaptain.customerId)
@@ -48,7 +49,7 @@ class CaptainServiceImpl(private val captainJpaRepository: CaptainJpaRepository)
             captainJpaRepository.deleteById(captainId)
             val captainModel = captainModelOpt.get()
             CaptainEntity(
-                captainModel.captainId, captainModel.userId, captainModel.customerId
+                    captainModel.captainId, captainModel.userId, captainModel.customerId
             )
         } else throw EntityNotFoundException("The captain with id$captainId cannot be found.")
     }
@@ -65,7 +66,8 @@ class CaptainServiceImpl(private val captainJpaRepository: CaptainJpaRepository)
         }
         return CaptainEntity(captainId, entity.userId, entity.customerId)
     }
-    override fun getAllCaptainByUserId(userId : Int): List<CaptainEntity> {
+
+    override fun getAllCaptainByUserId(userId: Int): List<CaptainEntity> {
         return captainJpaRepository
                 .findAllByUserId(userId)
                 .map { captainModel: CaptainModel ->
@@ -76,5 +78,18 @@ class CaptainServiceImpl(private val captainJpaRepository: CaptainJpaRepository)
                     )
                 }
 
+    }
+
+    override fun getAllCaptainByCustomerId(customerId: Int): List<UserEntityWithID> {
+        return captainJpaRepository
+                .findAllCaptainByCustomerId(customerId)
+                .map { userModel: UserModel ->
+                    UserEntityWithID(
+                            userModel.userId,
+                            userModel.lastName,
+                            userModel.firstName,
+                            userModel.email
+                    )
+                }
     }
 }

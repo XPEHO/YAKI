@@ -1,19 +1,24 @@
-import {defineStore} from "pinia";
-import {teamMateService} from "@/services/teamMate.service";
-import {TeamMateType} from "@/models/teamMate.type";
-import {teamService} from "@/services/team.service";
-import {TeamType} from "@/models/team.type";
+import { defineStore } from "pinia";
+import { teamMateService } from "@/services/teamMate.service";
+import { TeamMateType } from "@/models/teamMate.type";
+import { teamService } from "@/services/team.service";
+import { TeamType } from "@/models/team.type";
 
 export const useTeamStore = defineStore("teamStore", {
   state: () => ({
-    captainsId: [343] as number[],
+    customersId: [] as number[],
+    captainsId: [] as number[],
     teamId: 0 as number,
     teamName: "" as string,
     teammate: [] as TeamMateType[],
     teamList: [] as TeamType[],
     teammateToDelete: 0 as number,
+    teamToDelete: 0 as number,
   }),
   getters: {
+    getCustomersId(): number[] {
+      return this.customersId;
+    },
     getCaptainId(): number[] {
       return this.captainsId;
     },
@@ -37,16 +42,28 @@ export const useTeamStore = defineStore("teamStore", {
     setTeamName(name: string) {
       this.teamName = name;
     },
-    setCaptainsId(captainsId: number[]){
+    setCustomersId(customersId: number[]) {
+      this.customersId = customersId;
+    },
+    setCaptainsId(captainsId: number[]) {
       this.captainsId = captainsId;
     },
 
     // get all teams of a captain
     async getTeamsFromCaptain(captainsId: number[]) {
-      this.teamList = []
-      for (let captainId of captainsId){
-        let a =  await teamService.getAllTeamsWithinCaptain(captainId);
-        this.teamList = this.teamList.concat(a)
+      this.teamList = [];
+      for (const captainId of captainsId) {
+        const a = await teamService.getAllTeamsWithinCaptain(captainId);
+        this.teamList = this.teamList.concat(a);
+      }
+    },
+
+    // get all teams of a customer
+    async getTeamsFromCustomer(customersId: number[]) {
+      this.teamList = [];
+      for (const id of customersId) {
+        const a = await teamService.getAllTeamsByCustomerId(id);
+        this.teamList = this.teamList.concat(a);
       }
     },
 
@@ -58,7 +75,7 @@ export const useTeamStore = defineStore("teamStore", {
 
     // add a selected user to a team
     async addUserToTeam(userId: number): Promise<void> {
-      const data = {teamId: this.teamId, userId: userId};
+      const data = { teamId: this.teamId, userId: userId };
       await teamMateService.createTeammate(data);
     },
 
@@ -66,18 +83,26 @@ export const useTeamStore = defineStore("teamStore", {
     async deleteTeammateFromTeam(id: number): Promise<void> {
       await teamMateService.deleteTeammate(id);
     },
-    // get the teamId to delete
+    // get the teamMateId to delete
     setTeammateToDelete(id: number) {
       this.teammateToDelete = id;
     },
 
+    //get the teamId to delete
+    setTeamToDelete(teamId: number) {
+      this.teamToDelete = teamId;
+    },
     // create a team (use captain id and team name)
     async createTeam(cptId: number, teamName: string): Promise<void> {
       await teamService.createTeam(cptId, teamName);
     },
 
     // update the selected team (can change name or captainID)
-    async updateTeam(teamID: number, cptId: number, teamName: string): Promise<void> {
+    async updateTeam(
+      teamID: number,
+      cptId: number,
+      teamName: string
+    ): Promise<void> {
       await teamService.updateTeam(teamID, cptId, teamName);
     },
 

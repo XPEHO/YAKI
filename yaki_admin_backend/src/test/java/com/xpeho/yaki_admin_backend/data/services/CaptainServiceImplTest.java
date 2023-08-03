@@ -1,13 +1,16 @@
 package com.xpeho.yaki_admin_backend.data.services;
 
 import com.xpeho.yaki_admin_backend.data.models.CaptainModel;
+import com.xpeho.yaki_admin_backend.data.models.UserModel;
 import com.xpeho.yaki_admin_backend.data.sources.CaptainJpaRepository;
 import com.xpeho.yaki_admin_backend.domain.entities.CaptainEntity;
+import com.xpeho.yaki_admin_backend.domain.entities.UserEntityWithID;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -115,5 +118,48 @@ class CaptainServiceImplTest {
         assertEquals(captainId, savedCaptain.id());
         assertEquals(captainEntity.userId(), savedCaptain.userId());
         assertEquals(captainEntity.customerId(), savedCaptain.customerId());
+    }
+
+    @Test
+    public void testGetAllCaptainByUserId() {
+
+        //given
+        int userId = 1;
+        List<CaptainModel> captainModels = new ArrayList<>();
+        captainModels.add(new CaptainModel(1, 1, 1));
+        captainModels.add(new CaptainModel(2, 1, 2));
+
+        //when
+        when(captainJpaRepository.findAllByUserId(userId)).thenReturn(captainModels);
+
+        List<CaptainEntity> expectedCaptainEntities = new ArrayList<>();
+        expectedCaptainEntities.add(new CaptainEntity(1, 1, 1));
+        expectedCaptainEntities.add(new CaptainEntity(2, 1, 2));
+
+        List<CaptainEntity> actualCaptainEntities = captainService.getAllCaptainByUserId(userId);
+
+        //then
+        assertEquals(expectedCaptainEntities, actualCaptainEntities);
+    }
+
+    @Test
+    public void testGetAllCaptainByCustomerId() {
+        //given
+        int customerId = 1;
+        List<UserModel> userModels = new ArrayList<>();
+        userModels.add(new UserModel(1, "Chette", "Barbie", "barbie@email.com", "Barbie", "Barbie"));
+        userModels.add(new UserModel(2, "Mattel", "Ken", "ken@email.com", "Ken", "Ken"));
+
+        //when
+        when(captainJpaRepository.findAllCaptainByCustomerId(customerId)).thenReturn(userModels);
+
+        List<UserEntityWithID> expectedCaptainEntities = new ArrayList<>();
+        expectedCaptainEntities.add(new UserEntityWithID(1, "Chette", "Barbie", "barbie@email.com"));
+        expectedCaptainEntities.add(new UserEntityWithID(2, "Mattel", "Ken", "ken@email.com"));
+
+        List<UserEntityWithID> actualCaptainEntities = captainService.getAllCaptainByCustomerId(customerId);
+
+        //then
+        assertEquals(expectedCaptainEntities, actualCaptainEntities);
     }
 }

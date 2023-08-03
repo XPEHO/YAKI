@@ -12,6 +12,8 @@ public interface TeamService {
     TeamEntity deleteById(int id);
 
     TeamEntity saveOrUpdate(TeamEntity entity, int id);
-    
+
     List<TeamEntity> findAllByCaptain(int id);
+
+    List<TeamEntity> findAllTeamByCustomerId(int customerId);
 }

@@ -45,4 +45,9 @@ public class TeamController {
     public List<TeamEntity> getAllWithinCaptain(@PathVariable int id) {
         return teamService.findAllByCaptain(id);
     }
+
+    @GetMapping({"customer/{id}"})
+    public List<TeamEntity> findAllTeamByCustomerId(@PathVariable int id) {
+        return teamService.findAllTeamByCustomerId(id);
+    }
 }
