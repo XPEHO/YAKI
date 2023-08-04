@@ -3,7 +3,7 @@ import {UserRepository} from "../features/user/user.repository";
 import mockDb from "./__mocks__/mockDbUsers";
 import UserModel from "../features/user/user.dtoIn";
 import {CaptainDtoOut} from "../features/captain/captain.dtoOut";
-import {TeammateDtoOut} from "../features/teammate/teamate.dtoOut";
+import {TeammateDtoOut} from "../features/teammate/teammate.dtoOut";
 
 // Mock of UserRepository
 jest.mock("../features/user/user.repository", () => {
