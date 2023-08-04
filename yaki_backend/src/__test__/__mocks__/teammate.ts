@@ -1,4 +1,4 @@
-import {TeammateDtoIn} from "../../features/teammate/teamate.dtoIn";
+import {TeammateDtoIn} from "../../features/teammate/teammate.dtoIn";
 
 const teammatesMock: TeammateDtoIn[] = [
   {

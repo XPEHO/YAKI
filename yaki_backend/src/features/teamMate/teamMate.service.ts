@@ -1,7 +1,7 @@
 import {TeamDtoIn} from "../team/team.dtoIn";
 import {TeamService} from "../team/team.service";
 import {TeammateWithDeclaration} from "./teamMateWithDeclaration.dtoOut";
-import {TeammateRepository} from "./teamate.repository";
+import {TeammateRepository} from "./teammate.repository";
 
 export class TeammateService {
   teamMateRepository: TeammateRepository;

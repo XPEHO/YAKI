@@ -1,4 +1,4 @@
-import {TeammateService as TeammateService} from "./teamate.service";
+import {TeammateService as TeammateService} from "./teammate.service";
 import {Response, Request} from "express";
 
 export class TeammateController {

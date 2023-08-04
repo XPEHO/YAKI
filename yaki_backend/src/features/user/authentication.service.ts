@@ -1,7 +1,7 @@
 import {Request, Response, NextFunction} from "express";
 import {CaptainDtoOut} from "../captain/captain.dtoOut";
 import bcrypt from "bcrypt";
-import {TeammateDtoOut} from "../teammate/teamate.dtoOut";
+import {TeammateDtoOut} from "../teammate/teammate.dtoOut";
 
 const jwt = require("jsonwebtoken");
 
