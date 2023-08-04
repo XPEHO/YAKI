@@ -3,12 +3,12 @@ import {UserController} from "./features/user/user.controller";
 import {UserService} from "./features/user/user.service";
 import {UserRepository} from "./features/user/user.repository";
 import {TeammateRepository} from "./features/teammate/teammate.repository";
-import {TeammateService} from "./features/teammate/teammate.service";
 import {authService} from "./features/user/authentication.service";
 
 import {TeammateController} from "./features/teammate/teammate.controller";
 import {TeamRepository} from "./features/team/team.repository";
 import {TeamService} from "./features/team/team.service";
+import {TeammateService} from "./features/teammate/teammate.service";
 
 export const router = express.Router();
 
