@@ -19,10 +19,10 @@ describe("TeammateService testing", () => {
   let teammateService = new TeammateService(mockTeammateRepository, mockTeamService);
 
   it("should fetch teammates with their lastest declaration", async () => {
-    // Mock the data and behavior of the depend                                                                                     encies
-    const mockCaptainId = 12;
+    // Mock the data
+    const mockCaptainId: number = 12;
     const mockTeamId: number = 20;
-    const mockTeammatesData = [
+    const mockTeammatesDataApiReponse = [
       {
         user_id: 1,
         teammate_id: 101,
@@ -32,8 +32,7 @@ describe("TeammateService testing", () => {
         declaration_status: StatusDeclaration.REMOTE,
       },
     ];
-
-    const mockTeamDto = [
+    const mockTeamDtoApiResponse = [
       {
         teamId: 20,
         teamName: "Test team",
@@ -44,9 +43,9 @@ describe("TeammateService testing", () => {
     ];
 
     // Mock TeamService response
-    mockTeamService.getTeamsByCaptainId = jest.fn().mockResolvedValue(mockTeamDto);
+    mockTeamService.getTeamsByCaptainId = jest.fn().mockResolvedValue(mockTeamDtoApiResponse);
     // Mock TeammateRepository response
-    mockTeammateRepository.getByTeamIdWithLastDeclaration = jest.fn().mockResolvedValue(mockTeammatesData);
+    mockTeammateRepository.getByTeamIdWithLastDeclaration = jest.fn().mockResolvedValue(mockTeammatesDataApiReponse);
 
     // method to test
     const result = await teammateService.getByTeamIdWithLastDeclaration(mockCaptainId);
@@ -55,7 +54,7 @@ describe("TeammateService testing", () => {
     expect(mockTeamService.getTeamsByCaptainId).toHaveBeenCalledWith(mockCaptainId);
     expect(mockTeammateRepository.getByTeamIdWithLastDeclaration).toHaveBeenCalledWith(mockTeamId);
     expect(result).toEqual(
-      mockTeammatesData.map(
+      mockTeammatesDataApiReponse.map(
         (element) =>
           new TeammateWithDeclaration(
             element.user_id,
