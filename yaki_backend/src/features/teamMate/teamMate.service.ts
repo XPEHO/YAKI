@@ -13,7 +13,7 @@ export class TeammateService {
   }
 
   getByTeamIdWithLastDeclaration = async (captainId: number) => {
-    const team: TeamDtoIn[] = await this.teamService.getTeamByCaptainId(captainId);
+    const team: TeamDtoIn[] = await this.teamService.getTeamsByCaptainId(captainId);
 
     // THIS NEED TO BE CHANGED TO ALLOW A CAPTAIN TO SELECT HIS TEAM WHEN HE HANDLE SEVERAL OF THEM
     const getTeammates: any[] = await this.teamMateRepository.getByTeamIdWithLastDeclaration(team[0].teamId);

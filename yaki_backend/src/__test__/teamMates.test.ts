@@ -2,12 +2,27 @@ import {TeammateRepository} from "../features/teammate/teammate.repository";
 import {TeammateService} from "../features/teammate/teammate.service";
 import {TeamService} from "../features/team/team.service";
 import {TeamRepository} from "../features/team/team.repository";
-import mockTeam from "./__mocks__/mockTeam";
-import mockTeammates from "./__mocks__/mockTeammate";
+import teamMock from "./__mocks__/team";
+import teammatesMock from "./__mocks__/teammate";
 import mockTeammatesWithDeclaration from "./__mocks__/mockTeammatesWithDeclaration";
 
-const mockedTeammateRepo = jest.mocked(TeammateRepository, {shallow: true});
-const mockedTeamService = jest.mocked(TeamService, {shallow: true});
+const mockTeammateRepo = jest.mocked(TeammateRepository, {shallow: true});
+const mockTeamService = jest.mocked(TeamService, {shallow: true});
+
+jest.mock("../features/team/team.repository", () => {
+  // mock the team repository to use the mock team data
+  return {
+    TeamRepository: jest.fn().mockImplementation(() => {
+      // mock the team repository to use the mock team data
+      return {
+        getTeamByCaptainId: async (captain_id: number) => {
+          const team = teamMock.filter((elm) => elm.teamCaptainId == captain_id);
+          return team;
+        },
+      };
+    }),
+  };
+});
 
 jest.mock("../features/teammate/teammate.repository", () => {
   return {
@@ -16,7 +31,7 @@ jest.mock("../features/teammate/teammate.repository", () => {
         getByTeamIdWithLastDeclaration: async (teamId: number) => {
           // just to use teamId, this is the "preview DB review way, as now declaration arent bound anymore to teammate_id"
           //Get teamates from mock [] where there teamID = teamID to get teammates with their declarations
-          const teammates = mockTeammates.filter((teammate) => teammate.teammate_team_id == teamId);
+          const teammates = teammatesMock.filter((teammate) => teammate.teammate_team_id == teamId);
           // filter the "teammate with declarations" corresponding to the user being in the selected team from their teammate-id
           const teammateWithDeclaration = mockTeammatesWithDeclaration.filter(
             (userWithDecla) => userWithDecla.teammate_id == teammates[0].teammate_id
@@ -33,7 +48,7 @@ jest.mock("../features/team/team.service", () => {
     TeamService: jest.fn().mockImplementation(() => {
       return {
         getTeamByCaptainId: async (captain_id: number) => {
-          const team = mockTeam.filter((elm) => elm.teamCaptainId == captain_id);
+          const team = teamMock.filter((elm) => elm.teamCaptainId == captain_id);
           return team;
         },
       };
@@ -47,8 +62,8 @@ describe("get teammate by team id with last declaration", () => {
   const teammateRepo = new TeammateRepository();
   const teammateService = new TeammateService(teammateRepo, teamService);
   beforeEach(() => {
-    mockedTeamService.mockClear();
-    mockedTeammateRepo.mockClear();
+    mockTeamService.mockClear();
+    mockTeammateRepo.mockClear();
   });
 
   it("return a teammate with last declaration", async () => {

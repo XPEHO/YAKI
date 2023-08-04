@@ -1,6 +1,6 @@
 import {TeamDtoIn} from "../../features/team/team.dtoIn";
 
-const mockTeam: TeamDtoIn[] = [
+const teamMock: TeamDtoIn[] = [
   {
     teamId: 1,
     teamName: "Red team",
@@ -17,4 +17,4 @@ const mockTeam: TeamDtoIn[] = [
   },
 ];
 
-export default mockTeam;
+export default teamMock;
