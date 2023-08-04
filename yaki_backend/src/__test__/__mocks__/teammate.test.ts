@@ -1,5 +1,5 @@
-import {TeammateRepository} from "../features/teammate/teammate.repository";
-import {TeammateService} from "../features/teammate/teammate.service";
+import {TeammateRepository} from "../features/teammate/teamate.repository";
+import {TeammateService} from "../features/teammate/teamate.service";
 import {TeamService} from "../features/team/team.service";
 import {TeamRepository} from "../features/team/team.repository";
 import teamMock from "./__mocks__/team";

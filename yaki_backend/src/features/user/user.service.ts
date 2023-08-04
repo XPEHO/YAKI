@@ -2,12 +2,12 @@ import {UserRepository} from "./user.repository";
 import {authService} from "./authentication.service";
 import YakiUtils from "../../utils/yakiUtils";
 
-import {TeammateDtoOut} from "../teammate/teammate.dtoOut";
+import {TeammateDtoOut} from "../teammate/teamate.dtoOut";
 import {CaptainDtoOut} from "../captain/captain.dtoOut";
 import {UserToRegisterIn} from "./toRegister.dtoIn";
 import {UserToRegisterOut} from "./toRegister.dtoOut";
 import {RegisterResponse} from "./registerResponse";
-import EmailAlreadyExistsError from "../../errors/EmailAlreadyExistError"
+import EmailAlreadyExistsError from "../../errors/EmailAlreadyExistError";
 
 export class UserService {
   userRepository: UserRepository;
@@ -76,19 +76,18 @@ export class UserService {
       user.email.trim(),
       user.password.trim()
     );
-    try{
+    try {
       const springResponse = await this.userRepository.registerUser(userToRegister);
       if (springResponse.id !== 0 && springResponse.id !== null) {
         responseAfterRegister.isRegistered = true;
       }
       return responseAfterRegister;
-    }
-    catch (error: any) {
+    } catch (error: any) {
       if (error instanceof EmailAlreadyExistsError) {
-        throw new EmailAlreadyExistsError(error.message)
+        throw new EmailAlreadyExistsError(error.message);
       } else {
         // catch server errors
-        throw TypeError
+        throw TypeError;
       }
     }
   };
