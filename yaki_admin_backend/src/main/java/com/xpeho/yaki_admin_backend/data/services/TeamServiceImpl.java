@@ -114,10 +114,13 @@ public class TeamServiceImpl implements TeamService {
         List<TeamModel> results = teamJpaRepository.findAllTeamByCustomerId(customerId);
         List<TeamEntity> teamEntities = new ArrayList<>();
         for (TeamModel result : results) {
-            TeamEntity teamEntity = new TeamEntity(result.getId(), result.getCaptainId(), result.getTeamName());
+            List<Integer> captainsId = result.getCaptains().stream()
+                    .map(CaptainModel::getCaptainId).toList();
+            TeamEntity teamEntity = new TeamEntity(result.getId(), captainsId, result.getTeamName(),result.getCustomerId());
             teamEntities.add(teamEntity);
         }
         return teamEntities;
+    }
     //disable the team but keep in log
     @Override
     public TeamEntity disabled(int teamId){

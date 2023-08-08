@@ -98,12 +98,13 @@ class CaptainServiceImpl(private val captainJpaRepository: CaptainJpaRepository,
                             userModel.email
                     )
                 }
+    }
     fun findAllById(id: MutableList<Int> ): MutableList<CaptainModel> {
         return captainJpaRepository.findAllById(id)
     }
 
     //disable the team but keep in log
-    override fun disabled(captainId: Int): CaptainEntity? {
+        override fun disabled(captainId: Int): CaptainEntity? {
         val captainModelOpt: Optional<CaptainModel> = captainJpaRepository.findById(captainId)
         if (captainModelOpt.isEmpty) {
             throw EntityNotFoundException("The captain with id $captainId not found.")
