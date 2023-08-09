@@ -24,6 +24,7 @@ const fetchTeams = async () => {
 onBeforeMount(async () => {
   await fetchTeams();
   // automaticaly select first team right after team fetch, and save name
+  if(store.getTeamList.length === 0) return;
   isTeamSelected.setTeam(store.getTeamList[0].id);
   store.setTeamName(store.getTeamList[0].teamName);
   //directly fetch teammate from the first team

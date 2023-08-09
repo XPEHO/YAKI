@@ -34,7 +34,7 @@ class CaptainServiceImpl(private val captainJpaRepository: CaptainJpaRepository,
             captainModel = CaptainModel(captainEntity.userId, captainEntity.customerId,entityLogModel.id)
         }
         else{
-            captainModel = CaptainModel(captainEntity.id,captainEntity.userId, captainEntity.customerId)
+            captainModel = CaptainModel(captainEntity.id,captainEntity.userId, captainEntity.customerId,entityLogModel.id)
         }
         val savedCaptain = captainJpaRepository.save(captainModel)
         return CaptainEntity(savedCaptain.captainId, savedCaptain.userId, savedCaptain.customerId)
