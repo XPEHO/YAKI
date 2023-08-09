@@ -39,9 +39,9 @@ jobs:
           sleep 10s
           echo "sleep finished"
           echo "database initialization"
-          docker exec -i yaki_docker_bdd psql -U ${{secrets.KARATE_DB_NAME }} -d ${{secrets.KARATE_DB_NAME }} < create_user.sql
-          docker exec -i yaki_docker_bdd psql -U ${{secrets.KARATE_DB_NAME }} -d ${{secrets.KARATE_DB_NAME }} < create_table.sql
-          docker exec -i yaki_docker_bdd psql -U ${{secrets.KARATE_DB_NAME }} -d ${{secrets.KARATE_DB_NAME }} < create_data.sql
+          docker exec -i yaki_docker-bdd-1 psql -U ${{secrets.KARATE_DB_NAME }} -d ${{secrets.KARATE_DB_NAME }} < create_user.sql
+          docker exec -i yaki_docker-bdd-1 psql -U ${{secrets.KARATE_DB_NAME }} -d ${{secrets.KARATE_DB_NAME }} < create_table.sql
+          docker exec -i yaki_docker-bdd-1 psql -U ${{secrets.KARATE_DB_NAME }} -d ${{secrets.KARATE_DB_NAME }} < create_data.sql
           cd ../yaki_karate
           echo ${{ secrets.KARATE_CONFIG }} | base64 -d > .env
           echo "Running karate tests"
