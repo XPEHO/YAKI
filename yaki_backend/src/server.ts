@@ -1,24 +1,22 @@
-// Importing the Express library and related types
 import express, {Express} from "express";
-// Load environment variables from a .env file
 import "dotenv/config";
+import cors from "cors";
 // Import the initConfig function from the config.ts module
 import {initConfig} from "./config";
 
 // Import the Swagger UI middleware
 import swaggerUi from "swagger-ui-express";
-// Import swagger JSON file
 import * as swaggerDocument from "./dev/swagger.json";
 
 import {router} from "./router";
-/* Importing the declaration router from the declaration.router.ts file. */
 import declarationRouter from "./declaration.router";
-
-import cors from "cors";
 import teamRouter from "./features/team/team.router";
+//
+import {initdb} from "./db/initdb";
 
 // Call the initConfig function to load environment variables and log their values to the console
 initConfig();
+initdb();
 
 const corsOptions = {
   origin: "*",
