@@ -7,11 +7,17 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-java@v3
         with:
-          distribution: 'temurin'
-          java-version: '17'
+          distribution: "temurin"
+          java-version: "17"
       - name: Run karate tests
         run: |
           cd yaki_docker
+          echo "Creating create_user.sql file"
+          echo ${{ secrets.KARATE_DB_USER_CREATION }} | base64 -d > create_user.sql
+          echo "Creating create_table.sql file"
+          echo ${{ secrets.KARATE_DB_TABLE_CREATION }} | base64 -d > create_table.sql
+          echo "Creating create_data.sql file"
+          echo ${{ secrets.KARATE_DB_DATA_CREATION }} | base64 -d > create_data.sql
           echo "Creating .env file"
           echo ${{ secrets.ENV_FILE }} | base64 -d > .env
           cd ../yaki_backend
@@ -31,6 +37,11 @@ jobs:
           docker compose up --build --quiet-pull -d
           echo "Sleep 10s to wait backend admin initialization"
           sleep 10s
+          echo "sleep finished"
+          echo "database initialization"
+          docker exec -i yaki_db psql -U yaki -d yaki < create_user.sql
+          docker exec -i yaki_db psql -U yaki -d yaki < create_table.sql
+          docker exec -i yaki_db psql -U yaki -d yaki < create_data.sql
           cd ../yaki_karate
           echo ${{ secrets.KARATE_CONFIG }} | base64 -d > .env
           echo "Running karate tests"
