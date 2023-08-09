@@ -111,7 +111,7 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public List<TeamEntity> findAllTeamByCustomerId(int customerId) {
-        List<TeamModel> results = teamJpaRepository.findAllTeamByCustomerId(customerId);
+        List<TeamModel> results = teamJpaRepository.findAllByCustomerId(customerId);
         List<TeamEntity> teamEntities = new ArrayList<>();
         for (TeamModel result : results) {
             List<Integer> captainsId = result.getCaptains().stream()

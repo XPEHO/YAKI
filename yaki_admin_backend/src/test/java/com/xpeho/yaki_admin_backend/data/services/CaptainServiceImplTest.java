@@ -141,15 +141,15 @@ class CaptainServiceImplTest {
         //given
         int userId = 1;
         List<CaptainModel> captainModels = new ArrayList<>();
-        captainModels.add(new CaptainModel(1, 1, 1));
-        captainModels.add(new CaptainModel(2, 1, 2));
+        captainModels.add(new CaptainModel(1,1, 1, 1));
+        captainModels.add(new CaptainModel(2,3, 1, 2));
 
         //when
         when(captainJpaRepository.findAllByUserId(userId)).thenReturn(captainModels);
 
         List<CaptainEntity> expectedCaptainEntities = new ArrayList<>();
         expectedCaptainEntities.add(new CaptainEntity(1, 1, 1));
-        expectedCaptainEntities.add(new CaptainEntity(2, 1, 2));
+        expectedCaptainEntities.add(new CaptainEntity(2, 3, 1));
 
         List<CaptainEntity> actualCaptainEntities = captainService.getAllCaptainByUserId(userId);
 

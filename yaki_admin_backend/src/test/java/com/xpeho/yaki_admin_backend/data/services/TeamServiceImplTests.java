@@ -163,14 +163,14 @@ class TeamServiceImplTests {
         //given
         int customerId = 1;
         List<TeamModel> teamModels = new ArrayList<>();
-        teamModels.add(new TeamModel(1, 1, "Team 1"));
-        teamModels.add(new TeamModel(2, 2, "Team 2"));
-        Mockito.when(teamJpaRepository.findAllTeamByCustomerId(customerId)).thenReturn(teamModels);
+        teamModels.add(new TeamModel(1, captains, "Team 1",1,1));
+        teamModels.add(new TeamModel(2, captains, "Team 2",1,2));
+        Mockito.when(teamJpaRepository.findAllByCustomerId(customerId)).thenReturn(teamModels);
 
         //when
         List<TeamEntity> expectedTeamEntities = new ArrayList<>();
-        expectedTeamEntities.add(new TeamEntity(1, 1, "Team 1"));
-        expectedTeamEntities.add(new TeamEntity(2, 2, "Team 2"));
+        expectedTeamEntities.add(new TeamEntity(1, Arrays.asList(1) , "Team 1",1));
+        expectedTeamEntities.add(new TeamEntity(2,  Arrays.asList(1), "Team 2",1));
 
         List<TeamEntity> actualTeamEntities = teamService.findAllTeamByCustomerId(customerId);
         //then
