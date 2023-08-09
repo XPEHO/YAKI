@@ -1,7 +1,7 @@
 import {Request, Response, NextFunction} from "express";
 import {CaptainDtoOut} from "../captain/captain.dtoOut";
-import {TeamMateDtoOut} from "../teamMate/teamMate.dtoOut";
 import bcrypt from "bcrypt";
+import {TeammateDtoOut} from "../teammate/teammate.dtoOut";
 
 const jwt = require("jsonwebtoken");
 
@@ -21,7 +21,7 @@ class Service {
    * @param user
    * @returns
    */
-  createToken = async (user: CaptainDtoOut | TeamMateDtoOut) => {
+  createToken = async (user: CaptainDtoOut | TeammateDtoOut) => {
     const token = jwt.sign(
       {
         user_id: user.userId,

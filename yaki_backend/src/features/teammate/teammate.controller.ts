@@ -1,10 +1,10 @@
-import {TeamMateService} from "./teamMate.service";
+import {TeammateService as TeammateService} from "./teammate.service";
 import {Response, Request} from "express";
 
-export class TeamMateController {
-  service: TeamMateService;
+export class TeammateController {
+  service: TeammateService;
 
-  constructor(service: TeamMateService) {
+  constructor(service: TeammateService) {
     this.service = service;
   }
 
