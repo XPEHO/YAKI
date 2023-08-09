@@ -13,8 +13,8 @@ jobs:
         run: |
           cd yaki_docker
           echo "Creating create_user.sql file"
-          echo ${{ secrets.KARATE_DB_USER_CREATION }} | base64 -d > create_user.sql
-          echo "${cat create_user.sql}"
+          echo ${{ secrets.KARATE_DB_USER_CREATION }} | base64 -d > create_user.txt
+          echo "${cat create_user.txt}"
           echo "Creating create_table.sql file"
           echo ${{ secrets.KARATE_DB_TABLE_CREATION }} | base64 -d > create_table.sql
           echo "Creating create_data.sql file"
