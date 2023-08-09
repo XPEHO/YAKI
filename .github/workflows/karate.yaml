@@ -20,6 +20,7 @@ jobs:
           echo ${{ secrets.KARATE_DB_DATA_CREATION }} | base64 -d > create_data.sql
           echo "Creating .env file"
           echo ${{ secrets.ENV_FILE }} | base64 -d > .env
+          echo "$(cat .env)"
           cd ../yaki_backend
           echo "Creating .env file"
           echo ${{ secrets.ENV_FILE }} | base64 -d > .env
