@@ -7,9 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface TeamJpaRepository extends JpaRepository<TeamModel, Integer> {
-    @Query("SELECT DISTINCT team FROM TeamModel team WHERE team.captainId = ?1")
+    @Query("SELECT DISTINCT team FROM TeamModel team INNER JOIN CaptainsTeamsModel as ct ON ct.teamModel.id = team.id WHERE ct.captainModel.captainId = ?1")
     List<TeamModel> findAllByCaptain(int id);
 
-    @Query("SELECT DISTINCT t FROM TeamModel AS t INNER JOIN CaptainModel AS capt ON t.captainId = capt.captainId INNER JOIN CustomerModel AS cust ON cust.id = capt.customerId WHERE cust.id = ?1")
-    List<TeamModel> findAllTeamByCustomerId(int id);
+    List<TeamModel> findAllByCustomerId(int id);
 }

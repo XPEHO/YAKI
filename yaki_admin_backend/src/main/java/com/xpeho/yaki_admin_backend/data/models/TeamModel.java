@@ -28,6 +28,9 @@ public class TeamModel {
     @Column(name = "team_customer_id")
     private int customerId;
 
+    @Column(name = "team_entity_log_id")
+    private int entityLogId;
+
     public int getCustomerId() {
         return customerId;
     }
@@ -36,22 +39,24 @@ public class TeamModel {
         this.customerId = customerId;
     }
 
-    public TeamModel(List<CaptainModel> captainsModel, String teamName, int customerId) {
+    public TeamModel(List<CaptainModel> captainsModel, String teamName, int customerId,int entityLogId) {
         this.captains= captainsModel;
         this.teamName = teamName;
         this.actif = true;
         this.customerId = customerId;
+        this.entityLogId = entityLogId;
     }
 
     public TeamModel() {
     }
 
-    public TeamModel(int id, List<CaptainModel> captainsModel, String teamName, int customerId) {
+    public TeamModel(int id, List<CaptainModel> captainsModel, String teamName, int customerId,int entityLogId) {
         this.teamName = teamName;
         this.id = id;
         this.captains = captainsModel;
         this.actif = true;
         this.customerId = customerId;
+        this.entityLogId = entityLogId;
     }
 
     public boolean isActif() {
@@ -84,6 +89,14 @@ public class TeamModel {
 
     public void setCaptainId(List<CaptainModel> captains) {
         this.captains = captains;
+    }
+
+    public int getEntityLogId() {
+        return entityLogId;
+    }
+
+    public void setEntityLogId(int entityLogId) {
+        this.entityLogId = entityLogId;
     }
 
     @Override

@@ -2,9 +2,14 @@ package com.xpeho.yaki_admin_backend.data.services;
 
 import com.xpeho.yaki_admin_backend.data.models.CaptainModel;
 import com.xpeho.yaki_admin_backend.data.models.UserModel;
-import com.xpeho.yaki_admin_backend.data.sources.CaptainJpaRepository;
 import com.xpeho.yaki_admin_backend.domain.entities.CaptainEntity;
 import com.xpeho.yaki_admin_backend.domain.entities.UserEntityWithID;
+import com.xpeho.yaki_admin_backend.data.models.CustomerModel;
+import com.xpeho.yaki_admin_backend.data.models.EntityLogModel;
+import com.xpeho.yaki_admin_backend.data.models.OwnerModel;
+import com.xpeho.yaki_admin_backend.data.sources.CaptainJpaRepository;
+import com.xpeho.yaki_admin_backend.domain.entities.CustomerEntity;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,10 +33,19 @@ class CaptainServiceImplTest {
     @MockBean
     private CaptainJpaRepository captainJpaRepository;
 
+    @MockBean
+    private EntityLogServiceImpl entityLogService;
+    private EntityLogModel entityLogModel;
+
+    @BeforeEach
+    void setup() {
+        entityLogModel = new EntityLogModel();
+
+    }
     @Test
     void getCaptainById() {
         //given
-        CaptainModel captainEntity = new CaptainModel(1, 1, 2);
+        CaptainModel captainEntity = new CaptainModel(1, 1, 2,entityLogModel.getId());
 
         //when
         when(captainJpaRepository.findById(1)).thenReturn(Optional.of(captainEntity));
@@ -47,9 +61,9 @@ class CaptainServiceImplTest {
     void getCaptains() {
         //given
         List<CaptainModel> captainModels = Arrays.asList(
-                new CaptainModel(1, 1, 2),
-                new CaptainModel(2, 1, 2),
-                new CaptainModel(3, 2, 2)
+                new CaptainModel(1, 1, 2,entityLogModel.getId()),
+                new CaptainModel(2, 1, 2,entityLogModel.getId()),
+                new CaptainModel(3, 2, 2,entityLogModel.getId())
         );
 
         //when
@@ -67,7 +81,8 @@ class CaptainServiceImplTest {
     void createCaptain() {
         //given
         CaptainEntity captainEntity = new CaptainEntity(1, 2, 3);
-        when(captainJpaRepository.save(any())).thenReturn(new CaptainModel(1, 2, 3));
+        given(entityLogService.createEntityLog()).willReturn(entityLogModel);
+        when(captainJpaRepository.save(any())).thenReturn(new CaptainModel(1, 2, 3,entityLogModel.getId()));
 
         //when
         CaptainEntity createCaptain = captainService.createCaptain(captainEntity);
@@ -84,7 +99,7 @@ class CaptainServiceImplTest {
 
         //given
         int captainId = 1;
-        CaptainModel captainModel = new CaptainModel(captainId, 1, 2);
+        CaptainModel captainModel = new CaptainModel(captainId, 1, 2,entityLogModel.getId());
 
 
         when(captainJpaRepository.findById(captainId)).thenReturn(Optional.of(captainModel));
@@ -106,7 +121,7 @@ class CaptainServiceImplTest {
         // given
         int captainId = 1;
         CaptainEntity captainEntity = new CaptainEntity(2, 3, 3);
-        CaptainModel captainModel = new CaptainModel(captainId, 4, 5);
+        CaptainModel captainModel = new CaptainModel(captainId, 4, 5,entityLogModel.getId());
         when(captainJpaRepository.findById(captainId)).thenReturn(Optional.of(captainModel));
 
         // when
@@ -126,15 +141,15 @@ class CaptainServiceImplTest {
         //given
         int userId = 1;
         List<CaptainModel> captainModels = new ArrayList<>();
-        captainModels.add(new CaptainModel(1, 1, 1));
-        captainModels.add(new CaptainModel(2, 1, 2));
+        captainModels.add(new CaptainModel(1,1, 1, 1));
+        captainModels.add(new CaptainModel(2,3, 1, 2));
 
         //when
         when(captainJpaRepository.findAllByUserId(userId)).thenReturn(captainModels);
 
         List<CaptainEntity> expectedCaptainEntities = new ArrayList<>();
         expectedCaptainEntities.add(new CaptainEntity(1, 1, 1));
-        expectedCaptainEntities.add(new CaptainEntity(2, 1, 2));
+        expectedCaptainEntities.add(new CaptainEntity(2, 3, 1));
 
         List<CaptainEntity> actualCaptainEntities = captainService.getAllCaptainByUserId(userId);
 

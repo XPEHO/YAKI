@@ -1,6 +1,7 @@
 package com.xpeho.yaki_admin_backend.data.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.xpeho.yaki_admin_backend.data.models.EntityLogModel;
 import com.xpeho.yaki_admin_backend.data.models.TeammateModel;
 import com.xpeho.yaki_admin_backend.data.sources.TeammateJpaRepository;
 import com.xpeho.yaki_admin_backend.domain.entities.TeammateDetailsEntity;
@@ -11,6 +12,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.Arrays;
 import java.util.List;
@@ -30,16 +32,21 @@ class TeammateServiceImplTest {
     private TeammateEntity teammateE2;
     private List<Object[]> teammatesFromTeamOne;
     private List<TeammateDetailsEntity> teammatesEFromTeamOne;
+    private  EntityLogModel entityLogModel;
 
     @InjectMocks
     private TeammateServiceImpl teammateService;
     @Mock
     private TeammateJpaRepository teammateJpaRepository;
 
+    @Mock
+    private EntityLogServiceImpl entityLogService;
+
     @BeforeEach
     void setup() {
-        teammate1 = new TeammateModel(1, 5);
-        teammate2 = new TeammateModel(1, 8);
+        entityLogModel = new EntityLogModel();
+        teammate1 = new TeammateModel(1, 5,entityLogModel.getId());
+        teammate2 = new TeammateModel(1, 8,entityLogModel.getId());
         teammateE1 = new TeammateEntity(teammate1.getId(), 1, 5);
         teammateE2 = new TeammateEntity(teammate2.getId(), 1, 8);
         TeammateDetailsEntity teammateUserE1 = new TeammateDetailsEntity(1, 2, 5, "Albert", "Redmont", "albert.redmont@mail.com");
@@ -69,6 +76,7 @@ class TeammateServiceImplTest {
     void createTeammateTest() throws Exception {
         //given
         given(teammateJpaRepository.save(teammate1)).willReturn(teammate1);
+        given(entityLogService.createEntityLog()).willReturn(entityLogModel);
         // when
         TeammateEntity savedTeammate = teammateService.createTeammate(teammateE1);
         // then - verify the output
@@ -80,9 +88,9 @@ class TeammateServiceImplTest {
     void saveTeammateTest() throws Exception {
         //given
         int idUsed = 3;
-        TeammateModel replacedModel = new TeammateModel(idUsed, 235, 772);
+        TeammateModel replacedModel = new TeammateModel(idUsed, 235, 772,entityLogModel.getId());
         TeammateModel expectedModel = new TeammateModel(
-                idUsed, teammate2.getTeamId(), teammate2.getUserId());
+                idUsed, teammate2.getTeamId(), teammate2.getUserId(),entityLogModel.getId());
         given(teammateJpaRepository.save(expectedModel)).willReturn(expectedModel);
         given(teammateJpaRepository.findById(idUsed)).willReturn(Optional.of(replacedModel));
 
@@ -119,7 +127,7 @@ class TeammateServiceImplTest {
 
         //given
         int deletedId = 1;
-        TeammateModel deletedModel = new TeammateModel(deletedId, 25, 87);
+        TeammateModel deletedModel = new TeammateModel(deletedId, 25, 87,entityLogModel.getId());
         willDoNothing().given(teammateJpaRepository).deleteById(deletedId);
         given(teammateJpaRepository.findById(deletedId)).willReturn(Optional.of(deletedModel));
 

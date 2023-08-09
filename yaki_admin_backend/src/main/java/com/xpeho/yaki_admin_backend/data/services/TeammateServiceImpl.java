@@ -1,10 +1,8 @@
 package com.xpeho.yaki_admin_backend.data.services;
 
-import com.xpeho.yaki_admin_backend.data.models.CaptainModel;
-import com.xpeho.yaki_admin_backend.data.models.TeamModel;
+import com.xpeho.yaki_admin_backend.data.models.EntityLogModel;
 import com.xpeho.yaki_admin_backend.data.models.TeammateModel;
 import com.xpeho.yaki_admin_backend.data.sources.TeammateJpaRepository;
-import com.xpeho.yaki_admin_backend.domain.entities.TeamEntity;
 import com.xpeho.yaki_admin_backend.domain.entities.TeammateDetailsEntity;
 import com.xpeho.yaki_admin_backend.domain.entities.TeammateEntity;
 import com.xpeho.yaki_admin_backend.domain.services.TeammateService;
@@ -20,9 +18,12 @@ public class TeammateServiceImpl implements TeammateService {
 
     final TeammateJpaRepository teammateJpaRepository;
 
-    public TeammateServiceImpl(TeammateJpaRepository teammateJpaRepository) {
+    final EntityLogServiceImpl entityLogService;
+
+    public TeammateServiceImpl(TeammateJpaRepository teammateJpaRepository, EntityLogServiceImpl entityLogService) {
 
         this.teammateJpaRepository = teammateJpaRepository;
+        this.entityLogService = entityLogService;
     }
 
     public List<TeammateDetailsEntity> findAllByTeam(int teamIdF) {
@@ -44,7 +45,9 @@ public class TeammateServiceImpl implements TeammateService {
 
     @Override
     public TeammateEntity createTeammate(TeammateEntity teammateEntity) {
-        final TeammateModel teammateModel = new TeammateModel(teammateEntity.teamId(), teammateEntity.userId());
+        EntityLogModel entityLogModel = entityLogService.createEntityLog();
+        final TeammateModel teammateModel = new TeammateModel(teammateEntity.teamId(), teammateEntity.userId()
+                ,entityLogModel.getId());
         TeammateModel savedModel = teammateJpaRepository.save(teammateModel);
         //teammateEntity.id could be null, so we are using autogenerate id
         return new TeammateEntity(savedModel.getId(), savedModel.getTeamId(), savedModel.getUserId());
@@ -97,6 +100,7 @@ public class TeammateServiceImpl implements TeammateService {
             throw new EntityNotFoundException("The teammate with id " + teammateId + " not found.");
         }
         TeammateModel teammateModel = teammateModelOpt.get();
+        entityLogService.disabledEntity(teammateModel.getEntityLogId());
         teammateModel.setActif(false);
         teammateJpaRepository.save(teammateModel);
         return new TeammateEntity(teammateModel.getId(),teammateModel.getTeamId(),teammateModel.getUserId());
