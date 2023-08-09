@@ -37,15 +37,17 @@ export const useAuthStore = defineStore("loginStore", {
           this.logout();
           return false;
         }
+        const teamStore = useTeamStore();
+        const customerRightsStore = useCustomerRightsStore();
         //in what route the user will be redirect depending of his rights.
         if (this.customersRights.length >= 1) {
           this.returnedUrl = "/customer/manage-captain";
         } else {
           //if not a customer it's necessarily a captain
           this.returnedUrl = "/administration/captain";
+          teamStore.setCustomerId(this.captains[0].customerId)
         }
-        const teamStore = useTeamStore();
-        const customerRightsStore = useCustomerRightsStore();
+        
         
         let idsCust = [];
         let idsCap = [];
@@ -57,7 +59,7 @@ export const useAuthStore = defineStore("loginStore", {
         }
         
         //temporary we must choose the customer then.
-        teamStore.setCustomerId(this.captains[0].customerId)
+        
         teamStore.setCaptainsId(idsCap);
         customerRightsStore.setCustomersRightsId(idsCust);
 
