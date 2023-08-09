@@ -35,7 +35,7 @@ jobs:
           echo "Starting docker containers"
           cd ../yaki_docker
           docker compose up --build --quiet-pull -d
-          docker ps
+          docker exec -i yaki_docker-bdd-1 /bin/bash -c "password=password psql --username postgres postgres" < create_table.sql
           echo "Sleep 10s to wait backend admin initialization"
           sleep 10s
           echo "sleep finished"
