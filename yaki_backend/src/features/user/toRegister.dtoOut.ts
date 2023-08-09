@@ -1,3 +1,4 @@
+// DTO sent out from repository, sent to the database
 export class UserToRegisterOut {
   lastname: string;
   firstname: string;
