@@ -1,31 +1,29 @@
 import {TeamDtoIn} from "../team/team.dtoIn";
 import {TeamService} from "../team/team.service";
-import {TeamMateRepository} from "./teamMate.repository";
-import {TeamMateWithDeclaration} from "./teamMateWithDeclaration.dtoOut";
+import {TeammateWithDeclaration} from "./teammateWithDeclaration.dtoOut";
+import {TeammateRepository} from "./teammate.repository";
 
-export class TeamMateService {
-  teamMateRepository: TeamMateRepository;
+export class TeammateService {
+  teamMateRepository: TeammateRepository;
   teamService: TeamService;
 
-  constructor(repository: TeamMateRepository, teamService: TeamService) {
+  constructor(repository: TeammateRepository, teamService: TeamService) {
     this.teamMateRepository = repository;
     this.teamService = teamService;
   }
 
-  getByUserId = async (user_id: string) => {
-    return await this.teamMateRepository.getByUserId(user_id);
-  };
-
   getByTeamIdWithLastDeclaration = async (captainId: number) => {
-    const team: TeamDtoIn = await this.teamService.getTeamByCaptainId(captainId);
-    const getTeamMates: any[] = await this.teamMateRepository.getByTeamIdWithLastDeclaration(team.teamId);
+    const team: TeamDtoIn[] = await this.teamService.getTeamsByCaptainId(captainId);
 
-    let result: TeamMateWithDeclaration[] = [];
-    getTeamMates.forEach((element) => {
+    // THIS NEED TO BE CHANGED TO ALLOW A CAPTAIN TO SELECT HIS TEAM WHEN HE HANDLE SEVERAL OF THEM
+    const getTeammates: any[] = await this.teamMateRepository.getByTeamIdWithLastDeclaration(team[0].teamId);
+
+    let result: TeammateWithDeclaration[] = [];
+    getTeammates.forEach((element) => {
       result.push(
-        new TeamMateWithDeclaration(
+        new TeammateWithDeclaration(
           element.user_id,
-          element.team_mate_id,
+          element.teammate_id,
           element.user_last_name,
           element.user_first_name,
           element.declaration_date,
