@@ -11,8 +11,8 @@ export class TeammateController {
   getByTeamIdWithLastDeclaration = async (req: Request, res: Response) => {
     const captainId = Number(req.query.captainId);
     try {
-      const teamMates = await this.service.getByTeamIdWithLastDeclaration(captainId);
-      res.send(teamMates);
+      const teammates = await this.service.getByTeamIdWithLastDeclaration(captainId);
+      res.send(teammates);
     } catch (error: any) {
       if (error instanceof TypeError) {
         res.status(404).json({message: error.message});

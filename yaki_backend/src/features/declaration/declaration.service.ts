@@ -90,11 +90,11 @@ export class DeclarationService {
 
   /**
    * Get all declarations for a team mate.
-   * @param {number} teamMateId - number
+   * @param {number} teammateId - number
    * @returns DeclarationDtoIn[] | String
    */
-  async getDeclarationForTeamMate(teamMateId: number): Promise<DeclarationDtoIn[] | string> {
-    const declarationList: DeclarationDtoIn[] = await this.declarationRepository.getDeclarationForTeamMate(teamMateId);
+  async getDeclarationForTeammate(teammateId: number): Promise<DeclarationDtoIn[] | string> {
+    const declarationList: DeclarationDtoIn[] = await this.declarationRepository.getDeclarationForTeammate(teammateId);
     if (declarationList.length !== 0 || declarationList !== null || declarationList !== undefined) {
       return this.selectDeclarationToReturn(declarationList);
     } else {

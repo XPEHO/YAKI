@@ -1,4 +1,4 @@
-import {Pool, QueryResult} from "pg";
+import {Client, QueryResult} from "pg";
 import "dotenv/config";
 import {UserToRegisterOut} from "./toRegister.dtoOut";
 import ToRegisterRes from "./toRegisterRes.dto";
@@ -12,11 +12,12 @@ export class UserRepository {
    * @returns
    */
   getByLogin = async (username: string) => {
-    const pool = new Pool({
-      user: `${process.env.DB_ROLE}`,
-      host: `${process.env.DB_HOST}`,
-      database: `${process.env.DB_DATABASE}`,
-      password: `${process.env.DB_ROLE_PWD}`,
+    console.log(username)
+    const client = new Client({
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE,
       port: Number(process.env.DB_PORT),
     });
 
@@ -32,15 +33,17 @@ export class UserRepository {
         ON u.user_id = c.captain_user_id
         WHERE user_login = $1
       `;
-    const poolResult: QueryResult = await pool.query(query, [username]);
-    await pool.end();
-
+    client.connect();
+    const poolResult: QueryResult = await client.query(query, [username]);
+    await client.end();
+    console.log(poolResult);
     // If the user wasn't found in the DB
     if (poolResult.rowCount === 0) {
       throw new Error("Bad authentification details");
     }
     // If the user still hasn't confirmed his account
     if (poolResult.rows[0].user_enabled === false) {
+      console.log("this user isn't activated")
       throw new Error("This account isn't activated");
     }
     // "else" return the user

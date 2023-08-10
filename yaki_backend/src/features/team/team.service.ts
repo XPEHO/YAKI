@@ -21,11 +21,11 @@ export class TeamService {
   /**
    * This function returns the list of teams that a team mate is in
    * and returns an error if the team mate is not in any teams
-   * @param teamMateId the id of the team mate
+   * @param teammateId the id of the team mate
    * @returns a list of teams that the team mate is in
    */
-  getTeamByTeamMateId = async (teamMateId: number) => {
-    const team = await this.teamRepository.getTeamByTeamMateId(teamMateId);
+  getTeamByTeammateId = async (teammateId: number) => {
+    const team = await this.teamRepository.getTeamByTeammateId(teammateId);
     if (team !== undefined) {
       return team;
     } else {

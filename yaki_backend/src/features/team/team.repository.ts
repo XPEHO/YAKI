@@ -39,10 +39,10 @@ export class TeamRepository {
 
   /**
    * This function returns the list of teams that a team mate is in
-   * @param teamMateId the id of the team mate
+   * @param teammateId the id of the team mate
    * @returns a list of teams that the team mate is in
    */
-  getTeamByTeamMateId = async (teamMateId: number) => {
+  getTeamByTeammateId = async (teammateId: number) => {
     const client = new Client({
       host: process.env.DB_HOST,
       user: process.env.DB_USER,
@@ -59,7 +59,7 @@ export class TeamRepository {
     `;
     client.connect();
     try {
-      const result = await client.query(query, [teamMateId]);
+      const result = await client.query(query, [teammateId]);
 
       const teamListToReturn: TeamDtoIn[] = [];
       for (let team of result.rows) {

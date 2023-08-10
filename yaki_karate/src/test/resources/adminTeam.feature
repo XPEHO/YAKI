@@ -11,19 +11,19 @@ Feature: Team
   Scenario: 01 Create users
     Given path '/users'
     And header Authorization = token
-    And request {id : 2, lastname: 'owner2', firstname: 'owner', email: 'owner@gmail.com', login: 'owner2', password: 'owner2'}
+    And request {id : 30, lastname: 'owner5', firstname: 'owner5', email: 'owner5@gmail.com', login: 'owner5', password: 'owner5'}
     When method post
     Then status 200
 
     Given path '/users'
     And header Authorization = token
-    And request {id : 3, lastname: 'customer', firstname: 'customer', email: 'customer@gmail.com', login: 'customer', password: 'customer'}
+    And request {id : 31, lastname: 'customer', firstname: 'customer', email: 'customer@gmail.com', login: 'customer', password: 'customer'}
     When method post
     Then status 200
 
     Given path '/users'
     And header Authorization = token
-    And request {id : 4, lastname: 'captain', firstname: 'captain', email: 'captain@gmail.com', login: 'captain', password: 'captain'}
+    And request {id : 32, lastname: 'captain', firstname: 'captain', email: 'captain@gmail.com', login: 'captain', password: 'captain'}
     When method post
     Then status 200
 

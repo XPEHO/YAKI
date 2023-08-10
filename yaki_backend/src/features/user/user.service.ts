@@ -22,8 +22,9 @@ export class UserService {
    * @returns
    */
   checkUserLoginDetails = async (object: any) => {
+    console.log(object);
     const searchUser = await this.userRepository.getByLogin(object.login);
-
+    console.log(searchUser);
     if (await authService.comparePw(object.password, searchUser.user_password)) {
       let user = undefined;
       // if captain_id column is null, create a team_mate
@@ -48,6 +49,7 @@ export class UserService {
       // add a token to the user before sending to front
       return authService.createToken(user);
     } else {
+      console.log("Bad authentification details");
       throw new Error("Bad authentification details");
     }
   };

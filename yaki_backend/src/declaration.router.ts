@@ -25,7 +25,7 @@ declarationRouter.post(
                 description: 'Declaration details',
                 required: true,
                 type: 'object',
-                schema: { declarationTeamMateId: 1, declarationStatus: 'string', declarationDate: 'string' }
+                schema: { declarationTeammateId: 1, declarationStatus: 'string', declarationDate: 'string' }
 }
   */
     authService.verifyToken(req, res, next),
@@ -37,17 +37,17 @@ declarationRouter.post(
 declarationRouter.get(
   "/declarations",
   (req, res, next) =>
-    /*#swagger.parameters['teamMateId'] = {
+    /*#swagger.parameters['teammateId'] = {
                 in: 'query',
-                description: 'Team mate id',
+                description: 'Teammate id',
                 required: true,
                 type: 'number',
-                schema: { teamMateId: 1 }
+                schema: { teammateId: 1 }
 }
   */
     authService.verifyToken(req, res, next),
   (req, res) => {
-    declarationController.getDeclarationsForTeamMate(req, res);
+    declarationController.getDeclarationsForTeammate(req, res);
   }
 );
 

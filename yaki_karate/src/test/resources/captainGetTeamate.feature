@@ -7,28 +7,51 @@ Feature: Captain
     And def token = 'Bearer ' + response.token
 
   Scenario: 01 Create user
-    Given url 'http://localhost:8080/users'
-    And header Authorization = token
-    And request {id : 1, lastname: 'owner', firstname: 'owner', email: 'owner@gmail.com', login: 'owner', password: 'owner'}
+    Given url 'http://localhost:8080/login/register'
+    And request {lastname: 'owner4', firstname: 'owner4', email: 'owner4@gmail.com', login: 'owner4', password: 'owner4'}
     When method post
     Then status 200
 
-    Given url 'http://localhost:8080/users'
-    And header Authorization = token
-    And request {id : 2, lastname: 'customer', firstname: 'customer', email: 'customer@gmail.com', login: 'customer', password: 'customer'}
+    Given url 'http://localhost:8080/login/register'
+    And request {lastname: 'customer2', firstname: 'customer2', email: 'customer2@gmail.com', login: 'customer2', password: 'customer2'}
     When method post
     Then status 200
 
-    Given url 'http://localhost:8080/users'
-    And header Authorization = token
-    And request {id : 3, lastname: 'captain', firstname: 'captain', email: 'captain@gmail.com', login: 'captain', password: 'captain'}
+    Given url 'http://localhost:8080/login/register'
+    And request {lastname: 'captain2', firstname: 'captain2', email: 'captain2@gmail.com', login: 'captain2', password: 'captain2'}
     When method post
     Then status 200
 
-    Given url 'http://localhost:8080/users'
-    And header Authorization = token
-    And request {id : 4, lastname: 'adfetchTuser', firstname: 'adfetchTuser', email: 'owner@gmail.com', login: 'adfetchTuser', password: 'adfetchTuser'}
+    Given url 'http://localhost:8080/login/register'
+    And request {lastname: 'adfetchTuser', firstname: 'adfetchTuser', email: 'fetchuser@gmail.com', login: 'adfetchTuser', password: 'adfetchTuser'}
     When method post
+    Then status 200
+
+    * def DbUtils = Java.type('org.example.utils.DbUtils')
+    * def db = new DbUtils()
+    * def token = db.readValue('SELECT token FROM public.verification_token WHERE verification_token_user_id = 10')
+    * print token
+    Given url 'http://localhost:8080/login/registerConfirm'
+    And param token = token
+    When method GET
+    Then status 200
+
+    * def token2 = db.readValue('SELECT token FROM public.verification_token WHERE verification_token_user_id = 11')
+    Given url 'http://localhost:8080/login/registerConfirm'
+    And param token = token2
+    When method GET
+    Then status 200
+
+    * def token3 = db.readValue('SELECT token FROM public.verification_token WHERE verification_token_user_id = 12')
+    Given url 'http://localhost:8080/login/registerConfirm'
+    And param token = token3
+    When method GET
+    Then status 200
+
+    * def token4 = db.readValue('SELECT token FROM public.verification_token WHERE verification_token_user_id = 13')
+    Given url 'http://localhost:8080/login/registerConfirm'
+    And param token = token4
+    When method GET
     Then status 200
 
   Scenario: 02 Attribute role & create team
@@ -70,7 +93,7 @@ Feature: Captain
     And def token = response.token
     And def userId = response.userId
 
-    Given url 'http://localhost:3000/teamMates'
+    Given url 'http://localhost:3000/teammates'
     And param captainId = 2
     And header x-access-token = token
     And header user_id = userId

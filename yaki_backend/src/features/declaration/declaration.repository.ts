@@ -106,10 +106,10 @@ export class DeclarationRepository {
   /**
    * Get the latest declaration for a team mate
    * Select current day declaration, OR declaration ending after the current day (vacation or "other" situation)
-   * @param {number} teamMateId - number
+   * @param {number} teammateId - number
    * @returns An array of Declaration objects.
    */
-  async getDeclarationForTeamMate(teamMateId: number): Promise<DeclarationDtoIn[]> {
+  async getDeclarationForTeammate(teammateId: number): Promise<DeclarationDtoIn[]> {
     const client = new Client({
       host: process.env.DB_HOST,
       user: process.env.DB_USER,
@@ -135,7 +135,7 @@ export class DeclarationRepository {
               )
             )
         ORDER BY declaration_date DESC LIMIT 10`,
-        [teamMateId]
+        [teammateId]
       );
 
       const declarationListToFront: DeclarationDtoIn[] = [];

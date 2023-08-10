@@ -132,9 +132,9 @@ CREATE TABLE IF NOT EXISTS public.user
     CONSTRAINT user_pkey PRIMARY KEY (user_id)
 )
 TABLESPACE pg_default;
--- ALTER TABLE IF EXISTS public.user
+ALTER TABLE IF EXISTS public.user
 --     ADD COLUMN IF NOT EXISTS user_enabled boolean DEFAULT true,
---     OWNER to yaki;
+    OWNER to yaki;
 -- CREATE TABLE FOR LOCATIONS
 CREATE TABLE IF NOT EXISTS public.locations
 (

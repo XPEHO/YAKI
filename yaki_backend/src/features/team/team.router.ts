@@ -23,7 +23,7 @@ teamRouter.get(
     (req, res, next) => 
   
     authService.verifyToken(req, res, next),
-    (req, res) => teamController.getTeamByTeamMateId(req, res)
+    (req, res) => teamController.getTeamByTeammateId(req, res)
 );
 
 export default teamRouter;

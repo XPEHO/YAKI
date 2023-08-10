@@ -34,7 +34,7 @@ describe("DeclarationService", () => {
     it("should throw a TypeError if mandatory information is missing", async () => {
       const declaration: any = {
         declarationId: 1,
-        declarationTeamMateId: undefined,
+        declarationTeammateId: undefined,
         declarationDate: new Date(),
         declarationStatus: "",
       };
@@ -50,22 +50,22 @@ describe("DeclarationService", () => {
       new DeclarationDtoIn(1, 1, new Date(), dateStart, dateEnd, StatusDeclaration.REMOTE, 1),
     ];
 
-    it("should get and return declaration of teamMate 1", async () => {
-      jest.spyOn(declarationRepository, "getDeclarationForTeamMate").mockResolvedValueOnce(declarationDtoIn);
+    it("should get and return declaration of teammate 1", async () => {
+      jest.spyOn(declarationRepository, "getDeclarationForTeammate").mockResolvedValueOnce(declarationDtoIn);
 
-      const declarationForTeamMates = await declarationService.getDeclarationForTeamMate(1);
+      const declarationForTeammates = await declarationService.getDeclarationForTeammate(1);
 
-      expect(declarationForTeamMates).toEqual(declarationDtoIn);
+      expect(declarationForTeammates).toEqual(declarationDtoIn);
     });
 
     it("should throw an error for null or undefined declaration list", async () => {
       // Arrange
-      const teamMateId = 1;
+      const teammateId = 1;
 
-      jest.spyOn(declarationRepository, "getDeclarationForTeamMate").mockResolvedValueOnce([]);
+      jest.spyOn(declarationRepository, "getDeclarationForTeammate").mockResolvedValueOnce([]);
 
       // Act and Assert
-      await expect(declarationService.getDeclarationForTeamMate(teamMateId)).rejects.toThrow(TypeError);
+      await expect(declarationService.getDeclarationForTeammate(teammateId)).rejects.toThrow(TypeError);
     });
   });
 });

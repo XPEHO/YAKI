@@ -50,10 +50,10 @@ export class DeclarationController {
    * @param {Request} req - Request - the request object
    * @param {Response} res - Response - the response object
    */
-  async getDeclarationsForTeamMate(req: Request, res: Response) {
-    const teamMateId = Number(req.query.teamMateId);
+  async getDeclarationsForTeammate(req: Request, res: Response) {
+    const teammateId = Number(req.query.teammateId);
     try {
-      const declarations = await this.declarationService.getDeclarationForTeamMate(teamMateId);
+      const declarations = await this.declarationService.getDeclarationForTeammate(teammateId);
       res.status(200).json(declarations);
     } catch (error: any) {
       if (error instanceof TypeError) {

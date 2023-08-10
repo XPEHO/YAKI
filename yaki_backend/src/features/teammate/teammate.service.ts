@@ -4,11 +4,11 @@ import {TeammateWithDeclaration} from "./teammateWithDeclaration.dtoOut";
 import {TeammateRepository} from "./teammate.repository";
 
 export class TeammateService {
-  teamMateRepository: TeammateRepository;
+  teammateRepository: TeammateRepository;
   teamService: TeamService;
 
   constructor(repository: TeammateRepository, teamService: TeamService) {
-    this.teamMateRepository = repository;
+    this.teammateRepository = repository;
     this.teamService = teamService;
   }
 
@@ -16,7 +16,7 @@ export class TeammateService {
     const team: TeamDtoIn[] = await this.teamService.getTeamsByCaptainId(captainId);
 
     // THIS NEED TO BE CHANGED TO ALLOW A CAPTAIN TO SELECT HIS TEAM WHEN HE HANDLE SEVERAL OF THEM
-    const getTeammates: any[] = await this.teamMateRepository.getByTeamIdWithLastDeclaration(team[0].teamId);
+    const getTeammates: any[] = await this.teammateRepository.getByTeamIdWithLastDeclaration(team[0].teamId);
 
     let result: TeammateWithDeclaration[] = [];
     getTeammates.forEach((element) => {

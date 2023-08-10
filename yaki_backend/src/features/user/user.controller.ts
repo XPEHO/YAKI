@@ -12,6 +12,7 @@ export class UserController {
    * Send login details from the front to be checked
    */
   checkLogin = async (req: Request, res: Response) => {
+    console.log(req.body);
     this.service
       .checkUserLoginDetails(req.body)
       .then((response) => res.send(response))

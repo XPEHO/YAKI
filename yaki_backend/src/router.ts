@@ -17,9 +17,9 @@ const teamRepository = new TeamRepository();
 const teamService = new TeamService(teamRepository);
 
 //TEAM MATE
-const teamMateRepository = new TeammateRepository();
-const teamMateService = new TeammateService(teamMateRepository, teamService);
-const teamMateController = new TeammateController(teamMateService);
+const teammateRepository = new TeammateRepository();
+const teammateService = new TeammateService(teammateRepository, teamService);
+const teammateController = new TeammateController(teammateService);
 
 //USER
 const userRepository = new UserRepository();
@@ -40,7 +40,7 @@ router.post("/login", (req, res) =>
 router.post("/register", (req, res) => userController.registerNewUser(req, res));
 
 router.get(
-  "/teamMates",
+  "/teammates",
   (req, res, next) =>
     /*#swagger.parameters['captainId'] = {
                 in: 'query',
@@ -50,5 +50,5 @@ router.get(
                 schema: { captainId: 1 }
 }
   */ authService.verifyToken(req, res, next),
-  async (req, res) => teamMateController.getByTeamIdWithLastDeclaration(req, res)
+  async (req, res) => teammateController.getByTeamIdWithLastDeclaration(req, res)
 );

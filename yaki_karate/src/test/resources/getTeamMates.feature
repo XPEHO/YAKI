@@ -1,19 +1,25 @@
-Feature: GetTeamMates
+Feature: GetTeammates
 
   Background:
-    * def schema = [{userId : '#number', teamMateId: '#number', userLastName: '#string', userFirstName: '#string', declarationDate: "#string", declarationStatus: "#string"}]
+    * def schema = [{userId : '#number', teammateId: '#number', userLastName: '#string', userFirstName: '#string', declarationDate: "#string", declarationStatus: "#string"}]
     Given url 'http://localhost:8080/login/authenticate'
     And request { login: 'owner', password: 'owner' }
     When method post
     Then status 200
     And def token = 'Bearer ' + response.token
   Scenario: 01 Create user
-    Given url 'http://localhost:8080/users'
-    And header Authorization = token
+    Given url 'http://localhost:8080/login/register'
     And request {id : 4, lastname: 'user', firstname: 'user', email: 'owner@gmail.com', login: 'user', password: 'user'}
     When method post
     Then status 200
 
+    * def DbUtils = Java.type('org.example.utils.DbUtils')
+    * def db = new DbUtils()
+    * def token2 = db.readValue('SELECT token FROM public.verification_token WHERE verification_token_user_id = 19')
+    Given url 'http://localhost:8080/login/registerConfirm'
+    And param token = token2
+    When method GET
+    Then status 200
   Scenario: 02 Attribute role & create team
     Given url 'http://localhost:8080/teammates'
     And header Authorization = token
@@ -21,8 +27,8 @@ Feature: GetTeamMates
     When method post
     Then status 200
 
-  @GetAllTeamMateSuccessful
-  Scenario: Get all teamMate
+  @GetAllTeammateSuccessful
+  Scenario: Get all teammate
     Given url 'http://localhost:3000/login'
     And request { "login": "user", "password": "user" }
     When method POST
@@ -30,7 +36,7 @@ Feature: GetTeamMates
     And def token = response.token
     And def userId = response.userId
 
-    Given url 'http://localhost:3000/teamMates'
+    Given url 'http://localhost:3000/teammates'
     And header x-access-token = token
     And header user_id = userId
     And param captainId = 2
@@ -41,6 +47,6 @@ Feature: GetTeamMates
     * print schema
 
   Scenario: Get the latest declaration fail
-    Given url 'http://localhost:3000/teamMate'
+    Given url 'http://localhost:3000/teammate'
     When method get
     Then status 404
