@@ -1,4 +1,4 @@
-#!bin/bash
+#!/bin/bash
 
 DB_PASSWORD="password"
 DB_USER="postgres"
