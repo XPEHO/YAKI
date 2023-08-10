@@ -32,7 +32,7 @@ jobs:
           echo "inset .sql files into the database"
           cd sql_scripts
           chmod +x ./insert_table_data.sh
-          shell: bash
+          ./insert_table_data.sh
           cd ../yaki_docker
           echo "Sleep 10s to wait backend admin initialization"
           sleep 10s
