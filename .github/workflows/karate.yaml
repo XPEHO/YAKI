@@ -30,7 +30,7 @@ jobs:
           cd ../yaki_docker
           docker compose up --build --quiet-pull -d
           echo "inset .sql files into the database"
-          docker exec -i  yaki_docker-bdd-1 psql -h localhost -p 5432 -U postgres -d postgres -a -f /yaki_docker/sql_scripts/create_tables.sql
+          docker exec -i  yaki_docker-bdd-1 psql -U postgres -d postgres -a -f /yaki_docker/sql_scripts/create_tables.sql
           echo "Sleep 10s to wait backend admin initialization"
           sleep 10s
           echo "sleep finished"
