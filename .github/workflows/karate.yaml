@@ -3,6 +3,15 @@ on: push
 jobs:
   karate:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-java@v3
@@ -11,6 +20,7 @@ jobs:
           java-version: "17"
       - name: Run karate tests
         run: |
+          docker ps
           cd yaki_docker
           echo "Creating .env file"
           echo ${{ secrets.ENV_FILE }} | base64 -d > .env
@@ -33,7 +43,7 @@ jobs:
           cd sql_scripts
           chmod +x ./insert_table_data.sh
           ./insert_table_data.sh
-          cd ../yaki_docker
+          cd ..
           echo "Sleep 10s to wait backend admin initialization"
           sleep 10s
           echo "sleep finished"
