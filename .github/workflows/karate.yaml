@@ -30,8 +30,10 @@ jobs:
           cd ../yaki_docker
           docker compose up --build --quiet-pull -d
           echo "inset .sql files into the database"
-          chmod +x  insert_table_data.sh
+          cd sql_scripts
+          chmod +x ./insert_table_data.sh
           shell: bash
+          cd ../yaki_docker
           echo "Sleep 10s to wait backend admin initialization"
           sleep 10s
           echo "sleep finished"
