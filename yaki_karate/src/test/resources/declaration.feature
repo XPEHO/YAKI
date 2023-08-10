@@ -72,7 +72,7 @@ Feature: CreationDeclaration
 
     Given url 'http://localhost:8080/teams'
     And header Authorization = token
-    And request { captainId : 2, teamName: "adTeam_team_name" }
+    And request { captainsId : [2], teamName: "adTeam_team_name", customerId : 2 }
     When method post
     Then status 200
 

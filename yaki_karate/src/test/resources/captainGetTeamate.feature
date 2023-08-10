@@ -69,13 +69,13 @@ Feature: Captain
 
     Given url 'http://localhost:8080/captains'
     And header Authorization = token
-    And request { userId : 3, customerId: 1 }
+    And request {userId : 3, customerId: 1 }
     When method post
     Then status 200
 
     Given url 'http://localhost:8080/teams'
     And header Authorization = token
-    And request { captainId : 2, teamName: "adTeam_team_name" }
+    And request { captainsId : [2], teamName: "adTeam_team_name", customerId: 2 }
     When method post
     Then status 200
 
@@ -87,7 +87,7 @@ Feature: Captain
 
   Scenario: Request all team mates from a team takes less than 300 ms
     Given url 'http://localhost:3000/login'
-    And request { "login": "captain", "password": "captain" }
+    And request { "login": "captain2", "password": "captain2" }
     When method POST
     Then status 200
     And def token = response.token
