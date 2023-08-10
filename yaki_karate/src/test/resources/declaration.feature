@@ -7,22 +7,22 @@ Feature: CreationDeclaration
     And def token = 'Bearer ' + response.token
   Scenario: 01 Create user
     Given url 'http://localhost:8080/login/register'
-    And request { lastname: 'owner', firstname: 'owner', email: 'owner@gmail.com', login: 'owner', password: 'owner'}
+    And request { lastname: 'owner6', firstname: 'owner6', email: 'owner6@gmail.com', login: 'owner6', password: 'owner6'}
     When method post
     Then status 200
 
     Given url 'http://localhost:8080/login/register'
-    And request { lastname: 'customer', firstname: 'customer', email: 'customer@gmail.com', login: 'customer', password: 'customer'}
+    And request { lastname: 'customer3', firstname: 'customer3', email: 'customer3@gmail.com', login: 'customer3', password: 'customer3'}
     When method post
     Then status 200
 
     Given url 'http://localhost:8080/login/register'
-    And request { lastname: 'captain', firstname: 'captain', email: 'captain@gmail.com', login: 'captain', password: 'captain'}
+    And request { lastname: 'captain3', firstname: 'captain3', email: 'captain3@gmail.com', login: 'captain3', password: 'captain3'}
     When method post
     Then status 200
 
     Given url 'http://localhost:8080/login/register'
-    And request { lastname: 'user', firstname: 'user', email: 'owner@gmail.com', login: 'user', password: 'user'}
+    And request { lastname: 'user3', firstname: 'user3', email: 'user3@gmail.com', login: 'user3', password: 'user3'}
     When method post
     Then status 200
 
@@ -78,7 +78,7 @@ Feature: CreationDeclaration
 
     Given url 'http://localhost:8080/teammates'
     And header Authorization = token
-    And request { teamId : 2, userId: 4 }
+    And request { teamId : 2, userId: 12 }
     When method post
     Then status 200
 
@@ -93,16 +93,19 @@ Feature: CreationDeclaration
 
     * def timeStart = function(){ return java.time.LocalDate.now().toString() + "T08:00:00.950Z" }
     * def timeEnd = function(){ return java.time.LocalDate.now().toString() + "T18:00:00.950Z" }
+    * def now = function(){ return java.time.LocalDate.now().toString() + "T10:00:00.950Z" }
     Given url 'http://localhost:3000/declarations'
     And header x-access-token = token
     And header user_id = userId
     And param mode = 'fullDay'
-    And def now = java.time.OffsetDateTime.now().toString()
-    And def requestPayload = [{ declarationDate: now, declarationDateStart: '#(timeStart())', declarationDateEnd: '#(timeEnd())', declarationTeammateId: 2, declarationStatus: "remote", declarationTeamId: 2 }]
+
+    And def requestPayload = [{ declarationUserId: 12, declarationDate: '#(now())', declarationDateStart: '#(timeStart())', declarationDateEnd: '#(timeEnd())', declarationStatus: "remote", declarationTeamId: 2 }]
+    * print requestPayload
+    * print now
     And request requestPayload
     When method POST
     Then status 201
-    And match response == [{ declarationId: '#number', declarationDate: '#string', declarationDateStart: '#string', declarationDateEnd: '#string', declarationTeammateId: '#number', declarationStatus: 'remote', declarationTeamId: '#number' }]
+    And match response == [{ declarationId: '#number', declarationDate: '#string', declarationDateStart: '#string', declarationDateEnd: '#string', declarationUserId: '#number', declarationStatus: 'remote', declarationTeamId: '#number' }]
 
   Scenario: Creation declaration fail
     Given url 'http://localhost:3000/login'
@@ -117,7 +120,7 @@ Feature: CreationDeclaration
     And header x-access-token = token
     And header user_id = userId
     And param mode = 'fullDay'
-    And request [{"declarationDate": "" ,"declarationDateStart": "" ,"declarationDateEnd": "","declarationTeammateId": '',  "declarationStatus": "", declarationTeamId: '' }]
+    And request [{"declarationDate": "" ,"declarationDateStart": "" ,"declarationDateEnd": "","declarationUserId": '',  "declarationStatus": "", declarationTeamId: '' }]
     When method POST
     Then status 400
 
@@ -133,10 +136,11 @@ Feature: CreationDeclaration
     Given url 'http://localhost:3000/declarations'
     And header x-access-token = token
     And header user_id = userId
-    And param teammateId = 2
+    ##it's a userId but we must put teammateId
+    And param teammateId = 12
     When method get
     Then status 200
-    And match response contains [{ declarationId: '#number', declarationDate: '#string', declarationDateStart: '#string', declarationDateEnd: '#string', declarationTeammateId: '#number', declarationStatus: 'remote', declarationTeamId: '#number' }]
+    And match response contains [{ declarationId: '#number', declarationUserId: '#number', declarationDate: '#string', declarationDateStart: '#string', declarationDateEnd: '#string', declarationStatus: 'remote', declarationTeamId: '#number' }]
 
   Scenario: Get the latest declaration fail
     Given url 'http://localhost:3000/login'

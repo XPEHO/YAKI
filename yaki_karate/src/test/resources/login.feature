@@ -7,7 +7,7 @@ Feature: Login
 
     * def DbUtils = Java.type('org.example.utils.DbUtils')
     * def db = new DbUtils()
-    * def token = db.readValue('SELECT token FROM public.verification_token WHERE verification_token_user_id = 14')
+    * def token = db.readValue('SELECT token FROM public.verification_token WHERE verification_token_user_id = 19')
     * print token
     Given url 'http://localhost:8080/login/registerConfirm'
     And param token = token
