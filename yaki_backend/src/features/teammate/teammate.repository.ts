@@ -42,7 +42,7 @@ export class TeammateRepository {
           ) t
           WHERE rank = 1
         ) as max_decl
-        ON max_decl.declaration_user_id = tm.teammate_cuser_id
+        ON max_decl.declaration_user_id = tm.teammate_user_id
         WHERE tm.teammate_team_id = $1;
   `;
     client.connect();
