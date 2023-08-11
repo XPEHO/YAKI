@@ -1,8 +1,8 @@
 import express, {Router} from "express";
-import {authService} from "../user/authentication.service";
-import {DeclarationController} from "./declaration.controller";
-import {DeclarationRepository} from "./declaration.repository";
-import {DeclarationService} from "./declaration.service";
+import {authService} from "./features/user/authentication.service";
+import {DeclarationController} from "./features/declaration/declaration.controller";
+import {DeclarationRepository} from "./features/declaration/declaration.repository";
+import {DeclarationService} from "./features/declaration/declaration.service";
 
 /* Creating a new router object. */
 const declarationRouter: Router = express.Router();
@@ -25,7 +25,7 @@ declarationRouter.post(
                 description: 'Declaration details',
                 required: true,
                 type: 'object',
-                schema: { declarationTeamMateId: 1, declarationStatus: 'string', declarationDate: 'string' }
+                schema: { declarationTeammateId: 1, declarationStatus: 'string', declarationDate: 'string' }
 }
   */
     authService.verifyToken(req, res, next),
@@ -37,20 +37,19 @@ declarationRouter.post(
 declarationRouter.get(
   "/declarations",
   (req, res, next) =>
-    /*#swagger.parameters['teamMateId'] = {
+    /*#swagger.parameters['teammateId'] = {
                 in: 'query',
-                description: 'Team mate id',
+                description: 'Teammate id',
                 required: true,
                 type: 'number',
-                schema: { teamMateId: 1 }
+                schema: { teammateId: 1 }
 }
   */
     authService.verifyToken(req, res, next),
   (req, res) => {
-    declarationController.getDeclarationsForTeamMate(req, res);
+    declarationController.getDeclarationsForTeammate(req, res);
   }
 );
-
 
 /* Exporting the declarationRouter object. */
 export default declarationRouter;

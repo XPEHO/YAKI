@@ -2,7 +2,7 @@ Feature: Team
 
   Background:
     * url 'http://localhost:8080'
-    * def schema = {id : '#number', captainId: '#number', teamName: '#string'}
+    * def schema = {id : '#number', captainsId: '#array', teamName: '#string',customerId: '#number'}
     Given path '/login/authenticate'
     And request { login: 'owner', password: 'owner' }
     When method post
@@ -11,19 +11,19 @@ Feature: Team
   Scenario: 01 Create users
     Given path '/users'
     And header Authorization = token
-    And request {id : 2, lastname: 'owner2', firstname: 'owner', email: 'owner@gmail.com', login: 'owner2', password: 'owner2'}
+    And request {id : 30, lastname: 'owner5', firstname: 'owner5', email: 'owner5@gmail.com', login: 'owner5', password: 'owner5'}
     When method post
     Then status 200
 
     Given path '/users'
     And header Authorization = token
-    And request {id : 3, lastname: 'customer', firstname: 'customer', email: 'customer@gmail.com', login: 'customer', password: 'customer'}
+    And request {id : 31, lastname: 'customer', firstname: 'customer', email: 'customer@gmail.com', login: 'customer', password: 'customer'}
     When method post
     Then status 200
 
     Given path '/users'
     And header Authorization = token
-    And request {id : 4, lastname: 'captain', firstname: 'captain', email: 'captain@gmail.com', login: 'captain', password: 'captain'}
+    And request {id : 32, lastname: 'captain', firstname: 'captain', email: 'captain@gmail.com', login: 'captain', password: 'captain'}
     When method post
     Then status 200
 
@@ -61,7 +61,7 @@ Feature: Team
 
     Given path '/teams'
     And header Authorization = token
-    And request { captainId : 2, teamName: "adTeam_team_name" }
+    And request { captainsId : [2], teamName: "adTeam_team_name", customerId: 2 }
     When method post
     Then status 200
 
@@ -81,7 +81,7 @@ Feature: Team
 
     Given path '/teams/' + 1
     And header Authorization = token
-    And request {captainId: 2, teamName: 'Team Red'}
+    And request {captainsId: [2], teamName: 'Team Red',customerId: 2}
     When method put
     Then status 200
     And match response == schema

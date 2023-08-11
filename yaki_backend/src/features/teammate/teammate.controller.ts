@@ -1,18 +1,18 @@
-import {TeamMateService} from "./teamMate.service";
+import {TeammateService as TeammateService} from "./teammate.service";
 import {Response, Request} from "express";
 
-export class TeamMateController {
-  service: TeamMateService;
+export class TeammateController {
+  service: TeammateService;
 
-  constructor(service: TeamMateService) {
+  constructor(service: TeammateService) {
     this.service = service;
   }
 
   getByTeamIdWithLastDeclaration = async (req: Request, res: Response) => {
     const captainId = Number(req.query.captainId);
     try {
-      const teamMates = await this.service.getByTeamIdWithLastDeclaration(captainId);
-      res.send(teamMates);
+      const teammates = await this.service.getByTeamIdWithLastDeclaration(captainId);
+      res.send(teammates);
     } catch (error: any) {
       if (error instanceof TypeError) {
         res.status(404).json({message: error.message});

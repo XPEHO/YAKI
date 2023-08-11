@@ -1,5 +1,6 @@
 package com.xpeho.yaki_admin_backend.data.services;
 
+import com.xpeho.yaki_admin_backend.data.models.EntityLogModel;
 import com.xpeho.yaki_admin_backend.data.models.TeammateModel;
 import com.xpeho.yaki_admin_backend.data.sources.TeammateJpaRepository;
 import com.xpeho.yaki_admin_backend.domain.entities.TeammateDetailsEntity;
@@ -17,9 +18,12 @@ public class TeammateServiceImpl implements TeammateService {
 
     final TeammateJpaRepository teammateJpaRepository;
 
-    public TeammateServiceImpl(TeammateJpaRepository teammateJpaRepository) {
+    final EntityLogServiceImpl entityLogService;
+
+    public TeammateServiceImpl(TeammateJpaRepository teammateJpaRepository, EntityLogServiceImpl entityLogService) {
 
         this.teammateJpaRepository = teammateJpaRepository;
+        this.entityLogService = entityLogService;
     }
 
     public List<TeammateDetailsEntity> findAllByTeam(int teamIdF) {
@@ -41,7 +45,9 @@ public class TeammateServiceImpl implements TeammateService {
 
     @Override
     public TeammateEntity createTeammate(TeammateEntity teammateEntity) {
-        final TeammateModel teammateModel = new TeammateModel(teammateEntity.teamId(), teammateEntity.userId());
+        EntityLogModel entityLogModel = entityLogService.createEntityLog();
+        final TeammateModel teammateModel = new TeammateModel(teammateEntity.teamId(), teammateEntity.userId()
+                ,entityLogModel.getId());
         TeammateModel savedModel = teammateJpaRepository.save(teammateModel);
         //teammateEntity.id could be null, so we are using autogenerate id
         return new TeammateEntity(savedModel.getId(), savedModel.getTeamId(), savedModel.getUserId());
@@ -61,8 +67,9 @@ public class TeammateServiceImpl implements TeammateService {
     public TeammateEntity deleteById(int id) {
         final Optional<TeammateModel> teammateModelOpt = teammateJpaRepository.findById(id);
         TeammateModel teammateModel = teammateModelOpt.orElseThrow(() -> new EntityNotFoundException("The teammate with id" + id + " is not found."));
+        TeammateEntity returnedEntity = new TeammateEntity(id, teammateModel.getTeamId(), teammateModel.getUserId());
         teammateJpaRepository.deleteById(id);
-        return new TeammateEntity(id, teammateModel.getTeamId(), teammateModel.getUserId());
+        return returnedEntity;
     }
 
 
@@ -83,5 +90,19 @@ public class TeammateServiceImpl implements TeammateService {
 
         //id and entity.id() could be different
         return entitySaved;
+    }
+
+    //disable the teammate but keep in log
+    @Override
+    public TeammateEntity disabled(int teammateId){
+        Optional<TeammateModel> teammateModelOpt = teammateJpaRepository.findById(teammateId);
+        if (teammateModelOpt.isEmpty()) {
+            throw new EntityNotFoundException("The teammate with id " + teammateId + " not found.");
+        }
+        TeammateModel teammateModel = teammateModelOpt.get();
+        entityLogService.disabledEntity(teammateModel.getEntityLogId());
+        teammateModel.setActif(false);
+        teammateJpaRepository.save(teammateModel);
+        return new TeammateEntity(teammateModel.getId(),teammateModel.getTeamId(),teammateModel.getUserId());
     }
 }

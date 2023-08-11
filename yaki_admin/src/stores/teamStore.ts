@@ -8,12 +8,13 @@ export const useTeamStore = defineStore("teamStore", {
   state: () => ({
     customersId: [] as number[],
     captainsId: [] as number[],
-    teamId: 0 as number,
+    teamSelectedId: 0 as number,
     teamName: "" as string,
     teammate: [] as TeamMateType[],
     teamList: [] as TeamType[],
     teammateToDelete: 0 as number,
     teamToDelete: 0 as number,
+    customerId: 0 as number,
   }),
   getters: {
     getCustomersId(): number[] {
@@ -23,7 +24,7 @@ export const useTeamStore = defineStore("teamStore", {
       return this.captainsId;
     },
     getTeamId(): number {
-      return this.teamId;
+      return this.teamSelectedId;
     },
     getTeamName(): string {
       return this.teamName;
@@ -48,7 +49,12 @@ export const useTeamStore = defineStore("teamStore", {
     setCaptainsId(captainsId: number[]) {
       this.captainsId = captainsId;
     },
-
+    setCustomerId(customerId: number){
+      this.customerId = customerId;
+    },
+    setTeamSelectedId(teamId: number) {
+      this.teamSelectedId = teamId;
+    },
     // get all teams of a captain
     async getTeamsFromCaptain(captainsId: number[]) {
       this.teamList = [];
@@ -69,13 +75,13 @@ export const useTeamStore = defineStore("teamStore", {
 
     // get all teammate of a team
     async getTeammateWithinTeam(teamId: number): Promise<void> {
-      this.teamId = teamId;
-      this.teammate = await teamMateService.getAllWithinTeam(this.teamId);
+      this.teamSelectedId = teamId;
+      this.teammate = await teamMateService.getAllWithinTeam(this.teamSelectedId);
     },
 
     // add a selected user to a team
     async addUserToTeam(userId: number): Promise<void> {
-      const data = { teamId: this.teamId, userId: userId };
+      const data = { teamId: this.teamSelectedId, userId: userId };
       await teamMateService.createTeammate(data);
     },
 
@@ -94,16 +100,13 @@ export const useTeamStore = defineStore("teamStore", {
     },
     // create a team (use captain id and team name)
     async createTeam(cptId: number, teamName: string): Promise<void> {
-      await teamService.createTeam(cptId, teamName);
+      await teamService.createTeam(cptId, teamName,this.customerId);
+      this.setTeamSelectedId(this.teamList.length);
     },
 
     // update the selected team (can change name or captainID)
-    async updateTeam(
-      teamID: number,
-      cptId: number,
-      teamName: string
-    ): Promise<void> {
-      await teamService.updateTeam(teamID, cptId, teamName);
+    async updateTeam(teamID: number, teamName: string): Promise<void> {
+      await teamService.updateTeam(teamID, teamName,this.customerId);
     },
 
     async deleteTeam(teamId: number): Promise<void> {

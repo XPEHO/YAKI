@@ -1,10 +1,12 @@
 export type TeamType = {
   id: number;
-  captainId: number;
+  captainsId: number[];
   teamName: string;
+  customerId: number;
 };
 
 export type TeamTypeOut = {
-  "captainId": number;
+  "captainsId": number[];
   "teamName": string;
+  "customerId": number;
 };

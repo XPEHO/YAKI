@@ -26,7 +26,7 @@ export class DeclarationService {
       throw new TypeError("Invalid declaration status.");
     }
     if (
-      declarationList[0].declarationTeamMateId &&
+      declarationList[0].declarationUserId &&
       declarationList[0].declarationDate &&
       declarationList[0].declarationDateStart &&
       declarationList[0].declarationDateEnd &&
@@ -67,7 +67,7 @@ export class DeclarationService {
       // check  if all values are true,  therefore  no null, nor undefined, nor empty string.
 
       if (
-        declaration.declarationTeamMateId &&
+        declaration.declarationUserId &&
         declaration.declarationDate &&
         declaration.declarationDateStart &&
         declaration.declarationDateEnd &&
@@ -90,11 +90,11 @@ export class DeclarationService {
 
   /**
    * Get all declarations for a team mate.
-   * @param {number} teamMateId - number
+   * @param {number} teammateId - number
    * @returns DeclarationDtoIn[] | String
    */
-  async getDeclarationForTeamMate(teamMateId: number): Promise<DeclarationDtoIn[] | string> {
-    const declarationList: DeclarationDtoIn[] = await this.declarationRepository.getDeclarationForTeamMate(teamMateId);
+  async getDeclarationForTeammate(teammateId: number): Promise<DeclarationDtoIn[] | string> {
+    const declarationList: DeclarationDtoIn[] = await this.declarationRepository.getDeclarationForTeammate(teammateId);
     if (declarationList.length !== 0 || declarationList !== null || declarationList !== undefined) {
       return this.selectDeclarationToReturn(declarationList);
     } else {

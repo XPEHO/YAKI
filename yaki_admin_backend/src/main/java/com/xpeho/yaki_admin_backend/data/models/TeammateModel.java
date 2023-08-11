@@ -5,34 +5,51 @@ import jakarta.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "team_mate", schema = "public")
+@Table(name = "teammate", schema = "public")
 public class TeammateModel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "team_mate_seq")
-    @SequenceGenerator(name = "team_mate_seq", sequenceName = "team_mate_id_seq", allocationSize = 1)
-    @Column(name = "team_mate_id")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "teammate_seq")
+    @SequenceGenerator(name = "teammate_seq", sequenceName = "teammate_id_seq", allocationSize = 1)
+    @Column(name = "teammate_id")
     private int id;
-    @Column(name = "team_mate_team_id")
+    @Column(name = "teammate_team_id")
     private int teamId;
-    @Column(name = "team_mate_user_id")
+    @Column(name = "teammate_user_id")
     private int userId;
 
+    @Column(name = "teammate_actif_flag")
+    private boolean actif;
 
-    public TeammateModel(int teamId, int userId) {
+    @Column(name = "teammate_entity_log_id")
+    private int entityLogId;
+
+
+
+    public TeammateModel(int teamId, int userId, int entityLogId) {
         this.teamId = teamId;
         this.userId = userId;
+        this.actif = true;
+        this.entityLogId = entityLogId;
     }
 
     public TeammateModel() {
     }
 
-    public TeammateModel(int id, int teamId, int userId) {
+    public TeammateModel(int id, int teamId, int userId,int entityLogId) {
         this.id = id;
         this.teamId = teamId;
         this.userId = userId;
+        this.actif = true;
+        this.entityLogId = entityLogId;
+    }
+    public boolean isActif() {
+        return actif;
     }
 
+    public void setActif(boolean actif) {
+        this.actif = actif;
+    }
     public int getTeamId() {
         return teamId;
     }
@@ -55,6 +72,13 @@ public class TeammateModel {
 
     public void setId(int id) {
         this.id = id;
+    }
+    public int getEntityLogId() {
+        return entityLogId;
+    }
+
+    public void setEntityLogId(int entityLogId) {
+        this.entityLogId = entityLogId;
     }
 
     //used for test servicesImpl for create and save methods

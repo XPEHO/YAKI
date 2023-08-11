@@ -25,8 +25,8 @@ export const useAuthStore = defineStore("loginStore", {
   actions: {
     async login(login: string, password: string): Promise<boolean> {
       try {
-        localStorage.setItem("user", JSON.stringify(this.user));
-        this.user = await loginService.login(login, password);
+        this.user = await loginService.login(login,password);
+        localStorage.setItem('user', JSON.stringify(this.user));
         this.captains = await captainService.getAllCaptainByUserId(
           this.user.id
         );
@@ -37,12 +37,18 @@ export const useAuthStore = defineStore("loginStore", {
           this.logout();
           return false;
         }
+        const teamStore = useTeamStore();
+        const customerRightsStore = useCustomerRightsStore();
+        //in what route the user will be redirect depending of his rights.
         if (this.customersRights.length >= 1) {
           this.returnedUrl = "/customer/manage-captain";
         } else {
           //if not a customer it's necessarily a captain
           this.returnedUrl = "/administration/captain";
+          teamStore.setCustomerId(this.captains[0].customerId)
         }
+        
+        
         let idsCust = [];
         let idsCap = [];
         for (const customerRights of this.customersRights) {
@@ -51,12 +57,19 @@ export const useAuthStore = defineStore("loginStore", {
         for (const captain of this.captains) {
           idsCap.push(captain.id);
         }
-        const teamStore = useTeamStore();
-        const customerRightsStore = useCustomerRightsStore();
+        
+        //temporary we must choose the customer then.
+        
         teamStore.setCaptainsId(idsCap);
         customerRightsStore.setCustomersRightsId(idsCust);
+
         router.push(this.returnedUrl);
         return true;
+        
+        
+        
+        //
+        
       } catch {
         return false;
       }

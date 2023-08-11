@@ -13,25 +13,29 @@ describe("teamService", () => {
   /**
    * This function tests the getByCaptainId function in the teamService class
    */
-  describe("getTeamByTeamMateId", () => {
-    const mockTeamMateId = 1;
+  describe("getTeamByTeammateId", () => {
+    const mockTeammateId = 1;
     const mockTeam = [
       {
         teamId: 2,
-        teamCaptainId: 2,
         teamName: "Equipe 2",
+        teamCaptainId: 2,
+        teamCustomerId: 2,
+        teamActifFlag: true,
       },
     ];
 
     it("should return a team", async () => {
-      jest.spyOn(teamRepository, "getTeamByTeamMateId").mockResolvedValueOnce([
+      jest.spyOn(teamRepository, "getTeamByTeammateId").mockResolvedValueOnce([
         {
           teamId: 2,
-          teamCaptainId: 2,
           teamName: "Equipe 2",
+          teamCaptainId: 2,
+          teamCustomerId: 2,
+          teamActifFlag: true,
         },
       ]);
-      const getTeam = await teamService.getTeamByTeamMateId(mockTeamMateId);
+      const getTeam = await teamService.getTeamByTeammateId(mockTeammateId);
 
       expect(getTeam).toEqual(mockTeam);
     });

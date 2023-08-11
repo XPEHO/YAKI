@@ -34,8 +34,9 @@ export class TeamService {
     return response;
   };
 
-  createTeam = async (cptId: number, teamName: string): Promise<TeamType> => {
-    const newTeam: TeamTypeOut = { captainId: cptId, teamName: teamName };
+  createTeam = async (cptId: number, teamName: string, customerId: number): Promise<TeamType> => {
+    
+    const newTeam: TeamTypeOut = {"captainsId": [cptId], "teamName": teamName, "customerId": customerId};
     const requestOptions = {
       method: "POST",
       body: JSON.stringify(newTeam),
@@ -48,15 +49,10 @@ export class TeamService {
     return res;
   };
 
-  updateTeam = async (
-    teamId: number,
-    cptId: number,
-    teamName: string
-  ): Promise<TeamType> => {
-    const newTeam: TeamTypeOut = { captainId: cptId, teamName: teamName };
+  updateTeam = async (teamId: number, teamName: string, customerId: number): Promise<TeamType> => {
     const requestOptions = {
-      method: "PUT",
-      body: JSON.stringify(newTeam),
+      method: 'PUT',
+      body: JSON.stringify({"teamName": teamName}),
       headers: authHeader(`${URL}/teams/${teamId}`),
     };
     const res = await fetch(`${URL}/teams/${teamId}`, requestOptions)
@@ -68,10 +64,10 @@ export class TeamService {
 
   deleteTeam = async (teamId: number): Promise<TeamType> => {
     const requestOptions = {
-      method: "DELETE",
-      headers: authHeader(`${URL}/teams/${teamId}`),
-    };
-    const res = await fetch(`${URL}/teams/${teamId}`, requestOptions)
+      method: 'PUT',
+      headers: authHeader(`${URL}/teams/disabled/${teamId}`),
+    }
+    const res = await fetch(`${URL}/teams/disabled/${teamId}`, requestOptions)
       .then(handleResponse)
       .catch((err) => console.warn(err));
 

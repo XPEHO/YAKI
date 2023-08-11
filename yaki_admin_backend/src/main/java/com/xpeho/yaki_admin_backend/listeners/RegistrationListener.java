@@ -75,7 +75,10 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
                                 .put(Emailv31.Message.TEXTPART, "Yaki")
                                 .put(Emailv31.Message.HTMLPART, "<html><body>" + message + "<br><a href=" + apiUrl + confirmationUrl + ">Confirm Registration</a></body></html>")
                                 .put(Emailv31.Message.CUSTOMID, "RegisterTest")));
-        MailjetResponse response = client.post(request);
+        //in case we are not in test env, don't send the email
+        if(!apiKey.equals("key") ) {
+            MailjetResponse response = client.post(request);
+        }
 
     }
 }

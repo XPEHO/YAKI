@@ -30,8 +30,8 @@ import static org.mockito.BDDMockito.given;
 @ExtendWith(MockitoExtension.class)
 class TeamControllerTests {
     private final ObjectMapper objectMapper = new ObjectMapper();
-    private final TeamEntity team1 = new TeamEntity(1, 1, "teamFeliz");
-    private final TeamEntity team2 = new TeamEntity(2, 1, "teamHappy");
+    private final TeamEntity team1 = new TeamEntity(1, Arrays.asList(1), "teamFeliz",1);
+    private final TeamEntity team2 = new TeamEntity(2, Arrays.asList(1), "teamHappy",1);
     private final List<TeamEntity> teams = Arrays.asList(team1, team2);
     private MockMvc mvc;
 
@@ -132,7 +132,7 @@ class TeamControllerTests {
     @Test
     void mustPutATeam() throws Exception {
         TeamEntity team3 = new TeamEntity(
-                2, team1.captainId(), team1.teamName());
+                2, team1.captainsId(), team1.teamName(),team1.customerId());
 
         //given
         given(teamService.saveOrUpdate(team1, 2)).willReturn(team3);

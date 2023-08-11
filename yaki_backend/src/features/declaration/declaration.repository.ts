@@ -26,10 +26,10 @@ export class DeclarationRepository {
     const declarationValuesList: Array<string> = YakiUtils.objectsListToValuesList(declarationList);
     const query = `INSERT INTO declaration 
     (
+      declaration_user_id, 
       declaration_date, 
       declaration_date_start, 
       declaration_date_end, 
-      declaration_team_mate_id, 
       declaration_status,
       declaration_team_id
     ) 
@@ -39,7 +39,7 @@ export class DeclarationRepository {
       const declarationToFront = [
         new DeclarationDtoIn(
           result.rows[0].declaration_id,
-          result.rows[0].declaration_team_mate_id,
+          result.rows[0].declaration_user_id,
           result.rows[0].declaration_date,
           result.rows[0].declaration_date_start,
           result.rows[0].declaration_date_end,
@@ -74,10 +74,10 @@ export class DeclarationRepository {
       const result = await client.query(
         `INSERT INTO declaration
         (
+          declaration_user_id, 
           declaration_date, 
           declaration_date_start, 
           declaration_date_end, 
-          declaration_team_mate_id, 
           declaration_status,
           declaration_team_id
         )
@@ -88,7 +88,7 @@ export class DeclarationRepository {
       const declarationListToFront = result.rows.map((item) => {
         return new DeclarationDtoIn(
           item.declaration_id,
-          item.declaration_team_mate_id,
+          item.declaration_user_id,
           item.declaration_date,
           item.declaration_date_start,
           item.declaration_date_end,
@@ -106,10 +106,10 @@ export class DeclarationRepository {
   /**
    * Get the latest declaration for a team mate
    * Select current day declaration, OR declaration ending after the current day (vacation or "other" situation)
-   * @param {number} teamMateId - number
+   * @param {number} teammateId - number
    * @returns An array of Declaration objects.
    */
-  async getDeclarationForTeamMate(teamMateId: number): Promise<DeclarationDtoIn[]> {
+  async getDeclarationForTeammate(teammateId: number): Promise<DeclarationDtoIn[]> {
     const client = new Client({
       host: process.env.DB_HOST,
       user: process.env.DB_USER,
@@ -123,7 +123,7 @@ export class DeclarationRepository {
       const result = await client.query(
         `SELECT *
         FROM declaration
-        WHERE declaration_team_mate_id = $1
+        WHERE declaration_user_id = $1
         AND declaration_date::date = now()::date
         OR (
             declaration_date_start::date <= now()::date
@@ -135,7 +135,7 @@ export class DeclarationRepository {
               )
             )
         ORDER BY declaration_date DESC LIMIT 10`,
-        [teamMateId]
+        [teammateId]
       );
 
       const declarationListToFront: DeclarationDtoIn[] = [];
@@ -144,7 +144,7 @@ export class DeclarationRepository {
         declarationListToFront.push(
           new DeclarationDtoIn(
             declaration.declaration_id,
-            declaration.declaration_team_mate_id,
+            declaration.declaration_user_id,
             declaration.declaration_date,
             declaration.declaration_date_start,
             declaration.declaration_date_end,

@@ -11,7 +11,7 @@ Feature: Owner
   Scenario: 01 Create owner
     Given path '/users'
     And header Authorization = token
-    And request {id : 2, lastname: 'owner2', firstname: 'owner', email: 'owner@gmail.com', login: 'owner2', password: 'owner2'}
+    And request {id : 2, lastname: 'owner3', firstname: 'owner3', email: 'owner3@gmail.com', login: 'owner3', password: 'owner3'}
     When method post
     Then status 200
 

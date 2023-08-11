@@ -1,5 +1,6 @@
 package com.xpeho.yaki_admin_backend.domain.services;
 
+import com.xpeho.yaki_admin_backend.domain.entities.CaptainEntity;
 import com.xpeho.yaki_admin_backend.domain.entities.TeammateDetailsEntity;
 import com.xpeho.yaki_admin_backend.domain.entities.TeammateEntity;
 
@@ -12,6 +13,8 @@ public interface TeammateService {
     TeammateEntity getTeammate(int id);
 
     TeammateEntity deleteById(int id);
+
+    TeammateEntity disabled(int id);
 
     TeammateEntity saveOrUpdate(TeammateEntity entity, int id);
 

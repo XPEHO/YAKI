@@ -15,10 +15,10 @@ export class TeamController {
      * @param res the response object
      * @returns a list of teams that the team mate is in
      */
-    getTeamByTeamMateId = async (req: any, res: any) => {
-        const teamMateId = Number(req.query.teamMateId);
+    getTeamByTeammateId = async (req: any, res: any) => {
+        const teammateId = Number(req.query.teammateId);
         try {
-            const team = await this.teamService.getTeamByTeamMateId(teamMateId);
+            const team = await this.teamService.getTeamByTeammateId(teammateId);
             res.status(200).json(team);
         } catch (error: any) {
             if (error instanceof TypeError) {

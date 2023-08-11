@@ -2,15 +2,13 @@ import express from "express";
 import {UserController} from "./features/user/user.controller";
 import {UserService} from "./features/user/user.service";
 import {UserRepository} from "./features/user/user.repository";
-import {CaptainRepository} from "./features/captain/captain.repository";
-import {CaptainService} from "./features/captain/captain.service";
-import {TeamMateRepository} from "./features/teamMate/teamMate.repository";
-import {TeamMateService} from "./features/teamMate/teamMate.service";
+import {TeammateRepository} from "./features/teammate/teammate.repository";
 import {authService} from "./features/user/authentication.service";
-import {CaptainController} from "./features/captain/captain.controller";
-import {TeamMateController} from "./features/teamMate/teamMate.controller";
+
+import {TeammateController} from "./features/teammate/teammate.controller";
 import {TeamRepository} from "./features/team/team.repository";
 import {TeamService} from "./features/team/team.service";
+import {TeammateService} from "./features/teammate/teammate.service";
 
 export const router = express.Router();
 
@@ -19,14 +17,9 @@ const teamRepository = new TeamRepository();
 const teamService = new TeamService(teamRepository);
 
 //TEAM MATE
-const teamMateRepository = new TeamMateRepository();
-const teamMateService = new TeamMateService(teamMateRepository, teamService);
-const teamMateController = new TeamMateController(teamMateService);
-
-//CAPTAIN
-const captainRepository = new CaptainRepository();
-const captainService = new CaptainService(captainRepository);
-const captainController = new CaptainController(captainService);
+const teammateRepository = new TeammateRepository();
+const teammateService = new TeammateService(teammateRepository, teamService);
+const teammateController = new TeammateController(teammateService);
 
 //USER
 const userRepository = new UserRepository();
@@ -47,13 +40,7 @@ router.post("/login", (req, res) =>
 router.post("/register", (req, res) => userController.registerNewUser(req, res));
 
 router.get(
-  "/captains",
-  (req, res, next) => authService.verifyToken(req, res, next),
-  (_, res) => captainController.getAll(_, res)
-);
-
-router.get(
-  "/teamMates",
+  "/teammates",
   (req, res, next) =>
     /*#swagger.parameters['captainId'] = {
                 in: 'query',
@@ -63,5 +50,5 @@ router.get(
                 schema: { captainId: 1 }
 }
   */ authService.verifyToken(req, res, next),
-  async (req, res) => teamMateController.getByTeamIdWithLastDeclaration(req, res)
+  async (req, res) => teammateController.getByTeamIdWithLastDeclaration(req, res)
 );
