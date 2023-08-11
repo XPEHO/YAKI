@@ -20,17 +20,11 @@ Feature: GetTeammates
     And param token = token2
     When method GET
     Then status 200
-  Scenario: 02 Attribute role & create team
-    Given url 'http://localhost:8080/teammates'
-    And header Authorization = token
-    And request { teamId : 2, userId: 4 }
-    When method post
-    Then status 200
 
   @GetAllTeammateSuccessful
   Scenario: Get all teammate
     Given url 'http://localhost:3000/login'
-    And request { "login": "user", "password": "user" }
+    And request { "login": "roger", "password": "roger" }
     When method POST
     Then status 200
     And def token = response.token
@@ -39,7 +33,7 @@ Feature: GetTeammates
     Given url 'http://localhost:3000/teammates'
     And header x-access-token = token
     And header user_id = userId
-    And param captainId = 2
+    And param captainId = 3
     When method get
     Then status 200
     And match response contains  schema

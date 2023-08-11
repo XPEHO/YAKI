@@ -12,7 +12,6 @@ export class UserRepository {
    * @returns
    */
   getByLogin = async (username: string) => {
-    console.log(username)
     const client = new Client({
       host: process.env.DB_HOST,
       user: process.env.DB_USER,
@@ -36,7 +35,6 @@ export class UserRepository {
     client.connect();
     const poolResult: QueryResult = await client.query(query, [username]);
     await client.end();
-    console.log(poolResult);
     // If the user wasn't found in the DB
     if (poolResult.rowCount === 0) {
       throw new Error("Bad authentification details");

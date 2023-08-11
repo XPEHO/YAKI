@@ -72,19 +72,19 @@ Feature: CreationDeclaration
 
     Given url 'http://localhost:8080/teams'
     And header Authorization = token
-    And request { captainsId : [2], teamName: "adTeam_team_name", customerId : 2 }
+    And request { captainsId : [3], teamName: "adTeam_team_name", customerId : 2 }
     When method post
     Then status 200
 
     Given url 'http://localhost:8080/teammates'
     And header Authorization = token
-    And request { teamId : 2, userId: 12 }
+    And request { teamId : 3, userId: 12 }
     When method post
     Then status 200
 
   Scenario: Creation declaration successful
     Given url 'http://localhost:3000/login'
-    And request { "login": "user", "password": "user" }
+    And request { "login": "roger", "password": "roger" }
     When method POST
     Then status 200
     And def token = response.token
@@ -109,7 +109,7 @@ Feature: CreationDeclaration
 
   Scenario: Creation declaration fail
     Given url 'http://localhost:3000/login'
-    And request { "login": "user", "password": "user" }
+    And request { "login": "roger", "password": "roger" }
     When method POST
     Then status 200
     And def token = response.token
@@ -126,7 +126,7 @@ Feature: CreationDeclaration
 
   Scenario: Get the latest declaration successful
     Given url 'http://localhost:3000/login'
-    And request { "login": "user", "password": "user" }
+    And request { "login": "roger", "password": "roger" }
     When method POST
     Then status 200
     And def token = response.token
@@ -144,7 +144,7 @@ Feature: CreationDeclaration
 
   Scenario: Get the latest declaration fail
     Given url 'http://localhost:3000/login'
-    And request { "login": "user", "password": "user" }
+    And request { "login": "roger", "password": "roger" }
     When method POST
     Then status 200
     And def token = response.token

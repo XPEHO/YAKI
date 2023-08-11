@@ -10,31 +10,31 @@ export class TeammateRepository {
       port: Number(process.env.DB_PORT),
     });
     const query = `
-        SELECT user_id, teammate_id, user_last_name, user_first_name,
+    SELECT u.user_id, tm.teammate_id, u.user_last_name, u.user_first_name,
         CASE
-            WHEN declaration_date::date = now()::date 
+            WHEN max_decl.declaration_date::date = now()::date
             OR (
-                declaration_date_start::date <= now()::date
-                AND declaration_date_end::date > now()::date 
+                max_decl.declaration_date_start::date <= now()::date
+                AND max_decl.declaration_date_end::date > now()::date
               )
-            THEN declaration_date
+            THEN max_decl.declaration_date
             ELSE NULL
         END AS declaration_date,
         CASE
-            WHEN declaration_date::date = now()::date 
+            WHEN max_decl.declaration_date::date = now()::date
             OR (
-                declaration_date_start::date <= now()::date
-                AND declaration_date_end::date > now()::date 
+                max_decl.declaration_date_start::date <= now()::date
+                AND max_decl.declaration_date_end::date > now()::date
               )
-            THEN declaration_status
+            THEN max_decl.declaration_status
             ELSE NULL
         END AS declaration_status
-        FROM public.user
-        INNER JOIN public.teammate
-        ON user_id = teammate_user_id
+        FROM public.user u
+        INNER JOIN public.teammate tm
+        ON u.user_id = tm.teammate_user_id
         LEFT JOIN
         (
-          SELECT * 
+          SELECT *
           FROM (
             SELECT declaration_user_id, declaration_date, declaration_status,declaration_date_start, declaration_date_end, rank()
             OVER (PARTITION BY declaration_user_id ORDER BY declaration_date DESC)
@@ -42,8 +42,8 @@ export class TeammateRepository {
           ) t
           WHERE rank = 1
         ) as max_decl
-        ON declaration_user_id = teammate.teammate_id
-        WHERE teammate_team_id = $1;
+        ON max_decl.declaration_user_id = tm.teammate_cuser_id
+        WHERE tm.teammate_team_id = $1;
   `;
     client.connect();
     const poolResult: QueryResult = await client.query(query, [team_id]);

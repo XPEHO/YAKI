@@ -77,7 +77,6 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
                                 .put(Emailv31.Message.CUSTOMID, "RegisterTest")));
         //in case we are not in test env, don't send the email
         if(!apiKey.equals("key") ) {
-            System.out.println(apiKey);
             MailjetResponse response = client.post(request);
         }
 
