@@ -10,7 +10,7 @@ import * as swaggerDocument from "./dev/swagger.json";
 
 import {router} from "./router";
 import declarationRouter from "./declaration.router";
-import teamRouter from "./features/team/team.router";
+import teamRouter from "./team.router";
 //
 import {initdb} from "./db/initdb";
 

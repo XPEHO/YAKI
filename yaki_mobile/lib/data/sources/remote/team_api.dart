@@ -9,6 +9,6 @@ abstract class TeamApi {
 
   @GET('/teams')
   Future<HttpResponse> getTeam(
-    @Query('teamMateId') String id,
+    @Query('userId') String id,
   );
 }

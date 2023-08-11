@@ -1,6 +1,6 @@
 import {UserService} from "./user.service";
 import {Response, Request} from "express";
-import EmailAlreadyExistsError from "../../errors/EmailAlreadyExistError"
+import EmailAlreadyExistsError from "../../errors/EmailAlreadyExistError";
 
 export class UserController {
   service: UserService;
@@ -12,7 +12,7 @@ export class UserController {
    * Send login details from the front to be checked
    */
   checkLogin = async (req: Request, res: Response) => {
-    console.log(req.body);
+    console.log("Login informations", req.body.email, "#".repeat(req.body.password.length));
     this.service
       .checkUserLoginDetails(req.body)
       .then((response) => res.send(response))
@@ -21,10 +21,9 @@ export class UserController {
 
   registerNewUser = async (req: Request, res: Response) => {
     try {
-      const response = await this.service.registerUser(req.body)
-      res.send(response)
-    }
-    catch (error: any) {
+      const response = await this.service.registerUser(req.body);
+      res.send(response);
+    } catch (error: any) {
       if (error instanceof EmailAlreadyExistsError) {
         res.status(417).json({message: error.message});
         //catch emails error
@@ -33,5 +32,5 @@ export class UserController {
         res.status(400).json({message: error.message});
       }
     }
-  }
+  };
 }

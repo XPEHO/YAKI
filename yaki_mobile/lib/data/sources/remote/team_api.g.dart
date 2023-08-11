@@ -21,7 +21,7 @@ class _TeamApi implements TeamApi {
   @override
   Future<HttpResponse<dynamic>> getTeam(String id) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'teamMateId': id};
+    final queryParameters = <String, dynamic>{r'userId': id};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result =
@@ -36,7 +36,11 @@ class _TeamApi implements TeamApi {
               queryParameters: queryParameters,
               data: _data,
             )
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
     final value = _result.data;
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
@@ -53,5 +57,22 @@ class _TeamApi implements TeamApi {
       }
     }
     return requestOptions;
+  }
+
+  String _combineBaseUrls(
+    String dioBaseUrl,
+    String? baseUrl,
+  ) {
+    if (baseUrl == null || baseUrl.trim().isEmpty) {
+      return dioBaseUrl;
+    }
+
+    final url = Uri.parse(baseUrl);
+
+    if (url.isAbsolute) {
+      return url.toString();
+    }
+
+    return Uri.parse(dioBaseUrl).resolveUri(url).toString();
   }
 }

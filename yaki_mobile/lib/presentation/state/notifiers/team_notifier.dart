@@ -20,8 +20,7 @@ class TeamNotifier extends StateNotifier<List<TeamEntity>> {
   /// Asynchronous method that fetches a list of teams from the API and updates
   /// the state
   Future<void> fetchTeams() async {
-    final teamMateId = loginRepository.teamMateId.toString();
-    final teamList = await teamRepository.getTeam(teamMateId);
+    final teamList = await teamRepository.getTeam();
     state = teamList;
   }
 }

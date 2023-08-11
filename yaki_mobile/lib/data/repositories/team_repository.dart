@@ -20,7 +20,7 @@ class TeamRepository {
 
   /// Asynchronous method that retrieves a list of teams from the API and
   /// returns a list of TeamEntity objects
-  Future<List<TeamEntity>> getTeam(String teamMateId) async {
+  Future<List<TeamEntity>> getTeam() async {
     try {
       // Get userId stored in the sharedPreferences
       final SharedPreferences pref = await SharedPreferences.getInstance();

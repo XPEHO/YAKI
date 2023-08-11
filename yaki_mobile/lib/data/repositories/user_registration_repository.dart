@@ -1,14 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:yaki/data/models/user_registration_model.dart';
-import 'package:yaki/data/sources/remote/user_register_repository.dart';
+import 'package:yaki/data/sources/remote/user_register_api.dart';
 import 'package:yaki/domain/entities/user_registered.dart';
 
-class UserRegistrationService {
+class UserRegistrationRepository {
   UserRegistered userRegistered = UserRegistered(isRegistered: false);
   String status = '';
-  final UserRegisterRepository _userRegisterRepository;
-  UserRegistrationService(this._userRegisterRepository);
+  final UserRegisterApi _userRegisterApi;
+  UserRegistrationRepository(this._userRegisterApi);
 
   Future<void> registerUser({
     required String lastname,
@@ -25,7 +25,7 @@ class UserRegistrationService {
 
     try {
       final getHttpResponse =
-          await _userRegisterRepository.userResgistration(userToRegister);
+          await _userRegisterApi.userResgistration(userToRegister);
       final statusCode = getHttpResponse.response.statusCode;
 
       switch (statusCode) {

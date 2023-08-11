@@ -251,11 +251,10 @@ class MockTeamRepository extends _i1.Mock implements _i10.TeamRepository {
         returnValueForMissingStub: null,
       );
   @override
-  _i5.Future<List<_i11.TeamEntity>> getTeam(String? teamMateId) =>
-      (super.noSuchMethod(
+  _i5.Future<List<_i11.TeamEntity>> getTeam() => (super.noSuchMethod(
         Invocation.method(
           #getTeam,
-          [teamMateId],
+          [],
         ),
         returnValue:
             _i5.Future<List<_i11.TeamEntity>>.value(<_i11.TeamEntity>[]),
