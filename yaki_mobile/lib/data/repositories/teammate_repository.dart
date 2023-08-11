@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:retrofit/retrofit.dart';
-import 'package:yaki/data/models/team_mate_model.dart';
+import 'package:yaki/data/models/teammate_model.dart';
 import 'package:yaki/data/sources/remote/team_mate_api.dart';
 import 'package:yaki/domain/entities/team_mate_entity.dart';
 import 'package:yaki/presentation/displaydata/status_page_content.dart';
@@ -25,7 +25,7 @@ class TeamMateRepository {
 
       switch (statusCode) {
         case 200:
-          final modelList = setTeamMateModelList(listHttpResponse);
+          final modelList = setTeammateModelList(listHttpResponse);
 
           List<TeamMateEntity> teamMatelist = <TeamMateEntity>[];
 
@@ -60,15 +60,15 @@ class TeamMateRepository {
   }
 
   /// Function converting httpResponse.data ( a List<dynamic> of Map ) into a
-  /// List<TeamMateModel> using map, which create a List<dynamic> of TeamMateModel.
-  /// Convert it afterward into a List<TeamMateModel>
-  List<TeamMateModel> setTeamMateModelList(HttpResponse response) {
+  /// List<TeammateModel> using map, which create a List<dynamic> of TeammateModel.
+  /// Convert it afterward into a List<TeammateModel>
+  List<TeammateModel> setTeammateModelList(HttpResponse response) {
     final dynamicList = response.data.map(
       (teammate) {
-        return TeamMateModel.fromJson(teammate);
+        return TeammateModel.fromJson(teammate);
       },
     ).toList();
-    List<TeamMateModel> modelList = List<TeamMateModel>.from(dynamicList);
+    List<TeammateModel> modelList = List<TeammateModel>.from(dynamicList);
     return modelList;
   }
 }

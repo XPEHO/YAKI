@@ -40,7 +40,8 @@ class DeclarationNotifier extends StateNotifier<String> {
   /// then invoke the declarationRepository.createAllDay(), that will send the newly declaration to the API (via _api.dart)
   Future<void> createAllDay(String status) async {
     final todayDate = DateTime.now();
-    final teamId = teamRepository.teamlist.first.teamId;
+    // NEED TO BE CHANGED
+    const teamId = 2;
     DeclarationModel newDeclaration = DeclarationModel(
       declarationDate: todayDate,
       declarationDateStart: DateTime.parse(
@@ -61,7 +62,8 @@ class DeclarationNotifier extends StateNotifier<String> {
   /// Then send it to declarationRepository's function
   Future<void> createHalfDay(String morning, String afternoon) async {
     final todayDate = DateTime.now();
-    final teamId = teamRepository.teamlist.first.teamId;
+    // NEED TO BE CHANGED
+    const teamId = 2;
     DeclarationModel newDeclarationMorning = DeclarationModel(
       declarationDate: todayDate,
       declarationDateStart: DateTime.parse(

@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yaki/data/repositories/login_repository.dart';
-import 'package:yaki/data/repositories/team_mate_repository.dart';
+import 'package:yaki/data/repositories/teammate_repository.dart';
 import 'package:yaki/domain/entities/team_mate_entity.dart';
 
 class TeamMateNotifier extends StateNotifier<List<TeamMateEntity>> {

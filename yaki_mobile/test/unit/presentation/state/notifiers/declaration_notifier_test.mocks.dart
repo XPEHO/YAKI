@@ -6,9 +6,9 @@
 import 'dart:async' as _i5;
 
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:retrofit/retrofit.dart' as _i13;
+import 'package:retrofit/retrofit.dart' as _i12;
 import 'package:yaki/data/models/declaration_model.dart' as _i6;
-import 'package:yaki/data/models/team_model.dart' as _i12;
+import 'package:yaki/data/models/team_model.dart' as _i11;
 import 'package:yaki/data/models/user.dart' as _i9;
 import 'package:yaki/data/repositories/declaration_respository.dart' as _i4;
 import 'package:yaki/data/repositories/login_repository.dart' as _i7;
@@ -16,7 +16,6 @@ import 'package:yaki/data/repositories/team_repository.dart' as _i10;
 import 'package:yaki/data/sources/remote/team_api.dart' as _i3;
 import 'package:yaki/domain/entities/declaration_status.dart' as _i2;
 import 'package:yaki/domain/entities/logged_user.dart' as _i8;
-import 'package:yaki/domain/entities/team_entity.dart' as _i11;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -230,42 +229,20 @@ class MockTeamRepository extends _i1.Mock implements _i10.TeamRepository {
         ),
       ) as _i3.TeamApi);
   @override
-  List<_i11.TeamEntity> get teamlist => (super.noSuchMethod(
-        Invocation.getter(#teamlist),
-        returnValue: <_i11.TeamEntity>[],
-      ) as List<_i11.TeamEntity>);
-  @override
-  set teamlist(List<_i11.TeamEntity>? _teamlist) => super.noSuchMethod(
-        Invocation.setter(
-          #teamlist,
-          _teamlist,
-        ),
-        returnValueForMissingStub: null,
-      );
-  @override
-  set teamEntity(_i11.TeamEntity? _teamEntity) => super.noSuchMethod(
-        Invocation.setter(
-          #teamEntity,
-          _teamEntity,
-        ),
-        returnValueForMissingStub: null,
-      );
-  @override
-  _i5.Future<List<_i11.TeamEntity>> getTeam() => (super.noSuchMethod(
+  _i5.Future<List<_i11.TeamModel>> getTeam() => (super.noSuchMethod(
         Invocation.method(
           #getTeam,
           [],
         ),
-        returnValue:
-            _i5.Future<List<_i11.TeamEntity>>.value(<_i11.TeamEntity>[]),
-      ) as _i5.Future<List<_i11.TeamEntity>>);
+        returnValue: _i5.Future<List<_i11.TeamModel>>.value(<_i11.TeamModel>[]),
+      ) as _i5.Future<List<_i11.TeamModel>>);
   @override
-  List<_i12.TeamModel> setTeamModelList(_i13.HttpResponse<dynamic>? response) =>
+  List<_i11.TeamModel> setTeamModelList(_i12.HttpResponse<dynamic>? response) =>
       (super.noSuchMethod(
         Invocation.method(
           #setTeamModelList,
           [response],
         ),
-        returnValue: <_i12.TeamModel>[],
-      ) as List<_i12.TeamModel>);
+        returnValue: <_i11.TeamModel>[],
+      ) as List<_i11.TeamModel>);
 }

@@ -8,12 +8,12 @@ part of 'team_model.dart';
 
 TeamModel _$TeamModelFromJson(Map<String, dynamic> json) => TeamModel(
       teamId: json['teamId'] as int?,
-      teamCaptainId: json['teamCaptainId'] as int?,
       teamName: json['teamName'] as String?,
+      teamActifFlag: json['teamActifFlag'] as bool?,
     );
 
 Map<String, dynamic> _$TeamModelToJson(TeamModel instance) => <String, dynamic>{
       'teamId': instance.teamId,
-      'teamCaptainId': instance.teamCaptainId,
       'teamName': instance.teamName,
+      'teamActifFlag': instance.teamActifFlag,
     };

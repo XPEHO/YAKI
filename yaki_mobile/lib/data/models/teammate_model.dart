@@ -1,9 +1,9 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'team_mate_model.g.dart';
+part 'teammate_model.g.dart';
 
 @JsonSerializable()
-class TeamMateModel {
+class TeammateModel {
   int? userId;
   String? userLastName;
   String? userFirstName;
@@ -11,7 +11,7 @@ class TeamMateModel {
   DateTime? declarationDate;
   String? declarationStatus;
 
-  TeamMateModel({
+  TeammateModel({
     required this.userId,
     required this.userLastName,
     required this.userFirstName,
@@ -20,8 +20,8 @@ class TeamMateModel {
     required this.declarationStatus,
   });
 
-  factory TeamMateModel.fromJson(Map<String, dynamic> json) =>
-      _$TeamMateModelFromJson(json);
+  factory TeammateModel.fromJson(Map<String, dynamic> json) =>
+      _$TeammateModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$TeamMateModelToJson(this);
+  Map<String, dynamic> toJson() => _$TeammateModelToJson(this);
 }

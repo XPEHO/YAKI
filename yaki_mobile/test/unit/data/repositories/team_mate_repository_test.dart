@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:yaki/data/repositories/team_mate_repository.dart';
+import 'package:yaki/data/repositories/teammate_repository.dart';
 import 'package:yaki/data/sources/remote/team_mate_api.dart';
 import 'package:yaki/domain/entities/team_mate_entity.dart';
 

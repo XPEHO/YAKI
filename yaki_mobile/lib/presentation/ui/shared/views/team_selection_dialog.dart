@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:yaki/domain/entities/team_entity.dart';
+import 'package:yaki/data/models/team_model.dart';
 import 'package:yaki/presentation/state/providers/declaration_provider.dart';
 import 'package:yaki/presentation/state/providers/status_provider.dart';
 import 'package:yaki/presentation/state/providers/team_provider.dart';
@@ -64,7 +64,7 @@ class TeamSelectionDialog {
 
   /// Handles the selection of a team and creates a corresponding status.
   ///
-  /// The [selectedTeam] parameter is a required [TeamEntity] representing the
+  /// The [selectedTeam] parameter is a required [TeamModel] representing the
   /// team that was selected by the user.
   ///
   /// If the [allDayStatus] parameter is not null, an all-day status with the
@@ -81,7 +81,7 @@ class TeamSelectionDialog {
   ///
   /// The [goToPage] function passed in the constructor is called to navigate
   /// to the appropriate page after the status is created.
-  Future<void> _handleTeamSelection(TeamEntity selectedTeam) async {
+  Future<void> _handleTeamSelection(TeamModel selectedTeam) async {
     if (allDayStatus != null) {
       await ref.read(declarationProvider.notifier).createAllDay(allDayStatus!);
       ref.read(statusPageProvider.notifier).getSelectedStatus();

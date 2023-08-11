@@ -11,11 +11,11 @@ import './team_repository_test.mocks.dart';
   TeamApi,
 ])
 void main() {
-  const teamMateId = 42;
+  const userId = 42;
   SharedPreferences.setMockInitialValues(
     {
       'token': '',
-      'userId': teamMateId,
+      'userId': userId,
     },
   );
   final teamApi = MockTeamApi();
@@ -42,14 +42,14 @@ void main() {
     ];
     when(httpResponse.data).thenReturn(data);
 
-    when(teamApi.getTeam(teamMateId.toString())).thenAnswer(
+    when(teamApi.getTeam(userId.toString())).thenAnswer(
       (realInvocation) => Future.value(
         httpResponse,
       ),
     );
 
     // WHEN
-    final teamList = await teamRepository.getTeam(teamMateId.toString());
+    final teamList = await teamRepository.getTeam();
 
     // THEN
     expect(teamList.length, 1);
