@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'team_mate_api.dart';
+part of 'teammate_api.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,8 +8,8 @@ part of 'team_mate_api.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
-class _TeamMateApi implements TeamMateApi {
-  _TeamMateApi(
+class _TeammateApi implements TeammateApi {
+  _TeammateApi(
     this._dio, {
     this.baseUrl,
   });
@@ -19,7 +19,7 @@ class _TeamMateApi implements TeamMateApi {
   String? baseUrl;
 
   @override
-  Future<HttpResponse<dynamic>> getTeamMate(String id) async {
+  Future<HttpResponse<dynamic>> getTeammate(String id) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'captainId': id};
     final _headers = <String, dynamic>{};

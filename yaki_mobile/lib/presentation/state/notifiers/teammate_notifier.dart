@@ -3,20 +3,20 @@ import 'package:yaki/data/repositories/login_repository.dart';
 import 'package:yaki/data/repositories/teammate_repository.dart';
 import 'package:yaki/domain/entities/team_mate_entity.dart';
 
-class TeamMateNotifier extends StateNotifier<List<TeamMateEntity>> {
-  final TeamMateRepository teamMateRepository;
+class TeammateNotifier extends StateNotifier<List<TeammateEntity>> {
+  final TeammateRepository teammateRepository;
 
   final LoginRepository loginRepository;
 
-  TeamMateNotifier(this.teamMateRepository, this.loginRepository)
+  TeammateNotifier(this.teammateRepository, this.loginRepository)
       : super(
           [],
         );
 
   /// Retrieve the information from the team_mate_repository and store it in the state
-  Future<void> fetchTeamMates() async {
+  Future<void> fetchTeammates() async {
     final captainId = loginRepository.captainId.toString();
-    final teamList = await teamMateRepository.getTeamMate(captainId);
+    final teamList = await teammateRepository.getTeammate(captainId);
     state = teamList;
   }
 }

@@ -24,25 +24,29 @@ enum StatusEnum {
 
 /// status utilities
 class StatusUtils {
-  /// Reformat a string of words split with a defined character into camelCase
+  // regexp checking for any no letter characters, so number and any special characters, space included
+  static final RegExp _specialCharacter = RegExp(r'[^a-zA-Z]+');
+
+  /// Reformat a string of words split with specials character (space includes) or number, into camelCase
   ///
   /// ex : "Hello World" to "helloWorld".
   ///
-  /// If the String to format is an empty string it will return '';
+  /// If the String to format is an empty string, an empty string will be returned;
   ///
-  /// If the splitCharacter is an empty string the String will be returned in lowerCase.
+  /// If the string only has letter, the String to formats will be returned in lowerCase.
   static String toCamelCase({
     required String toFormat,
-    required String splitChar,
   }) {
     // get out if either is empty string.
     if (toFormat.isEmpty) {
       return '';
-    } else if (splitChar.isEmpty) {
+    } else if (!_specialCharacter.hasMatch(toFormat)) {
       return toFormat.toLowerCase();
     }
-    List<String> split = toFormat.split(splitChar);
+    //this will split the string at each special character position
+    List<String> split = toFormat.split(_specialCharacter);
     String formatted = split[0].toLowerCase();
+
     for (var i = 1; i < split.length; i++) {
       // first letter ([0]) capitalize + substring from string [1] in lowerCase.
       formatted +=
@@ -73,11 +77,10 @@ class StatusUtils {
 
   /// Use status to create the translationKey value
   ///
-  /// If status is an empty string, the default value will be used,
-  /// and return the translationKey for the error message.
+  /// If status is an empty string, the translationKey for the error message will be returned.
   static String getTranslationKey(String status, String mode) {
     String translationKey = "StatusError";
-    String keyFormat = toCamelCase(toFormat: status, splitChar: ' ');
+    String keyFormat = toCamelCase(toFormat: status);
 
     if (status != emptyDeclarationStatus.first) {
       keyFormat = keyFormat[0].toUpperCase() + keyFormat.substring(1);

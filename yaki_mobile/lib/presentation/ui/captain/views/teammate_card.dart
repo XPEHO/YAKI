@@ -6,9 +6,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:yaki/presentation/displaydata/status_page_utils.dart';
 import 'package:yaki/presentation/styles/color.dart';
 
-class CardTeamMate extends StatefulWidget {
+class CardTeammate extends StatefulWidget {
   /// Card with the Team Mate's avatar, name, update date and status
-  const CardTeamMate({
+  const CardTeammate({
     super.key,
     required this.firstName,
     required this.lastName,
@@ -22,10 +22,10 @@ class CardTeamMate extends StatefulWidget {
   final DateTime? dateActu;
 
   @override
-  State<CardTeamMate> createState() => _CardTeamMateState();
+  State<CardTeammate> createState() => _CardTeammateState();
 }
 
-class _CardTeamMateState extends State<CardTeamMate> {
+class _CardTeammateState extends State<CardTeammate> {
   @override
   Widget build(BuildContext context) {
     // recovers device dimensions

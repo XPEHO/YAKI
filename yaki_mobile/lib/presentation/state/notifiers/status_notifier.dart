@@ -22,8 +22,7 @@ class StatusPageNotifier extends StateNotifier<StateStatusPage> {
   /// Functions from status_page_content will determine which text & image will be displayed.
   void setState(String status) {
     String text = StatusUtils.getTranslationKey(status, 'Day');
-    String imageCamelCase =
-        StatusUtils.toCamelCase(toFormat: status, splitChar: ' ');
+    String imageCamelCase = StatusUtils.toCamelCase(toFormat: status);
     String image = StatusUtils.getImage(imageCamelCase);
 
     state = StateStatusPage(

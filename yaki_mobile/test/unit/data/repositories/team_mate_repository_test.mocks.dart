@@ -7,7 +7,7 @@ import 'dart:async' as _i4;
 
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:retrofit/retrofit.dart' as _i2;
-import 'package:yaki/data/sources/remote/team_mate_api.dart' as _i3;
+import 'package:yaki/data/sources/remote/teammate_api.dart' as _i3;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -31,26 +31,26 @@ class _FakeHttpResponse_0<T> extends _i1.SmartFake
         );
 }
 
-/// A class which mocks [TeamMateApi].
+/// A class which mocks [TeammateApi].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockTeamMateApi extends _i1.Mock implements _i3.TeamMateApi {
-  MockTeamMateApi() {
+class MockTeammateApi extends _i1.Mock implements _i3.TeammateApi {
+  MockTeammateApi() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i4.Future<_i2.HttpResponse<dynamic>> getTeamMate(String? id) =>
+  _i4.Future<_i2.HttpResponse<dynamic>> getTeammate(String? id) =>
       (super.noSuchMethod(
         Invocation.method(
-          #getTeamMate,
+          #getTeammate,
           [id],
         ),
         returnValue: _i4.Future<_i2.HttpResponse<dynamic>>.value(
             _FakeHttpResponse_0<dynamic>(
           this,
           Invocation.method(
-            #getTeamMate,
+            #getTeammate,
             [id],
           ),
         )),

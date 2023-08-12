@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:yaki/presentation/state/providers/team_mate_provider.dart';
-import 'package:yaki/presentation/ui/captain/views/team_mate_card.dart';
-import 'package:yaki/presentation/ui/captain/views/team_mate_card_halfday.dart';
+import 'package:yaki/presentation/state/providers/teammate_provider.dart';
+import 'package:yaki/presentation/ui/captain/views/teammate_card.dart';
+import 'package:yaki/presentation/ui/captain/views/teammate_card_halfday.dart';
 
 /// using ConsumerStatefulWidget (statefullWidget) to have access to the WidgetRef object
 /// allowing the current widget to have access to any provider.
@@ -21,7 +21,7 @@ class _CaptainBodyState extends ConsumerState<CaptainBody> {
   @override
   void initState() {
     setState(() {
-      ref.read(teamMateProvider.notifier).fetchTeamMates();
+      ref.read(teammateProvider.notifier).fetchTeammates();
     });
     super.initState();
   }
@@ -29,13 +29,13 @@ class _CaptainBodyState extends ConsumerState<CaptainBody> {
   @override
   Widget build(BuildContext context) {
     // Monitors changes in card status
-    final listTeamMate = ref.watch(teamMateProvider);
+    final listTeamMate = ref.watch(teammateProvider);
 
     return RefreshIndicator(
       onRefresh: () async {
         await Future.delayed(const Duration(seconds: 1));
         setState(() {
-          ref.read(teamMateProvider.notifier).fetchTeamMates();
+          ref.read(teammateProvider.notifier).fetchTeammates();
         });
       },
       child: ListView.builder(
@@ -43,14 +43,14 @@ class _CaptainBodyState extends ConsumerState<CaptainBody> {
         itemCount: listTeamMate.length,
         itemBuilder: (context, index) {
           if (listTeamMate[index].declarationStatus == null) {
-            return CardTeamMateHalfday(
+            return CardTeammateHalfday(
               firstName: (listTeamMate[index].userFirstName),
               lastName: (listTeamMate[index].userLastName),
               dateActu: (listTeamMate[index].declarationDate),
               status: (listTeamMate[index].halfDayDeclarationStatus),
             );
           } else {
-            return CardTeamMate(
+            return CardTeammate(
               // Cards of the Team Mate
               firstName: (listTeamMate[index].userFirstName),
               lastName: (listTeamMate[index].userLastName),
