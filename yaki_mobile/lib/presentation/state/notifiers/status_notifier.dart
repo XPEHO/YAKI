@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yaki/data/repositories/declaration_respository.dart';
-import 'package:yaki/presentation/displaydata/status_page_content.dart';
+import 'package:yaki/presentation/displaydata/status_page_utils.dart';
 import 'package:yaki/presentation/state/state/state_status_page.dart';
 
 class StatusPageNotifier extends StateNotifier<StateStatusPage> {

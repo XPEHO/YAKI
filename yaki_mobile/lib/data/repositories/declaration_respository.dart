@@ -3,7 +3,7 @@ import 'package:yaki/data/models/declaration_model.dart';
 import 'package:yaki/data/models/declaration_model_in.dart';
 import 'package:yaki/data/sources/remote/declaration_api.dart';
 import 'package:yaki/domain/entities/declaration_status.dart';
-import 'package:yaki/presentation/displaydata/status_page_content.dart';
+import 'package:yaki/presentation/displaydata/status_page_utils.dart';
 
 class DeclarationRepository {
   final DeclarationApi _declarationApi;
@@ -104,7 +104,7 @@ class DeclarationRepository {
     String statusValue = "";
     try {
       final createHttpResponse =
-          await _declarationApi.create([declaration], StatusEnum.fullDay.text);
+          await _declarationApi.create([declaration], StatusEnum.fullDay.value);
       final statusCode = createHttpResponse.response.statusCode;
       switch (statusCode) {
         case const (200 | 201):
@@ -139,7 +139,7 @@ class DeclarationRepository {
     String statusValueAfternoon = "";
     try {
       final createHttpResponse =
-          await _declarationApi.create(declarations, StatusEnum.halfDay.text);
+          await _declarationApi.create(declarations, StatusEnum.halfDay.value);
       final statusCode = createHttpResponse.response.statusCode;
       switch (statusCode) {
         case const (200 | 201):

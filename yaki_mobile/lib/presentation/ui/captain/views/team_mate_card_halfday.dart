@@ -3,7 +3,7 @@ import 'dart:core';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:yaki/presentation/displaydata/status_page_content.dart';
+import 'package:yaki/presentation/displaydata/status_page_utils.dart';
 import 'package:yaki/presentation/styles/color.dart';
 
 class CardTeamMateHalfday extends StatefulWidget {

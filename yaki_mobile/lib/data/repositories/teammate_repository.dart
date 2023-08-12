@@ -3,7 +3,7 @@ import 'package:retrofit/retrofit.dart';
 import 'package:yaki/data/models/teammate_model.dart';
 import 'package:yaki/data/sources/remote/team_mate_api.dart';
 import 'package:yaki/domain/entities/team_mate_entity.dart';
-import 'package:yaki/presentation/displaydata/status_page_content.dart';
+import 'package:yaki/presentation/displaydata/status_page_utils.dart';
 
 class TeamMateRepository {
   final TeamMateApi teamMateApi;

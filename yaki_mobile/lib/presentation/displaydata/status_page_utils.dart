@@ -1,8 +1,8 @@
 import 'package:yaki/domain/entities/declaration_status.dart';
 
-///  Enum name match the json object's keys from assets/translations/*.json files format
+///  Enum name (keys) match the json object's keys from assets/translations/*.json files format
 ///
-///  Enum text match the status format to be send to the API.
+///  Enum text (values) match the status format to be send to the API.
 enum StatusEnum {
   remote('remote'),
   onSite('on site'),
@@ -14,8 +14,12 @@ enum StatusEnum {
   afternoonTr('Afternoon'),
   undeclared('undeclared');
 
-  final String text;
-  const StatusEnum(this.text);
+  final String value;
+  const StatusEnum(this.value);
+
+  static String getValue({required String key}) {
+    return StatusEnum.values.byName(key).value;
+  }
 }
 
 /// status utilities

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yaki/presentation/displaydata/declaration_card_content.dart';
-import 'package:yaki/presentation/displaydata/status_page_content.dart';
+import 'package:yaki/presentation/displaydata/status_page_utils.dart';
 import 'package:yaki/presentation/ui/declaration/views/status_card.dart';
 import 'package:yaki/presentation/ui/shared/views/team_selection_dialog.dart';
 
@@ -33,8 +33,7 @@ class DeclarationBody extends ConsumerWidget {
                   onPress: () => TeamSelectionDialog(
                     ref: ref,
                     context: context,
-                    allDayStatus:
-                        StatusEnum.values.byName(cardContent['text']).text,
+                    allDayStatus: StatusEnum.getValue(key: cardContent['text']),
                     goToPage: () => context.go('/status'),
                     morningStatus: null,
                     afternoonStatus: null,
