@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yaki/presentation/displaydata/declaration_card_content.dart';
+import 'package:yaki/presentation/displaydata/declaration_enum.dart';
 import 'package:yaki/presentation/displaydata/status_page_utils.dart';
 import 'package:yaki/presentation/ui/declaration/views/status_card.dart';
 import 'package:yaki/presentation/ui/shared/views/team_selection_dialog.dart';
@@ -11,7 +12,12 @@ import 'package:yaki/presentation/ui/shared/views/team_selection_dialog.dart';
 /// the WidgetRef object
 /// allowing the current widget to have access to any provider.
 class DeclarationBody extends ConsumerWidget {
-  const DeclarationBody({Key? key}) : super(key: key);
+  final DeclarationTimeOfDay timeOfDay;
+
+  const DeclarationBody({
+    Key? key,
+    required this.timeOfDay,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -33,9 +39,8 @@ class DeclarationBody extends ConsumerWidget {
                   onPress: () => TeamSelectionDialog(
                     ref: ref,
                     context: context,
-                    allDayStatus: StatusEnum.getValue(key: cardContent['text']),
-                    morningStatus: null,
-                    afternoonStatus: null,
+                    timeOfDay: timeOfDay,
+                    status: StatusEnum.getValue(key: cardContent['text']),
                     goToPage: () => context.go('/status'),
                   ).show(),
                 ),

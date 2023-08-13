@@ -25,6 +25,8 @@ class StatusPageNotifier extends StateNotifier<StateStatusPage> {
     String imageCamelCase = StatusUtils.toCamelCase(toFormat: status);
     String image = StatusUtils.getImage(imageCamelCase);
 
+    print("$text, $image");
+
     state = StateStatusPage(
       image: image,
       text: tr(text),
