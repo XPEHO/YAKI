@@ -9,11 +9,11 @@ part of 'declaration_model_in.dart';
 DeclarationModelIn _$DeclarationModelInFromJson(Map<String, dynamic> json) =>
     DeclarationModelIn(
       declarationId: json['declarationId'] as int,
+      declarationUserId: json['declarationUserId'] as int,
       declarationDate: DateTime.parse(json['declarationDate'] as String),
       declarationDateStart:
           DateTime.parse(json['declarationDateStart'] as String),
       declarationDateEnd: DateTime.parse(json['declarationDateEnd'] as String),
-      declarationTeamMateId: json['declarationTeamMateId'] as int?,
       declarationStatus: json['declarationStatus'] as String,
       declarationTeamId: json['declarationTeamId'] as int?,
     );
@@ -21,10 +21,10 @@ DeclarationModelIn _$DeclarationModelInFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$DeclarationModelInToJson(DeclarationModelIn instance) =>
     <String, dynamic>{
       'declarationId': instance.declarationId,
+      'declarationUserId': instance.declarationUserId,
       'declarationDate': instance.declarationDate.toIso8601String(),
       'declarationDateStart': instance.declarationDateStart.toIso8601String(),
       'declarationDateEnd': instance.declarationDateEnd.toIso8601String(),
-      'declarationTeamMateId': instance.declarationTeamMateId,
       'declarationStatus': instance.declarationStatus,
       'declarationTeamId': instance.declarationTeamId,
     };
