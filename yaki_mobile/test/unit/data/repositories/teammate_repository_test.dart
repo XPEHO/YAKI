@@ -4,10 +4,10 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:yaki/data/repositories/teammate_repository.dart';
 import 'package:yaki/data/sources/remote/teammate_api.dart';
-import 'package:yaki/domain/entities/team_mate_entity.dart';
+import 'package:yaki/domain/entities/teammate_entity.dart';
 
 import '../../mocking.mocks.dart';
-import 'team_mate_repository_test.mocks.dart';
+import 'teammate_repository_test.mocks.dart';
 
 @GenerateMocks([TeammateApi])
 void main() {

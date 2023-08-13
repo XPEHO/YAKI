@@ -44,13 +44,13 @@ class StatusUtils {
       return toFormat.toLowerCase();
     }
     //this will split the string at each special character position
-    List<String> split = toFormat.split(_specialCharacter);
-    String formatted = split[0].toLowerCase();
+    List<String> splited = toFormat.split(_specialCharacter);
+    String formatted = splited[0].toLowerCase();
 
-    for (var i = 1; i < split.length; i++) {
+    for (var i = 1; i < splited.length; i++) {
       // first letter ([0]) capitalize + substring from string [1] in lowerCase.
       formatted +=
-          split[i][0].toUpperCase() + split[i].substring(1).toLowerCase();
+          splited[i][0].toUpperCase() + splited[i].substring(1).toLowerCase();
     }
     return formatted;
   }

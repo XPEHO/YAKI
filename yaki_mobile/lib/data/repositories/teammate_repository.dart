@@ -2,21 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:yaki/data/models/teammate_model.dart';
 import 'package:yaki/data/sources/remote/teammate_api.dart';
-import 'package:yaki/domain/entities/team_mate_entity.dart';
+import 'package:yaki/domain/entities/teammate_entity.dart';
 import 'package:yaki/presentation/displaydata/status_page_utils.dart';
 
 class TeammateRepository {
   final TeammateApi teammateApi;
-  List<TeammateEntity> teammatelist;
-  TeammateEntity? teamMateEntity;
+  List<TeammateEntity> teammateList;
+  TeammateEntity? teammateEntity;
 
   TeammateRepository(
     this.teammateApi, {
-    this.teammatelist = const [],
-    this.teamMateEntity,
+    this.teammateList = const [],
+    this.teammateEntity,
   });
 
-  /// Retrieves information from the TeamMate API <br>
+  /// Retrieves information from the Teammate API <br>
   /// and stores the response in the modelList variable
   Future<List<TeammateEntity>> getTeammate(String captainId) async {
     try {
