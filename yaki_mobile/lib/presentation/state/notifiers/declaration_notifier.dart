@@ -6,7 +6,7 @@ import 'package:yaki/data/repositories/login_repository.dart';
 import 'package:yaki/domain/entities/declaration_status.dart';
 import 'package:yaki/data/repositories/team_repository.dart';
 
-class DeclarationNotifier extends StateNotifier<String> {
+class DeclarationNotifier extends StateNotifier<void> {
   final DeclarationRepository declarationRepository;
   final LoginRepository loginRepository;
   final TeamRepository teamRepository;
@@ -15,7 +15,7 @@ class DeclarationNotifier extends StateNotifier<String> {
     this.declarationRepository,
     this.loginRepository,
     this.teamRepository,
-  ) : super("");
+  ) : super(0);
 
   /// Invoked at authentication "sign in" button press.
   ///
@@ -38,10 +38,9 @@ class DeclarationNotifier extends StateNotifier<String> {
   /// create a DeclarationModel model instance,
   ///
   /// then invoke the declarationRepository.createAllDay(), that will send the newly declaration to the API (via _api.dart)
-  Future<void> createFullDay(String status) async {
+  Future<void> createFullDay(
+      {required String status, required int teamId}) async {
     final todayDate = DateTime.now();
-    // NEED TO BE CHANGED
-    const teamId = 2;
     DeclarationModel newDeclaration = DeclarationModel(
       declarationUserId: loginRepository.userId,
       declarationDate: todayDate,
@@ -60,10 +59,11 @@ class DeclarationNotifier extends StateNotifier<String> {
   /// Create declaration for the morning by setting
   /// the dateStart to midnight and dateEnd to noon.
   /// Then send it to declarationRepository's function
-  Future<void> createHalfDay(String morning, String afternoon) async {
+  Future<void> createHalfDay(
+      {required morning,
+      required String afternoon,
+      required int teamId}) async {
     final todayDate = DateTime.now();
-    // NEED TO BE CHANGED
-    const teamId = 2;
     DeclarationModel newDeclarationMorning = DeclarationModel(
       declarationUserId: loginRepository.userId,
       declarationDate: todayDate,

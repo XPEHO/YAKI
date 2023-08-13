@@ -42,7 +42,7 @@ class TeamSelectionDialog {
               return InkWell(
                 onTap: () async {
                   // Call _handleTeamSelection when a team is tapped
-                  await _handleTeamSelection(teamList[index]);
+                  await _handleTeamSelection(teamList[index].teamId!);
                 },
                 child: ListTile(
                   // Show the name of the team in the ListTile
@@ -81,18 +81,23 @@ class TeamSelectionDialog {
   ///
   /// The [goToPage] function passed in the constructor is called to navigate
   /// to the appropriate page after the status is created.
-  Future<void> _handleTeamSelection(TeamModel selectedTeam) async {
+  Future<void> _handleTeamSelection(int teamId) async {
     if (allDayStatus != null) {
-      await ref.read(declarationProvider.notifier).createFullDay(allDayStatus!);
+      await ref.read(declarationProvider.notifier).createFullDay(
+            status: allDayStatus!,
+            teamId: teamId,
+          );
       ref.read(statusPageProvider.notifier).getSelectedStatus();
       //
     } else if (morningStatus != null) {
       ref.read(declarationProvider.notifier).setMorningStatus(morningStatus!);
       //
     } else if (morningStatus != null && afternoonStatus != null) {
-      await ref
-          .read(declarationProvider.notifier)
-          .createHalfDay(morningStatus!, afternoonStatus!);
+      await ref.read(declarationProvider.notifier).createHalfDay(
+            morning: morningStatus!,
+            afternoon: afternoonStatus!,
+            teamId: teamId,
+          );
       ref.read(halfdayStatusPageProvider.notifier).getHalfdayDeclaration();
     }
     goToPage();
