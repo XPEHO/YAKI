@@ -41,7 +41,7 @@ class DeclarationNotifier extends StateNotifier<String> {
   Future<void> createAllDay(String status) async {
     final todayDate = DateTime.now();
     // NEED TO BE CHANGED
-    const teamId = 1;
+    const teamId = 2;
     DeclarationModel newDeclaration = DeclarationModel(
       declarationUserId: loginRepository.userId,
       declarationDate: todayDate,
@@ -63,7 +63,7 @@ class DeclarationNotifier extends StateNotifier<String> {
   Future<void> createHalfDay(String morning, String afternoon) async {
     final todayDate = DateTime.now();
     // NEED TO BE CHANGED
-    const teamId = 1;
+    const teamId = 2;
     DeclarationModel newDeclarationMorning = DeclarationModel(
       declarationUserId: loginRepository.userId,
       declarationDate: todayDate,
