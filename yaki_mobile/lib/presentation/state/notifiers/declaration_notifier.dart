@@ -38,7 +38,7 @@ class DeclarationNotifier extends StateNotifier<String> {
   /// create a DeclarationModel model instance,
   ///
   /// then invoke the declarationRepository.createAllDay(), that will send the newly declaration to the API (via _api.dart)
-  Future<void> createAllDay(String status) async {
+  Future<void> createFullDay(String status) async {
     final todayDate = DateTime.now();
     // NEED TO BE CHANGED
     const teamId = 2;
@@ -99,17 +99,17 @@ class DeclarationNotifier extends StateNotifier<String> {
   }
 
   /// set the morning declaration status stored in declarationRepository
-  setMorningDeclaration(String status) {
-    declarationRepository.setMorningDeclaration(status);
+  setMorningStatus(String status) {
+    declarationRepository.setMorningStatus(status);
   }
 
   /// get the morning declaration status stored in declarationRepository
-  String getMorningDeclaration() {
+  String getMorningStatus() {
     return declarationRepository.statusMorning;
   }
 
   /// get all declarations stored in declarationRepository
-  DeclarationStatus getAllDeclaration() {
+  DeclarationStatus getAllStatus() {
     return declarationRepository.allDeclarations;
   }
 }

@@ -51,7 +51,7 @@ class DeclarationRepository {
               getHttpResponse.data.first,
             );
             statusValue.add(getDeclarationIn.declarationStatus);
-            setAllDayDeclaration(statusValue.first);
+            setFullDayStatus(statusValue.first);
           }
           // else the server returns at least two declarations
           else {
@@ -63,7 +63,7 @@ class DeclarationRepository {
             );
             statusValue.add(getDeclarationInMorning.declarationStatus);
             statusValue.add(getDeclarationInAfternoon.declarationStatus);
-            setHalfDayDeclaration(statusValue[0], statusValue[1]);
+            setHalfDayStatus(statusValue[0], statusValue[1]);
           }
           // convert HttpResponse<dynamic> (Map<String, dynamic>) into Model using .fromJson method
           break;
@@ -128,7 +128,7 @@ class DeclarationRepository {
             "Invalid statusCode from server : ${createHttpResponse.response.statusCode}",
           );
       }
-      setAllDayDeclaration(statusValue);
+      setFullDayStatus(statusValue);
     } catch (err) {
       debugPrint("error during creation : $err");
     }
@@ -169,32 +169,32 @@ class DeclarationRepository {
             "Invalid statusCode from server : ${createHttpResponse.response.statusCode}",
           );
       }
-      setHalfDayDeclaration(statusValueMorning, statusValueAfternoon);
+      setHalfDayStatus(statusValueMorning, statusValueAfternoon);
     } catch (err) {
       debugPrint("error during creation : $err");
     }
   }
 
   /// Assign status, to declarationStatus entities.
-  void setAllDayDeclaration(String status) {
-    declarationStatus.allDayDeclaration = status;
+  void setFullDayStatus(String status) {
+    declarationStatus.fullDayDeclaration = status;
   }
 
   /// Assign status, to declarationStatus entities.
-  void setHalfDayDeclaration(String morningStatus, String afternoonStatus) {
+  void setHalfDayStatus(String morningStatus, String afternoonStatus) {
     declarationStatus.morningDeclaration = morningStatus;
     declarationStatus.afternoonDeclaration = afternoonStatus;
   }
 
   /// Assign status, to declarationStatus entities.
-  void setMorningDeclaration(String status) {
+  void setMorningStatus(String status) {
     declarationStatus.morningDeclaration = status;
   }
 
   /// getter to retrieve declaration status stored in DeclarationStatus instance.
   /// This getter is called in the status_notifier, this value will determine the status page content.
   String get statusAllDay {
-    return declarationStatus.allDayDeclaration;
+    return declarationStatus.fullDayDeclaration;
   }
 
   String get statusMorning {

@@ -162,7 +162,7 @@ void main() {
         () {
           const String selectedStatus = "REMOTE";
 
-          when(declarationRepository.setAllDayDeclaration(selectedStatus));
+          when(declarationRepository.setFullDayStatus(selectedStatus));
           expect(
             declarationRepository.statusAllDay,
             selectedStatus,
@@ -299,7 +299,7 @@ void main() {
           const String selectedStatusAfternoon = "other";
           // Call the function to set the declaration status
           when(
-            declarationRepository.setHalfDayDeclaration(
+            declarationRepository.setHalfDayStatus(
               selectedStatusMorning,
               selectedStatusAfternoon,
             ),

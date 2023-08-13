@@ -31,12 +31,12 @@ class MorningDeclarationBody extends ConsumerWidget {
                   statusPicto: cardContent['image'],
                   onPress: () => TeamSelectionDialog(
                     ref: ref,
+                    context: context,
+                    allDayStatus: null,
                     morningStatus:
                         StatusEnum.getValue(key: cardContent['text']),
-                    context: context,
-                    goToPage: () => context.go('/afternoonDeclaration'),
-                    allDayStatus: null,
                     afternoonStatus: null,
+                    goToPage: () => context.go('/afternoonDeclaration'),
                   ).show(),
                 ),
               )

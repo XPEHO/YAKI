@@ -17,7 +17,7 @@ class AfternoonDeclarationBody extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     /// Retrieves the morning declaration
     var morningDeclaration =
-        ref.watch(declarationProvider.notifier).getMorningDeclaration();
+        ref.watch(declarationProvider.notifier).getMorningStatus();
 
     return Padding(
       padding: const EdgeInsets.all(20),
@@ -36,12 +36,12 @@ class AfternoonDeclarationBody extends ConsumerWidget {
                   statusPicto: cardContent['image'],
                   onPress: () => TeamSelectionDialog(
                     ref: ref,
-                    morningStatus: morningDeclaration,
                     context: context,
-                    goToPage: () => context.go('/halfdayStatus'),
                     allDayStatus: null,
+                    morningStatus: morningDeclaration,
                     afternoonStatus:
                         StatusEnum.getValue(key: cardContent['text']),
+                    goToPage: () => context.go('/halfdayStatus'),
                   ).show(),
                 ),
               )

@@ -34,9 +34,9 @@ class DeclarationBody extends ConsumerWidget {
                     ref: ref,
                     context: context,
                     allDayStatus: StatusEnum.getValue(key: cardContent['text']),
-                    goToPage: () => context.go('/status'),
                     morningStatus: null,
                     afternoonStatus: null,
+                    goToPage: () => context.go('/status'),
                   ).show(),
                 ),
               )

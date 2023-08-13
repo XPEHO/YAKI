@@ -83,17 +83,17 @@ class TeamSelectionDialog {
   /// to the appropriate page after the status is created.
   Future<void> _handleTeamSelection(TeamModel selectedTeam) async {
     if (allDayStatus != null) {
-      await ref.read(declarationProvider.notifier).createAllDay(allDayStatus!);
+      await ref.read(declarationProvider.notifier).createFullDay(allDayStatus!);
       ref.read(statusPageProvider.notifier).getSelectedStatus();
+      //
+    } else if (morningStatus != null) {
+      ref.read(declarationProvider.notifier).setMorningStatus(morningStatus!);
+      //
     } else if (morningStatus != null && afternoonStatus != null) {
       await ref
           .read(declarationProvider.notifier)
           .createHalfDay(morningStatus!, afternoonStatus!);
       ref.read(halfdayStatusPageProvider.notifier).getHalfdayDeclaration();
-    } else if (morningStatus != null) {
-      ref
-          .read(declarationProvider.notifier)
-          .setMorningDeclaration(morningStatus!);
     }
     goToPage();
   }

@@ -123,7 +123,7 @@ class MockDeclarationRepository extends _i1.Mock
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
   @override
-  void setAllDayDeclaration(String? status) => super.noSuchMethod(
+  void setFullDayStatus(String? status) => super.noSuchMethod(
         Invocation.method(
           #setAllDayDeclaration,
           [status],
@@ -131,7 +131,7 @@ class MockDeclarationRepository extends _i1.Mock
         returnValueForMissingStub: null,
       );
   @override
-  void setHalfDayDeclaration(
+  void setHalfDayStatus(
     String? morningStatus,
     String? afternoonStatus,
   ) =>
@@ -146,7 +146,7 @@ class MockDeclarationRepository extends _i1.Mock
         returnValueForMissingStub: null,
       );
   @override
-  void setMorningDeclaration(String? status) => super.noSuchMethod(
+  void setMorningStatus(String? status) => super.noSuchMethod(
         Invocation.method(
           #setMorningDeclaration,
           [status],
