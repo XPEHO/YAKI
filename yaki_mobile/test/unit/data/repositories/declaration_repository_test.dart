@@ -16,10 +16,10 @@ void main() {
   final List<Map<String, dynamic>> createResponseApi = [
     {
       "declarationId": 2,
+      "declarationUserId": 3,
       "declarationDate": DateTime.now().toIso8601String(),
       "declarationDateStart": DateTime.now().toIso8601String(),
       "declarationDateEnd": DateTime.now().toIso8601String(),
-      "declarationTeamMateId": 3,
       "declarationStatus": "REMOTE",
       "declarationTeamId": 2,
     },
@@ -85,10 +85,10 @@ void main() {
     'Declaration allDay respository create()',
     () {
       DeclarationModel createdDeclaration = DeclarationModel(
+        declarationUserId: 1,
         declarationDate: DateTime.now(),
         declarationDateStart: DateTime.parse('2023-03-20T00:00:00.000Z'),
         declarationDateEnd: DateTime.parse('2023-03-20T23:59:59.950Z'),
-        declarationTeamMateId: 1,
         declarationStatus: "REMOTE",
         declarationTeamId: 2,
       );
@@ -175,18 +175,18 @@ void main() {
     'Declaration halfDay respository create()',
     () {
       final DeclarationModel declarationMorning = DeclarationModel(
+        declarationUserId: 123,
         declarationDate: DateTime.utc(2023, 4, 26),
         declarationDateStart: DateTime.utc(2023, 4, 26, 00),
         declarationDateEnd: DateTime.utc(2023, 4, 26, 12),
-        declarationTeamMateId: 123,
         declarationStatus: 'remote',
         declarationTeamId: 2,
       );
       final DeclarationModel declarationAfternoon = DeclarationModel(
+        declarationUserId: 123,
         declarationDate: DateTime.utc(2023, 4, 26),
         declarationDateStart: DateTime.utc(2023, 4, 26, 13),
         declarationDateEnd: DateTime.utc(2023, 4, 26, 23),
-        declarationTeamMateId: 123,
         declarationStatus: 'other',
         declarationTeamId: 2,
       );

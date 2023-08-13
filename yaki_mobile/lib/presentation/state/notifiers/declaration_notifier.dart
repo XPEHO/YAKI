@@ -25,7 +25,7 @@ class DeclarationNotifier extends StateNotifier<String> {
   ///
   /// Return the declarationStatus, used in authentication page to determine the redirection.
   Future<List<String>> getDeclaration() async {
-    final teamMateId = loginRepository.teamMateId.toString();
+    final teamMateId = loginRepository.userId.toString();
     final declarationStatus =
         await declarationRepository.getDeclaration(teamMateId);
     return declarationStatus;
@@ -43,6 +43,7 @@ class DeclarationNotifier extends StateNotifier<String> {
     // NEED TO BE CHANGED
     const teamId = 1;
     DeclarationModel newDeclaration = DeclarationModel(
+      declarationUserId: loginRepository.userId,
       declarationDate: todayDate,
       declarationDateStart: DateTime.parse(
         '${DateFormat('yyyy-MM-dd').format(todayDate)} 00:00:00Z',
@@ -50,7 +51,6 @@ class DeclarationNotifier extends StateNotifier<String> {
       declarationDateEnd: DateTime.parse(
         '${DateFormat('yyyy-MM-dd').format(todayDate)} 23:59:59Z',
       ),
-      declarationTeamMateId: loginRepository.teamMateId,
       declarationTeamId: teamId,
       declarationStatus: status,
     );
@@ -65,6 +65,7 @@ class DeclarationNotifier extends StateNotifier<String> {
     // NEED TO BE CHANGED
     const teamId = 1;
     DeclarationModel newDeclarationMorning = DeclarationModel(
+      declarationUserId: loginRepository.userId,
       declarationDate: todayDate,
       declarationDateStart: DateTime.parse(
         '${DateFormat('yyyy-MM-dd').format(todayDate)} 00:00:00Z',
@@ -72,12 +73,12 @@ class DeclarationNotifier extends StateNotifier<String> {
       declarationDateEnd: DateTime.parse(
         '${DateFormat('yyyy-MM-dd').format(todayDate)} 12:00:00Z',
       ),
-      declarationTeamMateId: loginRepository.teamMateId,
       declarationStatus: morning,
       declarationTeamId: teamId,
     );
 
     DeclarationModel newDeclarationAfternoon = DeclarationModel(
+      declarationUserId: loginRepository.userId,
       declarationDate: todayDate,
       declarationDateStart: DateTime.parse(
         '${DateFormat('yyyy-MM-dd').format(todayDate)} 13:00:00Z',
@@ -85,7 +86,6 @@ class DeclarationNotifier extends StateNotifier<String> {
       declarationDateEnd: DateTime.parse(
         '${DateFormat('yyyy-MM-dd').format(todayDate)} 23:59:59Z',
       ),
-      declarationTeamMateId: loginRepository.teamMateId,
       declarationStatus: afternoon,
       declarationTeamId: teamId,
     );

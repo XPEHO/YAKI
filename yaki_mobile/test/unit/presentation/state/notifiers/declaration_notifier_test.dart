@@ -29,7 +29,7 @@ void main() {
       test(
         'getDeclaration method test',
         () async {
-          when(loginRepository.teamMateId).thenReturn(returnedTeamMateId);
+          when(loginRepository.userId).thenReturn(returnedTeamMateId);
           when(
             declarationRepository.getDeclaration(
               returnedTeamMateId.toString(),

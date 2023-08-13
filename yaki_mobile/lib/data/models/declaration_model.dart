@@ -4,7 +4,7 @@ part 'declaration_model.g.dart';
 
 @JsonSerializable()
 class DeclarationModel {
-  int declarationUserId;
+  int? declarationUserId;
   DateTime declarationDate;
   DateTime declarationDateStart;
   DateTime declarationDateEnd;

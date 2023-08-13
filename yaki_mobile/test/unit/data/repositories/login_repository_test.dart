@@ -190,7 +190,7 @@ void main() {
       test(
         'teammateId getter',
         () {
-          expect(loginRepository.teamMateId, 0);
+          expect(loginRepository.userId, 0);
         },
       );
       test(

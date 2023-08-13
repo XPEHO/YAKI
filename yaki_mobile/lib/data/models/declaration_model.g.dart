@@ -8,7 +8,7 @@ part of 'declaration_model.dart';
 
 DeclarationModel _$DeclarationModelFromJson(Map<String, dynamic> json) =>
     DeclarationModel(
-      declarationUserId: json['declarationUserId'] as int,
+      declarationUserId: json['declarationUserId'] as int?,
       declarationDate: DateTime.parse(json['declarationDate'] as String),
       declarationDateStart:
           DateTime.parse(json['declarationDateStart'] as String),
