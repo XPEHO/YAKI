@@ -24,10 +24,10 @@ class DeclarationNotifier extends StateNotifier<String> {
   /// then invoke the declarationRepository.getDeclaration() method to get the daily declaration, if one was created.
   ///
   /// Return the declarationStatus, used in authentication page to determine the redirection.
-  Future<List<String>> getDeclaration() async {
+  Future<List<String>> getLatestDeclaration() async {
     final teamMateId = loginRepository.userId.toString();
     final declarationStatus =
-        await declarationRepository.getDeclaration(teamMateId);
+        await declarationRepository.getLatestDeclaration(teamMateId);
     return declarationStatus;
   }
 
@@ -54,7 +54,7 @@ class DeclarationNotifier extends StateNotifier<String> {
       declarationTeamId: teamId,
       declarationStatus: status,
     );
-    await declarationRepository.createAllDay(newDeclaration);
+    await declarationRepository.createFullDay(newDeclaration);
   }
 
   /// Create declaration for the morning by setting

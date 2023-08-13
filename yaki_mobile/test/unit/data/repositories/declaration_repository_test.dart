@@ -41,7 +41,7 @@ void main() {
           when(httpResponse.data).thenReturn(createResponseApi);
 
           final List<String> status =
-              await declarationRepository.getDeclaration(teammateId);
+              await declarationRepository.getLatestDeclaration(teammateId);
 
           expect(status, ["REMOTE"]);
         },
@@ -58,7 +58,7 @@ void main() {
           when(httpResponse.data).thenReturn(getErrorResponse);
 
           final List<String> status =
-              await declarationRepository.getDeclaration(teammateId);
+              await declarationRepository.getLatestDeclaration(teammateId);
 
           expect(status, []);
         },
@@ -74,7 +74,7 @@ void main() {
           when(httpResponse.data).thenReturn(getErrorResponse);
 
           final List<String> status =
-              await declarationRepository.getDeclaration(teammateId);
+              await declarationRepository.getLatestDeclaration(teammateId);
 
           expect(status, []);
         },
@@ -100,7 +100,7 @@ void main() {
           when(httpResponse.response).thenReturn(response);
           when(response.statusCode).thenReturn(200 | 201);
           when(httpResponse.data).thenReturn(createResponseApi);
-          await declarationRepository.createAllDay(createdDeclaration);
+          await declarationRepository.createFullDay(createdDeclaration);
           expect(declarationRepository.statusAllDay, "REMOTE");
         },
       );
@@ -112,7 +112,7 @@ void main() {
           when(httpResponse.response).thenReturn(response);
           when(response.statusCode).thenReturn(400 | 500);
           when(httpResponse.data).thenReturn(createResponseApi);
-          await declarationRepository.createAllDay(createdDeclaration);
+          await declarationRepository.createFullDay(createdDeclaration);
           expect(declarationRepository.statusAllDay, "");
         },
       );
@@ -124,7 +124,7 @@ void main() {
           when(httpResponse.response).thenReturn(response);
           when(response.statusCode).thenReturn(401);
           when(httpResponse.data).thenReturn(createResponseApi);
-          await declarationRepository.createAllDay(createdDeclaration);
+          await declarationRepository.createFullDay(createdDeclaration);
           expect(declarationRepository.statusAllDay, "");
         },
       );
@@ -136,7 +136,7 @@ void main() {
           when(httpResponse.response).thenReturn(response);
           when(response.statusCode).thenReturn(403);
           when(httpResponse.data).thenReturn(createResponseApi);
-          await declarationRepository.createAllDay(createdDeclaration);
+          await declarationRepository.createFullDay(createdDeclaration);
           expect(declarationRepository.statusAllDay, "");
         },
       );
@@ -148,7 +148,7 @@ void main() {
           when(httpResponse.response).thenReturn(response);
           when(response.statusCode).thenReturn(418);
           when(httpResponse.data).thenReturn(createResponseApi);
-          await declarationRepository.createAllDay(createdDeclaration);
+          await declarationRepository.createFullDay(createdDeclaration);
           expect(declarationRepository.statusAllDay, "");
         },
       );

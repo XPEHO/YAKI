@@ -37,7 +37,7 @@ class DeclarationRepository {
   /// * Get the declarationStatus from the newly created object and assign it to the statusValue.
   ///
   /// This method return the statusValue value.
-  Future<List<String>> getDeclaration(String teamMateId) async {
+  Future<List<String>> getLatestDeclaration(String teamMateId) async {
     List<String> statusValue = [];
     try {
       final getHttpResponse = await _declarationApi.getDeclaration(teamMateId);
@@ -100,7 +100,7 @@ class DeclarationRepository {
   /// * Get the declarationStatus from created instance and assign it to the statusValue.
   ///
   /// At the end of the function assign the statusValue to the DeclarationStatus
-  Future<void> createAllDay(DeclarationModel declaration) async {
+  Future<void> createFullDay(DeclarationModel declaration) async {
     String statusValue = "";
     try {
       final createHttpResponse =

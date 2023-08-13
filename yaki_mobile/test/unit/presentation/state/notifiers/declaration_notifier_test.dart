@@ -31,14 +31,14 @@ void main() {
         () async {
           when(loginRepository.userId).thenReturn(returnedTeamMateId);
           when(
-            declarationRepository.getDeclaration(
+            declarationRepository.getLatestDeclaration(
               returnedTeamMateId.toString(),
             ),
           ).thenAnswer(
             (realInvocation) => Future.value(declarationStatus),
           );
           List<String> notifierStatus =
-              await declarationNotifier.getDeclaration();
+              await declarationNotifier.getLatestDeclaration();
 
           expect(notifierStatus, declarationStatus);
         },

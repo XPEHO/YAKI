@@ -95,7 +95,7 @@ class _AuthenticationState extends ConsumerState<Authentication> {
       } else {
         ref.read(teamProvider.notifier).fetchTeams();
         final declarationStatus =
-            await ref.read(declarationProvider.notifier).getDeclaration();
+            await ref.read(declarationProvider.notifier).getLatestDeclaration();
         if (declarationStatus.length > 1) {
           ref.read(halfdayStatusPageProvider.notifier).getHalfdayDeclaration();
           goToHalfdayStatusPage();
