@@ -5,6 +5,8 @@ import 'package:go_router/go_router.dart';
 import 'package:yaki/presentation/displaydata/declaration_card_content.dart';
 import 'package:yaki/presentation/displaydata/declaration_enum.dart';
 import 'package:yaki/presentation/displaydata/status_page_utils.dart';
+import 'package:yaki/presentation/state/providers/declaration_provider.dart';
+import 'package:yaki/presentation/state/providers/team_provider.dart';
 import 'package:yaki/presentation/ui/declaration/views/status_card.dart';
 import 'package:yaki/presentation/ui/shared/views/team_selection_dialog.dart';
 
@@ -19,14 +21,30 @@ class DeclarationBody extends ConsumerWidget {
     required this.timeOfDay,
   }) : super(key: key);
 
-  void onCardPress(WidgetRef ref, BuildContext context, Map cardContent) {
-    TeamSelectionDialog(
-      ref: ref,
-      context: context,
-      timeOfDay: timeOfDay,
-      status: StatusEnum.getValue(key: cardContent['text']),
-      goToPage: () => context.go('/status'),
-    ).show();
+  void onCardPressed({
+    required WidgetRef ref,
+    required BuildContext context,
+    required String cardContent,
+  }) {
+    if (cardContent != StatusEnum.vacation.name) {
+      final getTeamCount = ref.read(teamProvider).length;
+      if (getTeamCount > 1) {
+        TeamSelectionDialog(
+          ref: ref,
+          context: context,
+          timeOfDay: timeOfDay,
+          status: StatusEnum.getValue(key: cardContent),
+          goToPage: () => context.go('/status'),
+        ).show();
+      }
+      final teamList = ref.read(teamProvider);
+      ref.watch(declarationProvider.notifier).createDeclaration(
+            timeOfDay: timeOfDay,
+            status: StatusEnum.getValue(key: cardContent),
+            teamId: teamList.first.teamId!,
+          );
+      context.go('/status');
+    }
   }
 
   @override
@@ -46,7 +64,11 @@ class DeclarationBody extends ConsumerWidget {
                 (cardContent) => StatusCard(
                   statusName: tr(cardContent['text']),
                   statusPicto: cardContent['image'],
-                  onPress: () => onCardPress(ref, context, cardContent),
+                  onPress: () => onCardPressed(
+                    ref: ref,
+                    context: context,
+                    cardContent: cardContent['text'],
+                  ),
                 ),
               )
               .toList(),
@@ -55,15 +77,3 @@ class DeclarationBody extends ConsumerWidget {
     );
   }
 }
-
-
-/*
-TeamSelectionDialog(
-                    ref: ref,
-                    context: context,
-                    timeOfDay: timeOfDay,
-                    status: StatusEnum.getValue(key: cardContent['text']),
-                    goToPage: () => context.go('/status'),
-                  ).show(),
-
-*/
