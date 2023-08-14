@@ -97,7 +97,7 @@ class MockDeclarationRepository extends _i1.Mock
   _i5.Future<List<String>> getLatestDeclaration(String? teamMateId) =>
       (super.noSuchMethod(
         Invocation.method(
-          #getDeclaration,
+          #getLatestDeclaration,
           [teamMateId],
         ),
         returnValue: _i5.Future<List<String>>.value(<String>[]),
@@ -106,7 +106,7 @@ class MockDeclarationRepository extends _i1.Mock
   _i5.Future<void> createFullDay(_i6.DeclarationModel? declaration) =>
       (super.noSuchMethod(
         Invocation.method(
-          #createAllDay,
+          #createFullDay,
           [declaration],
         ),
         returnValue: _i5.Future<void>.value(),
@@ -125,7 +125,7 @@ class MockDeclarationRepository extends _i1.Mock
   @override
   void setFullDayStatus(String? status) => super.noSuchMethod(
         Invocation.method(
-          #setAllDayDeclaration,
+          #setFullDayStatus,
           [status],
         ),
         returnValueForMissingStub: null,
@@ -137,7 +137,7 @@ class MockDeclarationRepository extends _i1.Mock
   ) =>
       super.noSuchMethod(
         Invocation.method(
-          #setHalfDayDeclaration,
+          #setHalfDayStatus,
           [
             morningStatus,
             afternoonStatus,
@@ -148,7 +148,7 @@ class MockDeclarationRepository extends _i1.Mock
   @override
   void setMorningStatus(String? status) => super.noSuchMethod(
         Invocation.method(
-          #setMorningDeclaration,
+          #setMorningStatus,
           [status],
         ),
         returnValueForMissingStub: null,

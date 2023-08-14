@@ -10,6 +10,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:look/look.dart';
+import 'package:yaki/presentation/displaydata/declaration_enum.dart';
 import 'package:yaki/presentation/ui/declaration/declaration.dart';
 import 'package:yaki/presentation/ui/declaration/views/declaration_body.dart';
 import 'package:yaki/presentation/ui/shared/pages_layout_declaration.dart';

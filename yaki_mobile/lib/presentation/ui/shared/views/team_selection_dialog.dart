@@ -37,7 +37,6 @@ class TeamSelectionDialog {
             itemBuilder: (BuildContext context, int index) {
               return InkWell(
                 onTap: () async {
-                  // Call _handleTeamSelection when a team is tapped
                   ref.watch(declarationProvider.notifier).createDeclaration(
                         timeOfDay: timeOfDay,
                         status: status!,
