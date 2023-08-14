@@ -6,17 +6,21 @@ import 'package:yaki/data/repositories/login_repository.dart';
 import 'package:yaki/domain/entities/declaration_status.dart';
 import 'package:yaki/data/repositories/team_repository.dart';
 import 'package:yaki/presentation/displaydata/declaration_enum.dart';
+import 'package:yaki/presentation/state/providers/halfday_status_provider.dart';
+import 'package:yaki/presentation/state/providers/status_provider.dart';
 
 class DeclarationNotifier extends StateNotifier<void> {
+  final Ref ref;
   final DeclarationRepository declarationRepository;
   final LoginRepository loginRepository;
   final TeamRepository teamRepository;
 
-  DeclarationNotifier(
-    this.declarationRepository,
-    this.loginRepository,
-    this.teamRepository,
-  ) : super(0);
+  DeclarationNotifier({
+    required this.ref,
+    required this.declarationRepository,
+    required this.loginRepository,
+    required this.teamRepository,
+  }) : super(0);
 
   /// Invoked at authentication "sign in" button press.
   ///
@@ -35,27 +39,31 @@ class DeclarationNotifier extends StateNotifier<void> {
   /// Function invoked in declaration_body, morning_declaration and afternoon_declaration "page"
   ///
   /// this function aim to create declaration based on type of declaration (full day or halfday).
-  void createDeclaration({
+  Future<void> createDeclaration({
     required DeclarationTimeOfDay timeOfDay,
     required String status,
     required int teamId,
-  }) {
+  }) async {
     switch (timeOfDay) {
+      case DeclarationTimeOfDay.fullDay:
+        await createFullDay(
+          status: status,
+          teamId: teamId,
+        );
+        //call the statusProvider to get the latest declaration
+        ref.read(statusPageProvider.notifier).getSelectedStatus();
+        break;
       case DeclarationTimeOfDay.morning:
         setMorningStatus(status);
         break;
       case DeclarationTimeOfDay.afternoon:
-        createHalfDay(
+        await createHalfDay(
           morning: declarationRepository.statusMorning,
           afternoon: status,
           teamId: teamId,
         );
-        break;
-      case DeclarationTimeOfDay.fullDay:
-        createFullDay(
-          status: status,
-          teamId: teamId,
-        );
+        //call the halfdayStatusProvider to get the latest declaration
+        ref.read(halfdayStatusPageProvider.notifier).getHalfdayDeclaration();
         break;
     }
   }

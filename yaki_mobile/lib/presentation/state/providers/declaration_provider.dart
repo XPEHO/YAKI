@@ -42,8 +42,9 @@ final declarationRepositoryProvider = Provider(
 /// Notifier methods are related to the declaration page.
 final declarationProvider = StateNotifierProvider<DeclarationNotifier, void>(
   (ref) => DeclarationNotifier(
-    ref.read(declarationRepositoryProvider),
-    ref.read(loginRepositoryProvider),
-    ref.read(teamRepositoryProvider),
+    ref: ref,
+    declarationRepository: ref.read(declarationRepositoryProvider),
+    loginRepository: ref.read(loginRepositoryProvider),
+    teamRepository: ref.read(teamRepositoryProvider),
   ),
 );
