@@ -97,11 +97,13 @@ class _AuthenticationState extends ConsumerState<Authentication> {
         final declarationStatus =
             await ref.read(declarationProvider.notifier).getLatestDeclaration();
         if (declarationStatus.length > 1) {
-          ref.read(halfdayStatusPageProvider.notifier).getHalfdayDeclaration();
+          ref
+              .read(halfdayStatusPageProvider.notifier)
+              .setHalfDayStatusPageContent();
           goToHalfdayStatusPage();
         } else if (declarationStatus.length == 1 &&
             declarationStatus != emptyDeclarationStatus) {
-          ref.read(statusPageProvider.notifier).getSelectedStatus();
+          ref.read(statusPageProvider.notifier).setFullDayStatusPageContent();
           goToStatusPage();
         } else {
           goToDeclarationPage();

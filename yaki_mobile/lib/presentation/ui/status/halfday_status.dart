@@ -12,8 +12,6 @@ void _routeHandling(BuildContext context) {
   context.go('/morningDeclaration');
 }
 
-void onAvatarIconPress() {}
-
 class HalfDayStatus extends ConsumerWidget {
   const HalfDayStatus({Key? key}) : super(key: key);
 
@@ -21,6 +19,7 @@ class HalfDayStatus extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final halfdayDeclarations = ref.watch(halfdayStatusPageProvider);
 
+    debugPrint("inside halfdayDeclarations page");
     debugPrint(halfdayDeclarations.morning.text);
     debugPrint(halfdayDeclarations.afternoon.text);
 

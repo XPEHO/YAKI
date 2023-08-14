@@ -5,6 +5,8 @@ import 'package:go_router/go_router.dart';
 import 'package:yaki/presentation/displaydata/declaration_card_content.dart';
 import 'package:yaki/presentation/displaydata/declaration_enum.dart';
 import 'package:yaki/presentation/displaydata/status_page_utils.dart';
+import 'package:yaki/presentation/state/providers/declaration_provider.dart';
+import 'package:yaki/presentation/state/providers/team_provider.dart';
 import 'package:yaki/presentation/ui/declaration/views/status_card.dart';
 import 'package:yaki/presentation/ui/shared/views/team_selection_dialog.dart';
 
@@ -17,20 +19,35 @@ class AfternoonDeclarationBody extends ConsumerWidget {
     Key? key,
     required this.timeOfDay,
   }) : super(key: key);
-
   void onCardPressed({
     required WidgetRef ref,
     required BuildContext context,
     required String cardContent,
-  }) {
-    TeamSelectionDialog(
-      ref: ref,
-      context: context,
-      timeOfDay: timeOfDay,
-      status: StatusEnum.getValue(key: cardContent),
-      goToPage: () => context.go('/halfdayStatus'),
-    ).show();
+    required Function goToPage,
+  }) async {
+    if (cardContent != StatusEnum.vacation.name) {
+      final getTeamCount = ref.read(teamProvider).length;
+      if (getTeamCount == 1) {
+        final teamList = ref.read(teamProvider);
+        await ref.read(declarationProvider.notifier).createDeclaration(
+              timeOfDay: timeOfDay,
+              status: StatusEnum.getValue(key: cardContent),
+              teamId: teamList.first.teamId!,
+            );
+        goToPage();
+        return;
+      }
+      TeamSelectionDialog(
+        ref: ref,
+        context: context,
+        timeOfDay: timeOfDay,
+        status: StatusEnum.getValue(key: cardContent),
+        goToPage: () => context.go('/halfdayStatus'),
+      ).show();
+    }
   }
+
+  // context.go('/halfdayStatus');
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -53,6 +70,7 @@ class AfternoonDeclarationBody extends ConsumerWidget {
                     ref: ref,
                     context: context,
                     cardContent: cardContent['text'],
+                    goToPage: () => context.go('/halfdayStatus'),
                   ),
                 ),
               )

@@ -25,25 +25,27 @@ class DeclarationBody extends ConsumerWidget {
     required WidgetRef ref,
     required BuildContext context,
     required String cardContent,
-  }) {
+    required Function goToPage,
+  }) async {
     if (cardContent != StatusEnum.vacation.name) {
       final getTeamCount = ref.read(teamProvider).length;
-      if (getTeamCount > 1) {
-        TeamSelectionDialog(
-          ref: ref,
-          context: context,
-          timeOfDay: timeOfDay,
-          status: StatusEnum.getValue(key: cardContent),
-          goToPage: () => context.go('/status'),
-        ).show();
+      if (getTeamCount == 1) {
+        final teamList = ref.read(teamProvider);
+        await ref.read(declarationProvider.notifier).createDeclaration(
+              timeOfDay: timeOfDay,
+              status: StatusEnum.getValue(key: cardContent),
+              teamId: teamList.first.teamId!,
+            );
+        goToPage();
+        return;
       }
-      final teamList = ref.read(teamProvider);
-      ref.watch(declarationProvider.notifier).createDeclaration(
-            timeOfDay: timeOfDay,
-            status: StatusEnum.getValue(key: cardContent),
-            teamId: teamList.first.teamId!,
-          );
-      context.go('/status');
+      TeamSelectionDialog(
+        ref: ref,
+        context: context,
+        timeOfDay: timeOfDay,
+        status: StatusEnum.getValue(key: cardContent),
+        goToPage: () => context.go('/status'),
+      ).show();
     }
   }
 
@@ -68,6 +70,7 @@ class DeclarationBody extends ConsumerWidget {
                     ref: ref,
                     context: context,
                     cardContent: cardContent['text'],
+                    goToPage: () => context.go('/status'),
                   ),
                 ),
               )
