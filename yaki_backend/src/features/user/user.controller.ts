@@ -12,7 +12,7 @@ export class UserController {
    * Send login details from the front to be checked
    */
   checkLogin = async (req: Request, res: Response) => {
-    console.log("Login informations", req.body.login, "password", "#".repeat(req.body.password.length));
+    console.log("Login informations", req.body.login, "password : -hidden-");
     this.service
       .checkUserLoginDetails(req.body)
       .then((response) => res.send(response))
