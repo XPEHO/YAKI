@@ -8,7 +8,8 @@ import 'package:yaki/data/repositories/team_repository.dart';
 import 'package:yaki/presentation/displaydata/declaration_enum.dart';
 import 'package:yaki/presentation/state/providers/halfday_status_provider.dart';
 import 'package:yaki/presentation/state/providers/status_provider.dart';
-
+import 'package:yaki/presentation/state/providers/vacation_status_provider.dart';
+import 'package:intl/date_symbol_data_local.dart';
 class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
   final Ref ref;
   final DeclarationRepository declarationRepository;
@@ -157,6 +158,30 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
     setStateAfternoonStatus(status: halfDayStatus.last);
     //call the halfdayStatusProvider to get the latest declaration status
     setStatusPageHalfDayContent();
+  }
+  Future<void> createVacationDeclaration({
+    required String status,
+    required int teamId,
+    required DateTime dateStart,
+    required DateTime dateEnd,
+  }) async {
+    final todayDate = DateTime.now();
+    final DateTime dateEndExcluded = dateEnd.subtract(const Duration(days: 1));
+    DeclarationModel newDeclaration = DeclarationModel(
+      declarationUserId: loginRepository.userId,
+      declarationDate: todayDate,
+      
+      declarationDateStart: DateTime.parse(
+        '${DateFormat('yyyy-MM-dd').format(dateStart)} 00:00:00Z',
+      ),
+      declarationDateEnd: DateTime.parse(
+        '${DateFormat('yyyy-MM-dd').format(dateEndExcluded)} 23:59:59Z',
+      ),
+      declarationTeamId: teamId,
+      declarationStatus: status,
+    );
+    await declarationRepository.createFullDay(newDeclaration);
+    ref.read(vacationStatusPageProvider.notifier).getSelectedStatus(DateFormat.yMd('fr').format(dateStart), DateFormat.yMd('fr').format(dateEndExcluded));
   }
 
   /// Setter for declaration notifier state

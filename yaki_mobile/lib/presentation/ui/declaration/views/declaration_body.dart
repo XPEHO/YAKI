@@ -9,6 +9,7 @@ import 'package:yaki/presentation/state/providers/declaration_provider.dart';
 import 'package:yaki/presentation/state/providers/team_provider.dart';
 import 'package:yaki/presentation/ui/declaration/views/status_card.dart';
 import 'package:yaki/presentation/ui/shared/views/team_selection_dialog.dart';
+import 'package:yaki/presentation/ui/vacation/VacationSelectionDialog.dart';
 
 /// using ConsumerStatefulWidget (statefullWidget) to have access to
 /// the WidgetRef object
@@ -48,6 +49,14 @@ class DeclarationBody extends ConsumerWidget {
         status: StatusEnum.getValue(key: cardContent),
         goToPage: () => context.go(nextPage),
       ).show();
+  }
+   //if vacation is selected
+    else{
+      VacationSelectionDialog(
+                ref: ref,
+                context: context,
+                goToPage: () => context.go('/vacationStatus'),
+              ).show();
     }
   }
 
