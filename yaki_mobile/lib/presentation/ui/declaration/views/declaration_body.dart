@@ -19,6 +19,16 @@ class DeclarationBody extends ConsumerWidget {
     required this.timeOfDay,
   }) : super(key: key);
 
+  void onCardPress(WidgetRef ref, BuildContext context, Map cardContent) {
+    TeamSelectionDialog(
+      ref: ref,
+      context: context,
+      timeOfDay: timeOfDay,
+      status: StatusEnum.getValue(key: cardContent['text']),
+      goToPage: () => context.go('/status'),
+    ).show();
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
@@ -36,13 +46,7 @@ class DeclarationBody extends ConsumerWidget {
                 (cardContent) => StatusCard(
                   statusName: tr(cardContent['text']),
                   statusPicto: cardContent['image'],
-                  onPress: () => TeamSelectionDialog(
-                    ref: ref,
-                    context: context,
-                    timeOfDay: timeOfDay,
-                    status: StatusEnum.getValue(key: cardContent['text']),
-                    goToPage: () => context.go('/status'),
-                  ).show(),
+                  onPress: () => onCardPress(ref, context, cardContent),
                 ),
               )
               .toList(),
@@ -51,3 +55,15 @@ class DeclarationBody extends ConsumerWidget {
     );
   }
 }
+
+
+/*
+TeamSelectionDialog(
+                    ref: ref,
+                    context: context,
+                    timeOfDay: timeOfDay,
+                    status: StatusEnum.getValue(key: cardContent['text']),
+                    goToPage: () => context.go('/status'),
+                  ).show(),
+
+*/
