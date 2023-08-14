@@ -51,7 +51,7 @@ class HalfdayStatusNotifier extends StateNotifier<StateHalfdayPage> {
 
   /// method that retreives declaration for the afternoon and morning from
   /// declarationRepository, and store them in a state
-  void getHalfdayDeclaration() {
+  void setHalfDayStatusPageContent() {
     final DeclarationStatus declarations =
         declarationRepository.allDeclarations;
     setStateMorning(declarations.morningDeclaration);

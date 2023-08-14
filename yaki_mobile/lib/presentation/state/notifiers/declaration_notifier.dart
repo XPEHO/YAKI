@@ -51,7 +51,7 @@ class DeclarationNotifier extends StateNotifier<void> {
           teamId: teamId,
         );
         //call the statusProvider to get the latest declaration
-        ref.read(statusPageProvider.notifier).getSelectedStatus();
+        ref.read(statusPageProvider.notifier).setFullDayStatusPageContent();
         break;
       case DeclarationTimeOfDay.morning:
         setMorningStatus(status);
@@ -62,8 +62,11 @@ class DeclarationNotifier extends StateNotifier<void> {
           afternoon: status,
           teamId: teamId,
         );
+
         //call the halfdayStatusProvider to get the latest declaration
-        ref.read(halfdayStatusPageProvider.notifier).getHalfdayDeclaration();
+        ref
+            .read(halfdayStatusPageProvider.notifier)
+            .setHalfDayStatusPageContent();
         break;
     }
   }
