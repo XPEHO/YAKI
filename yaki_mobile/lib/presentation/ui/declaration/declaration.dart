@@ -23,6 +23,7 @@ class Declaration extends StatelessWidget {
         ),
         bodyContent: const DeclarationBody(
           timeOfDay: DeclarationTimeOfDay.fullDay,
+          nextPage: '/status',
         ),
       ),
     );

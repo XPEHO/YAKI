@@ -15,10 +15,12 @@ import 'package:yaki/presentation/ui/shared/views/team_selection_dialog.dart';
 /// allowing the current widget to have access to any provider.
 class DeclarationBody extends ConsumerWidget {
   final DeclarationTimeOfDay timeOfDay;
+  final String nextPage;
 
   const DeclarationBody({
     Key? key,
     required this.timeOfDay,
+    required this.nextPage,
   }) : super(key: key);
 
   void onCardPressed({
@@ -44,7 +46,7 @@ class DeclarationBody extends ConsumerWidget {
         context: context,
         timeOfDay: timeOfDay,
         status: StatusEnum.getValue(key: cardContent),
-        goToPage: () => context.go('/status'),
+        goToPage: () => context.go(nextPage),
       ).show();
     }
   }
@@ -70,7 +72,7 @@ class DeclarationBody extends ConsumerWidget {
                     ref: ref,
                     context: context,
                     cardContent: cardContent['text'],
-                    goToPage: () => context.go('/status'),
+                    goToPage: () => context.go(nextPage),
                   ),
                 ),
               )
