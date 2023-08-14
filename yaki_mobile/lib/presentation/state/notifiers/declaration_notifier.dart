@@ -30,9 +30,9 @@ class DeclarationNotifier extends StateNotifier<void> {
   ///
   /// Return the declarationStatus, used in authentication page to determine the redirection.
   Future<List<String>> getLatestDeclaration() async {
-    final teamMateId = loginRepository.userId.toString();
+    final userId = loginRepository.userId.toString();
     final declarationStatus =
-        await declarationRepository.getLatestDeclaration(teamMateId);
+        await declarationRepository.getLatestDeclaration(userId);
     return declarationStatus;
   }
 
