@@ -54,13 +54,6 @@ class HalfdayStatusNotifier extends StateNotifier<StateHalfdayPage> {
   void setHalfDayStatusPageContent() {
     final DeclarationStatus declarations =
         declarationRepository.allDeclarations;
-
-    print(
-      "${declarationRepository.statusMorning} - ${declarationRepository.declarationStatus.afternoonDeclaration}",
-    );
-
-    print(
-        "${declarations.morningDeclaration}, ${declarations.afternoonDeclaration}");
     setStateMorning(declarations.morningDeclaration);
     setStateAfternoon(declarations.afternoonDeclaration);
   }
