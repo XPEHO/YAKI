@@ -3,7 +3,7 @@ import 'package:yaki/data/models/declaration_model.dart';
 import 'package:yaki/data/models/declaration_model_in.dart';
 import 'package:yaki/data/sources/remote/declaration_api.dart';
 import 'package:yaki/domain/entities/declaration_status.dart';
-import 'package:yaki/presentation/displaydata/status_page_content.dart';
+import 'package:yaki/presentation/displaydata/status_page_utils.dart';
 
 class DeclarationRepository {
   final DeclarationApi _declarationApi;
@@ -37,7 +37,7 @@ class DeclarationRepository {
   /// * Get the declarationStatus from the newly created object and assign it to the statusValue.
   ///
   /// This method return the statusValue value.
-  Future<List<String>> getDeclaration(String teamMateId) async {
+  Future<List<String>> getLatestDeclaration(String teamMateId) async {
     List<String> statusValue = [];
     try {
       final getHttpResponse = await _declarationApi.getDeclaration(teamMateId);
@@ -51,7 +51,7 @@ class DeclarationRepository {
               getHttpResponse.data.first,
             );
             statusValue.add(getDeclarationIn.declarationStatus);
-            setAllDayDeclaration(statusValue.first);
+            setFullDayStatus(statusValue.first);
           }
           // else the server returns at least two declarations
           else {
@@ -63,7 +63,7 @@ class DeclarationRepository {
             );
             statusValue.add(getDeclarationInMorning.declarationStatus);
             statusValue.add(getDeclarationInAfternoon.declarationStatus);
-            setHalfDayDeclaration(statusValue[0], statusValue[1]);
+            setHalfDayStatus(statusValue[0], statusValue[1]);
           }
           // convert HttpResponse<dynamic> (Map<String, dynamic>) into Model using .fromJson method
           break;
@@ -100,11 +100,11 @@ class DeclarationRepository {
   /// * Get the declarationStatus from created instance and assign it to the statusValue.
   ///
   /// At the end of the function assign the statusValue to the DeclarationStatus
-  Future<void> createAllDay(DeclarationModel declaration) async {
+  Future<void> createFullDay(DeclarationModel declaration) async {
     String statusValue = "";
     try {
       final createHttpResponse =
-          await _declarationApi.create([declaration], StatusEnum.fullDay.text);
+          await _declarationApi.create([declaration], StatusEnum.fullDay.value);
       final statusCode = createHttpResponse.response.statusCode;
       switch (statusCode) {
         case const (200 | 201):
@@ -128,7 +128,7 @@ class DeclarationRepository {
             "Invalid statusCode from server : ${createHttpResponse.response.statusCode}",
           );
       }
-      setAllDayDeclaration(statusValue);
+      setFullDayStatus(statusValue);
     } catch (err) {
       debugPrint("error during creation : $err");
     }
@@ -139,7 +139,7 @@ class DeclarationRepository {
     String statusValueAfternoon = "";
     try {
       final createHttpResponse =
-          await _declarationApi.create(declarations, StatusEnum.halfDay.text);
+          await _declarationApi.create(declarations, StatusEnum.halfDay.value);
       final statusCode = createHttpResponse.response.statusCode;
       switch (statusCode) {
         case const (200 | 201):
@@ -169,32 +169,32 @@ class DeclarationRepository {
             "Invalid statusCode from server : ${createHttpResponse.response.statusCode}",
           );
       }
-      setHalfDayDeclaration(statusValueMorning, statusValueAfternoon);
+      setHalfDayStatus(statusValueMorning, statusValueAfternoon);
     } catch (err) {
       debugPrint("error during creation : $err");
     }
   }
 
   /// Assign status, to declarationStatus entities.
-  void setAllDayDeclaration(String status) {
-    declarationStatus.allDayDeclaration = status;
+  void setFullDayStatus(String status) {
+    declarationStatus.fullDayDeclaration = status;
   }
 
   /// Assign status, to declarationStatus entities.
-  void setHalfDayDeclaration(String morningStatus, String afternoonStatus) {
+  void setHalfDayStatus(String morningStatus, String afternoonStatus) {
     declarationStatus.morningDeclaration = morningStatus;
     declarationStatus.afternoonDeclaration = afternoonStatus;
   }
 
   /// Assign status, to declarationStatus entities.
-  void setMorningDeclaration(String status) {
+  void setMorningStatus(String status) {
     declarationStatus.morningDeclaration = status;
   }
 
   /// getter to retrieve declaration status stored in DeclarationStatus instance.
   /// This getter is called in the status_notifier, this value will determine the status page content.
   String get statusAllDay {
-    return declarationStatus.allDayDeclaration;
+    return declarationStatus.fullDayDeclaration;
   }
 
   String get statusMorning {

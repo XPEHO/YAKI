@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:yaki/data/models/team_mate_model.dart';
+import 'package:yaki/data/models/teammate_model.dart';
 
 void main() {
   // simulate json send by API
@@ -13,7 +13,7 @@ void main() {
     "declarationStatus": "Testing",
   };
   // model instance once json is parsed into dart usable model
-  TeamMateModel teammateModel = TeamMateModel(
+  TeammateModel teammateModel = TeammateModel(
     userId: 1,
     userLastName: "dupond",
     userFirstName: "dupond",
@@ -28,8 +28,8 @@ void main() {
       test(
         'TeamMateModel fromJson',
         () {
-          TeamMateModel teammateModelFromJson =
-              TeamMateModel.fromJson(teammateModelAsJson);
+          TeammateModel teammateModelFromJson =
+              TeammateModel.fromJson(teammateModelAsJson);
 
           expect(
             teammateModelFromJson.toJson().toString() ==

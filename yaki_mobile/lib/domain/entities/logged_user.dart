@@ -1,4 +1,5 @@
 class LoggedUser {
+  int? userId;
   int? captainId;
   int? teamMateid;
   String? lastName;
@@ -6,6 +7,7 @@ class LoggedUser {
   String? email;
 
   LoggedUser({
+    required this.userId,
     required this.captainId,
     required this.teamMateid,
     required this.lastName,

@@ -44,7 +44,7 @@ class _RegistrationState extends ConsumerState<Registration> {
   // when press register button
   Future<void> formButtonValidation() async {
     if (_formKey.currentState!.validate()) {
-      await ref.read(userRegisterServiceProvider).registerUser(
+      await ref.read(userRegisterRepositoryProvider).registerUser(
             firstname: firstNameController.text,
             lastname: lastNameController.text,
             email: emailController.text,
@@ -54,7 +54,7 @@ class _RegistrationState extends ConsumerState<Registration> {
       // after registration response get "isRegistered" value, being the object send from mobile API
       // confirming the registration was a success (no need others data)
       final String registrationResult =
-          ref.watch(userRegisterServiceProvider).status;
+          ref.watch(userRegisterRepositoryProvider).status;
 
       // depending of true of false (will be changed to true only if code200) change snachbar message and message color
       if (registrationResult == "OK") {

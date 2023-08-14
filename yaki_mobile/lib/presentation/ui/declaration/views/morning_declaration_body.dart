@@ -3,14 +3,20 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yaki/presentation/displaydata/declaration_card_content.dart';
-import 'package:yaki/presentation/displaydata/status_page_content.dart';
+import 'package:yaki/presentation/displaydata/declaration_enum.dart';
+import 'package:yaki/presentation/displaydata/status_page_utils.dart';
 import 'package:yaki/presentation/ui/declaration/views/status_card.dart';
 import 'package:yaki/presentation/ui/shared/views/team_selection_dialog.dart';
 
 /// using ConsumerStatefulWidget (statefullWidget) to have access to the WidgetRef object
 /// allowing the current widget to have access to any provider.
 class MorningDeclarationBody extends ConsumerWidget {
-  const MorningDeclarationBody({Key? key}) : super(key: key);
+  final DeclarationTimeOfDay timeOfDay;
+
+  const MorningDeclarationBody({
+    Key? key,
+    required this.timeOfDay,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -31,12 +37,10 @@ class MorningDeclarationBody extends ConsumerWidget {
                   statusPicto: cardContent['image'],
                   onPress: () => TeamSelectionDialog(
                     ref: ref,
-                    morningStatus:
-                        StatusEnum.values.byName(cardContent['text']).text,
                     context: context,
+                    timeOfDay: timeOfDay,
+                    status: StatusEnum.getValue(key: cardContent['text']),
                     goToPage: () => context.go('/afternoonDeclaration'),
-                    allDayStatus: null,
-                    afternoonStatus: null,
                   ).show(),
                 ),
               )

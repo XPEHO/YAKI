@@ -1,11 +1,11 @@
-class TeamMateEntity {
+class TeammateEntity {
   String? userFirstName;
   String? userLastName;
   DateTime? declarationDate;
   String? declarationStatus;
   List<String>? halfDayDeclarationStatus;
 
-  TeamMateEntity({
+  TeammateEntity({
     required this.userFirstName,
     required this.userLastName,
     required this.declarationDate,
@@ -33,7 +33,7 @@ class TeamMateEntity {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        other is TeamMateEntity &&
+        other is TeammateEntity &&
             runtimeType == other.runtimeType &&
             hashCode == other.hashCode;
   }

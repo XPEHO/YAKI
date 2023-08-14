@@ -188,9 +188,9 @@ void main() {
       // which change value in "loggedUser" attribute
       // teammateID = 0 because of loginRepository.setLoggedUser() method.
       test(
-        'teammateId getter',
+        'userId getter',
         () {
-          expect(loginRepository.teamMateId, 0);
+          expect(loginRepository.userId, 6);
         },
       );
       test(

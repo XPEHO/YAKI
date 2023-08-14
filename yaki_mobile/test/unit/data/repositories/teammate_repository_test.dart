@@ -2,21 +2,21 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:yaki/data/repositories/team_mate_repository.dart';
-import 'package:yaki/data/sources/remote/team_mate_api.dart';
-import 'package:yaki/domain/entities/team_mate_entity.dart';
+import 'package:yaki/data/repositories/teammate_repository.dart';
+import 'package:yaki/data/sources/remote/teammate_api.dart';
+import 'package:yaki/domain/entities/teammate_entity.dart';
 
 import '../../mocking.mocks.dart';
-import 'team_mate_repository_test.mocks.dart';
+import 'teammate_repository_test.mocks.dart';
 
-@GenerateMocks([TeamMateApi])
+@GenerateMocks([TeammateApi])
 void main() {
   // MockHttpResponseList as response is a list.
   final httpResponseList = MockHttpResponseList();
   final response = MockResponse();
-  final mockedTeamMateApi = MockTeamMateApi();
+  final mockedTeamMateApi = MockTeammateApi();
 
-  final teamMateRepository = TeamMateRepository(mockedTeamMateApi);
+  final teamMateRepository = TeammateRepository(mockedTeamMateApi);
 
   group(
     'Get() teamate list',
@@ -42,14 +42,14 @@ void main() {
             }
           ];
 
-          List<TeamMateEntity> teamMatelistReturned = [
-            TeamMateEntity(
+          List<TeammateEntity> teamMatelistReturned = [
+            TeammateEntity(
               userFirstName: "Dupond",
               userLastName: "Dupond",
               declarationDate: DateTime.parse('2023-03-20T10:00:00.950Z'),
               declarationStatus: "vacation",
             ),
-            TeamMateEntity(
+            TeammateEntity(
               userFirstName: "Jean",
               userLastName: "Val",
               declarationDate: DateTime.parse('2023-03-20T10:00:00.950Z'),
@@ -57,15 +57,15 @@ void main() {
             )
           ];
 
-          when(mockedTeamMateApi.getTeamMate(captainId)).thenAnswer(
+          when(mockedTeamMateApi.getTeammate(captainId)).thenAnswer(
             (realInvocation) => Future.value(httpResponseList),
           );
           when(httpResponseList.response).thenReturn(response);
           when(response.statusCode).thenReturn(200);
           when(httpResponseList.data).thenReturn(getResponseAsJson);
 
-          List<TeamMateEntity> teamMatelist =
-              await teamMateRepository.getTeamMate(captainId);
+          List<TeammateEntity> teamMatelist =
+              await teamMateRepository.getTeammate(captainId);
 
           expect(listEquals(teamMatelist, teamMatelistReturned), true);
         },
@@ -80,15 +80,15 @@ void main() {
             }
           ];
 
-          when(mockedTeamMateApi.getTeamMate(incorrectCaptainId)).thenAnswer(
+          when(mockedTeamMateApi.getTeammate(incorrectCaptainId)).thenAnswer(
             (realInvocation) => Future.value(httpResponseList),
           );
           when(httpResponseList.response).thenReturn(response);
           when(response.statusCode).thenReturn(404);
           when(httpResponseList.data).thenReturn(incorrectResponse);
 
-          List<TeamMateEntity> teamMatelist =
-              await teamMateRepository.getTeamMate(incorrectCaptainId);
+          List<TeammateEntity> teamMatelist =
+              await teamMateRepository.getTeammate(incorrectCaptainId);
 
           expect(listEquals(teamMatelist, []), true);
         },

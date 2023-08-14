@@ -5,17 +5,22 @@ import 'package:yaki/data/repositories/declaration_respository.dart';
 import 'package:yaki/data/repositories/login_repository.dart';
 import 'package:yaki/domain/entities/declaration_status.dart';
 import 'package:yaki/data/repositories/team_repository.dart';
+import 'package:yaki/presentation/displaydata/declaration_enum.dart';
+import 'package:yaki/presentation/state/providers/halfday_status_provider.dart';
+import 'package:yaki/presentation/state/providers/status_provider.dart';
 
-class DeclarationNotifier extends StateNotifier<String> {
+class DeclarationNotifier extends StateNotifier<void> {
+  final Ref ref;
   final DeclarationRepository declarationRepository;
   final LoginRepository loginRepository;
   final TeamRepository teamRepository;
 
-  DeclarationNotifier(
-    this.declarationRepository,
-    this.loginRepository,
-    this.teamRepository,
-  ) : super("");
+  DeclarationNotifier({
+    required this.ref,
+    required this.declarationRepository,
+    required this.loginRepository,
+    required this.teamRepository,
+  }) : super(0);
 
   /// Invoked at authentication "sign in" button press.
   ///
@@ -24,11 +29,43 @@ class DeclarationNotifier extends StateNotifier<String> {
   /// then invoke the declarationRepository.getDeclaration() method to get the daily declaration, if one was created.
   ///
   /// Return the declarationStatus, used in authentication page to determine the redirection.
-  Future<List<String>> getDeclaration() async {
-    final teamMateId = loginRepository.teamMateId.toString();
+  Future<List<String>> getLatestDeclaration() async {
+    final userId = loginRepository.userId.toString();
     final declarationStatus =
-        await declarationRepository.getDeclaration(teamMateId);
+        await declarationRepository.getLatestDeclaration(userId);
     return declarationStatus;
+  }
+
+  /// Function invoked in declaration_body, morning_declaration and afternoon_declaration "page"
+  ///
+  /// this function aim to create declaration based on type of declaration (full day or halfday).
+  Future<void> createDeclaration({
+    required DeclarationTimeOfDay timeOfDay,
+    required String status,
+    required int teamId,
+  }) async {
+    switch (timeOfDay) {
+      case DeclarationTimeOfDay.fullDay:
+        await createFullDay(
+          status: status,
+          teamId: teamId,
+        );
+        //call the statusProvider to get the latest declaration
+        ref.read(statusPageProvider.notifier).getSelectedStatus();
+        break;
+      case DeclarationTimeOfDay.morning:
+        setMorningStatus(status);
+        break;
+      case DeclarationTimeOfDay.afternoon:
+        await createHalfDay(
+          morning: declarationRepository.statusMorning,
+          afternoon: status,
+          teamId: teamId,
+        );
+        //call the halfdayStatusProvider to get the latest declaration
+        ref.read(halfdayStatusPageProvider.notifier).getHalfdayDeclaration();
+        break;
+    }
   }
 
   /// Invoked in declaration_body "page",
@@ -38,10 +75,13 @@ class DeclarationNotifier extends StateNotifier<String> {
   /// create a DeclarationModel model instance,
   ///
   /// then invoke the declarationRepository.createAllDay(), that will send the newly declaration to the API (via _api.dart)
-  Future<void> createAllDay(String status) async {
+  Future<void> createFullDay({
+    required String status,
+    required int teamId,
+  }) async {
     final todayDate = DateTime.now();
-    final teamId = teamRepository.teamlist.first.teamId;
     DeclarationModel newDeclaration = DeclarationModel(
+      declarationUserId: loginRepository.userId,
       declarationDate: todayDate,
       declarationDateStart: DateTime.parse(
         '${DateFormat('yyyy-MM-dd').format(todayDate)} 00:00:00Z',
@@ -49,20 +89,23 @@ class DeclarationNotifier extends StateNotifier<String> {
       declarationDateEnd: DateTime.parse(
         '${DateFormat('yyyy-MM-dd').format(todayDate)} 23:59:59Z',
       ),
-      declarationTeamMateId: loginRepository.teamMateId,
       declarationTeamId: teamId,
       declarationStatus: status,
     );
-    await declarationRepository.createAllDay(newDeclaration);
+    await declarationRepository.createFullDay(newDeclaration);
   }
 
   /// Create declaration for the morning by setting
   /// the dateStart to midnight and dateEnd to noon.
   /// Then send it to declarationRepository's function
-  Future<void> createHalfDay(String morning, String afternoon) async {
+  Future<void> createHalfDay({
+    required morning,
+    required String afternoon,
+    required int teamId,
+  }) async {
     final todayDate = DateTime.now();
-    final teamId = teamRepository.teamlist.first.teamId;
     DeclarationModel newDeclarationMorning = DeclarationModel(
+      declarationUserId: loginRepository.userId,
       declarationDate: todayDate,
       declarationDateStart: DateTime.parse(
         '${DateFormat('yyyy-MM-dd').format(todayDate)} 00:00:00Z',
@@ -70,12 +113,12 @@ class DeclarationNotifier extends StateNotifier<String> {
       declarationDateEnd: DateTime.parse(
         '${DateFormat('yyyy-MM-dd').format(todayDate)} 12:00:00Z',
       ),
-      declarationTeamMateId: loginRepository.teamMateId,
       declarationStatus: morning,
       declarationTeamId: teamId,
     );
 
     DeclarationModel newDeclarationAfternoon = DeclarationModel(
+      declarationUserId: loginRepository.userId,
       declarationDate: todayDate,
       declarationDateStart: DateTime.parse(
         '${DateFormat('yyyy-MM-dd').format(todayDate)} 13:00:00Z',
@@ -83,7 +126,6 @@ class DeclarationNotifier extends StateNotifier<String> {
       declarationDateEnd: DateTime.parse(
         '${DateFormat('yyyy-MM-dd').format(todayDate)} 23:59:59Z',
       ),
-      declarationTeamMateId: loginRepository.teamMateId,
       declarationStatus: afternoon,
       declarationTeamId: teamId,
     );
@@ -97,17 +139,17 @@ class DeclarationNotifier extends StateNotifier<String> {
   }
 
   /// set the morning declaration status stored in declarationRepository
-  setMorningDeclaration(String status) {
-    declarationRepository.setMorningDeclaration(status);
+  setMorningStatus(String status) {
+    declarationRepository.setMorningStatus(status);
   }
 
   /// get the morning declaration status stored in declarationRepository
-  String getMorningDeclaration() {
+  String getMorningStatus() {
     return declarationRepository.statusMorning;
   }
 
   /// get all declarations stored in declarationRepository
-  DeclarationStatus getAllDeclaration() {
+  DeclarationStatus getAllStatus() {
     return declarationRepository.allDeclarations;
   }
 }

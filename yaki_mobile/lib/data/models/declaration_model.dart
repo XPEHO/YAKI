@@ -4,19 +4,19 @@ part 'declaration_model.g.dart';
 
 @JsonSerializable()
 class DeclarationModel {
+  int? declarationUserId;
   DateTime declarationDate;
   DateTime declarationDateStart;
   DateTime declarationDateEnd;
-  int? declarationTeamMateId;
   String declarationStatus;
   int? declarationTeamId;
 
   // Remote, On site, Vacation, Other
   DeclarationModel({
+    required this.declarationUserId,
     required this.declarationDate,
     required this.declarationDateStart,
     required this.declarationDateEnd,
-    required this.declarationTeamMateId,
     required this.declarationStatus,
     required this.declarationTeamId,
   });

@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yaki/data/repositories/team_repository.dart';
 import 'package:yaki/data/sources/remote/team_api.dart';
-import 'package:yaki/domain/entities/team_entity.dart';
+import 'package:yaki/data/models/team_model.dart';
 import 'package:yaki/presentation/state/dio/dio_interceptor.dart';
 import 'package:yaki/presentation/state/notifiers/team_notifier.dart';
 import 'package:yaki/presentation/state/providers/login_provider.dart';
@@ -24,7 +24,7 @@ final teamRepositoryProvider = Provider(
 
 /// Define a StateNotifierProvider that creates an instance of
 /// the TeamNotifier class
-final teamProvider = StateNotifierProvider<TeamNotifier, List<TeamEntity>>(
+final teamProvider = StateNotifierProvider<TeamNotifier, List<TeamModel>>(
   (ref) => TeamNotifier(
     ref.read(teamRepositoryProvider),
     ref.read(loginRepositoryProvider),

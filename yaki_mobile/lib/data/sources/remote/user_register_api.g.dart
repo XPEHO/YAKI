@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'user_register_repository.dart';
+part of 'user_register_api.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,8 +8,8 @@ part of 'user_register_repository.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
-class _UserRegisterRepository implements UserRegisterRepository {
-  _UserRegisterRepository(
+class _UserRegisterApi implements UserRegisterApi {
+  _UserRegisterApi(
     this._dio, {
     this.baseUrl,
   });
@@ -20,12 +20,12 @@ class _UserRegisterRepository implements UserRegisterRepository {
 
   @override
   Future<HttpResponse<dynamic>> userResgistration(
-      UserRegistrationModel userToRegister) async {
+      UserRegistrationModel userToRegiste) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    _data.addAll(userToRegister.toJson());
+    _data.addAll(userToRegiste.toJson());
     final _result =
         await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(Options(
       method: 'POST',
@@ -38,7 +38,11 @@ class _UserRegisterRepository implements UserRegisterRepository {
               queryParameters: queryParameters,
               data: _data,
             )
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
     final value = _result.data;
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
@@ -55,5 +59,22 @@ class _UserRegisterRepository implements UserRegisterRepository {
       }
     }
     return requestOptions;
+  }
+
+  String _combineBaseUrls(
+    String dioBaseUrl,
+    String? baseUrl,
+  ) {
+    if (baseUrl == null || baseUrl.trim().isEmpty) {
+      return dioBaseUrl;
+    }
+
+    final url = Uri.parse(baseUrl);
+
+    if (url.isAbsolute) {
+      return url.toString();
+    }
+
+    return Uri.parse(dioBaseUrl).resolveUri(url).toString();
   }
 }

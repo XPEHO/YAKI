@@ -13,14 +13,12 @@ describe("teamService", () => {
   /**
    * This function tests the getByCaptainId function in the teamService class
    */
-  describe("getTeamByTeammateId", () => {
-    const mockTeammateId = 1;
+  describe("getTeamByUserId", () => {
+    const mockUserId = 1;
     const mockTeam = [
       {
         teamId: 2,
         teamName: "Equipe 2",
-        teamCaptainId: 2,
-        teamCustomerId: 2,
         teamActifFlag: true,
       },
     ];
@@ -30,12 +28,10 @@ describe("teamService", () => {
         {
           teamId: 2,
           teamName: "Equipe 2",
-          teamCaptainId: 2,
-          teamCustomerId: 2,
           teamActifFlag: true,
         },
       ]);
-      const getTeam = await teamService.getTeamByTeammateId(mockTeammateId);
+      const getTeam = await teamService.getTeamByTeammateId(mockUserId);
 
       expect(getTeam).toEqual(mockTeam);
     });

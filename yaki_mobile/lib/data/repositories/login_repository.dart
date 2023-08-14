@@ -84,6 +84,7 @@ class LoginRepository {
   /// entities are the class connected to the front.
   void setLoggedUser(User user) {
     loggedUser = LoggedUser(
+      userId: user.userId,
       captainId: user.captainId,
       teamMateid: user.teamMateId ?? 0,
       lastName: user.lastName ?? "",
@@ -92,9 +93,9 @@ class LoginRepository {
     );
   }
 
-  /// teamMateId getter, used at declaration object creation, in order to POST it.
-  int? get teamMateId {
-    return loggedUser?.teamMateid;
+  /// userId getter, used at declaration object creation, in order to POST it.
+  int? get userId {
+    return loggedUser?.userId;
   }
 
   /// captainId getter, used in team_mate_notifier to fetch the teammate list associated to the logged captain.

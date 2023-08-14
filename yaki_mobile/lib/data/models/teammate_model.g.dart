@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'team_mate_model.dart';
+part of 'teammate_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-TeamMateModel _$TeamMateModelFromJson(Map<String, dynamic> json) =>
-    TeamMateModel(
+TeammateModel _$TeammateModelFromJson(Map<String, dynamic> json) =>
+    TeammateModel(
       userId: json['userId'] as int?,
       userLastName: json['userLastName'] as String?,
       userFirstName: json['userFirstName'] as String?,
@@ -18,7 +18,7 @@ TeamMateModel _$TeamMateModelFromJson(Map<String, dynamic> json) =>
       declarationStatus: json['declarationStatus'] as String?,
     );
 
-Map<String, dynamic> _$TeamMateModelToJson(TeamMateModel instance) =>
+Map<String, dynamic> _$TeammateModelToJson(TeammateModel instance) =>
     <String, dynamic>{
       'userId': instance.userId,
       'userLastName': instance.userLastName,

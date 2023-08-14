@@ -3,12 +3,12 @@ import 'dart:core';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:yaki/presentation/displaydata/status_page_content.dart';
+import 'package:yaki/presentation/displaydata/status_page_utils.dart';
 import 'package:yaki/presentation/styles/color.dart';
 
-class CardTeamMateHalfday extends StatefulWidget {
+class CardTeammateHalfday extends StatefulWidget {
   /// Card with the Team Mate's avatar, name, update date and status
-  const CardTeamMateHalfday({
+  const CardTeammateHalfday({
     super.key,
     required this.firstName,
     required this.lastName,
@@ -22,10 +22,10 @@ class CardTeamMateHalfday extends StatefulWidget {
   final DateTime? dateActu;
 
   @override
-  State<CardTeamMateHalfday> createState() => _CardTeamMateState();
+  State<CardTeammateHalfday> createState() => _CardTeammateState();
 }
 
-class _CardTeamMateState extends State<CardTeamMateHalfday> {
+class _CardTeammateState extends State<CardTeammateHalfday> {
   @override
   Widget build(BuildContext context) {
     // recovers device dimensions

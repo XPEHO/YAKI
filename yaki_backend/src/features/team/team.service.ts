@@ -1,4 +1,4 @@
-import {TeamDtoIn} from "./team.dtoIn";
+import {TeamByCaptDtoIn} from "./teamByCaptainId.dtoIn";
 import {TeamRepository} from "./team.repository";
 
 export class TeamService {
@@ -9,8 +9,8 @@ export class TeamService {
   }
 
   // return a team list managed by a selected captain id
-  getTeamsByCaptainId = async (captain_id: number): Promise<TeamDtoIn[]> => {
-    const teams: TeamDtoIn[] = await this.teamRepository.getTeamByCaptainId(captain_id);
+  getTeamsByCaptainId = async (captain_id: number): Promise<TeamByCaptDtoIn[]> => {
+    const teams: TeamByCaptDtoIn[] = await this.teamRepository.getTeamByCaptainId(captain_id);
     if (teams !== undefined) {
       return teams;
     } else {

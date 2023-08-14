@@ -16,10 +16,10 @@ void main() {
   final List<Map<String, dynamic>> createResponseApi = [
     {
       "declarationId": 2,
+      "declarationUserId": 3,
       "declarationDate": DateTime.now().toIso8601String(),
       "declarationDateStart": DateTime.now().toIso8601String(),
       "declarationDateEnd": DateTime.now().toIso8601String(),
-      "declarationTeamMateId": 3,
       "declarationStatus": "REMOTE",
       "declarationTeamId": 2,
     },
@@ -41,7 +41,7 @@ void main() {
           when(httpResponse.data).thenReturn(createResponseApi);
 
           final List<String> status =
-              await declarationRepository.getDeclaration(teammateId);
+              await declarationRepository.getLatestDeclaration(teammateId);
 
           expect(status, ["REMOTE"]);
         },
@@ -58,7 +58,7 @@ void main() {
           when(httpResponse.data).thenReturn(getErrorResponse);
 
           final List<String> status =
-              await declarationRepository.getDeclaration(teammateId);
+              await declarationRepository.getLatestDeclaration(teammateId);
 
           expect(status, []);
         },
@@ -74,7 +74,7 @@ void main() {
           when(httpResponse.data).thenReturn(getErrorResponse);
 
           final List<String> status =
-              await declarationRepository.getDeclaration(teammateId);
+              await declarationRepository.getLatestDeclaration(teammateId);
 
           expect(status, []);
         },
@@ -85,10 +85,10 @@ void main() {
     'Declaration allDay respository create()',
     () {
       DeclarationModel createdDeclaration = DeclarationModel(
+        declarationUserId: 1,
         declarationDate: DateTime.now(),
         declarationDateStart: DateTime.parse('2023-03-20T00:00:00.000Z'),
         declarationDateEnd: DateTime.parse('2023-03-20T23:59:59.950Z'),
-        declarationTeamMateId: 1,
         declarationStatus: "REMOTE",
         declarationTeamId: 2,
       );
@@ -100,7 +100,7 @@ void main() {
           when(httpResponse.response).thenReturn(response);
           when(response.statusCode).thenReturn(200 | 201);
           when(httpResponse.data).thenReturn(createResponseApi);
-          await declarationRepository.createAllDay(createdDeclaration);
+          await declarationRepository.createFullDay(createdDeclaration);
           expect(declarationRepository.statusAllDay, "REMOTE");
         },
       );
@@ -112,7 +112,7 @@ void main() {
           when(httpResponse.response).thenReturn(response);
           when(response.statusCode).thenReturn(400 | 500);
           when(httpResponse.data).thenReturn(createResponseApi);
-          await declarationRepository.createAllDay(createdDeclaration);
+          await declarationRepository.createFullDay(createdDeclaration);
           expect(declarationRepository.statusAllDay, "");
         },
       );
@@ -124,7 +124,7 @@ void main() {
           when(httpResponse.response).thenReturn(response);
           when(response.statusCode).thenReturn(401);
           when(httpResponse.data).thenReturn(createResponseApi);
-          await declarationRepository.createAllDay(createdDeclaration);
+          await declarationRepository.createFullDay(createdDeclaration);
           expect(declarationRepository.statusAllDay, "");
         },
       );
@@ -136,7 +136,7 @@ void main() {
           when(httpResponse.response).thenReturn(response);
           when(response.statusCode).thenReturn(403);
           when(httpResponse.data).thenReturn(createResponseApi);
-          await declarationRepository.createAllDay(createdDeclaration);
+          await declarationRepository.createFullDay(createdDeclaration);
           expect(declarationRepository.statusAllDay, "");
         },
       );
@@ -148,7 +148,7 @@ void main() {
           when(httpResponse.response).thenReturn(response);
           when(response.statusCode).thenReturn(418);
           when(httpResponse.data).thenReturn(createResponseApi);
-          await declarationRepository.createAllDay(createdDeclaration);
+          await declarationRepository.createFullDay(createdDeclaration);
           expect(declarationRepository.statusAllDay, "");
         },
       );
@@ -162,7 +162,7 @@ void main() {
         () {
           const String selectedStatus = "REMOTE";
 
-          when(declarationRepository.setAllDayDeclaration(selectedStatus));
+          when(declarationRepository.setFullDayStatus(selectedStatus));
           expect(
             declarationRepository.statusAllDay,
             selectedStatus,
@@ -175,18 +175,18 @@ void main() {
     'Declaration halfDay respository create()',
     () {
       final DeclarationModel declarationMorning = DeclarationModel(
+        declarationUserId: 123,
         declarationDate: DateTime.utc(2023, 4, 26),
         declarationDateStart: DateTime.utc(2023, 4, 26, 00),
         declarationDateEnd: DateTime.utc(2023, 4, 26, 12),
-        declarationTeamMateId: 123,
         declarationStatus: 'remote',
         declarationTeamId: 2,
       );
       final DeclarationModel declarationAfternoon = DeclarationModel(
+        declarationUserId: 123,
         declarationDate: DateTime.utc(2023, 4, 26),
         declarationDateStart: DateTime.utc(2023, 4, 26, 13),
         declarationDateEnd: DateTime.utc(2023, 4, 26, 23),
-        declarationTeamMateId: 123,
         declarationStatus: 'other',
         declarationTeamId: 2,
       );
@@ -299,7 +299,7 @@ void main() {
           const String selectedStatusAfternoon = "other";
           // Call the function to set the declaration status
           when(
-            declarationRepository.setHalfDayDeclaration(
+            declarationRepository.setHalfDayStatus(
               selectedStatusMorning,
               selectedStatusAfternoon,
             ),
