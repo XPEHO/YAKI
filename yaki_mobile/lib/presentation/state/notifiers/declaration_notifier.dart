@@ -31,6 +31,7 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
   /// Return the declarationStatus, used in authentication page to determine the redirection.
   Future<List<String>> getLatestDeclaration() async {
     final userId = loginRepository.userId.toString();
+
     final declarationStatus =
         await declarationRepository.getLatestDeclaration(userId);
 
@@ -147,12 +148,9 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
     ];
     final List<String> halfDayStatus =
         await declarationRepository.createHalfDay(declarations);
-
-    print("print in notifier, createHalfDay : $halfDayStatus");
     // set state.
     setStateMorningStatus(status: halfDayStatus.first);
     setStateAfternoonStatus(status: halfDayStatus.last);
-
     //call the halfdayStatusProvider to get the latest declaration status
     setStatusPageHalfDayContent();
   }

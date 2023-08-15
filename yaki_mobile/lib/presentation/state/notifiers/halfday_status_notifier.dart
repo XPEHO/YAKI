@@ -53,9 +53,6 @@ class HalfdayStatusNotifier extends StateNotifier<StateHalfdayPage> {
   /// declarationRepository, and store them in a state
   void setStatusRecapHalfDayContent() {
     final DeclarationStatus declarationStatus = ref.read(declarationProvider);
-
-    print("halfday status notifier :  $declarationStatus");
-
     setStateMorning(declarationStatus.morningStatus);
     setStateAfternoon(declarationStatus.afternoonStatus);
   }

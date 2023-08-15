@@ -132,7 +132,7 @@ class DeclarationRepository {
   Future<List<String>> createHalfDay(
     List<DeclarationModel> declarations,
   ) async {
-    List<String> statusHalfDay = ["", ""];
+    List<String> statusHalfDay = [];
     try {
       final createHttpResponse =
           await _declarationApi.create(declarations, StatusEnum.halfDay.value);
@@ -147,8 +147,8 @@ class DeclarationRepository {
           final afternoonDeclaration = DeclarationModelIn.fromJson(
             createHttpResponse.data[1],
           );
-          statusHalfDay[0] = morningDeclaration.declarationStatus;
-          statusHalfDay[1] = afternoonDeclaration.declarationStatus;
+          statusHalfDay.add(morningDeclaration.declarationStatus);
+          statusHalfDay.add(afternoonDeclaration.declarationStatus);
           break;
         case const (400 | 500):
           debugPrint("Code error : $statusCode");
@@ -167,7 +167,6 @@ class DeclarationRepository {
     } catch (err) {
       debugPrint("error during creation : $err");
     }
-    print("declaration repo : $statusHalfDay");
     return statusHalfDay;
   }
 }

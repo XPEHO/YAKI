@@ -24,6 +24,27 @@ void main() {
       "declarationTeamId": 2,
     },
   ];
+  final List<Map<String, dynamic>> createHalfDayResponseApi = [
+    {
+      "declarationId": 2,
+      "declarationUserId": 3,
+      "declarationDate": DateTime.now().toIso8601String(),
+      "declarationDateStart": DateTime.now().toIso8601String(),
+      "declarationDateEnd": DateTime.now().toIso8601String(),
+      "declarationStatus": "REMOTE",
+      "declarationTeamId": 2,
+    },
+    {
+      "declarationId": 2,
+      "declarationUserId": 3,
+      "declarationDate": DateTime.now().toIso8601String(),
+      "declarationDateStart": DateTime.now().toIso8601String(),
+      "declarationDateEnd": DateTime.now().toIso8601String(),
+      "declarationStatus": "OTHER",
+      "declarationTeamId": 2,
+    },
+  ];
+
   group(
     'declaration repository getDeclaration()',
     () {
@@ -100,8 +121,9 @@ void main() {
           when(httpResponse.response).thenReturn(response);
           when(response.statusCode).thenReturn(200 | 201);
           when(httpResponse.data).thenReturn(createResponseApi);
-          await declarationRepository.createFullDay(createdDeclaration);
-          expect(declarationRepository.createFullDay, "REMOTE");
+          final returnedValue =
+              await declarationRepository.createFullDay(createdDeclaration);
+          expect(returnedValue, 'REMOTE');
         },
       );
       test(
@@ -112,8 +134,9 @@ void main() {
           when(httpResponse.response).thenReturn(response);
           when(response.statusCode).thenReturn(400 | 500);
           when(httpResponse.data).thenReturn(createResponseApi);
-          await declarationRepository.createFullDay(createdDeclaration);
-          expect(declarationRepository.createFullDay, "");
+          final returnedValue =
+              await declarationRepository.createFullDay(createdDeclaration);
+          expect(returnedValue, '');
         },
       );
       test(
@@ -124,8 +147,9 @@ void main() {
           when(httpResponse.response).thenReturn(response);
           when(response.statusCode).thenReturn(401);
           when(httpResponse.data).thenReturn(createResponseApi);
-          await declarationRepository.createFullDay(createdDeclaration);
-          expect(declarationRepository.createFullDay, "");
+          final returnedValue =
+              await declarationRepository.createFullDay(createdDeclaration);
+          expect(returnedValue, '');
         },
       );
       test(
@@ -136,8 +160,9 @@ void main() {
           when(httpResponse.response).thenReturn(response);
           when(response.statusCode).thenReturn(403);
           when(httpResponse.data).thenReturn(createResponseApi);
-          await declarationRepository.createFullDay(createdDeclaration);
-          expect(declarationRepository.createFullDay, "");
+          final returnedValue =
+              await declarationRepository.createFullDay(createdDeclaration);
+          expect(returnedValue, '');
         },
       );
       test(
@@ -148,8 +173,9 @@ void main() {
           when(httpResponse.response).thenReturn(response);
           when(response.statusCode).thenReturn(418);
           when(httpResponse.data).thenReturn(createResponseApi);
-          await declarationRepository.createFullDay(createdDeclaration);
-          expect(declarationRepository.createFullDay, "");
+          final returnedValue =
+              await declarationRepository.createFullDay(createdDeclaration);
+          expect(returnedValue, '');
         },
       );
     },
@@ -186,14 +212,15 @@ void main() {
           // Simulate the response of the API
           when(httpResponse.response).thenReturn(response);
           when(response.statusCode).thenReturn(200 | 201);
-          when(httpResponse.data).thenReturn(createResponseApi);
+          when(httpResponse.data).thenReturn(createHalfDayResponseApi);
 
           // Call the function to create a half-day declaration
-          await declarationRepository.createHalfDay(declarations);
+          final List<String> returnedValue =
+              await declarationRepository.createHalfDay(declarations);
           // Verify that the declaration status is correctly updated
           expect(
-            declarationRepository.createHalfDay,
-            ["remote", "other"],
+            returnedValue,
+            ['REMOTE', 'OTHER'],
           );
         },
       );
@@ -209,11 +236,12 @@ void main() {
           when(httpResponse.data).thenReturn(createResponseApi);
 
           // Call the function to create a half-day declaration
-          await declarationRepository.createHalfDay(declarations);
+          final returnedValue =
+              await declarationRepository.createHalfDay(declarations);
           // Verify that the declaration status is not updated
           expect(
-            declarationRepository.createHalfDay,
-            ["", ""],
+            returnedValue,
+            [],
           );
         },
       );
@@ -226,10 +254,11 @@ void main() {
           when(response.statusCode).thenReturn(401);
           when(httpResponse.data).thenReturn(createResponseApi);
 
-          await declarationRepository.createHalfDay(declarations);
+          final returnedValue =
+              await declarationRepository.createHalfDay(declarations);
           expect(
-            declarationRepository.createHalfDay,
-            ["", ""],
+            returnedValue,
+            [],
           );
         },
       );
@@ -240,10 +269,11 @@ void main() {
         when(response.statusCode).thenReturn(403);
         when(httpResponse.data).thenReturn(createResponseApi);
 
-        await declarationRepository.createHalfDay(declarations);
+        final returnedValue =
+            await declarationRepository.createHalfDay(declarations);
         expect(
-          declarationRepository.createHalfDay,
-          ["", ""],
+          returnedValue,
+          [],
         );
       });
     },
