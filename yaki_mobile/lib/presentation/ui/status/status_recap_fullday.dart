@@ -12,8 +12,8 @@ void _routeHandling(BuildContext context) {
   context.go('/declaration');
 }
 
-class Status extends ConsumerWidget {
-  const Status({Key? key}) : super(key: key);
+class StatusRecapFullDay extends ConsumerWidget {
+  const StatusRecapFullDay({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

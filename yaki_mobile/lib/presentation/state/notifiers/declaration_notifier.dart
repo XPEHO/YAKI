@@ -9,7 +9,7 @@ import 'package:yaki/presentation/displaydata/declaration_enum.dart';
 import 'package:yaki/presentation/state/providers/halfday_status_provider.dart';
 import 'package:yaki/presentation/state/providers/status_provider.dart';
 
-class DeclarationNotifier extends StateNotifier<void> {
+class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
   final Ref ref;
   final DeclarationRepository declarationRepository;
   final LoginRepository loginRepository;
@@ -20,7 +20,7 @@ class DeclarationNotifier extends StateNotifier<void> {
     required this.declarationRepository,
     required this.loginRepository,
     required this.teamRepository,
-  }) : super(0);
+  }) : super(DeclarationStatus());
 
   /// Invoked at authentication "sign in" button press.
   ///
@@ -33,6 +33,16 @@ class DeclarationNotifier extends StateNotifier<void> {
     final userId = loginRepository.userId.toString();
     final declarationStatus =
         await declarationRepository.getLatestDeclaration(userId);
+
+    if (declarationStatus.length == 1) {
+      setStateFullDayStatus(status: declarationStatus.first);
+      setStatusPageFullDayContent();
+    } else {
+      setStateMorningStatus(status: declarationStatus.first);
+      setStateAfternoonStatus(status: declarationStatus.last);
+      setStatusPageHalfDayContent();
+    }
+
     return declarationStatus;
   }
 
@@ -50,23 +60,16 @@ class DeclarationNotifier extends StateNotifier<void> {
           status: status,
           teamId: teamId,
         );
-        //call the statusProvider to get the latest declaration
-        ref.read(statusPageProvider.notifier).setFullDayStatusPageContent();
         break;
       case DeclarationTimeOfDay.morning:
-        setMorningStatus(status);
+        setStateMorningStatus(status: status);
         break;
       case DeclarationTimeOfDay.afternoon:
         await createHalfDay(
-          morning: declarationRepository.statusMorning,
+          morning: state.morningStatus,
           afternoon: status,
           teamId: teamId,
         );
-
-        //call the halfdayStatusProvider to get the latest declaration
-        ref
-            .read(halfdayStatusPageProvider.notifier)
-            .setHalfDayStatusPageContent();
         break;
     }
   }
@@ -95,7 +98,12 @@ class DeclarationNotifier extends StateNotifier<void> {
       declarationTeamId: teamId,
       declarationStatus: status,
     );
-    await declarationRepository.createFullDay(newDeclaration);
+    final String fullDayStatus =
+        await declarationRepository.createFullDay(newDeclaration);
+    //set State
+    setStateFullDayStatus(status: fullDayStatus);
+    //call the statusProvider to get the latest declaration
+    setStatusPageFullDayContent();
   }
 
   /// Create declaration for the morning by setting
@@ -137,22 +145,36 @@ class DeclarationNotifier extends StateNotifier<void> {
       newDeclarationMorning,
       newDeclarationAfternoon
     ];
+    final List<String> halfDayStatus =
+        await declarationRepository.createHalfDay(declarations);
 
-    await declarationRepository.createHalfDay(declarations);
+    print("print in notifier, createHalfDay : $halfDayStatus");
+    // set state.
+    setStateMorningStatus(status: halfDayStatus.first);
+    setStateAfternoonStatus(status: halfDayStatus.last);
+
+    //call the halfdayStatusProvider to get the latest declaration status
+    setStatusPageHalfDayContent();
   }
 
-  /// set the morning declaration status stored in declarationRepository
-  setMorningStatus(String status) {
-    declarationRepository.setMorningStatus(status);
+  /// Setter for declaration notifier state
+  setStateMorningStatus({required String status}) {
+    state.morningStatus = status;
   }
 
-  /// get the morning declaration status stored in declarationRepository
-  String getMorningStatus() {
-    return declarationRepository.statusMorning;
+  setStateAfternoonStatus({required String status}) {
+    state.afternoonStatus = status;
   }
 
-  /// get all declarations stored in declarationRepository
-  DeclarationStatus getAllStatus() {
-    return declarationRepository.allDeclarations;
+  setStateFullDayStatus({required String status}) {
+    state.fullDayStatus = status;
+  }
+
+  setStatusPageFullDayContent() {
+    ref.read(statusPageProvider.notifier).setStatusRecapFullDayContent();
+  }
+
+  setStatusPageHalfDayContent() {
+    ref.read(halfdayStatusPageProvider.notifier).setStatusRecapHalfDayContent();
   }
 }

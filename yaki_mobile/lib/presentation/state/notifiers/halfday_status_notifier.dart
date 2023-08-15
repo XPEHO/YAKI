@@ -1,15 +1,15 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:yaki/data/repositories/declaration_respository.dart';
 import 'package:yaki/domain/entities/declaration_status.dart';
 import 'package:yaki/presentation/displaydata/status_page_utils.dart';
+import 'package:yaki/presentation/state/providers/declaration_provider.dart';
 import 'package:yaki/presentation/state/state/state_halfday_page.dart';
 import 'package:yaki/presentation/state/state/state_status_page.dart';
 
 class HalfdayStatusNotifier extends StateNotifier<StateHalfdayPage> {
-  final DeclarationRepository declarationRepository;
+  final Ref ref;
 
-  HalfdayStatusNotifier(this.declarationRepository)
+  HalfdayStatusNotifier(this.ref)
       : super(
           StateHalfdayPage(
             morning: StateStatusPage(
@@ -51,10 +51,12 @@ class HalfdayStatusNotifier extends StateNotifier<StateHalfdayPage> {
 
   /// method that retreives declaration for the afternoon and morning from
   /// declarationRepository, and store them in a state
-  void setHalfDayStatusPageContent() {
-    final DeclarationStatus declarations =
-        declarationRepository.allDeclarations;
-    setStateMorning(declarations.morningDeclaration);
-    setStateAfternoon(declarations.afternoonDeclaration);
+  void setStatusRecapHalfDayContent() {
+    final DeclarationStatus declarationStatus = ref.read(declarationProvider);
+
+    print("halfday status notifier :  $declarationStatus");
+
+    setStateMorning(declarationStatus.morningStatus);
+    setStateAfternoon(declarationStatus.afternoonStatus);
   }
 }

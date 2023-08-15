@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yaki/data/repositories/declaration_respository.dart';
 import 'package:yaki/data/sources/remote/declaration_api.dart';
+import 'package:yaki/domain/entities/declaration_status.dart';
 import 'package:yaki/presentation/state/notifiers/declaration_notifier.dart';
 import 'package:yaki/presentation/state/dio/dio_interceptor.dart';
 import 'package:yaki/presentation/state/providers/login_provider.dart';
@@ -40,7 +41,8 @@ final declarationRepositoryProvider = Provider(
 ///
 /// This provider make accessible repository and routes related to status declaration.
 /// Notifier methods are related to the declaration page.
-final declarationProvider = StateNotifierProvider<DeclarationNotifier, void>(
+final declarationProvider =
+    StateNotifierProvider<DeclarationNotifier, DeclarationStatus>(
   (ref) => DeclarationNotifier(
     ref: ref,
     declarationRepository: ref.read(declarationRepositoryProvider),
