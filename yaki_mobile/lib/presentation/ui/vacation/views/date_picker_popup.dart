@@ -45,19 +45,19 @@ class _DatePickerPopupState extends ConsumerState<DatePickerPopup> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Vacation Selection Date'),
+      title: Text(tr('datePopupTitle')),
       content: SizedBox(
         height: 200,
         child: Column(
           children: [
-            const Text('Please select the date of your vacation'),
+            Text(tr('datePopupHint')),
             const SizedBox(height: 20),
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Column(
                   children: [
-                    const Text('Start Date'),
+                    Text(tr('vacationDateStart')),
                     ElevatedButton(
                       onPressed: () async {
                         selectedDateStart = await _selectDate(context);
@@ -74,7 +74,7 @@ class _DatePickerPopupState extends ConsumerState<DatePickerPopup> {
                 ),
                 Column(
                   children: [
-                    const Text('Ending Date'),
+                    Text(tr('vacationDateEnd')),
                     ElevatedButton(
                       onPressed: () async {
                         selectedDateEnd = await _selectDate(context);
