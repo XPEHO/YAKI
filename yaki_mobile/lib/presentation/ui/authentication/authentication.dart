@@ -75,6 +75,7 @@ class _AuthenticationState extends ConsumerState<Authentication> {
     required Function goToDeclarationPage,
     required Function goToStatusPage,
     required Function goToHalfdayStatusPage,
+    required Function goToVacationStatusPage,
     required Function goToCaptain,
   }) async {
     await SharedPref.deleteToken();
@@ -98,7 +99,11 @@ class _AuthenticationState extends ConsumerState<Authentication> {
           goToHalfdayStatusPage();
         } else if (declarationStatus.length == 1 &&
             declarationStatus != emptyDeclarationStatus) {
-          goToStatusPage();
+          if (declarationStatus.first == 'vacation') {
+            goToVacationStatusPage();
+          } else {
+            goToStatusPage();
+          }
         } else {
           goToDeclarationPage();
         }
@@ -221,6 +226,8 @@ class _AuthenticationState extends ConsumerState<Authentication> {
                           goToCaptain: () => context.go('/captain'),
                           goToHalfdayStatusPage: () =>
                               context.go('/halfdayStatus'),
+                          goToVacationStatusPage: () =>
+                              context.go('/vacationStatus'),
                         ),
                         child: Text(tr('signIn')),
                       ),
