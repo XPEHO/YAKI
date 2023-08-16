@@ -15,8 +15,4 @@ final List statusCardsContent = [
     'image': 'assets/images/vacation.svg',
     'text': StatusEnum.vacation.name,
   },
-  {
-    'image': 'assets/images/dots.svg',
-    'text': StatusEnum.other.name,
-  },
 ];
