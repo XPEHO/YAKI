@@ -77,7 +77,7 @@ class _DatePickerPopupState extends ConsumerState<DatePickerPopup> {
                     const Text('Ending Date'),
                     ElevatedButton(
                       onPressed: () async {
-                        selectedDateStart = await _selectDate(context);
+                        selectedDateEnd = await _selectDate(context);
                         setState(() {
                           selectedDateEndString =
                               DateFormat.yMd('fr').format(selectedDateEnd);
