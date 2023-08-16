@@ -9,8 +9,8 @@ import 'package:yaki/presentation/ui/declaration/afternoon_declaration.dart';
 import 'package:yaki/presentation/ui/declaration/morning_declaration.dart';
 import 'package:yaki/presentation/ui/profile/profile.dart';
 import 'package:yaki/presentation/ui/registration/registration.dart';
-import 'package:yaki/presentation/ui/status/status.dart';
-import 'package:yaki/presentation/ui/status/halfday_status.dart';
+import 'package:yaki/presentation/ui/status/status_recap_halfday.dart';
+import 'package:yaki/presentation/ui/status/status_recap_fullday.dart';
 
 /// router set as provider.
 final goRouterProvider = Provider<GoRouter>(
@@ -71,7 +71,7 @@ final goRouterProvider = Provider<GoRouter>(
             ),
             GoRoute(
               path: 'status',
-              builder: (context, state) => const Status(),
+              builder: (context, state) => const StatusRecapFullDay(),
               redirect: (BuildContext context, GoRouterState state) async {
                 if (await SharedPref.isTokenPresent()) {
                   return '/status';
@@ -93,7 +93,7 @@ final goRouterProvider = Provider<GoRouter>(
             ),
             GoRoute(
               path: 'halfdayStatus',
-              builder: (context, state) => const HalfDayStatus(),
+              builder: (context, state) => const StatusRecapHalfDay(),
               redirect: (BuildContext context, GoRouterState state) async {
                 if (await SharedPref.isTokenPresent()) {
                   return '/halfdayStatus';

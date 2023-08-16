@@ -1,13 +1,13 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:yaki/data/repositories/declaration_respository.dart';
 import 'package:yaki/presentation/displaydata/status_page_utils.dart';
+import 'package:yaki/presentation/state/providers/declaration_provider.dart';
 import 'package:yaki/presentation/state/state/state_status_page.dart';
 
 class StatusPageNotifier extends StateNotifier<StateStatusPage> {
-  final DeclarationRepository declarationRepository;
+  final Ref ref;
 
-  StatusPageNotifier(this.declarationRepository)
+  StatusPageNotifier(this.ref)
       : super(
           StateStatusPage(
             image: 'assets/images/unknown.svg',
@@ -39,8 +39,8 @@ class StatusPageNotifier extends StateNotifier<StateStatusPage> {
   ///
   /// Retrieve the status for the day saved in DeclarationStatus entities;
   /// And invoke the "setState" method.
-  void getSelectedStatus() {
-    final String status = declarationRepository.statusAllDay;
+  void setStatusRecapFullDayContent() {
+    final String status = ref.read(declarationProvider).fullDayStatus;
     setState(status);
   }
 }

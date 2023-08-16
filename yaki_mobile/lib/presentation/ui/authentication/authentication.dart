@@ -5,9 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:yaki/data/sources/local/shared_preference.dart';
 import 'package:yaki/domain/entities/declaration_status.dart';
 import 'package:yaki/presentation/state/providers/declaration_provider.dart';
-import 'package:yaki/presentation/state/providers/halfday_status_provider.dart';
 import 'package:yaki/presentation/state/providers/login_provider.dart';
-import 'package:yaki/presentation/state/providers/status_provider.dart';
 import 'package:yaki/presentation/styles/color.dart';
 import 'package:yaki/presentation/ui/shared/views/header.dart';
 import 'package:yaki/presentation/ui/shared/views/input_app.dart';
@@ -97,11 +95,9 @@ class _AuthenticationState extends ConsumerState<Authentication> {
         final declarationStatus =
             await ref.read(declarationProvider.notifier).getLatestDeclaration();
         if (declarationStatus.length > 1) {
-          ref.read(halfdayStatusPageProvider.notifier).getHalfdayDeclaration();
           goToHalfdayStatusPage();
         } else if (declarationStatus.length == 1 &&
             declarationStatus != emptyDeclarationStatus) {
-          ref.read(statusPageProvider.notifier).getSelectedStatus();
           goToStatusPage();
         } else {
           goToDeclarationPage();

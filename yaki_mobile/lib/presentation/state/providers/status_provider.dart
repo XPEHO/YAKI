@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yaki/presentation/state/notifiers/status_notifier.dart';
-import 'package:yaki/presentation/state/providers/declaration_provider.dart';
 import 'package:yaki/presentation/state/state/state_status_page.dart';
 
 /// Create a provider of StatusPageNotifier, allowing riverpod to know about values changes.
@@ -13,7 +12,5 @@ import 'package:yaki/presentation/state/state/state_status_page.dart';
 /// This provider make accessible repository related to status declaration, notifier methode are related to the selected status resume page.
 final statusPageProvider =
     StateNotifierProvider<StatusPageNotifier, StateStatusPage>(
-  (ref) => StatusPageNotifier(
-    ref.read(declarationRepositoryProvider),
-  ),
+  (ref) => StatusPageNotifier(ref),
 );

@@ -24,6 +24,27 @@ void main() {
       "declarationTeamId": 2,
     },
   ];
+  final List<Map<String, dynamic>> createHalfDayResponseApi = [
+    {
+      "declarationId": 2,
+      "declarationUserId": 3,
+      "declarationDate": DateTime.now().toIso8601String(),
+      "declarationDateStart": DateTime.now().toIso8601String(),
+      "declarationDateEnd": DateTime.now().toIso8601String(),
+      "declarationStatus": "REMOTE",
+      "declarationTeamId": 2,
+    },
+    {
+      "declarationId": 2,
+      "declarationUserId": 3,
+      "declarationDate": DateTime.now().toIso8601String(),
+      "declarationDateStart": DateTime.now().toIso8601String(),
+      "declarationDateEnd": DateTime.now().toIso8601String(),
+      "declarationStatus": "OTHER",
+      "declarationTeamId": 2,
+    },
+  ];
+
   group(
     'declaration repository getDeclaration()',
     () {
@@ -100,8 +121,9 @@ void main() {
           when(httpResponse.response).thenReturn(response);
           when(response.statusCode).thenReturn(200 | 201);
           when(httpResponse.data).thenReturn(createResponseApi);
-          await declarationRepository.createFullDay(createdDeclaration);
-          expect(declarationRepository.statusAllDay, "REMOTE");
+          final returnedValue =
+              await declarationRepository.createFullDay(createdDeclaration);
+          expect(returnedValue, 'REMOTE');
         },
       );
       test(
@@ -112,8 +134,9 @@ void main() {
           when(httpResponse.response).thenReturn(response);
           when(response.statusCode).thenReturn(400 | 500);
           when(httpResponse.data).thenReturn(createResponseApi);
-          await declarationRepository.createFullDay(createdDeclaration);
-          expect(declarationRepository.statusAllDay, "");
+          final returnedValue =
+              await declarationRepository.createFullDay(createdDeclaration);
+          expect(returnedValue, '');
         },
       );
       test(
@@ -124,8 +147,9 @@ void main() {
           when(httpResponse.response).thenReturn(response);
           when(response.statusCode).thenReturn(401);
           when(httpResponse.data).thenReturn(createResponseApi);
-          await declarationRepository.createFullDay(createdDeclaration);
-          expect(declarationRepository.statusAllDay, "");
+          final returnedValue =
+              await declarationRepository.createFullDay(createdDeclaration);
+          expect(returnedValue, '');
         },
       );
       test(
@@ -136,8 +160,9 @@ void main() {
           when(httpResponse.response).thenReturn(response);
           when(response.statusCode).thenReturn(403);
           when(httpResponse.data).thenReturn(createResponseApi);
-          await declarationRepository.createFullDay(createdDeclaration);
-          expect(declarationRepository.statusAllDay, "");
+          final returnedValue =
+              await declarationRepository.createFullDay(createdDeclaration);
+          expect(returnedValue, '');
         },
       );
       test(
@@ -148,25 +173,9 @@ void main() {
           when(httpResponse.response).thenReturn(response);
           when(response.statusCode).thenReturn(418);
           when(httpResponse.data).thenReturn(createResponseApi);
-          await declarationRepository.createFullDay(createdDeclaration);
-          expect(declarationRepository.statusAllDay, "");
-        },
-      );
-    },
-  );
-  group(
-    'annexe function',
-    () {
-      test(
-        'setDeclarationEntity',
-        () {
-          const String selectedStatus = "REMOTE";
-
-          when(declarationRepository.setFullDayStatus(selectedStatus));
-          expect(
-            declarationRepository.statusAllDay,
-            selectedStatus,
-          );
+          final returnedValue =
+              await declarationRepository.createFullDay(createdDeclaration);
+          expect(returnedValue, '');
         },
       );
     },
@@ -203,21 +212,15 @@ void main() {
           // Simulate the response of the API
           when(httpResponse.response).thenReturn(response);
           when(response.statusCode).thenReturn(200 | 201);
-          when(httpResponse.data).thenReturn(createResponseApi);
-          // Set the initial declaration status
-          declarationRepository.declarationStatus.morningDeclaration = "remote";
-          declarationRepository.declarationStatus.afternoonDeclaration =
-              "other";
+          when(httpResponse.data).thenReturn(createHalfDayResponseApi);
+
           // Call the function to create a half-day declaration
-          await declarationRepository.createHalfDay(declarations);
+          final List<String> returnedValue =
+              await declarationRepository.createHalfDay(declarations);
           // Verify that the declaration status is correctly updated
           expect(
-            declarationRepository.declarationStatus.morningDeclaration,
-            "remote",
-          );
-          expect(
-            declarationRepository.declarationStatus.afternoonDeclaration,
-            "other",
+            returnedValue,
+            ['REMOTE', 'OTHER'],
           );
         },
       );
@@ -231,19 +234,14 @@ void main() {
           when(httpResponse.response).thenReturn(response);
           when(response.statusCode).thenReturn(400 | 500);
           when(httpResponse.data).thenReturn(createResponseApi);
-          // Set the initial declaration status to empty strings
-          declarationRepository.declarationStatus.morningDeclaration = "";
-          declarationRepository.declarationStatus.afternoonDeclaration = "";
+
           // Call the function to create a half-day declaration
-          await declarationRepository.createHalfDay(declarations);
+          final returnedValue =
+              await declarationRepository.createHalfDay(declarations);
           // Verify that the declaration status is not updated
           expect(
-            declarationRepository.declarationStatus.morningDeclaration,
-            "",
-          );
-          expect(
-            declarationRepository.declarationStatus.afternoonDeclaration,
-            "",
+            returnedValue,
+            [],
           );
         },
       );
@@ -255,16 +253,12 @@ void main() {
           when(httpResponse.response).thenReturn(response);
           when(response.statusCode).thenReturn(401);
           when(httpResponse.data).thenReturn(createResponseApi);
-          declarationRepository.declarationStatus.morningDeclaration = "";
-          declarationRepository.declarationStatus.afternoonDeclaration = "";
-          await declarationRepository.createHalfDay(declarations);
+
+          final returnedValue =
+              await declarationRepository.createHalfDay(declarations);
           expect(
-            declarationRepository.declarationStatus.morningDeclaration,
-            "",
-          );
-          expect(
-            declarationRepository.declarationStatus.afternoonDeclaration,
-            "",
+            returnedValue,
+            [],
           );
         },
       );
@@ -274,47 +268,14 @@ void main() {
         when(httpResponse.response).thenReturn(response);
         when(response.statusCode).thenReturn(403);
         when(httpResponse.data).thenReturn(createResponseApi);
-        declarationRepository.declarationStatus.morningDeclaration = "";
-        declarationRepository.declarationStatus.afternoonDeclaration = "";
-        await declarationRepository.createHalfDay(declarations);
+
+        final returnedValue =
+            await declarationRepository.createHalfDay(declarations);
         expect(
-          declarationRepository.declarationStatus.morningDeclaration,
-          "",
-        );
-        expect(
-          declarationRepository.declarationStatus.afternoonDeclaration,
-          "",
+          returnedValue,
+          [],
         );
       });
-    },
-  );
-  group(
-    'Assign status, to declarationStatus entities.',
-    () {
-      test(
-        'set half day Declaration',
-        () {
-          // Set the selected declaration statuses
-          const String selectedStatusMorning = "remote";
-          const String selectedStatusAfternoon = "other";
-          // Call the function to set the declaration status
-          when(
-            declarationRepository.setHalfDayStatus(
-              selectedStatusMorning,
-              selectedStatusAfternoon,
-            ),
-          );
-          // Verify that the declaration status is updated accordingly
-          expect(
-            declarationRepository.declarationStatus.morningDeclaration,
-            selectedStatusMorning,
-          );
-          expect(
-            declarationRepository.declarationStatus.afternoonDeclaration,
-            selectedStatusAfternoon,
-          );
-        },
-      );
     },
   );
 }

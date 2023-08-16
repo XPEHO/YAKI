@@ -5,6 +5,8 @@ import 'package:go_router/go_router.dart';
 import 'package:yaki/presentation/displaydata/declaration_card_content.dart';
 import 'package:yaki/presentation/displaydata/declaration_enum.dart';
 import 'package:yaki/presentation/displaydata/status_page_utils.dart';
+import 'package:yaki/presentation/state/providers/declaration_provider.dart';
+import 'package:yaki/presentation/state/providers/team_provider.dart';
 import 'package:yaki/presentation/ui/declaration/views/status_card.dart';
 import 'package:yaki/presentation/ui/shared/views/team_selection_dialog.dart';
 
@@ -13,11 +15,41 @@ import 'package:yaki/presentation/ui/shared/views/team_selection_dialog.dart';
 /// allowing the current widget to have access to any provider.
 class DeclarationBody extends ConsumerWidget {
   final DeclarationTimeOfDay timeOfDay;
+  final String nextPage;
 
   const DeclarationBody({
     Key? key,
     required this.timeOfDay,
+    required this.nextPage,
   }) : super(key: key);
+
+  void onCardPressed({
+    required WidgetRef ref,
+    required BuildContext context,
+    required String cardContent,
+    required Function goToPage,
+  }) async {
+    if (cardContent != StatusEnum.vacation.name) {
+      final getTeamCount = ref.read(teamProvider).length;
+      if (getTeamCount == 1) {
+        final teamList = ref.read(teamProvider);
+        await ref.read(declarationProvider.notifier).createDeclaration(
+              timeOfDay: timeOfDay,
+              status: StatusEnum.getValue(key: cardContent),
+              teamId: teamList.first.teamId!,
+            );
+        goToPage();
+        return;
+      }
+      TeamSelectionDialog(
+        ref: ref,
+        context: context,
+        timeOfDay: timeOfDay,
+        status: StatusEnum.getValue(key: cardContent),
+        goToPage: () => context.go(nextPage),
+      ).show();
+    }
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -36,13 +68,12 @@ class DeclarationBody extends ConsumerWidget {
                 (cardContent) => StatusCard(
                   statusName: tr(cardContent['text']),
                   statusPicto: cardContent['image'],
-                  onPress: () => TeamSelectionDialog(
+                  onPress: () => onCardPressed(
                     ref: ref,
                     context: context,
-                    timeOfDay: timeOfDay,
-                    status: StatusEnum.getValue(key: cardContent['text']),
-                    goToPage: () => context.go('/status'),
-                  ).show(),
+                    cardContent: cardContent['text'],
+                    goToPage: () => context.go(nextPage),
+                  ),
                 ),
               )
               .toList(),
