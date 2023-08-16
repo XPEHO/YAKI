@@ -38,8 +38,9 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
       case 1:
         if (declarationStatus.fullDayStatus.first == 'vacation') {
           setStateAbsenceStatus(
-              dateStart: declarationStatus.dateStart ?? DateTime.now(),
-              dateEnd: declarationStatus.dateEnd ?? DateTime.now(),);
+            dateStart: declarationStatus.dateStart ?? DateTime.now(),
+            dateEnd: declarationStatus.dateEnd ?? DateTime.now(),
+          );
           setStatusPageVacationContent();
         } else {
           setStateFullDayStatus(status: declarationStatus.fullDayStatus.first);
@@ -203,8 +204,10 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
     state.fullDayStatus = status;
   }
 
-  setStateAbsenceStatus(
-      {required DateTime dateStart, required DateTime dateEnd,}) {
+  setStateAbsenceStatus({
+    required DateTime dateStart,
+    required DateTime dateEnd,
+  }) {
     state.dateStart = dateStart;
     state.dateEnd = dateEnd;
   }
