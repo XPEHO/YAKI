@@ -7,7 +7,6 @@ enum StatusEnum {
   remote('remote'),
   onSite('on site'),
   vacation('vacation'),
-  other('other'),
   halfDay('halfDay'),
   fullDay('fullDay'),
   morningTr('Morning'),
@@ -63,15 +62,12 @@ class StatusUtils {
     String link = 'assets/images/unknown.svg';
 
     if (status != emptyDeclarationStatus.first) {
-      if (status == StatusEnum.other.name) {
-        link = 'assets/images/dots.svg';
-      } else if (status == StatusEnum.undeclared.name) {
+      if (status == StatusEnum.undeclared.name) {
         link = 'assets/images/unknown.svg';
       } else {
         link = 'assets/images/$status.svg';
       }
     }
-
     return link;
   }
 

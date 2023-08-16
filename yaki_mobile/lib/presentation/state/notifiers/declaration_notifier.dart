@@ -35,15 +35,19 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
     final declarationStatus =
         await declarationRepository.getLatestDeclaration(userId);
 
-    if (declarationStatus.length == 1) {
-      setStateFullDayStatus(status: declarationStatus.first);
-      setStatusPageFullDayContent();
-    } else {
-      setStateMorningStatus(status: declarationStatus.first);
-      setStateAfternoonStatus(status: declarationStatus.last);
-      setStatusPageHalfDayContent();
+    switch (declarationStatus.length) {
+      case 1:
+        setStateFullDayStatus(status: declarationStatus.first);
+        setStatusPageFullDayContent();
+        break;
+      case 2:
+        setStateMorningStatus(status: declarationStatus.first);
+        setStateAfternoonStatus(status: declarationStatus.last);
+        setStatusPageHalfDayContent();
+        break;
+      default:
+        return [];
     }
-
     return declarationStatus;
   }
 
