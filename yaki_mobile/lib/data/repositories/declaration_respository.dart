@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:yaki/data/models/declaration_model.dart';
 import 'package:yaki/data/models/declaration_model_in.dart';
 import 'package:yaki/data/sources/remote/declaration_api.dart';
+import 'package:yaki/domain/entities/delcaration_entity_in.dart';
 import 'package:yaki/presentation/displaydata/status_page_utils.dart';
 
 class DeclarationRepository {
@@ -34,8 +35,11 @@ class DeclarationRepository {
   /// * Get the declarationStatus from the newly created object and assign it to the statusValue.
   ///
   /// This method return the statusValue value.
-  Future<List<String>> getLatestDeclaration(String teamMateId) async {
+  Future<DeclarationEntityIn> getLatestDeclaration(String teamMateId) async {
     List<String> statusGetDecl = [];
+    DateTime? dateStart;
+    DateTime? dateEnd;
+
     try {
       final getHttpResponse = await _declarationApi.getDeclaration(teamMateId);
       final statusCode = getHttpResponse.response.statusCode;
@@ -48,6 +52,11 @@ class DeclarationRepository {
               getHttpResponse.data.first,
             );
             statusGetDecl.add(getDeclarationIn.declarationStatus);
+            if (getDeclarationIn.declarationStatus ==
+                StatusEnum.vacation.name) {
+              dateStart = getDeclarationIn.declarationDateStart;
+              dateEnd = getDeclarationIn.declarationDateEnd;
+            }
           }
           // else the server returns at least two declarations
           else {
@@ -73,7 +82,7 @@ class DeclarationRepository {
     } catch (err) {
       debugPrint('error during get last declaration : $err');
     }
-    return statusGetDecl;
+    return DeclarationEntityIn(dateStart, dateEnd, statusGetDecl);
   }
 
   /// Invoked in declaration Notifier

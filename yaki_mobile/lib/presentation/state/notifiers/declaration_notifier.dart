@@ -8,6 +8,7 @@ import 'package:yaki/data/repositories/team_repository.dart';
 import 'package:yaki/presentation/displaydata/declaration_enum.dart';
 import 'package:yaki/presentation/state/providers/halfday_status_provider.dart';
 import 'package:yaki/presentation/state/providers/status_provider.dart';
+import 'package:yaki/presentation/state/providers/vacation_status_provider.dart';
 
 class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
   final Ref ref;
@@ -31,24 +32,30 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
   /// Return the declarationStatus, used in authentication page to determine the redirection.
   Future<List<String>> getLatestDeclaration() async {
     final userId = loginRepository.userId.toString();
-
     final declarationStatus =
         await declarationRepository.getLatestDeclaration(userId);
-
-    switch (declarationStatus.length) {
+    switch (declarationStatus.fullDayStatus.length) {
       case 1:
-        setStateFullDayStatus(status: declarationStatus.first);
-        setStatusPageFullDayContent();
+        if (declarationStatus.fullDayStatus.first == 'vacation') {
+          setStateAbsenceStatus(
+            dateStart: declarationStatus.dateStart ?? DateTime.now(),
+            dateEnd: declarationStatus.dateEnd ?? DateTime.now(),
+          );
+          setStatusPageVacationContent();
+        } else {
+          setStateFullDayStatus(status: declarationStatus.fullDayStatus.first);
+          setStatusPageFullDayContent();
+        }
         break;
       case 2:
-        setStateMorningStatus(status: declarationStatus.first);
-        setStateAfternoonStatus(status: declarationStatus.last);
+        setStateMorningStatus(status: declarationStatus.fullDayStatus.first);
+        setStateAfternoonStatus(status: declarationStatus.fullDayStatus.last);
         setStatusPageHalfDayContent();
         break;
       default:
-        return [];
+        return declarationStatus.fullDayStatus;
     }
-    return declarationStatus;
+    return declarationStatus.fullDayStatus;
   }
 
   /// Function invoked in declaration_body, morning_declaration and afternoon_declaration "page"
@@ -159,6 +166,31 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
     setStatusPageHalfDayContent();
   }
 
+  Future<void> createVacationDeclaration({
+    required String status,
+    required int teamId,
+    required DateTime dateStart,
+    required DateTime dateEnd,
+  }) async {
+    final todayDate = DateTime.now();
+    final DateTime dateEndExcluded = dateEnd.subtract(const Duration(days: 1));
+    DeclarationModel newDeclaration = DeclarationModel(
+      declarationUserId: loginRepository.userId,
+      declarationDate: todayDate,
+      declarationDateStart: DateTime.parse(
+        '${DateFormat('yyyy-MM-dd').format(dateStart)} 00:00:00Z',
+      ),
+      declarationDateEnd: DateTime.parse(
+        '${DateFormat('yyyy-MM-dd').format(dateEndExcluded)} 23:59:59Z',
+      ),
+      declarationTeamId: teamId,
+      declarationStatus: status,
+    );
+    await declarationRepository.createFullDay(newDeclaration);
+    setStateAbsenceStatus(dateStart: dateStart, dateEnd: dateEnd);
+    setStatusPageVacationContent();
+  }
+
   /// Setter for declaration notifier state
   setStateMorningStatus({required String status}) {
     state.morningStatus = status;
@@ -172,11 +204,23 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
     state.fullDayStatus = status;
   }
 
+  setStateAbsenceStatus({
+    required DateTime dateStart,
+    required DateTime dateEnd,
+  }) {
+    state.dateStart = dateStart;
+    state.dateEnd = dateEnd;
+  }
+
   setStatusPageFullDayContent() {
     ref.read(statusPageProvider.notifier).setStatusRecapFullDayContent();
   }
 
   setStatusPageHalfDayContent() {
     ref.read(halfdayStatusPageProvider.notifier).setStatusRecapHalfDayContent();
+  }
+
+  setStatusPageVacationContent() {
+    ref.read(vacationStatusPageProvider.notifier).setSelectedStatusVacation();
   }
 }
