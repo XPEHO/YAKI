@@ -202,7 +202,7 @@ void main() {
       );
       final List<DeclarationModel> declarations = [
         declarationMorning,
-        declarationAfternoon
+        declarationAfternoon,
       ];
       test(
         'should set declaration status after creating declarations',

@@ -155,7 +155,7 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
 
     List<DeclarationModel> declarations = [
       newDeclarationMorning,
-      newDeclarationAfternoon
+      newDeclarationAfternoon,
     ];
     final List<String> halfDayStatus =
         await declarationRepository.createHalfDay(declarations);

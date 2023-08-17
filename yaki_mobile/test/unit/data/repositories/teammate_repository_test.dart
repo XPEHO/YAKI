@@ -54,7 +54,7 @@ void main() {
               userLastName: "Val",
               declarationDate: DateTime.parse('2023-03-20T10:00:00.950Z'),
               declarationStatus: "remote",
-            )
+            ),
           ];
 
           when(mockedTeamMateApi.getTeammate(captainId)).thenAnswer(

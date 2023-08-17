@@ -95,7 +95,7 @@ class _CardTeammateState extends State<CardTeammateHalfday> {
                               fontWeight: FontWeight.bold,
                               fontSize: 20,
                             ),
-                          )
+                          ),
                         ],
                       ),
                       Align(

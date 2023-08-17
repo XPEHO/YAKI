@@ -6,7 +6,7 @@ void main() {
   // simulate json send by API
   Map<String, dynamic> loginModelAsJson = {
     "login": "dupond",
-    "password": "dupond"
+    "password": "dupond",
   };
   // model instance once json is parsed into dart usable model
   LoginModel loginModel = LoginModel(

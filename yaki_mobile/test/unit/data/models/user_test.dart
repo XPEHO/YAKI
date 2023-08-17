@@ -12,7 +12,7 @@ void main() {
     "userId": 15,
     "lastName": "dupond",
     "firstName": "dupond",
-    "email": "dupond@gmail.com"
+    "email": "dupond@gmail.com",
   };
   // model instance once json is parsed into dart usable model
   User user = User(
