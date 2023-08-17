@@ -58,7 +58,7 @@ class Header extends StatelessWidget {
                           : "assets/images/dots.svg",
                       onPressed: onPressed ?? () {},
                     ),
-                  ]
+                  ],
                 ],
               ),
             ),

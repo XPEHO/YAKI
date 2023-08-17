@@ -41,7 +41,7 @@ void main() {
     "userId": 3,
     "lastName": "Dupond",
     "firstName": "Dupond",
-    "email": "dupond@mail.com"
+    "email": "dupond@mail.com",
   };
 
   group(
@@ -87,7 +87,7 @@ void main() {
             "userId": 6,
             "lastName": "Lavigne",
             "firstName": "Lavigne",
-            "email": "lavigne@mail.com"
+            "email": "lavigne@mail.com",
           };
 
           when(mockedLoginApi.postLogin(captainLogin))

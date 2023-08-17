@@ -124,7 +124,7 @@ final goRouterProvider = Provider<GoRouter>(
                   return '/';
                 }
               },
-            )
+            ),
           ],
         ),
         GoRoute(

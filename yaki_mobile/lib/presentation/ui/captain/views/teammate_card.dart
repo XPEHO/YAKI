@@ -96,7 +96,7 @@ class _CardTeammateState extends State<CardTeammate> {
                               fontSize: 20,
                               color: Colors.black,
                             ),
-                          )
+                          ),
                         ],
                       ),
                       Align(
@@ -140,7 +140,7 @@ class _CardTeammateState extends State<CardTeammate> {
                             ),
                           ],
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
