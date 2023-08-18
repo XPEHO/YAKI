@@ -147,9 +147,10 @@ public class UserModel implements UserDetails {
         return true;
     }
 
+
     @Override
     public boolean isEnabled() {
-        return true;
+        return this.enabled;
     }
 
     public void setEnabled(boolean enabled) {

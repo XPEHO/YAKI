@@ -66,6 +66,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         );
         UserModel user = repository.findByLogin(request.login())
                 .orElseThrow();
+        if(user.isEnabled() == false){
+            throw new RuntimeException("you need to confirm your email before logging in");
+        }
         var jwtToken = jwtService.generateToken(user);
         return new AuthenticationResponseEntity(jwtToken, user.getUserId());
     }
