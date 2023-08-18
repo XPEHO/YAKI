@@ -74,12 +74,13 @@ public class AuthenticationServiceImplTest {
 
         // Mock repository findByLogin
         UserModel user = new UserModel("Vache", "Quirit", "vachequirit.doe@example.com", "vachequirit", "encodedPassword");
+        user.setEnabled(true); //simulate the user to verify this email
         when(repository.findByLogin(request.login())).thenReturn(Optional.of(user));
 
         // Mock jwtService.generateToken
         String jwtToken = "mockedJwtToken";
         when(jwtService.generateToken(user)).thenReturn(jwtToken);
-
+        when(jwtService.generateToken(user)).thenReturn(jwtToken);
         // Perform the authenticate operation
         AuthenticationResponseEntity response = authenticationServiceImpl.authenticate(request);
 
