@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import {onBeforeMount} from "vue";
 import TeamListElement from "@/features/captain/components/TeamListElement.vue";
-import SideBarElement from "@/features/shared/components/SideBarElement.vue";
+import SideBarElement from "@/features/shared/components/CategoryElement.vue";
 import SideBarButton from "@/features/shared/components/SideBarButton.vue";
-import ModalTeam from "@/features/shared/components/ModalTeam.vue";
+import ModalTeam from "@/features/shared/popup/ModalTeam.vue";
 
 import {useTeamStore} from "@/stores/teamStore.js";
 
-import isTeamSelected from "../services/isActiveTeam";
+import isTeamSelected from "@/services/isSelectedTeamActive";
 import modalState from "@/features/shared/services/modalTeamState";
 
 import vector from "@/assets/Vector.png";
@@ -24,7 +24,7 @@ const fetchTeams = async () => {
 onBeforeMount(async () => {
   await fetchTeams();
   // automaticaly select first team right after team fetch, and save name
-  if(store.getTeamList.length === 0) return;
+  if (store.getTeamList.length === 0) return;
   isTeamSelected.setTeam(store.getTeamList[0].id);
   store.setTeamName(store.getTeamList[0].teamName);
   //directly fetch teammate from the first team
@@ -51,7 +51,7 @@ const onClickAddTeam = () => {
 const teamModalAccept = async (teamName: string) => {
   switch (modalState.modalMode) {
     case 0:
-      store.createTeam(store.getCaptainId[0], teamName,);
+      store.createTeam(store.getCaptainId[0], teamName);
       break;
     case 1:
       store.updateTeam(store.getTeamId, teamName);
@@ -99,3 +99,4 @@ const teamModalAccept = async (teamName: string) => {
   gap: 0.5rem;
 }
 </style>
+../services/isSelectedTeamActive

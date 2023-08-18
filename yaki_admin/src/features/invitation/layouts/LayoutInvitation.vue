@@ -105,3 +105,4 @@ const addUserToTeam = async (userId: number) => {
   gap: 1.2rem;
 }
 </style>
+@/features/captain/services/isSelectedTeamActive

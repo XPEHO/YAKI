@@ -24,7 +24,7 @@ const props = defineProps({
   </button>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
 .sidebar-button-specific {
   border: none;
   background-color: transparent;

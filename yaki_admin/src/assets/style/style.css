@@ -1,7 +1,6 @@
 * {
   margin: 0;
   padding: 0;
-  text-decoration: none;
 }
 
 body {
@@ -19,6 +18,7 @@ body {
 .sidebar-element-generic-style {
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 1rem;
   width: 100%;
 }
@@ -43,4 +43,67 @@ body {
 
 .sidebar-active-class {
   background-color: #59a9b5;
-} /*# sourceMappingURL=style.css.map */
+}
+
+.modal-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.515);
+}
+
+.modal-container {
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+  border: none;
+  height: 15rem;
+  width: min(90%, 30rem);
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  flex-direction: column;
+}
+
+.button-style-common {
+  cursor: pointer;
+  border-radius: 0.5rem;
+  padding-block: 0.5rem 0.6rem;
+  height: 3rem;
+  transition: transform 0.02s ease, box-shadow 0.02s ease;
+}
+.button-style-common:active {
+  transform: translateY(4px);
+}
+
+.button-style-primary {
+  border: 2px solid #9a822b;
+  background-color: #f5cd3d;
+  box-shadow: 0 5px 0 0rem #9a822b;
+}
+.button-style-primary:active {
+  box-shadow: 0 1px 0 0rem #9a822b;
+}
+
+.button-style-secondary {
+  border: 2px solid #9f9e99;
+  background-color: #d9d6d4;
+  box-shadow: 0 5px 0 0rem #9f9e99;
+}
+.button-style-secondary:active {
+  box-shadow: 0 1px 0 0rem #9f9e99;
+}
+
+.button-text-main {
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: black;
+}
+
+.button-text-secondary {
+  font-size: 1rem;
+  font-weight: 600;
+  color: rgb(75, 74, 74);
+}/*# sourceMappingURL=style.css.map */

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import HeaderYaki from "@/features/shared/components/HeaderYaki.vue";
-import SideBar from "@/features/shared/components/SideBar.vue";
+import SideBar from "@/gobal-layouts/SideBar.vue";
 </script>
 
 <template>
@@ -13,7 +13,7 @@ import SideBar from "@/features/shared/components/SideBar.vue";
   </section>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
 .sidebar-content-container-grid {
   // flex 1 to have this container take the rest of the screen space
   // See assets/style.scss @app {}

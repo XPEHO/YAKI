@@ -2,7 +2,7 @@
 // Importing necessary modules and types
 import TeamMate from "../components/teamMate.vue";
 import SideBarButton from "@/features/shared/components/SideBarButton.vue";
-import ModalValidation from "@/features/shared/components/ModalValidation.vue";
+import ModalValidation from "@/features/shared/popup/ModalValidation.vue";
 import modalValidationState from "@/features/shared/services/modalValidationState";
 
 import {useTeamStore} from "@/stores/teamStore.js";

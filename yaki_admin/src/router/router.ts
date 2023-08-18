@@ -1,12 +1,12 @@
-import { createRouter, createWebHistory } from "vue-router";
-import { useAuthStore } from "@/stores/authStore";
+import {createRouter, createWebHistory} from "vue-router";
+import {useAuthStore} from "@/stores/authStore";
 import PageLogin from "@/features/login/pages/PageLogin.vue";
-import LayoutCaptain from "@/features/captain/layouts/LayoutCaptain.vue";
+import CaptainContent from "@/features/captain/layouts/CaptainContent.vue";
 import LayoutInvitation from "@/features/invitation/layouts/LayoutInvitation.vue";
 import LayoutCustomer from "@/features/customer/layouts/LayoutCustomer.vue";
 import LayoutCaptainByCustomer from "@/features/customer/layouts/LayoutCaptainByCustomer.vue";
 
-import PageApplication from "@/features/PageApplication.vue";
+import CaptainPage from "@/features/captain/CaptainPage.vue";
 import LayoutTeamByCustomer from "@/features/customer/layouts/LayoutTeamByCustomer.vue";
 
 const router = createRouter({
@@ -17,17 +17,17 @@ const router = createRouter({
       path: "/",
       name: "Login",
       component: PageLogin,
-      meta: { transition: "slide-left" },
+      meta: {transition: "slide-left"},
     },
     {
-      path: "/administration",
-      name: "Administration",
-      component: PageApplication,
-      meta: { transition: "slide-right" },
+      path: "/captain",
+      name: "Captain",
+      component: CaptainPage,
+      meta: {transition: "slide-right"},
       children: [
         {
-          path: "captain",
-          component: LayoutCaptain,
+          path: "manage-team",
+          component: CaptainContent,
         },
         {
           path: "invitation",
@@ -39,7 +39,7 @@ const router = createRouter({
       path: "/customer",
       name: "Customer",
       component: LayoutCustomer,
-      meta: { transition: "slide-left" },
+      meta: {transition: "slide-left"},
       children: [
         {
           path: "manage-captain",

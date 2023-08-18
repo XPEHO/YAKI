@@ -5,15 +5,25 @@ import LoginForm from "@/features/login/components/LoginForm.vue";
 
 <template>
   <header-yaki />
-  <img
-    class="banner"
-    src="../../../assets/banner2.png" />
+  <figure class="banner-figure">
+    <img
+      class="banner"
+      src="../../../assets/banner2.png" />
+  </figure>
+
   <login-form />
 </template>
 
-<style lang="scss">
-.banner {
+<style scoped lang="scss">
+.banner-figure {
+  background-color: #f5cd3d;
   width: 100%;
-  display: block;
+  max-height: 12rem;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
 }
 </style>

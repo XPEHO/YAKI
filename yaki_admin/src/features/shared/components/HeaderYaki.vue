@@ -8,7 +8,7 @@
   </header>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
 .header-yaki {
   background-color: #32353c;
   display: flex;

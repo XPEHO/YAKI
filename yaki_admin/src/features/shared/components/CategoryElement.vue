@@ -12,18 +12,19 @@ const props = defineProps({
 </script>
 
 <template>
-  <section
-    class="sidebar-element-specific sidebar-element-generic-style sidebar-active-class">
+  <section class="sidebar-element-specific sidebar-element-generic-style sidebar-active-class">
     <div>
       <figure>
-        <img v-bind:src="iconPath" alt="teams icons" />
+        <img
+          v-bind:src="iconPath"
+          alt="teams icons" />
       </figure>
       <p>{{ innerText }}</p>
     </div>
   </section>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
 .sidebar-element-specific {
   padding-block: 1rem;
 

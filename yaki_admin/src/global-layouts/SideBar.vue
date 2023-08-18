@@ -1,12 +1,10 @@
-<script setup lang="ts"></script>
-
 <template>
   <nav class="navbar">
     <slot> </slot>
   </nav>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
 .navbar {
   background-color: #fafafa;
   padding-block: 2rem;

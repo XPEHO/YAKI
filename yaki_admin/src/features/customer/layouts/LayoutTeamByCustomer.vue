@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { onBeforeMount } from "vue";
+import {onBeforeMount} from "vue";
 
-import { useTeamStore } from "@/stores/teamStore";
-import { useCustomerRightsStore } from "@/stores/customerRightsStore";
+import {useTeamStore} from "@/stores/teamStore";
+import {useCustomerRightsStore} from "@/stores/customerRightsStore";
 
 const teamStore = useTeamStore();
 const customerRight = useCustomerRightsStore();
@@ -45,7 +45,6 @@ onBeforeMount(async () => {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  padding: 2rem;
   align-items: center;
   max-width: 70vw;
 }

@@ -98,3 +98,4 @@ const onClickDeleteTeam = () => {
   background-color: #f5cd3d;
 }
 </style>
+../services/isSelectedTeamActive

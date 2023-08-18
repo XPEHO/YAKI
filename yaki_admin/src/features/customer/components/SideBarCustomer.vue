@@ -4,7 +4,7 @@ import security from "@/assets/security.png";
 import plusIcon from "@/assets/plus.png";
 import router from "@/router/router";
 
-import SideBarElement from "@/features/shared/components/SideBarElement.vue";
+import SideBarElement from "@/features/shared/components/CategoryElement.vue";
 import SideBarButton from "@/features/shared/components/SideBarButton.vue";
 
 const navigateTo = (route: string) => {
