@@ -1,44 +1,53 @@
 <script setup lang="ts">
 import {PropType} from "vue";
-import {UserWithIdType} from "@/models/userWithId.type";
+import type {TeammateType} from "@/models/teammate.type";
 
 import avatarIcon from "@/assets/images/avatar.png";
 import editIcon from "@/assets/images/Edit.png";
 import deleteIcon from "@/assets/images/Delete.png";
+import {UserWithIdType} from "@/models/userWithId.type";
 
 const props = defineProps({
-  captain: {
-    type: Object as PropType<UserWithIdType>,
+  user: {
+    type: Object as PropType<TeammateType | UserWithIdType>,
     required: true,
   },
 });
+
+console.log(props.user);
+
+const emit = defineEmits(["removeUser"]);
+
+const removeUser = () => {
+  emit("removeUser", props.user.id, `${props.user.firstname} ${props.user.lastname}`);
+};
 </script>
 
 <template>
-  <section class="teammate">
-    <div class="teammate-avatar-info">
+  <section class="user">
+    <div class="user-avatar-info">
       <img
         class="avatar"
         v-bind:src="avatarIcon"
         alt="Avatar" />
-      <div class="teammate-info">
-        <h1 class="name">{{ captain.firstname }} {{ captain.lastname }}</h1>
-        <h2 class="email">{{ captain.email }}</h2>
+      <div class="user-info">
+        <h1 class="name">{{ user.firstname }} {{ user.lastname }}</h1>
+        <h2 class="email">{{ user.email }}</h2>
       </div>
     </div>
     <div class="delete-edit-icon">
       <button>
         <figure>
           <img
-            class="teammate-icon"
+            class="user-icon"
             v-bind:src="editIcon"
             alt="" />
         </figure>
       </button>
-      <button @click.prevent="() => {}">
+      <button @click.prevent="removeUser">
         <figure>
           <img
-            class="teammate-icon"
+            class="user-icon"
             v-bind:src="deleteIcon"
             alt="" />
         </figure>
@@ -48,30 +57,31 @@ const props = defineProps({
 </template>
 
 <style scoped lang="scss">
-.teammate {
+.user {
   display: flex;
   flex-direction: row;
   align-items: flex-end;
   justify-content: space-between;
+
   width: 60%;
 }
 
-.teammate-avatar-info {
+.user-avatar-info {
   display: flex;
   flex-direction: row;
   align-items: flex-end;
   gap: 2rem;
 }
 
-.teammate-info {
+.user-info {
   display: flex;
   flex-direction: column;
 }
 .name {
-  font-size: 18px;
+  font-size: $user-info-name-font-size;
 }
 .email {
-  font-size: 15px;
+  font-size: $user-info-email-font-size;
   color: #787878;
 }
 .avatar {
@@ -93,7 +103,7 @@ const props = defineProps({
 
     figure {
       width: 1.6rem;
-      .teammate-icon {
+      .user-icon {
         width: 100%;
         object-fit: contain;
       }
@@ -101,3 +111,4 @@ const props = defineProps({
   }
 }
 </style>
+@/models/teammate.type

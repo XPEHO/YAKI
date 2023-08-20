@@ -5,7 +5,7 @@ import router from "@/router/router";
 
 import PageContentLayout from "@/global-layouts/PageContentLayout.vue";
 import HeaderContentPage from "@/features/shared/components/HeaderContentPage.vue";
-import Teammate from "@/features/captain/components/Teammate.vue";
+import UserCard from "@/features/shared/components/UserCard.vue";
 import SideBarButton from "@/features/shared/components/SideBarButton.vue";
 import ModalValidation from "@/features/shared/popup/ModalValidation.vue";
 import modalValidationState from "@/features/shared/services/modalValidationState";
@@ -53,11 +53,11 @@ const validationModalAccept = () => {
         v-bind:icon-path="plusIcon"
         @click.prevent="router.push({path: `invitation`})" />
 
-      <teammate
-        :team-mate="teamMate"
-        v-for="teamMate in teamStore.getTeammateList"
-        :key="teamMate.id"
-        @RemoteTeammate="removeUserFromTeam" />
+      <user-card
+        v-for="teammate in teamStore.getTeammateList"
+        :user="teammate"
+        :key="teammate.id"
+        @removeUser="removeUserFromTeam" />
     </template>
   </page-content-layout>
 </template>

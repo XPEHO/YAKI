@@ -4,8 +4,8 @@ import {onBeforeMount} from "vue";
 import {useCaptainStore} from "@/stores/captainStore";
 
 import SideBarButton from "@/features/shared/components/SideBarButton.vue";
-import CaptainElement from "../components/CaptainElement.vue";
 import HeaderContentPage from "@/features/shared/components/HeaderContentPage.vue";
+import UserCard from "@/features/shared/components/UserCard.vue";
 import plusIcon from "@/assets/images/plus.png";
 
 const captainStore = useCaptainStore();
@@ -30,9 +30,9 @@ onBeforeMount(async () => {
     @click.prevent="router.push({path: 'invitation'})" />
 
   <div class="captain-list">
-    <captain-element
-      :captain="captain"
+    <user-card
       v-for="captain in captainStore.getCaptainList"
+      :user="captain"
       :key="captain.id" />
   </div>
 </template>

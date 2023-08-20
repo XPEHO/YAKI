@@ -1,6 +1,6 @@
 import {defineStore} from "pinia";
 import {teamMateService} from "@/services/teamMate.service";
-import {TeammateType} from "@/models/teamMate.type";
+import {TeammateType} from "@/models/teammate.type";
 import {teamService} from "@/services/team.service";
 import {TeamType} from "@/models/team.type";
 

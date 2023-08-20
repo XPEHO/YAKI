@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {onBeforeMount} from "vue";
-import TeamListElement from "@/features/shared/components/TeamListElement.vue";
+import SideBarTeamListElement from "@/features/shared/components/SideBarTeamListElement.vue";
 import SideBarElement from "@/features/shared/components/SideBarCategoryElement.vue";
 import SideBarButton from "@/features/shared/components/SideBarButton.vue";
 import ModalTeam from "@/features/shared/popup/ModalTeam.vue";
@@ -83,7 +83,7 @@ const teamModalAccept = async (teamName: string) => {
     @click="onClickAddTeam" />
 
   <section class="team-list">
-    <team-list-element
+    <side-bar-team-list-element
       v-for="(team, index) in store.getTeamList"
       :key="index"
       v-bind:id="team.id"
@@ -91,5 +91,3 @@ const teamModalAccept = async (teamName: string) => {
       @click.prevent="() => onClickSelectTeam(team.id, team.teamName)" />
   </section>
 </template>
-
-<style lang="scss"></style>

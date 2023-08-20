@@ -37,7 +37,7 @@ const onClickDeleteTeam = () => {
       <button @click="onClickEditTeam">
         <figure>
           <img
-            class="teammate-icon"
+            class="team-mate-icon"
             v-bind:src="editIcon"
             alt="" />
         </figure>
@@ -45,7 +45,7 @@ const onClickDeleteTeam = () => {
       <button @click="onClickDeleteTeam">
         <figure>
           <img
-            class="teammate-icon"
+            class="team-mate-icon"
             v-bind:src="deleteIcon"
             alt="" />
         </figure>
@@ -66,11 +66,13 @@ const onClickDeleteTeam = () => {
 
   p {
     width: 40%;
-    font-size: 0.95rem;
+    font-size: $team-list-element-font-sizer;
     user-select: none;
   }
 
   .delete-edit-icon {
+    display: flex;
+    gap: 0.5rem;
     button {
       border: none;
       background-color: transparent;
@@ -81,7 +83,7 @@ const onClickDeleteTeam = () => {
 
       figure {
         width: 1.3rem;
-        .teammate-icon {
+        .team-mate-icon {
           width: 100%;
           object-fit: contain;
         }

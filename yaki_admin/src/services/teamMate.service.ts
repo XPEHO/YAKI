@@ -1,4 +1,4 @@
-import type {TeammateType, TeammateTypeOut, TeammateTypeIn} from "@/models/teamMate.type";
+import type {TeammateType, TeammateTypeOut, TeammateTypeIn} from "@/models/teammate.type";
 import {environmentVar} from "@/envPlaceholder";
 import {authHeader} from "@/utils/authUtils";
 import {handleResponse} from "@/utils/responseUtils";

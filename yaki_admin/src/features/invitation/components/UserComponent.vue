@@ -95,7 +95,7 @@ const invitBtnClick = () => {
   justify-content: space-around;
   align-items: center;
 
-  width: 55%;
+  width: min(90%, 40rem);
 
   background-color: #d9d9d9;
   border: 3px solid transparent;
@@ -122,7 +122,7 @@ const invitBtnClick = () => {
       }
       article {
         p:nth-child(1) {
-          font-size: 1.1rem;
+          font-size: $user-component-name-font-size;
           font-family: Inter;
           font-weight: 900;
         }
@@ -138,7 +138,7 @@ const invitBtnClick = () => {
       padding-block: 0.6rem;
 
       color: #000;
-      font-size: 0.9rem;
+      font-size: $user-component-button-font-size;
       font-family: Inter;
       font-weight: 900;
 
