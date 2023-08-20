@@ -1,4 +1,4 @@
-export type TeamMateType = {
+export type TeammateType = {
   id: number;
   teamId: number;
   userId: number;

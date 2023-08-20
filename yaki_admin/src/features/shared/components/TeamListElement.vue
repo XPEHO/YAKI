@@ -37,7 +37,7 @@ const onClickDeleteTeam = () => {
       <button @click="onClickEditTeam">
         <figure>
           <img
-            class="team-mate-icon"
+            class="teammate-icon"
             v-bind:src="editIcon"
             alt="" />
         </figure>
@@ -45,7 +45,7 @@ const onClickDeleteTeam = () => {
       <button @click="onClickDeleteTeam">
         <figure>
           <img
-            class="team-mate-icon"
+            class="teammate-icon"
             v-bind:src="deleteIcon"
             alt="" />
         </figure>
@@ -81,7 +81,7 @@ const onClickDeleteTeam = () => {
 
       figure {
         width: 1.3rem;
-        .team-mate-icon {
+        .teammate-icon {
           width: 100%;
           object-fit: contain;
         }

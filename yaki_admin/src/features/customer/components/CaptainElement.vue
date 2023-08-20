@@ -15,15 +15,13 @@ const props = defineProps({
 </script>
 
 <template>
-  <dialog></dialog>
-
-  <section class="team-mate">
-    <div class="team-mate-avatar-info">
+  <section class="teammate">
+    <div class="teammate-avatar-info">
       <img
         class="avatar"
         v-bind:src="avatarIcon"
         alt="Avatar" />
-      <div class="team-mate-info">
+      <div class="teammate-info">
         <h1 class="name">{{ captain.firstname }} {{ captain.lastname }}</h1>
         <h2 class="email">{{ captain.email }}</h2>
       </div>
@@ -32,7 +30,7 @@ const props = defineProps({
       <button>
         <figure>
           <img
-            class="team-mate-icon"
+            class="teammate-icon"
             v-bind:src="editIcon"
             alt="" />
         </figure>
@@ -40,7 +38,7 @@ const props = defineProps({
       <button @click.prevent="() => {}">
         <figure>
           <img
-            class="team-mate-icon"
+            class="teammate-icon"
             v-bind:src="deleteIcon"
             alt="" />
         </figure>
@@ -49,8 +47,8 @@ const props = defineProps({
   </section>
 </template>
 
-<style lang="scss">
-.team-mate {
+<style scoped lang="scss">
+.teammate {
   display: flex;
   flex-direction: row;
   align-items: flex-end;
@@ -58,14 +56,14 @@ const props = defineProps({
   width: 60%;
 }
 
-.team-mate-avatar-info {
+.teammate-avatar-info {
   display: flex;
   flex-direction: row;
   align-items: flex-end;
   gap: 2rem;
 }
 
-.team-mate-info {
+.teammate-info {
   display: flex;
   flex-direction: column;
 }
@@ -95,7 +93,7 @@ const props = defineProps({
 
     figure {
       width: 1.6rem;
-      .team-mate-icon {
+      .teammate-icon {
         width: 100%;
         object-fit: contain;
       }
