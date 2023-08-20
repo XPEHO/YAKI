@@ -93,17 +93,16 @@ $box-shadow-with: 5px;
 $translation-y: calc($box-shadow-with - 1px);
 
 $button-background-color-primary: #f5cd3d;
-$shadow-color-primary: #9a822b;
+$shadow-color-primary: #c4a63a;
 
-$button-background-color-secondary: #d9d6d4;
-$shadow-color-secondary: #9f9e99;
+$button-background-color-secondary: #f1f0ee;
+$shadow-color-secondary: #c3c1b9;
 
 .button-style-common {
   cursor: pointer;
 
-  border-radius: 0.5rem;
-  padding-block: 0.5rem 0.6rem;
-  height: 3rem;
+  border-radius: 16px;
+  padding-block: 0.9rem 1.1rem;
 
   transition: transform 0.02s ease, box-shadow 0.02s ease;
 

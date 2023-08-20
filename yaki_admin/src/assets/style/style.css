@@ -68,9 +68,8 @@ body {
 
 .button-style-common {
   cursor: pointer;
-  border-radius: 0.5rem;
-  padding-block: 0.5rem 0.6rem;
-  height: 3rem;
+  border-radius: 16px;
+  padding-block: 0.9rem 1.1rem;
   transition: transform 0.02s ease, box-shadow 0.02s ease;
 }
 .button-style-common:active {
@@ -78,21 +77,21 @@ body {
 }
 
 .button-style-primary {
-  border: 2px solid #9a822b;
+  border: 2px solid #c4a63a;
   background-color: #f5cd3d;
-  box-shadow: 0 5px 0 0rem #9a822b;
+  box-shadow: 0 5px 0 0rem #c4a63a;
 }
 .button-style-primary:active {
-  box-shadow: 0 1px 0 0rem #9a822b;
+  box-shadow: 0 1px 0 0rem #c4a63a;
 }
 
 .button-style-secondary {
-  border: 2px solid #9f9e99;
-  background-color: #d9d6d4;
-  box-shadow: 0 5px 0 0rem #9f9e99;
+  border: 2px solid #c3c1b9;
+  background-color: #f1f0ee;
+  box-shadow: 0 5px 0 0rem #c3c1b9;
 }
 .button-style-secondary:active {
-  box-shadow: 0 1px 0 0rem #9f9e99;
+  box-shadow: 0 1px 0 0rem #c3c1b9;
 }
 
 .button-text-main {

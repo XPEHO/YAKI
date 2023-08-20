@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import router from "@/router/router";
-import plusIcon from "@/assets/plus.png";
-import { onBeforeMount } from "vue";
+import {onBeforeMount} from "vue";
+import {useCaptainStore} from "@/stores/captainStore";
+
 import SideBarButton from "@/features/shared/components/SideBarButton.vue";
-import { useCaptainStore } from "@/stores/captainStore";
 import CaptainElement from "../components/CaptainElement.vue";
+import HeaderContentPage from "@/features/shared/components/HeaderContentPage.vue";
+import plusIcon from "@/assets/plus.png";
 
 const captainStore = useCaptainStore();
 
@@ -20,13 +22,14 @@ onBeforeMount(async () => {
 <template>
   <div class="layout-captain">
     <div class="customer-view-captains">
-      <h1 class="title">Captains List</h1>
-      <h2 class="text">Manage your captains here</h2>
-      <hr class="line" />
+      <header-content-page
+        v-bind:title="'Captains List'"
+        v-bind:text="'Manage your captains here'" />
+
       <SideBarButton
         v-bind:inner-text="'To invite a captain'"
         v-bind:icon-path="plusIcon"
-        @click.prevent="router.push({ path: 'invitation' })" />
+        @click.prevent="router.push({path: 'invitation'})" />
 
       <div class="captain-list">
         <captain-element

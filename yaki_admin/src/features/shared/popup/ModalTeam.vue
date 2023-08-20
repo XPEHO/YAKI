@@ -13,11 +13,11 @@ const emit = defineEmits(["ModalTeam"]);
 
 const validateModalBtn = () => {
   emit("ModalTeam", modalTeamState.teamInputValue);
-  modalTeamState.changeVisibility();
+  modalTeamState.visibilitySwitch();
 };
 
 const CancelModalBtn = () => {
-  modalTeamState.changeVisibility();
+  modalTeamState.visibilitySwitch();
 };
 </script>
 

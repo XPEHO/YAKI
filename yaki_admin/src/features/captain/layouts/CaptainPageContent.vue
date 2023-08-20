@@ -1,15 +1,15 @@
 <script setup lang="ts">
-// Importing necessary modules and types
+import {onBeforeMount} from "vue";
+import {useTeamStore} from "@/stores/teamStore.js";
+import router from "@/router/router";
+
 import TeamMate from "../components/teamMate.vue";
 import SideBarButton from "@/features/shared/components/SideBarButton.vue";
+import HeaderContentPage from "@/features/shared/components/HeaderContentPage.vue";
 import ModalValidation from "@/features/shared/popup/ModalValidation.vue";
 import modalValidationState from "@/features/shared/services/modalValidationState";
 
-import {useTeamStore} from "@/stores/teamStore.js";
-
 import plusIcon from "@/assets/plus.png";
-import router from "@/router/router";
-import {onBeforeMount} from "vue";
 
 const teamStore = useTeamStore();
 
@@ -39,23 +39,23 @@ const validationModalAccept = () => {
   <modal-validation
     v-show="modalValidationState.isShowed"
     @modal-accept="validationModalAccept" />
-  <div class="captain-view">
-    <h1 class="title">Team Members</h1>
-    <h2 class="text">Manage your team members here</h2>
-    <hr class="line" />
 
+  <div class="captain-view">
+    <header-content-page
+      v-bind:title="'Team Members'"
+      v-bind:text="'Manage your team members here'" />
     <side-bar-button
       v-bind:inner-text="'Add Teammate'"
       v-bind:icon-path="plusIcon"
       @click.prevent="router.push({path: `invitation`})" />
 
-    <div class="team-mate-list">
+    <section class="team-mate-list">
       <team-mate
         :team-mate="teamMate"
         v-for="teamMate in teamStore.getTeammateList"
         :key="teamMate.id"
         @RemoteTeammate="removeUserFromTeam" />
-    </div>
+    </section>
   </div>
 </template>
 
@@ -66,20 +66,7 @@ const validationModalAccept = () => {
   padding: 30px;
   font-family: "Inter", sans-serif;
 }
-.title {
-  font-size: 38px;
-}
-.text {
-  font-size: 18px;
-  color: #787878;
-  margin-bottom: 20px;
-}
-.line {
-  width: 80%;
-  background-color: #efefefed;
 
-  margin-bottom: 1rem;
-}
 .team-mate-list {
   padding: 50px;
   display: flex;

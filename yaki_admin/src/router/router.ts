@@ -1,9 +1,9 @@
 import {createRouter, createWebHistory} from "vue-router";
 import {useAuthStore} from "@/stores/authStore";
 import PageLogin from "@/features/login/pages/PageLogin.vue";
-import CaptainContent from "@/features/captain/layouts/CaptainContent.vue";
-import LayoutInvitation from "@/features/invitation/layouts/LayoutInvitation.vue";
-import LayoutCustomer from "@/features/customer/layouts/LayoutCustomer.vue";
+import CaptainPageContent from "@/features/captain/layouts/CaptainPageContent.vue";
+import UserInvitationPageContent from "@/features/invitation/layouts/UserInvitationPageContent.vue";
+import CustomerPage from "@/features/customer/CustomerPage.vue";
 import LayoutCaptainByCustomer from "@/features/customer/layouts/LayoutCaptainByCustomer.vue";
 
 import CaptainPage from "@/features/captain/CaptainPage.vue";
@@ -27,18 +27,18 @@ const router = createRouter({
       children: [
         {
           path: "manage-team",
-          component: CaptainContent,
+          component: CaptainPageContent,
         },
         {
           path: "invitation",
-          component: LayoutInvitation,
+          component: UserInvitationPageContent,
         },
       ],
     },
     {
       path: "/customer",
       name: "Customer",
-      component: LayoutCustomer,
+      component: CustomerPage,
       meta: {transition: "slide-left"},
       children: [
         {
@@ -51,7 +51,7 @@ const router = createRouter({
         },
         {
           path: "invitation",
-          component: LayoutInvitation,
+          component: UserInvitationPageContent,
         },
       ],
     },

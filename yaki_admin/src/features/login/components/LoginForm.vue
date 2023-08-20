@@ -89,7 +89,7 @@ form {
   display: flex;
   justify-content: center;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1rem;
   padding-block-start: 8rem;
   margin-inline: auto;
   width: min(90%, 400px);
@@ -104,16 +104,20 @@ form {
 
   input {
     padding-inline-start: 1rem;
-    padding-block: 0.75rem;
-    font-size: 1.2rem;
-    border-radius: 0.25rem;
+    padding-block: 1.3rem;
+    font-size: 1rem;
+    border-radius: 16px;
     border: 1px solid #ccc;
+  }
+
+  input:nth-of-type(2) {
+    margin-bottom: 1.5rem;
   }
 
   figure {
     width: 1.8rem;
     position: absolute;
-    top: 56.5%;
+    top: 54%;
     right: 1%;
     transform: translate(-50%, -50%);
 

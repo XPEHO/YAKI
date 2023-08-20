@@ -15,7 +15,7 @@ const modalTeamState = reactive({
   },
 
   // when making modal visible change input text depending of edit or creation
-  changeVisibility() {
+  visibilitySwitch() {
     if (modalTeamState.modalMode === 1) {
       this.setTeamInputValue(this.selectedTeamName);
     } else {
@@ -24,6 +24,8 @@ const modalTeamState = reactive({
     this.isShowed = !this.isShowed;
   },
 
+  // modalMode 0 = creation, 1 = edit, 2 = delete
+  // Modal mode is used to change modal content
   setModalMode(mode: number) {
     this.modalMode = mode;
   },

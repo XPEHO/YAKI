@@ -1,14 +1,13 @@
 <script setup lang="ts">
 import PageLayout from "@/global-layouts/PageLayout.vue";
-import SideBarCaptainContent from "@/features/captain/components/SideBarCaptainContent.vue";
-
+import SideBarCustomer from "@/features/customer/components/SideBarCustomer.vue";
 import {RouterView} from "vue-router";
 </script>
 
 <template>
   <page-layout>
     <template v-slot:sidebarContent>
-      <side-bar-captain-content />
+      <side-bar-customer />
     </template>
 
     <template v-slot:pageContent>

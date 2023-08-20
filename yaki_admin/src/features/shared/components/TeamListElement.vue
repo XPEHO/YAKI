@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import isTeamSelected from "../services/isActiveTeam";
+import isTeamSelected from "@/features/shared/services/isSelectedTeamActive";
 import editIcon from "@/assets/Edit.png";
 import deleteIcon from "@/assets/Delete.png";
 import modalState from "@/features/shared/services/modalTeamState";
@@ -17,12 +17,12 @@ const props = defineProps({
 
 const onClickEditTeam = () => {
   modalState.setModalMode(1);
-  modalState.changeVisibility();
+  modalState.visibilitySwitch();
 };
 
 const onClickDeleteTeam = () => {
   modalState.setModalMode(2);
-  modalState.changeVisibility();
+  modalState.visibilitySwitch();
 };
 </script>
 
@@ -30,7 +30,7 @@ const onClickDeleteTeam = () => {
   <article
     class="team-list-unit"
     :class="{
-      'team-list-unit-selected': isTeamSelected.isSameIndex(props.id),
+      'team-list-unit-selected': isTeamSelected.isSameTeamId(props.id),
     }">
     <p>{{ props.teamName }}</p>
     <section class="delete-edit-icon">
@@ -98,4 +98,4 @@ const onClickDeleteTeam = () => {
   background-color: #f5cd3d;
 }
 </style>
-../services/isSelectedTeamActive
+@/features/shared/services/isSelectedTeamActive

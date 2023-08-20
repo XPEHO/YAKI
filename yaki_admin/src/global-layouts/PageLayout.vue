@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import HeaderYaki from "@/features/shared/components/HeaderYaki.vue";
-import SideBar from "@/gobal-layouts/SideBar.vue";
+import HeaderYaki from "@/features/shared/components/HeaderMain.vue";
+import SideBar from "@/global-layouts/SideBar.vue";
 </script>
 
 <template>
