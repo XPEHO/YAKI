@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import isTeamSelected from "@/features/shared/services/isSelectedTeamActive";
-import editIcon from "@/assets/Edit.png";
-import deleteIcon from "@/assets/Delete.png";
+import editIcon from "@/assets/images/Edit.png";
+import deleteIcon from "@/assets/images/Delete.png";
 import modalState from "@/features/shared/services/modalTeamState";
 
 const props = defineProps({

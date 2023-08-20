@@ -10,8 +10,8 @@ import {useTeamStore} from "@/stores/teamStore.js";
 import isTeamSelected from "@/features/shared/services/isSelectedTeamActive";
 import modalState from "@/features/shared/services/modalTeamState";
 
-import vector from "@/assets/Vector.png";
-import plusIcon from "@/assets/plus.png";
+import vector from "@/assets/images/Vector.png";
+import plusIcon from "@/assets/images/plus.png";
 import modalTeamState from "@/features/shared/services/modalTeamState";
 
 const store = useTeamStore();

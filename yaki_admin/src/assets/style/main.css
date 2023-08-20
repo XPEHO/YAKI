@@ -18,23 +18,23 @@ body {
 .sidebar-element-generic-style {
   display: flex;
   justify-content: center;
-  align-items: center;
   gap: 1rem;
   width: 100%;
 }
 .sidebar-element-generic-style div {
   display: flex;
-  align-items: flex-start;
-  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
 }
-.sidebar-element-generic-style figure {
+.sidebar-element-generic-style div figure {
   width: 1.8rem;
 }
-.sidebar-element-generic-style figure img {
+.sidebar-element-generic-style div figure img {
   width: 100%;
 }
-.sidebar-element-generic-style p {
-  font-size: 1.4rem;
+.sidebar-element-generic-style div p {
+  font-size: 1.1rem;
   letter-spacing: 0.05rem;
 }
 .sidebar-element-generic-style:hover {
@@ -105,4 +105,4 @@ body {
   font-size: 1rem;
   font-weight: 600;
   color: rgb(75, 74, 74);
-}/*# sourceMappingURL=style.css.map */
+}/*# sourceMappingURL=main.css.map */

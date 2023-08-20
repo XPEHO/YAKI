@@ -1,8 +1,3 @@
-// Colors
-$dark-color: #32353c;
-$blue-color: #59a9b5;
-$yellow-color: #f5cd3d;
-
 * {
   margin: 0;
   padding: 0;
@@ -26,27 +21,27 @@ body {
 .sidebar-element-generic-style {
   display: flex;
   justify-content: center;
-  align-items: center;
   gap: 1rem;
 
   width: 100%;
 
   div {
     display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-  }
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
 
-  figure {
-    width: 1.8rem;
-    img {
-      width: 100%;
+    figure {
+      width: 1.8rem;
+      img {
+        width: 100%;
+      }
     }
-  }
 
-  p {
-    font-size: 1.4rem;
-    letter-spacing: 0.05rem;
+    p {
+      font-size: 1.1rem;
+      letter-spacing: 0.05rem;
+    }
   }
 
   &:hover {
@@ -88,15 +83,6 @@ body {
 
 // BUTTON STYLES ----------------------------------------------------------------------------------------
 // basti like button style
-$border-with: 2px;
-$box-shadow-with: 5px;
-$translation-y: calc($box-shadow-with - 1px);
-
-$button-background-color-primary: #f5cd3d;
-$shadow-color-primary: #c4a63a;
-
-$button-background-color-secondary: #f1f0ee;
-$shadow-color-secondary: #c3c1b9;
 
 .button-style-common {
   cursor: pointer;

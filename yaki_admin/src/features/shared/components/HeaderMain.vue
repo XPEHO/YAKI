@@ -1,7 +1,11 @@
+<script setup lang="ts">
+import Logo from "@/assets/images/LOGO.png";
+</script>
+
 <template>
   <header class="header-yaki">
     <figure>
-      <img src="../../../assets/LOGO.png" />
+      <img v-bind:src="Logo" />
     </figure>
   </header>
 </template>

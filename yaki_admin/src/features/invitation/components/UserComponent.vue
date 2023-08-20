@@ -4,8 +4,8 @@ import type {UserWithIdType} from "@/models/userWithId.type";
 
 import {useTeamStore} from "@/stores/teamStore.js";
 
-import avatarIcon from "@/assets/avatar.png";
-import YakiButton from "@/features/shared/components/YakiButton.vue";
+import avatarIcon from "@/assets/images/avatar.png";
+import YakiButton from "@/features/shared/components/DefaultButton.vue";
 
 const teamStore = useTeamStore();
 
@@ -89,13 +89,13 @@ const invitBtnClick = () => {
   </section>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
 .user-component__card {
   display: flex;
   justify-content: space-around;
   align-items: center;
 
-  width: 100%;
+  width: 55%;
 
   background-color: #d9d9d9;
   border: 3px solid transparent;
@@ -113,7 +113,7 @@ const invitBtnClick = () => {
       flex-grow: 3;
 
       figure {
-        width: 4rem;
+        width: 3rem;
         img {
           user-select: none;
           width: 100%;
@@ -122,7 +122,7 @@ const invitBtnClick = () => {
       }
       article {
         p:nth-child(1) {
-          font-size: 1.2rem;
+          font-size: 1.1rem;
           font-family: Inter;
           font-weight: 900;
         }
@@ -130,14 +130,12 @@ const invitBtnClick = () => {
     }
 
     .button-class-test {
-      flex-basis: 10rem;
+      flex-basis: 8rem;
 
       border: none;
       border-radius: 5rem;
 
-      height: 90%;
-
-      padding-block: 1rem;
+      padding-block: 0.6rem;
 
       color: #000;
       font-size: 0.9rem;

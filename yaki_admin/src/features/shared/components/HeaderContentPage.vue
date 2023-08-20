@@ -17,10 +17,10 @@ const props = defineProps({
 </template>
 <style lang="scss">
 .title {
-  font-size: 38px;
+  font-size: 25px;
 }
 .text {
-  font-size: 18px;
+  font-size: 15px;
   color: #787878;
   margin-bottom: 20px;
 }

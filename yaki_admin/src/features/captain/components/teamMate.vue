@@ -2,9 +2,9 @@
 import {PropType} from "vue";
 import type {TeamMateType} from "@/models/teamMate.type";
 
-import avatarIcon from "@/assets/avatar.png";
-import editIcon from "@/assets/Edit.png";
-import deleteIcon from "@/assets/Delete.png";
+import avatarIcon from "@/assets/images/avatar.png";
+import editIcon from "@/assets/images/Edit.png";
+import deleteIcon from "@/assets/images/Delete.png";
 
 const props = defineProps({
   teamMate: {

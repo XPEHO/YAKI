@@ -30,9 +30,6 @@ const props = defineProps({
   background-color: transparent;
   transition: background-color 0.2s;
   padding-block: 0.7rem;
-  div {
-    align-items: flex-start;
-  }
   p {
     color: rgb(4, 3, 3);
   }

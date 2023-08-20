@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { PropType } from "vue";
-import { UserWithIdType } from "@/models/userWithId.type";
+import {PropType} from "vue";
+import {UserWithIdType} from "@/models/userWithId.type";
 
-import avatarIcon from "@/assets/avatar.png";
-import editIcon from "@/assets/Edit.png";
-import deleteIcon from "@/assets/Delete.png";
+import avatarIcon from "@/assets/images/avatar.png";
+import editIcon from "@/assets/images/Edit.png";
+import deleteIcon from "@/assets/images/Delete.png";
 
 const props = defineProps({
   captain: {
@@ -19,7 +19,10 @@ const props = defineProps({
 
   <section class="team-mate">
     <div class="team-mate-avatar-info">
-      <img class="avatar" v-bind:src="avatarIcon" alt="Avatar" />
+      <img
+        class="avatar"
+        v-bind:src="avatarIcon"
+        alt="Avatar" />
       <div class="team-mate-info">
         <h1 class="name">{{ captain.firstname }} {{ captain.lastname }}</h1>
         <h2 class="email">{{ captain.email }}</h2>
@@ -28,12 +31,18 @@ const props = defineProps({
     <div class="delete-edit-icon">
       <button>
         <figure>
-          <img class="team-mate-icon" v-bind:src="editIcon" alt="" />
+          <img
+            class="team-mate-icon"
+            v-bind:src="editIcon"
+            alt="" />
         </figure>
       </button>
       <button @click.prevent="() => {}">
         <figure>
-          <img class="team-mate-icon" v-bind:src="deleteIcon" alt="" />
+          <img
+            class="team-mate-icon"
+            v-bind:src="deleteIcon"
+            alt="" />
         </figure>
       </button>
     </div>

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import HeaderYaki from "@/features/shared/components/HeaderMain.vue";
 import LoginForm from "@/features/login/components/LoginForm.vue";
+import Banner from "@/assets/images/banner2.png";
 </script>
 
 <template>
@@ -8,7 +9,7 @@ import LoginForm from "@/features/login/components/LoginForm.vue";
   <figure class="banner-figure">
     <img
       class="banner"
-      src="../../../assets/banner2.png" />
+      v-bind:src="Banner" />
   </figure>
 
   <login-form />

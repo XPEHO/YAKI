@@ -1,11 +1,11 @@
 <template>
-  <nav class="navbar">
+  <nav class="sidebar">
     <slot> </slot>
   </nav>
 </template>
 
 <style scoped lang="scss">
-.navbar {
+.sidebar {
   background-color: #fafafa;
   padding-block: 2rem;
   display: flex;

@@ -1,12 +1,17 @@
 <script>
 import {useAuthStore} from "@/stores/authStore";
 
+import eyesIcon from "@/assets/images/eye.png";
+import btnClickSound from "@/assets/sound/btnClick.mp3";
+
 export default {
   mounted() {
     this.audioContainer = document.getElementById("audioContainer");
   },
   data() {
     return {
+      eyesIcon: eyesIcon,
+      btnClickSound: btnClickSound,
       audioContainer: null,
       usernamePlaceholder: "Enter your login",
       passwordPlaceholder: "Enter your password",
@@ -61,7 +66,7 @@ export default {
       :placeholder="passwordPlaceholder" />
     <figure>
       <img
-        src="../../../assets/eye.png"
+        v-bind:src="eyesIcon"
         @click.prevent="togglePasswordVisibility" />
     </figure>
     <button
@@ -78,7 +83,7 @@ export default {
 
   <audio id="audioContainer">
     <source
-      src="../../../assets/btnClick.mp3"
+      v-bind:src="btnClickSound"
       type="audio/mpeg" />
   </audio>
 </template>
