@@ -1,6 +1,8 @@
 name: Update the production
 
 on:
+  push:
+    branches: ["chore/prod_CI_CD"]
   workflow_dispatch:
     inputs:
       reason:
@@ -83,4 +85,3 @@ jobs:
           docker build -t yaki_admin .
           docker tag yaki_admin ghcr.io/xpeho/yaki:frontend-admin-prod
           docker push ghcr.io/xpeho/yaki:frontend-admin-prod
-          
