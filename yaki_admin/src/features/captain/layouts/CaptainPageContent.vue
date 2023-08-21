@@ -10,8 +10,6 @@ import SideBarButton from "@/features/shared/components/SideBarButton.vue";
 import ModalValidation from "@/features/shared/popup/ModalValidation.vue";
 import modalValidationState from "@/features/shared/services/modalValidationState";
 
-import {h} from "vue";
-
 import plusIcon from "@/assets/images/plus.png";
 
 const teamStore = useTeamStore();
@@ -27,9 +25,6 @@ onBeforeMount(async () => {
 const removeUserFromTeam = (id: number, informations: string) => {
   teamStore.setTeammateToDelete(id);
 
-  testdisplay();
-
-  testFunction();
   modalValidationState.setInformation(informations);
   modalValidationState.changeVisibility();
 };
@@ -40,33 +35,12 @@ const validationModalAccept = () => {
     fetchTeammates();
   }, 150);
 };
-
-const testFunction = () => {
-  return h(ModalValidation, {
-    vShow: modalValidationState.isShowed,
-    "onUpdate:vShow": (value: boolean) => {
-      modalValidationState.isShowed = value;
-    },
-    "onModal-accept": validationModalAccept,
-  });
-};
-
-const testdisplay = () => {
-  return h("div", {innerHTML: "hello"});
-};
-
-/*
-
-
-*/
 </script>
 
 <template>
-  <!-- <modal-validation
+  <modal-validation
     v-show="modalValidationState.isShowed"
-    @modal-accept="validationModalAccept" /> -->
-
-  {{ testdisplay() }}
+    @modal-accept="validationModalAccept" />
 
   <page-content-layout>
     <template #pageContentHeader>
