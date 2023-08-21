@@ -1,6 +1,8 @@
 name: Update the production
 
 on:
+  push:
+    branches: ["chore/prod_CI_CD"]
   workflow_dispatch:
     inputs:
       reason:
