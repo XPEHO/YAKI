@@ -27,10 +27,11 @@ onBeforeMount(async () => {
 const removeUserFromTeam = (id: number, informations: string) => {
   teamStore.setTeammateToDelete(id);
 
-  modalValidationState.setInformation(informations);
-  modalValidationState.changeVisibility();
+  testdisplay();
 
   testFunction();
+  modalValidationState.setInformation(informations);
+  modalValidationState.changeVisibility();
 };
 
 const validationModalAccept = () => {
@@ -56,13 +57,17 @@ const testdisplay = () => {
 
 /*
 
-<modal-validation
-          v-show="modalValidationState.isShowed"
-          @modal-accept="validationModalAccept" />`
+
 */
 </script>
 
 <template>
+  <!-- <modal-validation
+    v-show="modalValidationState.isShowed"
+    @modal-accept="validationModalAccept" /> -->
+
+  {{ testdisplay() }}
+
   <page-content-layout>
     <template #pageContentHeader>
       <header-content-page
