@@ -46,7 +46,7 @@ const addUserToTeam = async (userId: number) => {
         v-bind:icon-path="backIcon"
         @click.prevent="router.go(-1)" />
 
-      <user-invitation-component
+      <user-invitation-card
         v-for="user in users.list"
         v-bind:key="user.id"
         class="user_unit"
