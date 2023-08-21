@@ -1,6 +1,8 @@
 name: Restart PROD
 
 on:
+  push:
+    branches: ["chore/prod_CI_CD"]
   workflow_run:
     workflows:
       - Update the production
