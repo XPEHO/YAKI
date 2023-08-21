@@ -8,7 +8,7 @@ import type {UserWithIdType} from "@/models/userWithId.type";
 import {usersService} from "@/services/users.service";
 
 import PageContentLayout from "@/global-layouts/PageContentLayout.vue";
-import UserComponent from "@/features/invitation/components/UserComponent.vue";
+import UserInvitationCard from "@/features/invitation/components/UserInvitationCard.vue";
 import SideBarButton from "@/features/shared/components/SideBarButton.vue";
 import HeaderContentPage from "@/features/shared/components/HeaderContentPage.vue";
 import backIcon from "@/assets/images/arrow-back.png";
@@ -46,7 +46,7 @@ const addUserToTeam = async (userId: number) => {
         v-bind:icon-path="backIcon"
         @click.prevent="router.go(-1)" />
 
-      <user-component
+      <user-invitation-component
         v-for="user in users.list"
         v-bind:key="user.id"
         class="user_unit"

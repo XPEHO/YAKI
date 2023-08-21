@@ -10,7 +10,7 @@ export const useTeamStore = defineStore("teamStore", {
     captainsId: [] as number[],
     teamSelectedId: 0 as number,
     teamName: "" as string,
-    teammate: [] as TeammateType[],
+    teammateList: [] as TeammateType[],
     teamList: [] as TeamType[],
     teammateToDelete: 0 as number,
     teamToDelete: 0 as number,
@@ -30,7 +30,7 @@ export const useTeamStore = defineStore("teamStore", {
       return this.teamName;
     },
     getTeammateList(): TeammateType[] {
-      return this.teammate;
+      return this.teammateList;
     },
     getTeamList(): TeamType[] {
       return this.teamList;
@@ -76,7 +76,7 @@ export const useTeamStore = defineStore("teamStore", {
     // get all teammate of a team
     async getTeammateWithinTeam(teamId: number): Promise<void> {
       this.teamSelectedId = teamId;
-      this.teammate = await teamMateService.getAllWithinTeam(this.teamSelectedId);
+      this.teammateList = await teamMateService.getAllWithinTeam(this.teamSelectedId);
     },
 
     // add a selected user to a team
