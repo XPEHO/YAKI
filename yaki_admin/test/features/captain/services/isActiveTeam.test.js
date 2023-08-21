@@ -9,7 +9,7 @@ test("isTeamSelected", () => {
       const teamId = 1;
 
       // Act
-      const result = isTeamSelected.isSameIndex(teamId);
+      const result = isTeamSelected.isSameTeamId(teamId);
 
       // Assert
       expect(result).toBe(true);
@@ -21,7 +21,7 @@ test("isTeamSelected", () => {
       const teamId = 2;
 
       // Act
-      const result = isTeamSelected.isSameIndex(teamId);
+      const result = isTeamSelected.isSameTeamId(teamId);
 
       // Assert
       expect(result).toBe(false);
