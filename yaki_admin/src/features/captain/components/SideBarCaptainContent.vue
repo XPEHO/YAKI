@@ -1,17 +1,17 @@
 <script setup lang="ts">
 import {onBeforeMount} from "vue";
-import TeamListElement from "@/features/captain/components/TeamListElement.vue";
-import SideBarElement from "@/features/shared/components/SideBarElement.vue";
+import SideBarTeamListElement from "@/features/shared/components/SideBarTeamListElement.vue";
+import SideBarElement from "@/features/shared/components/SideBarCategoryElement.vue";
 import SideBarButton from "@/features/shared/components/SideBarButton.vue";
-import ModalTeam from "@/features/shared/components/ModalTeam.vue";
+import ModalTeam from "@/features/shared/popup/ModalTeam.vue";
 
 import {useTeamStore} from "@/stores/teamStore.js";
 
-import isTeamSelected from "../services/isActiveTeam";
+import isTeamSelected from "@/features/shared/services/isSelectedTeamActive";
 import modalState from "@/features/shared/services/modalTeamState";
 
-import vector from "@/assets/Vector.png";
-import plusIcon from "@/assets/plus.png";
+import vector from "@/assets/images/Vector.png";
+import plusIcon from "@/assets/images/plus.png";
 import modalTeamState from "@/features/shared/services/modalTeamState";
 
 const store = useTeamStore();
@@ -24,8 +24,8 @@ const fetchTeams = async () => {
 onBeforeMount(async () => {
   await fetchTeams();
   // automaticaly select first team right after team fetch, and save name
-  if(store.getTeamList.length === 0) return;
-  isTeamSelected.setTeam(store.getTeamList[0].id);
+  if (store.getTeamList.length === 0) return;
+  isTeamSelected.setTeamId(store.getTeamList[0].id);
   store.setTeamName(store.getTeamList[0].teamName);
   //directly fetch teammate from the first team
   store.getTeammateWithinTeam(store.getTeamList[0].id);
@@ -33,7 +33,7 @@ onBeforeMount(async () => {
 
 const onClickSelectTeam = (id: number, teamName: string) => {
   // style change on selection
-  isTeamSelected.setTeam(id);
+  isTeamSelected.setTeamId(id);
   // for input value change for creation or edition
   modalTeamState.setSelectedTeamName(teamName);
   // teamStore
@@ -44,14 +44,14 @@ const onClickSelectTeam = (id: number, teamName: string) => {
 // add team button press to open modal
 const onClickAddTeam = () => {
   modalState.setModalMode(0);
-  modalState.changeVisibility();
+  modalState.visibilitySwitch();
 };
 
 // modal accept button press
 const teamModalAccept = async (teamName: string) => {
   switch (modalState.modalMode) {
     case 0:
-      store.createTeam(store.getCaptainId[0], teamName,);
+      store.createTeam(store.getCaptainId[0], teamName);
       break;
     case 1:
       store.updateTeam(store.getTeamId, teamName);
@@ -77,25 +77,17 @@ const teamModalAccept = async (teamName: string) => {
     v-bind:iconPath="vector"
     v-bind:isSelected="true" />
 
+  <side-bar-button
+    v-bind:inner-text="'Add team'"
+    v-bind:icon-path="plusIcon"
+    @click="onClickAddTeam" />
+
   <section class="team-list">
-    <team-list-element
+    <side-bar-team-list-element
       v-for="(team, index) in store.getTeamList"
       :key="index"
       v-bind:id="team.id"
       v-bind:teamName="team.teamName"
       @click.prevent="() => onClickSelectTeam(team.id, team.teamName)" />
   </section>
-  <side-bar-button
-    v-bind:inner-text="'Add team'"
-    v-bind:icon-path="plusIcon"
-    @click="onClickAddTeam" />
 </template>
-
-<style lang="scss">
-.team-list {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-}
-</style>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import isTeamSelected from "../services/isActiveTeam";
-import editIcon from "@/assets/Edit.png";
-import deleteIcon from "@/assets/Delete.png";
+import isTeamSelected from "@/features/shared/services/isSelectedTeamActive";
+import editIcon from "@/assets/images/Edit.png";
+import deleteIcon from "@/assets/images/Delete.png";
 import modalState from "@/features/shared/services/modalTeamState";
 
 const props = defineProps({
@@ -17,12 +17,12 @@ const props = defineProps({
 
 const onClickEditTeam = () => {
   modalState.setModalMode(1);
-  modalState.changeVisibility();
+  modalState.visibilitySwitch();
 };
 
 const onClickDeleteTeam = () => {
   modalState.setModalMode(2);
-  modalState.changeVisibility();
+  modalState.visibilitySwitch();
 };
 </script>
 
@@ -30,7 +30,7 @@ const onClickDeleteTeam = () => {
   <article
     class="team-list-unit"
     :class="{
-      'team-list-unit-selected': isTeamSelected.isSameIndex(props.id),
+      'team-list-unit-selected': isTeamSelected.isSameTeamId(props.id),
     }">
     <p>{{ props.teamName }}</p>
     <section class="delete-edit-icon">
@@ -66,11 +66,13 @@ const onClickDeleteTeam = () => {
 
   p {
     width: 40%;
-    font-size: 0.95rem;
+    font-size: $sidebar-teamlist-element-font-size;
     user-select: none;
   }
 
   .delete-edit-icon {
+    display: flex;
+    gap: 0.5rem;
     button {
       border: none;
       background-color: transparent;
@@ -98,3 +100,4 @@ const onClickDeleteTeam = () => {
   background-color: #f5cd3d;
 }
 </style>
+@/features/shared/services/isSelectedTeamActive

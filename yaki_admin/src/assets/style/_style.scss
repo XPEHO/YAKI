@@ -1,0 +1,82 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap");
+  font-family: "Inter", sans-serif;
+
+  font-size: 16px;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100svh;
+}
+
+// SIDEBAR SHARED STYLES ----------------------------------------------------------------------------------------
+
+.sidebar-element-generic-style {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+
+  width: 100%;
+
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+
+    figure {
+      width: 1.8rem;
+      img {
+        width: 100%;
+      }
+    }
+
+    p {
+      font-size: $side-bar-element-font-size;
+      letter-spacing: 0.05rem;
+    }
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.sidebar-active-class {
+  background-color: #59a9b5;
+}
+
+// MODAL SHARED STYLES ----------------------------------------------------------------------------------------
+
+.modal-background {
+  // screen center even when scroll : fixed not absolute
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+
+  background-color: rgba(0, 0, 0, 0.515);
+}
+
+.modal-container {
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+
+  border: none;
+
+  height: 15rem;
+  width: min(90%, 30rem);
+  background-color: rgb(255, 255, 255);
+
+  display: flex;
+  flex-direction: column;
+}

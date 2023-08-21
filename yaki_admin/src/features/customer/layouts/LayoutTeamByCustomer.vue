@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { onBeforeMount } from "vue";
+import {onBeforeMount} from "vue";
 
-import { useTeamStore } from "@/stores/teamStore";
-import { useCustomerRightsStore } from "@/stores/customerRightsStore";
+import {useTeamStore} from "@/stores/teamStore";
+import {useCustomerRightsStore} from "@/stores/customerRightsStore";
+
+import HeaderContentPage from "@/features/shared/components/HeaderContentPage.vue";
 
 const teamStore = useTeamStore();
 const customerRight = useCustomerRightsStore();
@@ -17,35 +19,27 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-  <div class="layout-team">
-    <div class="customer-view-teams">
-      <h1 class="title">Teams List</h1>
-      <h2 class="text">Manage your teams</h2>
-      <hr class="line" />
+  <header-content-page
+    v-bind:title="'Teams List'"
+    v-bind:text="'Manage your teams here'" />
 
-      <div class="team-list">
-        <div
-          class="team-item"
-          :team="team"
-          v-for="team in teamStore.getTeamList"
-          :key="team.id">
-          {{ team.teamName }}
-        </div>
-      </div>
+  <div class="team-list">
+    <div
+      class="team-item"
+      :team="team"
+      v-for="team in teamStore.getTeamList"
+      :key="team.id">
+      {{ team.teamName }}
     </div>
   </div>
 </template>
 
 <style lang="scss">
 .customer-view,
-.customer-view-teams {
-  padding: 2rem;
-}
 .team-list {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  padding: 2rem;
   align-items: center;
   max-width: 70vw;
 }

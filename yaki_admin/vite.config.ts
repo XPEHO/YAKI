@@ -21,4 +21,13 @@ export default defineConfig({
       provider: "istanbul", // or 'v8'
     },
   },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `
+          @import "./src/assets/style/_variables.scss";
+        `,
+      },
+    },
+  },
 });

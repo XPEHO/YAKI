@@ -1,52 +1,51 @@
 <script setup lang="ts">
 import {PropType} from "vue";
-import type {TeamMateType} from "@/models/teamMate.type";
+import type {TeammateType} from "@/models/teammate.type";
 
-import avatarIcon from "@/assets/avatar.png";
-import editIcon from "@/assets/Edit.png";
-import deleteIcon from "@/assets/Delete.png";
+import avatarIcon from "@/assets/images/avatar.png";
+import editIcon from "@/assets/images/Edit.png";
+import deleteIcon from "@/assets/images/Delete.png";
+import {UserWithIdType} from "@/models/userWithId.type";
 
 const props = defineProps({
-  teamMate: {
-    type: Object as PropType<TeamMateType>,
+  user: {
+    type: Object as PropType<TeammateType | UserWithIdType>,
     required: true,
   },
 });
 
-const emit = defineEmits(["RemoteTeammate"]);
+const emit = defineEmits(["removeUser"]);
 
-const removeUserFromTeam = () => {
-  emit("RemoteTeammate", props.teamMate.id, `${props.teamMate.firstName} ${props.teamMate.lastName}`);
+const removeUser = () => {
+  emit("removeUser", props.user.id, `${props.user.firstname} ${props.user.lastname}`);
 };
 </script>
 
 <template>
-  <dialog></dialog>
-
-  <section class="team-mate">
-    <div class="team-mate-avatar-info">
+  <section class="user">
+    <div class="user-avatar-info">
       <img
         class="avatar"
         v-bind:src="avatarIcon"
         alt="Avatar" />
-      <div class="team-mate-info">
-        <h1 class="name">{{ teamMate.firstName }} {{ teamMate.lastName }}</h1>
-        <h2 class="email">{{ teamMate.email }}</h2>
+      <div class="user-info">
+        <h1 class="name">{{ user.firstname }} {{ user.lastname }}</h1>
+        <h2 class="email">{{ user.email }}</h2>
       </div>
     </div>
     <div class="delete-edit-icon">
       <button>
         <figure>
           <img
-            class="team-mate-icon"
+            class="user-icon"
             v-bind:src="editIcon"
             alt="" />
         </figure>
       </button>
-      <button @click.prevent="removeUserFromTeam">
+      <button @click.prevent="removeUser">
         <figure>
           <img
-            class="team-mate-icon"
+            class="user-icon"
             v-bind:src="deleteIcon"
             alt="" />
         </figure>
@@ -55,8 +54,8 @@ const removeUserFromTeam = () => {
   </section>
 </template>
 
-<style lang="scss">
-.team-mate {
+<style scoped lang="scss">
+.user {
   display: flex;
   flex-direction: row;
   align-items: flex-end;
@@ -65,22 +64,22 @@ const removeUserFromTeam = () => {
   width: 60%;
 }
 
-.team-mate-avatar-info {
+.user-avatar-info {
   display: flex;
   flex-direction: row;
   align-items: flex-end;
   gap: 2rem;
 }
 
-.team-mate-info {
+.user-info {
   display: flex;
   flex-direction: column;
 }
 .name {
-  font-size: 18px;
+  font-size: $user-info-name-font-size;
 }
 .email {
-  font-size: 15px;
+  font-size: $user-info-email-font-size;
   color: #787878;
 }
 .avatar {
@@ -102,7 +101,7 @@ const removeUserFromTeam = () => {
 
     figure {
       width: 1.6rem;
-      .team-mate-icon {
+      .user-icon {
         width: 100%;
         object-fit: contain;
       }
@@ -110,3 +109,4 @@ const removeUserFromTeam = () => {
   }
 }
 </style>
+@/models/teammate.type

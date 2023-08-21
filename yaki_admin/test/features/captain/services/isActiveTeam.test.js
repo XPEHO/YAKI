@@ -1,15 +1,15 @@
 import {test, it, expect} from "vitest";
-import {isTeamSelected} from "../../../../src/features/captain/services/isActiveTeam.ts";
+import {isSelectedTeamActive} from "../../../../src/features/shared/services/isSelectedTeamActive.ts";
 
-test("isTeamSelected", () => {
+test("isSelectedTeamActive", () => {
   test("isSameIndex", () => {
     it("should return true if the given team ID is the same as the selected team ID", () => {
       // Arrange
-      isTeamSelected.id = 1;
+      isSelectedTeamActive.id = 1;
       const teamId = 1;
 
       // Act
-      const result = isTeamSelected.isSameIndex(teamId);
+      const result = isSelectedTeamActive.isSameTeamId(teamId);
 
       // Assert
       expect(result).toBe(true);
@@ -17,11 +17,11 @@ test("isTeamSelected", () => {
 
     it("should return false if the given team ID is different from the selected team ID", () => {
       // Arrange
-      isTeamSelected.id = 1;
+      isSelectedTeamActive.id = 1;
       const teamId = 2;
 
       // Act
-      const result = isTeamSelected.isSameIndex(teamId);
+      const result = isSelectedTeamActive.isSameTeamId(teamId);
 
       // Assert
       expect(result).toBe(false);

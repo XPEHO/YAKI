@@ -1,0 +1,108 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap");
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100svh;
+}
+
+.sidebar-element-generic-style {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+}
+.sidebar-element-generic-style div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+}
+.sidebar-element-generic-style div figure {
+  width: 1.8rem;
+}
+.sidebar-element-generic-style div figure img {
+  width: 100%;
+}
+.sidebar-element-generic-style div p {
+  font-size: 1.1rem;
+  letter-spacing: 0.05rem;
+}
+.sidebar-element-generic-style:hover {
+  cursor: pointer;
+}
+
+.sidebar-active-class {
+  background-color: #59a9b5;
+}
+
+.modal-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.515);
+}
+
+.modal-container {
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+  border: none;
+  height: 15rem;
+  width: min(90%, 30rem);
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  flex-direction: column;
+}
+
+.button-style-common {
+  cursor: pointer;
+  border-radius: 16px;
+  padding-block: 0.9rem 1.1rem;
+  transition: transform 0.02s ease, box-shadow 0.02s ease;
+}
+.button-style-common:active {
+  transform: translateY(4px);
+}
+
+.button-style-primary {
+  border: 2px solid #c4a63a;
+  background-color: #f5cd3d;
+  box-shadow: 0 5px 0 0rem #c4a63a;
+}
+.button-style-primary:active {
+  box-shadow: 0 1px 0 0rem #c4a63a;
+}
+
+.button-style-secondary {
+  border: 2px solid #c3c1b9;
+  background-color: #f1f0ee;
+  box-shadow: 0 5px 0 0rem #c3c1b9;
+}
+.button-style-secondary:active {
+  box-shadow: 0 1px 0 0rem #c3c1b9;
+}
+
+.button-text-main {
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: black;
+}
+
+.button-text-secondary {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: rgb(75, 74, 74);
+}/*# sourceMappingURL=main.css.map */

@@ -1,12 +1,12 @@
-import { createRouter, createWebHistory } from "vue-router";
-import { useAuthStore } from "@/stores/authStore";
+import {createRouter, createWebHistory} from "vue-router";
+import {useAuthStore} from "@/stores/authStore";
 import PageLogin from "@/features/login/pages/PageLogin.vue";
-import LayoutCaptain from "@/features/captain/layouts/LayoutCaptain.vue";
-import LayoutInvitation from "@/features/invitation/layouts/LayoutInvitation.vue";
-import LayoutCustomer from "@/features/customer/layouts/LayoutCustomer.vue";
+import CaptainPageContent from "@/features/captain/layouts/CaptainPageContent.vue";
+import UserInvitationPageContent from "@/features/invitation/layouts/UserInvitationPageContent.vue";
+import CustomerPage from "@/features/customer/CustomerPage.vue";
 import LayoutCaptainByCustomer from "@/features/customer/layouts/LayoutCaptainByCustomer.vue";
 
-import PageApplication from "@/features/PageApplication.vue";
+import CaptainPage from "@/features/captain/CaptainPage.vue";
 import LayoutTeamByCustomer from "@/features/customer/layouts/LayoutTeamByCustomer.vue";
 
 const router = createRouter({
@@ -17,29 +17,29 @@ const router = createRouter({
       path: "/",
       name: "Login",
       component: PageLogin,
-      meta: { transition: "slide-left" },
+      meta: {transition: "slide-left"},
     },
     {
-      path: "/administration",
-      name: "Administration",
-      component: PageApplication,
-      meta: { transition: "slide-right" },
+      path: "/captain",
+      name: "Captain",
+      component: CaptainPage,
+      meta: {transition: "slide-right"},
       children: [
         {
-          path: "captain",
-          component: LayoutCaptain,
+          path: "manage-team",
+          component: CaptainPageContent,
         },
         {
           path: "invitation",
-          component: LayoutInvitation,
+          component: UserInvitationPageContent,
         },
       ],
     },
     {
       path: "/customer",
       name: "Customer",
-      component: LayoutCustomer,
-      meta: { transition: "slide-left" },
+      component: CustomerPage,
+      meta: {transition: "slide-left"},
       children: [
         {
           path: "manage-captain",
@@ -51,7 +51,7 @@ const router = createRouter({
         },
         {
           path: "invitation",
-          component: LayoutInvitation,
+          component: UserInvitationPageContent,
         },
       ],
     },

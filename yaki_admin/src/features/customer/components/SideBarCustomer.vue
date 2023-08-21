@@ -1,52 +1,31 @@
 <script setup lang="ts">
-import vector from "@/assets/Vector.png";
-import security from "@/assets/security.png";
-import plusIcon from "@/assets/plus.png";
+import vector from "@/assets/images/Vector.png";
+import security from "@/assets/images/security.png";
+import plusIcon from "@/assets/images/plus.png";
 import router from "@/router/router";
 
-import SideBarElement from "@/features/shared/components/SideBarElement.vue";
+import SideBarElement from "@/features/shared/components/SideBarCategoryElement.vue";
 import SideBarButton from "@/features/shared/components/SideBarButton.vue";
 
 const navigateTo = (route: string) => {
-  router.push(route);
+  router.push({path: route, replace: true});
 };
 </script>
 
 <template>
-  <nav class="navbar">
-    <router-link to="/customer/manage-captain">
-      <side-bar-element
-        v-bind:innerText="'Manage Captains'"
-        v-bind:iconPath="security"
-        v-bind:isSelected="true"
-        @Click="() => {}" />
-    </router-link>
-    <router-link to="/customer/manage-team">
-      <side-bar-element
-        v-bind:innerText="'Manage Teams'"
-        v-bind:iconPath="vector"
-        v-bind:isSelected="true"
-        @Click="() => {}" />
-    </router-link>
-    <router-link to="/customer/invitation">
-      <side-bar-button
-        v-bind:inner-text="'Add captain'"
-        v-bind:icon-path="plusIcon"
-        @click="navigateTo('customer/invitation')" />
-    </router-link>
-  </nav>
-</template>
+  <side-bar-element
+    v-bind:innerText="'Manage Captains'"
+    v-bind:iconPath="security"
+    v-bind:isSelected="true"
+    @click="navigateTo('/customer/manage-captain')" />
 
-<style lang="scss">
-.navbar {
-  min-width: 20vw;
-  height: 100vh;
-  background-color: #fafafa;
-  padding-block: 2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  font-size: 1rem;
-  text-decoration: none;
-}
-</style>
+  <side-bar-element
+    v-bind:innerText="'Manage Teams'"
+    v-bind:iconPath="vector"
+    v-bind:isSelected="true"
+    @click="navigateTo('/customer/manage-team')" />
+  <side-bar-button
+    v-bind:inner-text="'Add team'"
+    v-bind:icon-path="plusIcon"
+    @click="() => {}" />
+</template>

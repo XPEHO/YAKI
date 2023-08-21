@@ -13,16 +13,17 @@ const emit = defineEmits(["ModalTeam"]);
 
 const validateModalBtn = () => {
   emit("ModalTeam", modalTeamState.teamInputValue);
-  modalTeamState.changeVisibility();
+  modalTeamState.visibilitySwitch();
 };
 
 const CancelModalBtn = () => {
-  modalTeamState.changeVisibility();
+  modalTeamState.visibilitySwitch();
 };
 </script>
+
 <template>
   <section class="modal-background">
-    <dialog class="modaltest">
+    <dialog class="modal-container">
       <form action="">
         <article
           v-if="modalTeamState.modalMode === 0 || modalTeamState.modalMode === 1"
@@ -49,94 +50,69 @@ const CancelModalBtn = () => {
   </section>
 </template>
 
-<style lang="scss">
-.modal-background {
-  // screen center even when scroll : fixed not absolute
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-
-  background-color: rgba(0, 0, 0, 0.515);
-}
-.modaltest {
-  left: 50%;
-  top: 40%;
-  transform: translate(-50%, -50%);
-
-  border: none;
-
-  height: 15rem;
-  width: min(90%, 30rem);
-  background-color: rgb(255, 255, 255);
-
+<style scoped lang="scss">
+form {
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
 
-  form {
+  .input-container {
+    flex-grow: 3;
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
 
-    .input-container {
-      flex-grow: 3;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 1.5rem;
+    background-color: #cac9c9;
 
-      background-color: #cac9c9;
+    label,
+    p {
+      color: #303030;
+      font-size: 1.3rem;
+      font-family: Inter;
+      font-weight: 700;
+    }
 
-      label,
-      p {
-        color: #303030;
-        font-size: 1.3rem;
-        font-family: Inter;
-        font-weight: 700;
-      }
+    input {
+      height: 2.5rem;
+      width: 50%;
 
-      input {
-        height: 2.5rem;
-        width: 50%;
+      border-radius: 0.2rem;
+      border: none;
 
-        border-radius: 0.2rem;
-        border: none;
+      font-size: 1rem;
+      font-weight: 400;
 
-        font-size: 1rem;
-        font-weight: 400;
-
-        padding-inline-start: 1rem;
-        &:focus {
-          outline: 1px solid rgb(21, 21, 21);
-        }
+      padding-inline-start: 1rem;
+      &:focus {
+        outline: 1px solid rgb(21, 21, 21);
       }
     }
   }
+}
 
-  section {
+section {
+  flex-grow: 1;
+  width: 100%;
+
+  display: flex;
+  button {
+    border: none;
     flex-grow: 1;
-    width: 100%;
+  }
 
-    display: flex;
-    button {
-      border: none;
-      flex-grow: 1;
+  button:nth-child(1) {
+    background-color: #a2b75e;
+    &:active {
+      background-color: #899b4d;
     }
+  }
 
-    button:nth-child(1) {
-      background-color: #a2b75e;
-      &:active {
-        background-color: #899b4d;
-      }
-    }
-
-    button:nth-child(2) {
-      background-color: #dd6158;
-      &:active {
-        background-color: #b24c45;
-      }
+  button:nth-child(2) {
+    background-color: #dd6158;
+    &:active {
+      background-color: #b24c45;
     }
   }
 }

@@ -5,5 +5,3 @@ import {RouterView} from "vue-router";
 <template>
   <router-view />
 </template>
-
-<style lang="scss"></style>

@@ -14,5 +14,3 @@ const props = defineProps({
 <template>
   <button v-bind:class="cssClass">{{ text }}</button>
 </template>
-
-<style lang="scss"></style>

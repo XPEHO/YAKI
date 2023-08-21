@@ -1,17 +1,15 @@
-<script setup lang="ts"></script>
-
 <template>
-  <nav class="navbar">
+  <nav class="sidebar">
     <slot> </slot>
   </nav>
 </template>
 
-<style lang="scss">
-.navbar {
+<style scoped lang="scss">
+.sidebar {
   background-color: #fafafa;
   padding-block: 2rem;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1rem;
 }
 </style>
