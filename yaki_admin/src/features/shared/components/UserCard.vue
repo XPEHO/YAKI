@@ -14,8 +14,6 @@ const props = defineProps({
   },
 });
 
-console.log(props.user);
-
 const emit = defineEmits(["removeUser"]);
 
 const removeUser = () => {

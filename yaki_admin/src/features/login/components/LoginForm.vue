@@ -13,8 +13,8 @@ export default {
       eyesIcon: eyesIcon,
       btnClickSound: btnClickSound,
       audioContainer: null,
-      usernamePlaceholder: "Enter your login",
-      passwordPlaceholder: "Enter your password",
+      usernamePlaceholder: "Login",
+      passwordPlaceholder: "Password",
       showPassword: false,
       form: {
         username: "",
@@ -101,18 +101,16 @@ form {
 
   position: relative;
 
-  label {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
-  }
-
   input {
-    padding-inline-start: 1rem;
+    padding-inline-start: 2rem;
     padding-block: 1.3rem;
-    font-size: 1rem;
+    font-size: $login-input-font-size;
     border-radius: 16px;
     border: 1px solid #ccc;
+
+    &::placeholder {
+      font-size: calc($login-input-font-size * 0.8);
+    }
   }
 
   input:nth-of-type(2) {
@@ -120,9 +118,9 @@ form {
   }
 
   figure {
-    width: 1.8rem;
+    width: 1.4rem;
     position: absolute;
-    top: 54%;
+    top: 55%;
     right: 1%;
     transform: translate(-50%, -50%);
 

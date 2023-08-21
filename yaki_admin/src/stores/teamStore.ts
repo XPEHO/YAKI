@@ -1,6 +1,6 @@
 import {defineStore} from "pinia";
-import {teamMateService} from "@/services/teamMate.service";
-import {TeammateType} from "@/models/teammate.type";
+import {teamMateService} from "@/services/teammate.service";
+import {TeammateType, TeammateTypeResponse} from "@/models/teammate.type";
 import {teamService} from "@/services/team.service";
 import {TeamType} from "@/models/team.type";
 
@@ -76,7 +76,18 @@ export const useTeamStore = defineStore("teamStore", {
     // get all teammate of a team
     async getTeammateWithinTeam(teamId: number): Promise<void> {
       this.teamSelectedId = teamId;
-      this.teammateList = await teamMateService.getAllWithinTeam(this.teamSelectedId);
+      let responseData: TeammateTypeResponse[] = await teamMateService.getAllWithinTeam(this.teamSelectedId);
+
+      this.teammateList = responseData.map((teammate) => {
+        return new TeammateType(
+          teammate.id,
+          teammate.firstName,
+          teammate.lastName,
+          teammate.email,
+          teammate.teamId,
+          teammate.userId
+        );
+      });
     },
 
     // add a selected user to a team

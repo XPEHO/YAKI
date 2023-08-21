@@ -66,7 +66,7 @@ const onClickDeleteTeam = () => {
 
   p {
     width: 40%;
-    font-size: $team-list-element-font-sizer;
+    font-size: $sidebar-teamlist-element-font-size;
     user-select: none;
   }
 
