@@ -1,8 +1,6 @@
 name: Restart PROD
 
 on:
-  push:
-    branches: ["chore/prod_CI_CD"]
   workflow_run:
     workflows:
       - Update the production
@@ -18,7 +16,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
