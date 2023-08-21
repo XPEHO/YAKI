@@ -1,0 +1,31 @@
+name: Restart PROD
+
+on:
+  workflow_run:
+    workflows:
+      - Update the production
+    types:
+      - completed
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Reason for restart'
+        required: true
+        default: ''
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Restart Prod services
+      uses: garygrossgarten/github-action-ssh@release
+      with:
+        command: sh restart_prod.sh
+        host: ${{ secrets.SERVER_IP }}
+        username: debian
+        passphrase: ${{ secrets.SSH_PASS }}
+        privateKey: ${{ secrets.SSH_PRIVATE_KEY }}

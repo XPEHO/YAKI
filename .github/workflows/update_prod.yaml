@@ -1,0 +1,86 @@
+name: Update the production
+
+on:
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: "Reason"
+        required: true
+        default: "Manual trigger"
+
+jobs:
+  build-yaki-backend-mobile-prod:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build and publish Yaki backend Docker image
+        run: |
+          echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io --username phanatic --password-stdin
+          cd yaki_backend
+          docker build -t yaki_backend .
+          docker tag yaki_backend ghcr.io/xpeho/yaki:backend-mobile-prod
+          docker push ghcr.io/xpeho/yaki:backend-mobile-prod
+  build-yaki-front-mobile-prod:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          java-version: "17.x"
+          distribution: "temurin"
+      - uses: subosito/flutter-action@v2
+      - name: Install lcov
+        run: |
+          sudo apt update
+          sudo apt install lcov
+      - name: Build and publish Yaki frontend mobile Docker image
+        run: |
+          echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io --username phanatic --password-stdin
+          cd yaki_mobile
+          flutter upgrade
+          flutter pub get
+          dart format --set-exit-if-changed .
+          flutter analyze
+          flutter test
+          flutter build web --dart-define API_BASE_URL=https://yaki.uat.xpeho.fr/api/ --dart-define CRED_HASH_PASS=${{ secrets.CRED_HASH_PASS }} --base-href "/ui/"
+          docker build -t yaki_mobile .
+          docker tag yaki_mobile ghcr.io/xpeho/yaki:frontend-mobile-prod
+          docker push ghcr.io/xpeho/yaki:frontend-mobile-prod 
+  build-yaki-backend-admin-prod:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          java-version: "17.x"
+          distribution: "temurin"
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: "17.x"
+          distribution: "temurin"
+      - name: Build and publish Yaki backend admin Docker image
+        run: |
+          echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io --username phanatic --password-stdin
+          cd yaki_admin_backend
+          echo ${{ secrets.APPLICATION_TEST_PROPERTIES }} | base64 -d > src/test/resources/application-test.properties
+          gradle clean build
+          docker build -t yaki_admin_backend .
+          docker tag yaki_admin_backend ghcr.io/xpeho/yaki:backend-admin-prod
+          docker push ghcr.io/xpeho/yaki:backend-admin-prod
+  build-yaki-frontend-admin-prod:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install node
+        uses: actions/setup-node@v2
+      - name: Build and publish Yaki frontend admin Docker image
+        run: |
+          echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io --username phanatic --password-stdin
+          cd yaki_admin
+          docker build -t yaki_admin .
+          docker tag yaki_admin ghcr.io/xpeho/yaki:frontend-admin-prod
+          docker push ghcr.io/xpeho/yaki:frontend-admin-prod
+          
