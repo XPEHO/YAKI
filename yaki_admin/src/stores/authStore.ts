@@ -6,11 +6,11 @@ import {customerService} from "@/services/customer.service";
 
 import router from "@/router/router";
 
-import {useTeamStore} from "@/stores/teamStore.js";
-import {useCustomerRightsStore} from "@/stores/customerRightsStore.js";
-
 import {CaptainType} from "@/models/captain.type";
 import {CustomerType} from "@/models/customer.type";
+
+import { useTeamStore } from "@/stores/teamStore.js";
+import { useRoleStore } from "./roleStore";
 
 export const useAuthStore = defineStore("loginStore", {
   state: () => ({
@@ -35,7 +35,7 @@ export const useAuthStore = defineStore("loginStore", {
           return false;
         }
         const teamStore = useTeamStore();
-        const customerRightsStore = useCustomerRightsStore();
+        const roleStore = useRoleStore();
         //in what route the user will be redirect depending of his rights.
         if (this.customersRights.length >= 1) {
           this.returnedUrl = "/customer/manage-captain";
@@ -55,9 +55,9 @@ export const useAuthStore = defineStore("loginStore", {
         }
 
         //temporary we must choose the customer then.
-
-        teamStore.setCaptainsId(idsCap);
-        customerRightsStore.setCustomersRightsId(idsCust);
+        
+        roleStore.setCaptainsId(idsCap);
+        roleStore.setCustomersIdWhereIgotRights(idsCust);
 
         router.push(this.returnedUrl);
         return true;

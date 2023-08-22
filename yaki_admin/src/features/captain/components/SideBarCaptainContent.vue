@@ -13,22 +13,24 @@ import modalState from "@/features/shared/services/modalTeamState";
 import vector from "@/assets/images/Vector.png";
 import plusIcon from "@/assets/images/plus.png";
 import modalTeamState from "@/features/shared/services/modalTeamState";
+import { useRoleStore } from "@/stores/roleStore";
 
-const store = useTeamStore();
+const teamStore = useTeamStore();
+const roleStore = useRoleStore();
 
 const fetchTeams = async () => {
-  await store.getTeamsFromCaptain(store.getCaptainId);
+  await teamStore.setTeamsFromCaptain(roleStore.getCaptainsId);
 };
 
 //before mount, fetch teams, select first team from the saved list, get team name, fetch teammates.
 onBeforeMount(async () => {
   await fetchTeams();
   // automaticaly select first team right after team fetch, and save name
-  if (store.getTeamList.length === 0) return;
-  isTeamSelected.setTeamId(store.getTeamList[0].id);
-  store.setTeamName(store.getTeamList[0].teamName);
+  if(teamStore.getTeamList.length === 0) return;
+  isTeamSelected.setTeamId(teamStore.getTeamList[0].id);
+  teamStore.setTeamSelectedId(teamStore.getTeamList[0].id);
+  teamStore.setTeamName(teamStore.getTeamList[0].teamName);
   //directly fetch teammate from the first team
-  store.getTeammateWithinTeam(store.getTeamList[0].id);
 });
 
 const onClickSelectTeam = (id: number, teamName: string) => {
@@ -37,8 +39,7 @@ const onClickSelectTeam = (id: number, teamName: string) => {
   // for input value change for creation or edition
   modalTeamState.setSelectedTeamName(teamName);
   // teamStore
-  store.setTeamName(teamName);
-  store.getTeammateWithinTeam(id);
+  teamStore.setTeamName(teamName);
 };
 
 // add team button press to open modal
@@ -51,13 +52,14 @@ const onClickAddTeam = () => {
 const teamModalAccept = async (teamName: string) => {
   switch (modalState.modalMode) {
     case 0:
-      store.createTeam(store.getCaptainId[0], teamName);
+      //create a team with the captainId of the captain connected
+      teamStore.createTeam(roleStore.getCaptainsId[0], teamName,);
       break;
     case 1:
-      store.updateTeam(store.getTeamId, teamName);
+      teamStore.updateTeam(teamStore.getTeamId, teamName);
       break;
     case 2:
-      store.deleteTeam(store.getTeamId);
+      teamStore.deleteTeam(teamStore.getTeamId);
       break;
   }
   // fetch to trigger re-render
@@ -84,7 +86,7 @@ const teamModalAccept = async (teamName: string) => {
 
   <section class="team-list">
     <side-bar-team-list-element
-      v-for="(team, index) in store.getTeamList"
+      v-for="(team, index) in teamStore.getTeamList"
       :key="index"
       v-bind:id="team.id"
       v-bind:teamName="team.teamName"

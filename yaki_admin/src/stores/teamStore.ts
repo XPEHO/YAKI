@@ -1,27 +1,24 @@
-import {defineStore} from "pinia";
-import {teamMateService} from "@/services/teammate.service";
-import {TeammateType} from "@/models/teammate.type";
-import {teamService} from "@/services/team.service";
-import {TeamType} from "@/models/team.type";
+import { defineStore } from "pinia";
+import { teamMateService } from "@/services/teamMate.service";
+import { teamService } from "@/services/team.service";
+import { TeamType } from "@/models/team.type";
+import { useTeammateStore } from "./teammateStore";
 
 export const useTeamStore = defineStore("teamStore", {
   state: () => ({
-    customersId: [] as number[],
-    captainsId: [] as number[],
-    teamSelectedId: 0 as number,
-    teamName: "" as string,
-    teammateList: [] as TeammateType[],
     teamList: [] as TeamType[],
-    teammateToDelete: 0 as number,
-    teamToDelete: 0 as number,
-    customerId: 0 as number,
+    teamSelectedId: 0 as number,
+    customersId: [] as number[], //useless ?
+    captainsIdForTeamSelected: [] as number[], //captains of this team
+    teamName: "" as string,
+    customerId: 0 as number,//useless ?
   }),
   getters: {
     getCustomersId(): number[] {
       return this.customersId;
     },
-    getCaptainId(): number[] {
-      return this.captainsId;
+    getCaptainsId(): number[] {
+      return this.captainsIdForTeamSelected;
     },
     getTeamId(): number {
       return this.teamSelectedId;
@@ -29,15 +26,10 @@ export const useTeamStore = defineStore("teamStore", {
     getTeamName(): string {
       return this.teamName;
     },
-    getTeammateList(): TeammateType[] {
-      return this.teammateList;
-    },
     getTeamList(): TeamType[] {
       return this.teamList;
     },
-    getTeammateToDelete(): number {
-      return this.teammateToDelete;
-    },
+
   },
   actions: {
     setTeamName(name: string) {
@@ -47,16 +39,18 @@ export const useTeamStore = defineStore("teamStore", {
       this.customersId = customersId;
     },
     setCaptainsId(captainsId: number[]) {
-      this.captainsId = captainsId;
+      this.captainsIdForTeamSelected = captainsId;
     },
     setCustomerId(customerId: number) {
       this.customerId = customerId;
     },
     setTeamSelectedId(teamId: number) {
+      const teammateStore = useTeammateStore();
       this.teamSelectedId = teamId;
+      teammateStore.setTeammatesWithinTeam(teamId);
     },
-    // get all teams of a captain
-    async getTeamsFromCaptain(captainsId: number[]) {
+    // set all teams for a captain list
+    async setTeamsFromCaptain(captainsId: number[]) {
       this.teamList = [];
       for (const captainId of captainsId) {
         const a = await teamService.getAllTeamsWithinCaptain(captainId);
@@ -64,40 +58,23 @@ export const useTeamStore = defineStore("teamStore", {
       }
     },
 
-    // get all teams of a customer
-    async getTeamsFromCustomer(customersId: number[]) {
+    // set all teams of a customer
+    async setTeamsFromCustomer(customersId: number[]) {
+      //for now we display all teams of all customers
+      //but we should display only the teams of the selected customer 
+      //for the selected customer tab in the future
       this.teamList = [];
       for (const id of customersId) {
         const a = await teamService.getAllTeamsByCustomerId(id);
         this.teamList = this.teamList.concat(a);
       }
     },
-
-    // get all teammate of a team
-    async getTeammateWithinTeam(teamId: number): Promise<void> {
-      this.teamSelectedId = teamId;
-      this.teammateList = await teamMateService.getAllWithinTeam(this.teamSelectedId);
-    },
-
     // add a selected user to a team
     async addUserToTeam(userId: number): Promise<void> {
       const data = {teamId: this.teamSelectedId, userId: userId};
       await teamMateService.createTeammate(data);
     },
-
-    // remove a user from a team (delete his "teammate" status)
-    async deleteTeammateFromTeam(id: number): Promise<void> {
-      await teamMateService.deleteTeammate(id);
-    },
-    // get the teamMateId to delete
-    setTeammateToDelete(id: number) {
-      this.teammateToDelete = id;
-    },
-
-    //get the teamId to delete
-    setTeamToDelete(teamId: number) {
-      this.teamToDelete = teamId;
-    },
+    
     // create a team (use captain id and team name)
     async createTeam(cptId: number, teamName: string): Promise<void> {
       await teamService.createTeam(cptId, teamName, this.customerId);

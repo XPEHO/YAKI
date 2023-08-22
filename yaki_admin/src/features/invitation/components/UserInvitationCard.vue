@@ -2,12 +2,11 @@
 import {PropType, onBeforeMount, reactive} from "vue";
 import type {UserWithIdType} from "@/models/userWithId.type";
 
-import {useTeamStore} from "@/stores/teamStore.js";
-
 import avatarIcon from "@/assets/images/avatar.png";
 import YakiButton from "@/features/shared/components/DefaultButton.vue";
+import { useTeammateStore } from "@/stores/teammateStore";
 
-const teamStore = useTeamStore();
+const teammateStore = useTeammateStore();
 
 // props coming from LayoutInvitation, setting user from "v-for"
 const props = defineProps({
@@ -29,7 +28,7 @@ const settings = reactive({
 // get teammate list before mount to check if current user already is in it before change settings
 
 onBeforeMount(() => {
-  for (const teammate of teamStore.getTeammateList) {
+  for (const teammate of teammateStore.getTeammateList) {
     if (teammate.userId === props.user.id) {
       settings.isInvited = true;
       settings.text = "In Team";
