@@ -1,4 +1,6 @@
 export type AuthenticateType = {
-    user_id : number;
+    userId : number;
     token : string;
+    customerId : number[];
+    captainId : number[];
 }

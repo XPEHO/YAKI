@@ -1,14 +1,14 @@
-import { TeamMateType } from "@/models/teamMate.type";
-import { teamMateService } from "@/services/teamMate.service";
+import { TeammateType } from "@/models/teammate.type";
+import { teamMateService } from "@/services/teammate.service";
 import { defineStore } from "pinia";
 
-export const useTeammateStore = defineStore("teamStore", {
+export const useTeammateStore = defineStore("teammateStore", {
     state: () => ({
-        teammates: [] as TeamMateType[],
+        teammates: [] as TeammateType[],
         teammateToDelete: 0 as number,
     }),
     getters: {
-        getTeammateList(): TeamMateType[] {
+        getTeammateList(): TeammateType[] {
             return this.teammates;
           },
           getTeammateToDelete(): number {

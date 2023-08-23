@@ -18,6 +18,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -39,12 +40,17 @@ public class AuthenticationServiceImplTest {
     private ApplicationEventPublisher eventPublisher;
     @InjectMocks
     private AuthenticationServiceImpl authenticationServiceImpl;
+    @Mock
+    private CaptainServiceImpl captainService;
+    @Mock
+    private CustomerServiceImpl customerService;
 
     @BeforeEach
     void setUp() {
         repository = mock(UserJpaRepository.class);
 
-        authenticationServiceImpl = new AuthenticationServiceImpl(repository, jwtService, authenticationManager, passwordEncoder,verificationTokenService,eventPublisher);
+        authenticationServiceImpl = new AuthenticationServiceImpl(repository, jwtService, authenticationManager,
+                passwordEncoder,verificationTokenService,eventPublisher,captainService,customerService);
     }
 
     @Test
@@ -81,6 +87,8 @@ public class AuthenticationServiceImplTest {
         String jwtToken = "mockedJwtToken";
         when(jwtService.generateToken(user)).thenReturn(jwtToken);
         when(jwtService.generateToken(user)).thenReturn(jwtToken);
+        when(captainService.getAllCaptainsIdByUserId(user.getUserId())).thenReturn(Arrays.asList(1,2));
+        when(customerService.getAllCustomersRightIdByUserId(user.getUserId())).thenReturn(null);
         // Perform the authenticate operation
         AuthenticationResponseEntity response = authenticationServiceImpl.authenticate(request);
 

@@ -182,22 +182,6 @@ class CaptainControllerTests {
     }
 
     @Test
-    public void testGetAllCaptainByUserId() {
-        // given
-        CaptainEntity captain = new CaptainEntity(1, 1, 1);
-        List<CaptainEntity> captainList = new ArrayList<>();
-        captainList.add(captain);
-
-        // when
-        when(captainService.getAllCaptainByUserId(1)).thenReturn(captainList);
-        List<CaptainEntity> result = captainController.getAllCaptainByUserId(1);
-        verify(captainService, times(1)).getAllCaptainByUserId(1);
-
-        // then
-        assertEquals(captainList, result);
-    }
-
-    @Test
     public void testGetAllCaptainByCustomerId() {
         //given
         int customerId = 1;

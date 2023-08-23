@@ -22,5 +22,5 @@ public interface CustomerService {
 
     CustomerEntity saveOrUpdate(CustomerEntity entity, int id);
 
-    List<CustomerEntity> getAllCustomersRightByUserId(int id);
+    List<Integer> getAllCustomersRightIdByUserId(int id);
 }

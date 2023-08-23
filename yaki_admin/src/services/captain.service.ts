@@ -63,6 +63,20 @@ export class CaptainService {
       .then(handleResponse)
       .catch((err) => console.warn(err));
   } 
+  getCaptain = async (captainId: number): Promise<CaptainType> => {
+    const requestOptions = {
+      method: "GET",
+      headers: authHeader(`${URL}/captains/${captainId}`),
+    };
+    const response = await fetch(
+      `${URL}/captains/${captainId}`,
+      requestOptions
+    )
+      .then(handleResponse)
+      .catch((err) => console.warn(err));
+
+    return response;
+  }
 }
 
 export const captainService = Object.freeze(new CaptainService());

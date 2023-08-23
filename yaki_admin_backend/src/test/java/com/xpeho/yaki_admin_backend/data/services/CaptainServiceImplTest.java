@@ -136,7 +136,7 @@ class CaptainServiceImplTest {
     }
 
     @Test
-    public void testGetAllCaptainByUserId() {
+    public void testGetAllCaptainsIdByUserId() {
 
         //given
         int userId = 1;
@@ -147,14 +147,12 @@ class CaptainServiceImplTest {
         //when
         when(captainJpaRepository.findAllByUserId(userId)).thenReturn(captainModels);
 
-        List<CaptainEntity> expectedCaptainEntities = new ArrayList<>();
-        expectedCaptainEntities.add(new CaptainEntity(1, 1, 1));
-        expectedCaptainEntities.add(new CaptainEntity(2, 3, 1));
+        List<Integer> expectedCaptainsId = Arrays.asList(1,2);
 
-        List<CaptainEntity> actualCaptainEntities = captainService.getAllCaptainByUserId(userId);
+        List<Integer> actualCaptainsId = captainService.getAllCaptainsIdByUserId(userId);
 
         //then
-        assertEquals(expectedCaptainEntities, actualCaptainEntities);
+        assertEquals(expectedCaptainsId, actualCaptainsId);
     }
 
     @Test

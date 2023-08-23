@@ -111,8 +111,8 @@ public class CustomerServiceImpl implements CustomerService {
                 ,customerModel.getOwnerId(),customerModel.getLocationId());
     }
 
-    @Override
-    public List<CustomerEntity> getAllCustomersRightByUserId(int userId) {
+
+    public List<Integer> getAllCustomersRightIdByUserId(int userId) {
         Optional<UserModel> userModelOpt = userJpaRepository.findById(userId);
         if(!userModelOpt.isPresent()){
             throw new EntityNotFoundException("Entity user with id " + userId + " not found");
@@ -122,13 +122,9 @@ public class CustomerServiceImpl implements CustomerService {
             List<CustomerModel> customersModels = userModel.getCustomers();
             return customersModels
                     .stream()
-                    .map(customerModel -> new CustomerEntity(customerModel.getId(),
-                            customerModel.getName(),customerModel.getOwnerId(),
-                            customerModel.getLocationId()))
+                    .map(customerModel -> customerModel.getId())
                     .toList();
         }
     }
-
-
 }
 

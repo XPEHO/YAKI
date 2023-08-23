@@ -7,12 +7,12 @@ import HeaderContentPage from "@/features/shared/components/HeaderContentPage.vu
 import UserCard from "@/features/shared/components/UserCard.vue";
 import plusIcon from "@/assets/images/plus.png";
 import { useCaptainStore } from "@/stores/captainStore";
-import { useCustomerStore } from "@/stores/customerStore";
+import { useSelectedRoleStore } from "@/stores/selectedRole";
 
 const captainStore = useCaptainStore();
-const customerStore = useCustomerStore();
+const selectedRoleStore = useSelectedRoleStore();
 const fetchCaptains = async () => {
-  await captainStore.setAllCaptainsByCustomerId(customerStore.getCustomerIdSelected);
+  await captainStore.setAllCaptainsByCustomerId(selectedRoleStore.getCustomerIdSelected);
 };
 
 onBeforeMount(async () => {

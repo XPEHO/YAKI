@@ -13,9 +13,6 @@ export const useCaptainStore = defineStore("captainStore", {
     captainToDelete: 0 as number,
   }),
   getters: {
-    // getCustomerId(): number[] {
-    //   return this.customerId;
-    // },
     getCaptainIdSelected(): number {
       return this.captainIdSelected;
     },
@@ -31,9 +28,6 @@ export const useCaptainStore = defineStore("captainStore", {
     setCaptainId(captainId: number) {
       this.captainIdSelected = captainId;
     },
-    // setCustomerId(customerId: number[]) {
-    //   this.customerId = customerId;
-    // },
 
     // get all captains of a customer
     async setAllCaptainsByCustomerId(customerId: number) {

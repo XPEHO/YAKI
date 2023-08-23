@@ -53,10 +53,6 @@ public class CustomerController {
     public CustomerEntity addCustomerRight(@RequestBody CustomerRightsEntity entity) {
         return customerService.addCustomerRight(entity);
     }
-    @GetMapping("/rights/{id}")
-    public List<CustomerEntity> getAllCustomersRightByUserId(@PathVariable int id){
-        return customerService.getAllCustomersRightByUserId(id);
-    }
     @PutMapping("/disabled/{id}")
     public CustomerEntity disabled(@PathVariable int id){
         return customerService.disabled(id);

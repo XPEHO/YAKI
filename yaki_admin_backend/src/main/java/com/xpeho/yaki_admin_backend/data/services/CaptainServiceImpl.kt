@@ -73,16 +73,12 @@ class CaptainServiceImpl(private val captainJpaRepository: CaptainJpaRepository,
         return CaptainEntity(captainId, entity.userId, entity.customerId)
     }
 
-    override fun getAllCaptainByUserId(userId: Int): List<CaptainEntity> {
+    override fun getAllCaptainsIdByUserId(userId: Int): List<Int> {
         return captainJpaRepository
                 .findAllByUserId(userId)
                 .filter { captainModel -> captainModel.isActif}
                 .map { captainModel: CaptainModel ->
-                    CaptainEntity(
-                            captainModel.captainId,
-                            captainModel.userId,
-                            captainModel.customerId
-                    )
+                    captainModel.captainId
                 }
 
     }

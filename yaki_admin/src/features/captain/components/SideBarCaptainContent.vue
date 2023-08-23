@@ -38,6 +38,7 @@ const onClickSelectTeam = (id: number, teamName: string) => {
   isTeamSelected.setTeamId(id);
   // for input value change for creation or edition
   modalTeamState.setSelectedTeamName(teamName);
+  teamStore.setTeamSelectedId(id);
   // teamStore
   teamStore.setTeamName(teamName);
 };
