@@ -26,6 +26,10 @@ export const useAuthStore = defineStore("loginStore", {
           user_id : userEntity.userId,
           token: userEntity.token,
         }
+        if(userEntity.customerId.length == 0 && userEntity.captainId.length == 0){
+          this.logout();
+          return false;
+        }
         localStorage.setItem("user", JSON.stringify(this.user));
         //if the user is not a captain or a customer, he can't access to the admin part
         

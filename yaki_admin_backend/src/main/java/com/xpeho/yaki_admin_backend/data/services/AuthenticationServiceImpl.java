@@ -82,9 +82,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         }
         List<Integer> captainsIdRoles = captainService.getAllCaptainsIdByUserId(user.getUserId());
         List<Integer> customersIdRoles = customerService.getAllCustomersRightIdByUserId(user.getUserId());
-        if(captainsIdRoles.isEmpty() && customersIdRoles.isEmpty()){
-            throw new RuntimeException("you don't have any role, please contact the administrator");
-        }
         var jwtToken = jwtService.generateToken(user);
         return new AuthenticationResponseEntity(jwtToken, user.getUserId(),customersIdRoles,captainsIdRoles);
     }
