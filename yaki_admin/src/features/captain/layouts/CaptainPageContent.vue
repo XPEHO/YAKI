@@ -11,11 +11,13 @@ import ModalValidation from "@/features/shared/popup/ModalValidation.vue";
 import modalValidationState from "@/features/shared/services/modalValidationState";
 
 import plusIcon from "@/assets/images/plus.png";
+import { useTeammateStore } from "@/stores/teammateStore";
 
 const teamStore = useTeamStore();
+const teammateStore = useTeammateStore();
 
 const fetchTeammates = async () => {
-  await teamStore.getTeammateWithinTeam(teamStore.getTeamId);
+  await teammateStore.setTeammatesWithinTeam(teamStore.getTeamId);
 };
 
 onBeforeMount(async () => {
@@ -23,14 +25,14 @@ onBeforeMount(async () => {
 });
 
 const removeUserFromTeam = (id: number, informations: string) => {
-  teamStore.setTeammateToDelete(id);
+  teammateStore.setTeammateToDelete(id);
 
   modalValidationState.setInformation(informations);
   modalValidationState.changeVisibility();
 };
 
 const validationModalAccept = () => {
-  teamStore.deleteTeammateFromTeam(teamStore.getTeammateToDelete);
+  teammateStore.deleteTeammateFromTeam(teammateStore.getTeammateToDelete);
   setTimeout(() => {
     fetchTeammates();
   }, 150);
@@ -55,7 +57,7 @@ const validationModalAccept = () => {
         @click.prevent="router.push({path: `invitation`})" />
 
       <user-card
-        v-for="teammate in teamStore.getTeammateList"
+        v-for="teammate in teammateStore.getTeammateList"
         :user="teammate"
         :key="teammate.id"
         @removeUser="removeUserFromTeam" />

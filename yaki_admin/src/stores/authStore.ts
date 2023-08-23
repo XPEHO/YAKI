@@ -1,16 +1,12 @@
 import {defineStore} from "pinia";
 
 import {loginService} from "@/services/login.service";
-import {captainService} from "@/services/captain.service";
-import {customerService} from "@/services/customer.service";
-
 import router from "@/router/router";
-
-import {useTeamStore} from "@/stores/teamStore.js";
-import {useCustomerRightsStore} from "@/stores/customerRightsStore.js";
 
 import {CaptainType} from "@/models/captain.type";
 import {CustomerType} from "@/models/customer.type";
+import { useRoleStore } from "./roleStore";
+import { useSelectedRoleStore } from "./selectedRole";
 
 export const useAuthStore = defineStore("loginStore", {
   state: () => ({
@@ -25,39 +21,34 @@ export const useAuthStore = defineStore("loginStore", {
   actions: {
     async login(login: string, password: string): Promise<boolean> {
       try {
-        this.user = await loginService.login(login, password);
-        localStorage.setItem("user", JSON.stringify(this.user));
-        this.captains = await captainService.getAllCaptainByUserId(this.user.id);
-        this.customersRights = await customerService.getAllCustomersRightByUserId(this.user.id);
-        //if the user is not a captain or a customer, he can't access to the admin part
-        if (this.customersRights.length === 0 && this.captains.length === 0) {
+        let userEntity = await loginService.login(login, password);
+        this.user = {
+          user_id : userEntity.userId,
+          token: userEntity.token,
+        }
+        if(userEntity.customerId.length == 0 && userEntity.captainId.length == 0){
           this.logout();
           return false;
         }
-        const teamStore = useTeamStore();
-        const customerRightsStore = useCustomerRightsStore();
+        localStorage.setItem("user", JSON.stringify(this.user));
+        //if the user is not a captain or a customer, he can't access to the admin part
+        
+        const selectedRoleStore = useSelectedRoleStore();
+        const roleStore = useRoleStore();
         //in what route the user will be redirect depending of his rights.
-        if (this.customersRights.length >= 1) {
+        if (userEntity.customerId.length >= 1) {
           this.returnedUrl = "/customer/manage-captain";
+          selectedRoleStore.setCustomerIdSelected(userEntity.customerId[0]);
         } else {
           //if not a customer it's necessarily a captain
           this.returnedUrl = "/captain/manage-team";
-          teamStore.setCustomerId(this.captains[0].customerId);
+          //set the tab to the first captain
+          selectedRoleStore.setCaptainIdSelected(userEntity.captainId[0]);
         }
-
-        let idsCust = [];
-        let idsCap = [];
-        for (const customerRights of this.customersRights) {
-          idsCust.push(customerRights.id);
-        }
-        for (const captain of this.captains) {
-          idsCap.push(captain.id);
-        }
-
         //temporary we must choose the customer then.
-
-        teamStore.setCaptainsId(idsCap);
-        customerRightsStore.setCustomersRightsId(idsCust);
+        
+        roleStore.setCaptainsId(userEntity.captainId);
+        roleStore.setCustomersIdWhereIgotRights(userEntity.customerId);
 
         router.push(this.returnedUrl);
         return true;

@@ -5,17 +5,16 @@ import { UserWithIdType } from "@/models/userWithId.type";
 
 export const useCaptainStore = defineStore("captainStore", {
   state: () => ({
-    customerId: [] as number[],
-    captainId: 0 as number,
-    captainList: [] as UserWithIdType[],
+    //captain id for the view customer where he got the list of captain view
+    //so its the captain id of the selected captain
+    captainIdSelected: 0 as number,
+    //list of captains display in the view customer
+    captainList: [] as UserWithIdType[], 
     captainToDelete: 0 as number,
   }),
   getters: {
-    getCustomerId(): number[] {
-      return this.customerId;
-    },
-    getCaptainId(): number {
-      return this.captainId;
+    getCaptainIdSelected(): number {
+      return this.captainIdSelected;
     },
     getCaptainList(): UserWithIdType[] {
       return this.captainList;
@@ -27,16 +26,13 @@ export const useCaptainStore = defineStore("captainStore", {
 
   actions: {
     setCaptainId(captainId: number) {
-      this.captainId = captainId;
-    },
-    setCustomerId(customerId: number[]) {
-      this.customerId = customerId;
+      this.captainIdSelected = captainId;
     },
 
     // get all captains of a customer
-    async getAllCaptainsByCustomerId(customerId: number[]) {
-      this.captainList = await captainService.getAllCaptainsByCustomerId(1);
-    },
+    async setAllCaptainsByCustomerId(customerId: number) {
+      this.captainList = await captainService.getAllCaptainsByCustomerId(customerId);
+  },
 
     // create a captain
     async createCaptain(data: CaptainType): Promise<void> {

@@ -1,17 +1,18 @@
 <script setup lang="ts">
 import router from "@/router/router";
 import {onBeforeMount} from "vue";
-import {useCaptainStore} from "@/stores/captainStore";
 
 import SideBarButton from "@/features/shared/components/SideBarButton.vue";
 import HeaderContentPage from "@/features/shared/components/HeaderContentPage.vue";
 import UserCard from "@/features/shared/components/UserCard.vue";
 import plusIcon from "@/assets/images/plus.png";
+import { useCaptainStore } from "@/stores/captainStore";
+import { useSelectedRoleStore } from "@/stores/selectedRole";
 
 const captainStore = useCaptainStore();
-
+const selectedRoleStore = useSelectedRoleStore();
 const fetchCaptains = async () => {
-  await captainStore.getAllCaptainsByCustomerId(captainStore.getCustomerId);
+  await captainStore.setAllCaptainsByCustomerId(selectedRoleStore.getCustomerIdSelected);
 };
 
 onBeforeMount(async () => {

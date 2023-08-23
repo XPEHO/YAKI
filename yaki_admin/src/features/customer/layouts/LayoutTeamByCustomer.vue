@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import {onBeforeMount} from "vue";
 
-import {useTeamStore} from "@/stores/teamStore";
-import {useCustomerRightsStore} from "@/stores/customerRightsStore";
-
 import HeaderContentPage from "@/features/shared/components/HeaderContentPage.vue";
+import { useTeamStore } from "@/stores/teamStore";
+import { useRoleStore } from "@/stores/roleStore";
+
 
 const teamStore = useTeamStore();
-const customerRight = useCustomerRightsStore();
+const roleStore = useRoleStore();
 
 const fetchTeams = async () => {
-  await teamStore.getTeamsFromCustomer(customerRight.getCustomersRightsId);
+  await teamStore.setTeamsFromCustomer(roleStore.getCustomersIdWhereIgotRights);
 };
 
 onBeforeMount(async () => {

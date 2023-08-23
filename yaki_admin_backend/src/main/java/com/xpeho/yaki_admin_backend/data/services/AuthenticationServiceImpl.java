@@ -18,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
+import java.util.List;
 
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
@@ -27,15 +28,25 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final VerificationTokenServiceImpl verificationTokenService;
     private final ApplicationEventPublisher eventPublisher;
+    private final CaptainServiceImpl captainService;
+    private final CustomerServiceImpl customerService;
 
-    public AuthenticationServiceImpl(UserJpaRepository repository, JwtService jwtService, AuthenticationManager authenticationManager
-            , PasswordEncoder passwordEncoder, VerificationTokenServiceImpl verificationTokenService, ApplicationEventPublisher eventPublisher){
+    public AuthenticationServiceImpl(UserJpaRepository repository,
+                                     JwtService jwtService,
+                                     AuthenticationManager authenticationManager,
+                                     PasswordEncoder passwordEncoder,
+                                     VerificationTokenServiceImpl verificationTokenService,
+                                     ApplicationEventPublisher eventPublisher,
+                                     CaptainServiceImpl captainService,
+                                     CustomerServiceImpl customerService) {
         this.repository = repository;
         this.jwtService = jwtService;
         this.authenticationManager = authenticationManager;
         this.passwordEncoder = passwordEncoder;
         this.verificationTokenService = verificationTokenService;
         this.eventPublisher = eventPublisher;
+        this.captainService = captainService;
+        this.customerService = customerService;
     }
 
     @Override
@@ -69,8 +80,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         if(user.isEnabled() == false){
             throw new RuntimeException("you need to confirm your email before logging in");
         }
+        List<Integer> captainsIdRoles = captainService.getAllCaptainsIdByUserId(user.getUserId());
+        List<Integer> customersIdRoles = customerService.getAllCustomersRightIdByUserId(user.getUserId());
         var jwtToken = jwtService.generateToken(user);
-        return new AuthenticationResponseEntity(jwtToken, user.getUserId());
+        return new AuthenticationResponseEntity(jwtToken, user.getUserId(),customersIdRoles,captainsIdRoles);
     }
 
     @Override
