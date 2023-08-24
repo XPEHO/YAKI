@@ -84,8 +84,9 @@ export const useTeamStore = defineStore("teamStore", {
     // update the selected team (can change name or captainID)
     async updateTeam(teamID: number, teamName: string): Promise<void> {
       const selectedRoleStore = useSelectedRoleStore();
-      const customerId = selectedRoleStore.getCustomerIdSelected;
-      await teamService.updateTeam(teamID, teamName, customerId);
+      // could use the customerId later on
+      //const customerId = selectedRoleStore.getCustomerIdSelected;
+      await teamService.updateTeam(teamID, teamName);
     },
 
     async deleteTeam(teamId: number): Promise<void> {
