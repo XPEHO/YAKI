@@ -1,5 +1,5 @@
 import {test, it, expect} from "vitest";
-import {isSelectedTeamActive} from "../../../../src/features/shared/services/isSelectedTeamActive.ts";
+import isSelectedTeamActive from "../../../../src/features/shared/services/isSelectedTeamActive";
 
 test("isSelectedTeamActive", () => {
   test("isSameIndex", () => {

@@ -1,3 +1,4 @@
+/// <reference types="vitest" />
 import {fileURLToPath, URL} from "node:url";
 
 import {defineConfig} from "vite";
@@ -17,8 +18,9 @@ export default defineConfig({
     },
   },
   test: {
+    environment : 'happy-dom',
     coverage: {
-      provider: "istanbul", // or 'v8'
+      reporter: ['text', 'lcov', 'html']
     },
   },
   css: {
