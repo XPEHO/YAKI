@@ -1,4 +1,4 @@
-import {test, it, expect} from "vitest";
+import {test, expect} from "vitest";
 
 test("isSelectedTeamActive", () => {
   test("isSameIndex", () => {

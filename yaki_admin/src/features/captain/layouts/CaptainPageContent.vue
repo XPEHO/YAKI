@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {computed, onBeforeMount, watch} from "vue";
+import {onBeforeMount} from "vue";
 import {useTeamStore} from "@/stores/teamStore.js";
 import router from "@/router/router";
 

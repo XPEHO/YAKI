@@ -118,7 +118,7 @@ const modalState = reactive({
     this.refreshTeamList();
 
     if (teamStore.getTeamList.length !== 0) {
-      teamStore.setSeletedTeamTeamId(teamStore.getTeamList[0].id);
+      teamStore.setSelectedTeamTeamId(teamStore.getTeamList[0].id);
     }
   },
 

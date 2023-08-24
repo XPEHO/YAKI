@@ -21,7 +21,7 @@ export const useAuthStore = defineStore("loginStore", {
   actions: {
     async login(login: string, password: string): Promise<boolean> {
       try {
-        let userEntity = await loginService.login(login, password);
+        const userEntity = await loginService.login(login, password);
         this.user = {
           user_id : userEntity.userId,
           token: userEntity.token,

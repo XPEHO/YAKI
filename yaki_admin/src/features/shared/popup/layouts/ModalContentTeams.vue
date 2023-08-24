@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import modalState from "@/features/shared/services/modalState";
 import {MODALMODE} from "@/features/shared/services/modalMode";
-import {computed, inject, nextTick, ref, watch} from "vue";
 
 const setTeamName = (e: Event) => {
   let input = (e.target as HTMLInputElement).value;

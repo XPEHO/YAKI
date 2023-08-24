@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import router from "@/router/router";
 import {environmentVar} from "@/envPlaceholder";
-import {onBeforeMount, reactive, watch} from "vue";
+import {onBeforeMount, reactive} from "vue";
 import {useTeamStore} from "@/stores/teamStore";
 import modalState from "@/features/shared/services/modalState";
 

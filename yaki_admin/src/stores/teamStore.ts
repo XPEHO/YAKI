@@ -33,7 +33,7 @@ export const useTeamStore = defineStore("teamStore", {
     setCaptainsId(captainsId: number[]) {
       this.captainsIdForTeamSelected = captainsId;
     },
-    setSeletedTeamTeamId(teamId: number): void {
+    setSelectedTeamTeamId(teamId: number): void {
       this.selectedTeamId = teamId;
     },
     isSameTeamId(teamId: number): boolean {
@@ -75,8 +75,8 @@ export const useTeamStore = defineStore("teamStore", {
     // create a team (use captain id and team name)
     async createTeam(cptId: number, teamName: string): Promise<void> {
       const selectedRoleStore = useSelectedRoleStore();
-      let customerId = selectedRoleStore.getCustomerIdSelected;
-      let captainId = selectedRoleStore.getCaptainIdSelected;
+      const customerId = selectedRoleStore.getCustomerIdSelected;
+      const captainId = selectedRoleStore.getCaptainIdSelected;
       //the back handle if the captainId is null or not
       await teamService.createTeam(captainId, teamName, customerId);
     },
@@ -84,7 +84,7 @@ export const useTeamStore = defineStore("teamStore", {
     // update the selected team (can change name or captainID)
     async updateTeam(teamID: number, teamName: string): Promise<void> {
       const selectedRoleStore = useSelectedRoleStore();
-      let customerId = selectedRoleStore.getCustomerIdSelected;
+      const customerId = selectedRoleStore.getCustomerIdSelected;
       await teamService.updateTeam(teamID, teamName, customerId);
     },
 

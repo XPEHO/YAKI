@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {PropType, onBeforeMount, reactive, watch} from "vue";
+import {PropType, onBeforeMount, reactive} from "vue";
 import type {UserWithIdType} from "@/models/userWithId.type";
 
 import avatarIcon from "@/assets/images/avatar.png";
