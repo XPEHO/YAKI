@@ -8,7 +8,6 @@ import deleteIcon from "@/assets/images/Delete.png";
 import {UserWithIdType} from "@/models/userWithId.type";
 
 import modalState from "@/features/shared/services/modalState";
-import {useTeamStore} from "@/stores/teamStore.js";
 
 const props = defineProps({
   user: {
