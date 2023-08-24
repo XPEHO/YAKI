@@ -23,4 +23,5 @@ public interface CaptainService {
 
     CaptainEntity disabled(int id);
 
+    CaptainEntity assign(int id, Integer teamId);
 }

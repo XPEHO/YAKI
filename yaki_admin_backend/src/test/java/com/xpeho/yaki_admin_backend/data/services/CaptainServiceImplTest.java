@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import java.net.HttpCookie;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -35,6 +36,10 @@ class CaptainServiceImplTest {
 
     @MockBean
     private EntityLogServiceImpl entityLogService;
+
+    @MockBean
+    private CaptainsTeamsServiceImpl captainsTeamsService;
+
     private EntityLogModel entityLogModel;
 
     @BeforeEach
@@ -174,5 +179,17 @@ class CaptainServiceImplTest {
 
         //then
         assertEquals(expectedCaptainEntities, actualCaptainEntities);
+    }
+
+    @Test
+    public void testAssign() {
+        //given
+        int captainId = 3;
+        int teamId = 5;
+        when(captainJpaRepository.findById(captainId)).thenReturn(Optional.of(new CaptainModel(captainId, 1, 2, entityLogModel.getId())));
+        when(captainsTeamsService.assignCaptainToTeam(captainId, teamId)).thenReturn(true);
+        CaptainEntity captainEntityExpected = new CaptainEntity(captainId, 1, 2);
+        CaptainEntity captainEntityTested = captainService.assign(captainId, teamId);
+        assertEquals(captainEntityExpected, captainEntityTested);
     }
 }

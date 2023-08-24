@@ -54,4 +54,8 @@ public class CaptainController {
     public CaptainEntity disabled(@PathVariable int id){
         return captainService.disabled(id);
     }
+    @PutMapping("/assign/{id}")
+    public CaptainEntity assign(@PathVariable int id, @RequestBody Integer teamId ){
+        return captainService.assign(id,teamId);
+    }
 }

@@ -5,16 +5,17 @@ import com.xpeho.yaki_admin_backend.data.models.UserModel
 import com.xpeho.yaki_admin_backend.data.sources.CaptainJpaRepository
 import com.xpeho.yaki_admin_backend.domain.entities.CaptainEntity
 import com.xpeho.yaki_admin_backend.domain.entities.UserEntityWithID
-import com.xpeho.yaki_admin_backend.data.models.TeamModel
-import com.xpeho.yaki_admin_backend.domain.entities.TeamEntity
 import com.xpeho.yaki_admin_backend.data.models.EntityLogModel
 import com.xpeho.yaki_admin_backend.domain.services.CaptainService
+import com.xpeho.yaki_admin_backend.data.services.CaptainsTeamsServiceImpl
+import com.xpeho.yaki_admin_backend.domain.services.CaptainsTeamsService
 import jakarta.persistence.EntityNotFoundException
 import org.springframework.stereotype.Service
 import java.util.*
 
 @Service
-class CaptainServiceImpl(private val captainJpaRepository: CaptainJpaRepository, private val entityLogService: EntityLogServiceImpl) : CaptainService {
+class CaptainServiceImpl(private val captainJpaRepository: CaptainJpaRepository, private val entityLogService: EntityLogServiceImpl,
+        private val captainsTeamsService: CaptainsTeamsServiceImpl) : CaptainService {
     override fun getCaptains(): List<CaptainEntity> {
         return captainJpaRepository
                 .findAll()
@@ -100,15 +101,25 @@ class CaptainServiceImpl(private val captainJpaRepository: CaptainJpaRepository,
     }
 
     //disable the team but keep in log
-        override fun disabled(captainId: Int): CaptainEntity? {
-        val captainModelOpt: Optional<CaptainModel> = captainJpaRepository.findById(captainId)
+    override fun disabled(captainId: Int): CaptainEntity? {
+    val captainModelOpt: Optional<CaptainModel> = captainJpaRepository.findById(captainId)
+    if (captainModelOpt.isEmpty) {
+        throw EntityNotFoundException("The captain with id $captainId not found.")
+    }
+    val captainModel = captainModelOpt.get()
+    entityLogService.disabledEntity(captainModel.entityLogId)
+    captainModel.isActif = false
+    captainJpaRepository.save(captainModel)
+    return CaptainEntity(captainModel.captainId, captainModel.userId, captainModel.customerId)
+    }
+
+    override fun assign(id: Int, teamId: Int): CaptainEntity {
+        val captainModelOpt: Optional<CaptainModel> = captainJpaRepository.findById(id)
         if (captainModelOpt.isEmpty) {
-            throw EntityNotFoundException("The captain with id $captainId not found.")
+            throw EntityNotFoundException("The captain with id $id not found.")
         }
         val captainModel = captainModelOpt.get()
-        entityLogService.disabledEntity(captainModel.entityLogId)
-        captainModel.isActif = false
-        captainJpaRepository.save(captainModel)
+        captainsTeamsService.assignCaptainToTeam(id, teamId);
         return CaptainEntity(captainModel.captainId, captainModel.userId, captainModel.customerId)
     }
 }

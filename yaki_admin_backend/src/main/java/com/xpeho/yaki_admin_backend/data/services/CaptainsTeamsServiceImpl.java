@@ -21,4 +21,8 @@ public class CaptainsTeamsServiceImpl implements CaptainsTeamsService {
         return captainsTeamsJpaRepository.findAllTeamsByCaptain(id);
 
     }
+    public boolean assignCaptainToTeam(int captainId, int teamId) {
+        captainsTeamsJpaRepository.save(new CaptainsTeamsModel(captainId, teamId));
+        return true;
+    }
 }

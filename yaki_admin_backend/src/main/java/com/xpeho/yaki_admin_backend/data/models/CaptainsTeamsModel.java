@@ -15,7 +15,10 @@ public class CaptainsTeamsModel {
         this.captainModel = captainModel;
         this.teamModel = teamModel;
     }
-
+    public CaptainsTeamsModel(int captainId, int teamId) {
+        this.captainId = captainId;
+        this.teamId = teamId;
+    }
     public CaptainsTeamsModel() {
     }
     @ManyToOne()
@@ -25,6 +28,14 @@ public class CaptainsTeamsModel {
     @ManyToOne()
     @JoinColumn(name = "captains_teams_team_id", insertable = false, updatable = false)
     private TeamModel teamModel;
+
+    @Column(name = "captains_teams_captain_id")
+    private int captainId;
+
+    @Column(name = "captains_teams_team_id")
+    private int teamId;
+
+
 
     public int getId() {
         return id;
@@ -48,5 +59,21 @@ public class CaptainsTeamsModel {
 
     public void setTeamModel(TeamModel teamModel) {
         this.teamModel = teamModel;
+    }
+
+    public int getCaptainId() {
+        return captainId;
+    }
+
+    public void setCaptainId(int captainId) {
+        this.captainId = captainId;
+    }
+
+    public int getTeamId() {
+        return teamId;
+    }
+
+    public void setTeamId(int teamId) {
+        this.teamId = teamId;
     }
 }
