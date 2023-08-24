@@ -1,8 +1,9 @@
 import {reactive} from "vue";
 import {useTeamStore} from "@/stores/teamStore.js";
 import {MODALMODE} from "@/features/shared/services/modalMode";
-import {StoreGeneric} from "pinia";
 import isTeamSelected from "./isSelectedTeamActive";
+import {useTeammateStore} from "@/stores/teammateStore";
+import {useRoleStore} from "@/stores/roleStore";
 
 const modalState = reactive({
   isShowed: false as boolean,
@@ -67,8 +68,8 @@ const modalState = reactive({
    * Get the user ID and retrive first name and last name which will be displayed in the modal
    */
   setTeammateIDAndInformations(id: number, informations: string) {
-    const teamStore = useTeamStore();
-    teamStore.setTeammateToDelete(id);
+    const teammateStore = useTeammateStore();
+    teammateStore.setIdOfTeammateToDelete(id);
 
     this.setUserFirstLastName(informations);
     this.switchModalVisibility(true, MODALMODE.userDelete);
@@ -100,7 +101,9 @@ const modalState = reactive({
 
   createNewteam() {
     const teamStore = useTeamStore();
-    teamStore.createTeam(teamStore.getCaptainId[0], this.teamInputValue);
+    const roleStore = useRoleStore();
+
+    teamStore.createTeam(roleStore.getCaptainsId[0], this.teamInputValue);
     this.refreshTeamList();
   },
 
@@ -121,22 +124,23 @@ const modalState = reactive({
   },
 
   deleteUserFromTeam() {
-    const teamStore = useTeamStore();
-    teamStore.deleteTeammateFromTeam(teamStore.getTeammateToDelete);
+    const teammateStore = useTeammateStore();
+    teammateStore.deleteTeammateFromTeam(teammateStore.getTeammateToDelete);
     this.refreshTeammatesList();
   },
 
   async refreshTeamList() {
     const teamStore = useTeamStore();
     await setTimeout(async () => {
-      await teamStore.getTeamsFromCaptain(teamStore.getCaptainId);
+      await teamStore.setTeamListOfACaptain(teamStore.getCaptainsId);
     }, 100);
   },
 
   async refreshTeammatesList() {
     const teamStore = useTeamStore();
+    const teammateStore = useTeammateStore();
     await setTimeout(async () => {
-      await teamStore.getTeammateWithinTeam(teamStore.getTeamId);
+      await teammateStore.setListOfTeammatesWithinTeam(teamStore.getTeamId);
     }, 150);
   },
 });

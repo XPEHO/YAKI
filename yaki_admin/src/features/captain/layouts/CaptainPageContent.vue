@@ -15,7 +15,7 @@ const teamStore = useTeamStore();
 const teammateStore = useTeammateStore();
 
 onBeforeMount(async () => {
-  await teammateStore.setTeammatesWithinTeam(teamStore.getTeamId);
+  await teammateStore.setListOfTeammatesWithinTeam(teamStore.getTeamId);
 });
 </script>
 

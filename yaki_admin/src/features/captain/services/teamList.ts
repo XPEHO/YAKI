@@ -1,6 +1,7 @@
 import {useTeamStore} from "@/stores/teamStore";
 import isTeamSelected from "@/features/shared/services/isSelectedTeamActive";
 import modalState from "@/features/shared/services/modalState";
+import {useTeammateStore} from "@/stores/teammateStore";
 
 /**
  * invoked when user select a team.
@@ -12,12 +13,13 @@ import modalState from "@/features/shared/services/modalState";
  * @param teamId
  * @returns
  */
-export const selectTeamAndFetchUsers = (teamId: number) => {
+export const selectTeamAndFetchTeammates = (teamId: number) => {
   const teamStore = useTeamStore();
-  if (teamStore.getTeamList.length === 0) return;
+  const teammateStore = useTeammateStore();
 
+  if (teamStore.getTeamList.length === 0) return;
   isTeamSelected.setTeamId(teamId);
   const TeamName = teamStore.getTeamList.find((team) => team.id === teamId)?.teamName;
   modalState.setTeamName(TeamName ?? "");
-  teamStore.getTeammateWithinTeam(teamId);
+  teammateStore.setListOfTeammatesWithinTeam(teamId);
 };

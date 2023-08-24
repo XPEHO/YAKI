@@ -22,12 +22,12 @@ const teamStore = useTeamStore();
 const route = useRoute();
 
 const props = reactive({
-  list: [] as UserWithIdType[],
+  userList: [] as UserWithIdType[],
   fromRoute: "" as string,
 });
 
 onBeforeMount(async () => {
-  props.list = await usersService.fetchUserInRange(
+  props.userList = await usersService.fetchUserInRange(
     environmentVar.tempUserIdRangeStart,
     environmentVar.tempUserIdRAngeEnd
   );
@@ -55,7 +55,7 @@ const invitUser = async (userId: number) => {
         @click.prevent="router.go(-1)" />
 
       <user-invitation-card
-        v-for="user in props.list"
+        v-for="user in props.userList"
         v-bind:key="user.id"
         v-bind:user="user"
         v-bind:fromRoute="props.fromRoute"

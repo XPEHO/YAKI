@@ -1,5 +1,5 @@
 import {UserWithIdType} from "@/models/userWithId.type";
-import {useTeamStore} from "@/stores/teamStore";
+import {useTeammateStore} from "@/stores/teammateStore";
 
 const captainPageRoute = "/captain/invitation";
 const customerPageRoute = "/customer/invitation";
@@ -16,8 +16,8 @@ export const checkInvitationStatus = (user: UserWithIdType) => {
     cardCSS: "",
   };
 
-  const teamStore = useTeamStore();
-  const isUserInTeam = teamStore.getTeammateList.find((teammate) => teammate.userId === user.id);
+  const teammateStore = useTeammateStore();
+  const isUserInTeam = teammateStore.getTeammateList.find((teammate) => teammate.userId === user.id);
 
   if (isUserInTeam) {
     invitationStatus.isInvited = true;
