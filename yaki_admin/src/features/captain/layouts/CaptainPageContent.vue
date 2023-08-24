@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {onBeforeMount} from "vue";
+import {computed, onBeforeMount, watch} from "vue";
 import {useTeamStore} from "@/stores/teamStore.js";
 import router from "@/router/router";
 
@@ -15,7 +15,7 @@ const teamStore = useTeamStore();
 const teammateStore = useTeammateStore();
 
 onBeforeMount(async () => {
-  await teammateStore.setListOfTeammatesWithinTeam(teamStore.getTeamId);
+  await teammateStore.setListOfTeammatesWithinTeam(teamStore.getSelectedTeamId);
 });
 </script>
 

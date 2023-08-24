@@ -6,7 +6,7 @@ import {handleResponse} from "@/utils/responseUtils";
 const URL: string = environmentVar.baseURL;
 
 // Defining a TeamMateService class to handle HTTP requests to the API
-export class TeamMateService {
+export class TeammateService {
   // Defining a method to retrieve all team mates within a given team
   getAllWithinTeam = async (id: number): Promise<TeammateType[]> => {
     const requestOptions = {
@@ -48,4 +48,4 @@ export class TeamMateService {
 }
 
 // Creating an instance of the TeamMateService class and freezing it to prevent modification
-export const teamMateService = Object.freeze(new TeamMateService());
+export const teammateService = Object.freeze(new TeammateService());

@@ -1,5 +1,4 @@
 import {useTeamStore} from "@/stores/teamStore";
-import isTeamSelected from "@/features/shared/services/isSelectedTeamActive";
 import modalState from "@/features/shared/services/modalState";
 import {useTeammateStore} from "@/stores/teammateStore";
 
@@ -18,8 +17,9 @@ export const selectTeamAndFetchTeammates = (teamId: number) => {
   const teammateStore = useTeammateStore();
 
   if (teamStore.getTeamList.length === 0) return;
-  isTeamSelected.setTeamId(teamId);
+  teamStore.setSeletedTeamTeamId(teamId);
   const TeamName = teamStore.getTeamList.find((team) => team.id === teamId)?.teamName;
+
   modalState.setTeamName(TeamName ?? "");
   teammateStore.setListOfTeammatesWithinTeam(teamId);
 };

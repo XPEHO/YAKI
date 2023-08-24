@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import isTeamSelected from "@/features/shared/services/isSelectedTeamActive";
 import editIcon from "@/assets/images/Edit.png";
 import deleteIcon from "@/assets/images/Delete.png";
 import modalState from "@/features/shared/services/modalState";
 import {MODALMODE} from "../services/modalMode";
+import {useTeamStore} from "@/stores/teamStore";
+
+const teamStore = useTeamStore();
 
 const props = defineProps({
   teamName: {
@@ -30,7 +32,7 @@ const onClickDeleteTeam = () => {
   <article
     class="team-list-unit"
     :class="{
-      'team-list-unit-selected': isTeamSelected.isSameTeamId(props.id),
+      'team-list-unit-selected': teamStore.isSameTeamId(props.id),
     }">
     <p>{{ props.teamName }}</p>
     <section class="delete-edit-icon">
@@ -95,9 +97,7 @@ const onClickDeleteTeam = () => {
     cursor: pointer;
   }
 }
-
 .team-list-unit-selected {
   background-color: #f5cd3d;
 }
 </style>
-@/features/shared/services/isSelectedTeamActive

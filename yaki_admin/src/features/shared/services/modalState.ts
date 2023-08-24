@@ -1,7 +1,6 @@
 import {reactive} from "vue";
 import {useTeamStore} from "@/stores/teamStore.js";
 import {MODALMODE} from "@/features/shared/services/modalMode";
-import isTeamSelected from "./isSelectedTeamActive";
 import {useTeammateStore} from "@/stores/teammateStore";
 import {useRoleStore} from "@/stores/roleStore";
 
@@ -109,17 +108,17 @@ const modalState = reactive({
 
   editTeamName() {
     const teamStore = useTeamStore();
-    teamStore.updateTeam(teamStore.getTeamId, this.teamInputValue);
+    teamStore.updateTeam(teamStore.getSelectedTeamId, this.teamInputValue);
     this.refreshTeamList();
   },
 
   deleteTeam() {
     const teamStore = useTeamStore();
-    teamStore.deleteTeam(teamStore.getTeamId);
+    teamStore.deleteTeam(teamStore.getSelectedTeamId);
     this.refreshTeamList();
 
     if (teamStore.getTeamList.length !== 0) {
-      isTeamSelected.setTeamId(teamStore.getTeamList[0].id);
+      teamStore.setSeletedTeamTeamId(teamStore.getTeamList[0].id);
     }
   },
 
@@ -131,8 +130,9 @@ const modalState = reactive({
 
   async refreshTeamList() {
     const teamStore = useTeamStore();
+    const roleStore = useRoleStore();
     await setTimeout(async () => {
-      await teamStore.setTeamListOfACaptain(teamStore.getCaptainsId);
+      await teamStore.setTeamListOfACaptain(roleStore.getCaptainsId);
     }, 100);
   },
 
@@ -140,7 +140,7 @@ const modalState = reactive({
     const teamStore = useTeamStore();
     const teammateStore = useTeammateStore();
     await setTimeout(async () => {
-      await teammateStore.setListOfTeammatesWithinTeam(teamStore.getTeamId);
+      await teammateStore.setListOfTeammatesWithinTeam(teamStore.getSelectedTeamId);
     }, 150);
   },
 });

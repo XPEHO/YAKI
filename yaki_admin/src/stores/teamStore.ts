@@ -1,29 +1,29 @@
 import {defineStore} from "pinia";
-import {teamMateService} from "@/services/teammate.service";
+import {teammateService} from "@/services/teammate.service";
 import {teamService} from "@/services/team.service";
 import {TeamType} from "@/models/team.type";
-import {useTeammateStore} from "./teammateStore";
 import {useSelectedRoleStore} from "./selectedRole";
 
 export const useTeamStore = defineStore("teamStore", {
   state: () => ({
     teamList: [] as TeamType[],
-    teamSelectedId: 0 as number,
+    // CaptainS id within a team
     captainsIdForTeamSelected: [] as number[], //captains of this team
     teamName: "" as string,
+    selectedTeamId: 0 as number,
   }),
   getters: {
     getCaptainsId(): number[] {
       return this.captainsIdForTeamSelected;
-    },
-    getTeamId(): number {
-      return this.teamSelectedId;
     },
     getTeamName(): string {
       return this.teamName;
     },
     getTeamList(): TeamType[] {
       return this.teamList;
+    },
+    getSelectedTeamId(): number {
+      return this.selectedTeamId;
     },
   },
   actions: {
@@ -33,11 +33,16 @@ export const useTeamStore = defineStore("teamStore", {
     setCaptainsId(captainsId: number[]) {
       this.captainsIdForTeamSelected = captainsId;
     },
-    setTeamSelectedId(teamId: number) {
-      const teammateStore = useTeammateStore();
-      this.teamSelectedId = teamId;
-      teammateStore.setListOfTeammatesWithinTeam(teamId);
+    setSeletedTeamTeamId(teamId: number): void {
+      this.selectedTeamId = teamId;
     },
+    isSameTeamId(teamId: number): boolean {
+      if (this.selectedTeamId === teamId) {
+        return true;
+      }
+      return false;
+    },
+
     /**
      * set all teams for a captain list
      */
@@ -60,10 +65,11 @@ export const useTeamStore = defineStore("teamStore", {
         this.teamList = this.teamList.concat(a);
       }
     },
+
     // add a selected user to a team
     async addUserToTeam(userId: number): Promise<void> {
-      const data = {teamId: this.teamSelectedId, userId: userId};
-      await teamMateService.createTeammate(data);
+      const data = {teamId: this.selectedTeamId, userId: userId};
+      await teammateService.createTeammate(data);
     },
 
     // create a team (use captain id and team name)
@@ -73,7 +79,6 @@ export const useTeamStore = defineStore("teamStore", {
       let captainId = selectedRoleStore.getCaptainIdSelected;
       //the back handle if the captainId is null or not
       await teamService.createTeam(captainId, teamName, customerId);
-      this.setTeamSelectedId(this.teamList.length);
     },
 
     // update the selected team (can change name or captainID)

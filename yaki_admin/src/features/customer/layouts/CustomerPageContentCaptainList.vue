@@ -2,40 +2,43 @@
 import router from "@/router/router";
 import {onBeforeMount} from "vue";
 
+import PageContentLayout from "@/global-layouts/PageContentLayout.vue";
 import SideBarButton from "@/features/shared/components/SideBarButton.vue";
 import HeaderContentPage from "@/features/shared/components/HeaderContentPage.vue";
 import UserCard from "@/features/shared/components/UserCard.vue";
 import plusIcon from "@/assets/images/plus.png";
-import { useCaptainStore } from "@/stores/captainStore";
-import { useSelectedRoleStore } from "@/stores/selectedRole";
+import {useCaptainStore} from "@/stores/captainStore";
+import {useSelectedRoleStore} from "@/stores/selectedRole";
 
 const captainStore = useCaptainStore();
 const selectedRoleStore = useSelectedRoleStore();
-const fetchCaptains = async () => {
-  await captainStore.setAllCaptainsByCustomerId(selectedRoleStore.getCustomerIdSelected);
-};
 
 onBeforeMount(async () => {
-  fetchCaptains();
+  await captainStore.setAllCaptainsByCustomerId(selectedRoleStore.getCustomerIdSelected);
 });
 </script>
 
 <template>
-  <header-content-page
-    v-bind:title="'Captains List'"
-    v-bind:text="'Manage your captains :'" />
+  <page-content-layout>
+    <template #pageContentHeader>
+      <header-content-page
+        v-bind:title="'Captains List'"
+        v-bind:text="'Manage your captains :'" />
+    </template>
+    <template #content>
+      <SideBarButton
+        v-bind:inner-text="'Invite a captain'"
+        v-bind:icon-path="plusIcon"
+        @click.prevent="router.push({path: 'invitation'})" />
 
-  <SideBarButton
-    v-bind:inner-text="'Invite a captain'"
-    v-bind:icon-path="plusIcon"
-    @click.prevent="router.push({path: 'invitation'})" />
-
-  <div class="captain-list">
-    <user-card
-      v-for="captain in captainStore.getCaptainList"
-      :user="captain"
-      :key="captain.id" />
-  </div>
+      <div class="captain-list">
+        <user-card
+          v-for="captain in captainStore.getCaptainList"
+          :user="captain"
+          :key="captain.id" />
+      </div>
+    </template>
+  </page-content-layout>
 </template>
 
 <style lang="scss">

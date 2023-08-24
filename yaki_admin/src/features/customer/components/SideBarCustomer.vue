@@ -1,11 +1,9 @@
 <script setup lang="ts">
 import vector from "@/assets/images/Vector.png";
 import security from "@/assets/images/security.png";
-import plusIcon from "@/assets/images/plus.png";
 import router from "@/router/router";
 
 import SideBarElement from "@/features/shared/components/SideBarCategoryElement.vue";
-import SideBarButton from "@/features/shared/components/SideBarButton.vue";
 
 const navigateTo = (route: string) => {
   router.push({path: route, replace: true});
@@ -24,8 +22,4 @@ const navigateTo = (route: string) => {
     v-bind:iconPath="vector"
     v-bind:isSelected="true"
     @click="navigateTo('/customer/manage-team')" />
-  <side-bar-button
-    v-bind:inner-text="'Add team'"
-    v-bind:icon-path="plusIcon"
-    @click="() => {}" />
 </template>
