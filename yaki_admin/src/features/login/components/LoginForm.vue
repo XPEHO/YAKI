@@ -2,7 +2,6 @@
 import {useAuthStore} from "@/stores/authStore";
 
 import eyesIcon from "@/assets/images/eye.png";
-import btnClickSound from "@/assets/sound/btnClick.mp3";
 
 export default {
   mounted() {
@@ -11,7 +10,6 @@ export default {
   data() {
     return {
       eyesIcon: eyesIcon,
-      btnClickSound: btnClickSound,
       audioContainer: null,
       usernamePlaceholder: "Login",
       passwordPlaceholder: "Password",

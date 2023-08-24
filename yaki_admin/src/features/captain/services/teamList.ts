@@ -19,7 +19,7 @@ export const selectTeamAndFetchTeammates = (teamId: number) => {
   if (teamStore.getTeamList.length === 0) return;
   teamStore.setSeletedTeamTeamId(teamId);
   const TeamName = teamStore.getTeamList.find((team) => team.id === teamId)?.teamName;
-
   modalState.setTeamName(TeamName ?? "");
+
   teammateStore.setListOfTeammatesWithinTeam(teamId);
 };
