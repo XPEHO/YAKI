@@ -23,10 +23,10 @@ onBeforeMount(async () => {
 <template>
   <header-content-page
     v-bind:title="'Captains List'"
-    v-bind:text="'Manage your captains here'" />
+    v-bind:text="'Manage your captains :'" />
 
   <SideBarButton
-    v-bind:inner-text="'To invite a captain'"
+    v-bind:inner-text="'Invite a captain'"
     v-bind:icon-path="plusIcon"
     @click.prevent="router.push({path: 'invitation'})" />
 

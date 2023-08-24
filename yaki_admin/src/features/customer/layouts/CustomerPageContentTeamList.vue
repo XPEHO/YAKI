@@ -36,13 +36,6 @@ onBeforeMount(async () => {
 
 <style lang="scss">
 .customer-view,
-.team-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  align-items: center;
-  max-width: 70vw;
-}
 .team-item {
   border: 1px solid #ccc;
   background-color: rgb(177, 173, 173);

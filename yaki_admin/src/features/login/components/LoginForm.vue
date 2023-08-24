@@ -31,12 +31,7 @@ export default {
       this.usernameText = e.target.value;
     },
 
-    playAudio() {
-      this.audioContainer.play();
-    },
-
     login() {
-      this.playAudio();
       const authStore = useAuthStore();
       if (this.form.username !== "" && this.form.password !== "") {
         return authStore.login(this.form.username, this.form.password).catch((error) => setErrors({apiError: error}));
@@ -44,15 +39,13 @@ export default {
       return;
     },
 
-    forgottenPassword() {
-      this.playAudio();
-    },
+    forgottenPassword() {},
   },
 };
 </script>
 
 <template>
-  <form @submit.prevent="login">
+  <form>
     <input
       type="text"
       v-model="form.username"
@@ -71,7 +64,8 @@ export default {
     </figure>
     <button
       type="submit"
-      class="button-style-common button-style-primary button-text-main">
+      class="button-style-common button-style-primary button-text-main"
+      @click.prevent="login">
       Sign In
     </button>
     <button
@@ -80,19 +74,12 @@ export default {
       Forgot password ?
     </button>
   </form>
-
-  <audio id="audioContainer">
-    <source
-      v-bind:src="btnClickSound"
-      type="audio/mpeg" />
-  </audio>
 </template>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 form {
   display: flex;
-  justify-content: center;
   flex-direction: column;
   gap: 1rem;
   padding-block-start: 8rem;
@@ -104,12 +91,12 @@ form {
   input {
     padding-inline-start: 2rem;
     padding-block: 1.3rem;
-    font-size: $login-input-font-size;
+    font-size: $font-size-login-input;
     border-radius: 16px;
     border: 1px solid #ccc;
 
     &::placeholder {
-      font-size: calc($login-input-font-size * 0.8);
+      font-size: calc($font-size-login-input * 0.8);
     }
   }
 

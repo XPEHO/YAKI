@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import HeaderYaki from "@/features/shared/components/HeaderMain.vue";
 import SideBar from "@/global-layouts/SideBar.vue";
+import modalFrame from "@/features/shared/popup/ModalFrame.vue";
+import modalState from "@/features/shared/services/modalState";
 </script>
 
 <template>
+  <modal-frame v-show="modalState.isShowed" />
   <header-yaki />
   <section class="sidebar-content-container-grid">
     <side-bar>
@@ -22,7 +25,7 @@ import SideBar from "@/global-layouts/SideBar.vue";
   // See assets/style.scss @app {}
   flex: 1;
   display: grid;
-  grid-template-columns: minmax(10rem, 20rem) minmax(80%, 1fr);
+  grid-template-columns: minmax(10rem, 17rem) minmax(80%, 1fr);
 }
 .page-content {
   padding: 30px;

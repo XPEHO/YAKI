@@ -21,7 +21,7 @@ const props = defineProps({
 }
 .text {
   font-size: 15px;
-  color: #787878;
+  color: $font-color-sub-text;
   margin-bottom: 20px;
 }
 .line {

@@ -7,6 +7,10 @@ import editIcon from "@/assets/images/Edit.png";
 import deleteIcon from "@/assets/images/Delete.png";
 import {UserWithIdType} from "@/models/userWithId.type";
 
+import modalState from "@/features/shared/services/modalState";
+import {useTeamStore} from "@/stores/teamStore.js";
+const teamStore = useTeamStore();
+
 const props = defineProps({
   user: {
     type: Object as PropType<TeammateType | UserWithIdType>,
@@ -14,10 +18,8 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["removeUser"]);
-
-const removeUser = () => {
-  emit("removeUser", props.user.id, `${props.user.firstname} ${props.user.lastname}`);
+const UserToBeRemoved = () => {
+  modalState.setTeammateIDAndInformations(props.user.id, `${props.user.firstname} ${props.user.lastname}`);
 };
 </script>
 
@@ -42,7 +44,7 @@ const removeUser = () => {
             alt="" />
         </figure>
       </button>
-      <button @click.prevent="removeUser">
+      <button @click.prevent="UserToBeRemoved">
         <figure>
           <img
             class="user-icon"
@@ -76,10 +78,10 @@ const removeUser = () => {
   flex-direction: column;
 }
 .name {
-  font-size: $user-info-name-font-size;
+  font-size: $font-size-user-info-name;
 }
 .email {
-  font-size: $user-info-email-font-size;
+  font-size: $font-size-user-info-email;
   color: #787878;
 }
 .avatar {
@@ -109,4 +111,3 @@ const removeUser = () => {
   }
 }
 </style>
-@/models/teammate.type

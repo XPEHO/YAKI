@@ -2,7 +2,8 @@
 import isTeamSelected from "@/features/shared/services/isSelectedTeamActive";
 import editIcon from "@/assets/images/Edit.png";
 import deleteIcon from "@/assets/images/Delete.png";
-import modalState from "@/features/shared/services/modalTeamState";
+import modalState from "@/features/shared/services/modalState";
+import {MODALMODE} from "../services/modalMode";
 
 const props = defineProps({
   teamName: {
@@ -16,13 +17,12 @@ const props = defineProps({
 });
 
 const onClickEditTeam = () => {
-  modalState.setModalMode(1);
-  modalState.visibilitySwitch();
+  // change input value on edit to have the current team name to edit
+  modalState.switchModalVisibility(true, MODALMODE.teamEdit, props.teamName);
 };
 
 const onClickDeleteTeam = () => {
-  modalState.setModalMode(2);
-  modalState.visibilitySwitch();
+  modalState.switchModalVisibility(true, MODALMODE.teamDelete);
 };
 </script>
 
@@ -57,22 +57,22 @@ const onClickDeleteTeam = () => {
 <style lang="scss">
 .team-list-unit {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
-  gap: 1.25rem;
+  gap: 0.5rem;
 
   width: 100%;
   padding-block: 0.5rem;
 
   p {
     width: 40%;
-    font-size: $sidebar-teamlist-element-font-size;
+    font-size: $font-size-sidebar-teamlist-element;
     user-select: none;
   }
 
   .delete-edit-icon {
     display: flex;
-    gap: 0.5rem;
+    gap: 1.2rem;
     button {
       border: none;
       background-color: transparent;

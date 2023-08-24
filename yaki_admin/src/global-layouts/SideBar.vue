@@ -6,7 +6,7 @@
 
 <style scoped lang="scss">
 .sidebar {
-  background-color: #fafafa;
+  background-color: $color-side-bar-background;
   padding-block: 2rem;
   display: flex;
   flex-direction: column;

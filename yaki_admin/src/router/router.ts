@@ -1,13 +1,14 @@
 import {createRouter, createWebHistory} from "vue-router";
 import {useAuthStore} from "@/stores/authStore";
 import PageLogin from "@/features/login/pages/PageLogin.vue";
-import CaptainPageContent from "@/features/captain/layouts/CaptainPageContent.vue";
 import UserInvitationPageContent from "@/features/invitation/layouts/UserInvitationPageContent.vue";
-import CustomerPage from "@/features/customer/CustomerPage.vue";
-import LayoutCaptainByCustomer from "@/features/customer/layouts/LayoutCaptainByCustomer.vue";
 
 import CaptainPage from "@/features/captain/CaptainPage.vue";
-import LayoutTeamByCustomer from "@/features/customer/layouts/LayoutTeamByCustomer.vue";
+import CaptainPageContent from "@/features/captain/layouts/CaptainPageContent.vue";
+
+import CustomerPage from "@/features/customer/CustomerPage.vue";
+import CustomerPageContentTeamList from "@/features/customer/layouts/CustomerPageContentTeamList.vue";
+import CustomerPageContentCaptainList from "@/features/customer/layouts/CustomerPageContentCaptainList.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -43,11 +44,11 @@ const router = createRouter({
       children: [
         {
           path: "manage-captain",
-          component: LayoutCaptainByCustomer,
+          component: CustomerPageContentCaptainList,
         },
         {
           path: "manage-team",
-          component: LayoutTeamByCustomer,
+          component: CustomerPageContentTeamList,
         },
         {
           path: "invitation",
