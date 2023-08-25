@@ -35,18 +35,22 @@ const modalState = reactive({
   },
 
   // Modal mode is used to change modal content
+  // invoked in switchModalVisibility
   setMode(mode: MODALMODE) {
     this.mode = mode;
   },
 
-  // for teammate to delete
+  // get lastname and firstname of a user that might be deleted
+  // invoked in setTeammateIDAndInformations
   setUserFirstLastName(information: string) {
     this.UserFirstLastName = information;
   },
 
   /**
    * Team management.
-   * Save team name
+   * Save team name of the current selected team from the sidebar team list
+   *
+   * Called in teamList.ts
    */
   setTeamName(name: string) {
     this.teamName = name;
@@ -54,7 +58,9 @@ const modalState = reactive({
 
   /**
    * Team management.
-   * Save team input value
+   * Save input value from the modal content handling either team creation or team name edition
+   *
+   * invoked in ModalContentTeam.vue
    */
   setTeamInputValue(inputvalue: string) {
     this.teamInputValue = inputvalue;
@@ -63,8 +69,9 @@ const modalState = reactive({
   /**
    * Teammate management
    *
-   * Method called inside UserCard.vue.
    * Get the user ID and retrive first name and last name which will be displayed in the modal
+   *
+   * invoked in UserCard.vue
    */
   setTeammateIDAndInformations(id: number, informations: string) {
     const teammateStore = useTeammateStore();
@@ -77,8 +84,11 @@ const modalState = reactive({
   /**
    *  Modal management
    *
+   * Trigger corresponding methods at modal validation depending on the current modal mode
+   *
+   * See MODALMODE enum for more information
+   *
    * Called inside ModalFrame.vue.
-   * Trigger corresponding methods at modal validation, depending on modal mode
    * @returns
    */
   validationActions() {
@@ -116,7 +126,7 @@ const modalState = reactive({
     const teamStore = useTeamStore();
     teamStore.deleteTeam(teamStore.getSelectedTeamId);
     this.refreshTeamList();
-
+    // set the first team of the list as selected team if there is at least one team
     if (teamStore.getTeamList.length !== 0) {
       teamStore.setSelectedTeamTeamId(teamStore.getTeamList[0].id);
     }
@@ -128,6 +138,12 @@ const modalState = reactive({
     this.refreshTeammatesList();
   },
 
+  /**
+   * refetch the team list of a given captain.
+   * Get all the captainsID from the roleStore the current connected user have
+   *
+   * invoked in modalState createNewteam / editTeamName / deleteTeam
+   */
   async refreshTeamList() {
     const teamStore = useTeamStore();
     const roleStore = useRoleStore();
@@ -136,6 +152,10 @@ const modalState = reactive({
     }, 100);
   },
 
+  /**
+   * refetch the teammate list of a given team.
+   * Get the selected team id from the teamStore
+   */
   async refreshTeammatesList() {
     const teamStore = useTeamStore();
     const teammateStore = useTeammateStore();

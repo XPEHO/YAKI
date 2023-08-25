@@ -1,7 +1,8 @@
 import {defineStore} from "pinia";
 
 /*
-  ALL captains and/or customers rights a user can have.
+  All captains role and/or customers rights a user 
+  able to connect on the admin applicatin can have.
 */
 export const useRoleStore = defineStore("roleStore", {
   state: () => ({
