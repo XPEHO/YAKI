@@ -13,7 +13,14 @@ import SideBarButton from "@/features/shared/components/SideBarButton.vue";
 import HeaderContentPage from "@/features/shared/components/HeaderContentPage.vue";
 import backIcon from "@/assets/images/arrow-back.png";
 
-import {changeHeaderTitle, changeHeaderSubText,invitUser, getListOfUserAlreadyAccepted,getInvitationStatusText,getReturnText} from "@/features/invitation/services/invitationService";
+import {
+  changeHeaderTitle,
+  changeHeaderSubText,
+  invitUser,
+  getListOfUserAlreadyAccepted,
+  getInvitationStatusText,
+  getReturnText,
+} from "@/features/invitation/services/invitationService";
 
 import {useRoute} from "vue-router";
 const route = useRoute();
@@ -26,7 +33,6 @@ const props = reactive({
 });
 //list of person who have admin rights in company
 //don't want to fetch them in each separated component
-  
 
 onBeforeMount(async () => {
   props.fromRoute = route.path;
@@ -34,7 +40,7 @@ onBeforeMount(async () => {
   props.userList = await usersService.fetchUserInRange(
     environmentVar.tempUserIdRangeStart,
     environmentVar.tempUserIdRAngeEnd
-  );  
+  );
   props.invitationStatusText = getInvitationStatusText(props.fromRoute);
 });
 // invit button from user-component
@@ -48,8 +54,9 @@ onBeforeMount(async () => {
     </template>
 
     <template #content>
-      <side-bar-button v-if="props.fromRoute != '/customer/admin-invitation'"
-        v-bind:inner-text ="getReturnText(props.fromRoute)"
+      <side-bar-button
+        v-if="props.fromRoute != '/customer/admin-invitation'"
+        v-bind:inner-text="getReturnText(props.fromRoute)"
         v-bind:icon-path="backIcon"
         @click.prevent="router.go(-1)" />
 
@@ -60,8 +67,7 @@ onBeforeMount(async () => {
         v-bind:fromRoute="props.fromRoute"
         v-bind:adminList="props.alreadyInList"
         v-bind:invitationStatusText="props.invitationStatusText"
-        @invitUserToTeam="invitUser"
-         />
+        @invitUserToTeam="invitUser" />
     </template>
   </page-content-layout>
 </template>
