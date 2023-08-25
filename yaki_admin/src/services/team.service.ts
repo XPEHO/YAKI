@@ -1,7 +1,7 @@
-import type { TeamType, TeamTypeOut } from "../models/team.type";
-import { environmentVar } from "@/envPlaceholder";
-import { authHeader } from "@/utils/authUtils";
-import { handleResponse } from "@/utils/responseUtils";
+import type {TeamType, TeamTypeOut} from "../models/team.type";
+import {environmentVar} from "@/envPlaceholder";
+import {authHeader} from "@/utils/authUtils";
+import {handleResponse} from "@/utils/responseUtils";
 
 const URL: string = environmentVar.baseURL;
 
@@ -35,8 +35,7 @@ export class TeamService {
   };
 
   createTeam = async (cptId: number, teamName: string, customerId: number): Promise<TeamType> => {
-    
-    const newTeam: TeamTypeOut = {"captainsId": [cptId], "teamName": teamName, "customerId": customerId};
+    const newTeam: TeamTypeOut = {captainsId: [cptId], teamName: teamName, customerId: customerId};
     const requestOptions = {
       method: "POST",
       body: JSON.stringify(newTeam),
@@ -49,10 +48,11 @@ export class TeamService {
     return res;
   };
 
-  updateTeam = async (teamId: number, teamName: string, customerId: number): Promise<TeamType> => {
+  // might could use , customerId: number as parameter
+  updateTeam = async (teamId: number, teamName: string): Promise<TeamType> => {
     const requestOptions = {
-      method: 'PUT',
-      body: JSON.stringify({"teamName": teamName}),
+      method: "PUT",
+      body: JSON.stringify({teamName: teamName}),
       headers: authHeader(`${URL}/teams/${teamId}`),
     };
     const res = await fetch(`${URL}/teams/${teamId}`, requestOptions)
@@ -64,9 +64,9 @@ export class TeamService {
 
   deleteTeam = async (teamId: number): Promise<TeamType> => {
     const requestOptions = {
-      method: 'PUT',
+      method: "PUT",
       headers: authHeader(`${URL}/teams/disabled/${teamId}`),
-    }
+    };
     const res = await fetch(`${URL}/teams/disabled/${teamId}`, requestOptions)
       .then(handleResponse)
       .catch((err) => console.warn(err));

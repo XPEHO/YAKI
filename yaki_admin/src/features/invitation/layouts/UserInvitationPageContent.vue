@@ -1,33 +1,41 @@
 <script setup lang="ts">
 import router from "@/router/router";
+import {environmentVar} from "@/envPlaceholder";
 import {onBeforeMount, reactive} from "vue";
 import {useTeamStore} from "@/stores/teamStore";
-import {environmentVar} from "@/envPlaceholder";
+import modalState from "@/features/shared/services/modalState";
 
 import type {UserWithIdType} from "@/models/userWithId.type";
 import {usersService} from "@/services/users.service";
 
 import PageContentLayout from "@/global-layouts/PageContentLayout.vue";
-import UserInvitationCard from "@/features/invitation/components/UserInvitationCard.vue";
+import UserInvitationCard from "@/features/invitation/components/InvitationCard.vue";
 import SideBarButton from "@/features/shared/components/SideBarButton.vue";
 import HeaderContentPage from "@/features/shared/components/HeaderContentPage.vue";
 import backIcon from "@/assets/images/arrow-back.png";
 
-const teamStore = useTeamStore();
+import {changeHeaderTitle, changeHeaderSubText} from "@/features/invitation/services/userService";
 
-const users = reactive({
-  list: [] as UserWithIdType[],
+import {useRoute} from "vue-router";
+
+const teamStore = useTeamStore();
+const route = useRoute();
+
+const props = reactive({
+  userList: [] as UserWithIdType[],
+  fromRoute: "" as string,
 });
 
 onBeforeMount(async () => {
-  users.list = await usersService.fetchUserInRange(
+  props.userList = await usersService.fetchUserInRange(
     environmentVar.tempUserIdRangeStart,
     environmentVar.tempUserIdRAngeEnd
   );
+  props.fromRoute = route.path;
 });
 
 // invit button from user-component
-const addUserToTeam = async (userId: number) => {
+const invitUser = async (userId: number) => {
   teamStore.addUserToTeam(userId);
 };
 </script>
@@ -36,8 +44,8 @@ const addUserToTeam = async (userId: number) => {
   <page-content-layout>
     <template #pageContentHeader>
       <header-content-page
-        v-bind:title="'Invite Teammate'"
-        v-bind:text="'Select the teammate(s) you want to invit to : ' + teamStore.getTeamName" />
+        v-bind:title="changeHeaderTitle(props.fromRoute)"
+        v-bind:text="changeHeaderSubText(props.fromRoute, modalState.teamName)" />
     </template>
 
     <template #content>
@@ -47,12 +55,11 @@ const addUserToTeam = async (userId: number) => {
         @click.prevent="router.go(-1)" />
 
       <user-invitation-card
-        v-for="user in users.list"
+        v-for="user in props.userList"
         v-bind:key="user.id"
-        class="user_unit"
         v-bind:user="user"
-        v-bind:isInTeam="false"
-        @GetUserId="addUserToTeam" />
+        v-bind:fromRoute="props.fromRoute"
+        @invitUserToTeam="invitUser" />
     </template>
   </page-content-layout>
 </template>

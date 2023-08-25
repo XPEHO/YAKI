@@ -3,18 +3,38 @@ import {PropType, onBeforeMount, reactive} from "vue";
 import type {UserWithIdType} from "@/models/userWithId.type";
 
 import avatarIcon from "@/assets/images/avatar.png";
-import YakiButton from "@/features/shared/components/DefaultButton.vue";
-import { useTeammateStore } from "@/stores/teammateStore";
+import defaultButton from "@/features/shared/components/DefaultButton.vue";
 
-const teammateStore = useTeammateStore();
+import {checkInvitationStatus, updateReactive} from "@/features/invitation/services/userService";
 
-// props coming from LayoutInvitation, setting user from "v-for"
+//const teammateStore = useTeammateStore();
+
+onBeforeMount(() => {
+  if (props.fromRoute.includes("captain")) {
+    updateReactive(settings, checkInvitationStatus(props.user));
+  }
+});
+
 const props = defineProps({
   user: {
     type: Object as PropType<UserWithIdType>,
     required: true,
   },
+  fromRoute: {
+    type: String,
+    required: true,
+  },
 });
+
+const emit = defineEmits(["invitUserToTeam", "invitUserAsCaptain"]);
+
+const emitterRedirect = () => {
+  if (props.fromRoute.includes("captain")) {
+    emit("invitUserToTeam", props.user.id);
+  } else {
+    emit("invitUserAsCaptain", props.user.id);
+  }
+};
 
 //Setting reactive with card and button configuration
 // text and style
@@ -25,42 +45,30 @@ const settings = reactive({
   cardCSS: "",
 });
 
-// get teammate list before mount to check if current user already is in it before change settings
-
-onBeforeMount(() => {
-  for (const teammate of teammateStore.getTeammateList) {
-    if (teammate.userId === props.user.id) {
-      settings.isInvited = true;
-      settings.text = "In Team";
-      settings.btnCSS = "button-class-test btn-bg-color-present";
-      settings.cardCSS = "user-invited";
-    }
-  }
-});
-
-// emitter to send on invit btn click the userID (to create the teammate)
-const emit = defineEmits(["GetUserId"]);
-
-const invitBtnClick = () => {
+const invitBtnClick = async () => {
   if (!settings.isInvited) {
-    emit("GetUserId", props.user.id);
+    emitterRedirect();
 
-    // meant to be removed when mailing system is made, demo purpose
-    let time = Math.floor(Math.random() * (3000 - 1000)) + 1000;
-
-    settings.text = "Pending...";
-    settings.btnCSS = "button-class-test btn-bg-color-pending";
-    settings.cardCSS = "user-pending";
-
-    // meant to be removed when mailing system is made, demo purpose
-    setTimeout(() => {
-      settings.text = "Accepted";
-      settings.btnCSS = "button-class-test btn-bg-color-present";
-      settings.cardCSS = "user-invited";
-    }, time);
+    cssEffect();
 
     settings.isInvited = true;
   }
+};
+
+const cssEffect = () => {
+  // meant to be removed when mailing system is made, demo purpose
+  let time = Math.floor(Math.random() * (3000 - 1000)) + 1000;
+
+  settings.text = "Pending...";
+  settings.btnCSS = "button-class-test btn-bg-color-pending";
+  settings.cardCSS = "user-pending";
+
+  // meant to be removed when mailing system is made, demo purpose
+  setTimeout(() => {
+    settings.text = "Accepted";
+    settings.btnCSS = "button-class-test btn-bg-color-present";
+    settings.cardCSS = "user-invited";
+  }, time);
 };
 </script>
 
@@ -80,7 +88,7 @@ const invitBtnClick = () => {
         </article>
       </article>
 
-      <yaki-button
+      <default-button
         :text="settings.text"
         :css-class="settings.btnCSS"
         @click.prevent="invitBtnClick" />
@@ -96,8 +104,9 @@ const invitBtnClick = () => {
 
   width: min(90%, 40rem);
 
-  background-color: #d9d9d9;
-  border: 3px solid transparent;
+  background-color: #e7e5e5;
+  border: 2px solid transparent;
+  border-radius: 16px;
 
   div {
     display: flex;
@@ -121,7 +130,7 @@ const invitBtnClick = () => {
       }
       article {
         p:nth-child(1) {
-          font-size: $user-component-name-font-size;
+          font-size: $font-size-user-component-name;
           font-family: Inter;
           font-weight: 900;
         }
@@ -132,12 +141,12 @@ const invitBtnClick = () => {
       flex-basis: 8rem;
 
       border: none;
-      border-radius: 5rem;
+      border-radius: 16px;
 
       padding-block: 0.6rem;
 
       color: #000;
-      font-size: $user-component-button-font-size;
+      font-size: $font-size-user-component-button;
       font-family: Inter;
       font-weight: 900;
 
@@ -168,3 +177,4 @@ const invitBtnClick = () => {
   border-color: #59a9b5;
 }
 </style>
+@/features/invitation/services/userService

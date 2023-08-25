@@ -2,20 +2,29 @@ $dark-color: #32353c;
 $blue-color: #59a9b5;
 $yellow-color: #f5cd3d;
 
+$color-side-bar-background: #fafafa;
+
 // TEXT --------------------------------
 
-$side-bar-element-font-size: 1.1rem;
+$font-size-side-bar-element: 1.1rem;
 
-$user-info-name-font-size: 1.1rem;
-$user-info-email-font-size: 0.8rem;
+$font-size-user-info-name: 1.1rem;
+$font-size-user-info-email: 0.8rem;
 
-$user-component-name-font-size: 1.05rem;
-$user-component-button-font-size: 0.8rem;
+$font-size-user-component-name: 1.05rem;
+$font-size-user-component-button: 0.8rem;
 
-$sidebar-teamlist-element-font-size: 0.95rem;
+$font-size-sidebar-teamlist-element: 0.95rem;
 
-$login-input-font-size: 1rem;
-$login-input-placeholder-font-size: 0.4rem;
+$font-size-login-input: 1rem;
+$font-size-login-input-placeholder: 0.65rem;
 
-$button-main-font-size: 1rem;
-$button-secondary-font-size: 0.85rem;
+$font-size-button-main: 1rem;
+$font-size-button-secondary: 0.85rem;
+
+$font-color-main-text: #303030;
+$font-color-sub-text: #787878;
+
+// MODAL --------------------------------
+
+$modal-border-radius: 16px;

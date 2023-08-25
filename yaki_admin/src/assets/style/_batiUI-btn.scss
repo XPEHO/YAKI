@@ -44,14 +44,14 @@ $shadow-color-secondary: #c3c1b9;
 }
 
 .button-text-main {
-  font-size: $button-main-font-size;
+  font-size: $font-size-button-main;
   font-weight: 600;
   text-transform: uppercase;
   color: black;
 }
 
 .button-text-secondary {
-  font-size: $button-secondary-font-size;
+  font-size: $font-size-button-secondary;
   font-weight: 600;
   color: rgb(75, 74, 74);
 }

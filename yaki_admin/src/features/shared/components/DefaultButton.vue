@@ -12,5 +12,5 @@ const props = defineProps({
 </script>
 
 <template>
-  <button v-bind:class="cssClass">{{ text }}</button>
+  <button v-bind:class="cssClass">{{ props.text }}</button>
 </template>
