@@ -54,6 +54,10 @@ const router = createRouter({
           path: "invitation",
           component: UserInvitationPageContent,
         },
+        {
+          path: "admin-invitation",
+          component: UserInvitationPageContent,
+        }
       ],
     },
   ],

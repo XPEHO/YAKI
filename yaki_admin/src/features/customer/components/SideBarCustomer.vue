@@ -2,6 +2,7 @@
 import vector from "@/assets/images/Vector.png";
 import security from "@/assets/images/security.png";
 import router from "@/router/router";
+import plusIcon from "@/assets/images/plus.png";
 
 import SideBarElement from "@/features/shared/components/SideBarCategoryElement.vue";
 
@@ -22,4 +23,9 @@ const navigateTo = (route: string) => {
     v-bind:iconPath="vector"
     v-bind:isSelected="true"
     @click="navigateTo('/customer/manage-team')" />
+
+  <side-bar-button
+    v-bind:inner-text="'Grant admin rights'"
+    v-bind:icon-path="plusIcon"
+    @click="() => {}" />
 </template>

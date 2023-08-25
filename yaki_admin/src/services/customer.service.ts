@@ -47,6 +47,19 @@ export class CustomerService {
       .then(handleResponse)
       .catch((err) => console.warn(err));
   };
+
+  //add a customer right
+  addCustomerRights = async (customerId: number, userId: number): Promise<CustomerType> => {
+    const requestOptions = {
+      method: "POST",
+      body: JSON.stringify({customerId: customerId, userId: [userId]}),
+      headers: authHeader(`${URL}/addCustomersRights`),
+    };
+    const response = await fetch(`${URL}/addCustomersRights`, requestOptions)
+      .then(handleResponse)
+      .catch((err) => console.warn(err));
+      return response;
+  }
 }
 
 export const customerService = Object.freeze(new CustomerService());
