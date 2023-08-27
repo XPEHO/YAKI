@@ -7,7 +7,8 @@ import editIcon from "@/assets/images/Edit.png";
 import deleteIcon from "@/assets/images/Delete.png";
 import {UserWithIdType} from "@/models/userWithId.type";
 
-import modalState from "@/features/shared/services/modalState";
+import modalState from "@/features/shared/modal/services/modalState";
+import {MODALMODE} from "@/features/shared/modal/services/modalMode";
 
 const props = defineProps({
   user: {
@@ -18,6 +19,7 @@ const props = defineProps({
 
 const UserToBeRemoved = () => {
   modalState.setTeammateIDAndInformations(props.user.id, `${props.user.firstname} ${props.user.lastname}`);
+  modalState.switchModalVisibility(true, MODALMODE.userDelete);
 };
 </script>
 
@@ -109,3 +111,4 @@ const UserToBeRemoved = () => {
   }
 }
 </style>
+@/features/shared/modal/services/modalState@/features/shared/modal/services/modalMode

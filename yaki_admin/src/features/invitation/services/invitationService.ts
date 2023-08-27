@@ -58,8 +58,6 @@ export const checkInvitationStatus = (user: UserWithIdType, userAlreadyIn: numbe
   return invitationStatus;
 };
 
-// /captain/invitation || /customer/invitation
-
 export const changeHeaderTitle = (fromRoute: string) => {
   let title = "";
   if (fromRoute === customeraddAdminPageRoute) {

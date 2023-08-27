@@ -7,9 +7,9 @@
 <style scoped lang="scss">
 .sidebar {
   background-color: $color-side-bar-background;
-  padding-block: 2rem;
+  padding-block-start: 2.5rem;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 2rem;
 }
 </style>

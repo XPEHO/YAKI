@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import HeaderYaki from "@/features/shared/components/HeaderMain.vue";
 import SideBar from "@/global-layouts/SideBar.vue";
-import modalFrame from "@/features/shared/popup/ModalFrame.vue";
-import modalState from "@/features/shared/services/modalState";
+import modalFrame from "@/features/shared/modal/ModalFrame.vue";
+import modalState from "@/features/shared/modal/services/modalState";
 </script>
 
 <template>
@@ -32,3 +32,4 @@ import modalState from "@/features/shared/services/modalState";
   font-family: "Inter", sans-serif;
 }
 </style>
+@/features/shared/modal/services/modalState

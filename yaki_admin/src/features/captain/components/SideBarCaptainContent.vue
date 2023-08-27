@@ -3,15 +3,15 @@ import {onBeforeMount} from "vue";
 import SideBarTeamsListElement from "@/features/shared/components/SideBarTeamsListElement.vue";
 import SideBarElement from "@/features/shared/components/SideBarCategoryElement.vue";
 import SideBarButton from "@/features/shared/components/SideBarButton.vue";
-import modalState from "@/features/shared/services/modalState";
-import {MODALMODE} from "@/features/shared/services/modalMode";
+import modalState from "@/features/shared/modal/services/modalState";
+import {MODALMODE} from "@/features/shared/modal/services/modalMode";
 
 import {useTeamStore} from "@/stores/teamStore.js";
+import {useRoleStore} from "@/stores/roleStore";
 import {selectTeamAndFetchTeammates} from "@/features/captain/services/teamList";
 
 import vector from "@/assets/images/Vector.png";
 import plusIcon from "@/assets/images/plus.png";
-import {useRoleStore} from "@/stores/roleStore";
 
 const teamStore = useTeamStore();
 const roleStore = useRoleStore();
@@ -54,3 +54,4 @@ const onClickAddTeam = () => {
   </section>
 </template>
 @/features/captain/services/teamList
+@/features/shared/modal/services/modalState@/features/shared/modal/services/modalMode

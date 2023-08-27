@@ -8,6 +8,8 @@ import {useRoleStore} from "@/stores/roleStore";
 import PageContentLayout from "@/global-layouts/PageContentLayout.vue";
 import SideBarButton from "@/features/shared/components/SideBarButton.vue";
 import plusIcon from "@/assets/images/plus.png";
+import modalState from "@/features/shared/modal/services/modalState";
+import {MODALMODE} from "@/features/shared/modal/services/modalMode";
 
 const teamStore = useTeamStore();
 const roleStore = useRoleStore();
@@ -19,6 +21,10 @@ const fetchTeams = async () => {
 onBeforeMount(async () => {
   fetchTeams();
 });
+
+const customerTeamCreation = () => {
+  modalState.switchModalVisibility(true, MODALMODE.teamCreateCustomer);
+};
 </script>
 
 <template>
@@ -32,7 +38,7 @@ onBeforeMount(async () => {
       <SideBarButton
         v-bind:inner-text="'Add a team'"
         v-bind:icon-path="plusIcon"
-        @click.prevent="() => {}" />
+        @click.prevent="customerTeamCreation" />
 
       <div class="team-list">
         <div
@@ -48,10 +54,6 @@ onBeforeMount(async () => {
 </template>
 
 <style lang="scss">
-.team-list {
-  padding-block-start: 1.5rem;
-}
-
 .team-item {
   border: 1px solid #ccc;
   background-color: rgb(177, 173, 173);
@@ -61,3 +63,4 @@ onBeforeMount(async () => {
   text-align: center;
 }
 </style>
+@/features/shared/modal/services/modalState@/features/shared/modal/services/modalMode

@@ -10,7 +10,8 @@
  * - teamDelete : Handle team deletion
  */
 export enum MODALMODE {
-  userDelete = "deleteUser",
+  userDelete = "userDelete",
+  teamCreateCustomer = "teamCreateCustomer",
   teamCreate = "teamCreate",
   teamEdit = "teamEdit",
   teamDelete = "teamDelete",

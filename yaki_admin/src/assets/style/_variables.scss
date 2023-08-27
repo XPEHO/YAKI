@@ -4,6 +4,10 @@ $yellow-color: #f5cd3d;
 
 $color-side-bar-background: #fafafa;
 
+$color-modal-background: #f0efef;
+
+$color-drop-down-icons: rgb(97, 95, 95);
+
 // TEXT --------------------------------
 
 $font-size-side-bar-element: 1.1rem;
@@ -16,14 +20,18 @@ $font-size-user-component-button: 0.8rem;
 
 $font-size-sidebar-teamlist-element: 0.95rem;
 
-$font-size-login-input: 1rem;
-$font-size-login-input-placeholder: 0.65rem;
+$font-size-input-login: 0.95rem;
+$font-size-input-login-placeholder: calc($font-size-input-login * 0.8);
+
+$font-size-input-modal: 0.95rem;
+$font-size-input-modal-placeholder: calc($font-size-input-modal * 0.8);
 
 $font-size-button-main: 1rem;
 $font-size-button-secondary: 0.85rem;
 
 $font-color-main-text: #303030;
 $font-color-sub-text: #787878;
+$font-color-clear-gray: rgb(239, 237, 237);
 
 // MODAL --------------------------------
 

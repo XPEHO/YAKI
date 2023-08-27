@@ -45,13 +45,14 @@ export default {
 <template>
   <form>
     <input
+      class="input-general"
       type="text"
       v-model="form.username"
       @input="onInputLogin"
       :placeholder="usernamePlaceholder" />
 
     <input
-      class="password-input"
+      class="input-general"
       v-model="form.password"
       :type="showPassword ? 'text' : 'password'"
       :placeholder="passwordPlaceholder" />
@@ -89,13 +90,6 @@ form {
   input {
     padding-inline-start: 2rem;
     padding-block: 1.3rem;
-    font-size: $font-size-login-input;
-    border-radius: 16px;
-    border: 1px solid #ccc;
-
-    &::placeholder {
-      font-size: calc($font-size-login-input * 0.8);
-    }
   }
 
   input:nth-of-type(2) {
