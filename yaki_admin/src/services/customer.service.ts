@@ -60,6 +60,22 @@ export class CustomerService {
       .catch((err) => console.warn(err));
       return response;
   }
+  getAllUsersRightByCustomerId = async (
+    customerId: number
+  ): Promise<number[]> => {
+    const requestOptions = {
+      method: "GET",
+      headers: authHeader(`${URL}/customers/usersRights/${customerId}`),
+    };
+    const response = await fetch(
+      `${URL}/customers/usersRights/${customerId}`,
+      requestOptions
+    )
+      .then(handleResponse)
+      .catch((err) => console.warn(err));
+
+    return response;
+  };
 }
 
 export const customerService = Object.freeze(new CustomerService());

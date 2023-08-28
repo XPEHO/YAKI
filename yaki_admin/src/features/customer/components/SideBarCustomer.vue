@@ -24,8 +24,8 @@ const navigateTo = (route: string) => {
     v-bind:isSelected="true"
     @click="navigateTo('/customer/manage-team')" />
 
-  <side-bar-button
+  <side-bar-element
     v-bind:inner-text="'Grant admin rights'"
     v-bind:icon-path="plusIcon"
-    @click="() => {}" />
+    @click="navigateTo('/customer/admin-invitation')" />
 </template>

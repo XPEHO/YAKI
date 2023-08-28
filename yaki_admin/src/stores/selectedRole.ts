@@ -37,5 +37,9 @@ export const useSelectedRoleStore = defineStore("selectedRoleStore", {
     async addAdminToCompany(userId: number){
       await customerService.addCustomerRights(this.customerIdSelected,userId);
     },
+    async getUsersWhoHaveRightInCompany(){
+      const users = await customerService.getAllUsersRightByCustomerId(this.customerIdSelected);
+      return users;
+    }
   },
 });

@@ -5,13 +5,16 @@ import type {UserWithIdType} from "@/models/userWithId.type";
 import avatarIcon from "@/assets/images/avatar.png";
 import defaultButton from "@/features/shared/components/DefaultButton.vue";
 
-import {checkInvitationStatus, updateReactive} from "@/features/invitation/services/userService";
+import {checkInvitationStatus, invitUser, updateReactive, checkInvitationStatusAdmin} from "@/features/invitation/services/userService";
 
 //const teammateStore = useTeammateStore();
 
 onBeforeMount(() => {
   if (props.fromRoute.includes("captain")) {
     updateReactive(settings, checkInvitationStatus(props.user));
+  }
+  if (props.fromRoute.includes("admin")) {
+    updateReactive(settings, checkInvitationStatusAdmin(props.user, props.adminList));
   }
 });
 
@@ -24,16 +27,18 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  adminList: {
+    type: Array as PropType<number[]>,
+    required: true,
+  },
 });
 
-const emit = defineEmits(["invitUserToTeam", "invitUserAsCaptain"]);
+const emit = defineEmits(["invitUser"]);
 
 const emitterRedirect = () => {
-  if (props.fromRoute.includes("captain")) {
-    emit("invitUserToTeam", props.user.id);
-  } else {
-    emit("invitUserAsCaptain", props.user.id);
-  }
+  
+    emit("invitUser", props.user.id,props.fromRoute);
+  
 };
 
 //Setting reactive with card and button configuration
