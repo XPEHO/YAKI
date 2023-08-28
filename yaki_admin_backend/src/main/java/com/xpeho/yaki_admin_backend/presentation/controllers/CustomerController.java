@@ -3,6 +3,7 @@ package com.xpeho.yaki_admin_backend.presentation.controllers;
 import com.xpeho.yaki_admin_backend.domain.entities.CaptainEntity;
 import com.xpeho.yaki_admin_backend.domain.entities.CustomerEntity;
 import com.xpeho.yaki_admin_backend.domain.entities.CustomerRightsEntity;
+import com.xpeho.yaki_admin_backend.domain.entities.UserEntityWithID;
 import com.xpeho.yaki_admin_backend.domain.services.CustomerService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.web.bind.annotation.*;
@@ -57,6 +58,9 @@ public class CustomerController {
     public CustomerEntity disabled(@PathVariable int id){
         return customerService.disabled(id);
     }
-
+    @GetMapping("/usersRights/{id}")
+    public List<Integer> getAllCustomersRightIdByUserId(@PathVariable int id){
+        return customerService.findAllIfHasCustomerRights(id);
+    }
 
 }
