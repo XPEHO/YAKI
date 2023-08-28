@@ -7,10 +7,12 @@ import com.xpeho.yaki_admin_backend.data.sources.CustomerJpaRepository;
 import com.xpeho.yaki_admin_backend.data.sources.UserJpaRepository;
 import com.xpeho.yaki_admin_backend.domain.entities.CustomerEntity;
 import com.xpeho.yaki_admin_backend.domain.entities.CustomerRightsEntity;
+import com.xpeho.yaki_admin_backend.domain.entities.UserEntityWithID;
 import com.xpeho.yaki_admin_backend.domain.services.CustomerService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -124,6 +126,20 @@ public class CustomerServiceImpl implements CustomerService {
                     .stream()
                     .map(customerModel -> customerModel.getId())
                     .toList();
+        }
+    }
+    @Override
+    public List<Integer> findAllIfHasCustomerRights(int customerId) {
+        Optional<CustomerModel> customerModelOpt = customerJpaRepository.findById(customerId);
+        if (!customerModelOpt.isPresent()) {
+            throw new EntityNotFoundException("Entity customer with id " + customerId + " not found");
+        } else {
+            CustomerModel customerModel = customerModelOpt.get();
+            List<Integer> userWithIdList = new ArrayList<>();
+            for (UserModel user : customerModel.getUsers()) {
+                userWithIdList.add(user.getUserId());
+            }
+            return userWithIdList;
         }
     }
 }
