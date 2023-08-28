@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {useCaptainStore} from "@/stores/captainStore";
 import {useSelectedRoleStore} from "@/stores/selectedRole";
-import {onBeforeMount, onMounted, reactive, ref} from "vue";
+import {onBeforeMount, reactive, ref} from "vue";
 
 const captainStore = useCaptainStore();
 const selectedRoleStore = useSelectedRoleStore();
@@ -17,6 +17,13 @@ const selectedCaptain = reactive({
   informations: "",
 });
 
+/**
+ * get captainid and lastname & firstname from the captain list.
+ * If the button text do not already display the selected captain informations, the new captain informations are saved.
+ * Else if the same captain is selected, reset the display and captain informations. As it mean the user have unselected the current captain.
+ * @param captainId
+ * @param informations lastname and firstname concatenatio
+ */
 const getSelectedCaptain = (captainId: number, informations: string) => {
   if (buttonText.value !== selectedCaptain.informations) {
     selectedCaptain.id = captainId;
@@ -29,6 +36,7 @@ const getSelectedCaptain = (captainId: number, informations: string) => {
   }
 };
 
+// display the checkIcon for the selected captain
 const isCaptainSelected = (id: number): boolean => {
   return selectedCaptain.id === id;
 };
@@ -42,14 +50,16 @@ const isCaptainSelected = (id: number): boolean => {
         <div class="arrow-down"></div>
       </div>
       <article class="drop-down-container">
+        <!-- Empty Captain list -->
         <div
-          v-if="captainStore.getCaptainList.length === 0"
-          class="drop-down-element-container shared-setting">
+          v-if="captainStore.getCaptainList !== undefined && captainStore.getCaptainList.length === 0"
+          class="drop-down-element shared-setting">
           <p class="italic">No captain available</p>
         </div>
+        <!-- Captain list with data -->
         <div
           v-for="captain in captainStore.getCaptainList"
-          class="drop-down-element-container shared-setting"
+          class="drop-down-element shared-setting"
           @click.prevent="getSelectedCaptain(captain.id, `${captain.lastname} ${captain.firstname}`)">
           <p>{{ captain.lastname }} {{ captain.firstname }}</p>
           <div
@@ -74,7 +84,7 @@ $transition-delay: 0.125s;
 
 $modal-drop-down-element-padding: 1rem;
 
-// button & drop-down-element-container
+// button & drop-down-element
 .shared-setting {
   display: flex;
   justify-content: space-between;
@@ -140,7 +150,7 @@ $modal-drop-down-element-padding: 1rem;
   }
 }
 
-.drop-down-element-container {
+.drop-down-element {
   padding-block: 0.65rem;
 
   background-color: $color-drop-down-border-color;
@@ -158,7 +168,7 @@ $modal-drop-down-element-padding: 1rem;
   }
 }
 
-.drop-down-element-container:nth-last-child(1) {
+.drop-down-element:nth-last-child(1) {
   border-radius: 0px 0px $modal-border-radius $modal-border-radius;
 }
 
@@ -189,7 +199,7 @@ $modal-drop-down-element-padding: 1rem;
 }
 
 // on HOVER on element container change P color
-.drop-down-element-container:hover p {
+.drop-down-element:hover p {
   color: $font-color-clear-gray;
 }
 

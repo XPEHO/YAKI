@@ -110,22 +110,22 @@ const modalState = reactive({
     }
   },
 
-  createNewteam() {
+  async createNewteam() {
     const teamStore = useTeamStore();
     const roleStore = useRoleStore();
-    teamStore.createTeam(roleStore.getCaptainsId[0], this.teamInputValue);
+    await teamStore.createTeam(roleStore.getCaptainsId[0], this.teamInputValue);
     this.refreshTeamList();
   },
 
-  editTeamName() {
+  async editTeamName() {
     const teamStore = useTeamStore();
-    teamStore.updateTeam(teamStore.getSelectedTeamId, this.teamInputValue);
+    await teamStore.updateTeam(teamStore.getSelectedTeamId, this.teamInputValue);
     this.refreshTeamList();
   },
 
-  deleteTeam() {
+  async deleteTeam() {
     const teamStore = useTeamStore();
-    teamStore.deleteTeam(teamStore.getSelectedTeamId);
+    await teamStore.deleteTeam(teamStore.getSelectedTeamId);
     this.refreshTeamList();
     // set the first team of the list as selected team if there is at least one team
     if (teamStore.getTeamList.length !== 0) {
@@ -133,9 +133,9 @@ const modalState = reactive({
     }
   },
 
-  deleteUserFromTeam() {
+  async deleteUserFromTeam() {
     const teammateStore = useTeammateStore();
-    teammateStore.deleteTeammateFromTeam(teammateStore.getTeammateToDelete);
+    await teammateStore.deleteTeammateFromTeam(teammateStore.getTeammateToDelete);
     this.refreshTeammatesList();
   },
 
@@ -145,24 +145,24 @@ const modalState = reactive({
    *
    * invoked in modalState createNewteam / editTeamName / deleteTeam
    */
-  async refreshTeamList() {
+  refreshTeamList() {
     const teamStore = useTeamStore();
     const roleStore = useRoleStore();
-    await setTimeout(async () => {
-      await teamStore.setTeamListOfACaptain(roleStore.getCaptainsId);
-    }, 100);
+    setTimeout(() => {
+      teamStore.setTeamListOfACaptain(roleStore.getCaptainsId);
+    }, 125);
   },
 
   /**
    * refetch the teammate list of a given team.
    * Get the selected team id from the teamStore
    */
-  async refreshTeammatesList() {
+  refreshTeammatesList() {
     const teamStore = useTeamStore();
     const teammateStore = useTeammateStore();
-    await setTimeout(async () => {
-      await teammateStore.setListOfTeammatesWithinTeam(teamStore.getSelectedTeamId);
-    }, 150);
+    setTimeout(() => {
+      teammateStore.setListOfTeammatesWithinTeam(teamStore.getSelectedTeamId);
+    }, 125);
   },
 });
 
