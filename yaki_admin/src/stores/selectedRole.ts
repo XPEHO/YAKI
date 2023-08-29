@@ -32,7 +32,7 @@ export const useSelectedRoleStore = defineStore("selectedRoleStore", {
       this.fetchCustomerIdSelected(captainId);
     },
     async fetchCustomerIdSelected(captainId: number) {
-      let captain = await captainService.getCaptain(captainId);
+      const captain = await captainService.getCaptain(captainId);
       this.setCustomerIdSelected(captain.customerId)
     },
     async addAdminToCompany(userId: number){

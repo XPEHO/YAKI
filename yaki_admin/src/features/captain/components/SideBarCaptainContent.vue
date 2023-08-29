@@ -53,5 +53,3 @@ const onClickAddTeam = () => {
       @click.prevent="() => onClickSelectTeam(team.id)" />
   </section>
 </template>
-@/features/captain/services/teamList
-@/features/shared/modal/services/modalState@/features/shared/modal/services/modalMode

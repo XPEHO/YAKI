@@ -26,7 +26,7 @@ export const getListOfUserAlreadyAccepted = async (fromRoute: string) => {
   const teammateStore = useTeammateStore();
   const captainStore = useCaptainStore();
   if (fromRoute == captainPageRoute) {
-    return teammateStore.getTeammateList.map((teammate) => teammate.userId);
+    return teammateStore.getTeammateList.map((teammate) => teammate.id);
   } else if (fromRoute == customerPageRoute) {
     return captainStore.getCaptainList.map((captain) => captain.id);
   } else {

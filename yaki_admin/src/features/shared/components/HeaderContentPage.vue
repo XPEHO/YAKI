@@ -15,7 +15,8 @@ const props = defineProps({
   <h2 class="text">{{ text }}</h2>
   <hr class="line" />
 </template>
-<style lang="scss">
+
+<style scoped lang="scss">
 .title {
   font-size: 25px;
 }

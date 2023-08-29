@@ -10,5 +10,5 @@ public interface TeamJpaRepository extends JpaRepository<TeamModel, Integer> {
     @Query("SELECT DISTINCT team FROM TeamModel team INNER JOIN CaptainsTeamsModel as ct ON ct.teamModel.id = team.id WHERE ct.captainModel.captainId = ?1")
     List<TeamModel> findAllByCaptain(int id);
 
-    List<TeamModel> findAllByCustomerId(int id);
+    List<TeamModel> findAllByCustomerIdAndActifIsTrue(int id);
 }

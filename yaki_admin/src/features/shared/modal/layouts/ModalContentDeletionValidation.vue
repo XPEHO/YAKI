@@ -32,7 +32,7 @@ const changeSubText = () => {
   </article>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
 .modal-text {
   gap: 0.25rem;
 

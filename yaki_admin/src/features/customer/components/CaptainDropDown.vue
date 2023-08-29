@@ -1,15 +1,24 @@
 <script setup lang="ts">
 import {useCaptainStore} from "@/stores/captainStore";
-import {useSelectedRoleStore} from "@/stores/selectedRole";
 import {useTeamStore} from "@/stores/teamStore";
-import {onBeforeMount, reactive, ref} from "vue";
+import {PropType, onBeforeMount, reactive, ref} from "vue";
+import {CaptainDetails} from "@/models/team.type";
 
 const captainStore = useCaptainStore();
-const selectedRoleStore = useSelectedRoleStore();
 const teamStore = useTeamStore();
 
+const captainOfTheteam = defineProps({
+  captain: {
+    type: Object as PropType<CaptainDetails>,
+  },
+});
+
 onBeforeMount(async () => {
-  await captainStore.setAllCaptainsByCustomerId(selectedRoleStore.getCustomerIdSelected);
+  if (captainOfTheteam.captain !== undefined) {
+    selectedCaptain.id = captainOfTheteam.captain.captainId;
+    selectedCaptain.informations = `${captainOfTheteam.captain.lastName} ${captainOfTheteam.captain.firstName}`;
+    buttonText.value = selectedCaptain.informations;
+  }
 });
 
 const buttonText = ref("Captain selection");
@@ -48,7 +57,7 @@ const getSelectedCaptain = (captainId: number, informations: string) => {
 };
 
 // display the checkIcon for the selected captain
-const isCaptainSelected = (id: number): boolean => {
+const isCaptainSelected = (id: number | null): boolean => {
   return selectedCaptain.id === id;
 };
 
@@ -59,33 +68,29 @@ const isEmptyCaptainList = (): boolean => {
 </script>
 
 <template>
-  <section class="body-drop-down">
-    <section class="wrapper-drop-down">
-      <div class="button-drop-down shared-setting">
-        <p>{{ buttonText }}</p>
-        <div class="arrow-down"></div>
+  <section class="wrapper-captain-drop-down">
+    <div class="button shared-setting">
+      <div class="arrow-down"></div>
+      <p>{{ buttonText }}</p>
+    </div>
+    <article class="drop-down-container">
+      <!-- Empty Captain list -->
+      <div
+        v-if="isEmptyCaptainList()"
+        class="drop-down-element shared-setting">
+        <p class="italic">No captain available</p>
       </div>
-      <article class="drop-down-container">
-        <!-- Empty Captain list -->
-        <div
-          v-if="isEmptyCaptainList()"
-          class="drop-down-element shared-setting">
-          <p class="italic">No captain available</p>
-        </div>
-        <!-- Captain list with data -->
-        <div
-          v-for="captain in captainStore.getCaptainList"
-          class="drop-down-element shared-setting"
-          @click.prevent="getSelectedCaptain(captain.captainId, `${captain.lastname} ${captain.firstname}`)"
-          v-bind:key="captain.captainId">
-          <p>{{ captain.lastname }} {{ captain.firstname }}</p>
-          <div
-            v-if="isCaptainSelected(captain.captainId)"
-            class="check-icon"></div>
-        </div>
-      </article>
-    </section>
-    <p class="annotation italic">Optional : Assign a captain to the team</p>
+      <!-- Captain list with data -->
+      <div
+        v-for="captain in captainStore.getCaptainList"
+        class="drop-down-element shared-setting"
+        @click.prevent="getSelectedCaptain(captain.captainId, `${captain.lastname} ${captain.firstname}`)"
+        v-bind:key="captain.captainId">
+        <div :class="isCaptainSelected(captain.captainId) ? 'check-icon' : 'check-icon-transparent'"></div>
+
+        <p>{{ captain.lastname }} {{ captain.firstname }}</p>
+      </div>
+    </article>
   </section>
 </template>
 
@@ -101,51 +106,45 @@ $transition-delay: 0.125s;
 
 $modal-drop-down-element-padding: 1rem;
 
-// button & drop-down-element
-.shared-setting {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+$font-size-captain-name: 0.85rem;
+$font-weight-captain-name: 700;
 
-  box-sizing: border-box;
-  padding-inline: 1.5rem;
-
+.wrapper-captain-drop-down {
+  position: relative;
   width: 100%;
-}
-
-.body-drop-down {
-  margin-block-start: 1rem;
 
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   gap: 0.5rem;
+
+  height: 2.5rem;
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
-.wrapper-drop-down {
-  position: relative;
+// button & drop-down-element
+.shared-setting {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
   width: 100%;
 }
 
-.button-drop-down {
-  padding-block: 0.8rem;
-
-  gap: 0.5rem;
-
-  background-color: white;
-  border: 1px solid;
-  border-color: $color-drop-down-border-color;
-
-  border-radius: $modal-border-radius;
+.button {
+  border: none;
 
   // delay hover
   transition-delay: $transition-delay;
 
   p {
+    font-size: $font-size-captain-name;
+    font-weight: $font-weight-captain-name;
     color: $font-color-main-text;
-    font-size: $font-size-button-drop-down;
-    font-weight: $font-weight-button-drop-down;
-    cursor: pointer;
   }
 }
 
@@ -153,30 +152,25 @@ $modal-drop-down-element-padding: 1rem;
   visibility: hidden;
   position: absolute;
   top: 100%;
+  right: 1rem;
 
   width: 100%;
 
-  border-radius: 0px 0px $modal-border-radius $modal-border-radius;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.282);
+  box-shadow: 20px 5px 10px 10px rgba(0, 0, 0, 0.292);
 
   // delay hover
   transition-delay: $transition-delay;
-
-  &:hover {
-    cursor: pointer;
-  }
 }
 
 .drop-down-element {
   padding-block: 0.65rem;
+  padding-inline: 1rem;
 
-  background-color: $color-drop-down-border-color;
-
-  border: 1px solid $color-drop-down-border-color;
+  background-color: white;
   border-top-color: transparent;
 
   &:hover {
-    background-color: rgb(167, 160, 160);
+    background-color: #326169;
   }
 
   p {
@@ -185,39 +179,24 @@ $modal-drop-down-element-padding: 1rem;
   }
 }
 
-.drop-down-element:nth-last-child(1) {
-  border-radius: 0px 0px $modal-border-radius $modal-border-radius;
-}
-
-.annotation {
-  width: min(100%, 12rem);
-  font-size: 0.8rem;
-}
-
 .italic {
   font-style: italic;
 }
 
 // ON HOVER STYLE --------------------------------------------------------
 
-// on HOVER the container change BUTTON style
-.wrapper-drop-down:hover .button-drop-down {
-  border-radius: $modal-border-radius $modal-border-radius 0px 0px;
-  border-bottom-color: transparent;
-
-  p {
-    color: $font-color-main-text;
-  }
-}
-
 // on HOVER the container set DROP DOWN LIST visible
-.wrapper-drop-down:hover .drop-down-container {
+.wrapper-captain-drop-down:hover .drop-down-container {
   visibility: visible;
 }
 
 // on HOVER on element container change P color
 .drop-down-element:hover p {
   color: $font-color-clear-gray;
+}
+
+.drop-down-element:hover .check-icon {
+  @include check-icon-mixin(0.8rem, $font-color-clear-gray);
 }
 
 // ICONS ----------------------------------------------------------------
@@ -227,5 +206,9 @@ $modal-drop-down-element-padding: 1rem;
 
 .check-icon {
   @include check-icon-mixin(0.8rem, $color-drop-down-icons);
+}
+
+.check-icon-transparent {
+  @include check-icon-mixin(0.8rem, transparent);
 }
 </style>

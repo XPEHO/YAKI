@@ -65,6 +65,7 @@ watch(
 
 <style scoped lang="scss">
 .modal-background {
+  z-index: 9000;
   // screen center even when scroll : fixed not absolute
   position: fixed;
   top: 0;

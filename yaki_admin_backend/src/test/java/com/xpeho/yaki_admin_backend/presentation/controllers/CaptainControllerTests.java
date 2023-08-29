@@ -186,8 +186,8 @@ class CaptainControllerTests {
         //given
         int customerId = 1;
         List<UserEntityWithID> expectedCaptains = new ArrayList<>();
-        expectedCaptains.add(new UserEntityWithID(1, "Barbie", "Chette", "barbie@email.com"));
-        expectedCaptains.add(new UserEntityWithID(2, "Jean", "sérien", "jean@email.com"));
+        expectedCaptains.add(new UserEntityWithID(1, 1,"Barbie", "Chette", "barbie@email.com"));
+        expectedCaptains.add(new UserEntityWithID(2, 2,"Jean", "sérien", "jean@email.com"));
 
         //when
         when(captainService.getAllCaptainByCustomerId(customerId)).thenReturn(expectedCaptains);

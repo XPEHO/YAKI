@@ -11,7 +11,7 @@ const setTeamName = (e: Event) => {
 
 <template>
   <article class="modal-content-container input-container">
-    <label>{{ modalState.mode === MODALMODE.teamEdit ? "Team name edition" : "Create a Team" }} </label>
+    <label>{{ modalState.mode === MODALMODE.teamEdit ? "Team name edition" : "Team creation" }} </label>
 
     <input
       class="input-general"

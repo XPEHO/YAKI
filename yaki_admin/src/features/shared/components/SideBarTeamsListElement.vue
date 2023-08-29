@@ -59,12 +59,11 @@ const onClickDeleteTeam = () => {
   </article>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
 .team-list-unit {
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
-  gap: 0.5rem;
 
   width: 100%;
   padding-block: 0.5rem;
@@ -104,4 +103,3 @@ const onClickDeleteTeam = () => {
   background-color: #f5cd3d;
 }
 </style>
-@/features/shared/modal/services/modalState@/features/shared/modal/services/modalMode

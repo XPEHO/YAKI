@@ -25,11 +25,9 @@ import modalState from "@/features/shared/modal/services/modalState";
   // See assets/style.scss @app {}
   flex: 1;
   display: grid;
-  grid-template-columns: minmax(10rem, 17rem) minmax(80%, 1fr);
+  grid-template-columns: minmax(10rem, 18rem) minmax(80%, 1fr);
 }
 .page-content {
   padding: 30px;
-  font-family: "Inter", sans-serif;
 }
 </style>
-@/features/shared/modal/services/modalState

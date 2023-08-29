@@ -2,6 +2,7 @@ package com.xpeho.yaki_admin_backend.domain.services;
 
 import com.xpeho.yaki_admin_backend.domain.entities.CaptainEntity;
 import com.xpeho.yaki_admin_backend.domain.entities.TeamEntity;
+import com.xpeho.yaki_admin_backend.domain.entities.TeamEntityWithCaptainsDetails;
 
 import java.util.List;
 
@@ -18,5 +19,5 @@ public interface TeamService {
 
     List<TeamEntity> findAllByCaptain(int id);
 
-    List<TeamEntity> findAllTeamByCustomerId(int customerId);
+    List<TeamEntityWithCaptainsDetails> findAllTeamByCustomerId(int customerId);
 }

@@ -1,5 +1,6 @@
 package com.xpeho.yaki_admin_backend.data.services;
 
+import com.xpeho.yaki_admin_backend.data.dto.UserWithDetailsDto;
 import com.xpeho.yaki_admin_backend.data.models.CaptainModel;
 import com.xpeho.yaki_admin_backend.data.models.UserModel;
 import com.xpeho.yaki_admin_backend.domain.entities.CaptainEntity;
@@ -159,16 +160,16 @@ class CaptainServiceImplTest {
     public void testGetAllCaptainByCustomerId() {
         //given
         int customerId = 1;
-        List<UserModel> userModels = new ArrayList<>();
-        userModels.add(new UserModel(1, "Chette", "Barbie", "barbie@email.com", "Barbie", "Barbie"));
-        userModels.add(new UserModel(2, "Mattel", "Ken", "ken@email.com", "Ken", "Ken"));
+        List<UserWithDetailsDto> userModels = new ArrayList<>();
+        userModels.add(new UserWithDetailsDto(1, 1, "Chette", "Barbie", "barbie@email.com"));
+        userModels.add(new UserWithDetailsDto(2,2, "Mattel", "Ken", "ken@email.com"));
 
         //when
         when(captainJpaRepository.findAllCaptainByCustomerId(customerId)).thenReturn(userModels);
 
         List<UserEntityWithID> expectedCaptainEntities = new ArrayList<>();
-        expectedCaptainEntities.add(new UserEntityWithID(1, "Chette", "Barbie", "barbie@email.com"));
-        expectedCaptainEntities.add(new UserEntityWithID(2, "Mattel", "Ken", "ken@email.com"));
+        expectedCaptainEntities.add(new UserEntityWithID(1, 1,"Chette", "Barbie", "barbie@email.com"));
+        expectedCaptainEntities.add(new UserEntityWithID(2, 2,"Mattel", "Ken", "ken@email.com"));
 
         List<UserEntityWithID> actualCaptainEntities = captainService.getAllCaptainByCustomerId(customerId);
 

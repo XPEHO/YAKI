@@ -1,6 +1,11 @@
+<!--  
+  USER CARD IS USED TO DISPLAY USER element of users list IN  :
+  - CaptainPageContent.vue
+  - CustomerPageContentCaptainList.vue
+ -->
+
 <script setup lang="ts">
 import {PropType} from "vue";
-import type {TeammateType} from "@/models/teammate.type";
 
 import avatarIcon from "@/assets/images/avatar.png";
 import editIcon from "@/assets/images/Edit.png";
@@ -12,7 +17,7 @@ import {MODALMODE} from "@/features/shared/modal/services/modalMode";
 
 const props = defineProps({
   user: {
-    type: Object as PropType<TeammateType | UserWithIdType>,
+    type: Object as PropType<UserWithIdType>,
     required: true,
   },
 });
@@ -63,7 +68,7 @@ const UserToBeRemoved = () => {
   align-items: flex-end;
   justify-content: space-between;
 
-  width: 60%;
+  width: min(90%, 35rem);
 }
 
 .user-avatar-info {
@@ -111,4 +116,3 @@ const UserToBeRemoved = () => {
   }
 }
 </style>
-@/features/shared/modal/services/modalState@/features/shared/modal/services/modalMode

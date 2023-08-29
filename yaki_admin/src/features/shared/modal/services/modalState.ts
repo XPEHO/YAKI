@@ -98,6 +98,9 @@ const modalState = reactive({
       case MODALMODE.teamCreate:
         this.createNewteam();
         return;
+      case MODALMODE.teamCreateCustomer:
+        this.createNewTeamWithOptionalCaptain();
+        return;
       case MODALMODE.teamEdit:
         this.editTeamName();
         return;
@@ -112,14 +115,25 @@ const modalState = reactive({
 
   async createNewteam() {
     const teamStore = useTeamStore();
-    const roleStore = useRoleStore();
-    await teamStore.createTeam(roleStore.getCaptainsId[0], this.teamInputValue);
+    await teamStore.createTeam(this.teamInputValue);
     this.refreshTeamList();
+  },
+
+  async createNewTeamWithOptionalCaptain() {
+    const teamStore = useTeamStore();
+
+    teamStore.createTeamOptionalAssignCaptain(this.teamInputValue, teamStore.getCaptainIdToBeAssign);
+    this.refreshTeamListForCustomer();
   },
 
   async editTeamName() {
     const teamStore = useTeamStore();
-    await teamStore.updateTeam(teamStore.getSelectedTeamId, this.teamInputValue);
+    await teamStore.updateTeam(
+      teamStore.getSelectedTeamId,
+      teamStore.getCaptainIdToBeAssign,
+      this.teamInputValue,
+      null
+    );
     this.refreshTeamList();
   },
 
@@ -150,6 +164,13 @@ const modalState = reactive({
     const roleStore = useRoleStore();
     setTimeout(() => {
       teamStore.setTeamListOfACaptain(roleStore.getCaptainsId);
+    }, 125);
+  },
+
+  refreshTeamListForCustomer() {
+    const teamStore = useTeamStore();
+    setTimeout(() => {
+      teamStore.setTeamsFromCustomer();
     }, 125);
   },
 

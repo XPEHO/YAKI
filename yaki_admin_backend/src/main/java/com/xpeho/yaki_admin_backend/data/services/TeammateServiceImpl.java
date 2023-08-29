@@ -3,8 +3,8 @@ package com.xpeho.yaki_admin_backend.data.services;
 import com.xpeho.yaki_admin_backend.data.models.EntityLogModel;
 import com.xpeho.yaki_admin_backend.data.models.TeammateModel;
 import com.xpeho.yaki_admin_backend.data.sources.TeammateJpaRepository;
-import com.xpeho.yaki_admin_backend.domain.entities.TeammateDetailsEntity;
 import com.xpeho.yaki_admin_backend.domain.entities.TeammateEntity;
+import com.xpeho.yaki_admin_backend.domain.entities.UserEntityWithID;
 import com.xpeho.yaki_admin_backend.domain.services.TeammateService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
@@ -26,21 +26,19 @@ public class TeammateServiceImpl implements TeammateService {
         this.entityLogService = entityLogService;
     }
 
-    public List<TeammateDetailsEntity> findAllByTeam(int teamIdF) {
+    public List<UserEntityWithID> findAllByTeam(int teamIdF) {
         List<Object[]> results = teammateJpaRepository.findAllByTeam(teamIdF);
-        List<TeammateDetailsEntity> teammateEntities = new ArrayList<>();
+        List<UserEntityWithID> userEntityWithIDList = new ArrayList<>();
         for (Object[] result : results) {
             int id = (int) result[0];
-            int teamId = (int) result[1];
-            int userId = (int) result[2];
-            String firstName = (String) result[3];
-            String lastName = (String) result[4];
-            String email = (String) result[5];
+            String lastname = result[1].toString();
+            String firstname = result[2].toString();
+            String email = result[3].toString();
 
-            TeammateDetailsEntity teammateEntity = new TeammateDetailsEntity(id, teamId, userId, firstName, lastName, email);
-            teammateEntities.add(teammateEntity);
+            UserEntityWithID userEntityWithID = new UserEntityWithID(id, null, lastname, firstname, email);
+            userEntityWithIDList.add(userEntityWithID);
         }
-        return teammateEntities;
+        return userEntityWithIDList;
     }
 
     @Override

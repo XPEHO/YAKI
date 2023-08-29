@@ -68,6 +68,7 @@ public class UserServiceImpl implements UserService {
         for (UserModel user : userList) {
             UserEntityWithID newUserWIthId = new UserEntityWithID(
                     user.getUserId(),
+                    null,
                     user.getLastName(),
                     user.getFirstName(),
                     user.getEmail());

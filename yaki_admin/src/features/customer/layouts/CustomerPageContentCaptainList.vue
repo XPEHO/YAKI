@@ -39,7 +39,7 @@ onBeforeMount(async () => {
   </page-content-layout>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
 .captain-list {
   display: flex;
   flex-direction: column;

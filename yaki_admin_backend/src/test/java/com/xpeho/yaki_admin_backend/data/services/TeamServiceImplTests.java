@@ -4,8 +4,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xpeho.yaki_admin_backend.data.models.CaptainModel;
 import com.xpeho.yaki_admin_backend.data.models.EntityLogModel;
 import com.xpeho.yaki_admin_backend.data.models.TeamModel;
+import com.xpeho.yaki_admin_backend.data.models.UserModel;
 import com.xpeho.yaki_admin_backend.data.sources.TeamJpaRepository;
+import com.xpeho.yaki_admin_backend.domain.entities.CaptainEntityWithDetails;
 import com.xpeho.yaki_admin_backend.domain.entities.TeamEntity;
+import com.xpeho.yaki_admin_backend.domain.entities.TeamEntityWithCaptainsDetails;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -160,19 +163,40 @@ class TeamServiceImplTests {
 
     @Test
     public void testFindAllTeamByCustomerId() {
-        //given
+        // Given
         int customerId = 1;
+
+        // Create a mock UserModel
+        UserModel user = new UserModel();
+        user.setLastName("Last");
+        user.setFirstName("First");
+
+        // Create valid CaptainModel instances with associated UserModel
+        List<CaptainModel> captains = new ArrayList<>();
+        CaptainModel captain1 = new CaptainModel();
+        captain1.setCaptainId(1);
+        captain1.setUser(user);  // Associate the mock UserModel
+        captains.add(captain1);
+
+        CaptainModel captain2 = new CaptainModel();
+        captain2.setCaptainId(2);
+        captain2.setUser(user);  // Associate the mock UserModel
+        captains.add(captain2);
+
         List<TeamModel> teamModels = new ArrayList<>();
-        teamModels.add(new TeamModel(1, captains, "Team 1",1,1));
-        teamModels.add(new TeamModel(2, captains, "Team 2",1,2));
-        Mockito.when(teamJpaRepository.findAllByCustomerId(customerId)).thenReturn(teamModels);
+        teamModels.add(new TeamModel(1, captains, "Team 1", 1, 1));
+        teamModels.add(new TeamModel(2, captains, "Team 2", 1, 2));
+        Mockito.when(teamJpaRepository.findAllByCustomerIdAndActifIsTrue(customerId)).thenReturn(teamModels);
 
-        //when
-        List<TeamEntity> expectedTeamEntities = new ArrayList<>();
-        expectedTeamEntities.add(new TeamEntity(1, Arrays.asList(1) , "Team 1",1));
-        expectedTeamEntities.add(new TeamEntity(2,  Arrays.asList(1), "Team 2",1));
+        // Create expectedTeamEntities with CaptainEntityWithDetails instances
+        List<TeamEntityWithCaptainsDetails> expectedTeamEntities = new ArrayList<>();
+        List<CaptainEntityWithDetails> expectedCaptains = new ArrayList<>();
+        expectedCaptains.add(new CaptainEntityWithDetails(1, "Last", "First"));
+        expectedCaptains.add(new CaptainEntityWithDetails(2, "Last", "First"));
+        expectedTeamEntities.add(new TeamEntityWithCaptainsDetails(1, "Team 1", 1, expectedCaptains));
+        expectedTeamEntities.add(new TeamEntityWithCaptainsDetails(2, "Team 2", 1, expectedCaptains));
 
-        List<TeamEntity> actualTeamEntities = teamService.findAllTeamByCustomerId(customerId);
+        List<TeamEntityWithCaptainsDetails> actualTeamEntities = teamService.findAllTeamByCustomerId(customerId);
         //then
         assertEquals(expectedTeamEntities, actualTeamEntities);
     }

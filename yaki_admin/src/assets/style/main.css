@@ -21,6 +21,22 @@ body {
   color: #787878;
 }
 
+.input-general {
+  font-size: 0.95rem;
+  border-radius: 16px;
+  border: 1px solid #ccc;
+  font-weight: 300;
+}
+.input-general::-moz-placeholder {
+  font-size: 0.76rem;
+}
+.input-general::placeholder {
+  font-size: 0.76rem;
+}
+.input-general:focus {
+  outline: 1px solid rgb(142, 140, 140);
+}
+
 .sidebar-element-generic-style {
   display: flex;
   justify-content: center;
