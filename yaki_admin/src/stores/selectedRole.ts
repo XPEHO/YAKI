@@ -1,5 +1,7 @@
-import {captainService} from "@/services/captain.service";
-import {defineStore} from "pinia";
+import { captainService } from "@/services/captain.service";
+import { customerService } from "@/services/customer.service";
+import { defineStore } from "pinia";
+import { useCaptainStore } from "./captainStore";
 
 /*
   Explanation :
@@ -30,8 +32,19 @@ export const useSelectedRoleStore = defineStore("selectedRoleStore", {
       this.fetchCustomerIdSelected(captainId);
     },
     async fetchCustomerIdSelected(captainId: number) {
-      const captain = await captainService.getCaptain(captainId);
-      this.setCustomerIdSelected(captain.customerId);
+      let captain = await captainService.getCaptain(captainId);
+      this.setCustomerIdSelected(captain.customerId)
     },
+    async addAdminToCompany(userId: number){
+      await customerService.addCustomerRights(this.customerIdSelected,userId);
+    },
+    async addCaptainToCompany(userId: number){
+      const captainStore = useCaptainStore();
+      captainStore.createCaptain({id: 0,userId : userId,customerId : this.customerIdSelected})
+      .then(() => {
+        //reload the captain list
+        captainStore.setAllCaptainsByCustomerId(this.customerIdSelected);
+      })
+    }, 
   },
 });

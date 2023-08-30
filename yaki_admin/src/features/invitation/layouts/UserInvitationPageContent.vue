@@ -2,7 +2,6 @@
 import router from "@/router/router";
 import {environmentVar} from "@/envPlaceholder";
 import {onBeforeMount, reactive} from "vue";
-import {useTeamStore} from "@/stores/teamStore";
 import modalState from "@/features/shared/services/modalState";
 
 import type {UserWithIdType} from "@/models/userWithId.type";
@@ -14,32 +13,32 @@ import SideBarButton from "@/features/shared/components/SideBarButton.vue";
 import HeaderContentPage from "@/features/shared/components/HeaderContentPage.vue";
 import backIcon from "@/assets/images/arrow-back.png";
 
-import {changeHeaderTitle, changeHeaderSubText} from "@/features/invitation/services/userService";
+import {changeHeaderTitle, changeHeaderSubText,invitUser, getListOfUserAlreadyAccepted,getInvitationStatusText,getReturnText} from "@/features/invitation/services/invitationService";
 
 import {useRoute} from "vue-router";
-
-const teamStore = useTeamStore();
 const route = useRoute();
 
 const props = reactive({
   userList: [] as UserWithIdType[],
   fromRoute: "" as string,
+  alreadyInList: [] as number[],
+  invitationStatusText: "" as string,
 });
+//list of person who have admin rights in company
+//don't want to fetch them in each separated component
+  
 
 onBeforeMount(async () => {
+  props.fromRoute = route.path;
+  props.alreadyInList = await getListOfUserAlreadyAccepted(props.fromRoute);
   props.userList = await usersService.fetchUserInRange(
     environmentVar.tempUserIdRangeStart,
     environmentVar.tempUserIdRAngeEnd
-  );
-  props.fromRoute = route.path;
+  );  
+  props.invitationStatusText = getInvitationStatusText(props.fromRoute);
 });
-
 // invit button from user-component
-const invitUser = async (userId: number) => {
-  teamStore.addUserToTeam(userId);
-};
 </script>
-
 <template>
   <page-content-layout>
     <template #pageContentHeader>
@@ -49,8 +48,8 @@ const invitUser = async (userId: number) => {
     </template>
 
     <template #content>
-      <side-bar-button
-        v-bind:inner-text="'Return to teammate list'"
+      <side-bar-button v-if="props.fromRoute != '/customer/admin-invitation'"
+        v-bind:inner-text ="getReturnText(props.fromRoute)"
         v-bind:icon-path="backIcon"
         @click.prevent="router.go(-1)" />
 
@@ -59,7 +58,10 @@ const invitUser = async (userId: number) => {
         v-bind:key="user.id"
         v-bind:user="user"
         v-bind:fromRoute="props.fromRoute"
-        @invitUserToTeam="invitUser" />
+        v-bind:adminList="props.alreadyInList"
+        v-bind:invitationStatusText="props.invitationStatusText"
+        @invitUserToTeam="invitUser"
+         />
     </template>
   </page-content-layout>
 </template>

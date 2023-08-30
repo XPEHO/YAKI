@@ -1,19 +1,12 @@
 <script setup lang="ts">
-import {PropType, onBeforeMount, reactive} from "vue";
+import {PropType, onMounted, reactive} from "vue";
 import type {UserWithIdType} from "@/models/userWithId.type";
 
 import avatarIcon from "@/assets/images/avatar.png";
 import defaultButton from "@/features/shared/components/DefaultButton.vue";
 
-import {checkInvitationStatus, updateReactive} from "@/features/invitation/services/userService";
-
+import {checkInvitationStatus, updateReactive} from "@/features/invitation/services/invitationService";
 //const teammateStore = useTeammateStore();
-
-onBeforeMount(() => {
-  if (props.fromRoute.includes("captain")) {
-    updateReactive(settings, checkInvitationStatus(props.user));
-  }
-});
 
 const props = defineProps({
   user: {
@@ -24,16 +17,26 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  adminList: {
+    type: Array as PropType<number[]>,
+    required: true,
+  },
+  invitationStatusText: {
+    type: String,
+    required: true,
+  },
 });
 
-const emit = defineEmits(["invitUserToTeam", "invitUserAsCaptain"]);
+onMounted(() => {
+    updateReactive(settings, checkInvitationStatus(props.user, props.adminList, props.invitationStatusText));
+});
+
+const emit = defineEmits<{
+  invitUserToTeam: [fromRoute: string,userId: number]
+}>()
 
 const emitterRedirect = () => {
-  if (props.fromRoute.includes("captain")) {
-    emit("invitUserToTeam", props.user.id);
-  } else {
-    emit("invitUserAsCaptain", props.user.id);
-  }
+    emit("invitUserToTeam", props.fromRoute,props.user.id);
 };
 
 //Setting reactive with card and button configuration
@@ -44,6 +47,8 @@ const settings = reactive({
   btnCSS: "button-class-test btn-bg-color-invite",
   cardCSS: "",
 });
+
+
 
 const invitBtnClick = async () => {
   if (!settings.isInvited) {
@@ -177,4 +182,3 @@ const cssEffect = () => {
   border-color: #59a9b5;
 }
 </style>
-@/features/invitation/services/userService

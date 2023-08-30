@@ -44,9 +44,9 @@ export class CaptainService {
     const requestOptions = {
       method: "POST",
       body: JSON.stringify(data),
-      headers: authHeader(`${URL}/captains/create`),
+      headers: authHeader(`${URL}/captains`),
     };
-    await fetch(`${URL}/captains/create`, requestOptions)
+    await fetch(`${URL}/captains`, requestOptions)
       .then(handleResponse)
       .catch((err) => console.warn(err));
 
