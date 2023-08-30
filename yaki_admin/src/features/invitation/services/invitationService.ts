@@ -1,30 +1,62 @@
 import {UserWithIdType} from "@/models/userWithId.type";
+import { customerService } from "@/services/customer.service";
+import { useCaptainStore } from "@/stores/captainStore";
 import { useSelectedRoleStore } from "@/stores/selectedRole";
 import { useTeamStore } from "@/stores/teamStore";
 import {useTeammateStore} from "@/stores/teammateStore";
 
 const captainPageRoute = "/captain/invitation";
 const customerPageRoute = "/customer/invitation";
-const customeraddAdminPageRoute = "/customer/addAdminInvitation";
+const customeraddAdminPageRoute = "/customer/admin-invitation";
 
 export const updateReactive = (current: Object, newReactive: Object) => {
   Object.assign(current, newReactive);
 };
-
-export const checkInvitationStatus = (user: UserWithIdType) => {
+export const getInvitationStatusText = (fromRoute: string) => {
+  if (fromRoute == captainPageRoute) {
+    return "In team";
+  }
+  else if (fromRoute == customerPageRoute) {
+    return "already captain";
+  }
+  else{
+    return "already admin";
+  }
+}
+export  const  getListOfUserAlreadyAccepted = async (fromRoute: string) => {
+  const selectedRoleStore = useSelectedRoleStore();
+  const teammateStore = useTeammateStore();
+  const captainStore = useCaptainStore();
+  if (fromRoute == captainPageRoute) {
+    return teammateStore.getTeammateList.map(teammate => teammate.userId);
+  }
+  else if (fromRoute == customerPageRoute) {
+    return captainStore.getCaptainList.map(captain => captain.id);
+  }
+  else{
+    return customerService.getAllUsersRightByCustomerId(selectedRoleStore.getCustomerIdSelected);
+    
+  }
+}
+export const getReturnText = (fromRoute: string) => {
+  if (fromRoute == captainPageRoute) {
+    return "return to teammate List";
+  }
+  else{
+    return "return to captain List";
+  }
+}
+export const checkInvitationStatus = (user: UserWithIdType,userAlreadyIn: number[],textStatus : string) => {
   const invitationStatus = {
     isInvited: false,
     text: "Invite",
     btnCSS: "button-class-test btn-bg-color-invite",
     cardCSS: "",
   };
-
-  const teammateStore = useTeammateStore();
-  const isUserInTeam = teammateStore.getTeammateList.find((teammate) => teammate.userId === user.id);
-
+  const isUserInTeam = userAlreadyIn.find((teammate) => teammate === user.id);
   if (isUserInTeam) {
     invitationStatus.isInvited = true;
-    invitationStatus.text = "In Team";
+    invitationStatus.text = textStatus;
     invitationStatus.btnCSS = "button-class-test btn-bg-color-present";
     invitationStatus.cardCSS = "user-invited";
   }
@@ -32,27 +64,7 @@ export const checkInvitationStatus = (user: UserWithIdType) => {
   return invitationStatus;
 };
 
-export const checkInvitationStatusAdmin = (user: UserWithIdType,usersWithAdminRights: number[]) => {
 
-  const invitationStatus = {
-    isInvited: false,
-    text: "Invite",
-    btnCSS: "button-class-test btn-bg-color-invite",
-    cardCSS: "",
-  };
-
-  const teammateStore = useTeammateStore();
-  const isUserAdmin = usersWithAdminRights.find((userId) => userId === user.id);
-
-  if (isUserAdmin) {
-    invitationStatus.isInvited = true;
-    invitationStatus.text = "Already Admin";
-    invitationStatus.btnCSS = "button-class-test btn-bg-color-present";
-    invitationStatus.cardCSS = "invited";
-  }
-
-  return invitationStatus;
-};
 // /captain/invitation || /customer/invitation
 
 export const changeHeaderTitle = (fromRoute: string) => {
@@ -91,7 +103,6 @@ export const invitUser = async (fromRoute: string, userId: number,) => {
     teamStore.addUserToTeam(userId);
   }
   else if(fromRoute === customerPageRoute){
-
-    //not handled yet
+    selectedRoleStore.addCaptainToCompany(userId);
   }
 }

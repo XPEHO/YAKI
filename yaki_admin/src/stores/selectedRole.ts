@@ -1,6 +1,7 @@
 import { captainService } from "@/services/captain.service";
 import { customerService } from "@/services/customer.service";
 import { defineStore } from "pinia";
+import { useCaptainStore } from "./captainStore";
 
 /*
   Explanation :
@@ -37,9 +38,13 @@ export const useSelectedRoleStore = defineStore("selectedRoleStore", {
     async addAdminToCompany(userId: number){
       await customerService.addCustomerRights(this.customerIdSelected,userId);
     },
-    async getUsersWhoHaveRightInCompany(){
-      const users = await customerService.getAllUsersRightByCustomerId(this.customerIdSelected);
-      return users;
-    }
+    async addCaptainToCompany(userId: number){
+      const captainStore = useCaptainStore();
+      captainStore.createCaptain({id: 0,userId : userId,customerId : this.customerIdSelected})
+      .then(() => {
+        //reload the captain list
+        captainStore.setAllCaptainsByCustomerId(this.customerIdSelected);
+      })
+    }, 
   },
 });

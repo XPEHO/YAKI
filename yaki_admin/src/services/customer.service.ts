@@ -52,10 +52,10 @@ export class CustomerService {
   addCustomerRights = async (customerId: number, userId: number): Promise<CustomerType> => {
     const requestOptions = {
       method: "POST",
-      body: JSON.stringify({customerId: customerId, userId: [userId]}),
-      headers: authHeader(`${URL}/addCustomersRights`),
+      body: JSON.stringify({customerId: customerId, usersId: [userId]}),
+      headers: authHeader(`${URL}/customers/addCustomerRights`),
     };
-    const response = await fetch(`${URL}/addCustomersRights`, requestOptions)
+    const response = await fetch(`${URL}/customers/addCustomerRights`, requestOptions)
       .then(handleResponse)
       .catch((err) => console.warn(err));
       return response;
