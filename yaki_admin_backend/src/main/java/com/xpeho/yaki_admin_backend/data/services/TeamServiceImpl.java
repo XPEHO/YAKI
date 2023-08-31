@@ -4,7 +4,9 @@ import com.xpeho.yaki_admin_backend.data.models.CaptainModel;
 import com.xpeho.yaki_admin_backend.data.models.EntityLogModel;
 import com.xpeho.yaki_admin_backend.data.models.TeamModel;
 import com.xpeho.yaki_admin_backend.data.sources.TeamJpaRepository;
+import com.xpeho.yaki_admin_backend.domain.entities.CaptainEntityWithDetails;
 import com.xpeho.yaki_admin_backend.domain.entities.TeamEntity;
+import com.xpeho.yaki_admin_backend.domain.entities.TeamEntityWithCaptainsDetails;
 import com.xpeho.yaki_admin_backend.domain.services.TeamService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
@@ -110,13 +112,17 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    public List<TeamEntity> findAllTeamByCustomerId(int customerId) {
-        List<TeamModel> results = teamJpaRepository.findAllByCustomerId(customerId);
-        List<TeamEntity> teamEntities = new ArrayList<>();
+    public List<TeamEntityWithCaptainsDetails> findAllTeamByCustomerId(int customerId) {
+        List<TeamModel> results = teamJpaRepository.findAllByCustomerIdAndActifIsTrue(customerId);
+        List<TeamEntityWithCaptainsDetails> teamEntities = new ArrayList<>();
         for (TeamModel result : results) {
-            List<Integer> captainsId = result.getCaptains().stream()
-                    .map(CaptainModel::getCaptainId).toList();
-            TeamEntity teamEntity = new TeamEntity(result.getId(), captainsId, result.getTeamName(),result.getCustomerId());
+            List<CaptainEntityWithDetails> captains = result.getCaptains()
+                    .stream()
+                    .map(CaptainModel -> new CaptainEntityWithDetails(CaptainModel.getCaptainId(),
+                            CaptainModel.getUser().getLastName(),
+                            CaptainModel.getUser().getFirstName()))
+                    .toList();
+            TeamEntityWithCaptainsDetails teamEntity = new TeamEntityWithCaptainsDetails(result.getId(), result.getTeamName(),result.getCustomerId(), captains);
             teamEntities.add(teamEntity);
         }
         return teamEntities;

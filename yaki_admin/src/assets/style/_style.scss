@@ -16,6 +16,48 @@ body {
   height: 100svh;
 }
 
+// GENERAL SHARED STYLES ----------------------------------------------------------------------------------------
+
+.sub-text {
+  font-size: 15px;
+  font-weight: 900;
+  color: $font-color-sub-text;
+}
+
+.input-general {
+  font-size: $font-size-input-login;
+  border-radius: $modal-border-radius;
+  border: 1px solid #ccc;
+
+  font-weight: 300;
+
+  &::placeholder {
+    font-size: $font-size-input-login-placeholder;
+  }
+
+  &:focus {
+    outline: 1px solid rgb(142, 140, 140);
+  }
+}
+
+// CSS ICON ----------------------------------------------------------------------------------------
+
+@mixin arrow-down-mixin($border-left-right, $border-top, $color) {
+  width: 0;
+  height: 0;
+  border-left: $border-left-right solid transparent;
+  border-right: $border-left-right solid transparent;
+
+  border-top: $border-top solid $color;
+}
+
+@mixin check-icon-mixin($size, $color) {
+  width: $size;
+  height: $size;
+  background-color: $color;
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+
 // SIDEBAR SHARED STYLES ----------------------------------------------------------------------------------------
 
 .sidebar-element-generic-style {
@@ -67,11 +109,22 @@ body {
   border-top-right-radius: $modal-border-radius;
   border-top-left-radius: $modal-border-radius;
 
-  background-color: $color-side-bar-background;
+  background-color: $color-modal-background;
 
   flex-grow: 3;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.modal-title-text {
+  color: $font-color-main-text;
+  font-size: 1.1rem;
+  font-weight: 900;
+}
+
+.modal-sub-text {
+  font-size: 0.95rem;
+  color: $font-color-sub-text;
 }

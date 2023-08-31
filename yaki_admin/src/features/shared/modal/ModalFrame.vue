@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import modalState from "@/features/shared/services/modalState";
-import ModalContentTeams from "@/features/shared/popup/layouts/ModalContentTeams.vue";
-import ModalContentDeletionValidation from "@/features/shared/popup/layouts/ModalContentDeletionValidation.vue";
-import {MODALMODE} from "@/features/shared/services/modalMode";
+import modalState from "@/features/shared/modal/services/modalState";
+import ModalContentTeam from "@/features/shared/modal/layouts/ModalContentTeam.vue";
+import ModalContentDeletionValidation from "@/features/shared/modal/layouts/ModalContentDeletionValidation.vue";
+import {MODALMODE} from "@/features/shared/modal/services/modalMode";
 import {nextTick, watch} from "vue";
 
 const validationModalAccept = async () => {
@@ -23,7 +23,11 @@ const CancelModalBtn = () => {
 watch(
   () => modalState.isShowed,
   (newValue) => {
-    if ((newValue === true && modalState.mode === MODALMODE.teamCreate) || modalState.mode === MODALMODE.teamEdit) {
+    if (
+      (newValue === true && modalState.mode === MODALMODE.teamCreate) ||
+      modalState.mode === MODALMODE.teamEdit ||
+      modalState.mode === MODALMODE.teamCreateCustomer
+    ) {
       nextTick(() => {
         const input = document.querySelector("input");
         input?.focus();
@@ -44,7 +48,11 @@ watch(
     <dialog class="modal-container">
       <form>
         <component
-          :is="modalState.mode === MODALMODE.userDelete ? ModalContentDeletionValidation : ModalContentTeams" />
+          :is="
+            modalState.mode === MODALMODE.userDelete || modalState.mode === MODALMODE.teamDelete
+              ? ModalContentDeletionValidation
+              : ModalContentTeam
+          " />
 
         <section class="button-container">
           <button @click.prevent="validationModalAccept">Confirm</button>
@@ -57,6 +65,7 @@ watch(
 
 <style scoped lang="scss">
 .modal-background {
+  z-index: 9000;
   // screen center even when scroll : fixed not absolute
   position: fixed;
   top: 0;
@@ -73,7 +82,7 @@ watch(
     border: none;
     border-radius: $modal-border-radius;
 
-    height: 15rem;
+    min-height: 15rem;
     width: min(90%, 30rem);
 
     display: flex;
@@ -96,7 +105,7 @@ watch(
     padding-block: 1.2rem;
 
     color: rgb(232, 232, 232);
-    font-size: 1rem;
+    font-size: 0.9rem;
     letter-spacing: 1px;
     font-weight: 500;
   }

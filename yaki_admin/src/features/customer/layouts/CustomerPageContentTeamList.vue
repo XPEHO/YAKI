@@ -3,22 +3,28 @@ import {onBeforeMount} from "vue";
 
 import HeaderContentPage from "@/features/shared/components/HeaderContentPage.vue";
 import {useTeamStore} from "@/stores/teamStore";
-import {useRoleStore} from "@/stores/roleStore";
+import modalState from "@/features/shared/modal/services/modalState";
+import {MODALMODE} from "@/features/shared/modal/services/modalMode";
 
 import PageContentLayout from "@/global-layouts/PageContentLayout.vue";
 import SideBarButton from "@/features/shared/components/SideBarButton.vue";
+import TeamWithCaptainCard from "@/features/customer/components/TeamWithCaptainCard.vue";
 import plusIcon from "@/assets/images/plus.png";
+import {useCaptainStore} from "@/stores/captainStore";
+import {useSelectedRoleStore} from "@/stores/selectedRole";
 
 const teamStore = useTeamStore();
-const roleStore = useRoleStore();
-
-const fetchTeams = async () => {
-  await teamStore.setTeamsFromCustomer(roleStore.getCustomersIdWhereIgotRights);
-};
+const captainStore = useCaptainStore();
+const selectedRoleStore = useSelectedRoleStore();
 
 onBeforeMount(async () => {
-  fetchTeams();
+  await teamStore.setTeamsFromCustomer();
+  await captainStore.setAllCaptainsByCustomerId(selectedRoleStore.getCustomerIdSelected);
 });
+
+const customerTeamCreation = () => {
+  modalState.switchModalVisibility(true, MODALMODE.teamCreateCustomer);
+};
 </script>
 
 <template>
@@ -30,34 +36,14 @@ onBeforeMount(async () => {
     </template>
     <template #content>
       <SideBarButton
-        v-bind:inner-text="'Add a team'"
+        v-bind:inner-text="'Create a team'"
         v-bind:icon-path="plusIcon"
-        @click.prevent="() => {}" />
+        @click.prevent="customerTeamCreation" />
 
-      <div class="team-list">
-        <div
-          v-for="team in teamStore.getTeamList"
-          class="team-item"
-          :team="team"
-          :key="team.id">
-          {{ team.teamName }}
-        </div>
-      </div>
+      <team-with-captain-card
+        v-for="team in teamStore.getTeamList"
+        :team-content="team"
+        :key="team.id" />
     </template>
   </page-content-layout>
 </template>
-
-<style lang="scss">
-.team-list {
-  padding-block-start: 1.5rem;
-}
-
-.team-item {
-  border: 1px solid #ccc;
-  background-color: rgb(177, 173, 173);
-  border-radius: 10px;
-  padding: 1rem;
-  width: 20vw;
-  text-align: center;
-}
-</style>

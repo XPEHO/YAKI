@@ -1,5 +1,6 @@
 package com.xpeho.yaki_admin_backend.data.services
 
+import com.xpeho.yaki_admin_backend.data.dto.UserWithDetailsDto
 import com.xpeho.yaki_admin_backend.data.models.CaptainModel
 import com.xpeho.yaki_admin_backend.data.models.UserModel
 import com.xpeho.yaki_admin_backend.data.sources.CaptainJpaRepository
@@ -86,12 +87,13 @@ class CaptainServiceImpl(private val captainJpaRepository: CaptainJpaRepository,
     override fun getAllCaptainByCustomerId(customerId: Int): List<UserEntityWithID> {
         return captainJpaRepository
                 .findAllCaptainByCustomerId(customerId)
-                .map { userModel: UserModel ->
+                .map { userWithDetails: UserWithDetailsDto ->
                     UserEntityWithID(
-                            userModel.userId,
-                            userModel.lastName,
-                            userModel.firstName,
-                            userModel.email
+                        userWithDetails.id,
+                        userWithDetails.captainId,
+                        userWithDetails.lastName,
+                        userWithDetails.firstName,
+                        userWithDetails.email
                     )
                 }
     }

@@ -31,17 +31,15 @@ onBeforeMount(async () => {
         v-bind:icon-path="plusIcon"
         @click.prevent="router.push({path: 'invitation'})" />
 
-      <div class="captain-list">
-        <user-card
-          v-for="captain in captainStore.getCaptainList"
-          :user="captain"
-          :key="captain.id" />
-      </div>
+      <user-card
+        v-for="captain in captainStore.getCaptainList"
+        :user="captain"
+        :key="captain.id" />
     </template>
   </page-content-layout>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
 .captain-list {
   display: flex;
   flex-direction: column;

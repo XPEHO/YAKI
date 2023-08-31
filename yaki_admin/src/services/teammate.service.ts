@@ -1,14 +1,15 @@
-import type {TeammateTypeOut, TeammateTypeIn, TeammateType} from "@/models/teammate.type";
+import type {TeammateTypeOut, TeammateTypeIn} from "@/models/teammate.type";
 import {environmentVar} from "@/envPlaceholder";
 import {authHeader} from "@/utils/authUtils";
 import {handleResponse} from "@/utils/responseUtils";
+import {UserWithIdType} from "@/models/userWithId.type";
 
 const URL: string = environmentVar.baseURL;
 
 // Defining a TeamMateService class to handle HTTP requests to the API
 export class TeammateService {
   // Defining a method to retrieve all team mates within a given team
-  getAllWithinTeam = async (id: number): Promise<TeammateType[]> => {
+  getAllWithinTeam = async (id: number): Promise<UserWithIdType[]> => {
     const requestOptions = {
       method: "GET",
       headers: authHeader(`${URL}/teammates/team/${id}`),

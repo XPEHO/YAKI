@@ -1,8 +1,8 @@
 import {UserWithIdType} from "@/models/userWithId.type";
-import { customerService } from "@/services/customer.service";
-import { useCaptainStore } from "@/stores/captainStore";
-import { useSelectedRoleStore } from "@/stores/selectedRole";
-import { useTeamStore } from "@/stores/teamStore";
+import {customerService} from "@/services/customer.service";
+import {useCaptainStore} from "@/stores/captainStore";
+import {useSelectedRoleStore} from "@/stores/selectedRole";
+import {useTeamStore} from "@/stores/teamStore";
 import {useTeammateStore} from "@/stores/teammateStore";
 
 const captainPageRoute = "/captain/invitation";
@@ -15,38 +15,32 @@ export const updateReactive = (current: Object, newReactive: Object) => {
 export const getInvitationStatusText = (fromRoute: string) => {
   if (fromRoute == captainPageRoute) {
     return "In team";
-  }
-  else if (fromRoute == customerPageRoute) {
+  } else if (fromRoute == customerPageRoute) {
     return "already captain";
-  }
-  else{
+  } else {
     return "already admin";
   }
-}
-export  const  getListOfUserAlreadyAccepted = async (fromRoute: string) => {
+};
+export const getListOfUserAlreadyAccepted = async (fromRoute: string) => {
   const selectedRoleStore = useSelectedRoleStore();
   const teammateStore = useTeammateStore();
   const captainStore = useCaptainStore();
   if (fromRoute == captainPageRoute) {
-    return teammateStore.getTeammateList.map(teammate => teammate.userId);
-  }
-  else if (fromRoute == customerPageRoute) {
-    return captainStore.getCaptainList.map(captain => captain.id);
-  }
-  else{
+    return teammateStore.getTeammateList.map((teammate) => teammate.id);
+  } else if (fromRoute == customerPageRoute) {
+    return captainStore.getCaptainList.map((captain) => captain.id);
+  } else {
     return customerService.getAllUsersRightByCustomerId(selectedRoleStore.getCustomerIdSelected);
-    
   }
-}
+};
 export const getReturnText = (fromRoute: string) => {
   if (fromRoute == captainPageRoute) {
     return "return to teammate List";
-  }
-  else{
+  } else {
     return "return to captain List";
   }
-}
-export const checkInvitationStatus = (user: UserWithIdType,userAlreadyIn: number[],textStatus : string) => {
+};
+export const checkInvitationStatus = (user: UserWithIdType, userAlreadyIn: number[], textStatus: string) => {
   const invitationStatus = {
     isInvited: false,
     text: "Invite",
@@ -64,15 +58,11 @@ export const checkInvitationStatus = (user: UserWithIdType,userAlreadyIn: number
   return invitationStatus;
 };
 
-
-// /captain/invitation || /customer/invitation
-
 export const changeHeaderTitle = (fromRoute: string) => {
   let title = "";
-  if(fromRoute === customeraddAdminPageRoute){
+  if (fromRoute === customeraddAdminPageRoute) {
     title = "Invite an Admin";
-  }
-  else if (fromRoute === captainPageRoute) {
+  } else if (fromRoute === captainPageRoute) {
     title = "Invite a User";
   } else if (fromRoute === customerPageRoute) {
     title = "Invite a Captain";
@@ -82,10 +72,9 @@ export const changeHeaderTitle = (fromRoute: string) => {
 
 export const changeHeaderSubText = (fromRoute: string, teamName: string) => {
   let subText = "";
-  if(fromRoute === customeraddAdminPageRoute){
+  if (fromRoute === customeraddAdminPageRoute) {
     subText = "Select the person(s) you want to invit as admin : ";
-  }
-  else if (fromRoute === captainPageRoute) {
+  } else if (fromRoute === captainPageRoute) {
     subText = `Select the user(s) you want to invit to : ${teamName}`;
   } else if (fromRoute === customerPageRoute) {
     subText = "Select the user(s) you want to invit as captain : ";
@@ -93,16 +82,14 @@ export const changeHeaderSubText = (fromRoute: string, teamName: string) => {
   return subText;
 };
 
-export const invitUser = async (fromRoute: string, userId: number,) => {
+export const invitUser = async (fromRoute: string, userId: number) => {
   const selectedRoleStore = useSelectedRoleStore();
   const teamStore = useTeamStore();
-  if(fromRoute === customeraddAdminPageRoute){
+  if (fromRoute === customeraddAdminPageRoute) {
     selectedRoleStore.addAdminToCompany(userId);
-  }
-  else if (fromRoute === captainPageRoute) {
+  } else if (fromRoute === captainPageRoute) {
     teamStore.addUserToTeam(userId);
-  }
-  else if(fromRoute === customerPageRoute){
+  } else if (fromRoute === customerPageRoute) {
     selectedRoleStore.addCaptainToCompany(userId);
   }
-}
+};

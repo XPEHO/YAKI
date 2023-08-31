@@ -1,8 +1,7 @@
 package com.xpeho.yaki_admin_backend.presentation.controllers;
 
-import com.xpeho.yaki_admin_backend.domain.entities.CaptainEntity;
-import com.xpeho.yaki_admin_backend.domain.entities.TeammateDetailsEntity;
 import com.xpeho.yaki_admin_backend.domain.entities.TeammateEntity;
+import com.xpeho.yaki_admin_backend.domain.entities.UserEntityWithID;
 import com.xpeho.yaki_admin_backend.domain.services.TeammateService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.web.bind.annotation.*;
@@ -47,7 +46,7 @@ public class TeammateController {
     }
 
     @GetMapping("team/{id}")
-    public List<TeammateDetailsEntity> getAllWithinTeam(@PathVariable int id) {
+    public List<UserEntityWithID> getAllWithinTeam(@PathVariable int id) {
 
         return teammateService.findAllByTeam(id);
     }

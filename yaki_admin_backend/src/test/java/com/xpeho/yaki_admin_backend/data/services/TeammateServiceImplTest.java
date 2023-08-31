@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xpeho.yaki_admin_backend.data.models.EntityLogModel;
 import com.xpeho.yaki_admin_backend.data.models.TeammateModel;
 import com.xpeho.yaki_admin_backend.data.sources.TeammateJpaRepository;
-import com.xpeho.yaki_admin_backend.domain.entities.TeammateDetailsEntity;
 import com.xpeho.yaki_admin_backend.domain.entities.TeammateEntity;
+import com.xpeho.yaki_admin_backend.domain.entities.UserEntityWithID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,7 +31,7 @@ class TeammateServiceImplTest {
     private TeammateEntity teammateE1;
     private TeammateEntity teammateE2;
     private List<Object[]> teammatesFromTeamOne;
-    private List<TeammateDetailsEntity> teammatesEFromTeamOne;
+    private List<UserEntityWithID> teammatesEFromTeamOne;
     private  EntityLogModel entityLogModel;
 
     @InjectMocks
@@ -49,11 +49,11 @@ class TeammateServiceImplTest {
         teammate2 = new TeammateModel(1, 8,entityLogModel.getId());
         teammateE1 = new TeammateEntity(teammate1.getId(), 1, 5);
         teammateE2 = new TeammateEntity(teammate2.getId(), 1, 8);
-        TeammateDetailsEntity teammateUserE1 = new TeammateDetailsEntity(1, 2, 5, "Albert", "Redmont", "albert.redmont@mail.com");
-        TeammateDetailsEntity teammateUserE2 = new TeammateDetailsEntity(2, 2, 6, "Michel", "Bertrand", "michel.bertrand@mail.com");
+        UserEntityWithID teammateUserE1 = new UserEntityWithID(1, null, "Albert", "Redmont", "albert.redmont@mail.com");
+        UserEntityWithID teammateUserE2 = new UserEntityWithID(2, null, "Michel", "Bertrand", "michel.bertrand@mail.com");
 
-        Object[] teammateUser1 = new Object[]{1, 2, 5, "Albert", "Redmont", "albert.redmont@mail.com"};
-        Object[] teammateUser2 = new Object[]{2, 2, 6, "Michel", "Bertrand", "michel.bertrand@mail.com"};
+        Object[] teammateUser1 = new Object[]{1, "Albert", "Redmont", "albert.redmont@mail.com"};
+        Object[] teammateUser2 = new Object[]{2, "Michel", "Bertrand", "michel.bertrand@mail.com"};
         teammatesEFromTeamOne = Arrays.asList(teammateUserE1, teammateUserE2);
         teammatesFromTeamOne = Arrays.asList(teammateUser1, teammateUser2);
     }
@@ -113,10 +113,10 @@ class TeammateServiceImplTest {
         given(teammateJpaRepository.findAllByTeam(1)).willReturn(teammatesFromTeamOne);
 
         //when
-        List<TeammateDetailsEntity> teammateDto = teammateService.findAllByTeam(1);
+        List<UserEntityWithID> userList = teammateService.findAllByTeam(1);
 
         //then
-        String returnedResponse = objectMapper.writeValueAsString(teammateDto);
+        String returnedResponse = objectMapper.writeValueAsString(userList);
         String expectedResponse = objectMapper.writeValueAsString(teammatesEFromTeamOne);
         assertEquals(returnedResponse,
                 expectedResponse);

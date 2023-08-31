@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import editIcon from "@/assets/images/Edit.png";
 import deleteIcon from "@/assets/images/Delete.png";
-import modalState from "@/features/shared/services/modalState";
-import {MODALMODE} from "../services/modalMode";
+import modalState from "@/features/shared/modal/services/modalState";
 import {useTeamStore} from "@/stores/teamStore";
+import {MODALMODE} from "@/features/shared/modal/services/modalMode";
 
 const teamStore = useTeamStore();
 
@@ -24,16 +24,19 @@ const onClickEditTeam = () => {
 };
 
 const onClickDeleteTeam = () => {
+  modalState.setTeamName(props.teamName);
   modalState.switchModalVisibility(true, MODALMODE.teamDelete);
 };
 </script>
 
 <template>
   <article
-    class="team-list-unit"
-    :class="{
-      'team-list-unit-selected': teamStore.isSameTeamId(props.id),
-    }">
+    :class="[
+      'team-list-unit',
+      {
+        'team-list-unit-selected': teamStore.isSameTeamId(props.id),
+      },
+    ]">
     <p>{{ props.teamName }}</p>
     <section class="delete-edit-icon">
       <button @click="onClickEditTeam">
@@ -56,12 +59,11 @@ const onClickDeleteTeam = () => {
   </article>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
 .team-list-unit {
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
-  gap: 0.5rem;
 
   width: 100%;
   padding-block: 0.5rem;

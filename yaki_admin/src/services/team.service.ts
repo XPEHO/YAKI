@@ -34,7 +34,7 @@ export class TeamService {
     return response;
   };
 
-  createTeam = async (cptId: number, teamName: string, customerId: number): Promise<TeamType> => {
+  createTeam = async (cptId: number | null, teamName: string, customerId: number): Promise<TeamType> => {
     const newTeam: TeamTypeOut = {captainsId: [cptId], teamName: teamName, customerId: customerId};
     const requestOptions = {
       method: "POST",
@@ -49,10 +49,16 @@ export class TeamService {
   };
 
   // might could use , customerId: number as parameter
-  updateTeam = async (teamId: number, teamName: string): Promise<TeamType> => {
+  updateTeam = async (
+    teamId: number,
+    cptId: number | null,
+    teamName: string | null,
+    customerId: number | null
+  ): Promise<TeamType> => {
+    const updatedTeam: TeamTypeOut = {captainsId: [cptId], teamName: teamName, customerId: customerId};
     const requestOptions = {
       method: "PUT",
-      body: JSON.stringify({teamName: teamName}),
+      body: JSON.stringify(updatedTeam),
       headers: authHeader(`${URL}/teams/${teamId}`),
     };
     const res = await fetch(`${URL}/teams/${teamId}`, requestOptions)

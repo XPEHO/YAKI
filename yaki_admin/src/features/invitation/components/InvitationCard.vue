@@ -6,7 +6,6 @@ import avatarIcon from "@/assets/images/avatar.png";
 import defaultButton from "@/features/shared/components/DefaultButton.vue";
 
 import {checkInvitationStatus, updateReactive} from "@/features/invitation/services/invitationService";
-//const teammateStore = useTeammateStore();
 
 const props = defineProps({
   user: {
@@ -28,15 +27,15 @@ const props = defineProps({
 });
 
 onMounted(() => {
-    updateReactive(settings, checkInvitationStatus(props.user, props.adminList, props.invitationStatusText));
+  updateReactive(settings, checkInvitationStatus(props.user, props.adminList, props.invitationStatusText));
 });
 
 const emit = defineEmits<{
-  invitUserToTeam: [fromRoute: string,userId: number]
-}>()
+  invitUserToTeam: [fromRoute: string, userId: number];
+}>();
 
 const emitterRedirect = () => {
-    emit("invitUserToTeam", props.fromRoute,props.user.id);
+  emit("invitUserToTeam", props.fromRoute, props.user.id);
 };
 
 //Setting reactive with card and button configuration
@@ -47,8 +46,6 @@ const settings = reactive({
   btnCSS: "button-class-test btn-bg-color-invite",
   cardCSS: "",
 });
-
-
 
 const invitBtnClick = async () => {
   if (!settings.isInvited) {

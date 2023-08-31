@@ -32,7 +32,7 @@ const props = defineProps({
     align-items: center;
   }
   p {
-    color: rgb(239, 237, 237);
+    color: $font-color-clear-gray;
   }
 }
 </style>
