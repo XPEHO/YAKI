@@ -30,4 +30,9 @@ public class UserController {
                                                     @RequestParam int idEnd) {
         return userService.findUserByIdRange(idStart, idEnd);
     }
+
+    @DeleteMapping("{id}")
+    public UserEntity deleteUser(@PathVariable int id) {
+        return userService.deleteById(id);
+    }
 }

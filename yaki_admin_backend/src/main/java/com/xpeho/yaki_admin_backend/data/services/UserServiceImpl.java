@@ -76,4 +76,18 @@ public class UserServiceImpl implements UserService {
         }
         return userWithIdList;
     }
+
+    @Override
+    public UserEntity deleteById(int id) {
+        Optional<UserModel> userModelOptional = userJpaRepository.findById(id);
+        if (userModelOptional.isPresent()) {
+            UserModel userModel = userModelOptional.get();
+            userJpaRepository.deleteById(id);
+            return new UserEntity(
+                    userModel.getLastName(),
+                    userModel.getFirstName(),
+                    userModel.getEmail(),
+                    userModel.getLogin());
+        } else throw new EntityNotFoundException("Entity User with id " + id + " not found");
+    }
 }

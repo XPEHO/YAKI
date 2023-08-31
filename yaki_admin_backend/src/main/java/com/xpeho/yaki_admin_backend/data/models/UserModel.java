@@ -42,6 +42,11 @@ public class UserModel implements UserDetails {
     @JoinTable(name = "customer_rights", joinColumns = @JoinColumn(name = "customer_rights_user_id"), inverseJoinColumns = @JoinColumn(name = "customer_rights_customer_id"))
     private List<CustomerModel> customers = new ArrayList<>();
 
+    //if the user is delete, the token will be deleted too
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL,orphanRemoval = true)
+    @JoinColumn(name = "verification_token_user_id", insertable = false, updatable = false)
+    private VerificationTokenModel verificationTokenModel;
+
     public UserModel(int userId, String lastName, String firstName, String email, String login, String password) {
         this.userId = userId;
         this.lastName = lastName;

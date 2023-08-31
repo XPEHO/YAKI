@@ -49,4 +49,19 @@ class UserServiceImplTest {
                 expectedResponse);
     }
 
+    @Test
+    void deleteByIdTest() throws Exception {
+        //given
+        given(userJpaRepository.findById(1)).willReturn(Optional.of(user1));
+
+        //when
+        UserEntity userDto = userService.deleteById(1);
+
+        //then
+        String returnedResponse = objectMapper.writeValueAsString(userDto);
+        String expectedResponse = objectMapper.writeValueAsString(userE1);
+        assertEquals(returnedResponse,
+                expectedResponse);
+    }
+
 }
