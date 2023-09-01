@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface TeammateJpaRepository extends JpaRepository<TeammateModel, Integer> {
     @Query("""
-            SELECT tm.userId, u.lastName, u.firstName , u.email
+            SELECT tm.userId, tm.id, u.lastName, u.firstName , u.email
             FROM TeammateModel tm 
             JOIN UserModel u ON tm.userId = u.userId
             WHERE tm.teamId = ?1 and tm.actif = true

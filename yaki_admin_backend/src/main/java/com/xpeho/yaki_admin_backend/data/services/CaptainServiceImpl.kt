@@ -91,6 +91,7 @@ class CaptainServiceImpl(private val captainJpaRepository: CaptainJpaRepository,
                     UserEntityWithID(
                         userWithDetails.id,
                         userWithDetails.captainId,
+                        null,
                         userWithDetails.lastName,
                         userWithDetails.firstName,
                         userWithDetails.email

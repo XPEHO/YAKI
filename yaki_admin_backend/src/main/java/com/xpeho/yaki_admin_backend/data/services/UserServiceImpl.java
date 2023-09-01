@@ -69,6 +69,7 @@ public class UserServiceImpl implements UserService {
             UserEntityWithID newUserWIthId = new UserEntityWithID(
                     user.getUserId(),
                     null,
+                    null,
                     user.getLastName(),
                     user.getFirstName(),
                     user.getEmail());
