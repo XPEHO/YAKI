@@ -7,11 +7,15 @@ import {useRoleStore} from "@/stores/roleStore";
 const modalState = reactive({
   isShowed: false as boolean,
   // for teammate to delete
-  UserFirstLastName: "" as string,
+  temmateName: "" as string,
   // for teams management
   mode: "" as MODALMODE,
   teamInputValue: "" as string,
   teamName: "" as string,
+
+  defaultButtonValue: "Select a captain" as string,
+  dropDownButtonText: "Select a captain" as string,
+  dropDownSelectedCaptainId: null as number | null,
 
   /**
    * Determine modal visibility :
@@ -46,7 +50,7 @@ const modalState = reactive({
   // get lastname and firstname of a user that might be deleted
   // invoked in setTeammateIDAndInformations
   setUserFirstLastName(information: string) {
-    this.UserFirstLastName = information;
+    this.temmateName = information;
   },
 
   /**
@@ -81,6 +85,14 @@ const modalState = reactive({
     const teammateStore = useTeammateStore();
     teammateStore.setIdOfTeammateToDelete(id);
     this.setUserFirstLastName(informations);
+  },
+
+  setDropDownButtonText(text: string) {
+    this.dropDownButtonText = text;
+  },
+
+  setDropDownSelectedCaptainId(id: number | null) {
+    this.dropDownSelectedCaptainId = id;
   },
 
   /**
@@ -121,9 +133,11 @@ const modalState = reactive({
 
   async createNewTeamWithOptionalCaptain() {
     const teamStore = useTeamStore();
-
     teamStore.createTeamOptionalAssignCaptain(this.teamInputValue, teamStore.getCaptainIdToBeAssign);
     this.refreshTeamListForCustomer();
+    //reset values
+    teamStore.setCaptainIdToBeAssign(null);
+    this.setTeamInputValue("");
   },
 
   async editTeamName() {
@@ -135,6 +149,9 @@ const modalState = reactive({
       null
     );
     this.refreshTeamList();
+    //reset value
+    teamStore.setCaptainIdToBeAssign(null);
+    this.setTeamInputValue("");
   },
 
   async deleteTeam() {
@@ -149,7 +166,7 @@ const modalState = reactive({
 
   async deleteUserFromTeam() {
     const teammateStore = useTeammateStore();
-    await teammateStore.deleteTeammateFromTeam(teammateStore.getTeammateToDelete);
+    await teammateStore.deleteTeammateFromTeam(teammateStore.getIdOfTeammateToDelete);
     this.refreshTeammatesList();
   },
 

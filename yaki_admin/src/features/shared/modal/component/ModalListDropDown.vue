@@ -2,7 +2,8 @@
 import {useCaptainStore} from "@/stores/captainStore";
 import {useSelectedRoleStore} from "@/stores/selectedRole";
 import {useTeamStore} from "@/stores/teamStore";
-import {onBeforeMount, reactive, ref} from "vue";
+import {onBeforeMount, reactive, ref, watch} from "vue";
+import modalState from "../services/modalState";
 
 const captainStore = useCaptainStore();
 const selectedRoleStore = useSelectedRoleStore();
@@ -10,18 +11,6 @@ const teamStore = useTeamStore();
 
 onBeforeMount(async () => {
   await captainStore.setAllCaptainsByCustomerId(selectedRoleStore.getCustomerIdSelected);
-});
-
-const buttonText = ref("Captain selection");
-
-interface SelectedCaptain {
-  id: number | null;
-  informations: string;
-}
-
-const selectedCaptain: SelectedCaptain = reactive({
-  id: null,
-  informations: "",
 });
 
 /**
@@ -32,27 +21,23 @@ const selectedCaptain: SelectedCaptain = reactive({
  * @param informations lastname and firstname concatenatio
  */
 const getSelectedCaptain = (captainId: number, informations: string) => {
-  if (buttonText.value !== selectedCaptain.informations) {
-    selectedCaptain.id = captainId;
-    selectedCaptain.informations = informations;
-    buttonText.value = `${selectedCaptain.informations}`;
-
+  if (modalState.dropDownButtonText !== informations) {
     teamStore.setCaptainIdToBeAssign(captainId);
+    modalState.setDropDownButtonText(informations);
   } else {
-    selectedCaptain.id = 0;
-    selectedCaptain.informations = "";
-    buttonText.value = "Captain selection";
+    teamStore.setCaptainIdToBeAssign(null);
+    modalState.setDropDownButtonText(modalState.defaultButtonValue);
 
     teamStore.setCaptainIdToBeAssign(null);
   }
 };
 
-// display the checkIcon for the selected captain
+// checkIcon display for the selected captain, if there is one selected.
 const isCaptainSelected = (id: number): boolean => {
-  return selectedCaptain.id === id;
+  return teamStore.getCaptainIdToBeAssign === id;
 };
 
-// check if the captain list exist and is empty to replace the captain list with a message.
+// check if the captain list exist and if the list is empty replace the captain list with a message.
 const isEmptyCaptainList = (): boolean => {
   return captainStore.getCaptainList !== undefined && captainStore.getCaptainList.length === 0;
 };
@@ -62,7 +47,7 @@ const isEmptyCaptainList = (): boolean => {
   <section class="body-drop-down">
     <section class="wrapper-drop-down">
       <div class="button-drop-down shared-setting">
-        <p>{{ buttonText }}</p>
+        <p>{{ modalState.dropDownButtonText }}</p>
         <div class="arrow-down"></div>
       </div>
       <article class="drop-down-container">

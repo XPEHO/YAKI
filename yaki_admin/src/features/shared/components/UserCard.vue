@@ -23,7 +23,7 @@ const props = defineProps({
 });
 
 const UserToBeRemoved = () => {
-  modalState.setTeammateIDAndInformations(props.user.id, `${props.user.firstname} ${props.user.lastname}`);
+  modalState.setTeammateIDAndInformations(props.user.teammateId, `${props.user.firstname} ${props.user.lastname}`);
   modalState.switchModalVisibility(true, MODALMODE.userDelete);
 };
 </script>

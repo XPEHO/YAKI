@@ -28,15 +28,20 @@ public class TeammateServiceImpl implements TeammateService {
 
     public List<UserEntityWithID> findAllByTeam(int teamIdF) {
         List<Object[]> results = teammateJpaRepository.findAllByTeam(teamIdF);
+
         List<UserEntityWithID> userEntityWithIDList = new ArrayList<>();
         for (Object[] result : results) {
             int id = (int) result[0];
-            String lastname = result[1].toString();
-            String firstname = result[2].toString();
-            String email = result[3].toString();
+            int teammateId = (Integer) result[1];
+            String lastname = result[2].toString();
+            String firstname = result[3].toString();
+            String email = result[4].toString();
 
-            UserEntityWithID userEntityWithID = new UserEntityWithID(id, null, lastname, firstname, email);
+            UserEntityWithID userEntityWithID = new UserEntityWithID(id, null,teammateId, lastname, firstname, email);
             userEntityWithIDList.add(userEntityWithID);
+        }
+        for(UserEntityWithID element: userEntityWithIDList) {
+            System.out.println(element.lastname());
         }
         return userEntityWithIDList;
     }

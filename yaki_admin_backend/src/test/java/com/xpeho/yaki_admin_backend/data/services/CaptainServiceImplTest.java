@@ -160,20 +160,20 @@ class CaptainServiceImplTest {
     public void testGetAllCaptainByCustomerId() {
         //given
         int customerId = 1;
-        List<UserWithDetailsDto> userModels = new ArrayList<>();
-        userModels.add(new UserWithDetailsDto(1, 1, "Chette", "Barbie", "barbie@email.com"));
-        userModels.add(new UserWithDetailsDto(2,2, "Mattel", "Ken", "ken@email.com"));
+        List<UserWithDetailsDto> userWithDetailsDtos = new ArrayList<>();
+        userWithDetailsDtos.add(new UserWithDetailsDto(1, 1, "Chette", "Barbie", "barbie@email.com"));
+        userWithDetailsDtos.add(new UserWithDetailsDto(2,2, "Mattel", "Ken", "ken@email.com"));
 
         //when
-        when(captainJpaRepository.findAllCaptainByCustomerId(customerId)).thenReturn(userModels);
+        when(captainJpaRepository.findAllCaptainByCustomerId(customerId)).thenReturn(userWithDetailsDtos);
 
-        List<UserEntityWithID> expectedCaptainEntities = new ArrayList<>();
-        expectedCaptainEntities.add(new UserEntityWithID(1, 1,"Chette", "Barbie", "barbie@email.com"));
-        expectedCaptainEntities.add(new UserEntityWithID(2, 2,"Mattel", "Ken", "ken@email.com"));
+        List<UserEntityWithID> expecteduserEntityWithIDS = new ArrayList<>();
+        expecteduserEntityWithIDS.add(new UserEntityWithID(1, 1,null,"Chette", "Barbie", "barbie@email.com"));
+        expecteduserEntityWithIDS.add(new UserEntityWithID(2, 2,null,"Mattel", "Ken", "ken@email.com"));
 
         List<UserEntityWithID> actualCaptainEntities = captainService.getAllCaptainByCustomerId(customerId);
 
         //then
-        assertEquals(expectedCaptainEntities, actualCaptainEntities);
+        assertEquals(expecteduserEntityWithIDS, actualCaptainEntities);
     }
 }

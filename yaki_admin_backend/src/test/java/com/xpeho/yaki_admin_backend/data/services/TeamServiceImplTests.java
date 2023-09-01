@@ -167,20 +167,17 @@ class TeamServiceImplTests {
         int customerId = 1;
 
         // Create a mock UserModel
-        UserModel user = new UserModel();
-        user.setLastName("Last");
-        user.setFirstName("First");
+        UserModel user = new UserModel(1 ,"Hautmont", "Robert", "email", "login", "pw");
+        UserModel user2 = new UserModel(2 ,"Basmont", "Rubert", "email", "login", "pw");
 
         // Create valid CaptainModel instances with associated UserModel
         List<CaptainModel> captains = new ArrayList<>();
-        CaptainModel captain1 = new CaptainModel();
-        captain1.setCaptainId(1);
+        CaptainModel captain1 = new CaptainModel(1,1,1,1);
         captain1.setUser(user);  // Associate the mock UserModel
         captains.add(captain1);
 
-        CaptainModel captain2 = new CaptainModel();
-        captain2.setCaptainId(2);
-        captain2.setUser(user);  // Associate the mock UserModel
+        CaptainModel captain2 = new CaptainModel(2,2,2,2);
+        captain2.setUser(user2);  // Associate the mock UserModel
         captains.add(captain2);
 
         List<TeamModel> teamModels = new ArrayList<>();
@@ -191,8 +188,8 @@ class TeamServiceImplTests {
         // Create expectedTeamEntities with CaptainEntityWithDetails instances
         List<TeamEntityWithCaptainsDetails> expectedTeamEntities = new ArrayList<>();
         List<CaptainEntityWithDetails> expectedCaptains = new ArrayList<>();
-        expectedCaptains.add(new CaptainEntityWithDetails(1, "Last", "First"));
-        expectedCaptains.add(new CaptainEntityWithDetails(2, "Last", "First"));
+        expectedCaptains.add(new CaptainEntityWithDetails(1, "Hautmont", "Robert"));
+        expectedCaptains.add(new CaptainEntityWithDetails(2, "Basmont", "Rubert"));
         expectedTeamEntities.add(new TeamEntityWithCaptainsDetails(1, "Team 1", 1, expectedCaptains));
         expectedTeamEntities.add(new TeamEntityWithCaptainsDetails(2, "Team 2", 1, expectedCaptains));
 

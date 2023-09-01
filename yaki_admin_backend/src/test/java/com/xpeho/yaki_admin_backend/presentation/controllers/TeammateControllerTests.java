@@ -35,8 +35,8 @@ class TeammateControllerTests {
     private final TeammateEntity teammate2 = new TeammateEntity(2, 1, 8);
     private final TeammateEntity teammate3 = new TeammateEntity(3, 2, 6);
     private final List<TeammateEntity> teammates = Arrays.asList(teammate1, teammate2, teammate3);
-    private final UserEntityWithID teammate4 = new UserEntityWithID(4, 1,"Dupond", "Jack", "dupond.jack@mail.com");
-    private final UserEntityWithID teammate5 = new UserEntityWithID(4, 2,"Dugrond", "Jean", "dugrond.jean@mail.com");
+    private final UserEntityWithID teammate4 = new UserEntityWithID(4, 1,1,"Dupond", "Jack", "dupond.jack@mail.com");
+    private final UserEntityWithID teammate5 = new UserEntityWithID(4, 2,2,"Dugrond", "Jean", "dugrond.jean@mail.com");
     private final List<UserEntityWithID> teammatesFromTeamOne = Arrays.asList(teammate4, teammate5);
     private MockMvc mvc;
     @Mock
