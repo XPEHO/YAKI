@@ -8,7 +8,7 @@ import {MODALMODE} from "@/features/shared/modal/services/modalMode";
 
 import {useTeamStore} from "@/stores/teamStore.js";
 import {useRoleStore} from "@/stores/roleStore";
-import {selectTeamAndFetchTeammates} from "@/features/captain/services/teamList";
+import {selectTeamAndFetchTeammates} from "@/features/captain/services/teamList.service";
 
 import vector from "@/assets/images/Vector.png";
 import plusIcon from "@/assets/images/plus.png";
@@ -20,7 +20,10 @@ const roleStore = useRoleStore();
 onBeforeMount(async () => {
   await teamStore.setTeamListOfACaptain(roleStore.getCaptainsId);
   // automaticaly select first team right after team fetch, and save name
-  selectTeamAndFetchTeammates(teamStore.getTeamList[0].id);
+
+  if (teamStore.getTeamList.length > 0) {
+    selectTeamAndFetchTeammates(teamStore.getTeamList[0].id);
+  }
 });
 
 const onClickSelectTeam = (id: number) => {
@@ -53,3 +56,4 @@ const onClickAddTeam = () => {
       @click.prevent="() => onClickSelectTeam(team.id)" />
   </section>
 </template>
+@/features/captain/services/teamList.service

@@ -7,7 +7,7 @@ const changeTitle = () => {
     case MODALMODE.teamDelete:
       return modalState.teamName;
     case MODALMODE.userDelete:
-      return modalState.UserFirstLastName;
+      return modalState.temmateName;
   }
 };
 

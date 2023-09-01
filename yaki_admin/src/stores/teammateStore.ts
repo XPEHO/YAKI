@@ -5,14 +5,14 @@ import {defineStore} from "pinia";
 export const useTeammateStore = defineStore("teammateStore", {
   state: () => ({
     teammates: [] as UserWithIdType[],
-    teammateToDelete: 0 as number,
+    IdOfTeammateToDelete: 0 as number,
   }),
   getters: {
     getTeammateList(): UserWithIdType[] {
       return this.teammates;
     },
-    getTeammateToDelete(): number {
-      return this.teammateToDelete;
+    getIdOfTeammateToDelete(): number {
+      return this.IdOfTeammateToDelete;
     },
   },
 
@@ -26,7 +26,7 @@ export const useTeammateStore = defineStore("teammateStore", {
     },
     // get the teamMateId to delete
     setIdOfTeammateToDelete(id: number) {
-      this.teammateToDelete = id;
+      this.IdOfTeammateToDelete = id;
     },
   },
 });
