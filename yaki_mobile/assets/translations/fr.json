@@ -10,7 +10,7 @@
   "forgotPassword": "Mot de passe oublié ?",
   "headerTitleDecla": "Déclaration",
   "headerHintDecla": "Quel est votre statut pour la journée ?",
-  "headerHintDeclaMorning": "quel est votre statut pout la matinée ?",
+  "headerHintDeclaMorning": "quel est votre statut pour la matinée ?",
   "headerHintDeclaAfternoon": "quel est votre statut pour l'aprés-midi ?",
   "remote": "Distanciel",
   "onSite": "Sur site",
@@ -24,6 +24,7 @@
   "vacationDateEnd": "Au (Exclus)",
   "datePopupTitle": "Date d'absence",
   "datePopupHint": "Sélectionner les dates de vos absences",
+
   "statusOtherDay": "Autre statut pour la journée",
   "statusRemoteMorning": "Vous êtes en distanciel ce matin",
   "statusOnSiteMorning": "Vous êtes sur site ce matin",
@@ -33,6 +34,7 @@
   "statusOnSiteAfternoon": "Vous êtes sur site cette après-midi",
   "statusVacationAfternoon": "Vous êtes en vacances jusque...",
   "statusOtherAfternoon": "Autre statut pour cette après-midi",
+
   "statusButton": "Changer",
   "statusError": "Quelque chose ne c'est pas passé comme prévu, veuillez recommencer..",
   "captainTitle": "Capitaine",
@@ -47,6 +49,7 @@
   "inputLabelFirstName": "Prénom",
   "createAccountInvitFormule": "Pas encore de compte ?",
   "createAccountLink": "Vous enregistrer",
+
   "registrationPageTitle": "Création de compte",
   "registrationInputFirstnameLabel": "Prénom :",
   "registrationInputLastnameLabel": "Nom :",
@@ -65,5 +68,11 @@
   "registrationSnackSuccess": "Création de compte réussie. Veuillez vérifier vos emails",
   "registrationSnackError": "Erreur lors de l'inscription, Veuillez réessayer",
   "registrationSnackEmailError": "Cet email est déjà utilisé",
-  "registrationCancelButton": "Annuler"
+  "registrationCancelButton": "Annuler",
+
+  "userDefaultWelcome": "Bienvenue sur YAKI !",
+  "userDefaultThanks": "Merci d'utiliser l'application",
+  "userDefaultTeamPart": "Vous n'êtes pas encore dans une ",
+  "userDefaultTeam": "Équipe",
+  "userDefaultContact": "Veuillez contacter votre Capitaine"
 }

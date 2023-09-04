@@ -47,3 +47,19 @@ TextStyle registratonSnackTextStyle({required Color textColor}) {
     color: textColor,
   );
 }
+
+TextStyle textStyleUserRedirectStyle() {
+  return const TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.bold,
+    color: Color.fromARGB(255, 46, 46, 45),
+  );
+}
+
+TextStyle textStyleUserRedirectStyleTeam() {
+  return const TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.bold,
+    color: Color.fromARGB(255, 42, 43, 42),
+  );
+}

@@ -35,7 +35,7 @@
   "statusOtherAfternoon": "Other status for this afternoon",
   "statusButton": "Change",
   "statusError": "Something went wrong, please retry...",
-  
+
   "captainTitle": "Captain",
   "captainHeaderTitle": "Captain",
   "inputCaptain": "Name, Status...",
@@ -66,5 +66,11 @@
   "registrationSnackSuccess": "Account creation sucess. Please check yours emails",
   "registrationSnackError": "Oups, something went wrong, try again later",
   "registrationSnackEmailError": "eamil already used",
-  "registrationCancelButton": "Cancel"
+  "registrationCancelButton": "Cancel",
+
+  "userDefaultWelcome": "Welcome to YAKI !",
+  "userDefaultThanks": "Thanks for joining our application",
+  "userDefaultTeamPart": "You are not part of a",
+  "userDefaultTeam": "TEAM",
+  "userDefaultContact": "Please contact your Captain."
 }

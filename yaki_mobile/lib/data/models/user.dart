@@ -5,7 +5,7 @@ part 'user.g.dart';
 @JsonSerializable()
 class User {
   int? captainId;
-  int? teamMateId;
+  int? teammateId;
   int? teamId;
   int? userId;
   String? lastName;
@@ -15,7 +15,7 @@ class User {
 
   User({
     required this.captainId,
-    required this.teamMateId,
+    required this.teammateId,
     required this.teamId,
     required this.userId,
     required this.lastName,
