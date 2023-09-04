@@ -1,12 +1,12 @@
-import {UserRepository} from "./user.repository";
-import {authService} from "./authentication.service";
+import { UserRepository } from "./user.repository";
+import { authService } from "./authentication.service";
 import YakiUtils from "../../utils/yakiUtils";
 
-import {TeammateDtoOut} from "../teammate/teammate.dtoOut";
-import {CaptainDtoOut} from "../captain/captain.dtoOut";
-import {UserToRegisterIn} from "./toRegister.dtoIn";
-import {UserToRegisterOut} from "./toRegister.dtoOut";
-import {RegisterResponse} from "./registerResponse";
+import { TeammateDtoOut } from "../teammate/teammate.dtoOut";
+import { CaptainDtoOut } from "../captain/captain.dtoOut";
+import { UserToRegisterIn } from "./toRegister.dtoIn";
+import { UserToRegisterOut } from "./toRegister.dtoOut";
+import { RegisterResponse } from "./registerResponse";
 import EmailAlreadyExistsError from "../../errors/EmailAlreadyExistError";
 import {LoginDtoIn} from "./login.dtoIn";
 
@@ -71,7 +71,9 @@ export class UserService {
     if (YakiUtils.isSameObjStructure(user, reference) === false) {
       throw new TypeError("Incorrect data");
     }
-    const isSomesAttributesEmpty = Object.values(user).some((value) => !value && value.trim() === "");
+    const isSomesAttributesEmpty = Object.values(user).some(
+      (value) => !value && value.trim() === ""
+    );
     if (isSomesAttributesEmpty === true) {
       throw new Error("Missing registration information(s)");
     }
@@ -84,7 +86,9 @@ export class UserService {
       user.password.trim()
     );
     try {
-      const springResponse = await this.userRepository.registerUser(userToRegister);
+      const springResponse = await this.userRepository.registerUser(
+        userToRegister
+      );
       if (springResponse.id !== 0 && springResponse.id !== null) {
         responseAfterRegister.isRegistered = true;
       }
@@ -98,4 +102,24 @@ export class UserService {
       }
     }
   };
+
+  /**
+   * Reset a user's password
+   * @param email The email of the user whose password is being reset
+   * @param newPassword The new password to set for the user
+   * @returns True if the password was reset successfully, false otherwise
+   */
+  resetPassword = async (
+    email: string,
+    newPassword: string
+  ): Promise<boolean> => {
+    // Reset password
+    const success = await this.userRepository.resetPassword(email, newPassword);
+    if (!success) {
+      throw new Error("Failed to reset password");
+    }
+    return true;
+  };
+
+
 }
