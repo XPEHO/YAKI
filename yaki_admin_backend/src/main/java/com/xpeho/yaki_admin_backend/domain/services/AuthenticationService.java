@@ -12,4 +12,6 @@ public interface AuthenticationService {
     AuthenticationResponseEntity authenticate(AuthenticationRequestEntity request);
 
     String confirmRegister(String token);
+
+    String forgotPassword(String email);
 }

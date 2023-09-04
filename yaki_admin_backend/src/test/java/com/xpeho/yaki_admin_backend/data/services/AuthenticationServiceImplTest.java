@@ -44,13 +44,15 @@ public class AuthenticationServiceImplTest {
     private CaptainServiceImpl captainService;
     @Mock
     private CustomerServiceImpl customerService;
+    @Mock
+    private UserServiceImpl userServiceImpl;
 
     @BeforeEach
     void setUp() {
         repository = mock(UserJpaRepository.class);
 
         authenticationServiceImpl = new AuthenticationServiceImpl(repository, jwtService, authenticationManager,
-                passwordEncoder,verificationTokenService,eventPublisher,captainService,customerService);
+                passwordEncoder,verificationTokenService,eventPublisher,captainService,customerService, userServiceImpl );
     }
 
     @Test
@@ -106,4 +108,5 @@ public class AuthenticationServiceImplTest {
         assertEquals(jwtToken, response.token());
         assertEquals(user.getUserId(), response.id());
     }
+
 }

@@ -16,4 +16,7 @@ public interface UserService {
     List<UserEntityWithID> findUserByIdRange(int idStart, int idEnd);
 
     UserEntity deleteById(int id);
+
+
+    String changePassword(String email, String oldPassword, String newPassword);
 }

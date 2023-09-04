@@ -1,14 +1,16 @@
 package com.xpeho.yaki_admin_backend.data.services;
 
-import com.xpeho.yaki_admin_backend.data.models.TeamModel;
 import com.xpeho.yaki_admin_backend.data.models.UserModel;
 import com.xpeho.yaki_admin_backend.data.sources.UserJpaRepository;
-import com.xpeho.yaki_admin_backend.domain.entities.TeamEntity;
+import com.xpeho.yaki_admin_backend.domain.entities.AuthenticationRequestEntity;
 import com.xpeho.yaki_admin_backend.domain.entities.UserEntity;
 import com.xpeho.yaki_admin_backend.domain.entities.UserEntityIn;
 import com.xpeho.yaki_admin_backend.domain.entities.UserEntityWithID;
 import com.xpeho.yaki_admin_backend.domain.services.UserService;
+import com.xpeho.yaki_admin_backend.events.OnResetPasswordCompletEvent;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +23,19 @@ public class UserServiceImpl implements UserService {
 
     final UserJpaRepository userJpaRepository;
 
-    public UserServiceImpl(UserJpaRepository userJpaRepository) {
+    final PasswordServiceImpl passwordService;
+
+    private final ApplicationEventPublisher eventPublisher;
+
+    private final AuthenticationServiceImpl authService;
+
+    //lazy to avoid circular dependency
+    public UserServiceImpl(UserJpaRepository userJpaRepository, PasswordServiceImpl passwordService, ApplicationEventPublisher eventPublisher,@Lazy AuthenticationServiceImpl authService) {
+
         this.userJpaRepository = userJpaRepository;
+        this.passwordService = passwordService;
+        this.eventPublisher = eventPublisher;
+        this.authService = authService;
     }
 
     @Override
@@ -91,4 +104,33 @@ public class UserServiceImpl implements UserService {
                     userModel.getLogin());
         } else throw new EntityNotFoundException("Entity User with id " + id + " not found");
     }
+
+    @Override
+    public String changePassword(String email, String oldPassword, String newPassword) {
+        try{
+            authService.authenticate(new AuthenticationRequestEntity(email, oldPassword));
+        }
+        catch (Exception e){
+            return "Email or Old password is not correct";
+        }
+        Optional<UserModel> user = userJpaRepository.findByLogin(email);
+        if(user.isEmpty()) return "User not found";
+        BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
+        String encodedPassword = bcrypt.encode(newPassword);
+        user.get().setPassword(encodedPassword);
+        userJpaRepository.save(user.get());
+        return "Password changed successfully";
+    }
+
+    public void resetPassword(UserModel user) {
+        BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
+        String temporaryPassword = passwordService.generatePassword(12);
+        String encodedPassword = bcrypt.encode(temporaryPassword);
+        user.setPassword(encodedPassword);
+        userJpaRepository.save(user);
+        eventPublisher.publishEvent(new OnResetPasswordCompletEvent(user, temporaryPassword));
+    }
+
+    //I used common text from apache because Passay present a security hotspot.
+
 }

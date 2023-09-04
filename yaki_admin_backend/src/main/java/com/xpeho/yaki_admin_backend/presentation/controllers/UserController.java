@@ -35,4 +35,16 @@ public class UserController {
     public UserEntity deleteUser(@PathVariable int id) {
         return userService.deleteById(id);
     }
+
+    //route avalaible on the mail to reset your password
+    @GetMapping("/changePassword")
+    public String showChangePasswordPage(@RequestParam String email,
+                                         @RequestParam String oldPassword,
+                                         @RequestParam String newPassword) {
+        return userService.changePassword(email, oldPassword, newPassword);
+    }
+
+    //route when the form to change your password is submitted
+
+
 }
