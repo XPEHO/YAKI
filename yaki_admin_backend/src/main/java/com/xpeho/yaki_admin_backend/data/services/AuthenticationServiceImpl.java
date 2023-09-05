@@ -14,6 +14,7 @@ import com.xpeho.yaki_admin_backend.events.OnRegistrationCompleteEvent;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -76,12 +77,16 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public AuthenticationResponseEntity authenticate(AuthenticationRequestEntity request) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.login(),
-                        request.password()
-                )
-        );
+        try{
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            request.login(),
+                            request.password()
+                    )
+            );
+        }catch (Exception e){
+            throw new BadCredentialsException("bad credentials");
+        }
         UserModel user = repository.findByLogin(request.login())
                 .orElseThrow();
         if(user.isEnabled() == false){
@@ -117,7 +122,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         if(!user.isPresent()){
             throw new EntityNotFoundException("no user found with this email");
         }
-        userService.resetPassword(user.get());
+        userService.resetPassword(user.get(),this.passwordEncoder);
 
         //send email
 

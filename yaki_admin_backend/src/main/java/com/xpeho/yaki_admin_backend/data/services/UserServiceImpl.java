@@ -2,7 +2,6 @@ package com.xpeho.yaki_admin_backend.data.services;
 
 import com.xpeho.yaki_admin_backend.data.models.UserModel;
 import com.xpeho.yaki_admin_backend.data.sources.UserJpaRepository;
-import com.xpeho.yaki_admin_backend.domain.entities.AuthenticationRequestEntity;
 import com.xpeho.yaki_admin_backend.domain.entities.UserEntity;
 import com.xpeho.yaki_admin_backend.domain.entities.UserEntityIn;
 import com.xpeho.yaki_admin_backend.domain.entities.UserEntityWithID;
@@ -10,10 +9,14 @@ import com.xpeho.yaki_admin_backend.domain.services.UserService;
 import com.xpeho.yaki_admin_backend.events.OnResetPasswordCompletEvent;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.context.annotation.Lazy;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.rmi.UnexpectedException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -27,17 +30,24 @@ public class UserServiceImpl implements UserService {
 
     private final ApplicationEventPublisher eventPublisher;
 
-    private final AuthenticationServiceImpl authService;
+    private final AuthenticationManager authManager;
+
+    private final PasswordEncoder passwordEncoder;
 
     //lazy to avoid circular dependency
-    public UserServiceImpl(UserJpaRepository userJpaRepository, PasswordServiceImpl passwordService, ApplicationEventPublisher eventPublisher,@Lazy AuthenticationServiceImpl authService) {
-
+    public UserServiceImpl(UserJpaRepository userJpaRepository,
+                           PasswordServiceImpl passwordService,
+                           ApplicationEventPublisher eventPublisher,
+                           AuthenticationManager authenticationManager,
+                           PasswordEncoder passwordEncoder) {
         this.userJpaRepository = userJpaRepository;
         this.passwordService = passwordService;
         this.eventPublisher = eventPublisher;
-        this.authService = authService;
+        this.authManager = authenticationManager;
+        this.passwordEncoder = passwordEncoder;
     }
 
+    //to remove use register instead
     @Override
     public UserEntity save(UserEntityIn user) {
 
@@ -106,26 +116,26 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String changePassword(String email, String oldPassword, String newPassword) {
+    public void changePassword(int id, String oldPassword, String newPassword) {
+        Optional<UserModel> user = userJpaRepository.findById(id);
+        if(user.isEmpty()){
+            //the user should not be log in as it doesn't exist, or the id received by the front is wrong
+                throw new EntityNotFoundException("Your account is unknown");
+        }
         try{
-            authService.authenticate(new AuthenticationRequestEntity(email, oldPassword));
+            authManager.authenticate(new UsernamePasswordAuthenticationToken(user.get().getEmail(), oldPassword));
         }
         catch (Exception e){
-            return "Email or Old password is not correct";
+            throw new BadCredentialsException("Wrong password");
         }
-        Optional<UserModel> user = userJpaRepository.findByLogin(email);
-        if(user.isEmpty()) return "User not found";
-        BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
-        String encodedPassword = bcrypt.encode(newPassword);
+        String encodedPassword = passwordEncoder.encode(newPassword);
         user.get().setPassword(encodedPassword);
         userJpaRepository.save(user.get());
-        return "Password changed successfully";
     }
 
-    public void resetPassword(UserModel user) {
-        BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
+    public void resetPassword(UserModel user, PasswordEncoder passwordEncoder) {
         String temporaryPassword = passwordService.generatePassword(12);
-        String encodedPassword = bcrypt.encode(temporaryPassword);
+        String encodedPassword = passwordEncoder.encode(temporaryPassword);
         user.setPassword(encodedPassword);
         userJpaRepository.save(user);
         eventPublisher.publishEvent(new OnResetPasswordCompletEvent(user, temporaryPassword));

@@ -37,11 +37,11 @@ public class UserController {
     }
 
     //route avalaible on the mail to reset your password
-    @GetMapping("/changePassword")
-    public String showChangePasswordPage(@RequestParam String email,
+    @PutMapping("/changePassword")
+    public void showChangePasswordPage(@RequestParam int id,
                                          @RequestParam String oldPassword,
                                          @RequestParam String newPassword) {
-        return userService.changePassword(email, oldPassword, newPassword);
+        userService.changePassword(id, oldPassword, newPassword);
     }
 
     //route when the form to change your password is submitted

@@ -5,6 +5,7 @@ import com.xpeho.yaki_admin_backend.domain.entities.UserEntity;
 import com.xpeho.yaki_admin_backend.domain.entities.UserEntityIn;
 import com.xpeho.yaki_admin_backend.domain.entities.UserEntityWithID;
 
+import java.rmi.UnexpectedException;
 import java.util.List;
 
 public interface UserService {
@@ -17,6 +18,5 @@ public interface UserService {
 
     UserEntity deleteById(int id);
 
-
-    String changePassword(String email, String oldPassword, String newPassword);
+    void changePassword(int id, String oldPassword, String newPassword);
 }

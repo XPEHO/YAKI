@@ -9,12 +9,13 @@ import java.util.stream.Collectors;
 
 @Service
 public class PasswordServiceImpl {
+
     public String generatePassword(int length) {
         String pwString = generateRandomSpecialCharacters(2)
                 .concat(generateRandomNumbers(2))
                 .concat(generateRandomAlphabet(2, true))
-                .concat(generateRandomAlphabet(2, false))
-                .concat(generateRandomCharacters(2));
+                .concat(generateRandomAlphabet(length-6, false));
+
         List<Character> pwChars = pwString.chars()
                 .mapToObj(data -> (char) data)
                 .collect(Collectors.toList());
@@ -37,9 +38,6 @@ public class PasswordServiceImpl {
     }
     public String generateRandomAlphabet(int length, boolean upperCase) {
         return generateCharactersInRange(length, upperCase ? 65 : 97, upperCase ? 90 : 122);
-    }
-    public String generateRandomCharacters(int length) {
-        return generateCharactersInRange(length, 33, 126);
     }
 
 }
