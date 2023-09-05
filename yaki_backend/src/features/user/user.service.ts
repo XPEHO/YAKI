@@ -111,10 +111,9 @@ export class UserService {
    */
   resetPassword = async (
     email: string,
-    newPassword: string
   ): Promise<boolean> => {
     // Reset password
-    const success = await this.userRepository.resetPassword(email, newPassword);
+    const success = await this.userRepository.resetPassword(email);
     if (!success) {
       throw new Error("Failed to reset password");
     }

@@ -33,18 +33,4 @@ export class UserController {
       }
     }
   };
-
-  resetPassword = async (req: Request, res: Response) => {
-    try {
-      const { email, newPassword } = req.body;
-      const success = await this.service.resetPassword(email, newPassword);
-      if (success) {
-        res.status(200).json({ message: "Password reset successful" });
-      } else {
-        res.status(400).json({ message: "Failed to reset password" });
-      }
-    } catch (error: any) {
-      res.status(400).json({ message: error.message });
-    }
-  };
 }
