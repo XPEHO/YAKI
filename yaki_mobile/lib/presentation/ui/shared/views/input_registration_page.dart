@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 
 class InputRegistration extends StatefulWidget {
+  final TextInputAction textInputAction;
   final TextEditingController controller;
   final String label;
   final bool isShown;
   final String? Function(String?) validatorFunction;
-  final String Function(String) textCapitalization;
+  final void Function(String)? onChange;
 
   const InputRegistration({
     super.key,
+    required this.textInputAction,
     required this.controller,
     required this.isShown,
     required this.label,
     required this.validatorFunction,
-    required this.textCapitalization,
+    this.onChange,
   });
 
   @override
@@ -34,15 +36,11 @@ class _InputRegistrationState extends State<InputRegistration> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 15),
       child: TextFormField(
-        onChanged: (value) {
-          widget.controller.value = TextEditingValue(
-            text: widget.textCapitalization(value),
-            selection: widget.controller.selection,
-          );
-        },
-        obscureText: _passwordVisible,
+        textInputAction: widget.textInputAction,
         controller: widget.controller,
         validator: widget.validatorFunction,
+        onChanged: widget.onChange,
+        obscureText: _passwordVisible,
         cursorColor: const Color.fromARGB(64, 91, 90, 90),
         // Decoration
         decoration: InputDecoration(

@@ -8,6 +8,7 @@ import 'package:yaki/presentation/ui/declaration/declaration.dart';
 import 'package:yaki/presentation/ui/declaration/afternoon_declaration.dart';
 import 'package:yaki/presentation/ui/declaration/morning_declaration.dart';
 import 'package:yaki/presentation/ui/default/user_default_redirection.dart';
+import 'package:yaki/presentation/ui/password/change_password.dart';
 import 'package:yaki/presentation/ui/profile/profile.dart';
 import 'package:yaki/presentation/ui/registration/registration.dart';
 import 'package:yaki/presentation/ui/status/status_recap_halfday.dart';
@@ -132,6 +133,17 @@ final goRouterProvider = Provider<GoRouter>(
               redirect: (BuildContext context, GoRouterState state) async {
                 if (await SharedPref.isTokenPresent()) {
                   return '/userDefaultRedirection';
+                } else {
+                  return '/';
+                }
+              },
+            ),
+            GoRoute(
+              path: 'changePassword',
+              builder: (context, state) => const ChangePassword(),
+              redirect: (BuildContext context, GoRouterState state) async {
+                if (await SharedPref.isTokenPresent()) {
+                  return '/changePassword';
                 } else {
                   return '/';
                 }

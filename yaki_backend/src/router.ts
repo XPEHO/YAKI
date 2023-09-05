@@ -10,6 +10,9 @@ import {TeamRepository} from "./features/team/team.repository";
 import {TeamService} from "./features/team/team.service";
 import {TeammateService} from "./features/teammate/teammate.service";
 import {limiter, signInLimiter} from "./middleware/rateLimiter";
+import {PasswordRepository} from "./features/password/password.repository";
+import {PasswordService} from "./features/password/password.service";
+import {PasswordController} from "./features/password/password.controller";
 
 export const router = express.Router();
 
@@ -27,7 +30,7 @@ const userRepository = new UserRepository();
 const userService = new UserService(userRepository);
 const userController = new UserController(userService);
 
-router.post("/login", signInLimiter,(req, res) =>
+router.post("/login", signInLimiter, (req, res) =>
   /* #swagger.parameters['Login'] = {
                 in: 'body',
                 description: 'Login details',
@@ -54,4 +57,8 @@ router.get(
   async (req, res) => teammateController.getByTeamIdWithLastDeclaration(req, res)
 );
 
+const passwordRepository = new PasswordRepository();
+const passwordService = new PasswordService(passwordRepository);
+const passwordController = new PasswordController(passwordService);
 
+router.post("/password/change", async (req, res) => passwordController.changePassword(req, res));

@@ -68,11 +68,22 @@
   "registrationSnackSuccess": "Création de compte réussie. Veuillez vérifier vos emails",
   "registrationSnackError": "Erreur lors de l'inscription, Veuillez réessayer",
   "registrationSnackEmailError": "Cet email est déjà utilisé",
+
+  "registrationSnackValidation": "Valider",
   "registrationCancelButton": "Annuler",
 
   "userDefaultWelcome": "Bienvenue sur YAKI !",
   "userDefaultThanks": "Merci d'utiliser l'application",
   "userDefaultTeamPart": "Vous n'êtes pas encore dans une ",
   "userDefaultTeam": "Équipe",
-  "userDefaultContact": "Veuillez contacter votre Capitaine"
+  "userDefaultContact": "Veuillez contacter votre Capitaine",
+
+  "changePassword": "Changer de mot de passe",
+  "changePasswordPageTitle": "Changement de mot de passe",
+  "changePasswordPageOldPW": "Mot de passe actuel",
+  "changePasswordPageNewPW": "Nouveau mot de passe",
+  "changePasswordPageNewPWConfirm": "Confirmer le nouveau mot de passe",
+  "changePasswordPageConfimButton": "Confirmer",
+  "changePasswordSucess": "Mot de passe changé avec succès, veuillez vous reconnecter",
+  "changePasswordError": "Erreur lors du changement de mot de passe, veuillez réessayer"
 }

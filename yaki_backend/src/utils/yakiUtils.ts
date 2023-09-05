@@ -69,6 +69,7 @@ export default class YakiUtils {
     if (!this.isAnObject(obj1) || !this.isAnObject(obj2)) {
       throw new TypeError("incorrect data");
     }
+    // create arrays containing objects attributes (keys) as values
     const obj1Attr = Object.keys(obj1);
     const obj2Attr = Object.keys(obj2);
     // if empty object

@@ -30,6 +30,7 @@ class _RegistrationState extends ConsumerState<Registration> {
   showSnackBar({
     required String content,
     required TextStyle textStyle,
+    required String actionLabel,
     required Function barAction,
   }) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -37,6 +38,7 @@ class _RegistrationState extends ConsumerState<Registration> {
         content: content,
         textStyle: textStyle,
         barAction: barAction,
+        actionLabel: actionLabel,
       ),
     );
   }
@@ -61,8 +63,9 @@ class _RegistrationState extends ConsumerState<Registration> {
         showSnackBar(
           content: tr("registrationSnackSuccess"),
           textStyle: registratonSnackTextStyle(
-            textColor: const Color.fromARGB(255, 21, 76, 8),
+            textColor: const Color.fromARGB(255, 82, 251, 45),
           ),
+          actionLabel: tr('registrationSnackValidation'),
           barAction: () {},
         );
         // ignore: use_build_context_synchronously
@@ -73,16 +76,18 @@ class _RegistrationState extends ConsumerState<Registration> {
           textStyle: registratonSnackTextStyle(
             textColor: const Color.fromARGB(255, 123, 5, 5),
           ),
+          actionLabel: tr('registrationCancelButton'),
           barAction: () {
             context.go('/');
           },
         );
       } else if (registrationResult == "registrationInputEmailError") {
         showSnackBar(
-          content: tr("registrationSnackEmailError"),
+          content: tr('registrationCancelButton'),
           textStyle: registratonSnackTextStyle(
             textColor: const Color.fromARGB(255, 123, 5, 5),
           ),
+          actionLabel: "Ok",
           barAction: () {
             context.go('/');
           },
@@ -138,10 +143,6 @@ class _RegistrationState extends ConsumerState<Registration> {
     return null;
   }
 
-  String toUpperCase(String s) {
-    return s.toUpperCase();
-  }
-
   String capitalize(String s) {
     //first letter uppercase only
     return "${s[0].toUpperCase()}${s.substring(1).toLowerCase()}";
@@ -170,39 +171,52 @@ class _RegistrationState extends ConsumerState<Registration> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       InputRegistration(
+                        textInputAction: TextInputAction.next,
                         controller: firstNameController,
                         label: tr('registrationInputFirstnameLabel'),
                         validatorFunction: nameValidator,
                         isShown: false,
-                        textCapitalization: capitalize,
+                        onChange: (value) {
+                          firstNameController.value = TextEditingValue(
+                            text: capitalize(value),
+                            selection: firstNameController.selection,
+                          );
+                        }, // textCapitalization: capitalize,
                       ),
                       InputRegistration(
+                        textInputAction: TextInputAction.next,
                         controller: lastNameController,
                         label: tr('registrationInputLastnameLabel'),
                         validatorFunction: nameValidator,
                         isShown: false,
-                        textCapitalization: toUpperCase,
+                        onChange: (value) {
+                          lastNameController.value = TextEditingValue(
+                            text: value.toUpperCase(),
+                            selection: lastNameController.selection,
+                          );
+                        }, // textCapitalization: toUpperCase,
                       ),
                       InputRegistration(
+                        textInputAction: TextInputAction.next,
                         controller: emailController,
                         label: tr('registrationInputEmailLabel'),
                         validatorFunction: emailValidator,
                         isShown: false,
-                        textCapitalization: (s) => (s),
+                        // textCapit,
                       ),
                       InputRegistration(
+                        textInputAction: TextInputAction.next,
                         controller: passwordController,
                         label: tr('registrationInputPasswordLabel'),
                         validatorFunction: passwordValidator,
                         isShown: true,
-                        textCapitalization: (s) => (s),
                       ),
                       InputRegistration(
+                        textInputAction: TextInputAction.done,
                         controller: passwordConfirmController,
                         label: tr('registrationInputPassConfirmLabel'),
                         validatorFunction: pwConfirmationValidator,
                         isShown: true,
-                        textCapitalization: (s) => (s),
                       ),
                     ],
                   ),

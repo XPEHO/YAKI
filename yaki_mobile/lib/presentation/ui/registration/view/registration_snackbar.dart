@@ -4,13 +4,15 @@ SnackBar registrationSnack({
   required String content,
   required TextStyle textStyle,
   required Function barAction,
+  required String actionLabel,
 }) {
   return SnackBar(
     behavior: SnackBarBehavior.floating,
-    duration: const Duration(seconds: 10),
-    backgroundColor: const Color.fromARGB(255, 220, 219, 219),
+    duration: const Duration(seconds: 999),
+    margin: const EdgeInsets.only(bottom: 50, left: 20, right: 20),
+    backgroundColor: const Color.fromARGB(255, 75, 75, 75),
     content: Padding(
-      padding: const EdgeInsets.symmetric(vertical: 15),
+      padding: const EdgeInsets.symmetric(vertical: 30),
       child: Padding(
         padding: const EdgeInsets.only(left: 20),
         child: Text(
@@ -20,9 +22,9 @@ SnackBar registrationSnack({
       ),
     ),
     action: SnackBarAction(
-      label: 'Retour',
+      label: actionLabel,
       disabledTextColor: Colors.white,
-      textColor: const Color.fromARGB(255, 0, 0, 0),
+      textColor: const Color.fromARGB(255, 226, 223, 223),
       onPressed: () => barAction(),
     ),
   );
