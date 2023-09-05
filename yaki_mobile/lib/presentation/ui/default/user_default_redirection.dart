@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:yaki/presentation/styles/color.dart';
 import 'package:yaki/presentation/styles/text_style.dart';
@@ -14,11 +15,11 @@ class UserDefaultRedirection extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            "Welcome to YAKI !",
+            tr('userDefaultWelcome'),
             style: registrationPageTitleTextStyle(),
           ),
           Text(
-            "Thanks for joining our application",
+            tr('userDefaultThanks'),
             style: registratonSnackTextStyle(textColor: Colors.black),
           ),
           const SizedBox(
@@ -35,14 +36,14 @@ class UserDefaultRedirection extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "You are not part of a",
+                tr('userDefaultTeamPart'),
                 style: textStyleUserRedirectStyle(),
               ),
               const SizedBox(
                 width: 4,
               ),
               Text(
-                "TEAM",
+                tr('userDefaultTeam'),
                 style: textStyleUserRedirectStyleTeam(),
               ),
             ],
@@ -51,7 +52,7 @@ class UserDefaultRedirection extends StatelessWidget {
             height: 20,
           ),
           Text(
-            "Please contact your Captain.",
+            tr('userDefaultContact'),
             style: textStyleUserRedirectStyle(),
           ),
         ],
