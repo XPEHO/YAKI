@@ -33,4 +33,13 @@ export class UserController {
       }
     }
   };
+
+  resetPassword = async (req: Request, res: Response) => {
+    try {
+      const response = await this.service.resetPassword(req.body);
+      res.send(response);
+    } catch (error: any) {
+      res.status(400).json({ message: error.message });
+    }
+  };
 }
