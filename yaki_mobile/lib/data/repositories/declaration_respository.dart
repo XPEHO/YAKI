@@ -15,21 +15,16 @@ class DeclarationRepository {
   /// Invoked in declaration Notifier
   ///
   /// String statusValue used in authentication page :
-  ///
   /// to determine if the response has a declaration object or not
   /// if statusValue is emptyString, there is no declaration at the current day, otherwise a declaration was created.
   ///
-  /// invoke declarationApi.getDeclaration() method to GET the declaration for the selected teammate
+  /// invoke declarationApi.getDeclaration()
   /// Receive a HttpResponse, with :
   ///
   /// * HttpResponse.response, get the response statusCode
-  ///
   /// * HttpResponse.data to get the data from the response body
   ///
   /// Depending of the response statusCode corresponding actions are set
-  ///
-  /// ( for now, only actions at statusCode 200 are made, waiting to setup analytic to be set up for others error code)
-  ///
   /// At statusCode 200 :
   /// * Convert the HttpResponse.data into a DeclarationModelIn instance,
   /// * Get the declarationStatus from the newly created object and assign it to the statusValue.
@@ -92,14 +87,11 @@ class DeclarationRepository {
   /// if statusValue isn't emptyString, the declaration is successfully created.
   ///
   /// Receive a HttpResponse, with :
-  ///
   /// * HttpResponse.response, get the response statusCode
-  ///
   /// * HttpResponse.data to get the data from the response body
   ///
   /// Depending of the response statusCode corresponding actions are set
   ///
-  /// ( for now, only actions at statusCode 200 or 201 are made, waiting to setup analytic to be set up for others error code)
   /// * Convert the HttpResponse.data into a DeclarationModelIn instance,
   /// * Get the declarationStatus from created instance and assign it to the statusValue.
   ///

@@ -77,6 +77,7 @@ class _AuthenticationState extends ConsumerState<Authentication> {
     required Function goToHalfdayStatusPage,
     required Function goToVacationStatusPage,
     required Function goToCaptain,
+    required Function goToUserDefaultRedirection,
   }) async {
     await SharedPref.deleteToken();
     // if the rememberMe checkbox value is true, store the login details
@@ -89,9 +90,10 @@ class _AuthenticationState extends ConsumerState<Authentication> {
         .userAuthentication(login, password);
     if (authenticationResult && await SharedPref.isTokenPresent()) {
       final bool isCaptain = ref.read(loginRepositoryProvider).isCaptain();
+      final bool isTeammate = ref.read(loginRepositoryProvider).isTeammate();
       if (isCaptain) {
         goToCaptain();
-      } else {
+      } else if (isTeammate) {
         ref.read(teamProvider.notifier).fetchTeams();
         final declarationStatus =
             await ref.read(declarationProvider.notifier).getLatestDeclaration();
@@ -107,6 +109,8 @@ class _AuthenticationState extends ConsumerState<Authentication> {
         } else {
           goToDeclarationPage();
         }
+      } else {
+        goToUserDefaultRedirection();
       }
     } else {
       showSnackBar();
@@ -228,6 +232,8 @@ class _AuthenticationState extends ConsumerState<Authentication> {
                               context.go('/halfdayStatus'),
                           goToVacationStatusPage: () =>
                               context.go('/vacationStatus'),
+                          goToUserDefaultRedirection: () =>
+                              context.go('/userDefaultRedirection'),
                         ),
                         child: Text(tr('signIn')),
                       ),

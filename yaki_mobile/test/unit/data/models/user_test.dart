@@ -7,7 +7,7 @@ void main() {
   Map<String, dynamic> userAsJson = {
     "token": "azertyuioptoken",
     "captainId": 1,
-    "teamMateId": null,
+    "teammateId": null,
     "teamId": null,
     "userId": 15,
     "lastName": "dupond",
@@ -18,7 +18,7 @@ void main() {
   User user = User(
     token: "azertyuioptoken",
     captainId: 1,
-    teamMateId: null,
+    teammateId: null,
     teamId: null,
     userId: 15,
     lastName: "dupond",

@@ -15,15 +15,10 @@ class LoginRepository {
   });
 
   /// Invoked at sign in button press in authentication page.
-  /// Create a new LoginModel using login and password sent from input.
-  /// invoke loginApi.postLogin() method to POST the new login information's
   ///
   /// Receive a HttpResponse, with :
-  ///
   /// * HttpResponse.response, get the response statusCode
-  ///
   /// * HttpResponse.data to get the data from the response body
-  ///
   /// Depending of the response statusCode corresponding actions are set
   ///
   /// At statusCode 200 :
@@ -64,14 +59,6 @@ class LoginRepository {
     return authenticationSuccess;
   }
 
-  // Check if the user stored in the repository is a captain or a teamMate
-  bool isCaptain() {
-    if (loggedUser!.captainId != null) {
-      return true;
-    }
-    return false;
-  }
-
   /// Attributes from User model,
   /// to be saved into sharedPreferences.
   void setSharedPreference(User user) async {
@@ -86,7 +73,7 @@ class LoginRepository {
     loggedUser = LoggedUser(
       userId: user.userId,
       captainId: user.captainId,
-      teamMateid: user.teamMateId ?? 0,
+      teammateId: user.teammateId,
       lastName: user.lastName ?? "",
       firstName: user.firstName ?? "",
       email: user.email ?? "",
@@ -101,5 +88,26 @@ class LoginRepository {
   /// captainId getter, used in team_mate_notifier to fetch the teammate list associated to the logged captain.
   int? get captainId {
     return loggedUser?.captainId;
+  }
+
+  /// teammateId getter, used in authentication page to determine if the user is part of a team
+  int? get teammateId {
+    return loggedUser?.teammateId;
+  }
+
+  // Check if the user stored in the repository is a captain or a teamMate
+  bool isCaptain() {
+    if (loggedUser!.captainId != null) {
+      return true;
+    }
+    return false;
+  }
+
+  // Check if the user stored in the repository is a captain or a teamMate
+  bool isTeammate() {
+    if (loggedUser!.teammateId != null) {
+      return true;
+    }
+    return false;
   }
 }
