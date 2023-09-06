@@ -5,9 +5,6 @@ import ToRegisterRes from "./toRegisterRes.dto";
 import EmailAlreadyExistsError from "../../errors/EmailAlreadyExistError";
 
 export class UserRepository {
-  getUserByEmail(email: string) {
-    throw new Error("Method not implemented.");
-  }
   /**
    * Seek a user in the database by its login value
    * @param username
@@ -87,18 +84,15 @@ export class UserRepository {
    * @param newPassword The new password to set for the user
    * @returns True if the password was reset successfully, false otherwise
    */
-  resetPassword = async (user: UserToRegisterOut): Promise<ToRegisterRes> => {
+  forgotPassword = async (user: UserToRegisterOut): Promise<ToRegisterRes> => {
     try {
-      const newPassword = await fetch(
-        `${process.env.ADMIN_API}/login/gpamonpw`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(user),
-        }
-      );
+      const newPassword = await fetch(`${process.env.ADMIN_API}/gpamonpwd`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user),
+      });
       if (!newPassword.ok) {
         if (newPassword.status === 418)
           throw new Error("password reset failed");
