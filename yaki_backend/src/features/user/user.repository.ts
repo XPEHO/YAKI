@@ -89,13 +89,16 @@ export class UserRepository {
    */
   resetPassword = async (user: UserToRegisterOut): Promise<ToRegisterRes> => {
     try {
-      const newPassword = await fetch(`${process.env.ADMIN_API}/gpamonpw`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(user),
-      });
+      const newPassword = await fetch(
+        `${process.env.ADMIN_API}/login/gpamonpw`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(user),
+        }
+      );
       if (!newPassword.ok) {
         if (newPassword.status === 418)
           throw new Error("password reset failed");
