@@ -1,13 +1,13 @@
 package com.xpeho.yaki_admin_backend.data.services;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-/*@ExtendWith(MockitoExtension.class)
+@ExtendWith(MockitoExtension.class)
 class PasswordServiceImplTest {
     @InjectMocks
     PasswordServiceImpl passwordService;
@@ -32,10 +32,9 @@ class PasswordServiceImplTest {
                 upperCaseCount++;
             }
         }
-        System.out.println("Password generated using commons-text: " + password);
         assertThat( lowerCaseCount >= 2);
         assertThat( upperCaseCount >= 2);
         assertThat( specialCharCount >= 2);
         assertThat(numberCount  >= 2);
     }
-}*/
+}

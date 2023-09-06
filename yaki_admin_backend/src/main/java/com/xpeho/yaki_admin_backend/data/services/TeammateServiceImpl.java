@@ -40,9 +40,6 @@ public class TeammateServiceImpl implements TeammateService {
             UserEntityWithID userEntityWithID = new UserEntityWithID(id, null,teammateId, lastname, firstname, email);
             userEntityWithIDList.add(userEntityWithID);
         }
-        for(UserEntityWithID element: userEntityWithIDList) {
-            System.out.println(element.lastname());
-        }
         return userEntityWithIDList;
     }
 

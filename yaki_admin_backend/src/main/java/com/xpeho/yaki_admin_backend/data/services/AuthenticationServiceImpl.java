@@ -117,16 +117,17 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
 
     @Override
-    public String forgotPassword(String email){
+    public void forgotPassword(String email){
         Optional<UserModel> user = repository.findByLogin(email);
         if(!user.isPresent()){
             throw new EntityNotFoundException("no user found with this email");
         }
-        userService.resetPassword(user.get(),this.passwordEncoder);
-
-        //send email
-
-        return "a token has been sent to your email";
+        try{
+            userService.resetPassword(user.get(),this.passwordEncoder);
+        }catch (Exception e){
+            throw new RuntimeException("an error has occured while trying to reset your password");
+        }
+        //send an email
     }
 
 

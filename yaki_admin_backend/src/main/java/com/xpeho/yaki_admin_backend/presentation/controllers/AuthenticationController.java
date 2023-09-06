@@ -35,8 +35,8 @@ public class AuthenticationController {
     public String confirmRegister(@RequestParam("token") String token) {
         return authenticationService.confirmRegister(token);
     }
-    @PostMapping("/forgotPassword")
-    public String forgotPassword(@RequestParam("email") String email){
-        return authenticationService.forgotPassword(email);
+    @PostMapping("/forgot-password")
+    public void forgotPassword(@RequestParam("email") String email){
+        authenticationService.forgotPassword(email);
     }
 }

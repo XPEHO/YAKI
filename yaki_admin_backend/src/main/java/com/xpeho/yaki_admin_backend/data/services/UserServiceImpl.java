@@ -140,7 +140,5 @@ public class UserServiceImpl implements UserService {
         userJpaRepository.save(user);
         eventPublisher.publishEvent(new OnResetPasswordCompletEvent(user, temporaryPassword));
     }
-
     //I used common text from apache because Passay present a security hotspot.
-
 }

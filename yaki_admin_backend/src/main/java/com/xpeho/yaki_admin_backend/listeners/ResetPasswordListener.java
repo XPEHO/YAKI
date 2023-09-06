@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 public class ResetPasswordListener extends EmailListener<OnResetPasswordCompletEvent>{
     @Override
     protected void sendEmail(OnResetPasswordCompletEvent event) throws MailjetSocketTimeoutException, MailjetException {
-        System.out.println("Sending email 2");
         UserModel user = event.getUser();
         String password = event.getPassword();
         String divStyle = "<div style=\"font-size:16px\">";

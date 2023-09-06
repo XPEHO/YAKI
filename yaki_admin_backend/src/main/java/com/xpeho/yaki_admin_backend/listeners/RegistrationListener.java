@@ -17,7 +17,6 @@ public class RegistrationListener extends EmailListener<OnRegistrationCompleteEv
 
     @Override
     protected void sendEmail(OnRegistrationCompleteEvent event) throws MailjetSocketTimeoutException, MailjetException {
-        System.out.println("Sending email 1");
         UserModel user = event.getUser();
         String token = UUID.randomUUID().toString();
         service.createVerificationToken(user, token);

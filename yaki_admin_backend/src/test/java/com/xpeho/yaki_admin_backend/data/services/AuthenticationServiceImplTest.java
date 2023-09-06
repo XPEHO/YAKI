@@ -21,6 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.Arrays;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -45,14 +46,14 @@ public class AuthenticationServiceImplTest {
     @Mock
     private CustomerServiceImpl customerService;
     @Mock
-    private UserServiceImpl userServiceImpl;
+    private UserServiceImpl userService;
 
     @BeforeEach
     void setUp() {
         repository = mock(UserJpaRepository.class);
 
         authenticationServiceImpl = new AuthenticationServiceImpl(repository, jwtService, authenticationManager,
-                passwordEncoder,verificationTokenService,eventPublisher,captainService,customerService, userServiceImpl );
+                passwordEncoder,verificationTokenService,eventPublisher,captainService,customerService, userService );
     }
 
     @Test
@@ -109,4 +110,13 @@ public class AuthenticationServiceImplTest {
         assertEquals(user.getUserId(), response.id());
     }
 
+    @Test
+    void testForgotPassword() {
+        // Mock input
+        String email = "email1";
+        UserModel userReturned = new UserModel("Vache", "Quirit", "email1", "email1", "encodedPassword");
+        when(repository.findByLogin(email)).thenReturn(Optional.of(userReturned));
+        doNothing().when(userService).resetPassword(userReturned,passwordEncoder);
+        assertDoesNotThrow(() -> authenticationServiceImpl.forgotPassword(email));
+    }
 }

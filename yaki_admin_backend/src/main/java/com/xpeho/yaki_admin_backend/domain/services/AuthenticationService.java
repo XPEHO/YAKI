@@ -13,5 +13,5 @@ public interface AuthenticationService {
 
     String confirmRegister(String token);
 
-    String forgotPassword(String email);
+    void forgotPassword(String email);
 }

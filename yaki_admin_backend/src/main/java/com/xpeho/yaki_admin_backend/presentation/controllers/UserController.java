@@ -36,15 +36,12 @@ public class UserController {
         return userService.deleteById(id);
     }
 
-    //route avalaible on the mail to reset your password
-    @PutMapping("/changePassword")
-    public void showChangePasswordPage(@RequestParam int id,
+    //route avalaible on the change your password
+    @PutMapping("/change-password")
+    public void changePassword(@RequestParam int id,
                                          @RequestParam String oldPassword,
                                          @RequestParam String newPassword) {
         userService.changePassword(id, oldPassword, newPassword);
     }
-
-    //route when the form to change your password is submitted
-
 
 }
