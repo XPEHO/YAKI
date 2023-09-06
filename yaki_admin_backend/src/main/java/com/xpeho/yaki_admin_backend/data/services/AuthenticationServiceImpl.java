@@ -11,14 +11,18 @@ import com.xpeho.yaki_admin_backend.domain.entities.RegisterResponseEntity;
 import com.xpeho.yaki_admin_backend.domain.services.AuthenticationService;
 import com.xpeho.yaki_admin_backend.error_handling.EmailAlreadyExistsException;
 import com.xpeho.yaki_admin_backend.events.OnRegistrationCompleteEvent;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
@@ -31,6 +35,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final CaptainServiceImpl captainService;
     private final CustomerServiceImpl customerService;
 
+    private final UserServiceImpl userService;
+
     public AuthenticationServiceImpl(UserJpaRepository repository,
                                      JwtService jwtService,
                                      AuthenticationManager authenticationManager,
@@ -38,7 +44,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                                      VerificationTokenServiceImpl verificationTokenService,
                                      ApplicationEventPublisher eventPublisher,
                                      CaptainServiceImpl captainService,
-                                     CustomerServiceImpl customerService) {
+                                     CustomerServiceImpl customerService,
+                                     UserServiceImpl userService) {
         this.repository = repository;
         this.jwtService = jwtService;
         this.authenticationManager = authenticationManager;
@@ -47,6 +54,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         this.eventPublisher = eventPublisher;
         this.captainService = captainService;
         this.customerService = customerService;
+        this.userService = userService;
     }
 
     @Override
@@ -69,12 +77,16 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public AuthenticationResponseEntity authenticate(AuthenticationRequestEntity request) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.login(),
-                        request.password()
-                )
-        );
+        try{
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            request.login(),
+                            request.password()
+                    )
+            );
+        }catch (Exception e){
+            throw new BadCredentialsException("bad credentials");
+        }
         UserModel user = repository.findByLogin(request.login())
                 .orElseThrow();
         if(user.isEnabled() == false){
@@ -102,4 +114,21 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         repository.save(user);
         return "Your account has been verified, you can now access to your account on the mobile application with your credential";
     }
+
+
+    @Override
+    public void forgotPassword(String email){
+        Optional<UserModel> user = repository.findByLogin(email);
+        if(!user.isPresent()){
+            throw new EntityNotFoundException("no user found with this email");
+        }
+        try{
+            userService.resetPassword(user.get(),this.passwordEncoder);
+        }catch (Exception e){
+            throw new RuntimeException("an error has occured while trying to reset your password");
+        }
+        //send an email
+    }
+
+
 }

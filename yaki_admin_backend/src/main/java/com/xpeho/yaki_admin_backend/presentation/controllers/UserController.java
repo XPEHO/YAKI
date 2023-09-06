@@ -35,4 +35,13 @@ public class UserController {
     public UserEntity deleteUser(@PathVariable int id) {
         return userService.deleteById(id);
     }
+
+    //route avalaible on the change your password
+    @PutMapping("/change-password")
+    public void changePassword(@RequestParam int id,
+                                         @RequestParam String oldPassword,
+                                         @RequestParam String newPassword) {
+        userService.changePassword(id, oldPassword, newPassword);
+    }
+
 }

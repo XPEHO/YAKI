@@ -26,7 +26,6 @@ public class VerificationTokenModel {
 
     @Column(name = "expiration_date")
     private Date expiryDate;
-//is it working properly ? test with 1 minute
     private Date calculateExpiryDate(int expiryTimeInMinutes) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(new Date(System.currentTimeMillis()));
