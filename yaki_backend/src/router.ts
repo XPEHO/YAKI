@@ -9,6 +9,7 @@ import {TeammateController} from "./features/teammate/teammate.controller";
 import {TeamRepository} from "./features/team/team.repository";
 import {TeamService} from "./features/team/team.service";
 import {TeammateService} from "./features/teammate/teammate.service";
+import {limiter, signInLimiter} from "./middleware/rateLimiter";
 
 export const router = express.Router();
 
@@ -26,7 +27,7 @@ const userRepository = new UserRepository();
 const userService = new UserService(userRepository);
 const userController = new UserController(userService);
 
-router.post("/login", (req, res) =>
+router.post("/login", signInLimiter,(req, res) =>
   /* #swagger.parameters['Login'] = {
                 in: 'body',
                 description: 'Login details',
@@ -36,7 +37,7 @@ router.post("/login", (req, res) =>
 } */
   userController.checkLogin(req, res)
 );
-
+router.use(limiter);
 router.post("/register", (req, res) => userController.registerNewUser(req, res));
 
 router.get(
@@ -52,3 +53,5 @@ router.get(
   */ authService.verifyToken(req, res, next),
   async (req, res) => teammateController.getByTeamIdWithLastDeclaration(req, res)
 );
+
+
