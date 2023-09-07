@@ -27,14 +27,12 @@ jobs:
           echo ${{ secrets.APPLICATION_TEST_PROPERTIES }} | base64 -d > src/test/resources/application-test.properties
           gradle clean build
           echo "Starting docker containers"
-          cd ../yaki_docker
+          cd ../yaki_karate
           docker compose up --build --quiet-pull -d
           echo "Sleep 10s to wait backend admin initialization"
           sleep 10s
-          cd ../yaki_karate
           echo ${{ secrets.KARATE_CONFIG }} | base64 -d > .env
           echo "Running karate tests"
           mvn test --quiet
-          cd ../yaki_docker
           echo "Stopping docker containers"
           docker compose down
