@@ -78,30 +78,5 @@ export class UserRepository {
     }
   };
 
-  /**
-   * Reset a user's password in the database
-   * @param email The email of the user whose password is being reset
-   * @param newPassword The new password to set for the user
-   * @returns True if the password was reset successfully, false otherwise
-   */
-  forgotPassword = async (user: UserToRegisterOut): Promise<ToRegisterRes> => {
-    try {
-      const newPassword = await fetch(`${process.env.ADMIN_API}/gpamonpwd`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(user),
-      });
-      if (!newPassword.ok) {
-        if (newPassword.status === 418)
-          throw new Error("password reset failed");
-      }
-      let jsonResponse = await newPassword.json();
-      return jsonResponse;
-    } catch (err) {
-      console.warn(err);
-      throw err;
-    }
-  };
+
 }

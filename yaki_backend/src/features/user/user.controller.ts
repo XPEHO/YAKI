@@ -34,12 +34,6 @@ export class UserController {
     }
   };
 
-  forgotPassword = async (req: Request, res: Response) => {
-    try {
-      const response = await this.service.forgotPassword(req.body);
-      res.send(response);
-    } catch (error: any) {
-      res.status(400).json({ message: error.message });
-    }
-  };
+
+
 }
