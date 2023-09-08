@@ -66,11 +66,22 @@
   "registrationSnackSuccess": "Account creation sucess. Please check yours emails",
   "registrationSnackError": "Oups, something went wrong, try again later",
   "registrationSnackEmailError": "eamil already used",
+
+  "registrationSnackValidation": "Confirm",
   "registrationCancelButton": "Cancel",
 
   "userDefaultWelcome": "Welcome to YAKI !",
   "userDefaultThanks": "Thanks for joining our application",
   "userDefaultTeamPart": "You are not part of a",
   "userDefaultTeam": "TEAM",
-  "userDefaultContact": "Please contact your Captain."
+  "userDefaultContact": "Please contact your Captain.",
+
+  "changePassword": "Change password",
+  "changePasswordPageTitle": "Change your password",
+  "changePasswordPageOldPW": "Current password",
+  "changePasswordPageNewPW": "New password",
+  "changePasswordPageNewPWConfirm": "Confirm new password",
+  "changePasswordPageConfimButton": "Confirm",
+  "changePasswordSucess": "Password changed successfully",
+  "changePasswordError": "An error has occured, please try again later"
 }

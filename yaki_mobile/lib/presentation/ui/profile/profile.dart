@@ -55,28 +55,62 @@ class Profile extends ConsumerWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 50.0),
-                child: TextButton(
-                  style: TextButton.styleFrom(
-                    elevation: 5,
-                    backgroundColor: Colors.red,
-                    foregroundColor: Colors.white,
-                    textStyle: const TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
+                padding: const EdgeInsets.only(left: 15, right: 15, top: 30),
+                child: SizedBox(
+                  height: 45,
+                  width: double.infinity,
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      elevation: 5,
+                      backgroundColor: const Color.fromARGB(255, 191, 192, 193),
+                      foregroundColor: const Color.fromARGB(255, 253, 253, 253),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      textStyle: const TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
-                    padding: const EdgeInsets.only(
-                      top: 20,
-                      bottom: 20,
-                      right: 50,
-                      left: 50,
+                    onPressed: () {
+                      context.go('/changePassword');
+                    },
+                    child: Text(
+                      tr('changePassword'),
                     ),
                   ),
-                  onPressed: () {
-                    context.go('/');
-                  },
-                  child: Text(
-                    tr('logOutButton'),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 15, right: 15, top: 40.0),
+                child: SizedBox(
+                  height: 45,
+                  width: double.infinity,
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      elevation: 5,
+                      backgroundColor: Colors.red,
+                      foregroundColor: const Color.fromARGB(255, 253, 253, 253),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      textStyle: const TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      padding: const EdgeInsets.only(
+                        top: 20,
+                        bottom: 20,
+                        right: 50,
+                        left: 50,
+                      ),
+                    ),
+                    onPressed: () {
+                      context.go('/');
+                    },
+                    child: Text(
+                      tr('logOutButton'),
+                    ),
                   ),
                 ),
               ),

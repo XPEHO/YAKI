@@ -27,7 +27,7 @@ TextStyle registrationPageTitleTextStyle() {
 TextStyle registrationBtnTextStyle() {
   return const TextStyle(
     color: Colors.black,
-    fontSize: 25,
+    fontSize: 16,
     fontWeight: FontWeight.w600,
   );
 }
@@ -35,14 +35,14 @@ TextStyle registrationBtnTextStyle() {
 TextStyle registrationCancelTextStyle() {
   return const TextStyle(
     color: Color.fromARGB(255, 231, 229, 229),
-    fontSize: 25,
+    fontSize: 16,
     fontWeight: FontWeight.w600,
   );
 }
 
 TextStyle registratonSnackTextStyle({required Color textColor}) {
   return TextStyle(
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: FontWeight.bold,
     color: textColor,
   );
