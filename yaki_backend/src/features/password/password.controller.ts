@@ -28,7 +28,7 @@ export class PasswordController {
     if (req.body === undefined || req.body === null)
       throw new Error("Body is Empty");
     const passwordForgotten: PasswordForgottenDtoIn = req.body;
-    this.passwordService.forgotPassword(passwordForgotten);
+    await this.passwordService.forgotPassword(passwordForgotten);
   }
 }
 

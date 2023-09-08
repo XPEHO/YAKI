@@ -1,5 +1,6 @@
 import { PasswordChangeDtoIn } from "./passwordChange.dtoIn";
 import { PasswordRepository } from "./password.repository";
+import { PasswordForgottenDtoIn } from "./passwordForgotten.dtoIn";
 
 export class PasswordService {
   private passwordRespository: PasswordRepository;
@@ -19,25 +20,9 @@ export class PasswordService {
    * @throws Error if the password reset failed
    * @throws TypeError if the user data is incorrect
    */
-  async forgotPassword(user: any): Promise<boolean> {
-    try {
-      const newPassword = await fetch(`${process.env.ADMIN_API}/gpamonpwd`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(user),
-      });
-      if (!newPassword.ok) {
-        if (newPassword.status === 418)
-          throw new Error("password reset failed");
-      }
-      let jsonResponse = await newPassword.json();
-      return jsonResponse;
-    } catch (err) {
-      console.warn(err);
-      throw err;
-    }
+  async forgotPassword(
+    passwordForgotten: PasswordForgottenDtoIn
+  ): Promise<void> {
+    await this.passwordRespository.forgotPassword(passwordForgotten);
   }
 }
-
