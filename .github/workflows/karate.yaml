@@ -13,10 +13,10 @@ jobs:
         run: |
           cd yaki_docker
           echo "Creating .env file"
-          echo ${{ secrets.ENV_FILE }} | base64 -d > .env
+          echo ${{ secrets.ENV_FILE_KARATE }} | base64 -d > .env
           cd ../yaki_backend
           echo "Creating .env file"
-          echo ${{ secrets.ENV_FILE }} | base64 -d > .env
+          echo ${{ secrets.ENV_FILE_KARATE }} | base64 -d > .env
           echo "Install dependencies"
           npm i
           echo "Generate swagger.json file"

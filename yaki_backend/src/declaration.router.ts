@@ -3,6 +3,7 @@ import {authService} from "./features/user/authentication.service";
 import {DeclarationController} from "./features/declaration/declaration.controller";
 import {DeclarationRepository} from "./features/declaration/declaration.repository";
 import {DeclarationService} from "./features/declaration/declaration.service";
+import {limiter} from "./middleware/rateLimiter";
 
 /* Creating a new router object. */
 const declarationRouter: Router = express.Router();
@@ -15,6 +16,7 @@ const declarationService = new DeclarationService(declarationRepo);
 
 /* Creating a new instance of the DeclarationController class. */
 const declarationController = new DeclarationController(declarationService);
+declarationRouter.use(limiter);
 
 /* Creating a new route for the declarationRouter object. */
 declarationRouter.post(
