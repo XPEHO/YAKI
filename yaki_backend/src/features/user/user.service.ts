@@ -8,6 +8,7 @@ import {UserToRegisterIn} from "./toRegister.dtoIn";
 import {UserToRegisterOut} from "./toRegister.dtoOut";
 import {RegisterResponse} from "./registerResponse";
 import EmailAlreadyExistsError from "../../errors/EmailAlreadyExistError";
+import {LoginDtoIn} from "./login.dtoIn";
 
 export class UserService {
   userRepository: UserRepository;
@@ -21,9 +22,15 @@ export class UserService {
    * @param object
    * @returns
    */
-  checkUserLoginDetails = async (object: any) => {
-    const searchUser = await this.userRepository.getByLogin(object.login);
-    if (await authService.comparePw(object.password, searchUser.user_password)) {
+  checkUserLoginDetails = async (loginUser: LoginDtoIn) => {
+    const reference = new LoginDtoIn("", "");
+    if (YakiUtils.isSameObjStructure(loginUser, reference) === false) {
+      throw new TypeError("Incorrect data");
+    }
+
+    const searchUser = await this.userRepository.getByLogin(loginUser.login);
+
+    if (await authService.comparePw(loginUser.password, searchUser.user_password)) {
       let user = undefined;
       // if captain_id column is null, create a team_mate
       if (searchUser.captain_id === null) {

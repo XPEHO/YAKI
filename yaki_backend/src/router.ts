@@ -61,4 +61,8 @@ const passwordRepository = new PasswordRepository();
 const passwordService = new PasswordService(passwordRepository);
 const passwordController = new PasswordController(passwordService);
 
-router.post("/password/change", async (req, res) => passwordController.changePassword(req, res));
+router.post(
+  "/password/change",
+  (req, res, next) => authService.verifyToken(req, res, next),
+  async (req, res) => passwordController.changePassword(req, res)
+);

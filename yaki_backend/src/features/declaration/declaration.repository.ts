@@ -1,6 +1,7 @@
 import {Client} from "pg";
 import {DeclarationDtoIn} from "./declaration.dtoIn";
 import YakiUtils from "../../utils/yakiUtils";
+import {DeclarationDto} from "./declaration.dto";
 
 export class DeclarationRepository {
   /**
@@ -13,7 +14,7 @@ export class DeclarationRepository {
    * @param declarationList The declaration to be inserted.
    * @returns A created declaration.
    */
-  async createDeclaration(declarationList: DeclarationDtoIn[]) {
+  async createDeclaration(declarationList: DeclarationDto[]) {
     const client = new Client({
       host: process.env.DB_HOST,
       user: process.env.DB_USER,
@@ -59,7 +60,7 @@ export class DeclarationRepository {
    * @param declarationList declaration list containing the declaratin to be inserted
    * @returns return the inserted halfDay declarations.
    */
-  async createHalfDayDeclaration(declarationList: DeclarationDtoIn[]) {
+  async createHalfDayDeclaration(declarationList: DeclarationDto[]) {
     const client = new Client({
       host: process.env.DB_HOST,
       user: process.env.DB_USER,

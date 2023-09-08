@@ -1,6 +1,8 @@
 import {DeclarationRepository} from "./declaration.repository";
 import {DeclarationDtoIn} from "./declaration.dtoIn";
 import {StatusDeclaration} from "./status.enum";
+import YakiUtils from "../../utils/yakiUtils";
+import {DeclarationDto} from "./declaration.dto";
 
 export class DeclarationService {
   private declarationRepository: DeclarationRepository;
@@ -18,13 +20,19 @@ export class DeclarationService {
    * @param {DeclarationDtoIn} declarationList - Declaration
    * @returns The declaration object.
    */
-  async createDeclaration(declarationList: DeclarationDtoIn[]) {
+  async createDeclaration(declarationList: DeclarationDto[]) {
     if (declarationList.length !== 1) {
       throw new TypeError("Incorrect full day declaration data, must contain one object only");
     }
     if (!Object.values(StatusDeclaration).includes(declarationList[0].declarationStatus)) {
       throw new TypeError("Invalid declaration status.");
     }
+
+    const reference = new DeclarationDto(0, new Date(), new Date(), new Date(), StatusDeclaration.ON_SITE, 0);
+    if (YakiUtils.isSameObjStructure(declarationList[0], reference) === false) {
+      throw new TypeError("Incorrect data");
+    }
+
     if (
       declarationList[0].declarationUserId &&
       declarationList[0].declarationDate &&
@@ -52,7 +60,7 @@ export class DeclarationService {
    * @param declarationList List containing morning and afternoon declaration objects
    * @returns Array containing saved halfday declaration object
    */
-  async createHalfDayDeclarations(declarationList: DeclarationDtoIn[]) {
+  async createHalfDayDeclarations(declarationList: DeclarationDto[]) {
     if (declarationList.length !== 2) {
       throw new TypeError("Incorrect half day declaration data, must contain 2 object");
     }
@@ -62,10 +70,17 @@ export class DeclarationService {
         throw new TypeError("Invalid declaration status.");
       }
     }
+
+    for (let declaration of declarationList) {
+      const reference = new DeclarationDto(0, new Date(), new Date(), new Date(), StatusDeclaration.ON_SITE, 0);
+      if (YakiUtils.isSameObjStructure(declaration, reference) === false) {
+        throw new TypeError("Incorrect data");
+      }
+    }
+
     let isObjectsValid: boolean = false;
     for (let declaration of declarationList) {
-      // check  if all values are true,  therefore  no null, nor undefined, nor empty string.
-
+      // check  if all values are true, therefore  no null, nor undefined, nor empty string.
       if (
         declaration.declarationUserId &&
         declaration.declarationDate &&
