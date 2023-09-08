@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yaki/data/sources/local/shared_preference.dart';
 import 'package:yaki/presentation/ui/authentication/authentication.dart';
+import 'package:yaki/presentation/ui/password/forgot_password.dart';
 import 'package:yaki/presentation/ui/captain/captain_view.dart';
 import 'package:yaki/presentation/ui/declaration/declaration.dart';
 import 'package:yaki/presentation/ui/declaration/afternoon_declaration.dart';
@@ -154,6 +155,10 @@ final goRouterProvider = Provider<GoRouter>(
         GoRoute(
           path: '/registration',
           builder: (context, state) => const Registration(),
+        ),
+        GoRoute(
+          path: '/forgotPassword',
+          builder: (context, state) => const ForgotPassword(),
         ),
       ],
     );
