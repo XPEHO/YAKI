@@ -68,6 +68,56 @@ void main() {
           expect(isUserId, false);
         },
       );
+
+      test(
+        'set rememberMe to sharedPreferences',
+        () async {
+          const bool rememberMeToSet = true;
+
+          SharedPreferences pref = await SharedPreferences.getInstance();
+
+          await SharedPref.setRememberMe(rememberMeToSet);
+          final bool? setRememberMe = pref.getBool('rememberMe');
+
+          expect(rememberMeToSet == setRememberMe, true);
+        },
+      );
+
+      test(
+        'get rememberMe value',
+        () async {
+          SharedPref.clearAll();
+          final rememberMe = await SharedPref.getRememberMe();
+          expect(rememberMe, false);
+
+          SharedPref.setRememberMe(true);
+          final rememberMe2 = await SharedPref.getRememberMe();
+          expect(rememberMe2, true);
+        },
+      );
+
+      group('Login details', () {
+        const String login = "loginTest";
+        const String password = "passwordTest";
+
+        test('set login details', () async {
+          await SharedPref.setLoginDetails(login, password);
+
+          final loginDetails = await SharedPref.getLoginDetails();
+
+          expect(loginDetails.contains(login), true);
+          expect(loginDetails.contains(password), true);
+        });
+
+        test('clear login details', () async {
+          SharedPref.clearAll();
+
+          final loginDetails = await SharedPref.getLoginDetails();
+
+          expect(loginDetails.contains(login), false);
+          expect(loginDetails.contains(password), false);
+        });
+      });
     },
   );
 }

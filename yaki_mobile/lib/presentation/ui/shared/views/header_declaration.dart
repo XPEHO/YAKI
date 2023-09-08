@@ -196,26 +196,6 @@ class Logo extends StatelessWidget {
   }
 }
 
-class CircleAvatarPNG extends StatelessWidget {
-  final String iconPath;
-  final double radius;
-
-  const CircleAvatarPNG({
-    super.key,
-    required this.iconPath,
-    required this.radius,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return CircleAvatar(
-      backgroundColor: Colors.transparent,
-      backgroundImage: AssetImage(iconPath),
-      radius: radius,
-    );
-  }
-}
-
 buildHeaderLook() => const HeaderDeclaration(
       pictoIcon: 'assets/images/avatar1.svg',
       pictoPath: 'assets/images/day.svg',
