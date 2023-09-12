@@ -1,11 +1,9 @@
 import {StatusDeclaration} from "./status.enum";
 
 /* 
-Defining the interface for the declaration object.
-Data coming from the database
+Data coming from the front - flutter - 
 */
-export class DeclarationDtoIn {
-  declarationId: number;
+export class DeclarationDto {
   declarationUserId: number;
   declarationDate: Date;
   declarationDateStart: Date;
@@ -14,7 +12,6 @@ export class DeclarationDtoIn {
   declarationTeamId: number;
 
   constructor(
-    declarationId: number,
     declarationUserId: number,
     declarationDate: Date,
     declarationDateStart: Date,
@@ -22,7 +19,6 @@ export class DeclarationDtoIn {
     declarationStatus: StatusDeclaration,
     declarationTeamId: number
   ) {
-    this.declarationId = declarationId;
     this.declarationUserId = declarationUserId;
     this.declarationDate = declarationDate;
     this.declarationDateStart = declarationDateStart;

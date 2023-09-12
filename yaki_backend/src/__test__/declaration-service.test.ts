@@ -2,6 +2,7 @@ import {DeclarationService} from "../features/declaration/declaration.service";
 import {DeclarationDtoIn} from "../features/declaration/declaration.dtoIn";
 import {StatusDeclaration} from "../features/declaration/status.enum";
 import {DeclarationRepository} from "../features/declaration/declaration.repository";
+import {DeclarationDto} from "../features/declaration/declaration.dto";
 
 describe("DeclarationService", () => {
   let declarationService: DeclarationService;
@@ -15,6 +16,10 @@ describe("DeclarationService", () => {
 
   /* The above code is testing the declarationService.createDeclaration method. */
   describe("create a declaration ", () => {
+    const declarationDtoList: DeclarationDto[] = [
+      new DeclarationDto(1, new Date(), new Date(), new Date(), StatusDeclaration.REMOTE, 1),
+    ];
+
     const declarationDtoIn: DeclarationDtoIn[] = [
       new DeclarationDtoIn(1, 1, new Date(), new Date(), new Date(), StatusDeclaration.REMOTE, 1),
     ];
@@ -24,7 +29,7 @@ describe("DeclarationService", () => {
     it("should create and return a new declaration", async () => {
       jest.spyOn(declarationRepository, "createDeclaration").mockResolvedValueOnce(declarationDtoIn);
 
-      const createdDeclaration = await declarationService.createDeclaration(declarationDtoIn);
+      const createdDeclaration = await declarationService.createDeclaration(declarationDtoList);
 
       expect(createdDeclaration).toEqual(declarationDtoIn);
     });
