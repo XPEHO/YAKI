@@ -1,5 +1,6 @@
 package com.xpeho.yaki_admin_backend.presentation.controllers;
 
+import com.xpeho.yaki_admin_backend.domain.entities.ChangePasswordEntity;
 import com.xpeho.yaki_admin_backend.domain.entities.UserEntity;
 import com.xpeho.yaki_admin_backend.domain.entities.UserEntityIn;
 import com.xpeho.yaki_admin_backend.domain.entities.UserEntityWithID;
@@ -37,10 +38,8 @@ public class UserController {
 
     //route avalaible when changing your password
     @PutMapping("/change-password")
-    public void changePassword(@RequestParam int id,
-                                         @RequestParam String oldPassword,
-                                         @RequestParam String newPassword) {
-        userService.changePassword(id, oldPassword, newPassword);
+    public void changePassword(@RequestBody ChangePasswordEntity changePasswordEntity) {
+        userService.changePassword(changePasswordEntity);
     }
 
 }

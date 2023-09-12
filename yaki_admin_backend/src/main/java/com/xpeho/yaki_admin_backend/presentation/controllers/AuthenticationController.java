@@ -1,9 +1,6 @@
 package com.xpeho.yaki_admin_backend.presentation.controllers;
 
-import com.xpeho.yaki_admin_backend.domain.entities.AuthenticationRequestEntity;
-import com.xpeho.yaki_admin_backend.domain.entities.AuthenticationResponseEntity;
-import com.xpeho.yaki_admin_backend.domain.entities.RegisterRequestEntity;
-import com.xpeho.yaki_admin_backend.domain.entities.RegisterResponseEntity;
+import com.xpeho.yaki_admin_backend.domain.entities.*;
 import com.xpeho.yaki_admin_backend.domain.services.AuthenticationService;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,7 +33,7 @@ public class AuthenticationController {
         return authenticationService.confirmRegister(token);
     }
     @PostMapping("/forgot-password")
-    public void forgotPassword(@RequestParam("email") String email){
-        authenticationService.forgotPassword(email);
+    public void forgotPassword(@RequestBody ResetPasswordEntity emailEntity){
+        authenticationService.forgotPassword(emailEntity);
     }
 }

@@ -1,5 +1,6 @@
 package com.xpeho.yaki_admin_backend.domain.services;
 
+import com.xpeho.yaki_admin_backend.domain.entities.ChangePasswordEntity;
 import com.xpeho.yaki_admin_backend.domain.entities.UserEntity;
 import com.xpeho.yaki_admin_backend.domain.entities.UserEntityIn;
 import com.xpeho.yaki_admin_backend.domain.entities.UserEntityWithID;
@@ -16,5 +17,5 @@ public interface UserService {
 
     UserEntity deleteById(int id);
 
-    void changePassword(int id, String oldPassword, String newPassword);
+    void changePassword(ChangePasswordEntity changePasswordEntity);
 }

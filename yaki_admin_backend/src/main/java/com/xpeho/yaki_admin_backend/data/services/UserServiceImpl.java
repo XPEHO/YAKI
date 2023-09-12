@@ -2,6 +2,7 @@ package com.xpeho.yaki_admin_backend.data.services;
 
 import com.xpeho.yaki_admin_backend.data.models.UserModel;
 import com.xpeho.yaki_admin_backend.data.sources.UserJpaRepository;
+import com.xpeho.yaki_admin_backend.domain.entities.ChangePasswordEntity;
 import com.xpeho.yaki_admin_backend.domain.entities.UserEntity;
 import com.xpeho.yaki_admin_backend.domain.entities.UserEntityIn;
 import com.xpeho.yaki_admin_backend.domain.entities.UserEntityWithID;
@@ -116,19 +117,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void changePassword(int id, String oldPassword, String newPassword) {
-        Optional<UserModel> user = userJpaRepository.findById(id);
+    public void changePassword(ChangePasswordEntity changePasswordEntity) {
+        Optional<UserModel> user = userJpaRepository.findById(changePasswordEntity.userId());
         if(user.isEmpty()){
             //the user should not be log in as it doesn't exist, or the id received by the front is wrong
                 throw new EntityNotFoundException("Your account is unknown");
         }
         try{
-            authManager.authenticate(new UsernamePasswordAuthenticationToken(user.get().getLogin(), oldPassword));
+            authManager.authenticate(new UsernamePasswordAuthenticationToken(user.get().getLogin(), changePasswordEntity.currentPassword()));
         }
         catch (Exception e){
             throw new BadCredentialsException("Wrong password");
         }
-        String encodedPassword = passwordEncoder.encode(newPassword);
+        String encodedPassword = passwordEncoder.encode(changePasswordEntity.newPassword());
         user.get().setPassword(encodedPassword);
         userJpaRepository.save(user.get());
     }

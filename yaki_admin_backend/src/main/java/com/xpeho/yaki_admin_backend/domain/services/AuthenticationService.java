@@ -1,9 +1,6 @@
 package com.xpeho.yaki_admin_backend.domain.services;
 
-import com.xpeho.yaki_admin_backend.domain.entities.AuthenticationRequestEntity;
-import com.xpeho.yaki_admin_backend.domain.entities.AuthenticationResponseEntity;
-import com.xpeho.yaki_admin_backend.domain.entities.RegisterRequestEntity;
-import com.xpeho.yaki_admin_backend.domain.entities.RegisterResponseEntity;
+import com.xpeho.yaki_admin_backend.domain.entities.*;
 
 public interface AuthenticationService {
 
@@ -13,5 +10,5 @@ public interface AuthenticationService {
 
     String confirmRegister(String token);
 
-    void forgotPassword(String email);
+    void forgotPassword(ResetPasswordEntity emailEntity);
 }
