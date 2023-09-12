@@ -8,6 +8,8 @@
   "rememberMe": "Se souvenir de moi",
   "signIn": "Se connecter",
   "forgotPassword": "Mot de passe oublié ?",
+  "resetPasswordSuccess": "Vérifier vos emails afin de réinitialiser votre mot de passe.",
+  "resetPassword": "Réinitialiser mon mot de passe",
   "headerTitleDecla": "Déclaration",
   "headerHintDecla": "Quel est votre statut pour la journée ?",
   "headerHintDeclaMorning": "quel est votre statut pour la matinée ?",

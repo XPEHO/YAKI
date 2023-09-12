@@ -30,8 +30,25 @@ class PasswordRepository {
       final statusCode = changePasswordResponse.response.statusCode;
       switch (statusCode) {
         case 200:
-          _passwordApi.postChangePassword(passwordChangementOut);
           debugPrint("password changed, $passwordChangementOut");
+          return true;
+        default:
+          throw Exception('Invalid statusCode : $statusCode');
+      }
+    } catch (err) {
+      debugPrint('error during password changement : $err');
+    }
+    return false;
+  }
+
+  Future<bool> forgotPassword(String email) async {
+    try {
+      final forgotPasswordResponse =
+          await _passwordApi.postForgotPassword(email);
+      final statusCode = forgotPasswordResponse.response.statusCode;
+      switch (statusCode) {
+        case 200:
+          debugPrint("Email sent, $email");
           return true;
         default:
           throw Exception('Invalid statusCode : $statusCode');

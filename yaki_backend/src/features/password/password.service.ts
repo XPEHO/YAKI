@@ -1,6 +1,8 @@
-import {PasswordChangeDtoIn} from "./passwordChange.dtoIn";
-import {PasswordRepository} from "./password.repository";
+
+import { PasswordRepository } from "./password.repository";
+import { PasswordForgottenDtoIn } from "./passwordForgotten.dtoIn";
 import YakiUtils from "../../utils/yakiUtils";
+import { PasswordChangeDtoIn } from "./passwortChange.dtoIn";
 
 export class PasswordService {
   private passwordRespository: PasswordRepository;
@@ -16,7 +18,9 @@ export class PasswordService {
       throw new TypeError("Incorrect data");
     }
     // if somes attributes are empty
-    const isSomesAttributesEmpty = Object.values(passwordChange).some((value) => !value && value.trim() === "");
+    const isSomesAttributesEmpty = Object.values(passwordChange).some(
+      (value) => !value && value.trim() === ""
+    );
     if (isSomesAttributesEmpty === true) {
       throw new Error("Missing password change information(s)");
     }
@@ -26,5 +30,11 @@ export class PasswordService {
     } catch (error: any) {
       throw new Error(error.message);
     }
+  }
+
+  async forgotPassword(
+    passwordForgotten: PasswordForgottenDtoIn
+  ): Promise<void> {
+    await this.passwordRespository.forgotPassword(passwordForgotten);
   }
 }

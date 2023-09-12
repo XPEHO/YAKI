@@ -1,41 +1,31 @@
 {
-
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "name": "yaki_mobile",
-            "request": "launch",
-            "type": "dart",
-            "args": [
-                "--dart-define-from-file=config.json"
-            ]
-        },
-        {
-            "name": "yaki_mobile (profile mode)",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "profile",
-            "args": [
-                "--dart-define-from-file=config.json"
-            ]
-        },
-        {
-            "name": "yaki_mobile (release mode)",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "release",
-            "args": [
-                "--dart-define-from-file=config.json"
-            ]
-        },
-        {
-            "name": "Tolerance",
-            "request": "launch",
-            "type": "dart",
-            "args": [
-                "--dart-define=golden_tolerance=0.1"
-            ]
-        }
-
-    ]
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "yaki_mobile",
+      "request": "launch",
+      "type": "dart",
+      "args": ["--dart-define-from-file=config.json"]
+    },
+    {
+      "name": "yaki_mobile (profile mode)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "profile",
+      "args": ["--dart-define-from-file=config.json"]
+    },
+    {
+      "name": "yaki_mobile (release mode)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "release",
+      "args": ["--dart-define-from-file=config.json"]
+    },
+    {
+      "name": "Tolerance",
+      "request": "launch",
+      "type": "dart",
+      "args": ["--dart-define=golden_tolerance=0.1"]
+    }
+  ]
 }

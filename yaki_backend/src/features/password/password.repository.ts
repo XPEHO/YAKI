@@ -1,6 +1,7 @@
-import { PasswordChangeDtoIn } from "./passwordChange.dtoIn";
+
 import "dotenv/config";
 import { PasswordForgottenDtoIn } from "./passwordForgotten.dtoIn";
+import { PasswordChangeDtoIn } from "./passwortChange.dtoIn";
 
 export class PasswordRepository {
   async changePassword(passwordChange: PasswordChangeDtoIn): Promise<void> {

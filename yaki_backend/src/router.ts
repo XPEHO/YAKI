@@ -77,6 +77,8 @@ router.post(
 
 router.post("/forgotpassword", async (req, res) =>
   /* #swagger.parameters['login forgotPassword'] = {
+router.post("/forgot", async (req, res) =>
+  /* #swagger.parameters['password forgot'] = {
                 in: 'body',
                 description: 'email',
                 required: true,

@@ -12,4 +12,9 @@ abstract class PasswordApi {
   Future<HttpResponse> postChangePassword(
     @Body() PasswordChangementOut passwordChangementOut,
   );
+
+  @POST('/password/forgot')
+  Future<HttpResponse> postForgotPassword(
+    @Body() String email,
+  );
 }

@@ -20,7 +20,7 @@ class UserDefaultRedirection extends StatelessWidget {
           ),
           Text(
             tr('userDefaultThanks'),
-            style: registratonSnackTextStyle(textColor: Colors.black),
+            style: registrationSnackTextStyle(textColor: Colors.black),
           ),
           const SizedBox(
             height: 40,

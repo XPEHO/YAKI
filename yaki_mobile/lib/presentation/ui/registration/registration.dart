@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:yaki/presentation/state/providers/user_registration_provider.dart';
 import 'package:yaki/presentation/styles/color.dart';
 import 'package:yaki/presentation/styles/text_style.dart';
+import 'package:yaki/presentation/ui/registration/form_functionality.dart';
 import 'package:yaki/presentation/ui/registration/view/registration_snackbar.dart';
 import 'package:yaki/presentation/ui/shared/views/confirmation_elevated_button.dart';
 import 'package:yaki/presentation/ui/shared/views/input_registration_page.dart';
@@ -62,7 +63,7 @@ class _RegistrationState extends ConsumerState<Registration> {
       if (registrationResult == "OK") {
         showSnackBar(
           content: tr("registrationSnackSuccess"),
-          textStyle: registratonSnackTextStyle(
+          textStyle: registrationSnackTextStyle(
             textColor: const Color.fromARGB(255, 82, 251, 45),
           ),
           actionLabel: tr('registrationSnackValidation'),
@@ -73,7 +74,7 @@ class _RegistrationState extends ConsumerState<Registration> {
       } else if (registrationResult == "registrationFailed") {
         showSnackBar(
           content: tr("registrationSnackError"),
-          textStyle: registratonSnackTextStyle(
+          textStyle: registrationSnackTextStyle(
             textColor: const Color.fromARGB(255, 123, 5, 5),
           ),
           actionLabel: tr('registrationCancelButton'),
@@ -84,7 +85,7 @@ class _RegistrationState extends ConsumerState<Registration> {
       } else if (registrationResult == "registrationInputEmailError") {
         showSnackBar(
           content: tr('registrationCancelButton'),
-          textStyle: registratonSnackTextStyle(
+          textStyle: registrationSnackTextStyle(
             textColor: const Color.fromARGB(255, 123, 5, 5),
           ),
           actionLabel: "Ok",
@@ -96,153 +97,99 @@ class _RegistrationState extends ConsumerState<Registration> {
     }
   }
 
-  // Validators for each input
-  String? nameValidator(String? value) {
-    final nameRegex = RegExp(r"^[A-Za-z ]+$");
-    if (value == null || value.isEmpty) {
-      return tr('registrationInputNameError1');
-    }
-    if (!nameRegex.hasMatch(value)) {
-      return tr('registrationInputNameError2');
-    }
-    return null;
-  }
-
-  String? emailValidator(String? value) {
-    final emailRegex = RegExp(r"^[a-zA-Z0-9-_.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
-    if (value == null || value.isEmpty) {
-      return tr('registrationInputNameError1');
-    }
-    if (!emailRegex.hasMatch(value)) {
-      return tr('registrationInputEmailError');
-    }
-    return null;
-  }
-
-  String? passwordValidator(String? value) {
-    final passwordRegex = RegExp(
-      r'^(?=.*?[A-Z])(?=.*[a-z])(?=.*?[0-9])(?=.*?[$£€µù^&§+=:;.?,()é!@#\><*~"%\-_/\[\]\{\}\|ç]).{10}',
-    );
-    if (value != null && value.isEmpty) {
-      return tr('registrationInputPasswordError1');
-    }
-
-    if (!passwordRegex.hasMatch(value!)) {
-      return tr('registrationInputPasswordError2');
-    }
-    return null;
-  }
-
-  String? pwConfirmationValidator(String? value) {
-    if (value != null && value.isEmpty) {
-      return tr('registrationInputPassConfirmError1');
-    }
-    if (passwordController.text != value) {
-      return tr('registrationInputPassConfirmError2');
-    }
-    return null;
-  }
-
-  String capitalize(String s) {
-    //first letter uppercase only
-    return "${s[0].toUpperCase()}${s.substring(1).toLowerCase()}";
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.yakiPrimaryColor,
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 40, bottom: 30),
-                  child: Text(
-                    tr('registrationPageTitle'),
-                    style: registrationPageTitleTextStyle(),
-                  ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 40, bottom: 30),
+                child: Text(
+                  tr('registrationPageTitle'),
+                  style: registrationPageTitleTextStyle(),
                 ),
-                Form(
-                  key: _formKey,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      InputRegistration(
-                        textInputAction: TextInputAction.next,
-                        controller: firstNameController,
-                        label: tr('registrationInputFirstnameLabel'),
-                        validatorFunction: nameValidator,
-                        isShown: false,
-                        onChange: (value) {
-                          firstNameController.value = TextEditingValue(
-                            text: capitalize(value),
-                            selection: firstNameController.selection,
-                          );
-                        }, // textCapitalization: capitalize,
-                      ),
-                      InputRegistration(
-                        textInputAction: TextInputAction.next,
-                        controller: lastNameController,
-                        label: tr('registrationInputLastnameLabel'),
-                        validatorFunction: nameValidator,
-                        isShown: false,
-                        onChange: (value) {
-                          lastNameController.value = TextEditingValue(
-                            text: value.toUpperCase(),
-                            selection: lastNameController.selection,
-                          );
-                        }, // textCapitalization: toUpperCase,
-                      ),
-                      InputRegistration(
-                        textInputAction: TextInputAction.next,
-                        controller: emailController,
-                        label: tr('registrationInputEmailLabel'),
-                        validatorFunction: emailValidator,
-                        isShown: false,
-                        // textCapit,
-                      ),
-                      InputRegistration(
-                        textInputAction: TextInputAction.next,
-                        controller: passwordController,
-                        label: tr('registrationInputPasswordLabel'),
-                        validatorFunction: passwordValidator,
-                        isShown: true,
-                      ),
-                      InputRegistration(
-                        textInputAction: TextInputAction.done,
-                        controller: passwordConfirmController,
-                        label: tr('registrationInputPassConfirmLabel'),
-                        validatorFunction: pwConfirmationValidator,
-                        isShown: true,
-                      ),
-                    ],
-                  ),
+              ),
+              Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    InputRegistration(
+                      textInputAction: TextInputAction.next,
+                      controller: firstNameController,
+                      label: tr('registrationInputFirstnameLabel'),
+                      validatorFunction: nameValidator,
+                      isShown: false,
+                      onChange: (value) {
+                        firstNameController.value = TextEditingValue(
+                          text: capitalize(value),
+                          selection: firstNameController.selection,
+                        );
+                      }, // textCapitalization: capitalize,
+                    ),
+                    InputRegistration(
+                      textInputAction: TextInputAction.next,
+                      controller: lastNameController,
+                      label: tr('registrationInputLastnameLabel'),
+                      validatorFunction: nameValidator,
+                      isShown: false,
+                      onChange: (value) {
+                        lastNameController.value = TextEditingValue(
+                          text: value.toUpperCase(),
+                          selection: lastNameController.selection,
+                        );
+                      }, // textCapitalization: toUpperCase,
+                    ),
+                    InputRegistration(
+                      textInputAction: TextInputAction.next,
+                      controller: emailController,
+                      label: tr('registrationInputEmailLabel'),
+                      validatorFunction: emailValidator,
+                      isShown: false,
+                      // textCapit,
+                    ),
+                    InputRegistration(
+                      textInputAction: TextInputAction.next,
+                      controller: passwordController,
+                      label: tr('registrationInputPasswordLabel'),
+                      validatorFunction: passwordValidator,
+                      isShown: true,
+                    ),
+                    InputRegistration(
+                      textInputAction: TextInputAction.done,
+                      controller: passwordConfirmController,
+                      label: tr('registrationInputPassConfirmLabel'),
+                      validatorFunction: (value) => pwConfirmationValidator(value, passwordController.text),
+                      isShown: true,
+                    ),
+                  ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 40),
-                  child: ConfirmationElevatedButton(
-                    text: tr('registrationButton'),
-                    onPressed: formButtonValidation,
-                    foregroundColor: const Color.fromARGB(212, 183, 146, 14),
-                    backgroundColor: const Color.fromARGB(255, 220, 219, 219),
-                    btnTextStyle: registrationBtnTextStyle(),
-                  ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 40),
+                child: ConfirmationElevatedButton(
+                  text: tr('registrationButton'),
+                  onPressed: formButtonValidation,
+                  foregroundColor: const Color.fromARGB(212, 183, 146, 14),
+                  backgroundColor: const Color.fromARGB(255, 220, 219, 219),
+                  btnTextStyle: registrationBtnTextStyle(),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 40),
-                  child: ConfirmationElevatedButton(
-                    text: tr('registrationCancelButton'),
-                    onPressed: () => context.go("/"),
-                    foregroundColor: const Color.fromARGB(212, 183, 146, 14),
-                    backgroundColor: const Color.fromARGB(255, 107, 97, 96),
-                    btnTextStyle: registrationCancelTextStyle(),
-                  ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 40),
+                child: ConfirmationElevatedButton(
+                  text: tr('registrationCancelButton'),
+                  onPressed: () => context.go("/"),
+                  foregroundColor: const Color.fromARGB(212, 183, 146, 14),
+                  backgroundColor: const Color.fromARGB(255, 107, 97, 96),
+                  btnTextStyle: registrationCancelTextStyle(),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

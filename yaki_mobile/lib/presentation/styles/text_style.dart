@@ -40,7 +40,7 @@ TextStyle registrationCancelTextStyle() {
   );
 }
 
-TextStyle registratonSnackTextStyle({required Color textColor}) {
+TextStyle registrationSnackTextStyle({required Color textColor}) {
   return TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.bold,
