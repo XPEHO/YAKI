@@ -8,7 +8,7 @@ import { UserToRegisterIn } from "./toRegister.dtoIn";
 import { UserToRegisterOut } from "./toRegister.dtoOut";
 import { RegisterResponse } from "./registerResponse";
 import EmailAlreadyExistsError from "../../errors/EmailAlreadyExistError";
-import {LoginDtoIn} from "./login.dtoIn";
+import { LoginDtoIn } from "./login.dtoIn";
 
 export class UserService {
   userRepository: UserRepository;
@@ -30,7 +30,9 @@ export class UserService {
 
     const searchUser = await this.userRepository.getByLogin(loginUser.login);
 
-    if (await authService.comparePw(loginUser.password, searchUser.user_password)) {
+    if (
+      await authService.comparePw(loginUser.password, searchUser.user_password)
+    ) {
       let user = undefined;
       // if captain_id column is null, create a team_mate
       if (searchUser.captain_id === null) {
@@ -102,23 +104,4 @@ export class UserService {
       }
     }
   };
-
-  /**
-   * Reset a user's password
-   * @param email The email of the user whose password is being reset
-   * @param newPassword The new password to set for the user
-   * @returns True if the password was reset successfully, false otherwise
-   */
-  resetPassword = async (
-    email: string,
-  ): Promise<boolean> => {
-    // Reset password
-    const success = await this.userRepository.resetPassword(email);
-    if (!success) {
-      throw new Error("Failed to reset password");
-    }
-    return true;
-  };
-
-
 }

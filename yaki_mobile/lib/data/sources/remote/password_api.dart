@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:yaki/data/models/password_changement_out.dart';
+import 'package:yaki/data/models/password_forgot_out.dart';
 
 part "password_api.g.dart";
 
@@ -15,6 +16,6 @@ abstract class PasswordApi {
 
   @POST('/password/forgot')
   Future<HttpResponse> postForgotPassword(
-    @Body() String email,
+    @Body() PasswordForgotOut passwordForgotOut,
   );
 }

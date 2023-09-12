@@ -49,11 +49,13 @@ class _PasswordApi implements PasswordApi {
   }
 
   @override
-  Future<HttpResponse<dynamic>> postForgotPassword(String email) async {
+  Future<HttpResponse<dynamic>> postForgotPassword(
+      PasswordForgotOut passwordForgotOut) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = email;
+    final _data = <String, dynamic>{};
+    _data.addAll(passwordForgotOut.toJson());
     final _result =
         await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(Options(
       method: 'POST',

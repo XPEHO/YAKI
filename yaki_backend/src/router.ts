@@ -75,7 +75,7 @@ router.post(
   async (req, res) => passwordController.changePassword(req, res)
 );
 
-router.post("/forgotpassword", async (req, res) =>
+router.post("/password/forgot", async (req, res) =>
   /* #swagger.parameters['login forgotPassword'] = {
 router.post("/forgot", async (req, res) =>
   /* #swagger.parameters['password forgot'] = {

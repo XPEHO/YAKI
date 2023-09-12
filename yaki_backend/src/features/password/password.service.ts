@@ -1,4 +1,3 @@
-
 import { PasswordRepository } from "./password.repository";
 import { PasswordForgottenDtoIn } from "./passwordForgotten.dtoIn";
 import YakiUtils from "../../utils/yakiUtils";
@@ -11,7 +10,7 @@ export class PasswordService {
     this.passwordRespository = passwordRespository;
   }
 
-  async changePassword(passwordChange: PasswordChangeDtoIn): Promise<void> {
+  async changePassword(passwordChange: PasswordChangeDtoIn): Promise<boolean> {
     // if same object structure verification
     const reference = new PasswordChangeDtoIn(0, "", "");
     if (YakiUtils.isSameObjStructure(passwordChange, reference) === false) {
@@ -24,17 +23,38 @@ export class PasswordService {
     if (isSomesAttributesEmpty === true) {
       throw new Error("Missing password change information(s)");
     }
-
     try {
-      this.passwordRespository.changePassword(passwordChange);
+      const response = await this.passwordRespository.changePassword(
+        passwordChange
+      );
+      if (response === 200) {
+        return true;
+      }
     } catch (error: any) {
       throw new Error(error.message);
     }
+    return false;
   }
 
   async forgotPassword(
     passwordForgotten: PasswordForgottenDtoIn
-  ): Promise<void> {
-    await this.passwordRespository.forgotPassword(passwordForgotten);
+  ): Promise<boolean> {
+    const reference = new PasswordForgottenDtoIn("");
+    if (YakiUtils.isSameObjStructure(passwordForgotten, reference) === false) {
+      throw new TypeError("Incorrect data");
+    }
+    try {
+      const response = await this.passwordRespository.forgotPassword(
+        passwordForgotten
+      );
+
+      if (response === 200) {
+        console.warn("service", response);
+        return true;
+      }
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+    return false;
   }
 }

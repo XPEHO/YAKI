@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yaki/data/models/password_changement_out.dart';
+import 'package:yaki/data/models/password_forgot_out.dart';
 import 'package:yaki/data/sources/remote/password_api.dart';
 
 class PasswordRepository {
@@ -42,9 +43,11 @@ class PasswordRepository {
   }
 
   Future<bool> forgotPassword(String email) async {
+    PasswordForgotOut passwordForgotOut = PasswordForgotOut(email: email);
+
     try {
       final forgotPasswordResponse =
-          await _passwordApi.postForgotPassword(email);
+          await _passwordApi.postForgotPassword(passwordForgotOut);
       final statusCode = forgotPasswordResponse.response.statusCode;
       switch (statusCode) {
         case 200:
