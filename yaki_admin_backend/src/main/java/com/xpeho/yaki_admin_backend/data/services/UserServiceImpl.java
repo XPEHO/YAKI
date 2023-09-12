@@ -123,7 +123,7 @@ public class UserServiceImpl implements UserService {
                 throw new EntityNotFoundException("Your account is unknown");
         }
         try{
-            authManager.authenticate(new UsernamePasswordAuthenticationToken(user.get().getEmail(), oldPassword));
+            authManager.authenticate(new UsernamePasswordAuthenticationToken(user.get().getLogin(), oldPassword));
         }
         catch (Exception e){
             throw new BadCredentialsException("Wrong password");
