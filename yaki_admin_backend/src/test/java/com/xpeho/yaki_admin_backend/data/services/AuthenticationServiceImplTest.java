@@ -3,10 +3,7 @@ package com.xpeho.yaki_admin_backend.data.services;
 import com.xpeho.yaki_admin_backend.configSecurity.JwtService;
 import com.xpeho.yaki_admin_backend.data.models.UserModel;
 import com.xpeho.yaki_admin_backend.data.sources.UserJpaRepository;
-import com.xpeho.yaki_admin_backend.domain.entities.AuthenticationRequestEntity;
-import com.xpeho.yaki_admin_backend.domain.entities.AuthenticationResponseEntity;
-import com.xpeho.yaki_admin_backend.domain.entities.RegisterRequestEntity;
-import com.xpeho.yaki_admin_backend.domain.entities.RegisterResponseEntity;
+import com.xpeho.yaki_admin_backend.domain.entities.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -117,6 +114,6 @@ public class AuthenticationServiceImplTest {
         UserModel userReturned = new UserModel("Vache", "Quirit", "email1", "email1", "encodedPassword");
         when(repository.findByLogin(email)).thenReturn(Optional.of(userReturned));
         doNothing().when(userService).resetPassword(userReturned,passwordEncoder);
-        assertDoesNotThrow(() -> authenticationServiceImpl.forgotPassword(email));
+        assertDoesNotThrow(() -> authenticationServiceImpl.forgotPassword(new ResetPasswordEntity(email)));
     }
 }

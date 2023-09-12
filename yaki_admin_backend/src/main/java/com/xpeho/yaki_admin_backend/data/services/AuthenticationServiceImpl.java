@@ -4,10 +4,7 @@ import com.xpeho.yaki_admin_backend.configSecurity.JwtService;
 import com.xpeho.yaki_admin_backend.data.models.UserModel;
 import com.xpeho.yaki_admin_backend.data.models.VerificationTokenModel;
 import com.xpeho.yaki_admin_backend.data.sources.UserJpaRepository;
-import com.xpeho.yaki_admin_backend.domain.entities.AuthenticationRequestEntity;
-import com.xpeho.yaki_admin_backend.domain.entities.AuthenticationResponseEntity;
-import com.xpeho.yaki_admin_backend.domain.entities.RegisterRequestEntity;
-import com.xpeho.yaki_admin_backend.domain.entities.RegisterResponseEntity;
+import com.xpeho.yaki_admin_backend.domain.entities.*;
 import com.xpeho.yaki_admin_backend.domain.services.AuthenticationService;
 import com.xpeho.yaki_admin_backend.error_handling.EmailAlreadyExistsException;
 import com.xpeho.yaki_admin_backend.events.OnRegistrationCompleteEvent;
@@ -117,8 +114,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
 
     @Override
-    public void forgotPassword(String email){
-        Optional<UserModel> user = repository.findByLogin(email);
+    public void forgotPassword(ResetPasswordEntity emailEntity) {
+        Optional<UserModel> user = repository.findByLogin(emailEntity.email());
         if(!user.isPresent()){
             throw new EntityNotFoundException("no user found with this email");
         }
