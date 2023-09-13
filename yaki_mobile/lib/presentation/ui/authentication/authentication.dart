@@ -132,6 +132,10 @@ class _AuthenticationState extends ConsumerState<Authentication> {
     goToRegistrationPage();
   }
 
+  void onPressedForgotPassword({required Function goToForgotPassword}) {
+    goToForgotPassword();
+  }
+
   @override
   Widget build(BuildContext context) {
     // Size of the device
@@ -236,6 +240,28 @@ class _AuthenticationState extends ConsumerState<Authentication> {
                               context.go('/userDefaultRedirection'),
                         ),
                         child: Text(tr('signIn')),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: InkWell(
+                        onTap: () => onPressedForgotPassword(
+                          goToForgotPassword: () =>
+                              context.push('/forgotPassword'),
+                        ),
+                        borderRadius: BorderRadius.circular(5),
+                        highlightColor: const Color.fromARGB(103, 243, 194, 18),
+                        splashColor: const Color.fromARGB(125, 46, 46, 46),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Text(
+                            tr('forgotPassword'),
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.blue.shade900,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                     Padding(

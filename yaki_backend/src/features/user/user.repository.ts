@@ -1,8 +1,8 @@
-import {Client, QueryResult} from "pg";
+import { Client, QueryResult } from "pg";
 import "dotenv/config";
-import {UserToRegisterOut} from "./toRegister.dtoOut";
+import { UserToRegisterOut } from "./toRegister.dtoOut";
 import ToRegisterRes from "./toRegisterRes.dto";
-import EmailAlreadyExistsError from "../../errors/EmailAlreadyExistError"
+import EmailAlreadyExistsError from "../../errors/EmailAlreadyExistError";
 
 export class UserRepository {
   /**
@@ -41,7 +41,7 @@ export class UserRepository {
     }
     // If the user still hasn't confirmed his account
     if (poolResult.rows[0].user_enabled === false) {
-      console.log("this user isn't activated")
+      console.log("this user isn't activated");
       throw new Error("This account isn't activated");
     }
     // "else" return the user
@@ -49,30 +49,34 @@ export class UserRepository {
   };
 
   /**
-   * resgister a user that signed in with the mobile application
+   * register a user that signed in with the mobile application
    * @param user user data coming from registration process
    * @returns response from admin api after email confirmation & successfull registration
    */
   registerUser = async (user: UserToRegisterOut): Promise<ToRegisterRes> => {
-    try{
-    const registerResponse = await fetch(`${process.env.ADMIN_API}/login/register`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(user),
-    });
-      if(!registerResponse.ok){
-        if(registerResponse.status === 417)
-        //handle the email already used error
-          throw new EmailAlreadyExistsError("email already used")
+    try {
+      const registerResponse = await fetch(
+        `${process.env.ADMIN_API}/login/register`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(user),
+        }
+      );
+      if (!registerResponse.ok) {
+        if (registerResponse.status === 417)
+          //handle the email already used error
+          throw new EmailAlreadyExistsError("email already used");
       }
-      let jsonResponse =  await registerResponse.json();
+      let jsonResponse = await registerResponse.json();
       return jsonResponse;
-    }
-    catch(err){
-      console.warn(err)
+    } catch (err) {
+      console.warn(err);
       throw err;
     }
   };
+
+
 }

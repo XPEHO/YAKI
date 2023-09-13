@@ -1,18 +1,18 @@
 import express from "express";
-import {UserController} from "./features/user/user.controller";
-import {UserService} from "./features/user/user.service";
-import {UserRepository} from "./features/user/user.repository";
-import {TeammateRepository} from "./features/teammate/teammate.repository";
-import {authService} from "./features/user/authentication.service";
+import { UserController } from "./features/user/user.controller";
+import { UserService } from "./features/user/user.service";
+import { UserRepository } from "./features/user/user.repository";
+import { TeammateRepository } from "./features/teammate/teammate.repository";
+import { authService } from "./features/user/authentication.service";
 
-import {TeammateController} from "./features/teammate/teammate.controller";
-import {TeamRepository} from "./features/team/team.repository";
-import {TeamService} from "./features/team/team.service";
-import {TeammateService} from "./features/teammate/teammate.service";
-import {limiter, signInLimiter} from "./middleware/rateLimiter";
-import {PasswordRepository} from "./features/password/password.repository";
-import {PasswordService} from "./features/password/password.service";
-import {PasswordController} from "./features/password/password.controller";
+import { TeammateController } from "./features/teammate/teammate.controller";
+import { TeamRepository } from "./features/team/team.repository";
+import { TeamService } from "./features/team/team.service";
+import { TeammateService } from "./features/teammate/teammate.service";
+import { limiter, signInLimiter } from "./middleware/rateLimiter";
+import { PasswordRepository } from "./features/password/password.repository";
+import { PasswordService } from "./features/password/password.service";
+import { PasswordController } from "./features/password/password.controller";
 
 export const router = express.Router();
 
@@ -30,6 +30,11 @@ const userRepository = new UserRepository();
 const userService = new UserService(userRepository);
 const userController = new UserController(userService);
 
+//PASSWORD
+const passwordRepository = new PasswordRepository();
+const passwordService = new PasswordService(passwordRepository);
+const passwordController = new PasswordController(passwordService);
+
 router.post("/login", signInLimiter, (req, res) =>
   /* #swagger.parameters['Login'] = {
                 in: 'body',
@@ -41,7 +46,13 @@ router.post("/login", signInLimiter, (req, res) =>
   userController.checkLogin(req, res)
 );
 router.use(limiter);
-router.post("/register", (req, res) => userController.registerNewUser(req, res));
+router.post("/register", (req, res) =>
+  userController.registerNewUser(req, res)
+);
+
+router.post("/register", (req, res) =>
+  userController.registerNewUser(req, res)
+);
 
 router.get(
   "/teammates",
@@ -54,15 +65,25 @@ router.get(
                 schema: { captainId: 1 }
 }
   */ authService.verifyToken(req, res, next),
-  async (req, res) => teammateController.getByTeamIdWithLastDeclaration(req, res)
+  async (req, res) =>
+    teammateController.getByTeamIdWithLastDeclaration(req, res)
 );
-
-const passwordRepository = new PasswordRepository();
-const passwordService = new PasswordService(passwordRepository);
-const passwordController = new PasswordController(passwordService);
 
 router.post(
   "/password/change",
   (req, res, next) => authService.verifyToken(req, res, next),
   async (req, res) => passwordController.changePassword(req, res)
+);
+
+router.post("/password/forgot", async (req, res) =>
+  /* #swagger.parameters['login forgotPassword'] = {
+router.post("/forgot", async (req, res) =>
+  /* #swagger.parameters['password forgot'] = {
+                in: 'body',
+                description: 'email',
+                required: true,
+                type: 'object',
+                schema: { email: 'string' }
+  */
+  passwordController.forgotPassword(req, res)
 );

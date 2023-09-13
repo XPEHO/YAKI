@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:yaki/presentation/state/providers/password_provider.dart';
 import 'package:yaki/presentation/styles/color.dart';
 import 'package:yaki/presentation/styles/text_style.dart';
+import 'package:yaki/presentation/ui/registration/form_functionality.dart';
 import 'package:yaki/presentation/ui/registration/view/registration_snackbar.dart';
 import 'package:yaki/presentation/ui/shared/views/confirmation_elevated_button.dart';
 import 'package:yaki/presentation/ui/shared/views/input_registration_page.dart';
@@ -48,12 +49,12 @@ class _ChangePasswordState extends ConsumerState<ChangePassword> {
             newPassword.text,
           );
 
-      final stateTest = ref.read(passwordProvider);
+      final changePasswordState = ref.read(passwordProvider);
 
-      if (stateTest == true) {
+      if (changePasswordState == true) {
         showSnackBar(
           content: tr('changePasswordSucess'),
-          textStyle: registratonSnackTextStyle(
+          textStyle: registrationSnackTextStyle(
             textColor: const Color.fromARGB(255, 99, 203, 64),
           ),
           actionLabel: tr('registrationSnackValidation'),
@@ -64,7 +65,7 @@ class _ChangePasswordState extends ConsumerState<ChangePassword> {
       } else {
         showSnackBar(
           content: tr('changePasswordError'),
-          textStyle: registratonSnackTextStyle(
+          textStyle: registrationSnackTextStyle(
             textColor: const Color.fromARGB(255, 182, 44, 44),
           ),
           actionLabel: tr('registrationCancelButton'),
@@ -72,30 +73,6 @@ class _ChangePasswordState extends ConsumerState<ChangePassword> {
         );
       }
     }
-  }
-
-  String? passwordValidator(String? value) {
-    final passwordRegex = RegExp(
-      r'^(?=.*?[A-Z])(?=.*[a-z])(?=.*?[0-9])(?=.*?[$£€µù^&§+=:;.?,()é!@#\><*~"%\-_/\[\]\{\}\|ç]).{10}',
-    );
-    if (value != null && value.isEmpty) {
-      return tr('registrationInputPasswordError1');
-    }
-
-    if (!passwordRegex.hasMatch(value!)) {
-      return tr('registrationInputPasswordError2');
-    }
-    return null;
-  }
-
-  String? pwConfirmationValidator(String? value) {
-    if (value != null && value.isEmpty) {
-      return tr('registrationInputPassConfirmError1');
-    }
-    if (newPassword.text != value) {
-      return tr('registrationInputPassConfirmError2');
-    }
-    return null;
   }
 
   @override
@@ -137,7 +114,8 @@ class _ChangePasswordState extends ConsumerState<ChangePassword> {
                       textInputAction: TextInputAction.done,
                       controller: newPasswordConfirmation,
                       label: tr('changePasswordPageNewPWConfirm'),
-                      validatorFunction: pwConfirmationValidator,
+                      validatorFunction: (value) =>
+                          pwConfirmationValidator(value, newPassword.text),
                       isShown: true,
                     ),
                   ],

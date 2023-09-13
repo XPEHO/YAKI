@@ -1,5 +1,5 @@
-import {UserService} from "./user.service";
-import {Response, Request} from "express";
+import { UserService } from "./user.service";
+import { Response, Request } from "express";
 import EmailAlreadyExistsError from "../../errors/EmailAlreadyExistError";
 
 export class UserController {
@@ -25,12 +25,15 @@ export class UserController {
       res.send(response);
     } catch (error: any) {
       if (error instanceof EmailAlreadyExistsError) {
-        res.status(417).json({message: error.message});
+        res.status(417).json({ message: error.message });
         //catch emails error
       } else {
         // catch server errors
-        res.status(400).json({message: error.message});
+        res.status(400).json({ message: error.message });
       }
     }
   };
+
+
+
 }

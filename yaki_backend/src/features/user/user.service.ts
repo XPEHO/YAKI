@@ -1,14 +1,14 @@
-import {UserRepository} from "./user.repository";
-import {authService} from "./authentication.service";
+import { UserRepository } from "./user.repository";
+import { authService } from "./authentication.service";
 import YakiUtils from "../../utils/yakiUtils";
 
-import {TeammateDtoOut} from "../teammate/teammate.dtoOut";
-import {CaptainDtoOut} from "../captain/captain.dtoOut";
-import {UserToRegisterIn} from "./toRegister.dtoIn";
-import {UserToRegisterOut} from "./toRegister.dtoOut";
-import {RegisterResponse} from "./registerResponse";
+import { TeammateDtoOut } from "../teammate/teammate.dtoOut";
+import { CaptainDtoOut } from "../captain/captain.dtoOut";
+import { UserToRegisterIn } from "./toRegister.dtoIn";
+import { UserToRegisterOut } from "./toRegister.dtoOut";
+import { RegisterResponse } from "./registerResponse";
 import EmailAlreadyExistsError from "../../errors/EmailAlreadyExistError";
-import {LoginDtoIn} from "./login.dtoIn";
+import { LoginDtoIn } from "./login.dtoIn";
 
 export class UserService {
   userRepository: UserRepository;
@@ -30,7 +30,9 @@ export class UserService {
 
     const searchUser = await this.userRepository.getByLogin(loginUser.login);
 
-    if (await authService.comparePw(loginUser.password, searchUser.user_password)) {
+    if (
+      await authService.comparePw(loginUser.password, searchUser.user_password)
+    ) {
       let user = undefined;
       // if captain_id column is null, create a team_mate
       if (searchUser.captain_id === null) {
@@ -71,7 +73,9 @@ export class UserService {
     if (YakiUtils.isSameObjStructure(user, reference) === false) {
       throw new TypeError("Incorrect data");
     }
-    const isSomesAttributesEmpty = Object.values(user).some((value) => !value && value.trim() === "");
+    const isSomesAttributesEmpty = Object.values(user).some(
+      (value) => !value && value.trim() === ""
+    );
     if (isSomesAttributesEmpty === true) {
       throw new Error("Missing registration information(s)");
     }
@@ -84,7 +88,9 @@ export class UserService {
       user.password.trim()
     );
     try {
-      const springResponse = await this.userRepository.registerUser(userToRegister);
+      const springResponse = await this.userRepository.registerUser(
+        userToRegister
+      );
       if (springResponse.id !== 0 && springResponse.id !== null) {
         responseAfterRegister.isRegistered = true;
       }

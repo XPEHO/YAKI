@@ -13,4 +13,10 @@ class PasswordNotifier extends StateNotifier<bool> {
     state =
         await passwordRepository.changePassword(currentPassword, newPassword);
   }
+
+  Future<void> forgotPassword(
+    String email,
+  ) async {
+    state = await passwordRepository.forgotPassword(email);
+  }
 }

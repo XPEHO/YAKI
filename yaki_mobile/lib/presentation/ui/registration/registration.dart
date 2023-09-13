@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:yaki/presentation/state/providers/user_registration_provider.dart';
 import 'package:yaki/presentation/styles/color.dart';
 import 'package:yaki/presentation/styles/text_style.dart';
+import 'package:yaki/presentation/ui/registration/form_functionality.dart';
 import 'package:yaki/presentation/ui/registration/view/registration_snackbar.dart';
 import 'package:yaki/presentation/ui/shared/views/confirmation_elevated_button.dart';
 import 'package:yaki/presentation/ui/shared/views/input_registration_page.dart';
@@ -62,7 +63,7 @@ class _RegistrationState extends ConsumerState<Registration> {
       if (registrationResult == "OK") {
         showSnackBar(
           content: tr("registrationSnackSuccess"),
-          textStyle: registratonSnackTextStyle(
+          textStyle: registrationSnackTextStyle(
             textColor: const Color.fromARGB(255, 82, 251, 45),
           ),
           actionLabel: tr('registrationSnackValidation'),
@@ -73,79 +74,23 @@ class _RegistrationState extends ConsumerState<Registration> {
       } else if (registrationResult == "registrationFailed") {
         showSnackBar(
           content: tr("registrationSnackError"),
-          textStyle: registratonSnackTextStyle(
-            textColor: const Color.fromARGB(255, 123, 5, 5),
+          textStyle: registrationSnackTextStyle(
+            textColor: const Color.fromARGB(255, 245, 33, 33),
           ),
           actionLabel: tr('registrationCancelButton'),
-          barAction: () {
-            context.go('/');
-          },
+          barAction: () {},
         );
       } else if (registrationResult == "registrationInputEmailError") {
         showSnackBar(
           content: tr('registrationCancelButton'),
-          textStyle: registratonSnackTextStyle(
-            textColor: const Color.fromARGB(255, 123, 5, 5),
+          textStyle: registrationSnackTextStyle(
+            textColor: const Color.fromARGB(255, 245, 33, 33),
           ),
           actionLabel: "Ok",
-          barAction: () {
-            context.go('/');
-          },
+          barAction: () {},
         );
       }
     }
-  }
-
-  // Validators for each input
-  String? nameValidator(String? value) {
-    final nameRegex = RegExp(r"^[A-Za-z ]+$");
-    if (value == null || value.isEmpty) {
-      return tr('registrationInputNameError1');
-    }
-    if (!nameRegex.hasMatch(value)) {
-      return tr('registrationInputNameError2');
-    }
-    return null;
-  }
-
-  String? emailValidator(String? value) {
-    final emailRegex = RegExp(r"^[a-zA-Z0-9-_.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
-    if (value == null || value.isEmpty) {
-      return tr('registrationInputNameError1');
-    }
-    if (!emailRegex.hasMatch(value)) {
-      return tr('registrationInputEmailError');
-    }
-    return null;
-  }
-
-  String? passwordValidator(String? value) {
-    final passwordRegex = RegExp(
-      r'^(?=.*?[A-Z])(?=.*[a-z])(?=.*?[0-9])(?=.*?[$£€µù^&§+=:;.?,()é!@#\><*~"%\-_/\[\]\{\}\|ç]).{10}',
-    );
-    if (value != null && value.isEmpty) {
-      return tr('registrationInputPasswordError1');
-    }
-
-    if (!passwordRegex.hasMatch(value!)) {
-      return tr('registrationInputPasswordError2');
-    }
-    return null;
-  }
-
-  String? pwConfirmationValidator(String? value) {
-    if (value != null && value.isEmpty) {
-      return tr('registrationInputPassConfirmError1');
-    }
-    if (passwordController.text != value) {
-      return tr('registrationInputPassConfirmError2');
-    }
-    return null;
-  }
-
-  String capitalize(String s) {
-    //first letter uppercase only
-    return "${s[0].toUpperCase()}${s.substring(1).toLowerCase()}";
   }
 
   @override
@@ -215,7 +160,10 @@ class _RegistrationState extends ConsumerState<Registration> {
                         textInputAction: TextInputAction.done,
                         controller: passwordConfirmController,
                         label: tr('registrationInputPassConfirmLabel'),
-                        validatorFunction: pwConfirmationValidator,
+                        validatorFunction: (value) => pwConfirmationValidator(
+                          value,
+                          passwordController.text,
+                        ),
                         isShown: true,
                       ),
                     ],
