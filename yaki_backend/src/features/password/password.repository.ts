@@ -4,7 +4,6 @@ import { PasswordChangeDtoIn } from "./passwortChange.dtoIn";
 
 export class PasswordRepository {
   async changePassword(passwordChange: PasswordChangeDtoIn): Promise<number> {
-    console.log("password repository, password change : ", passwordChange);
     try {
       const response = await fetch(
         `${process.env.ADMIN_API}/users/change-password`,
