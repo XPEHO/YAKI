@@ -4,6 +4,7 @@ import SideBarTeamsListElement from "@/features/shared/components/SideBarTeamsLi
 import SideBarElement from "@/features/shared/components/SideBarCategoryElement.vue";
 import SideBarButton from "@/features/shared/components/SideBarButton.vue";
 import modalState from "@/features/shared/modal/services/modalState";
+import router from "@/router/router";
 import {MODALMODE} from "@/features/shared/modal/services/modalMode";
 
 import {useTeamStore} from "@/stores/teamStore.js";
@@ -28,6 +29,7 @@ onBeforeMount(async () => {
 
 const onClickSelectTeam = (id: number) => {
   selectTeamAndFetchTeammates(id);
+  router.push({path: ('/captain/manage-team')});
 };
 
 // add team button press to open modal
