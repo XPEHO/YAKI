@@ -1,7 +1,15 @@
-name: Upload appbundle on internal test track
+name: Upload appbundle on production track
 on:
-  release:
-    types: [published]
+  workflow_dispatch:
+    inputs:
+      build-name:
+        description: 'Build name: major.minor.patch'
+        required: true
+        default: '0.0.0'
+      build-number:
+        description: 'Build number: positive integer'
+        required: true
+        default: '0'
 
 jobs:
   upload:
@@ -27,12 +35,12 @@ jobs:
         run: |
           cd yaki_mobile
           flutter pub get
-          flutter build appbundle --dart-define API_BASE_URL=https://yaki.uat.xpeho.fr/api/ --dart-define CRED_HASH_PASS=${{ secrets.CRED_HASH_PASS }}}
+          flutter build appbundle --dart-define API_BASE_URL=https://yaki.xpeho.fr/api/ --dart-define CRED_HASH_PASS=${{ secrets.CRED_HASH_PASS }}}
       - name: Upload appbundle to Play Console
         uses: r0adkll/upload-google-play@v1
         with:
           serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON }}
           packageName: com.xpeho.yaki
           releaseFiles: yaki_mobile/build/app/outputs/bundle/release/app-release.aab
-          track: internal
+          track: production
       
