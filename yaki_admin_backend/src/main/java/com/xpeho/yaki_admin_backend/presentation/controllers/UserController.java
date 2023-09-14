@@ -13,24 +13,23 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @RequestMapping("/users")
+@SecurityRequirement(name = "bearerAuth")
 public class UserController {
     private final UserService userService;
 
     public UserController(UserService userService) {
         this.userService = userService;
     }
-    @SecurityRequirement(name = "bearerAuth")
     @PostMapping
     public UserEntity createUser(@RequestBody UserEntityIn userEntity) {
         return userService.save(userEntity);
     }
-    @SecurityRequirement(name = "bearerAuth")
     @GetMapping("/inRange")
     public List<UserEntityWithID> findUserByIdRange(@RequestParam int idStart,
                                                     @RequestParam int idEnd) {
         return userService.findUserByIdRange(idStart, idEnd);
     }
-    @SecurityRequirement(name = "bearerAuth")
+    
     @DeleteMapping("{id}")
     public UserEntity deleteUser(@PathVariable int id) {
         return userService.deleteById(id);
