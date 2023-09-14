@@ -3,14 +3,6 @@ name: Create and publish all Docker images
 on:
   push:
     branches: ["main"]
-  release:
-    types: [published]
-  workflow_dispatch:
-    inputs:
-      reason:
-        description: "Reason"
-        required: true
-        default: "Manual trigger"
 
 jobs:
   build-yaki-backend-mobile:

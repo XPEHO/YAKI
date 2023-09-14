@@ -1,15 +1,11 @@
-name: Update the production
+name: Create and publish all Docker images
 
 on:
-  workflow_dispatch:
-    inputs:
-      reason:
-        description: "Reason"
-        required: true
-        default: "Manual trigger"
+  release:
+    types: [published]
 
 jobs:
-  build-yaki-backend-mobile-prod:
+  build-yaki-backend-mobile:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
@@ -19,9 +15,9 @@ jobs:
           echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io --username phanatic --password-stdin
           cd yaki_backend
           docker build -t yaki_backend .
-          docker tag yaki_backend ghcr.io/xpeho/yaki:backend-mobile-prod
-          docker push ghcr.io/xpeho/yaki:backend-mobile-prod
-  build-yaki-front-mobile-prod:
+          docker tag yaki_backend ghcr.io/xpeho/yaki:backend-mobile-${{ github.event.release.tag_name }}
+          docker push ghcr.io/xpeho/yaki:backend-mobile-${{ github.event.release.tag_name }}
+  build-yaki-front-mobile:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
@@ -45,9 +41,9 @@ jobs:
           flutter test
           flutter build web --dart-define API_BASE_URL=https://yaki.uat.xpeho.fr/api/ --dart-define CRED_HASH_PASS=${{ secrets.CRED_HASH_PASS }} --base-href "/ui/"
           docker build -t yaki_mobile .
-          docker tag yaki_mobile ghcr.io/xpeho/yaki:frontend-mobile-prod
-          docker push ghcr.io/xpeho/yaki:frontend-mobile-prod 
-  build-yaki-backend-admin-prod:
+          docker tag yaki_mobile ghcr.io/xpeho/yaki:frontend-mobile-${{ github.event.release.tag_name }}
+          docker push ghcr.io/xpeho/yaki:frontend-mobile-${{ github.event.release.tag_name }}
+  build-yaki-backend-admin:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
@@ -67,9 +63,9 @@ jobs:
           echo ${{ secrets.APPLICATION_TEST_PROPERTIES }} | base64 -d > src/test/resources/application-test.properties
           gradle clean build
           docker build -t yaki_admin_backend .
-          docker tag yaki_admin_backend ghcr.io/xpeho/yaki:backend-admin-prod
-          docker push ghcr.io/xpeho/yaki:backend-admin-prod
-  build-yaki-frontend-admin-prod:
+          docker tag yaki_admin_backend ghcr.io/xpeho/yaki:backend-admin-${{ github.event.release.tag_name }}
+          docker push ghcr.io/xpeho/yaki:backend-admin-${{ github.event.release.tag_name }}
+  build-yaki-frontend-admin:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
@@ -81,5 +77,5 @@ jobs:
           echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io --username phanatic --password-stdin
           cd yaki_admin
           docker build -t yaki_admin .
-          docker tag yaki_admin ghcr.io/xpeho/yaki:frontend-admin-prod
-          docker push ghcr.io/xpeho/yaki:frontend-admin-prod
+          docker tag yaki_admin ghcr.io/xpeho/yaki:frontend-admin-${{ github.event.release.tag_name }}
+          docker push ghcr.io/xpeho/yaki:frontend-admin-${{ github.event.release.tag_name }}

@@ -1,0 +1,38 @@
+name: Upload appbundle on internal test track
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  upload:
+    name: Upload
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          java-version: '17.x'
+          distribution: 'temurin'
+      - uses: subosito/flutter-action@v2
+      - name: Set up key.properties file from secrets
+        run: |
+          echo "${{ secrets.KEY_PROPERTIES }}" | base64 -d > yaki_mobile/android/key.properties
+      - name: Set up keystore from secrets
+        run: |
+          echo "${{ secrets.KEYSTORE }}" | base64 -d > yaki_mobile/android/app/keystore.jks
+      - name: Set up certificate from secrets
+        run: |
+          echo "${{ secrets.SERVER_CERTIFICATE }}" | base64 -d > yaki_mobile/assets/cer/server.cer
+      - name: Build appbundle
+        run: |
+          cd yaki_mobile
+          flutter pub get
+          flutter build appbundle --dart-define API_BASE_URL=https://yaki.uat.xpeho.fr/api/ --dart-define CRED_HASH_PASS=${{ secrets.CRED_HASH_PASS }}} --build-number ${{ github.event.inputs.build-number }} --build-name ${{ github.event.inputs.build-name }} --build-number ${{ github.event.inputs.build-number }}
+      - name: Upload appbundle to Play Console
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+          packageName: com.xpeho.yaki
+          releaseFiles: yaki_mobile/build/app/outputs/bundle/release/app-release.aab
+          track: internal
+      
