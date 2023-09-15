@@ -88,6 +88,12 @@ dependencies:
   flutter_launcher_icons: ^0.13.1
 
 dev_dependencies:
+  yaki_ui:
+    git:
+      url: git@github.com:XPEHO/yaki_ui.git
+      path: flutter
+      ref: 0.0.1
+
   flutter_test:
     sdk: flutter
 
