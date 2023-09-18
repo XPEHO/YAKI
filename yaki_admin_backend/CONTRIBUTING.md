@@ -1,6 +1,6 @@
 # YAKI_admin_backend
 
-Desktop back-end of the Admin Yaki application.
+Desktop back-end of the Admin Yaki application
 
 ## Recommended IDE Setup
 
