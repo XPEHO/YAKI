@@ -22,7 +22,7 @@ class TeamSelectionDialog {
   /// Shows the dialog with a list of teams to select from.
   Future<void> show() async {
     // Get the team list from the provider
-    final teamList = ref.read(teamProvider);
+    final teamList = ref.read(teamProvider).selectedTeamList;
     await showDialog(
       context: context,
       builder: (context) => AlertDialog(

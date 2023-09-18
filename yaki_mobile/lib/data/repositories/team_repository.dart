@@ -21,7 +21,7 @@ class TeamRepository {
       final SharedPreferences pref = await SharedPreferences.getInstance();
       final int userId = pref.getInt('userId') ?? 0;
       // Send a GET request to the API to retrieve a list of teams
-      final listHttpResponse = await teamApi.getTeam(userId.toString());
+      final listHttpResponse = await teamApi.getTeam(userId);
       // Get the status code of the response
       final statusCode = listHttpResponse.response.statusCode;
       // Handle the response based on the status code
@@ -42,12 +42,10 @@ class TeamRepository {
   /// Helper method that parses the API response data and returns a list of
   /// TeamModel objects
   List<TeamModel> setTeamModelList(HttpResponse response) {
-    final dynamicList = response.data.map(
-      (team) {
-        return TeamModel.fromJson(team);
-      },
-    ).toList();
-    List<TeamModel> modelList = List<TeamModel>.from(dynamicList);
+    final List<TeamModel> modelList = [];
+    for (final team in response.data) {
+      modelList.add(TeamModel.fromJson(team));
+    }
     return modelList;
   }
 }

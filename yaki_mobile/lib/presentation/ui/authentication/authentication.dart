@@ -229,7 +229,7 @@ class _AuthenticationState extends ConsumerState<Authentication> {
                           login: loginController.text,
                           password: passwordController.text,
                           goToDeclarationPage: () =>
-                              context.push('/declaration'),
+                              context.push('/team-selection'),
                           goToStatusPage: () => context.go('/status'),
                           goToCaptain: () => context.go('/captain'),
                           goToHalfdayStatusPage: () =>

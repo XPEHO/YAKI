@@ -45,7 +45,7 @@ class UserRegistrationRepository {
           );
       }
     } catch (err) {
-      if (err is DioError) {
+      if (err is DioException) {
         final responseStatusCode = err.response?.statusCode ?? -1;
         if (responseStatusCode == 417) {
           status = "registrationInputEmailError";

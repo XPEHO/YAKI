@@ -42,7 +42,7 @@ void main() {
     ];
     when(httpResponse.data).thenReturn(data);
 
-    when(teamApi.getTeam(userId.toString())).thenAnswer(
+    when(teamApi.getTeam(userId)).thenAnswer(
       (realInvocation) => Future.value(
         httpResponse,
       ),

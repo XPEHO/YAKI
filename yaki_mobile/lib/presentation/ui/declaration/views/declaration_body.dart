@@ -31,13 +31,13 @@ class DeclarationBody extends ConsumerWidget {
     required Function goToPage,
   }) async {
     if (cardContent != StatusEnum.vacation.name) {
-      final getTeamCount = ref.read(teamProvider).length;
+      final getTeamCount = ref.read(teamProvider).selectedTeamList.length;
       if (getTeamCount == 1) {
         final teamList = ref.read(teamProvider);
         await ref.read(declarationProvider.notifier).createDeclaration(
               timeOfDay: timeOfDay,
               status: StatusEnum.getValue(key: cardContent),
-              teamId: teamList.first.teamId!,
+              teamId: teamList.selectedTeamList.first.teamId!,
             );
         goToPage();
         return;

@@ -86,5 +86,11 @@
   "changePasswordPageNewPWConfirm": "Confirmer le nouveau mot de passe",
   "changePasswordPageConfimButton": "Confirmer",
   "changePasswordSucess": "Mot de passe changé avec succès, veuillez vous reconnecter",
-  "changePasswordError": "Erreur lors du changement de mot de passe, veuillez réessayer"
+  "changePasswordError": "Erreur lors du changement de mot de passe, veuillez réessayer",
+
+  "buttonNext": "SUIVANT",
+
+  "teamSelectionPageTitle1": "Quoi de prévu",
+  "teamSelectionPageTitle2": "aujourd'hui ?",
+  "teamSelectionPageHint": "Sélectionnez 1 ou 2 activités"
 }

@@ -84,5 +84,11 @@
   "changePasswordPageNewPWConfirm": "Confirm new password",
   "changePasswordPageConfimButton": "Confirm",
   "changePasswordSucess": "Password changed successfully",
-  "changePasswordError": "An error has occured, please try again later"
+  "changePasswordError": "An error has occured, please try again later",
+
+  "buttonNext": "NEXT",
+
+  "teamSelectionPageTitle1": "What's planned",
+  "teamSelectionPageTitle2": "for today ?",
+  "teamSelectionPageHint": "Select 1 or 2 activities"
 }

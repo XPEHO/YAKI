@@ -6,7 +6,6 @@ import 'package:yaki/data/sources/local/shared_preference.dart';
 import 'package:yaki/domain/entities/declaration_status.dart';
 import 'package:yaki/presentation/state/providers/declaration_provider.dart';
 import 'package:yaki/presentation/state/providers/login_provider.dart';
-import 'package:yaki/presentation/state/providers/team_provider.dart';
 import 'package:yaki_ui/yaki_ui.dart';
 
 /// using ConsumerWidget (statelessWidget) to have access to the WidgetRef object
@@ -93,7 +92,6 @@ class _AuthenticationState extends ConsumerState<Authentication> {
       if (isCaptain) {
         goToCaptain();
       } else if (isTeammate) {
-        ref.read(teamProvider.notifier).fetchTeams();
         final declarationStatus =
             await ref.read(declarationProvider.notifier).getLatestDeclaration();
         if (declarationStatus.length > 1) {
@@ -144,7 +142,7 @@ class _AuthenticationState extends ConsumerState<Authentication> {
       body: Container(
         color: backgroundColor,
         child: Padding(
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -189,7 +187,7 @@ class _AuthenticationState extends ConsumerState<Authentication> {
                             login: loginController.text,
                             password: passwordController.text,
                             goToDeclarationPage: () =>
-                                context.push('/declaration'),
+                                context.push('/team-selection'),
                             goToStatusPage: () => context.go('/status'),
                             goToCaptain: () => context.go('/captain'),
                             goToHalfdayStatusPage: () =>
