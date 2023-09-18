@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:look/look.dart';
 import 'package:yaki/presentation/styles/color.dart';
 import 'package:yaki/presentation/styles/text_style.dart';
 import 'package:yaki/presentation/ui/shared/views/avatar_icon.dart';
 
-@Look(builder: buildHeaderLook)
 class HeaderDeclaration extends StatelessWidget {
   final String pictoIcon;
   final String pictoPath;
