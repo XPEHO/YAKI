@@ -45,6 +45,7 @@
     "jest-mock": "^29.6.2",
     "jsonwebtoken": "^9.0.0",
     "pg": "^8.11.1",
+    "prom-client": "^14.2.0",
     "supertest": "^6.3.3",
     "swagger-ui-express": "^4.6.3",
     "ts-jest": "^29.1.0",

@@ -14,10 +14,11 @@ import teamRouter from "./team.router";
 //
 import {initdb} from "./db/initdb";
 
+import client from "prom-client";
+
 // Call the initConfig function to load environment variables and log their values to the console
 initConfig();
 initdb();
-
 const corsOptions = {
   origin: "*",
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
@@ -38,6 +39,7 @@ app.use(router);
 app.use(declarationRouter);
 app.use(teamRouter);
 
+
 // Get the value of the PORT environment variable
 const port = process.env.Port;
 // Get the value of the HOST environment variable
@@ -45,8 +47,17 @@ const host = process.env.Host;
 
 // Setting up the Swagger UI middleware
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+const collectDefaultMetrics = client.collectDefaultMetrics;
+
+collectDefaultMetrics();
+app.use("/metrics",  async (_req, res) =>{
+  res.set("Content-Type", client.register.contentType);
+  res.end(await client.register.metrics());
+});
 
 // Starting the server and logging a message to the console
 app.listen(`${port}`, () => {
   console.log(`[Server]: I am running at ${host}:${port}`);
 });
+
+
