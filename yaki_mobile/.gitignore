@@ -48,4 +48,7 @@ app.*.map.json
 
 config.json
 
+/linux/**
+/macos/**
+
 coverage/
