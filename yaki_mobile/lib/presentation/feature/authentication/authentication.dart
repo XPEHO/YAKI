@@ -22,6 +22,7 @@ class Authentication extends ConsumerStatefulWidget {
 class _AuthenticationState extends ConsumerState<Authentication> {
   final loginController = TextEditingController();
   final passwordController = TextEditingController();
+  final Color backgroundColor = const Color(0xFFF2F6F9);
   // store the value of the 'rememberMe' checkbox
   bool isChecked = false;
   // store the user default login details
@@ -140,122 +141,116 @@ class _AuthenticationState extends ConsumerState<Authentication> {
     // Size of the device
     var size = MediaQuery.of(context).size;
 
-    return Padding(
-      padding: const EdgeInsets.all(10),
-      child: Scaffold(
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(top: 175),
-              child: Text(
-                tr('signInLowercase'),
-                style: const TextStyle(
-                  fontSize: 40,
-                  fontWeight: FontWeight.w600,
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Container(
+          color: backgroundColor,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(top: 175),
+                child: Text(
+                  tr('signInLowercase'),
+                  style: const TextStyle(
+                    fontSize: 40,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
-            ),
-            Expanded(
-              flex: 7,
-              child: Form(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.only(
-                          top: size.height / 15,
-                        ),
-                        child: InputApp(
-                          defaultValue: loginDetails.first,
-                          inputText: tr('inputLogin'),
-                          inputHint: tr('hintLogin'),
-                          password: false,
-                          controller: loginController,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 20),
-                        child: InputApp(
-                          defaultValue: loginDetails.last,
-                          inputText: tr('inputPassword'),
-                          inputHint: tr('hintPassword'),
-                          password: true,
-                          controller: passwordController,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10),
-                        child: Button(
-                          text: tr('signIn'),
-                          onPressed: () => onPressAuthent(
-                            ref: ref,
-                            login: loginController.text,
-                            password: passwordController.text,
-                            goToDeclarationPage: () =>
-                                context.push('/declaration'),
-                            goToStatusPage: () => context.go('/status'),
-                            goToCaptain: () => context.go('/captain'),
-                            goToHalfdayStatusPage: () =>
-                                context.go('/halfdayStatus'),
-                            goToVacationStatusPage: () =>
-                                context.go('/vacationStatus'),
-                            goToUserDefaultRedirection: () =>
-                                context.go('/userDefaultRedirection'),
+              Expanded(
+                flex: 7,
+                child: Form(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.only(
+                            top: size.height / 15,
+                          ),
+                          child: InputApp(
+                            defaultValue: loginDetails.first,
+                            inputText: tr('inputLogin'),
+                            inputHint: tr('hintLogin'),
+                            password: false,
+                            controller: loginController,
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 5),
-                        child: InkWell(
-                          onTap: () => onPressedForgotPassword(
-                            goToForgotPassword: () =>
-                                context.push('/forgotPassword'),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 20),
+                          child: InputApp(
+                            defaultValue: loginDetails.last,
+                            inputText: tr('inputPassword'),
+                            inputHint: tr('hintPassword'),
+                            password: true,
+                            controller: passwordController,
                           ),
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 8.0),
-                            child: Button.secondary(
-                              text: tr('forgotPassword'),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 10),
+                          child: Button(
+                            text: tr('signIn'),
+                            onPressed: () => onPressAuthent(
+                              ref: ref,
+                              login: loginController.text,
+                              password: passwordController.text,
+                              goToDeclarationPage: () =>
+                                  context.push('/declaration'),
+                              goToStatusPage: () => context.go('/status'),
+                              goToCaptain: () => context.go('/captain'),
+                              goToHalfdayStatusPage: () =>
+                                  context.go('/halfdayStatus'),
+                              goToVacationStatusPage: () =>
+                                  context.go('/vacationStatus'),
+                              goToUserDefaultRedirection: () =>
+                                  context.go('/userDefaultRedirection'),
                             ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 40),
-                        child: Text(
-                          tr('createAccountInvitFormule'),
-                          style: const TextStyle(
-                            fontSize: 18,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10),
-                        child: InkWell(
-                          onTap: () => onPressSignUp(
-                            goToRegistrationPage: () =>
-                                context.push('/registration'),
-                          ),
-                          borderRadius: BorderRadius.circular(16),
-                          splashColor: const Color.fromARGB(125, 46, 46, 46),
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Text(
-                              tr('createAccountLink'),
-                              style: const TextStyle(
-                                fontSize: 18,
+                        Padding(
+                          padding: const EdgeInsets.only(top: 5),
+                          child: InkWell(
+                            onTap: () => onPressedForgotPassword(
+                              goToForgotPassword: () =>
+                                  context.push('/forgotPassword'),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 8.0),
+                              child: Button.secondary(
+                                text: tr('forgotPassword'),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                        Padding(
+                          padding: const EdgeInsets.only(top: 10),
+                          child: InkWell(
+                            onTap: () => onPressSignUp(
+                              goToRegistrationPage: () =>
+                                  context.push('/registration'),
+                            ),
+                            borderRadius: BorderRadius.circular(16),
+                            splashColor: const Color.fromARGB(125, 46, 46, 46),
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Text(
+                                tr('createAccountLink'),
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.blue.shade900,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

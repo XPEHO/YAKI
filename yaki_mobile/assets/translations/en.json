@@ -38,7 +38,6 @@
   "statusOtherAfternoon": "Other status for this afternoon",
   "statusButton": "Change",
   "statusError": "Something went wrong, please retry...",
-
   "captainTitle": "Captain",
   "captainHeaderTitle": "Captain",
   "inputCaptain": "Name, Status...",
@@ -49,8 +48,7 @@
   "headerTitleProfile": "Profile",
   "inputLabelLastName": "Name",
   "inputLabelFirstName": "First name",
-  "createAccountInvitFormule": "Don't have an account ?",
-  "createAccountLink": "sign up",
+  "createAccountLink": "Register",
   "registrationPageTitle": "Account Creation",
   "registrationInputFirstnameLabel": "Firstname :",
   "registrationInputLastnameLabel": "Lastname :",

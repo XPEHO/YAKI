@@ -50,9 +50,7 @@
   "headerTitleProfile": "Profil",
   "inputLabelLastName": "Nom",
   "inputLabelFirstName": "Prénom",
-  "createAccountInvitFormule": "Pas encore de compte ?",
-  "createAccountLink": "Vous enregistrer",
-
+  "createAccountLink": "S'inscrire",
   "registrationPageTitle": "Création de compte",
   "registrationInputFirstnameLabel": "Prénom :",
   "registrationInputLastnameLabel": "Nom :",
