@@ -142,15 +142,15 @@ class _AuthenticationState extends ConsumerState<Authentication> {
     var size = MediaQuery.of(context).size;
 
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Container(
-          color: backgroundColor,
+      body: Container(
+        color: backgroundColor,
+        child: Padding(
+          padding: const EdgeInsets.all(10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(top: 175),
+                padding: const EdgeInsets.only(top: 75),
                 child: Text(
                   tr('signInLowercase'),
                   style: const TextStyle(
