@@ -39,6 +39,7 @@ public class SecurityConfiguration {
                 .csrf((csrf) -> csrf.disable())
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(
+                                "/actuator/prometheus",
                                 "/login/**",
                                 "/swagger-ui/**",
                                 "/swagger-resources/**",
