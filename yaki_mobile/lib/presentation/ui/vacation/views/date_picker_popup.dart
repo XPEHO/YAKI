@@ -13,32 +13,36 @@ class DatePickerPopup extends ConsumerStatefulWidget {
 }
 
 class _DatePickerPopupState extends ConsumerState<DatePickerPopup> {
-  DateTime selectedDateStart = DateTime.now();
-  DateTime selectedDateEnd = DateTime.now();
-  String selectedDateStartString = '';
-  String selectedDateEndString = '';
+  DateTimeRange selectedDateRange = DateTimeRange(end: DateTime.now(), start: DateTime.now());
+  String selectedDateStartString = DateFormat.yMd('fr').format(DateTime.now());
+  String selectedDateEndString = DateFormat.yMd('fr').format(DateTime.now());
 
   void validateDate(WidgetRef ref) {
     ref.watch(declarationProvider.notifier).createVacationDeclaration(
-          dateStart: selectedDateStart,
-          dateEnd: selectedDateEnd,
+          dateStart: selectedDateRange.start,
+          dateEnd: selectedDateRange.end,
           status: StatusEnum.vacation.name,
           teamId: 1,
         );
     widget.goToPage();
   }
+  String dateToString(DateTime date) {
+    return DateFormat.yMd('fr').format(date);
+  }
 
-  Future<DateTime> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
+  Future<DateTimeRange> _selectDate(BuildContext context) async {
+    final DateTimeRange? picked = await showDateRangePicker(
       context: context,
-      initialDate: DateTime.now(),
       firstDate: DateTime.now(),
       lastDate: DateTime(2101),
     );
     if (picked != null) {
       return picked;
     } else {
-      return DateTime.now();
+      return  DateTimeRange(
+        start: DateTime.now(),
+        end: DateTime.now(),
+      );
     }
   }
 
@@ -60,10 +64,12 @@ class _DatePickerPopupState extends ConsumerState<DatePickerPopup> {
                     Text(tr('vacationDateStart')),
                     ElevatedButton(
                       onPressed: () async {
-                        selectedDateStart = await _selectDate(context);
+                        selectedDateRange = await _selectDate(context);
                         setState(() {
                           selectedDateStartString =
-                              DateFormat.yMd('fr').format(selectedDateStart);
+                              dateToString(selectedDateRange.start);
+                          selectedDateEndString =
+                              dateToString(selectedDateRange.end);
                         });
                       },
                       child: Text(
@@ -77,11 +83,13 @@ class _DatePickerPopupState extends ConsumerState<DatePickerPopup> {
                     Text(tr('vacationDateEnd')),
                     ElevatedButton(
                       onPressed: () async {
-                        selectedDateEnd = await _selectDate(context);
+                        selectedDateRange = await _selectDate(context);
                         setState(() {
+                          selectedDateStartString =
+                              dateToString(selectedDateRange.start);
                           selectedDateEndString =
-                              DateFormat.yMd('fr').format(selectedDateEnd);
-                        });
+                              dateToString(selectedDateRange.end);
+                              });
                       },
                       child: Text(
                         selectedDateEndString,
