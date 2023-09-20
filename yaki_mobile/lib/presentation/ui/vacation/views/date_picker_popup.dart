@@ -13,7 +13,8 @@ class DatePickerPopup extends ConsumerStatefulWidget {
 }
 
 class _DatePickerPopupState extends ConsumerState<DatePickerPopup> {
-  DateTimeRange selectedDateRange = DateTimeRange(end: DateTime.now(), start: DateTime.now());
+  DateTimeRange selectedDateRange =
+      DateTimeRange(end: DateTime.now(), start: DateTime.now());
   String selectedDateStartString = DateFormat.yMd('fr').format(DateTime.now());
   String selectedDateEndString = DateFormat.yMd('fr').format(DateTime.now());
 
@@ -26,6 +27,7 @@ class _DatePickerPopupState extends ConsumerState<DatePickerPopup> {
         );
     widget.goToPage();
   }
+
   String dateToString(DateTime date) {
     return DateFormat.yMd('fr').format(date);
   }
@@ -39,7 +41,7 @@ class _DatePickerPopupState extends ConsumerState<DatePickerPopup> {
     if (picked != null) {
       return picked;
     } else {
-      return  DateTimeRange(
+      return DateTimeRange(
         start: DateTime.now(),
         end: DateTime.now(),
       );
@@ -89,7 +91,7 @@ class _DatePickerPopupState extends ConsumerState<DatePickerPopup> {
                               dateToString(selectedDateRange.start);
                           selectedDateEndString =
                               dateToString(selectedDateRange.end);
-                              });
+                        });
                       },
                       child: Text(
                         selectedDateEndString,
