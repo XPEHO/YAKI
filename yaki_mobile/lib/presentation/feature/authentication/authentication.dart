@@ -169,21 +169,17 @@ class _AuthenticationState extends ConsumerState<Authentication> {
                           padding: EdgeInsets.only(
                             top: size.height / 15,
                           ),
-                          child: InputApp(
-                            defaultValue: loginDetails.first,
-                            inputText: tr('inputLogin'),
-                            inputHint: tr('hintLogin'),
-                            password: false,
+                          child: InputText(
+                            type: InputTextType.email,
+                            label: tr('inputLogin'),
                             controller: loginController,
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 20),
-                          child: InputApp(
-                            defaultValue: loginDetails.last,
-                            inputText: tr('inputPassword'),
-                            inputHint: tr('hintPassword'),
-                            password: true,
+                          child: InputText(
+                            type: InputTextType.password,
+                            label: tr('inputPassword'),
                             controller: passwordController,
                           ),
                         ),
