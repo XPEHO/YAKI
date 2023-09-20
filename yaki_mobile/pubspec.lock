@@ -1010,14 +1010,14 @@ packages:
     source: hosted
     version: "6.3.0"
   yaki_ui:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       path: flutter
-      ref: "^0.3.0"
-      resolved-ref: "97b2ad1bdff77acd9a082f610cf6632601677a10"
-      url: "git@github.com:XPEHO/yaki_ui.git"
+      ref: "^0.4.0"
+      resolved-ref: "09ba85926a085f26e593de2d952cd55d810b0dbd"
+      url: "https://github.com/XPEHO/yaki_ui.git"
     source: git
-    version: "0.3.0"
+    version: "0.4.0"
   yaml:
     dependency: transitive
     description:
