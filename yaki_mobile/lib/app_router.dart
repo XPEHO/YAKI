@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yaki/data/sources/local/shared_preference.dart';
-import 'package:yaki/presentation/ui/authentication/authentication.dart';
+import 'package:yaki/presentation/features/authentication/authentication.dart';
 import 'package:yaki/presentation/ui/password/forgot_password.dart';
 import 'package:yaki/presentation/ui/captain/captain_view.dart';
 import 'package:yaki/presentation/ui/declaration/declaration.dart';
