@@ -1,5 +1,28 @@
 import 'package:flutter/material.dart';
 
+TextStyle textStylePageTitle() {
+  return const TextStyle(
+    fontSize: 40,
+    fontWeight: FontWeight.w600,
+  );
+}
+
+TextStyle textStylePageDate() {
+  return const TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.w700,
+  );
+}
+
+TextStyle textStylePageHint() {
+  return const TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.w400,
+  );
+}
+
+// old styles
+// ------------------------------------------------------------
 TextStyle textStyleHeaderBig() {
   return const TextStyle(
     fontSize: 20,

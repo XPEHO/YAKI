@@ -11,10 +11,10 @@ class MobileOrientedAdapter extends CustomAdapter {
   @override
   getHttpClientAdapter() {
     return IOHttpClientAdapter(
-      onHttpClientCreate: (client) {
-        client.badCertificateCallback =
-            (X509Certificate cert, String host, int port) => true;
-        return client;
+      createHttpClient: () {
+        return HttpClient()
+          ..badCertificateCallback =
+              ((X509Certificate cert, String host, int port) => true);
       },
       validateCertificate: (certificate, host, port) {
         return true;

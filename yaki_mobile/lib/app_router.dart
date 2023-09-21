@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yaki/data/sources/local/shared_preference.dart';
 import 'package:yaki/presentation/features/authentication/authentication.dart';
+import 'package:yaki/presentation/features/team_selection/team_selection.dart';
 import 'package:yaki/presentation/ui/password/forgot_password.dart';
 import 'package:yaki/presentation/ui/captain/captain_view.dart';
 import 'package:yaki/presentation/ui/declaration/declaration.dart';
@@ -145,6 +146,17 @@ final goRouterProvider = Provider<GoRouter>(
               redirect: (BuildContext context, GoRouterState state) async {
                 if (await SharedPref.isTokenPresent()) {
                   return '/changePassword';
+                } else {
+                  return '/';
+                }
+              },
+            ),
+            GoRoute(
+              path: 'team-selection',
+              builder: (context, state) => const TeamSelection(),
+              redirect: (BuildContext context, GoRouterState state) async {
+                if (await SharedPref.isTokenPresent()) {
+                  return '/team-selection';
                 } else {
                   return '/';
                 }
