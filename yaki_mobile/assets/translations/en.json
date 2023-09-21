@@ -15,7 +15,6 @@
   "headerHintDecla": "What is your status for the day ?",
   "headerHintDeclaMorning": "What is your status for the morning ?",
   "headerHintDeclaAfternoon": "What is your status for the afternoon ?",
-  "remote": "Remote",
   "onSite": "On site",
   "vacation": "Absence",
   "undeclared": "Not notified",
@@ -90,5 +89,14 @@
 
   "teamSelectionPageTitle1": "What's planned",
   "teamSelectionPageTitle2": "for today ?",
-  "teamSelectionPageHint": "Select 1 or 2 activities"
+  "teamSelectionPageHint": "Select 1 or 2 activities",
+  "whereworking": "Where are you working for ",
+  "this": "this",
+  "thisAfternoon": "this",
+  "morning": "Morning",
+  "afternoon": "Afternoon",
+  "IWorkthis": "I work this",
+  "Iam": "I am",
+  "office": "To the Office",
+  "remote": "To Remote"
 }
