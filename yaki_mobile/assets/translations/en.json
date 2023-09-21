@@ -24,7 +24,7 @@
   "statusVacationDayFrom": "You are absent from ",
   "statusVacationDayTo": " to ",
   "vacationDateStart": "From",
-  "vacationDateEnd": "To (Exclued)",
+  "vacationDateEnd": "To",
   "datePopupTitle": "Absence date",
   "datePopupHint": "Select the date of your absences",
   "statusOtherDay": "Other status for today.",

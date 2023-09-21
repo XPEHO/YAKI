@@ -24,7 +24,7 @@
   "statusVacationDayFrom": "Vous êtes absent du ",
   "statusVacationDayTo": " jusqu'au ",
   "vacationDateStart": "Du",
-  "vacationDateEnd": "Au (Exclus)",
+  "vacationDateEnd": "Au",
   "datePopupTitle": "Date d'absence",
   "datePopupHint": "Sélectionner les dates de vos absences",
 
@@ -62,7 +62,7 @@
   "registrationInputPasswordLabel": "Mot de passe :",
   "registrationInputPasswordError1": "Veuillez renseigner un mot de passe",
   "registrationInputPasswordError2": "- Minimum : 10 caractères : \n - Une majuscule et minuscule \n - Un chiffre \n - Un caractère spécial",
-  "registrationInputPassConfirmLabel": "Confirmatin du mot de passe :",
+  "registrationInputPassConfirmLabel": "Confirmation du mot de passe :",
   "registrationInputPassConfirmError1": "Veuillez confirmer le mot de passe",
   "registrationInputPassConfirmError2": "Les mots de passe ne sont pas identiques",
   "registrationButton": "Créer",
