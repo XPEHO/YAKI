@@ -173,7 +173,6 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
     required DateTime dateEnd,
   }) async {
     final todayDate = DateTime.now();
-    final DateTime dateEndExcluded = dateEnd.subtract(const Duration(days: 1));
     DeclarationModel newDeclaration = DeclarationModel(
       declarationUserId: loginRepository.userId,
       declarationDate: todayDate,
@@ -181,7 +180,7 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
         '${DateFormat('yyyy-MM-dd').format(dateStart)} 00:00:00Z',
       ),
       declarationDateEnd: DateTime.parse(
-        '${DateFormat('yyyy-MM-dd').format(dateEndExcluded)} 23:59:59Z',
+        '${DateFormat('yyyy-MM-dd').format(dateEnd)} 23:59:59Z',
       ),
       declarationTeamId: teamId,
       declarationStatus: status,
