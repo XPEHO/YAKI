@@ -41,6 +41,13 @@ class TeamNotifier extends StateNotifier<TeamPageState> {
     }
   }
 
+  void clearSelectedTeamList() {
+    state = TeamPageState(
+      selectedTeamList: [],
+      isValidationActivated: false,
+    );
+  }
+
 // DEPRECIATED (keep this function during migration)
   Future<void> fetchTeams() async {
     final teamList = await teamRepository.getTeam();
