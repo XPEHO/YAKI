@@ -4,14 +4,14 @@ import 'package:go_router/go_router.dart';
 import 'package:yaki/presentation/styles/text_style.dart';
 import 'package:yaki_ui/yaki_ui.dart';
 
-class DeclarationWidget extends StatelessWidget {
+class Declaration extends StatelessWidget {
   final Color backgroundColor;
   final String timeOfDay;
   final String thisMorningOrAfternoon;
   final String imageSrc;
   final String route;
 
-  const DeclarationWidget({
+  const Declaration({
     Key? key,
     required this.backgroundColor,
     required this.timeOfDay,
