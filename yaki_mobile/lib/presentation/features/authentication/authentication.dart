@@ -6,6 +6,7 @@ import 'package:yaki/data/sources/local/shared_preference.dart';
 import 'package:yaki/domain/entities/declaration_status.dart';
 import 'package:yaki/presentation/state/providers/declaration_provider.dart';
 import 'package:yaki/presentation/state/providers/login_provider.dart';
+import 'package:yaki/presentation/styles/text_style.dart';
 import 'package:yaki_ui/yaki_ui.dart';
 
 /// using ConsumerWidget (statelessWidget) to have access to the WidgetRef object
@@ -145,15 +146,13 @@ class _AuthenticationState extends ConsumerState<Authentication> {
           padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(top: 75),
+                padding: const EdgeInsets.only(left: 8),
                 child: Text(
                   tr('signInLowercase'),
-                  style: const TextStyle(
-                    fontSize: 40,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: textStylePageTitle(),
                 ),
               ),
               Form(
