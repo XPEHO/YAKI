@@ -145,9 +145,10 @@ class _AuthenticationState extends ConsumerState<Authentication> {
           padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(top: 75),
+                padding: const EdgeInsets.only(left: 8),
                 child: Text(
                   tr('signInLowercase'),
                   style: const TextStyle(

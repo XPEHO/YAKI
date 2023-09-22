@@ -21,6 +21,13 @@ TextStyle textStylePageHint() {
   );
 }
 
+TextStyle textStyleDeclaration() {
+  return const TextStyle(
+    fontSize: 40,
+    fontWeight: FontWeight.w600,
+  );
+}
+
 // old styles
 // ------------------------------------------------------------
 TextStyle textStyleHeaderBig() {
