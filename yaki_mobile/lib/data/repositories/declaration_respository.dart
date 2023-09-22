@@ -30,7 +30,7 @@ class DeclarationRepository {
   /// * Get the declarationStatus from the newly created object and assign it to the statusValue.
   ///
   /// This method return the statusValue value.
-  Future<DeclarationEntityIn> getLatestDeclaration(String teamMateId) async {
+  Future<DeclarationEntityIn> getLatestDeclaration(int teamMateId) async {
     List<String> statusGetDecl = [];
     DateTime? dateStart;
     DateTime? dateEnd;

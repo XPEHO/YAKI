@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yaki/data/sources/local/shared_preference.dart';
+import 'package:yaki/presentation/displaydata/declaration_enum.dart';
 import 'package:yaki/presentation/features/authentication/authentication.dart';
+import 'package:yaki/presentation/features/declaration/temp_page.dart';
 import 'package:yaki/presentation/features/team_selection/team_selection.dart';
+import 'package:yaki/presentation/ui/declaration/afternoon_declaration.dart';
+import 'package:yaki/presentation/ui/declaration/declaration.dart';
+import 'package:yaki/presentation/ui/declaration/morning_declaration.dart';
 import 'package:yaki/presentation/ui/password/forgot_password.dart';
 import 'package:yaki/presentation/ui/captain/captain_view.dart';
-import 'package:yaki/presentation/ui/declaration/declaration.dart';
-import 'package:yaki/presentation/ui/declaration/afternoon_declaration.dart';
-import 'package:yaki/presentation/ui/declaration/morning_declaration.dart';
 import 'package:yaki/presentation/ui/default/user_default_redirection.dart';
 import 'package:yaki/presentation/ui/password/change_password.dart';
 import 'package:yaki/presentation/ui/profile/profile.dart';
@@ -26,6 +28,7 @@ final goRouterProvider = Provider<GoRouter>(
           path: '/',
           builder: (context, state) => const Authentication(),
           routes: [
+            // WILL BE REMOVED ONCE BASTI DESIGN IS INTEGRATED - start
             GoRoute(
               path: 'declaration',
               builder: (context, state) => const Declaration(),
@@ -74,6 +77,7 @@ final goRouterProvider = Provider<GoRouter>(
                 }
               },
             ),
+            // WILL BE REMOVED ONCE BASTI DESIGN IS INTEGRATED - end
             GoRoute(
               path: 'status',
               builder: (context, state) => const StatusRecapFullDay(),
@@ -162,6 +166,24 @@ final goRouterProvider = Provider<GoRouter>(
                 }
               },
             ),
+            GoRoute(
+              path: 'declaration/:mode',
+              builder: (context, state) => TempDeclarationPage(
+                declarationMode: state.pathParameters['mode']!,
+              ),
+              redirect: (BuildContext context, GoRouterState state) async {
+                // null check
+                final String pathParam = state.pathParameters['mode'] ?? '';
+                // check if the path parameter is valid
+                final bool isValidPath =
+                    DeclarationPaths.isValidPath(value: pathParam);
+
+                if (await SharedPref.isTokenPresent() && isValidPath) {
+                  return '/declaration/${state.pathParameters['mode']!}';
+                }
+                return '/';
+              },
+            ),
           ],
         ),
         GoRoute(
@@ -176,5 +198,3 @@ final goRouterProvider = Provider<GoRouter>(
     );
   },
 );
-
-///userDefaultRedirection

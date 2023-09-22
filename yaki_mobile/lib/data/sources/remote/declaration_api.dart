@@ -10,7 +10,7 @@ abstract class DeclarationApi {
 
   @GET('/declarations')
   Future<HttpResponse> getDeclaration(
-    @Query("teammateId") String id,
+    @Query("teammateId") int id,
   );
 
   @POST('/declarations')

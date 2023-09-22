@@ -28,6 +28,7 @@ class TeamSelectionList extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final teamListAsync = ref.watch(teamFutureProvider);
+
     return teamListAsync.when(
       data: (teamList) {
         return Expanded(
