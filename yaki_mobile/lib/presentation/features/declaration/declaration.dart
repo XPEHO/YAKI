@@ -17,7 +17,7 @@ class Declaration extends StatelessWidget {
     required this.timeOfDay,
     required this.thisMorningOrAfternoon,
     required this.imageSrc,
-    required this.route,
+    required this.route, required Future<String> Function(BuildContext context, GoRouterState state) redirect,
   }) : super(key: key);
 
   @override

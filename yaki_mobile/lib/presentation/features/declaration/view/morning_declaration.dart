@@ -12,6 +12,7 @@ class MorningDeclaration extends StatelessWidget {
       thisMorningOrAfternoon: 'this',
       imageSrc: 'Time-Morning.svg',
       route: '/afternoonDeclaration',
+      
     );
   }
 }
