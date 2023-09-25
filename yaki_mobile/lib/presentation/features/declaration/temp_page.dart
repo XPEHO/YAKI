@@ -43,25 +43,25 @@ class TempDeclarationPage extends ConsumerWidget {
               setHeader(declarationMode, teamNameList),
               const SizedBox(height: 60),
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(right: 10),
                     child: LocationSelectionCard(
                       picture: SvgPicture.asset(
-                        'assets/images/Work-Office.svg',
-                        width: 100,
-                        height: 100,
+                        setImage(declarationMode).first,
+                        width: 160,
+                        height: 160,
                       ),
-                      title: tr('Iam'),
-                      subtitle:
-                          tr('setButtonsText(declarationMode).first.name'),
+                      title: tr(setCardTitle(declarationMode).first),
+                      subtitle: tr(setCardSubtitle(declarationMode).first.name),
                       onSelectionChanged: (selected) {
-                        onButtonPress(
+                        onPress(
                           ref: ref,
                           declarationMode:
                               DeclarationPaths.fromText(declarationMode),
                           teamList: teamList,
-                          buttonValue: setButtonsText(declarationMode).first,
+                          buttonValue: setCardSubtitle(declarationMode).first,
                         );
                         redirection(
                           context: context,
@@ -72,19 +72,19 @@ class TempDeclarationPage extends ConsumerWidget {
                   ),
                   LocationSelectionCard(
                     picture: SvgPicture.asset(
-                      'assets/images/Work-Home.svg',
-                      width: 100,
-                      height: 100,
+                      setImage(declarationMode).last,
+                      width: 160,
+                      height: 160,
                     ),
-                    title: tr('Iam'),
-                    subtitle: tr('setButtonsText(declarationMode).last.name'),
+                    title: tr(setCardTitle(declarationMode).last),
+                    subtitle: tr(setCardSubtitle(declarationMode).last.name),
                     onSelectionChanged: (selected) {
-                      onButtonPress(
+                      onPress(
                         ref: ref,
                         declarationMode:
                             DeclarationPaths.fromText(declarationMode),
                         teamList: teamList,
-                        buttonValue: setButtonsText(declarationMode).last,
+                        buttonValue: setCardSubtitle(declarationMode).last,
                       );
                       redirection(
                         context: context,
@@ -102,7 +102,7 @@ class TempDeclarationPage extends ConsumerWidget {
   }
 }
 
-void onButtonPress({
+void onPress({
   required WidgetRef ref,
   required DeclarationPaths declarationMode,
   required List<TeamModel> teamList,
@@ -115,10 +115,37 @@ void onButtonPress({
       );
 }
 
+List<String> setCardTitle(String declarationMode) {
+  List<String> cardText = [];
+  if (declarationMode == DeclarationPaths.timeOfDay.text) {
+    cardText = ['IWorkthisMorning', 'IWorkthisAfternoon'];
+  } else if (declarationMode == DeclarationPaths.fullDay.text ||
+      declarationMode == DeclarationPaths.halfDayStart.text ||
+      declarationMode == DeclarationPaths.halfDayEnd.text) {
+    cardText = ['Iam', 'Iam'];
+  }
+  return cardText;
+}
+
+List<String> setImage(String declarationMode) {
+  List<String> imageSrc = [];
+  if (declarationMode == DeclarationPaths.timeOfDay.text) {
+    imageSrc = [
+      'assets/images/Time-Morning.svg',
+      'assets/images/Time-Afternoon.svg'
+    ];
+  } else if (declarationMode == DeclarationPaths.fullDay.text ||
+      declarationMode == DeclarationPaths.halfDayStart.text ||
+      declarationMode == DeclarationPaths.halfDayEnd.text) {
+    imageSrc = ['assets/images/Work-Office.svg', 'assets/images/Work-Home.svg'];
+  }
+  return imageSrc;
+}
+
 /// Determine the buttons's text depending of the declarationMode.
 /// Only the declarationMode "time-of-day" have different buttons text.
 /// For the halfDay we start by selecting the moment of the day (morning or afternoon)
-List<StatusEnum> setButtonsText(String declarationMode) {
+List<StatusEnum> setCardSubtitle(String declarationMode) {
   List<StatusEnum> buttonsText = [];
   if (declarationMode == DeclarationPaths.timeOfDay.text) {
     buttonsText = [StatusEnum.morning, StatusEnum.afternoon];
@@ -146,6 +173,7 @@ Widget setHeader(String declarationMode, List<String> teamList) {
     return HeaderDeclarationHalfDayChoice(
       declarationMode: declarationMode,
       teamList: teamList,
+      imageSrc: '',
     );
   }
   return Container();
@@ -163,5 +191,8 @@ void redirection({
   }
   if (declarationMode == DeclarationPaths.halfDayStart.text) {
     context.go("/declaration/${DeclarationPaths.halfDayEnd.text}");
+  }
+  if (declarationMode == DeclarationPaths.halfDayEnd.text) {
+    context.go("/status");
   }
 }

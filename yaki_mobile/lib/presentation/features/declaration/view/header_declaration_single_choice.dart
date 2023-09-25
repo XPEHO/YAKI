@@ -41,13 +41,13 @@ class HeaderDeclarationSingleChoice extends StatelessWidget {
             ),
             IconChip(
               label: setTeam(teamList: teamList),
-              backgroundColor: Colors.blue,
+              backgroundColor: Colors.white,
               image: ClipRRect(
                 borderRadius: BorderRadius.circular(50),
                 child: SvgPicture.asset(
                   imageSrc,
-                  width: 30,
-                  height: 30,
+                  width: 50,
+                  height: 50,
                 ),
               ),
             ),
