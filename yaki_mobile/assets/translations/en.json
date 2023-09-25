@@ -91,6 +91,8 @@
   "teamSelectionPageTitle2": "for today ?",
   "teamSelectionPageHint": "Select 1 or 2 activities",
   "whereworking": "Where are you working for ",
+  "doyouwork": "do you work ",
+
   "this": "this",
   "thisAfternoon": "this",
   "morning": "Morning",
@@ -98,5 +100,8 @@
   "IWorkthis": "I work this",
   "Iam": "I am",
   "office": "To the Office",
-  "remote": "To Remote"
+  "remote": "To Remote",
+  "for ": "for ",
+  "When ": "When ",
+  "Where ": "Where "
 }

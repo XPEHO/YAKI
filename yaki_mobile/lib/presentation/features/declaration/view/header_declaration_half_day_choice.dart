@@ -1,12 +1,13 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:yaki/presentation/displaydata/declaration_enum.dart';
 import 'package:yaki/presentation/styles/text_style.dart';
 
-class DeclarationHalfDayChoice extends StatelessWidget {
+class HeaderDeclarationHalfDayChoice extends StatelessWidget {
   final String declarationMode;
   final List<String> teamList;
 
-  const DeclarationHalfDayChoice({
+  const HeaderDeclarationHalfDayChoice({
     super.key,
     required this.declarationMode,
     required this.teamList,
@@ -18,13 +19,13 @@ class DeclarationHalfDayChoice extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "D'où travailles-tu ?",
+          tr('whereworking'),
           style: textStylePageTitle(),
         ),
         Row(
           children: [
             Text(
-              "Pour ",
+              tr("For "),
               style: textStylePageTitle(),
             ),
             Text(

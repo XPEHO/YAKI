@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:go_router/go_router.dart';
 import 'package:yaki/presentation/styles/text_style.dart';
 import 'package:yaki_ui/yaki_ui.dart';
 
@@ -9,7 +8,6 @@ class Declaration extends StatelessWidget {
   final String timeOfDay;
   final String thisMorningOrAfternoon;
   final String imageSrc;
-  final String route;
 
   const Declaration({
     Key? key,
@@ -17,7 +15,6 @@ class Declaration extends StatelessWidget {
     required this.timeOfDay,
     required this.thisMorningOrAfternoon,
     required this.imageSrc,
-    required this.route, required Future<String> Function(BuildContext context, GoRouterState state) redirect,
   }) : super(key: key);
 
   @override
@@ -76,7 +73,7 @@ class Declaration extends StatelessWidget {
                       title: tr('Iam'),
                       subtitle: tr('office'),
                       onSelectionChanged: (selected) {
-                        context.push(route);
+                  
                       },
                     ),
                     LocationSelectionCard(
@@ -84,7 +81,7 @@ class Declaration extends StatelessWidget {
                       title: tr('Iam'),
                       subtitle: tr('remote'),
                       onSelectionChanged: (selected) {
-                        context.push(route);
+                    
                       },
                     ),
                   ],

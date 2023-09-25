@@ -8,6 +8,8 @@ import 'package:yaki_ui/yaki_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:yaki/presentation/displaydata/declaration_enum.dart';
+
 class TeamSelection extends ConsumerWidget {
   const TeamSelection({super.key});
 
