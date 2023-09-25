@@ -9,8 +9,8 @@ enum StatusEnum {
   vacation('vacation'),
   halfDay('halfDay'),
   fullDay('fullDay'),
-  morningTr('Morning'),
-  afternoonTr('Afternoon'),
+  morning('Morning'),
+  afternoon('Afternoon'),
   undeclared('undeclared');
 
   final String value;

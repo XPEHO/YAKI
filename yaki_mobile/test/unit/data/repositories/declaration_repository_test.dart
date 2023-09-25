@@ -49,7 +49,7 @@ void main() {
   group(
     'declaration repository getDeclaration()',
     () {
-      const String teammateId = "1";
+      const int teammateId = 1;
       final List<Map<String, dynamic>> getErrorResponse = [{}];
       test(
         'Successfully GET daily declaration.',

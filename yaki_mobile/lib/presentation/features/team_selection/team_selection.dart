@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:go_router/go_router.dart';
+
 import 'package:yaki/presentation/features/team_selection/view/team_selection_header.dart';
 import 'package:yaki/presentation/features/team_selection/view/team_selection_list.dart';
 import 'package:yaki/presentation/state/providers/team_provider.dart';
@@ -19,8 +20,10 @@ class TeamSelection extends ConsumerWidget {
 
     if (isButtonActivated) {
       if (selectCount == 1) {
+        //For new logic change to "/declaration/${DeclarationPaths.fullDay.text}"
         context.go("/declaration");
       } else if (selectCount == 2) {
+        //For new logic change to "/declaration/${DeclarationPaths.timeOfDay.text}"
         context.go("/morningDeclaration");
       }
     }
@@ -28,8 +31,7 @@ class TeamSelection extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    bool isValidationButtonEnabled =
-        ref.watch(teamProvider).isValidationActivated;
+    bool isValidationButtonEnabled = ref.watch(teamProvider).isButtonActivated;
 
     return Scaffold(
       body: SafeArea(
