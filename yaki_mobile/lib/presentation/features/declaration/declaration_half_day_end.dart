@@ -32,73 +32,87 @@ class DeclarationHalfDayEnd extends ConsumerWidget {
     }
 
     return Scaffold(
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const SizedBox(height: 60),
-              HeaderDeclarationHalfDayChoice(
-                declarationMode: declarationMode,
-                teamList: teamNameList,
-                imageSrc: '',
-              ),
-              const SizedBox(height: 48),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: LocationSelectionCard(
-                      picture: SvgPicture.asset(
-                        'assets/images/Work-Office.svg',
-                        width: 112,
-                        height: 112,
+      body: SafeArea(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const SizedBox(height: 60),
+                HeaderDeclarationHalfDayChoice(
+                  declarationMode: declarationMode,
+                  teamList: teamNameList,
+                  imageSrc: '',
+                ),
+                const SizedBox(height: 48),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: LocationSelectionCard(
+                        picture: SvgPicture.asset(
+                          'assets/images/Work-Office.svg',
+                          width: 112,
+                          height: 112,
+                        ),
+                        title: tr("Iam"),
+                        subtitle: tr(StatusEnum.remote.name),
+                        onSelectionChanged: (selected) {
+                          onPress(
+                            ref: ref,
+                            declarationMode:
+                                DeclarationPaths.fromText(declarationMode),
+                            teamList: teamList,
+                            buttonValue: StatusEnum.remote,
+                          );
+                          redirection(
+                            context: context,
+                          );
+                        },
                       ),
-                      title: tr("Iam"),
-                      subtitle: tr(StatusEnum.remote.name),
-                      onSelectionChanged: (selected) {
-                        onPress(
-                          ref: ref,
-                          declarationMode:
-                              DeclarationPaths.fromText(declarationMode),
-                          teamList: teamList,
-                          buttonValue: StatusEnum.remote,
-                        );
-                        redirection(
-                          context: context,
-                        );
-                      },
                     ),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: LocationSelectionCard(
-                      picture: SvgPicture.asset(
-                        'assets/images/Work-Home.svg',
-                        width: 112,
-                        height: 112,
+                    Expanded(
+                      flex: 1,
+                      child: LocationSelectionCard(
+                        picture: SvgPicture.asset(
+                          'assets/images/Work-Home.svg',
+                          width: 112,
+                          height: 112,
+                        ),
+                        title: tr("Iam"),
+                        subtitle: tr(StatusEnum.onSite.name),
+                        onSelectionChanged: (selected) {
+                          onPress(
+                            ref: ref,
+                            declarationMode:
+                                DeclarationPaths.fromText(declarationMode),
+                            teamList: teamList,
+                            buttonValue: StatusEnum.onSite,
+                          );
+                          redirection(
+                            context: context,
+                          );
+                        },
                       ),
-                      title: tr("Iam"),
-                      subtitle: tr(StatusEnum.onSite.name),
-                      onSelectionChanged: (selected) {
-                        onPress(
-                          ref: ref,
-                          declarationMode:
-                              DeclarationPaths.fromText(declarationMode),
-                          teamList: teamList,
-                          buttonValue: StatusEnum.onSite,
-                        );
-                        redirection(
-                          context: context,
-                        );
-                      },
                     ),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(top: 25, left: 25, right: 0, bottom: 32),
+        child: Align(
+          alignment: Alignment.topLeft,
+          child: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              context.go("/declaration/half-day-start");
+            },
           ),
         ),
       ),

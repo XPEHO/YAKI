@@ -45,8 +45,8 @@ class HeaderDeclarationHalfDayChoice extends ConsumerWidget {
                 borderRadius: BorderRadius.circular(50),
                 child: SvgPicture.asset(
                   'assets/images/onSite.svg',
-                  width: 50,
-                  height: 50,
+                  width: 40,
+                  height: 40,
                 ),
               ),
             ),
@@ -65,8 +65,8 @@ class HeaderDeclarationHalfDayChoice extends ConsumerWidget {
                 borderRadius: BorderRadius.circular(50),
                 child: SvgPicture.asset(
                   setImageChips(ref, declarationMode),
-                  width: 50,
-                  height: 50,
+                  width: 40,
+                  height: 40,
                 ),
               ),
             ),

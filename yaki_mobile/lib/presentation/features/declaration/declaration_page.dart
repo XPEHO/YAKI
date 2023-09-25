@@ -6,15 +6,15 @@ import 'package:go_router/go_router.dart';
 import 'package:yaki/data/models/team_model.dart';
 import 'package:yaki/presentation/displaydata/declaration_enum.dart';
 import 'package:yaki/presentation/displaydata/status_page_utils.dart';
-import 'package:yaki/presentation/features/declaration/view/header_declaration_half_day_choice.dart';
+import 'package:yaki/presentation/features/declaration/view/header_declaration_single_choice.dart';
 import 'package:yaki/presentation/state/providers/declaration_provider.dart';
 import 'package:yaki/presentation/state/providers/team_provider.dart';
 import 'package:yaki_ui/yaki_ui.dart';
 
-class DeclarationHalfDayStart extends ConsumerWidget {
+class DeclarationPage extends ConsumerWidget {
   final String declarationMode;
 
-  const DeclarationHalfDayStart({
+  const DeclarationPage({
     super.key,
     required this.declarationMode,
   });
@@ -40,7 +40,7 @@ class DeclarationHalfDayStart extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(height: 60),
-                HeaderDeclarationHalfDayChoice(
+                HeaderDeclarationSingleChoice(
                   declarationMode: declarationMode,
                   teamList: teamNameList,
                   imageSrc: '',
@@ -55,22 +55,25 @@ class DeclarationHalfDayStart extends ConsumerWidget {
                         flex: 1,
                         child: LocationSelectionCard(
                           picture: SvgPicture.asset(
-                            'assets/images/Work-Office.svg',
+                            setImage(declarationMode).first,
                             width: 112,
                             height: 112,
                           ),
-                          title: tr("Iam"),
-                          subtitle: tr(StatusEnum.remote.name),
+                          title: tr(setCardTitle(declarationMode).first),
+                          subtitle:
+                              tr(setCardSubtitle(declarationMode).first.name),
                           onSelectionChanged: (selected) {
                             onPress(
                               ref: ref,
                               declarationMode:
                                   DeclarationPaths.fromText(declarationMode),
                               teamList: teamList,
-                              buttonValue: StatusEnum.remote,
+                              buttonValue:
+                                  setCardSubtitle(declarationMode).first,
                             );
                             redirection(
                               context: context,
+                              declarationMode: declarationMode,
                             );
                           },
                         ),
@@ -80,22 +83,25 @@ class DeclarationHalfDayStart extends ConsumerWidget {
                         flex: 1,
                         child: LocationSelectionCard(
                           picture: SvgPicture.asset(
-                            'assets/images/Work-Home.svg',
+                            setImage(declarationMode).last,
                             width: 112,
                             height: 112,
                           ),
-                          title: tr("Iam"),
-                          subtitle: tr(StatusEnum.onSite.name),
+                          title: tr(setCardTitle(declarationMode).last),
+                          subtitle:
+                              tr(setCardSubtitle(declarationMode).last.name),
                           onSelectionChanged: (selected) {
                             onPress(
                               ref: ref,
                               declarationMode:
                                   DeclarationPaths.fromText(declarationMode),
                               teamList: teamList,
-                              buttonValue: StatusEnum.onSite,
+                              buttonValue:
+                                  setCardSubtitle(declarationMode).last,
                             );
                             redirection(
                               context: context,
+                              declarationMode: declarationMode,
                             );
                           },
                         ),
@@ -115,7 +121,7 @@ class DeclarationHalfDayStart extends ConsumerWidget {
           child: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
-              context.go("/declaration/time-of-day");
+              context.go("/team-selection");
             },
           ),
         ),
@@ -137,8 +143,53 @@ void onPress({
       );
 }
 
+List<String> setCardTitle(String declarationMode) {
+  List<String> cardText = [];
+  if (declarationMode == DeclarationPaths.timeOfDay.text) {
+    cardText = ['IWorkthisMorning', 'IWorkthisAfternoon'];
+  } else if (declarationMode == DeclarationPaths.fullDay.text) {
+    cardText = ['Iam', 'Iam'];
+  }
+  return cardText;
+}
+
 void redirection({
   required BuildContext context,
+  required String declarationMode,
 }) {
-  context.go("/declaration/half-day-end");
+  if (declarationMode == DeclarationPaths.fullDay.text) {
+    context.go("/status");
+  }
+  if (declarationMode == DeclarationPaths.timeOfDay.text) {
+    context.go("/declaration/half-day-start");
+  }
+  if (declarationMode == DeclarationPaths.halfDayEnd.text) {
+    context.go("/status");
+  }
+}
+
+List<String> setImage(String declarationMode) {
+  List<String> imageSrc = [];
+  if (declarationMode == DeclarationPaths.timeOfDay.text) {
+    imageSrc = [
+      'assets/images/Time-Morning.svg',
+      'assets/images/Time-Afternoon.svg',
+    ];
+  } else if (declarationMode == DeclarationPaths.fullDay.text) {
+    imageSrc = ['assets/images/Work-Office.svg', 'assets/images/Work-Home.svg'];
+  }
+  return imageSrc;
+}
+
+/// Determine the buttons's text depending of the declarationMode.
+/// Only the declarationMode "time-of-day" have different buttons text.
+/// For the halfDay we start by selecting the moment of the day (morning or afternoon)
+List<StatusEnum> setCardSubtitle(String declarationMode) {
+  List<StatusEnum> buttonsText = [];
+  if (declarationMode == DeclarationPaths.timeOfDay.text) {
+    buttonsText = [StatusEnum.morning, StatusEnum.afternoon];
+  } else if (declarationMode == DeclarationPaths.fullDay.text) {
+    buttonsText = [StatusEnum.remote, StatusEnum.onSite];
+  }
+  return buttonsText;
 }
