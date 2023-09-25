@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yaki/data/models/team_model.dart';
 import 'package:yaki/presentation/displaydata/declaration_enum.dart';
+import 'package:yaki/presentation/displaydata/status_page_utils.dart';
 import 'package:yaki/presentation/features/declaration/view/header_declaration_half_day_choice.dart';
 import 'package:yaki/presentation/features/declaration/view/header_declaration_single_choice.dart';
 import 'package:yaki/presentation/state/providers/declaration_provider.dart';
@@ -43,27 +44,31 @@ class TempDeclarationPage extends ConsumerWidget {
               const SizedBox(height: 60),
               Row(
                 children: [
-                  LocationSelectionCard(
-                    picture: SvgPicture.asset(
-                      'assets/images/Work-Office.svg',
-                      width: 100,
-                      height: 100,
+                  Padding(
+                    padding: const EdgeInsets.only(right: 10),
+                    child: LocationSelectionCard(
+                      picture: SvgPicture.asset(
+                        'assets/images/Work-Office.svg',
+                        width: 100,
+                        height: 100,
+                      ),
+                      title: tr('Iam'),
+                      subtitle:
+                          tr('setButtonsText(declarationMode).first.name'),
+                      onSelectionChanged: (selected) {
+                        onButtonPress(
+                          ref: ref,
+                          declarationMode:
+                              DeclarationPaths.fromText(declarationMode),
+                          teamList: teamList,
+                          buttonValue: setButtonsText(declarationMode).first,
+                        );
+                        redirection(
+                          context: context,
+                          declarationMode: declarationMode,
+                        );
+                      },
                     ),
-                    title: tr('Iam'),
-                    subtitle: tr('setButtonsText(declarationMode).first.name'),
-                    onSelectionChanged: (selected) {
-                      onButtonPress(
-                        ref: ref,
-                        declarationMode:
-                            DeclarationPaths.fromText(declarationMode),
-                        teamList: teamList,
-                        buttonValue: tr('setButtonsText(declarationMode).first.name'),
-                      );
-                      redirection(
-                        context: context,
-                        declarationMode: declarationMode,
-                      );
-                    },
                   ),
                   LocationSelectionCard(
                     picture: SvgPicture.asset(
@@ -72,7 +77,7 @@ class TempDeclarationPage extends ConsumerWidget {
                       height: 100,
                     ),
                     title: tr('Iam'),
-                    subtitle: setButtonsText(declarationMode).last,
+                    subtitle: tr('setButtonsText(declarationMode).last.name'),
                     onSelectionChanged: (selected) {
                       onButtonPress(
                         ref: ref,
@@ -99,11 +104,15 @@ class TempDeclarationPage extends ConsumerWidget {
 
 void onButtonPress({
   required WidgetRef ref,
-  DeclarationPaths? declarationMode,
+  required DeclarationPaths declarationMode,
   required List<TeamModel> teamList,
-  required String buttonValue,
+  required StatusEnum buttonValue,
 }) {
-  ref.read(declarationProvider.notifier).declarationCreationHandler();
+  ref.read(declarationProvider.notifier).declarationCreationHandler(
+        declarationMode: declarationMode,
+        teamList: teamList,
+        selectedStatus: buttonValue,
+      );
 }
 
 /// Determine the buttons's text depending of the declarationMode.
@@ -111,13 +120,12 @@ void onButtonPress({
 /// For the halfDay we start by selecting the moment of the day (morning or afternoon)
 List<StatusEnum> setButtonsText(String declarationMode) {
   List<StatusEnum> buttonsText = [];
-
   if (declarationMode == DeclarationPaths.timeOfDay.text) {
-    buttonsText = [tr("morning"), tr("afternoon")];
+    buttonsText = [StatusEnum.morning, StatusEnum.afternoon];
   } else if (declarationMode == DeclarationPaths.fullDay.text ||
       declarationMode == DeclarationPaths.halfDayStart.text ||
       declarationMode == DeclarationPaths.halfDayEnd.text) {
-    buttonsText = [tr("office"), tr("remote")];
+    buttonsText = [StatusEnum.remote, StatusEnum.onSite];
   }
   return buttonsText;
 }
