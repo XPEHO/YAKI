@@ -46,6 +46,22 @@ class TeamNotifier extends StateNotifier<TeamPageState> {
     }
   }
 
+  /// invoked when team button validation is pressed, and if there is 2 teams selected.
+  /// If "Absence" is selected and not the first of the list, it is moved to the first position.
+  void isAbsenceSelectedSetFirstOfList() {
+    final bool isAbsenceSelected = state.selectedTeamList
+        .any((teamSearch) => teamSearch.teamName == "Absence");
+
+    if (isAbsenceSelected &&
+        state.selectedTeamList.first.teamName != "Absence") {
+      state.selectedTeamList = state.selectedTeamList.reversed.toList();
+    }
+
+    for (final team in state.selectedTeamList) {
+      debugPrint("team: ${team.teamName}");
+    }
+  }
+
 // DEPRECIATED (keep this function during migration)
   Future<void> fetchTeams() async {
     final teamList = await teamRepository.getTeam();

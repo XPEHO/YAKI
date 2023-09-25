@@ -5,7 +5,8 @@ enum DeclarationPaths {
   timeOfDay('time-of-day'),
   halfDayStart('half-day-start'),
   halfDayEnd('half-day-end'),
-  vacation('vacation');
+  vacation('vacation'),
+  unknown('unknown');
 
   final String text;
   const DeclarationPaths(this.text);
@@ -22,7 +23,7 @@ enum DeclarationPaths {
     return DeclarationPaths.getPathList().any((element) => element == value);
   }
 
-  static DeclarationPaths? fromText(String textValue) {
+  static DeclarationPaths fromText(String textValue) {
     switch (textValue) {
       case 'full-day':
         return DeclarationPaths.fullDay;
@@ -35,7 +36,7 @@ enum DeclarationPaths {
       case 'vacation':
         return DeclarationPaths.vacation;
       default:
-        return null;
+        return DeclarationPaths.unknown;
     }
   }
 }

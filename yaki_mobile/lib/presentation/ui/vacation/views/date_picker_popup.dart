@@ -22,7 +22,7 @@ class _DatePickerPopupState extends ConsumerState<DatePickerPopup> {
     ref.watch(declarationProvider.notifier).createVacationDeclaration(
           dateStart: selectedDateRange.start,
           dateEnd: selectedDateRange.end,
-          status: StatusEnum.vacation.name,
+          status: StatusEnum.absence.name,
           teamId: 1,
         );
     widget.goToPage();

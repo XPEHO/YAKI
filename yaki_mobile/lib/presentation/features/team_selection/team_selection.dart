@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:go_router/go_router.dart';
-
+import 'package:yaki/presentation/displaydata/declaration_enum.dart';
 import 'package:yaki/presentation/features/team_selection/view/team_selection_header.dart';
 import 'package:yaki/presentation/features/team_selection/view/team_selection_list.dart';
 import 'package:yaki/presentation/state/providers/team_provider.dart';
@@ -10,24 +10,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class TeamSelection extends ConsumerWidget {
   const TeamSelection({super.key});
-
-  void onValidationTap({
-    required WidgetRef ref,
-    required BuildContext context,
-    required bool isButtonActivated,
-  }) {
-    final selectCount = ref.read(teamProvider).selectedTeamList.length;
-
-    if (isButtonActivated) {
-      if (selectCount == 1) {
-        //For new logic change to "/declaration/${DeclarationPaths.fullDay.text}"
-        context.go("/declaration");
-      } else if (selectCount == 2) {
-        //For new logic change to "/declaration/${DeclarationPaths.timeOfDay.text}"
-        context.go("/morningDeclaration");
-      }
-    }
-  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -58,5 +40,26 @@ class TeamSelection extends ConsumerWidget {
         ),
       ),
     );
+  }
+}
+
+void onValidationTap({
+  required WidgetRef ref,
+  required BuildContext context,
+  required bool isButtonActivated,
+}) {
+  final selectCount = ref.read(teamProvider).selectedTeamList.length;
+
+  if (isButtonActivated) {
+    if (selectCount == 1) {
+      //For new logic change to "/declaration/${DeclarationPaths.fullDay.text}"
+      //context.go("/declaration");
+      context.go("/declaration/${DeclarationPaths.fullDay.text}");
+    } else if (selectCount == 2) {
+      ref.read(teamProvider.notifier).isAbsenceSelectedSetFirstOfList();
+      //For new logic change to "/declaration/${DeclarationPaths.timeOfDay.text}"
+      //context.go("/morningDeclaration");
+      context.go("/declaration/${DeclarationPaths.timeOfDay.text}");
+    }
   }
 }

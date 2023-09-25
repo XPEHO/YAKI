@@ -9,7 +9,7 @@ import 'package:yaki/presentation/ui/shared/views/avatar_icon.dart';
 import 'package:yaki/presentation/ui/shared/views/circle_avatar_svg.dart';
 
 void _routeHandling(BuildContext context) {
-  context.go('/morningDeclaration');
+  context.go('/team-selection');
 }
 
 void onAvatarIconPress() {}
