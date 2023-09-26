@@ -3,13 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yaki/presentation/state/providers/status_provider.dart';
+import 'package:yaki/presentation/state/providers/team_provider.dart';
 import 'package:yaki/presentation/styles/color.dart';
 import 'package:yaki/presentation/styles/text_style.dart';
 import 'package:yaki/presentation/ui/shared/views/avatar_icon.dart';
 import 'package:yaki/presentation/ui/shared/views/circle_avatar_svg.dart';
 
-void _routeHandling(BuildContext context) {
+void _routeHandling(BuildContext context, WidgetRef ref) {
   context.go('/team-selection');
+  ref.read(teamProvider.notifier).clearTeamList();
 }
 
 class StatusRecapFullDay extends ConsumerWidget {
@@ -62,7 +64,7 @@ class StatusRecapFullDay extends ConsumerWidget {
                       height: 50,
                     ),
                     child: ElevatedButton(
-                      onPressed: () => _routeHandling(context),
+                      onPressed: () => _routeHandling(context, ref),
                       style: ElevatedButton.styleFrom(
                         elevation: 5,
                         backgroundColor: Colors.grey[400],
