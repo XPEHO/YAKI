@@ -9,22 +9,6 @@ import 'package:yaki_ui/team_selection_card.dart';
 class TeamSelectionList extends ConsumerWidget {
   const TeamSelectionList({super.key});
 
-  void onSelection({
-    required ref,
-    required bool isSelected,
-    required TeamModel team,
-  }) {
-    ref.read(teamProvider.notifier).setSelectedTeamList(team, isSelected);
-  }
-
-  //temporary : TeamModel should contain a pictoLink
-  String pictoLink(TeamModel team) {
-    final picto = team.teamName == "Absence"
-        ? 'assets/images/vacation.svg'
-        : 'assets/images/onSite.svg';
-    return picto;
-  }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final teamListAsync = ref.watch(teamFutureProvider);
@@ -67,4 +51,20 @@ class TeamSelectionList extends ConsumerWidget {
       loading: () => const Text(""),
     );
   }
+}
+
+void onSelection({
+  required ref,
+  required bool isSelected,
+  required TeamModel team,
+}) {
+  ref.read(teamProvider.notifier).setSelectedTeamList(team, isSelected);
+}
+
+//temporary : TeamModel should contain a pictoLink
+String pictoLink(TeamModel team) {
+  final picto = team.teamName == "Absence"
+      ? 'assets/images/vacation.svg'
+      : 'assets/images/onSite.svg';
+  return picto;
 }

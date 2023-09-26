@@ -13,6 +13,6 @@ final List statusCardsContent = [
   },
   {
     'image': 'assets/images/vacation.svg',
-    'text': StatusEnum.vacation.name,
+    'text': StatusEnum.absence.name,
   },
 ];

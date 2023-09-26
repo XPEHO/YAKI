@@ -6,7 +6,7 @@ import 'package:yaki/domain/entities/declaration_status.dart';
 enum StatusEnum {
   remote('remote'),
   onSite('on site'),
-  vacation('vacation'),
+  absence('absence'),
   halfDay('halfDay'),
   fullDay('fullDay'),
   morning('Morning'),

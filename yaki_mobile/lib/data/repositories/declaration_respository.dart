@@ -47,8 +47,7 @@ class DeclarationRepository {
               getHttpResponse.data.first,
             );
             statusGetDecl.add(getDeclarationIn.declarationStatus);
-            if (getDeclarationIn.declarationStatus ==
-                StatusEnum.vacation.name) {
+            if (getDeclarationIn.declarationStatus == StatusEnum.absence.name) {
               dateStart = getDeclarationIn.declarationDateStart;
               dateEnd = getDeclarationIn.declarationDateEnd;
             }
