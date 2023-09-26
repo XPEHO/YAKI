@@ -62,6 +62,13 @@ class TeamNotifier extends StateNotifier<TeamPageState> {
     }
   }
 
+  void clearTeamList() {
+    state = TeamPageState(
+      selectedTeamList: [],
+      isButtonActivated: false,
+    );
+  }
+
 // DEPRECIATED (keep this function during migration)
   Future<void> fetchTeams() async {
     final teamList = await teamRepository.getTeam();
