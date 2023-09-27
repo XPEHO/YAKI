@@ -6,15 +6,15 @@ import 'package:go_router/go_router.dart';
 import 'package:yaki/data/models/team_model.dart';
 import 'package:yaki/presentation/displaydata/declaration_enum.dart';
 import 'package:yaki/presentation/displaydata/status_page_utils.dart';
-import 'package:yaki/presentation/features/declaration/view/header_declaration_single_choice.dart';
+import 'package:yaki/presentation/features/declaration/view/header_declaration_half_day_choice.dart';
 import 'package:yaki/presentation/state/providers/declaration_provider.dart';
 import 'package:yaki/presentation/state/providers/team_provider.dart';
 import 'package:yaki_ui/yaki_ui.dart';
 
-class TempDeclarationPage extends ConsumerWidget {
+class DeclarationHalfDayEnd extends ConsumerWidget {
   final String declarationMode;
 
-  const TempDeclarationPage({
+  const DeclarationHalfDayEnd({
     super.key,
     required this.declarationMode,
   });
@@ -39,7 +39,7 @@ class TempDeclarationPage extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const SizedBox(height: 60),
-              HeaderDeclarationSingleChoice(
+              HeaderDeclarationHalfDayChoice(
                 declarationMode: declarationMode,
                 teamList: teamNameList,
                 imageSrc: '',
@@ -52,46 +52,44 @@ class TempDeclarationPage extends ConsumerWidget {
                     padding: const EdgeInsets.only(right: 10),
                     child: LocationSelectionCard(
                       picture: SvgPicture.asset(
-                        setImage(declarationMode).first,
+                        'assets/images/Work-Office.svg',
                         width: 160,
                         height: 160,
                       ),
-                      title: tr(setCardTitle(declarationMode).first),
-                      subtitle: tr(setCardSubtitle(declarationMode).first.name),
+                      title: tr("Iam"),
+                      subtitle: tr(StatusEnum.remote.name),
                       onSelectionChanged: (selected) {
                         onPress(
                           ref: ref,
                           declarationMode:
                               DeclarationPaths.fromText(declarationMode),
                           teamList: teamList,
-                          buttonValue: setCardSubtitle(declarationMode).first,
+                          buttonValue: StatusEnum.remote,
                         );
                         redirection(
                           context: context,
-                          declarationMode: declarationMode,
                         );
                       },
                     ),
                   ),
                   LocationSelectionCard(
                     picture: SvgPicture.asset(
-                      setImage(declarationMode).last,
+                      'assets/images/Work-Home.svg',
                       width: 160,
                       height: 160,
                     ),
-                    title: tr(setCardTitle(declarationMode).last),
-                    subtitle: tr(setCardSubtitle(declarationMode).last.name),
+                    title: tr("Iam"),
+                    subtitle: tr(StatusEnum.onSite.name),
                     onSelectionChanged: (selected) {
                       onPress(
                         ref: ref,
                         declarationMode:
                             DeclarationPaths.fromText(declarationMode),
                         teamList: teamList,
-                        buttonValue: setCardSubtitle(declarationMode).last,
+                        buttonValue: StatusEnum.onSite,
                       );
                       redirection(
                         context: context,
-                        declarationMode: declarationMode,
                       );
                     },
                   ),
@@ -120,48 +118,6 @@ void onPress({
 
 void redirection({
   required BuildContext context,
-  required String declarationMode,
 }) {
-  if (declarationMode == DeclarationPaths.fullDay.text) {
-    context.go("/status");
-  }
-  if (declarationMode == DeclarationPaths.timeOfDay.text) {
-    context.go("/declaration/half-day-start");
-  }
-}
-
-List<String> setCardTitle(String declarationMode) {
-  List<String> cardText = [];
-  if (declarationMode == DeclarationPaths.timeOfDay.text) {
-    cardText = ['IWorkthisMorning', 'IWorkthisAfternoon'];
-  } else if (declarationMode == DeclarationPaths.fullDay.text) {
-    cardText = ['Iam', 'Iam'];
-  }
-  return cardText;
-}
-
-List<String> setImage(String declarationMode) {
-  List<String> imageSrc = [];
-  if (declarationMode == DeclarationPaths.timeOfDay.text) {
-    imageSrc = [
-      'assets/images/Time-Morning.svg',
-      'assets/images/Time-Afternoon.svg',
-    ];
-  } else if (declarationMode == DeclarationPaths.fullDay.text) {
-    imageSrc = ['assets/images/Work-Office.svg', 'assets/images/Work-Home.svg'];
-  }
-  return imageSrc;
-}
-
-/// Determine the buttons's text depending of the declarationMode.
-/// Only the declarationMode "time-of-day" have different buttons text.
-/// For the halfDay we start by selecting the moment of the day (morning or afternoon)
-List<StatusEnum> setCardSubtitle(String declarationMode) {
-  List<StatusEnum> buttonsText = [];
-  if (declarationMode == DeclarationPaths.timeOfDay.text) {
-    buttonsText = [StatusEnum.morning, StatusEnum.afternoon];
-  } else if (declarationMode == DeclarationPaths.fullDay.text) {
-    buttonsText = [StatusEnum.remote, StatusEnum.onSite];
-  }
-  return buttonsText;
+  context.go("/status");
 }

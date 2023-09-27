@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:yaki/data/sources/local/shared_preference.dart';
 import 'package:yaki/presentation/displaydata/declaration_enum.dart';
 import 'package:yaki/presentation/features/authentication/authentication.dart';
+import 'package:yaki/presentation/features/declaration/declaration_half_day_end.dart';
+import 'package:yaki/presentation/features/declaration/declaration_half_day_start.dart';
 import 'package:yaki/presentation/features/declaration/temp_page.dart';
 import 'package:yaki/presentation/features/team_selection/team_selection.dart';
 import 'package:yaki/presentation/ui/password/forgot_password.dart';
@@ -111,6 +113,32 @@ final goRouterProvider = Provider<GoRouter>(
                 } else {
                   return '/';
                 }
+              },
+            ),
+            GoRoute(
+              path: 'declaration/half-day-start',
+              builder: (context, state) => const DeclarationHalfDayStart(
+                declarationMode: "half-day-start",
+              ),
+              redirect: (BuildContext context, GoRouterState state) async {
+                if (await SharedPref.isTokenPresent()) {
+                  return '/declaration/half-day-start';
+                }
+                return '/';
+              },
+            ),
+            GoRoute(
+              path: 'declaration/half-day-end',
+              builder: (context, state) => const DeclarationHalfDayEnd(
+                declarationMode: "half-day-end",
+              ),
+              redirect: (BuildContext context, GoRouterState state) async {
+                // null check
+
+                if (await SharedPref.isTokenPresent()) {
+                  return '/declaration/half-day-end';
+                }
+                return '/';
               },
             ),
             GoRoute(
