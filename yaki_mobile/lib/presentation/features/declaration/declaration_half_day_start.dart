@@ -44,56 +44,63 @@ class DeclarationHalfDayStart extends ConsumerWidget {
                 teamList: teamNameList,
                 imageSrc: '',
               ),
-              const SizedBox(height: 60),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 10),
-                    child: LocationSelectionCard(
-                      picture: SvgPicture.asset(
-                        'assets/images/Work-Office.svg',
-                        width: 160,
-                        height: 160,
+              const SizedBox(height: 48),
+              SizedBox(
+                height: 240,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: LocationSelectionCard(
+                        picture: SvgPicture.asset(
+                          'assets/images/Work-Office.svg',
+                          width: 112,
+                          height: 112,
+                        ),
+                        title: tr("Iam"),
+                        subtitle: tr(StatusEnum.remote.name),
+                        onSelectionChanged: (selected) {
+                          onPress(
+                            ref: ref,
+                            declarationMode:
+                                DeclarationPaths.fromText(declarationMode),
+                            teamList: teamList,
+                            buttonValue: StatusEnum.remote,
+                          );
+                          redirection(
+                            context: context,
+                          );
+                        },
                       ),
-                      title: tr("Iam"),
-                      subtitle: tr(StatusEnum.remote.name),
-                      onSelectionChanged: (selected) {
-                        onPress(
-                          ref: ref,
-                          declarationMode:
-                              DeclarationPaths.fromText(declarationMode),
-                          teamList: teamList,
-                          buttonValue: StatusEnum.remote,
-                        );
-                        redirection(
-                          context: context,
-                        );
-                      },
                     ),
-                  ),
-                  LocationSelectionCard(
-                    picture: SvgPicture.asset(
-                      'assets/images/Work-Home.svg',
-                      width: 160,
-                      height: 160,
+                    const SizedBox(width: 9),
+                    Expanded(
+                      flex: 1,
+                      child: LocationSelectionCard(
+                        picture: SvgPicture.asset(
+                          'assets/images/Work-Home.svg',
+                          width: 112,
+                          height: 112,
+                        ),
+                        title: tr("Iam"),
+                        subtitle: tr(StatusEnum.onSite.name),
+                        onSelectionChanged: (selected) {
+                          onPress(
+                            ref: ref,
+                            declarationMode:
+                                DeclarationPaths.fromText(declarationMode),
+                            teamList: teamList,
+                            buttonValue: StatusEnum.onSite,
+                          );
+                          redirection(
+                            context: context,
+                          );
+                        },
+                      ),
                     ),
-                    title: tr("Iam"),
-                    subtitle: tr(StatusEnum.onSite.name),
-                    onSelectionChanged: (selected) {
-                      onPress(
-                        ref: ref,
-                        declarationMode:
-                            DeclarationPaths.fromText(declarationMode),
-                        teamList: teamList,
-                        buttonValue: StatusEnum.onSite,
-                      );
-                      redirection(
-                        context: context,
-                      );
-                    },
-                  ),
-                ],
+                  ],
+                ),
               ),
             ],
           ),
