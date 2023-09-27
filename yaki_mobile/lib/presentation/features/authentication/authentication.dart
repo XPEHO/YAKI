@@ -22,8 +22,7 @@ class _AuthenticationState extends ConsumerState<Authentication> {
   final loginController = TextEditingController();
   final passwordController = TextEditingController();
   final Color backgroundColor = const Color(0xFFF2F6F9);
-  // store the value of the 'rememberMe' checkbox
-  bool isChecked = false;
+
   // store the user default login details
   List<String> loginDetails = ["", ""];
 
@@ -31,11 +30,9 @@ class _AuthenticationState extends ConsumerState<Authentication> {
   // login details and the 'rememberMe' checkbox default value before
   // the widgets are mounted
   void _initiateCheckboxValue() async {
-    var rememberMe = await SharedPref.getRememberMe();
     var storedLoginDetails = await SharedPref.getLoginDetails();
 
     setState(() {
-      isChecked = rememberMe;
       loginDetails = storedLoginDetails;
     });
 
@@ -50,23 +47,6 @@ class _AuthenticationState extends ConsumerState<Authentication> {
   }
 
   /// on 'Sign in' button press/tap :
-  /// * delete the previously saved token in the sharedPreferences
-  /// * if the rememberMe checkbox value is true, store the login details
-  /// * POST to the API the login information's, by invoking the loginRepositoryProvider.userAuthentication() method,
-  /// then retrieve the boolean to know if the logged user is a captain.
-  ///
-  /// Depending of the newly saved token and if the user is a captain or not :
-  /// * route to the captain page
-  ///
-  /// Or
-  /// * route to the declaration page
-  /// fetch the latest declaration and retrieve the status,
-  ///
-  /// if not null
-  /// route to the status page directly
-  ///
-  /// if null
-  /// route to the declaration page
   void onPressAuthent({
     required WidgetRef ref,
     required String login,
@@ -81,18 +61,16 @@ class _AuthenticationState extends ConsumerState<Authentication> {
     await SharedPref.deleteToken();
     // if the rememberMe checkbox value is true, store the login details
     // in the shared preferences
-    if (await SharedPref.getRememberMe()) {
-      await SharedPref.setLoginDetails(login, password);
-    }
+
+    await SharedPref.setLoginDetails(login, password);
+
     final bool authenticationResult = await ref
         .read(loginRepositoryProvider)
         .userAuthentication(login, password);
     if (authenticationResult && await SharedPref.isTokenPresent()) {
       final bool isCaptain = ref.read(loginRepositoryProvider).isCaptain();
       final bool isTeammate = ref.read(loginRepositoryProvider).isTeammate();
-      if (isCaptain) {
-        goToCaptain();
-      } else if (isTeammate) {
+      if (isTeammate || isCaptain) {
         final declarationStatus =
             await ref.read(declarationProvider.notifier).getLatestDeclaration();
         if (declarationStatus.length > 1) {

@@ -38,16 +38,6 @@ class SharedPref {
     prefs.setBool('rememberMe', value);
   }
 
-  static Future<bool> getRememberMe() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (prefs.containsKey('rememberMe')) {
-      return prefs.getBool('rememberMe')!;
-    } else {
-      await setRememberMe(false);
-      return false;
-    }
-  }
-
   static Future<void> setLoginDetails(String login, String password) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setStringList('loginDetails', [login, password]);
