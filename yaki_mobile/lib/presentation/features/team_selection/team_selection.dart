@@ -4,6 +4,7 @@ import 'package:yaki/presentation/displaydata/declaration_enum.dart';
 import 'package:yaki/presentation/features/team_selection/view/team_selection_header.dart';
 import 'package:yaki/presentation/features/team_selection/view/team_selection_list.dart';
 import 'package:yaki/presentation/state/providers/team_provider.dart';
+import 'package:yaki/presentation/ui/vacation/vacation_selection_dialog.dart';
 import 'package:yaki_ui/yaki_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -48,17 +49,26 @@ void onValidationTap({
   required BuildContext context,
   required bool isButtonActivated,
 }) {
-  final selectCount = ref.read(teamProvider).selectedTeamList.length;
+  final teamList = ref.read(teamProvider).selectedTeamList;
+  final selectCount = teamList.length;
 
   if (isButtonActivated) {
     if (selectCount == 1) {
-      //For new logic change to "/declaration/${DeclarationPaths.fullDay.text}"
-      //context.go("/declaration");
-      context.go("/declaration/${DeclarationPaths.fullDay.text}");
+      final bool isAbsenceSelected =
+          teamList.any((team) => team.teamName == "Absence");
+
+      if (isAbsenceSelected) {
+        VacationSelectionDialog(
+          ref: ref,
+          context: context,
+          goToPage: () => context.go('/vacationStatus'),
+        ).show();
+      } else {
+        context.go("/declaration/${DeclarationPaths.fullDay.text}");
+      }
     } else if (selectCount == 2) {
       ref.read(teamProvider.notifier).isAbsenceSelectedSetFirstOfList();
-      //For new logic change to "/declaration/${DeclarationPaths.timeOfDay.text}"
-      //context.go("/morningDeclaration");
+
       context.go("/declaration/${DeclarationPaths.timeOfDay.text}");
     }
   }
