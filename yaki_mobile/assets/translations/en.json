@@ -90,9 +90,10 @@
   "teamSelectionPageTitle1": "What's planned",
   "teamSelectionPageTitle2": "for today ?",
   "teamSelectionPageHint": "Select 1 or 2 activities",
+
   "whereworking": "Where are you working ",
   "doyouwork": "do you work ",
-
+  "areYouAbsent": "are you absent ?",
   "thisMorning": " this ",
   "thisAfternoon": " this ",
   "morning": "Morning",

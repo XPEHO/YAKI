@@ -42,7 +42,7 @@ class DeclarationPage extends ConsumerWidget {
                 const SizedBox(height: 60),
                 HeaderDeclarationSingleChoice(
                   declarationMode: declarationMode,
-                  teamList: teamNameList,
+                  teamNameList: teamNameList,
                   imageSrc: '',
                 ),
                 const SizedBox(height: 48),
@@ -59,7 +59,12 @@ class DeclarationPage extends ConsumerWidget {
                             width: 112,
                             height: 112,
                           ),
-                          title: tr(setCardTitle(declarationMode).first),
+                          title: tr(
+                            setCardTitle(
+                              declarationMode: declarationMode,
+                              teamNameList: teamNameList,
+                            ).first,
+                          ),
                           subtitle:
                               tr(setCardSubtitle(declarationMode).first.name),
                           onSelectionChanged: (selected) {
@@ -74,6 +79,7 @@ class DeclarationPage extends ConsumerWidget {
                             redirection(
                               context: context,
                               declarationMode: declarationMode,
+                              teamNameList: teamNameList,
                             );
                           },
                         ),
@@ -87,7 +93,12 @@ class DeclarationPage extends ConsumerWidget {
                             width: 112,
                             height: 112,
                           ),
-                          title: tr(setCardTitle(declarationMode).last),
+                          title: tr(
+                            setCardTitle(
+                              declarationMode: declarationMode,
+                              teamNameList: teamNameList,
+                            ).last,
+                          ),
                           subtitle:
                               tr(setCardSubtitle(declarationMode).last.name),
                           onSelectionChanged: (selected) {
@@ -102,6 +113,7 @@ class DeclarationPage extends ConsumerWidget {
                             redirection(
                               context: context,
                               declarationMode: declarationMode,
+                              teamNameList: teamNameList,
                             );
                           },
                         ),
@@ -146,19 +158,31 @@ void onPress({
 void redirection({
   required BuildContext context,
   required String declarationMode,
+  required List<String> teamNameList,
 }) {
+  bool isAbsenceSelected = teamNameList.contains("Absence");
+
   if (declarationMode == DeclarationPaths.fullDay.text) {
     context.go("/status");
   }
   if (declarationMode == DeclarationPaths.timeOfDay.text) {
-    context.go("/declaration/half-day-start");
+    if (isAbsenceSelected) {
+      context.go("/declaration/half-day-end");
+    } else {
+      context.go("/declaration/half-day-start");
+    }
   }
 }
 
-List<String> setCardTitle(String declarationMode) {
+List<String> setCardTitle({
+  required String declarationMode,
+  required List<String> teamNameList,
+}) {
   List<String> cardText = [];
   if (declarationMode == DeclarationPaths.timeOfDay.text) {
-    cardText = ['IWorkthisMorning', 'IWorkthisAfternoon'];
+    cardText = teamNameList.contains("Absence")
+        ? ["thisMorning", "thisAfternoon"]
+        : ['IWorkthisMorning', 'IWorkthisAfternoon'];
   } else if (declarationMode == DeclarationPaths.fullDay.text) {
     cardText = ['Iam', 'Iam'];
   }
