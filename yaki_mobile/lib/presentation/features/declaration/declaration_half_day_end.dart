@@ -73,6 +73,7 @@ class DeclarationHalfDayEnd extends ConsumerWidget {
                         },
                       ),
                     ),
+                    const SizedBox(width: 9),
                     Expanded(
                       flex: 1,
                       child: LocationSelectionCard(

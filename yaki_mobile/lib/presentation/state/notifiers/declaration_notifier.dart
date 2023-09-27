@@ -54,8 +54,6 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
     return declarationStatus.fullDayStatus;
   }
 
-  // BASTIUI CODE =====================================================================================
-
   /// Function invoked in declaration page when a card is selected.
   Future<void> declarationCreationHandler({
     required DeclarationPaths declarationMode,
@@ -70,14 +68,15 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
           teamId: teamList.first.teamId ?? 0,
         );
         break;
-      // HALF DAY determine first team morning or afternoon
+      // HALF DAY determine first morning or afternoon selection
       case DeclarationPaths.timeOfDay:
         state.teamsHalfDay.firstToDSelection = selectedStatus;
         state.teamsHalfDay.firstTeamId = teamList.first.teamId ?? 0;
         state.teamsHalfDay.secondTeamId = teamList.last.teamId ?? 0;
 
         // declaration requier a teamID,
-        //therefore for now will set the second teamID, as the DB declaration table requier a valid teamId
+        // therefore in case of ABSENCE for now will set the second teamID,
+        // as the DB declaration table requier a valid teamId
         if (state.teamsHalfDay.firstTeamId == -1) {
           state.teamsHalfDay.firstTeamStatus = StatusEnum.absence.name;
           state.teamsHalfDay.firstTeamId = teamList.last.teamId!;
@@ -117,7 +116,6 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
     }
   }
 
-  // TO KEEP AFTER TRANSITION TO BASTIU REDESIGN
   /// Invoked in declaration_body "page",
   Future<void> createFullDay({
     required String status,

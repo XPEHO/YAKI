@@ -7,13 +7,13 @@ import 'package:yaki_ui/icon_chip.dart';
 
 class HeaderDeclarationSingleChoice extends StatelessWidget {
   final String declarationMode;
-  final List<String> teamList;
+  final List<String> teamNameList;
   final String imageSrc = 'assets/images/onSite.svg';
 
   const HeaderDeclarationSingleChoice({
     super.key,
     required this.declarationMode,
-    required this.teamList,
+    required this.teamNameList,
     required final String imageSrc,
   });
 
@@ -24,39 +24,41 @@ class HeaderDeclarationSingleChoice extends StatelessWidget {
         Row(
           children: [
             Text(
-              setFirstWord(declarationMode: declarationMode),
+              tr(setFirstWord(declarationMode: declarationMode)),
               style: textStylePageTitle(),
             ),
             Text(
-              tr("doyouwork"),
+              tr(setSecondSentencePart(teamNameList)),
               style: textStylePageTitle(),
             ),
           ],
         ),
-        Row(
-          children: [
-            Text(
-              tr("for "),
-              style: textStylePageTitle(),
-            ),
-            IconChip(
-              label: setTeam(teamList: teamList),
-              backgroundColor: Colors.white,
-              image: ClipRRect(
-                borderRadius: BorderRadius.circular(50),
-                child: SvgPicture.asset(
-                  imageSrc,
-                  width: 50,
-                  height: 50,
-                ),
+        teamNameList.contains("Absence")
+            ? Container()
+            : Row(
+                children: [
+                  Text(
+                    tr("for "),
+                    style: textStylePageTitle(),
+                  ),
+                  IconChip(
+                    label: setTeam(teamList: teamNameList),
+                    backgroundColor: Colors.white,
+                    image: ClipRRect(
+                      borderRadius: BorderRadius.circular(50),
+                      child: SvgPicture.asset(
+                        imageSrc,
+                        width: 50,
+                        height: 50,
+                      ),
+                    ),
+                  ),
+                  Text(
+                    " ?",
+                    style: textStylePageTitle(),
+                  ),
+                ],
               ),
-            ),
-            Text(
-              " ?",
-              style: textStylePageTitle(),
-            ),
-          ],
-        ),
       ],
     );
   }
@@ -64,8 +66,12 @@ class HeaderDeclarationSingleChoice extends StatelessWidget {
 
 String setFirstWord({required String declarationMode}) {
   return declarationMode == DeclarationPaths.timeOfDay.text
-      ? tr("When ")
-      : tr("Where ");
+      ? "When "
+      : "Where ";
+}
+
+String setSecondSentencePart(List<String> teamNameList) {
+  return teamNameList.contains("Absence") ? "areYouAbsent" : "doyouwork";
 }
 
 String setTeam({required List<String> teamList}) {
