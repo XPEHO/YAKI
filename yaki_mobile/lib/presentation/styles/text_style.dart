@@ -86,3 +86,10 @@ TextStyle textStyleUserRedirectStyleTeam() {
     color: Color.fromARGB(255, 42, 43, 42),
   );
 }
+
+TextStyle textStyleDeclaration() {
+  return const TextStyle(
+    fontSize: 40,
+    fontWeight: FontWeight.w600,
+  );
+}

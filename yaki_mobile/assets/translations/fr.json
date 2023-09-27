@@ -15,7 +15,6 @@
   "headerHintDecla": "Quel est votre statut pour la journée ?",
   "headerHintDeclaMorning": "quel est votre statut pour la matinée ?",
   "headerHintDeclaAfternoon": "quel est votre statut pour l'aprés-midi ?",
-  "remote": "Distanciel",
   "onSite": "Sur site",
   "vacation": "Absence",
   "undeclared": "Non déclaré",
@@ -92,5 +91,20 @@
 
   "teamSelectionPageTitle1": "Quoi de prévu",
   "teamSelectionPageTitle2": "aujourd'hui ?",
-  "teamSelectionPageHint": "Sélectionnez 1 ou 2 activités"
+  "teamSelectionPageHint": "Sélectionnez 1 ou 2 activités",
+
+  "whereworking": "D'où travailles tu ",
+  "doyouwork": "travailles-tu ",
+  "thisMorning": "ce ",
+  "thisAfternoon": "cet ",
+  "morning": "Matin",
+  "afternoon": "Après-midi",
+  "IWorkthisMorning": "Je travaille ce",
+  "IWorkthisAfternoon": "Je travaille cet",
+  "Iam": "Je suis",
+  "office": "Au Bureau",
+  "remote": "En Télétravail",
+  "for ": "pour ",
+  "When ": "Quand ",
+  "Where ": "Où "
 }
