@@ -134,6 +134,7 @@ class DeclarationPage extends ConsumerWidget {
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
               context.go("/team-selection");
+              ref.read(teamProvider.notifier).clearTeamList();
             },
           ),
         ),

@@ -1,9 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yaki/data/models/declaration_model.dart';
 import 'package:yaki/data/models/team_model.dart';
 import 'package:yaki/data/repositories/declaration_respository.dart';
-import 'package:yaki/data/repositories/login_repository.dart';
 import 'package:yaki/domain/entities/declaration_status.dart';
 import 'package:yaki/presentation/displaydata/declaration_enum.dart';
 import 'package:yaki/presentation/displaydata/status_page_utils.dart';
@@ -14,20 +14,20 @@ import 'package:yaki/presentation/state/providers/vacation_status_provider.dart'
 class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
   final Ref ref;
   final DeclarationRepository declarationRepository;
-  final LoginRepository loginRepository;
 
   DeclarationNotifier({
     required this.ref,
     required this.declarationRepository,
-    required this.loginRepository,
   }) : super(DeclarationStatus());
 
   // WILL NEED TO BE REVIEWED AFTER DECLARATION LOGIC REWORK WITH BASTI DESIGN
   /// Invoked at authentication "sign in" button press.
   Future<List<String>> getLatestDeclaration() async {
-    final userId = loginRepository.userId;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final int? userId = prefs.getInt("userId");
+
     final declarationStatus =
-        await declarationRepository.getLatestDeclaration(userId!);
+        await declarationRepository.getLatestDeclaration(userId ?? 0);
     switch (declarationStatus.fullDayStatus.length) {
       case 1:
         if (declarationStatus.fullDayStatus.first == 'vacation') {
@@ -60,12 +60,16 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
     required List<TeamModel> teamList,
     required StatusEnum selectedStatus,
   }) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final int? userId = prefs.getInt("userId");
+
     switch (declarationMode) {
       // FULL DAY
       case DeclarationPaths.fullDay:
         await createFullDay(
           status: StatusEnum.getValue(key: selectedStatus.name),
           teamId: teamList.first.teamId ?? 0,
+          userId: userId ?? 0,
         );
         break;
       // HALF DAY determine first morning or afternoon selection
@@ -98,6 +102,7 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
             morningTeamId: state.teamsHalfDay.firstTeamId,
             afternoonStatus: state.teamsHalfDay.secondTeamStatus,
             afternoonTeamId: state.teamsHalfDay.secondTeamId,
+            userId: userId ?? 0,
           );
         } else {
           await createHalfDay(
@@ -105,6 +110,7 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
             morningTeamId: state.teamsHalfDay.secondTeamId,
             afternoonStatus: state.teamsHalfDay.firstTeamStatus,
             afternoonTeamId: state.teamsHalfDay.firstTeamId,
+            userId: userId ?? 0,
           );
         }
         break;
@@ -120,12 +126,13 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
   Future<void> createFullDay({
     required String status,
     required int teamId,
+    required int userId,
   }) async {
     final todayDate = DateTime.now();
 
     // CREATE DECLARATION
     DeclarationModel newDeclaration = DeclarationModel(
-      declarationUserId: loginRepository.userId,
+      declarationUserId: userId,
       declarationDate: todayDate,
       declarationDateStart: DateTime.parse(
         '${DateFormat('yyyy-MM-dd').format(todayDate)} 00:00:00Z',
@@ -155,11 +162,12 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
     required int morningTeamId,
     required String afternoonStatus,
     required int afternoonTeamId,
+    required int userId,
   }) async {
     final todayDate = DateTime.now();
     // FIRST DECLARATION
     DeclarationModel newDeclarationMorning = DeclarationModel(
-      declarationUserId: loginRepository.userId,
+      declarationUserId: userId,
       declarationDate: todayDate,
       declarationDateStart: DateTime.parse(
         '${DateFormat('yyyy-MM-dd').format(todayDate)} 00:00:00Z',
@@ -172,7 +180,7 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
     );
     // SECOND DECLARATION
     DeclarationModel newDeclarationAfternoon = DeclarationModel(
-      declarationUserId: loginRepository.userId,
+      declarationUserId: userId,
       declarationDate: todayDate,
       declarationDateStart: DateTime.parse(
         '${DateFormat('yyyy-MM-dd').format(todayDate)} 13:00:00Z',
@@ -211,9 +219,12 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
   }) async {
     final todayDate = DateTime.now();
 
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final int? userId = prefs.getInt("userId");
+
     // CREATE DECLARATION
     DeclarationModel newDeclaration = DeclarationModel(
-      declarationUserId: loginRepository.userId,
+      declarationUserId: userId ?? 0,
       declarationDate: todayDate,
       declarationDateStart: DateTime.parse(
         '${DateFormat('yyyy-MM-dd').format(dateStart)} 00:00:00Z',
