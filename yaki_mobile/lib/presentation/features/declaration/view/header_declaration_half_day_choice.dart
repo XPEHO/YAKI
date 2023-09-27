@@ -45,8 +45,8 @@ class HeaderDeclarationHalfDayChoice extends ConsumerWidget {
                 borderRadius: BorderRadius.circular(50),
                 child: SvgPicture.asset(
                   'assets/images/onSite.svg',
-                  width: 50,
-                  height: 50,
+                  width: 40,
+                  height: 40,
                 ),
               ),
             ),
@@ -65,8 +65,8 @@ class HeaderDeclarationHalfDayChoice extends ConsumerWidget {
                 borderRadius: BorderRadius.circular(50),
                 child: SvgPicture.asset(
                   setImageChips(ref, declarationMode),
-                  width: 50,
-                  height: 50,
+                  width: 40,
+                  height: 40,
                 ),
               ),
             ),
@@ -95,41 +95,40 @@ String setTeam({
 }
 
 String setImageChips(WidgetRef ref, String declarationMode) {
-  final todStatus =
+  final selectedTimeOfDay =
       ref.watch(declarationProvider).teamsHalfDay.firstToDSelection;
-  final isMorning = todStatus == StatusEnum.morning;
-  final image = isMorning
-      ? "assets/images/Time-Morning.svg"
-      : "assets/images/Time-Afternoon.svg";
-  return declarationMode == DeclarationPaths.halfDayStart.text ? image : image;
+  final isMorning = selectedTimeOfDay == StatusEnum.morning;
+  return declarationMode == DeclarationPaths.halfDayStart.text
+      ? isMorning
+          ? 'assets/images/Time-Morning.svg'
+          : 'assets/images/Time-Afternoon.svg'
+      : isMorning
+          ? 'assets/images/Time-Afternoon.svg'
+          : 'assets/images/Time-Morning.svg';
 }
 
 String setLabel(WidgetRef ref, String declarationMode) {
   final selectedTimeOfDay =
       ref.watch(declarationProvider).teamsHalfDay.firstToDSelection;
-  String toReturn = "";
-  declarationMode == DeclarationPaths.halfDayStart.text &&
-          selectedTimeOfDay == StatusEnum.morning
-      ? toReturn = "morning"
-      : toReturn = "afternoon";
-  declarationMode == DeclarationPaths.halfDayEnd.text &&
-          selectedTimeOfDay == StatusEnum.morning
-      ? toReturn = "afternoon"
-      : toReturn = "morning";
-  return toReturn;
+  final isMorning = selectedTimeOfDay == StatusEnum.morning;
+  return declarationMode == DeclarationPaths.halfDayStart.text
+      ? isMorning
+          ? "morning"
+          : "afternoon"
+      : isMorning
+          ? "afternoon"
+          : "morning";
 }
 
 String setThis(WidgetRef ref, String declarationMode) {
   final selectedTimeOfDay =
       ref.watch(declarationProvider).teamsHalfDay.firstToDSelection;
-  String toReturn = "";
-  declarationMode == DeclarationPaths.halfDayStart.text &&
-          selectedTimeOfDay == StatusEnum.morning
-      ? toReturn = "thisMorning"
-      : toReturn = "thisAfternoon";
-  declarationMode == DeclarationPaths.halfDayEnd.text &&
-          selectedTimeOfDay == StatusEnum.morning
-      ? toReturn = "thisAfternoon"
-      : toReturn = "thisMorning";
-  return toReturn;
+  final isMorning = selectedTimeOfDay == StatusEnum.morning;
+  return declarationMode == DeclarationPaths.halfDayStart.text
+      ? isMorning
+          ? "thisMorning"
+          : "thisAfternoon"
+      : isMorning
+          ? "thisAfternoon"
+          : "thisMorning";
 }

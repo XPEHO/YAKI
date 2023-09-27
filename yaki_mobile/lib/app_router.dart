@@ -6,7 +6,7 @@ import 'package:yaki/presentation/displaydata/declaration_enum.dart';
 import 'package:yaki/presentation/features/authentication/authentication.dart';
 import 'package:yaki/presentation/features/declaration/declaration_half_day_end.dart';
 import 'package:yaki/presentation/features/declaration/declaration_half_day_start.dart';
-import 'package:yaki/presentation/features/declaration/temp_page.dart';
+import 'package:yaki/presentation/features/declaration/declaration_page.dart';
 import 'package:yaki/presentation/features/team_selection/team_selection.dart';
 import 'package:yaki/presentation/ui/password/forgot_password.dart';
 import 'package:yaki/presentation/ui/captain/captain_view.dart';
@@ -143,7 +143,7 @@ final goRouterProvider = Provider<GoRouter>(
             ),
             GoRoute(
               path: 'declaration/:mode',
-              builder: (context, state) => TempDeclarationPage(
+              builder: (context, state) => DeclarationPage(
                 declarationMode: state.pathParameters['mode']!,
               ),
               redirect: (BuildContext context, GoRouterState state) async {
