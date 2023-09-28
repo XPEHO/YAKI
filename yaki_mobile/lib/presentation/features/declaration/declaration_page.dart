@@ -32,6 +32,17 @@ class DeclarationPage extends ConsumerWidget {
     }
 
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        leading: IconButton(
+          onPressed: () {
+            context.go("/team-selection");
+            ref.read(teamProvider.notifier).clearTeamList();
+          },
+          icon: const Icon(Icons.arrow_back),
+        ),
+      ),
       body: SafeArea(
         child: Center(
           child: Padding(
@@ -39,7 +50,7 @@ class DeclarationPage extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const SizedBox(height: 60),
+                const SizedBox(height: 32),
                 HeaderDeclarationSingleChoice(
                   declarationMode: declarationMode,
                   teamNameList: teamNameList,
@@ -123,19 +134,6 @@ class DeclarationPage extends ConsumerWidget {
                 ),
               ],
             ),
-          ),
-        ),
-      ),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(top: 25, left: 25, right: 0, bottom: 32),
-        child: Align(
-          alignment: Alignment.topLeft,
-          child: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () {
-              context.go("/team-selection");
-              ref.read(teamProvider.notifier).clearTeamList();
-            },
           ),
         ),
       ),

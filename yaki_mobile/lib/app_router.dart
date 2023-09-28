@@ -9,7 +9,6 @@ import 'package:yaki/presentation/features/declaration/declaration_half_day_star
 import 'package:yaki/presentation/features/declaration/declaration_page.dart';
 import 'package:yaki/presentation/features/team_selection/team_selection.dart';
 import 'package:yaki/presentation/ui/password/forgot_password.dart';
-import 'package:yaki/presentation/ui/captain/captain_view.dart';
 import 'package:yaki/presentation/ui/default/user_default_redirection.dart';
 import 'package:yaki/presentation/ui/password/change_password.dart';
 import 'package:yaki/presentation/ui/profile/profile.dart';
@@ -35,17 +34,6 @@ final goRouterProvider = Provider<GoRouter>(
                   return '/status';
                 } else {
                   return '/declaration';
-                }
-              },
-            ),
-            GoRoute(
-              path: 'captain',
-              builder: (context, state) => const CaptainView(),
-              redirect: (BuildContext context, GoRouterState state) async {
-                if (await SharedPref.isTokenPresent()) {
-                  return '/captain';
-                } else {
-                  return '/';
                 }
               },
             ),

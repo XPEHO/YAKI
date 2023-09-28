@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yaki/data/models/declaration_model.dart';
@@ -26,8 +27,10 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final int? userId = prefs.getInt("userId");
 
+    if (userId == null) return [];
+
     final declarationStatus =
-        await declarationRepository.getLatestDeclaration(userId ?? 0);
+        await declarationRepository.getLatestDeclaration(userId);
     switch (declarationStatus.fullDayStatus.length) {
       case 1:
         if (declarationStatus.fullDayStatus.first == 'vacation') {
@@ -63,30 +66,35 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final int? userId = prefs.getInt("userId");
 
+    // exit function if improper data
+    if (userId == null ||
+        teamList.first.teamId == null ||
+        teamList.last.teamId == null) return;
+
     switch (declarationMode) {
       // FULL DAY
       case DeclarationPaths.fullDay:
         await createFullDay(
           status: StatusEnum.getValue(key: selectedStatus.name),
-          teamId: teamList.first.teamId ?? 0,
-          userId: userId ?? 0,
+          teamId: teamList.first.teamId!,
+          userId: userId,
         );
         break;
-      // HALF DAY determine first morning or afternoon selection
+      // HALF DAY determine initial morning or afternoon selection
       case DeclarationPaths.timeOfDay:
         state.teamsHalfDay.firstToDSelection = selectedStatus;
-        state.teamsHalfDay.firstTeamId = teamList.first.teamId ?? 0;
-        state.teamsHalfDay.secondTeamId = teamList.last.teamId ?? 0;
+        state.teamsHalfDay.firstTeamId = teamList.first.teamId!;
+        state.teamsHalfDay.secondTeamId = teamList.last.teamId!;
 
         // declaration requier a teamID,
-        // therefore in case of ABSENCE for now will set the second teamID,
-        // as the DB declaration table requier a valid teamId
+        // therefore in case of ABSENCE for now will use the second teamID,
+        // as the DB declaration table requier a valid teamId.
         if (state.teamsHalfDay.firstTeamId == -1) {
           state.teamsHalfDay.firstTeamStatus = StatusEnum.absence.name;
           state.teamsHalfDay.firstTeamId = teamList.last.teamId!;
         }
         break;
-      // HALF DAY determine first team status (remote / on site )
+      // HALF DAY determine first team status (remote / on site)
       case DeclarationPaths.halfDayStart:
         state.teamsHalfDay.firstTeamStatus =
             StatusEnum.getValue(key: selectedStatus.name);
@@ -102,7 +110,7 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
             morningTeamId: state.teamsHalfDay.firstTeamId,
             afternoonStatus: state.teamsHalfDay.secondTeamStatus,
             afternoonTeamId: state.teamsHalfDay.secondTeamId,
-            userId: userId ?? 0,
+            userId: userId,
           );
         } else {
           await createHalfDay(
@@ -110,15 +118,13 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
             morningTeamId: state.teamsHalfDay.secondTeamId,
             afternoonStatus: state.teamsHalfDay.firstTeamStatus,
             afternoonTeamId: state.teamsHalfDay.firstTeamId,
-            userId: userId ?? 0,
+            userId: userId,
           );
         }
         break;
-      //
-      case DeclarationPaths.vacation:
-      //
       default:
-      //
+        debugPrint('improper declaration mode');
+        break;
     }
   }
 

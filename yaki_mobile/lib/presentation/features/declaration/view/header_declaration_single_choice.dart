@@ -22,14 +22,18 @@ class HeaderDeclarationSingleChoice extends StatelessWidget {
     return Column(
       children: [
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              tr(setFirstWord(declarationMode: declarationMode)),
-              style: textStylePageTitle(),
-            ),
-            Text(
-              tr(setSecondSentencePart(teamNameList)),
-              style: textStylePageTitle(),
+            Flexible(
+              child: Text(
+                tr(
+                  setFirstSentence(
+                    declarationMode: declarationMode,
+                    teamNameList: teamNameList,
+                  ),
+                ),
+                style: textStylePageTitle(),
+              ),
             ),
           ],
         ),
@@ -64,14 +68,15 @@ class HeaderDeclarationSingleChoice extends StatelessWidget {
   }
 }
 
-String setFirstWord({required String declarationMode}) {
+String setFirstSentence({
+  required String declarationMode,
+  required List<String> teamNameList,
+}) {
   return declarationMode == DeclarationPaths.timeOfDay.text
-      ? "When "
-      : "Where ";
-}
-
-String setSecondSentencePart(List<String> teamNameList) {
-  return teamNameList.contains("Absence") ? "areYouAbsent" : "doyouwork";
+      ? teamNameList.contains("Absence")
+          ? "whenAreYouAbsent"
+          : "whenDoYouWork"
+      : "whereDoYouWork";
 }
 
 String setTeam({required List<String> teamList}) {

@@ -26,7 +26,7 @@ class HeaderDeclarationHalfDayChoice extends ConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          tr('whereworking'),
+          tr('whereDoYouWork'),
           style: textStylePageTitle(),
         ),
         Row(

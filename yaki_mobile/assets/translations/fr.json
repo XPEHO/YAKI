@@ -93,9 +93,9 @@
   "teamSelectionPageTitle2": "aujourd'hui ?",
   "teamSelectionPageHint": "Sélectionnez 1 ou 2 activités",
 
-  "whereworking": "D'où travailles tu ",
-  "doyouwork": "travailles-tu ",
-  "areYouAbsent": "es-tu absent ?",
+  "whenDoYouWork": "Quand travailles tu",
+  "whereDoYouWork": "D'où travailles tu",
+  "whenAreYouAbsent": "Quand es-tu absent ?",
   "thisMorning": "ce ",
   "thisAfternoon": "cet ",
   "morning": "Matin",
@@ -105,7 +105,5 @@
   "Iam": "Je suis",
   "office": "Au Bureau",
   "remote": "En Télétravail",
-  "for ": "pour ",
-  "When ": "Quand ",
-  "Where ": "Où "
+  "for ": "pour "
 }
