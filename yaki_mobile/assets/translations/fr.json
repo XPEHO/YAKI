@@ -89,10 +89,10 @@
 
   "teamSelectionPageTitle1": "Quoi de prévu",
   "teamSelectionPageTitle2": "aujourd'hui ?",
-  "teamSelectionPageHint": "Sélectionnez 1 ou 2 activités",
+  "teamSelectionPageHint": "Sélectionne 1 ou 2 activités",
 
-  "whenDoYouWork": "Quand travailles tu",
-  "whereDoYouWork": "D'où travailles tu",
+  "whenDoYouWork": "Quand travailles-tu",
+  "whereDoYouWork": "D'où travailles-tu",
   "whenAreYouAbsent": "Quand es-tu absent ?",
   "thisMorning": "ce ",
   "thisAfternoon": "cet ",
@@ -101,16 +101,16 @@
   "IWorkthisMorning": "Je travaille ce",
   "IWorkthisAfternoon": "Je travaille cet",
   "Iam": "Je suis",
-  "office": "Au Bureau",
+  "onSite": "Au bureau",
   "remote": "En Télétravail",
-  "onSite": "Sur site",
   "vacation": "Absence",
-  "for ": "pour ",
 
   "entryValidated": "Saisie validée",
   "youCanCloseTheApp": "Vous pouvez fermer l'application",
   "modify": "MODIFIER",
   "seeTeam": "VOIR MON ÉQUIPE",
 
-  "defaultTeamName": "Équipe"
+  "defaultTeamName": "Équipe",
+  "for ": "pour ",
+  "project": "Projet"
 }

@@ -17,6 +17,24 @@ class TeamSelection extends ConsumerWidget {
     bool isValidationButtonEnabled = ref.watch(teamProvider).isButtonActivated;
 
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        actions: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              IconButton(
+                onPressed: () {
+                  context.go("/");
+                  ref.read(teamProvider.notifier).clearTeamList();
+                },
+                icon: const Icon(Icons.close),
+              ),
+            ],
+          ),
+        ],
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(16.0, 20, 16.0, 30),
