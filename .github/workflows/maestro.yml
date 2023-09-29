@@ -1,0 +1,54 @@
+name: Run UI tests
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+on: push
+jobs:
+  build_apk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: "17"
+          distribution: "temurin"
+      - name: Install Flutter SDK
+        uses: subosito/flutter-action@v2
+      - name: Build apk
+        working-directory: yaki_mobile
+        run: |
+          flutter pub get
+          flutter build apk --debug --dart-define=API_BASE_URL=https://yaki.uat.xpeho.fr/api
+      - name: 'Upload Artifact'
+        uses: actions/upload-artifact@v3
+        with:
+          name: debug-apk
+          path: yaki_mobile/build/app/outputs/flutter-apk/app-debug.apk
+
+  run_ui_tests:
+    needs: build_apk
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: "17"
+          distribution: "temurin"
+      - name: Install maestro mobile
+        run: |
+          curl -Ls "https://get.maestro.mobile.dev" | bash
+          export PATH="$PATH":"$HOME/.maestro/bin"
+      - name: Download a single artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: debug-apk
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+      - name: Run UI tests
+        working-directory: yaki_mobile/maestro
+        run: |
+          sh headless_test.sh -t "maestro test first_flow.yaml" -a ../build/app/outputs/flutter-apk/app-debug.apk

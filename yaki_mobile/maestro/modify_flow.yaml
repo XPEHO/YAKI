@@ -1,0 +1,17 @@
+# flow.yaml
+
+appId: com.xpeho.yaki
+---
+- launchApp:
+    clearState: true
+    stopApp: true
+#- startRecording: "login"
+- tapOn: "Email"
+- inputText: "piotr.fleury@xpeho.com"
+- tapOn: "Password"
+- inputText: "YakiForever42!"
+- hideKeyboard
+- tapOn: "SIGN IN"
+- tapOn: "Piotr FLEURY\nYaki\nOn site"
+#- stopRecording
+#- takeScreenshot: "login"
