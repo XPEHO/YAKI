@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:yaki/domain/entities/chip_content.dart';
 import 'package:yaki/presentation/displaydata/declaration_enum.dart';
 import 'package:yaki/presentation/displaydata/status_page_utils.dart';
 import 'package:yaki/presentation/state/providers/declaration_provider.dart';
@@ -10,18 +11,23 @@ import 'package:yaki_ui/icon_chip.dart';
 
 class HeaderDeclarationHalfDayChoice extends ConsumerWidget {
   final String declarationMode;
-  final List<String> teamList;
+  final List<String> teamNameList;
   final String imageSrc;
 
   const HeaderDeclarationHalfDayChoice({
     super.key,
     required this.declarationMode,
-    required this.teamList,
+    required this.teamNameList,
     required this.imageSrc,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final ChipContent chipContent = setChipContent(
+      ref: ref,
+      declarationMode: declarationMode,
+    );
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -37,7 +43,7 @@ class HeaderDeclarationHalfDayChoice extends ConsumerWidget {
             ),
             IconChip(
               label: setTeam(
-                teamList: teamList,
+                teamList: teamNameList,
                 declarationMode: declarationMode,
               ),
               backgroundColor: Colors.white,
@@ -55,16 +61,16 @@ class HeaderDeclarationHalfDayChoice extends ConsumerWidget {
         Row(
           children: [
             Text(
-              tr(setThis(ref, declarationMode)),
+              tr(setHeaderText(ref, declarationMode)),
               style: textStylePageTitle(),
             ),
             IconChip(
-              label: tr(setLabel(ref, declarationMode)),
+              label: tr(chipContent.label),
               backgroundColor: Colors.white,
               image: ClipRRect(
                 borderRadius: BorderRadius.circular(50),
                 child: SvgPicture.asset(
-                  setImageChips(ref, declarationMode),
+                  chipContent.imageSrc,
                   width: 40,
                   height: 40,
                 ),
@@ -94,33 +100,7 @@ String setTeam({
           : "";
 }
 
-String setImageChips(WidgetRef ref, String declarationMode) {
-  final selectedTimeOfDay =
-      ref.watch(declarationProvider).teamsHalfDay.firstToDSelection;
-  final isMorning = selectedTimeOfDay == StatusEnum.morning;
-  return declarationMode == DeclarationPaths.halfDayStart.text
-      ? isMorning
-          ? 'assets/images/Time-Morning.svg'
-          : 'assets/images/Time-Afternoon.svg'
-      : isMorning
-          ? 'assets/images/Time-Afternoon.svg'
-          : 'assets/images/Time-Morning.svg';
-}
-
-String setLabel(WidgetRef ref, String declarationMode) {
-  final selectedTimeOfDay =
-      ref.watch(declarationProvider).teamsHalfDay.firstToDSelection;
-  final isMorning = selectedTimeOfDay == StatusEnum.morning;
-  return declarationMode == DeclarationPaths.halfDayStart.text
-      ? isMorning
-          ? "morning"
-          : "afternoon"
-      : isMorning
-          ? "afternoon"
-          : "morning";
-}
-
-String setThis(WidgetRef ref, String declarationMode) {
+String setHeaderText(WidgetRef ref, String declarationMode) {
   final selectedTimeOfDay =
       ref.watch(declarationProvider).teamsHalfDay.firstToDSelection;
   final isMorning = selectedTimeOfDay == StatusEnum.morning;
@@ -131,4 +111,33 @@ String setThis(WidgetRef ref, String declarationMode) {
       : isMorning
           ? "thisAfternoon"
           : "thisMorning";
+}
+
+ChipContent setChipContent({
+  required WidgetRef ref,
+  required String declarationMode,
+}) {
+  final selectedTimeOfDay =
+      ref.watch(declarationProvider).teamsHalfDay.firstToDSelection;
+  final isMorning = selectedTimeOfDay == StatusEnum.morning;
+
+  return declarationMode == DeclarationPaths.halfDayStart.text
+      ? isMorning
+          ? ChipContent(
+              imageSrc: 'assets/images/Time-Morning.svg',
+              label: "morning",
+            )
+          : ChipContent(
+              imageSrc: 'assets/images/Time-Afternoon.svg',
+              label: "afternoon",
+            )
+      : isMorning
+          ? ChipContent(
+              imageSrc: 'assets/images/Time-Afternoon.svg',
+              label: "afternoon",
+            )
+          : ChipContent(
+              imageSrc: 'assets/images/Time-Morning.svg',
+              label: "morning",
+            );
 }

@@ -4,8 +4,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yaki/data/models/team_model.dart';
+import 'package:yaki/domain/entities/location_card_content.dart';
 import 'package:yaki/presentation/displaydata/declaration_enum.dart';
 import 'package:yaki/presentation/displaydata/status_page_utils.dart';
+import 'package:yaki/presentation/features/declaration/view/header_declaration_half_day_choice.dart';
 import 'package:yaki/presentation/features/declaration/view/header_declaration_single_choice.dart';
 import 'package:yaki/presentation/state/providers/declaration_provider.dart';
 import 'package:yaki/presentation/state/providers/team_provider.dart';
@@ -23,13 +25,14 @@ class DeclarationPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final List<TeamModel> teamList = ref.read(teamProvider).selectedTeamList;
 
-    final List<String> teamNameList;
+    final List<String> teamNameList = teamList.isNotEmpty
+        ? teamList.map((e) => e.teamName ?? "default name").toList()
+        : [""];
 
-    if (teamList.isNotEmpty) {
-      teamNameList = teamList.map((e) => e.teamName ?? "default name").toList();
-    } else {
-      teamNameList = [""];
-    }
+    LocationCardContent locationCardContent = setLocationCardContent(
+      declarationMode: declarationMode,
+      teamNameList: teamNameList,
+    );
 
     return Scaffold(
       appBar: AppBar(
@@ -51,10 +54,9 @@ class DeclarationPage extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(height: 32),
-                HeaderDeclarationSingleChoice(
+                setPageHeader(
                   declarationMode: declarationMode,
                   teamNameList: teamNameList,
-                  imageSrc: '',
                 ),
                 const SizedBox(height: 48),
                 SizedBox(
@@ -66,26 +68,23 @@ class DeclarationPage extends ConsumerWidget {
                         flex: 1,
                         child: LocationSelectionCard(
                           picture: SvgPicture.asset(
-                            setImage(declarationMode).first,
+                            locationCardContent.imageSrc.first,
                             width: 112,
                             height: 112,
                           ),
                           title: tr(
-                            setCardTitle(
-                              declarationMode: declarationMode,
-                              teamNameList: teamNameList,
-                            ).first,
+                            locationCardContent.title.first,
                           ),
-                          subtitle:
-                              tr(setCardSubtitle(declarationMode).first.name),
+                          subtitle: tr(
+                            locationCardContent.subtitle.first.name,
+                          ),
                           onSelectionChanged: (selected) {
                             onPress(
                               ref: ref,
                               declarationMode:
                                   DeclarationPaths.fromText(declarationMode),
                               teamList: teamList,
-                              buttonValue:
-                                  setCardSubtitle(declarationMode).first,
+                              buttonValue: locationCardContent.subtitle.first,
                             );
                             redirection(
                               context: context,
@@ -100,26 +99,23 @@ class DeclarationPage extends ConsumerWidget {
                         flex: 1,
                         child: LocationSelectionCard(
                           picture: SvgPicture.asset(
-                            setImage(declarationMode).last,
+                            locationCardContent.imageSrc.last,
                             width: 112,
                             height: 112,
                           ),
                           title: tr(
-                            setCardTitle(
-                              declarationMode: declarationMode,
-                              teamNameList: teamNameList,
-                            ).last,
+                            locationCardContent.title.last,
                           ),
-                          subtitle:
-                              tr(setCardSubtitle(declarationMode).last.name),
+                          subtitle: tr(
+                            locationCardContent.subtitle.last.name,
+                          ),
                           onSelectionChanged: (selected) {
                             onPress(
                               ref: ref,
                               declarationMode:
                                   DeclarationPaths.fromText(declarationMode),
                               teamList: teamList,
-                              buttonValue:
-                                  setCardSubtitle(declarationMode).last,
+                              buttonValue: locationCardContent.subtitle.last,
                             );
                             redirection(
                               context: context,
@@ -154,6 +150,8 @@ void onPress({
       );
 }
 
+/// Determine the redirection depending of the declarationMode.
+/// Only the declarationMode "time-of-day" have different redirection because of the possible halfDay with an absence.
 void redirection({
   required BuildContext context,
   required String declarationMode,
@@ -161,55 +159,80 @@ void redirection({
 }) {
   bool isAbsenceSelected = teamNameList.contains("Absence");
 
-  if (declarationMode == DeclarationPaths.fullDay.text) {
-    context.go("/status");
-  }
-  if (declarationMode == DeclarationPaths.timeOfDay.text) {
-    if (isAbsenceSelected) {
-      context.go("/declaration/half-day-end");
-    } else {
-      context.go("/declaration/half-day-start");
+  // map with redirection depending of the DeclarationPaths
+  final redirectionPath = {
+    DeclarationPaths.fullDay: "/status",
+    DeclarationPaths.timeOfDay: isAbsenceSelected
+        ? "/declaration/half-day-end"
+        : "/declaration/half-day-start",
+    DeclarationPaths.halfDayStart: "/declaration/half-day-end",
+    DeclarationPaths.halfDayEnd: "/status",
+  };
+
+  DeclarationPaths redirection = DeclarationPaths.unknown;
+  // retrive the DeclarationPaths.'key' according to the declarationMode
+  for (DeclarationPaths path in DeclarationPaths.values) {
+    if (path.text == declarationMode) {
+      redirection = path;
     }
   }
+  context.go(redirectionPath[redirection]!);
 }
 
-List<String> setCardTitle({
+Widget setPageHeader({
   required String declarationMode,
   required List<String> teamNameList,
 }) {
-  List<String> cardText = [];
-  if (declarationMode == DeclarationPaths.timeOfDay.text) {
-    cardText = teamNameList.contains("Absence")
-        ? ["thisMorning", "thisAfternoon"]
-        : ['IWorkthisMorning', 'IWorkthisAfternoon'];
-  } else if (declarationMode == DeclarationPaths.fullDay.text) {
-    cardText = ['Iam', 'Iam'];
-  }
-  return cardText;
+  return declarationMode == DeclarationPaths.fullDay.text ||
+          declarationMode == DeclarationPaths.timeOfDay.text
+      ? HeaderDeclarationSingleChoice(
+          declarationMode: declarationMode,
+          teamNameList: teamNameList,
+          imageSrc: '',
+        )
+      : declarationMode == DeclarationPaths.halfDayStart.text ||
+              declarationMode == DeclarationPaths.halfDayEnd.text
+          ? HeaderDeclarationHalfDayChoice(
+              declarationMode: declarationMode,
+              teamNameList: teamNameList,
+              imageSrc: '',
+            )
+          : Container();
 }
 
-List<String> setImage(String declarationMode) {
+/// Determine the content of both LocationSelectionCard depending of the declarationMode.
+/// And the teamNameList to determine if the absence is selected.
+LocationCardContent setLocationCardContent({
+  required String declarationMode,
+  required List<String> teamNameList,
+}) {
   List<String> imageSrc = [];
+  List<String> title = [];
+  List<StatusEnum> subtitle = [];
+
+  // time of day with absence check
   if (declarationMode == DeclarationPaths.timeOfDay.text) {
     imageSrc = [
       'assets/images/Time-Morning.svg',
       'assets/images/Time-Afternoon.svg',
     ];
-  } else if (declarationMode == DeclarationPaths.fullDay.text) {
+    title = teamNameList.contains("Absence")
+        ? ["thisMorning", "thisAfternoon"]
+        : ['IWorkthisMorning', 'IWorkthisAfternoon'];
+    subtitle = [StatusEnum.morning, StatusEnum.afternoon];
+  }
+  // the others declaration paths
+  if (declarationMode == DeclarationPaths.fullDay.text ||
+      declarationMode == DeclarationPaths.halfDayStart.text ||
+      declarationMode == DeclarationPaths.halfDayEnd.text) {
     imageSrc = ['assets/images/Work-Office.svg', 'assets/images/Work-Home.svg'];
+    title = ['Iam', 'Iam'];
+    subtitle = [StatusEnum.remote, StatusEnum.onSite];
   }
-  return imageSrc;
-}
 
-/// Determine the buttons's text depending of the declarationMode.
-/// Only the declarationMode "time-of-day" have different buttons text.
-/// For the halfDay we start by selecting the moment of the day (morning or afternoon)
-List<StatusEnum> setCardSubtitle(String declarationMode) {
-  List<StatusEnum> buttonsText = [];
-  if (declarationMode == DeclarationPaths.timeOfDay.text) {
-    buttonsText = [StatusEnum.morning, StatusEnum.afternoon];
-  } else if (declarationMode == DeclarationPaths.fullDay.text) {
-    buttonsText = [StatusEnum.remote, StatusEnum.onSite];
-  }
-  return buttonsText;
+  return LocationCardContent(
+    title: title,
+    subtitle: subtitle,
+    imageSrc: imageSrc,
+  );
 }
