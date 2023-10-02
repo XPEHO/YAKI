@@ -7,6 +7,14 @@ TextStyle textStylePageTitle() {
   );
 }
 
+TextStyle textStyleSummarySubtitle() {
+  return const TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.w600,
+    color: Color.fromARGB(255, 83, 83, 84),
+  );
+}
+
 TextStyle textStylePageDate() {
   return const TextStyle(
     fontSize: 16,

@@ -15,9 +15,6 @@
   "headerHintDecla": "What is your status for the day ?",
   "headerHintDeclaMorning": "What is your status for the morning ?",
   "headerHintDeclaAfternoon": "What is your status for the afternoon ?",
-  "onSite": "On site",
-  "vacation": "Absence",
-  "undeclared": "Not notified",
   "statusRemoteDay": "You are working remotely today",
   "statusOnSiteDay": "You are on site today",
   "statusVacationDayFrom": "You are absent from ",
@@ -103,5 +100,15 @@
   "Iam": "I am",
   "office": "To the Office",
   "remote": "To Remote",
-  "for ": "for "
+  "onSite": "On site",
+  "vacation": "Absence",
+  "undeclared": "Not notified",
+  "for ": "for ",
+
+  "entryValidated": "Entry validated",
+  "youCanCloseTheApp": "You can close the application",
+  "modify": "MODIFY",
+  "seeTeam": "SEE MY TEAM",
+
+  "defaultTeamName": "Team"
 }

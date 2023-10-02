@@ -1,7 +1,9 @@
+import 'package:yaki/data/models/team_model.dart';
 import 'package:yaki/presentation/displaydata/status_page_utils.dart';
 
 class DeclarationStatus {
-  late String fullDayStatus = "";
+  late TeamModel fullDayTeam;
+  late StatusEnum fullDayStatus;
   late DeclarationTeamsInfo teamsHalfDay = DeclarationTeamsInfo();
   late DateTime? dateStart;
   late DateTime? dateEnd;
@@ -13,10 +15,15 @@ const List<String> emptyDeclarationStatus = [""];
 
 class DeclarationTeamsInfo {
   late StatusEnum firstToDSelection = StatusEnum.morning;
-  late int firstTeamId = 0;
-  late int secondTeamId = 0;
-  late String firstTeamStatus = "";
-  late String secondTeamStatus = "";
+  late TeamModel firstTeam;
+  late TeamModel secondTeam;
+  late StatusEnum firstStatus;
+  late StatusEnum secondStatus;
 
   DeclarationTeamsInfo();
+
+  @override
+  String toString() {
+    return 'DeclarationTeamsInfo{firstToDSelection: $firstToDSelection, firstTeam: ${firstTeam.teamName}, secondTeam: ${secondTeam.teamName}, firstStatus: $firstStatus, secondStatus: $secondStatus}';
+  }
 }
