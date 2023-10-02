@@ -8,13 +8,13 @@ import 'package:yaki_ui/icon_chip.dart';
 class HeaderDeclarationSingleChoice extends StatelessWidget {
   final String declarationMode;
   final List<String> teamNameList;
-  final String imageSrc = 'assets/images/onSite.svg';
+  final String imageSrc;
 
   const HeaderDeclarationSingleChoice({
     super.key,
     required this.declarationMode,
     required this.teamNameList,
-    required final String imageSrc,
+    required this.imageSrc,
   });
 
   @override
@@ -51,7 +51,7 @@ class HeaderDeclarationSingleChoice extends StatelessWidget {
                     image: ClipRRect(
                       borderRadius: BorderRadius.circular(50),
                       child: SvgPicture.asset(
-                        imageSrc,
+                        imageSrc == '' ? 'assets/images/onSite.svg' : imageSrc,
                         width: 50,
                         height: 50,
                       ),

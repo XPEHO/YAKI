@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:yaki/data/repositories/team_repository.dart';
 import 'package:yaki/data/models/team_model.dart';
 import 'package:yaki/presentation/state/state/team_page_state.dart';
 
 /// A StateNotifier class that manages the state of a list of TeamEntity objects
 class TeamNotifier extends StateNotifier<TeamPageState> {
-  final TeamRepository teamRepository;
-
-  TeamNotifier(
-    this.teamRepository,
-  ) : super(
+  TeamNotifier()
+      : super(
           TeamPageState(
             selectedTeamList: [],
             isButtonActivated: false,
@@ -67,11 +63,5 @@ class TeamNotifier extends StateNotifier<TeamPageState> {
       selectedTeamList: [],
       isButtonActivated: false,
     );
-  }
-
-// DEPRECIATED (keep this function during migration)
-  Future<void> fetchTeams() async {
-    final teamList = await teamRepository.getTeam();
-    debugPrint("teamList: $teamList");
   }
 }

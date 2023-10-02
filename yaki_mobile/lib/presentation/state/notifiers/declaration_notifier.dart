@@ -21,7 +21,6 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
     required this.declarationRepository,
   }) : super(DeclarationStatus());
 
-  // WILL NEED TO BE REVIEWED AFTER DECLARATION LOGIC REWORK WITH BASTI DESIGN
   /// Invoked at authentication "sign in" button press.
   Future<List<String>> getLatestDeclaration() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
