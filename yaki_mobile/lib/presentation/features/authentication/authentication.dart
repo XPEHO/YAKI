@@ -122,19 +122,19 @@ class _AuthenticationState extends ConsumerState<Authentication> {
         color: backgroundColor,
         child: Padding(
           padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(left: 8),
-                child: Text(
-                  tr('signInLowercase'),
-                  style: textStylePageTitle(),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(left: 8),
+                  child: Text(
+                    tr('signInLowercase'),
+                    style: textStylePageTitle(),
+                  ),
                 ),
-              ),
-              Form(
-                child: SingleChildScrollView(
+                Form(
                   child: Column(
                     children: <Widget>[
                       Padding(
@@ -210,8 +210,8 @@ class _AuthenticationState extends ConsumerState<Authentication> {
                     ],
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
