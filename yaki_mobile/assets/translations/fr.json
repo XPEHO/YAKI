@@ -15,8 +15,6 @@
   "headerHintDecla": "Quel est votre statut pour la journée ?",
   "headerHintDeclaMorning": "quel est votre statut pour la matinée ?",
   "headerHintDeclaAfternoon": "quel est votre statut pour l'aprés-midi ?",
-  "onSite": "Sur site",
-  "vacation": "Absence",
   "undeclared": "Non déclaré",
   "statusRemoteDay": "Vous êtes en distanciel aujourd'hui",
   "statusOnSiteDay": "Vous êtes sur site aujourd'hui",
@@ -105,5 +103,14 @@
   "Iam": "Je suis",
   "office": "Au Bureau",
   "remote": "En Télétravail",
-  "for ": "pour "
+  "onSite": "Sur site",
+  "vacation": "Absence",
+  "for ": "pour ",
+
+  "entryValidated": "Saisie validée",
+  "youCanCloseTheApp": "Vous pouvez fermer l'application",
+  "modify": "MODIFIER",
+  "seeTeam": "VOIR MON ÉQUIPE",
+
+  "defaultTeamName": "Équipe"
 }

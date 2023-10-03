@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yaki/data/sources/local/shared_preference.dart';
-import 'package:yaki/domain/entities/declaration_status.dart';
-import 'package:yaki/presentation/state/providers/declaration_provider.dart';
 import 'package:yaki/presentation/state/providers/login_provider.dart';
 import 'package:yaki/presentation/styles/text_style.dart';
 import 'package:yaki_ui/yaki_ui.dart';
@@ -52,16 +50,9 @@ class _AuthenticationState extends ConsumerState<Authentication> {
     required String login,
     required String password,
     required Function goToDeclarationPage,
-    required Function goToStatusPage,
-    required Function goToHalfdayStatusPage,
-    required Function goToVacationStatusPage,
-    required Function goToCaptain,
     required Function goToUserDefaultRedirection,
   }) async {
     await SharedPref.deleteToken();
-    // if the rememberMe checkbox value is true, store the login details
-    // in the shared preferences
-
     await SharedPref.setLoginDetails(login, password);
 
     final bool authenticationResult = await ref
@@ -71,20 +62,7 @@ class _AuthenticationState extends ConsumerState<Authentication> {
       final bool isCaptain = ref.read(loginRepositoryProvider).isCaptain();
       final bool isTeammate = ref.read(loginRepositoryProvider).isTeammate();
       if (isTeammate || isCaptain) {
-        final declarationStatus =
-            await ref.read(declarationProvider.notifier).getLatestDeclaration();
-        if (declarationStatus.length > 1) {
-          goToHalfdayStatusPage();
-        } else if (declarationStatus.length == 1 &&
-            declarationStatus != emptyDeclarationStatus) {
-          if (declarationStatus.first == 'vacation') {
-            goToVacationStatusPage();
-          } else {
-            goToStatusPage();
-          }
-        } else {
-          goToDeclarationPage();
-        }
+        goToDeclarationPage();
       } else {
         goToUserDefaultRedirection();
       }
@@ -165,12 +143,6 @@ class _AuthenticationState extends ConsumerState<Authentication> {
                             password: passwordController.text,
                             goToDeclarationPage: () =>
                                 context.push('/team-selection'),
-                            goToStatusPage: () => context.go('/status'),
-                            goToCaptain: () => context.go('/captain'),
-                            goToHalfdayStatusPage: () =>
-                                context.go('/halfdayStatus'),
-                            goToVacationStatusPage: () =>
-                                context.go('/vacationStatus'),
                             goToUserDefaultRedirection: () =>
                                 context.go('/userDefaultRedirection'),
                           ),

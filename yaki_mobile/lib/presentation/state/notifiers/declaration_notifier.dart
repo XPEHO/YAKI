@@ -8,16 +8,11 @@ import 'package:yaki/data/repositories/declaration_respository.dart';
 import 'package:yaki/domain/entities/declaration_status.dart';
 import 'package:yaki/presentation/displaydata/declaration_enum.dart';
 import 'package:yaki/presentation/displaydata/status_page_utils.dart';
-import 'package:yaki/presentation/state/providers/halfday_status_provider.dart';
-import 'package:yaki/presentation/state/providers/status_provider.dart';
-import 'package:yaki/presentation/state/providers/vacation_status_provider.dart';
 
 class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
-  final Ref ref;
   final DeclarationRepository declarationRepository;
 
   DeclarationNotifier({
-    required this.ref,
     required this.declarationRepository,
   }) : super(DeclarationStatus());
 
@@ -37,18 +32,14 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
             dateStart: declarationStatus.dateStart ?? DateTime.now(),
             dateEnd: declarationStatus.dateEnd ?? DateTime.now(),
           );
-          setStatusPageVacationContent();
         } else {
-          state.fullDayStatus = declarationStatus.fullDayStatus.first;
-          setStatusPageFullDayContent();
+          // need to be be reworked
+          // need to set value to state.fullDayStatus
         }
         break;
       case 2:
-        // state.morningStatus = declarationStatus.fullDayStatus.first;
-        //state.afternoonStatus = declarationStatus.fullDayStatus.last;
-        state.fullDayStatus = declarationStatus.fullDayStatus.first;
-        state.fullDayStatus = declarationStatus.fullDayStatus.last;
-        setStatusPageHalfDayContent();
+        // need to be be reworked
+        // need to set values to state.teamsHalfDay.firstTeamStatus & state.teamsHalfDay.secondTeamStatus
         break;
       default:
         return declarationStatus.fullDayStatus;
@@ -73,50 +64,62 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
     switch (declarationMode) {
       // FULL DAY
       case DeclarationPaths.fullDay:
+        state.fullDayTeam = teamList.first;
+        state.fullDayStatus = selectedStatus;
+
         await createFullDay(
           status: StatusEnum.getValue(key: selectedStatus.name),
           teamId: teamList.first.teamId!,
           userId: userId,
         );
         break;
-      // HALF DAY determine initial morning or afternoon selection
+
+      // TIME OF DAY determine initial morning or afternoon selection
       case DeclarationPaths.timeOfDay:
         state.teamsHalfDay.firstToDSelection = selectedStatus;
-        state.teamsHalfDay.firstTeamId = teamList.first.teamId!;
-        state.teamsHalfDay.secondTeamId = teamList.last.teamId!;
+        state.teamsHalfDay.firstTeam = teamList.first;
+        state.teamsHalfDay.secondTeam = teamList.last;
 
         // declaration requier a teamID,
         // therefore in case of ABSENCE for now will use the second teamID,
         // as the DB declaration table requier a valid teamId.
-        if (state.teamsHalfDay.firstTeamId == -1) {
-          state.teamsHalfDay.firstTeamStatus = StatusEnum.absence.name;
-          state.teamsHalfDay.firstTeamId = teamList.last.teamId!;
+        if (state.teamsHalfDay.firstTeam.teamId == -1) {
+          state.teamsHalfDay.firstStatus = StatusEnum.absence;
+          state.teamsHalfDay.firstTeam = teamList.last;
         }
         break;
-      // HALF DAY determine first team status (remote / on site)
+
+      // HALF DAY START determine first team status (remote / on site)
       case DeclarationPaths.halfDayStart:
-        state.teamsHalfDay.firstTeamStatus =
-            StatusEnum.getValue(key: selectedStatus.name);
+        state.teamsHalfDay.firstStatus = selectedStatus;
         break;
-      // HALF DAY determine second team status (remote / on site ), and create the declaration
+
+      // HALF DAY END determine second team status (remote / on site ), and create the declaration
       case DeclarationPaths.halfDayEnd:
-        state.teamsHalfDay.secondTeamStatus =
-            StatusEnum.getValue(key: selectedStatus.name);
+        state.teamsHalfDay.secondStatus = selectedStatus;
 
         if (state.teamsHalfDay.firstToDSelection == StatusEnum.morning) {
           await createHalfDay(
-            morningStatus: state.teamsHalfDay.firstTeamStatus,
-            morningTeamId: state.teamsHalfDay.firstTeamId,
-            afternoonStatus: state.teamsHalfDay.secondTeamStatus,
-            afternoonTeamId: state.teamsHalfDay.secondTeamId,
+            morningStatus: StatusEnum.getValue(
+              key: state.teamsHalfDay.firstStatus.name,
+            ),
+            morningTeamId: state.teamsHalfDay.firstTeam.teamId!,
+            afternoonStatus: StatusEnum.getValue(
+              key: state.teamsHalfDay.secondStatus.name,
+            ),
+            afternoonTeamId: state.teamsHalfDay.secondTeam.teamId!,
             userId: userId,
           );
         } else {
           await createHalfDay(
-            morningStatus: state.teamsHalfDay.secondTeamStatus,
-            morningTeamId: state.teamsHalfDay.secondTeamId,
-            afternoonStatus: state.teamsHalfDay.firstTeamStatus,
-            afternoonTeamId: state.teamsHalfDay.firstTeamId,
+            morningStatus: StatusEnum.getValue(
+              key: state.teamsHalfDay.secondStatus.name,
+            ),
+            morningTeamId: state.teamsHalfDay.secondTeam.teamId!,
+            afternoonStatus: StatusEnum.getValue(
+              key: state.teamsHalfDay.firstStatus.name,
+            ),
+            afternoonTeamId: state.teamsHalfDay.firstTeam.teamId!,
             userId: userId,
           );
         }
@@ -149,14 +152,7 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
       declarationStatus: status,
     );
     // SEND TO REPOSITORY
-    final String fullDayStatus =
-        await declarationRepository.createFullDay(newDeclaration);
-
-    //SET STATE
-    state.fullDayStatus = fullDayStatus;
-
-    // NEED TO BE CHANGED
-    setStatusPageFullDayContent();
+    await declarationRepository.createFullDay(newDeclaration);
   }
 
   /// Create declaration for the morning by setting
@@ -202,17 +198,7 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
       newDeclarationMorning,
       newDeclarationAfternoon,
     ];
-    final List<String> halfDayStatus =
-        await declarationRepository.createHalfDay(declarations);
-
-    // SET STATE.
-    //state.morningStatus = halfDayStatus.first;
-    //state.afternoonStatus = halfDayStatus.last;
-    state.fullDayStatus = halfDayStatus.first;
-    state.fullDayStatus = halfDayStatus.last;
-
-    // NEED TO BE CHANGED
-    setStatusPageHalfDayContent();
+    await declarationRepository.createHalfDay(declarations);
   }
 
   // ABSENCE declaration creation.
@@ -246,7 +232,6 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
 
     // NEED TO BE CHANGED
     setStateAbsenceStatus(dateStart: dateStart, dateEnd: dateEnd);
-    setStatusPageVacationContent();
   }
 
   setStateAbsenceStatus({
@@ -255,18 +240,5 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
   }) {
     state.dateStart = dateStart;
     state.dateEnd = dateEnd;
-  }
-
-  // THIS WILL NEED TO BE REVIEW AND CHANGED with proper provider abonment
-  setStatusPageFullDayContent() {
-    ref.read(statusPageProvider.notifier).setStatusRecapFullDayContent();
-  }
-
-  setStatusPageHalfDayContent() {
-    ref.read(halfdayStatusPageProvider.notifier).setStatusRecapHalfDayContent();
-  }
-
-  setStatusPageVacationContent() {
-    ref.read(vacationStatusPageProvider.notifier).setSelectedStatusVacation();
   }
 }

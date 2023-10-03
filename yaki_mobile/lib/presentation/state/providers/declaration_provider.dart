@@ -21,7 +21,6 @@ final declarationRepositoryProvider = Provider(
 final declarationProvider =
     StateNotifierProvider<DeclarationNotifier, DeclarationStatus>(
   (ref) => DeclarationNotifier(
-    ref: ref,
     declarationRepository: ref.read(declarationRepositoryProvider),
   ),
 );

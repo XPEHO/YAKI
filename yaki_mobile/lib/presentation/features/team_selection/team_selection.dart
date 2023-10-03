@@ -36,6 +36,7 @@ class TeamSelection extends ConsumerWidget {
                     ? const Color(0xFFFF936B)
                     : const Color.fromARGB(255, 195, 190, 190),
               ),
+              const SizedBox(height: 32),
             ],
           ),
         ),

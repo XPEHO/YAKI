@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class AppColors {
   // Primary Color of the app
   static const Color yakiPrimaryColor = Color.fromARGB(255, 245, 205, 61);
+  static const Color primaryColor = Color(0xFFFF936B);
 }
 
 MaterialColor createMaterialColor(Color color) {

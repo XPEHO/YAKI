@@ -3,16 +3,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yaki/data/sources/local/shared_preference.dart';
 import 'package:yaki/presentation/displaydata/declaration_enum.dart';
+import 'package:yaki/presentation/displaydata/declaration_summary_enum.dart';
 import 'package:yaki/presentation/features/authentication/authentication.dart';
 import 'package:yaki/presentation/features/declaration/declaration_page.dart';
+import 'package:yaki/presentation/features/declaration_summary/declaration_summary.dart';
 import 'package:yaki/presentation/features/team_selection/team_selection.dart';
 import 'package:yaki/presentation/ui/password/forgot_password.dart';
 import 'package:yaki/presentation/ui/default/user_default_redirection.dart';
 import 'package:yaki/presentation/ui/password/change_password.dart';
 import 'package:yaki/presentation/ui/profile/profile.dart';
 import 'package:yaki/presentation/ui/registration/registration.dart';
-import 'package:yaki/presentation/ui/status/status_recap_halfday.dart';
-import 'package:yaki/presentation/ui/status/status_recap_fullday.dart';
 import 'package:yaki/presentation/ui/status/vacation_status.dart';
 
 /// router set as provider.
@@ -24,28 +24,6 @@ final goRouterProvider = Provider<GoRouter>(
           path: '/',
           builder: (context, state) => const Authentication(),
           routes: [
-            GoRoute(
-              path: 'status',
-              builder: (context, state) => const StatusRecapFullDay(),
-              redirect: (BuildContext context, GoRouterState state) async {
-                if (await SharedPref.isTokenPresent()) {
-                  return '/status';
-                } else {
-                  return '/declaration';
-                }
-              },
-            ),
-            GoRoute(
-              path: 'halfdayStatus',
-              builder: (context, state) => const StatusRecapHalfDay(),
-              redirect: (BuildContext context, GoRouterState state) async {
-                if (await SharedPref.isTokenPresent()) {
-                  return '/halfdayStatus';
-                } else {
-                  return '/';
-                }
-              },
-            ),
             GoRoute(
               path: 'vacationStatus',
               builder: (context, state) => const VacationStatus(),
@@ -143,6 +121,24 @@ final goRouterProvider = Provider<GoRouter>(
                   return '/declaration/${state.pathParameters['mode']!}';
                 }
                 return '/';
+              },
+            ),
+            GoRoute(
+              path: 'summary/:mode',
+              builder: (context, state) => DeclarationSummary(
+                summaryMode: state.pathParameters['mode']!,
+              ),
+              redirect: (BuildContext context, GoRouterState state) async {
+                final String pathParam = state.pathParameters['mode'] ?? '';
+
+                final bool isValidPath =
+                    DeclarationSummaryPaths.isValidPath(value: pathParam);
+
+                if (await SharedPref.isTokenPresent() && isValidPath) {
+                  return '/summary/${state.pathParameters['mode']!}';
+                } else {
+                  return '/team-selection';
+                }
               },
             ),
           ],
