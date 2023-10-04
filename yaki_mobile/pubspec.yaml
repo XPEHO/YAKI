@@ -2,7 +2,7 @@ name: yaki
 description: Open source project, with the goal of allowing employees to notify to their working team if they work remotely or on site. This app, also allow to any team lead to easyly see his coworker status on that matter.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: "none" # Remove this line if you wish to publish to pub.dev
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -19,7 +19,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 1.8.0+11
 
 environment:
-  sdk: ">=3.0.0 <4.0.0"
+  sdk: '>=3.0.0 <4.0.0'
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -51,7 +51,7 @@ dependencies:
   # import 'package:retrofit/retrofit.dart';
   # import 'package:dio/dio.dart';
   # link : https://pub.dev/packages/retrofit
-  retrofit: ">=4.0.0 <5.0.0"
+  retrofit: '>=4.0.0 <5.0.0'
   logger: ^2.0.2 #for logging purpose
 
   # easy_localization : manage app translation, use folder defined in assets "translations",
@@ -109,7 +109,7 @@ dev_dependencies:
 
   # Retrofit dependency
   retrofit_generator: ^7.0.8
-  build_runner: ">=2.3.0 <4.0.0"
+  build_runner: '>=2.3.0 <4.0.0'
   json_serializable: ^6.7.1
 
   # Mockito 5.0.0 supports Dart's new null safety language feature in Dart 2.12, primarily
@@ -172,4 +172,4 @@ flutter_launcher_icons:
   remove_alpha_ios: true
   web:
     generate: true
-  image_path: "assets/images/yaki_icon.png"
+  image_path: 'assets/images/yaki_basti_icon.png'
