@@ -91,7 +91,7 @@ Widget setSummaryWidget({
     );
   } else {
     return SummaryHalfDay(
-      halfDayTeamsInfo: declarationStatus.teamsHalfDay,
+      halfDayData: declarationStatus.declarationsHalfDaySelections,
     );
   }
 }

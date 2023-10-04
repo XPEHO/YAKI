@@ -1,27 +1,22 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:yaki/domain/entities/declaration_status.dart';
-import 'package:yaki/domain/entities/summary_half_day_content.dart';
 import 'package:yaki/presentation/displaydata/status_page_utils.dart';
 import 'package:yaki/presentation/features/declaration_summary/view/summary_chips_duo.dart';
+import 'package:yaki/presentation/features/shared/chip_svg_picture.dart';
 import 'package:yaki/presentation/styles/text_style.dart';
 import 'package:yaki_ui/yaki_ui.dart';
 
 class SummaryHalfDay extends StatelessWidget {
-  final DeclarationTeamsInfo halfDayTeamsInfo;
+  final DeclarationsHalfDaySelections halfDayData;
 
   const SummaryHalfDay({
     super.key,
-    required this.halfDayTeamsInfo,
+    required this.halfDayData,
   });
 
   @override
   Widget build(BuildContext context) {
-    SummaryHalfDayContent summaryHalfDayContent = setSummaryHalfDayContent(
-      halfDayTeamsInfo: halfDayTeamsInfo,
-    );
-
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -30,62 +25,40 @@ class SummaryHalfDay extends StatelessWidget {
           style: textStyleSummarySubtitle(),
         ),
         const SizedBox(height: 16),
-        summaryHalfDayContent.morningStatus == StatusEnum.absence
+        halfDayData.morningTeamStatus == StatusEnum.absence
             ? IconChip(
                 label: tr(StatusEnum.absence.name),
                 backgroundColor: Colors.white,
                 image: ClipRRect(
                   borderRadius: BorderRadius.circular(50),
-                  child: SvgPicture.asset(
-                    "assets/images/absence.svg",
-                    width: 40,
-                    height: 40,
+                  child: declarationChipSvgPicture(
+                    imageSrc: "assets/images/absence.svg",
                   ),
                 ),
               )
             : SummaryChipDuo(
-                status: summaryHalfDayContent.morningStatus,
-                team: summaryHalfDayContent.morningTeam,
+                status: halfDayData.morningTeamStatus,
+                team: halfDayData.morningTeam,
               ),
         const SizedBox(height: 36),
         Text(tr("afternoon").toUpperCase(), style: textStyleSummarySubtitle()),
         const SizedBox(height: 16),
-        summaryHalfDayContent.afternoonStatus == StatusEnum.absence
+        halfDayData.afternoonTeamStatus == StatusEnum.absence
             ? IconChip(
                 label: tr(StatusEnum.absence.name),
                 backgroundColor: Colors.white,
                 image: ClipRRect(
                   borderRadius: BorderRadius.circular(50),
-                  child: SvgPicture.asset(
-                    "assets/images/absence.svg",
-                    width: 40,
-                    height: 40,
+                  child: declarationChipSvgPicture(
+                    imageSrc: "assets/images/absence.svg",
                   ),
                 ),
               )
             : SummaryChipDuo(
-                status: summaryHalfDayContent.afternoonStatus,
-                team: summaryHalfDayContent.afternoonTeam,
+                status: halfDayData.afternoonTeamStatus,
+                team: halfDayData.afternoonTeam,
               ),
       ],
     );
   }
-}
-
-SummaryHalfDayContent setSummaryHalfDayContent({
-  required DeclarationTeamsInfo halfDayTeamsInfo,
-}) {
-  return halfDayTeamsInfo.firstToDSelection == StatusEnum.morning
-      ? SummaryHalfDayContent(
-          morningTeam: halfDayTeamsInfo.firstTeam,
-          morningStatus: halfDayTeamsInfo.firstStatus,
-          afternoonTeam: halfDayTeamsInfo.secondTeam,
-          afternoonStatus: halfDayTeamsInfo.secondStatus,
-        )
-      : SummaryHalfDayContent(
-          morningTeam: halfDayTeamsInfo.secondTeam,
-          morningStatus: halfDayTeamsInfo.secondStatus,
-          afternoonTeam: halfDayTeamsInfo.firstTeam,
-          afternoonStatus: halfDayTeamsInfo.firstStatus,
-        );
 }

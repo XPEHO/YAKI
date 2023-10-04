@@ -41,8 +41,8 @@ class VacationStatusNotifier extends StateNotifier<StateVacationPage> {
   /// And invoke the "setStateVacation" method.
   void setSelectedStatusVacation() {
     final DeclarationStatus declarationStatus = ref.read(declarationProvider);
-    DateTime? fullDateStart = declarationStatus.dateStart;
-    DateTime? fullDateEnd = declarationStatus.dateEnd;
+    DateTime? fullDateStart = declarationStatus.dateAbsenceStart;
+    DateTime? fullDateEnd = declarationStatus.dateAbsenceEnd;
     setStateVacation(fullDateStart, fullDateEnd);
   }
 }
