@@ -100,89 +100,90 @@ class _AuthenticationState extends ConsumerState<Authentication> {
         color: backgroundColor,
         child: Padding(
           padding: const EdgeInsets.all(16),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(left: 8),
-                  child: Text(
-                    tr('signInLowercase'),
-                    style: textStylePageTitle(),
+          child: Center(
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8),
+                    child: Text(
+                      tr('signInLowercase'),
+                      style: textStylePageTitle(),
+                    ),
                   ),
-                ),
-                Form(
-                  child: Column(
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.only(
-                          top: size.height / 15,
-                        ),
-                        child: InputText(
-                          type: InputTextType.email,
-                          label: tr('inputLogin'),
-                          controller: loginController,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 20),
-                        child: InputText(
-                          type: InputTextType.password,
-                          label: tr('inputPassword'),
-                          controller: passwordController,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10),
-                        child: Button(
-                          text: tr('signIn'),
-                          onPressed: () => onPressAuthent(
-                            ref: ref,
-                            login: loginController.text,
-                            password: passwordController.text,
-                            goToDeclarationPage: () =>
-                                context.push('/team-selection'),
-                            goToUserDefaultRedirection: () =>
-                                context.go('/userDefaultRedirection'),
+                  Form(
+                    child: Column(
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.only(
+                            top: size.height / 15,
+                          ),
+                          child: InputText(
+                            type: InputTextType.email,
+                            label: tr('inputLogin'),
+                            controller: loginController,
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 5),
-                        child: Button.secondary(
-                          text: tr('forgotPassword'),
-                          onPressed: () => onPressedForgotPassword(
-                            goToForgotPassword: () =>
-                                context.push('/forgotPassword'),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 20),
+                          child: InputText(
+                            type: InputTextType.password,
+                            label: tr('inputPassword'),
+                            controller: passwordController,
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10),
-                        child: InkWell(
-                          onTap: () => onPressSignUp(
-                            goToRegistrationPage: () =>
-                                context.push('/registration'),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 10),
+                          child: Button(
+                            text: tr('signIn'),
+                            onPressed: () => onPressAuthent(
+                              ref: ref,
+                              login: loginController.text,
+                              password: passwordController.text,
+                              goToDeclarationPage: () =>
+                                  context.push('/team-selection'),
+                              goToUserDefaultRedirection: () =>
+                                  context.go('/userDefaultRedirection'),
+                            ),
                           ),
-                          borderRadius: BorderRadius.circular(16),
-                          splashColor: const Color.fromARGB(125, 46, 46, 46),
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Text(
-                              tr('createAccountLink'),
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: Colors.blue.shade900,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 5),
+                          child: Button.secondary(
+                            text: tr('forgotPassword'),
+                            onPressed: () => onPressedForgotPassword(
+                              goToForgotPassword: () =>
+                                  context.push('/forgotPassword'),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 10),
+                          child: InkWell(
+                            onTap: () => onPressSignUp(
+                              goToRegistrationPage: () =>
+                                  context.push('/registration'),
+                            ),
+                            borderRadius: BorderRadius.circular(16),
+                            splashColor: const Color.fromARGB(125, 46, 46, 46),
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Text(
+                                tr('createAccountLink'),
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.blue.shade900,
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

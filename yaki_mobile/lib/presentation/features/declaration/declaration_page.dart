@@ -6,7 +6,6 @@ import 'package:go_router/go_router.dart';
 import 'package:yaki/data/models/team_model.dart';
 import 'package:yaki/domain/entities/location_card_content.dart';
 import 'package:yaki/presentation/displaydata/declaration_enum.dart';
-import 'package:yaki/presentation/displaydata/declaration_summary_enum.dart';
 import 'package:yaki/presentation/displaydata/status_page_utils.dart';
 import 'package:yaki/presentation/features/declaration/view/header_declaration_half_day_choice.dart';
 import 'package:yaki/presentation/features/declaration/view/header_declaration_single_choice.dart';
@@ -50,7 +49,7 @@ class DeclarationPage extends ConsumerWidget {
       body: SafeArea(
         child: Center(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -61,7 +60,7 @@ class DeclarationPage extends ConsumerWidget {
                 ),
                 const SizedBox(height: 48),
                 SizedBox(
-                  height: 250,
+                  height: 240,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -162,15 +161,12 @@ void redirection({
 
   // map with redirection depending of the DeclarationPaths
   final redirectionPath = {
-    DeclarationPaths.fullDay:
-        "/summary/${DeclarationSummaryPaths.fullDay.text}",
+    DeclarationPaths.fullDay: "/status",
     DeclarationPaths.timeOfDay: isAbsenceSelected
-        ? "/declaration/${DeclarationPaths.halfDayEnd.text}"
-        : "/declaration/${DeclarationPaths.halfDayStart.text}",
-    DeclarationPaths.halfDayStart:
-        "/declaration/${DeclarationPaths.halfDayEnd.text}",
-    DeclarationPaths.halfDayEnd:
-        "/summary/${DeclarationSummaryPaths.halfDay.text}",
+        ? "/declaration/half-day-end"
+        : "/declaration/half-day-start",
+    DeclarationPaths.halfDayStart: "/declaration/half-day-end",
+    DeclarationPaths.halfDayEnd: "/status",
   };
 
   DeclarationPaths redirection = DeclarationPaths.unknown;
