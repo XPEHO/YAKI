@@ -4,26 +4,39 @@ import 'package:yaki/presentation/displaydata/status_page_utils.dart';
 class DeclarationStatus {
   late TeamModel fullDayTeam;
   late StatusEnum fullDayStatus;
-  late DeclarationTeamsInfo teamsHalfDay = DeclarationTeamsInfo();
-  late DateTime? dateStart;
-  late DateTime? dateEnd;
+  late HalfDayWorkflow halfDayWorkflow = HalfDayWorkflow();
+  late DeclarationsHalfDaySelections declarationsHalfDaySelections;
+  late DateTime? dateAbsenceStart;
+  late DateTime? dateAbsenceEnd;
 
   DeclarationStatus();
 }
 
-const List<String> emptyDeclarationStatus = [""];
-
-class DeclarationTeamsInfo {
-  late StatusEnum firstToDSelection = StatusEnum.morning;
+class HalfDayWorkflow {
+  late StatusEnum firstToDSelection;
   late TeamModel firstTeam;
   late TeamModel secondTeam;
   late StatusEnum firstStatus;
   late StatusEnum secondStatus;
 
-  DeclarationTeamsInfo();
+  HalfDayWorkflow();
 
   @override
   String toString() {
-    return 'DeclarationTeamsInfo{firstToDSelection: $firstToDSelection, firstTeam: ${firstTeam.teamName}, secondTeam: ${secondTeam.teamName}, firstStatus: $firstStatus, secondStatus: $secondStatus}';
+    return 'HalfDayWorkflow{firstToDSelection: $firstToDSelection, firstTeam: ${firstTeam.teamName}, secondTeam: ${secondTeam.teamName}, firstStatus: $firstStatus, secondStatus: $secondStatus}';
   }
+}
+
+class DeclarationsHalfDaySelections {
+  TeamModel morningTeam;
+  StatusEnum morningTeamStatus;
+  TeamModel afternoonTeam;
+  StatusEnum afternoonTeamStatus;
+
+  DeclarationsHalfDaySelections({
+    required this.morningTeam,
+    required this.morningTeamStatus,
+    required this.afternoonTeam,
+    required this.afternoonTeamStatus,
+  });
 }

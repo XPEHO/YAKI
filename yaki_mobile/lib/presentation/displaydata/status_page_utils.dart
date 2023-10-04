@@ -1,5 +1,3 @@
-import 'package:yaki/domain/entities/declaration_status.dart';
-
 ///  Enum name (keys) match the json object's keys from assets/translations/*.json files format
 ///
 ///  Enum text (values) match the status format to be send to the API.
@@ -52,36 +50,5 @@ class StatusUtils {
           splited[i][0].toUpperCase() + splited[i].substring(1).toLowerCase();
     }
     return formatted;
-  }
-
-  /// Use status to create the image relative link.
-  ///
-  /// If status is an empty string the default value will be used, and display
-  /// the selected 'error' image.
-  static String getImage(String status) {
-    String link = 'assets/images/unknown.svg';
-
-    if (status != emptyDeclarationStatus.first) {
-      if (status == StatusEnum.undeclared.name) {
-        link = 'assets/images/unknown.svg';
-      } else {
-        link = 'assets/images/$status.svg';
-      }
-    }
-    return link;
-  }
-
-  /// Use status to create the translationKey value
-  ///
-  /// If status is an empty string, the translationKey for the error message will be returned.
-  static String getTranslationKey(String status, String mode) {
-    String translationKey = "StatusError";
-    String keyFormat = toCamelCase(toFormat: status);
-
-    if (status != emptyDeclarationStatus.first) {
-      keyFormat = keyFormat[0].toUpperCase() + keyFormat.substring(1);
-      translationKey = "status$keyFormat$mode";
-    }
-    return translationKey;
   }
 }

@@ -1,10 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:yaki/domain/entities/chip_content.dart';
 import 'package:yaki/presentation/displaydata/declaration_enum.dart';
 import 'package:yaki/presentation/displaydata/status_page_utils.dart';
+import 'package:yaki/presentation/features/shared/chip_svg_picture.dart';
 import 'package:yaki/presentation/state/providers/declaration_provider.dart';
 import 'package:yaki/presentation/styles/text_style.dart';
 import 'package:yaki_ui/icon_chip.dart';
@@ -23,8 +23,21 @@ class HeaderDeclarationHalfDayChoice extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final StatusEnum selectedTimeOfDay =
+        ref.read(declarationProvider).halfDayWorkflow.firstToDSelection;
+
+    final String teamName = setTeam(
+      teamList: teamNameList,
+      declarationMode: declarationMode,
+    );
+
+    final String headerText = setHeaderText(
+      selectedTimeOfDay: selectedTimeOfDay,
+      declarationMode: declarationMode,
+    );
+
     final ChipContent chipContent = setChipContent(
-      ref: ref,
+      selectedTimeOfDay: selectedTimeOfDay,
       declarationMode: declarationMode,
     );
 
@@ -42,17 +55,12 @@ class HeaderDeclarationHalfDayChoice extends ConsumerWidget {
               style: textStylePageTitle(),
             ),
             IconChip(
-              label: setTeam(
-                teamList: teamNameList,
-                declarationMode: declarationMode,
-              ),
+              label: teamName,
               backgroundColor: Colors.white,
               image: ClipRRect(
                 borderRadius: BorderRadius.circular(50),
-                child: SvgPicture.asset(
-                  'assets/images/onSite.svg',
-                  width: 40,
-                  height: 40,
+                child: declarationChipSvgPicture(
+                  imageSrc: 'assets/images/onSite.svg',
                 ),
               ),
             ),
@@ -61,7 +69,7 @@ class HeaderDeclarationHalfDayChoice extends ConsumerWidget {
         Row(
           children: [
             Text(
-              tr(setHeaderText(ref, declarationMode)),
+              tr(headerText),
               style: textStylePageTitle(),
             ),
             IconChip(
@@ -69,10 +77,8 @@ class HeaderDeclarationHalfDayChoice extends ConsumerWidget {
               backgroundColor: Colors.white,
               image: ClipRRect(
                 borderRadius: BorderRadius.circular(50),
-                child: SvgPicture.asset(
-                  chipContent.imageSrc,
-                  width: 40,
-                  height: 40,
+                child: declarationChipSvgPicture(
+                  imageSrc: chipContent.imageSrc,
                 ),
               ),
             ),
@@ -100,9 +106,10 @@ String setTeam({
           : "";
 }
 
-String setHeaderText(WidgetRef ref, String declarationMode) {
-  final selectedTimeOfDay =
-      ref.watch(declarationProvider).teamsHalfDay.firstToDSelection;
+String setHeaderText({
+  required StatusEnum selectedTimeOfDay,
+  required String declarationMode,
+}) {
   final isMorning = selectedTimeOfDay == StatusEnum.morning;
   return declarationMode == DeclarationPaths.halfDayStart.text
       ? isMorning
@@ -114,13 +121,10 @@ String setHeaderText(WidgetRef ref, String declarationMode) {
 }
 
 ChipContent setChipContent({
-  required WidgetRef ref,
+  required StatusEnum selectedTimeOfDay,
   required String declarationMode,
 }) {
-  final selectedTimeOfDay =
-      ref.watch(declarationProvider).teamsHalfDay.firstToDSelection;
   final isMorning = selectedTimeOfDay == StatusEnum.morning;
-
   return declarationMode == DeclarationPaths.halfDayStart.text
       ? isMorning
           ? ChipContent(

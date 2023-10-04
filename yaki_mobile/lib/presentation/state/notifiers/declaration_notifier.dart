@@ -47,7 +47,13 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
     return declarationStatus.fullDayStatus;
   }
 
-  /// Function invoked in declaration page when a card is selected.
+  /// Function invoked in declaration page when a locationCard is selected.
+  /// Handle the creation of the declaration. FullDay or HalfDay.
+  ///
+  /// HalfDay is split in 3 steps, morning and afternoon selection while determining if an absence is selected (If so to to last halfDay declaration step).
+  ///
+  /// Then the first halfDay step : save the first selected status (remote / on site).
+  /// The last halfDay step : save the second selected status (remote / on site), set the DeclarationHalfDaySelection and create the declaration.
   Future<void> declarationCreationHandler({
     required DeclarationPaths declarationMode,
     required List<TeamModel> teamList,
@@ -76,53 +82,43 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
 
       // TIME OF DAY determine initial morning or afternoon selection
       case DeclarationPaths.timeOfDay:
-        state.teamsHalfDay.firstToDSelection = selectedStatus;
-        state.teamsHalfDay.firstTeam = teamList.first;
-        state.teamsHalfDay.secondTeam = teamList.last;
+        state.halfDayWorkflow.firstToDSelection = selectedStatus;
+        state.halfDayWorkflow.firstTeam = teamList.first;
+        state.halfDayWorkflow.secondTeam = teamList.last;
 
         // declaration requier a teamID,
         // therefore in case of ABSENCE for now will use the second teamID,
         // as the DB declaration table requier a valid teamId.
-        if (state.teamsHalfDay.firstTeam.teamId == -1) {
-          state.teamsHalfDay.firstStatus = StatusEnum.absence;
-          state.teamsHalfDay.firstTeam = teamList.last;
+        if (state.halfDayWorkflow.firstTeam.teamId == -1) {
+          state.halfDayWorkflow.firstStatus = StatusEnum.absence;
+          state.halfDayWorkflow.firstTeam = teamList.last;
         }
         break;
 
       // HALF DAY START determine first team status (remote / on site)
       case DeclarationPaths.halfDayStart:
-        state.teamsHalfDay.firstStatus = selectedStatus;
+        state.halfDayWorkflow.firstStatus = selectedStatus;
         break;
 
       // HALF DAY END determine second team status (remote / on site ), and create the declaration
       case DeclarationPaths.halfDayEnd:
-        state.teamsHalfDay.secondStatus = selectedStatus;
+        state.halfDayWorkflow.secondStatus = selectedStatus;
 
-        if (state.teamsHalfDay.firstToDSelection == StatusEnum.morning) {
-          await createHalfDay(
-            morningStatus: StatusEnum.getValue(
-              key: state.teamsHalfDay.firstStatus.name,
-            ),
-            morningTeamId: state.teamsHalfDay.firstTeam.teamId!,
-            afternoonStatus: StatusEnum.getValue(
-              key: state.teamsHalfDay.secondStatus.name,
-            ),
-            afternoonTeamId: state.teamsHalfDay.secondTeam.teamId!,
-            userId: userId,
-          );
-        } else {
-          await createHalfDay(
-            morningStatus: StatusEnum.getValue(
-              key: state.teamsHalfDay.secondStatus.name,
-            ),
-            morningTeamId: state.teamsHalfDay.secondTeam.teamId!,
-            afternoonStatus: StatusEnum.getValue(
-              key: state.teamsHalfDay.firstStatus.name,
-            ),
-            afternoonTeamId: state.teamsHalfDay.firstTeam.teamId!,
-            userId: userId,
-          );
-        }
+        setDeclarationHalfDaySelection();
+
+        await createHalfDay(
+          morningStatus: StatusEnum.getValue(
+            key: state.declarationsHalfDaySelections.morningTeamStatus.name,
+          ),
+          morningTeamId:
+              state.declarationsHalfDaySelections.morningTeam.teamId!,
+          afternoonStatus: StatusEnum.getValue(
+            key: state.declarationsHalfDaySelections.afternoonTeamStatus.name,
+          ),
+          afternoonTeamId:
+              state.declarationsHalfDaySelections.afternoonTeam.teamId!,
+          userId: userId,
+        );
         break;
       default:
         debugPrint('improper declaration mode');
@@ -230,7 +226,6 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
     // SEND TO REPOSITORY
     await declarationRepository.createFullDay(newDeclaration);
 
-    // NEED TO BE CHANGED
     setStateAbsenceStatus(dateStart: dateStart, dateEnd: dateEnd);
   }
 
@@ -238,7 +233,25 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
     required DateTime dateStart,
     required DateTime dateEnd,
   }) {
-    state.dateStart = dateStart;
-    state.dateEnd = dateEnd;
+    state.dateAbsenceStart = dateStart;
+    state.dateAbsenceEnd = dateEnd;
+  }
+
+  setDeclarationHalfDaySelection() {
+    final HalfDayWorkflow workflow = state.halfDayWorkflow;
+
+    workflow.firstToDSelection == StatusEnum.morning
+        ? state.declarationsHalfDaySelections = DeclarationsHalfDaySelections(
+            morningTeam: workflow.firstTeam,
+            morningTeamStatus: workflow.firstStatus,
+            afternoonTeam: workflow.secondTeam,
+            afternoonTeamStatus: workflow.secondStatus,
+          )
+        : state.declarationsHalfDaySelections = DeclarationsHalfDaySelections(
+            morningTeam: workflow.secondTeam,
+            morningTeamStatus: workflow.secondStatus,
+            afternoonTeam: workflow.firstTeam,
+            afternoonTeamStatus: workflow.firstStatus,
+          );
   }
 }
