@@ -49,7 +49,7 @@ class DeclarationPage extends ConsumerWidget {
       body: SafeArea(
         child: Center(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -60,7 +60,7 @@ class DeclarationPage extends ConsumerWidget {
                 ),
                 const SizedBox(height: 48),
                 SizedBox(
-                  height: 240,
+                  height: 250,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
