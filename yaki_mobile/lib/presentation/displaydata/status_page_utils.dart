@@ -17,6 +17,19 @@ enum StatusEnum {
   static String getValue({required String key}) {
     return StatusEnum.values.byName(key).value;
   }
+
+  static StatusEnum fromValue(String textValue) {
+    switch (textValue) {
+      case 'remote':
+        return StatusEnum.remote;
+      case 'on site':
+        return StatusEnum.onSite;
+      case 'absence':
+        return StatusEnum.absence;
+      default:
+        return StatusEnum.undeclared;
+    }
+  }
 }
 
 /// status utilities

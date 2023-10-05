@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yaki/data/sources/local/shared_preference.dart';
+import 'package:yaki/presentation/state/providers/declaration_provider.dart';
 import 'package:yaki/presentation/state/providers/login_provider.dart';
 import 'package:yaki/presentation/styles/text_style.dart';
 import 'package:yaki_ui/yaki_ui.dart';
@@ -62,6 +63,8 @@ class _AuthenticationState extends ConsumerState<Authentication> {
       final bool isCaptain = ref.read(loginRepositoryProvider).isCaptain();
       final bool isTeammate = ref.read(loginRepositoryProvider).isTeammate();
       if (isTeammate || isCaptain) {
+        ref.read(declarationProvider.notifier).getLatestDeclaration();
+
         goToDeclarationPage();
       } else {
         goToUserDefaultRedirection();

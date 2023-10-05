@@ -31,6 +31,7 @@ class DeclarationRepository {
   ///
   /// This method return the statusValue value.
   Future<DeclarationEntityIn> getLatestDeclaration(int teamMateId) async {
+    List<int> teamIdList = [];
     List<String> statusGetDecl = [];
     DateTime? dateStart;
     DateTime? dateEnd;
@@ -46,13 +47,20 @@ class DeclarationRepository {
             final getDeclarationIn = DeclarationModelIn.fromJson(
               getHttpResponse.data.first,
             );
+            if (getDeclarationIn.declarationTeamId != null) {
+              teamIdList.add(getDeclarationIn.declarationTeamId!);
+            } else {
+              throw Exception("No teamId in declaration");
+            }
+
             statusGetDecl.add(getDeclarationIn.declarationStatus);
+
             if (getDeclarationIn.declarationStatus == StatusEnum.absence.name) {
               dateStart = getDeclarationIn.declarationDateStart;
               dateEnd = getDeclarationIn.declarationDateEnd;
             }
           }
-          // else the server returns at least two declarations
+          // else the server returns at least two declarations : half day declaration.
           else {
             final getDeclarationInMorning = DeclarationModelIn.fromJson(
               getHttpResponse.data[0],
@@ -60,6 +68,14 @@ class DeclarationRepository {
             final getDeclarationInAfternoon = DeclarationModelIn.fromJson(
               getHttpResponse.data[1],
             );
+            if (getDeclarationInMorning.declarationTeamId != null &&
+                getDeclarationInAfternoon.declarationTeamId != null) {
+              teamIdList.add(getDeclarationInMorning.declarationTeamId!);
+              teamIdList.add(getDeclarationInAfternoon.declarationTeamId!);
+            } else {
+              throw Exception("No teamId in declaration");
+            }
+
             statusGetDecl.add(getDeclarationInMorning.declarationStatus);
             statusGetDecl.add(getDeclarationInAfternoon.declarationStatus);
           }
@@ -76,7 +92,12 @@ class DeclarationRepository {
     } catch (err) {
       debugPrint('error during get last declaration : $err');
     }
-    return DeclarationEntityIn(dateStart, dateEnd, statusGetDecl);
+    return DeclarationEntityIn(
+      teamIdList: teamIdList,
+      fullDayStatus: statusGetDecl,
+      dateStart: dateStart,
+      dateEnd: dateEnd,
+    );
   }
 
   /// Invoked in declaration Notifier

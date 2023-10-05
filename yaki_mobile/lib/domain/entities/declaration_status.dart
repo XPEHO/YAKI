@@ -8,6 +8,8 @@ class DeclarationStatus {
   late DeclarationsHalfDaySelections declarationsHalfDaySelections;
   late DateTime? dateAbsenceStart;
   late DateTime? dateAbsenceEnd;
+  bool isHalfDay = false;
+  bool isfullDay = false;
 
   DeclarationStatus();
 }
@@ -39,4 +41,9 @@ class DeclarationsHalfDaySelections {
     required this.afternoonTeam,
     required this.afternoonTeamStatus,
   });
+
+  @override
+  String toString() {
+    return 'DeclarationsHalfDaySelections{morningTeam: ${morningTeam.teamName}, morningTeamStatus: $morningTeamStatus, afternoonTeam: ${afternoonTeam.teamName}, afternoonTeamStatus: $afternoonTeamStatus}';
+  }
 }

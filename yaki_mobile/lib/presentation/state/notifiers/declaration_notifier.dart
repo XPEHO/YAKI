@@ -5,46 +5,83 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yaki/data/models/declaration_model.dart';
 import 'package:yaki/data/models/team_model.dart';
 import 'package:yaki/data/repositories/declaration_respository.dart';
+import 'package:yaki/data/repositories/team_repository.dart';
 import 'package:yaki/domain/entities/declaration_status.dart';
+import 'package:yaki/domain/entities/delcaration_entity_in.dart';
 import 'package:yaki/presentation/displaydata/declaration_enum.dart';
 import 'package:yaki/presentation/displaydata/status_page_utils.dart';
 
 class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
   final DeclarationRepository declarationRepository;
+  final TeamRepository teamRepository;
 
   DeclarationNotifier({
     required this.declarationRepository,
+    required this.teamRepository,
   }) : super(DeclarationStatus());
 
   /// Invoked at authentication "sign in" button press.
-  Future<List<String>> getLatestDeclaration() async {
+  Future<bool> getLatestDeclaration() async {
+    bool isDeclarationExist = false;
+
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final int? userId = prefs.getInt("userId");
 
-    if (userId == null) return [];
+    if (userId == null) return false;
 
-    final declarationStatus =
+    // retrive user team list
+    List<TeamModel> teamList = await teamRepository.getTeam();
+    // retrive user latest declaration(s) values
+    final DeclarationEntityIn declarationEntityIn =
         await declarationRepository.getLatestDeclaration(userId);
-    switch (declarationStatus.fullDayStatus.length) {
+
+    // depending of the case, set the state values
+    switch (declarationEntityIn.fullDayStatus.length) {
       case 1:
-        if (declarationStatus.fullDayStatus.first == 'vacation') {
-          setStateAbsenceStatus(
-            dateStart: declarationStatus.dateStart ?? DateTime.now(),
-            dateEnd: declarationStatus.dateEnd ?? DateTime.now(),
-          );
+        if (declarationEntityIn.fullDayStatus.first == 'vacation') {
+          state.dateAbsenceStart =
+              declarationEntityIn.dateStart ?? DateTime.now();
+          state.dateAbsenceEnd = declarationEntityIn.dateEnd ?? DateTime.now();
         } else {
-          // need to be be reworked
-          // need to set value to state.fullDayStatus
+          state.fullDayTeam = teamList.firstWhere(
+            (team) => team.teamId == declarationEntityIn.teamIdList.first,
+          );
+          state.fullDayStatus = StatusEnum.fromValue(
+            declarationEntityIn.fullDayStatus.first,
+          );
+          state.isfullDay = true;
+          state.isHalfDay = false;
+          isDeclarationExist = true;
         }
         break;
       case 2:
-        // need to be be reworked
-        // need to set values to state.teamsHalfDay.firstTeamStatus & state.teamsHalfDay.secondTeamStatus
+        final TeamModel teamMorning = teamList.firstWhere(
+          (team) => team.teamId == declarationEntityIn.teamIdList.first,
+        );
+        final TeamModel teamAfternoon = teamList.firstWhere(
+          (team) => team.teamId == declarationEntityIn.teamIdList.last,
+        );
+
+        state.declarationsHalfDaySelections = DeclarationsHalfDaySelections(
+          morningTeam: teamMorning,
+          morningTeamStatus: StatusEnum.fromValue(
+            declarationEntityIn.fullDayStatus.first,
+          ),
+          afternoonTeam: teamAfternoon,
+          afternoonTeamStatus: StatusEnum.fromValue(
+            declarationEntityIn.fullDayStatus.last,
+          ),
+        );
+        state.isfullDay = false;
+        state.isHalfDay = true;
+        isDeclarationExist = true;
         break;
       default:
-        return declarationStatus.fullDayStatus;
+        state.isfullDay = false;
+        state.isHalfDay = false;
+        return isDeclarationExist = false;
     }
-    return declarationStatus.fullDayStatus;
+    return isDeclarationExist;
   }
 
   /// Function invoked in declaration page when a locationCard is selected.
@@ -226,13 +263,6 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
     // SEND TO REPOSITORY
     await declarationRepository.createFullDay(newDeclaration);
 
-    setStateAbsenceStatus(dateStart: dateStart, dateEnd: dateEnd);
-  }
-
-  setStateAbsenceStatus({
-    required DateTime dateStart,
-    required DateTime dateEnd,
-  }) {
     state.dateAbsenceStart = dateStart;
     state.dateAbsenceEnd = dateEnd;
   }
