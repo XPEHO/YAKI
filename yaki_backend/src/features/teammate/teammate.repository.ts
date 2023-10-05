@@ -10,7 +10,7 @@ export class TeammateRepository {
       port: Number(process.env.DB_PORT),
     });
     const query = `
-    SELECT u.user_id, tm.teammate_id, u.user_last_name, u.user_first_name,
+    SELECT u.user_id, tm.teammate_id, u.user_last_name, u.user_first_name, t.team_id, t.team_name,
     CASE
         WHEN max_decl.declaration_date::date = now()::date
         OR (
