@@ -1,7 +1,15 @@
 name: Upload appbundle on internal test track
 on:
-  push:
-    branches: ["main"]
+  workflow_dispatch:
+    inputs:
+      build-name:
+        description: 'Build name: major.minor.patch'
+        required: true
+        default: '0.0.0'
+      build-number:
+        description: 'Build number: positive integer'
+        required: true
+        default: '0'
 
 jobs:
   upload:

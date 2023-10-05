@@ -35,7 +35,7 @@ jobs:
         run: |
           cd yaki_mobile
           flutter pub get
-          flutter build appbundle --dart-define API_BASE_URL=https://yaki.xpeho.fr/api/ --dart-define CRED_HASH_PASS=${{ secrets.CRED_HASH_PASS }}}
+          flutter build appbundle --dart-define API_BASE_URL=https://yaki.xpeho.fr/api/ --dart-define CRED_HASH_PASS=${{ secrets.CRED_HASH_PASS }}} --build-name ${{ github.event.inputs.build-name }} --build-number ${{ github.event.inputs.build-number }}
       - name: Upload appbundle to Play Console
         uses: r0adkll/upload-google-play@v1
         with:
