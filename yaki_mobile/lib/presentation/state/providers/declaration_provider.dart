@@ -5,11 +5,12 @@ import 'package:yaki/domain/entities/declaration_status.dart';
 import 'package:yaki/presentation/state/notifiers/declaration_notifier.dart';
 import 'package:yaki/presentation/state/dio/dio_interceptor.dart';
 import 'package:yaki/presentation/state/providers/team_provider.dart';
+import 'package:yaki/presentation/state/providers/url_provider.dart';
 
 final declarationApiProvider = Provider(
   (ref) => DeclarationApi(
     ref.read(dioInterceptor),
-    baseUrl: const String.fromEnvironment('API_BASE_URL'),
+    baseUrl: ref.read(urlProvider),
   ),
 );
 
