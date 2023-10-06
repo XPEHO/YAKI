@@ -3,6 +3,7 @@ import 'package:yaki/data/repositories/team_repository.dart';
 import 'package:yaki/data/sources/remote/team_api.dart';
 import 'package:yaki/presentation/state/dio/dio_interceptor.dart';
 import 'package:yaki/presentation/state/notifiers/team_notifier.dart';
+import 'package:yaki/presentation/state/providers/url_provider.dart';
 import 'package:yaki/presentation/state/state/team_page_state.dart';
 
 // Define a provider that creates an instance of the TeamApi class
@@ -11,7 +12,7 @@ final teamApiProvider = Provider(
     // Takes in a dioInterceptor provider to configure Dio
     ref.read(dioInterceptor),
     // Read the API base URL from an environment variable
-    baseUrl: const String.fromEnvironment("API_BASE_URL"),
+    baseUrl: ref.read(urlProvider),
   ),
 );
 
