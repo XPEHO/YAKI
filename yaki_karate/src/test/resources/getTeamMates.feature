@@ -33,7 +33,7 @@ Feature: GetTeammates
     Given url 'http://localhost:3000/teammates'
     And header x-access-token = token
     And header user_id = userId
-    And param team_id = 1 
+    And param teammateId = 1 
     When method get
     Then status 200
     And match response contains  schema
