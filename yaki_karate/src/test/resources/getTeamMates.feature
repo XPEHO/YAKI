@@ -29,7 +29,7 @@ Feature: GetTeammates
   Then status 200 
   And def token = response.token 
   And def userId = response.userId 
-  Given url 'http://localhost:8080/teammates' 
+  Given url 'http://localhost:3000/teammates' 
   And header x-access-token = token 
   And header user_id = userId 
   And param team_id = 1 
