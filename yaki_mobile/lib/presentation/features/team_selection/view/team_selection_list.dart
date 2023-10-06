@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
@@ -29,7 +30,7 @@ class TeamSelectionList extends ConsumerWidget {
                       pictoLink(teamList[index]),
                     ),
                   ),
-                  title: 'Project',
+                  title: tr("project"),
                   subtitle: teamList[index].teamName ?? 'No team name',
                   onSelectionChanged: (bool selected) {
                     final teamId = teamList[index].teamId;

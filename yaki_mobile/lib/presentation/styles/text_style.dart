@@ -35,7 +35,7 @@ TextStyle textStyleHeaderBig() {
   return const TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.bold,
-    color: Colors.white,
+    color: Colors.black,
   );
 }
 

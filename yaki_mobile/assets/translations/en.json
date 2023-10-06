@@ -98,17 +98,18 @@
   "IWorkthisMorning": "I work this",
   "IWorkthisAfternoon": "I work this",
   "Iam": "I am",
-  "office": "To the Office",
-  "remote": "To Remote",
   "onSite": "On site",
+  "remote": "To Remote",
+
   "vacation": "Absence",
   "undeclared": "Not notified",
-  "for ": "for ",
 
   "entryValidated": "Entry validated",
   "youCanCloseTheApp": "You can close the application",
   "modify": "MODIFY",
   "seeTeam": "SEE MY TEAM",
 
-  "defaultTeamName": "Team"
+  "defaultTeamName": "Team",
+  "for ": "for ",
+  "project": "Project"
 }
