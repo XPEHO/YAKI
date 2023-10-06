@@ -5,12 +5,13 @@ import 'package:yaki/domain/entities/teammate_entity.dart';
 import 'package:yaki/presentation/state/dio/dio_interceptor.dart';
 import 'package:yaki/presentation/state/notifiers/teammate_notifier.dart';
 import 'package:yaki/presentation/state/providers/login_provider.dart';
+import 'package:yaki/presentation/state/providers/url_provider.dart';
 
 /// Retrieves informations from the API
 final teammateServiceProvider = Provider(
   (ref) => TeammateApi(
     ref.read(dioInterceptor),
-    baseUrl: const String.fromEnvironment("API_BASE_URL"),
+    baseUrl: ref.read(urlProvider),
   ),
 );
 
