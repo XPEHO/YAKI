@@ -1,5 +1,5 @@
-import {TeammateService as TeammateService} from "./teammate.service";
-import {Response, Request} from "express";
+import { TeammateService as TeammateService } from './teammate.service';
+import { Response, Request } from 'express';
 
 export class TeammateController {
   service: TeammateService;
@@ -9,15 +9,17 @@ export class TeammateController {
   }
 
   getByTeamIdWithLastDeclaration = async (req: Request, res: Response) => {
-    const captainId = Number(req.query.captainId);
+    const userId = Number(req.query.userId);
     try {
-      const teammates = await this.service.getByTeamIdWithLastDeclaration(captainId);
+      const teammates = await this.service.getByTeamIdWithLastDeclaration(
+        userId
+      );
       res.send(teammates);
     } catch (error: any) {
       if (error instanceof TypeError) {
-        res.status(404).json({message: error.message});
+        res.status(404).json({ message: error.message });
       } else {
-        res.status(500).json({message: error.message});
+        res.status(500).json({ message: error.message });
       }
     }
   };

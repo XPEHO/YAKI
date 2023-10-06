@@ -4,10 +4,7 @@ import { UserService } from "./features/user/user.service";
 import { UserRepository } from "./features/user/user.repository";
 import { TeammateRepository } from "./features/teammate/teammate.repository";
 import { authService } from "./features/user/authentication.service";
-
 import { TeammateController } from "./features/teammate/teammate.controller";
-import { TeamRepository } from "./features/team/team.repository";
-import { TeamService } from "./features/team/team.service";
 import { TeammateService } from "./features/teammate/teammate.service";
 import { limiter, signInLimiter } from "./middleware/rateLimiter";
 import { PasswordRepository } from "./features/password/password.repository";
@@ -16,13 +13,9 @@ import { PasswordController } from "./features/password/password.controller";
 
 export const router = express.Router();
 
-// TEAM
-const teamRepository = new TeamRepository();
-const teamService = new TeamService(teamRepository);
-
 //TEAM MATE
 const teammateRepository = new TeammateRepository();
-const teammateService = new TeammateService(teammateRepository, teamService);
+const teammateService = new TeammateService(teammateRepository);
 const teammateController = new TeammateController(teammateService);
 
 //USER

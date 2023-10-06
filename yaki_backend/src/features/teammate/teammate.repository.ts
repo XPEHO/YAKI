@@ -10,7 +10,7 @@ export class TeammateRepository {
       port: Number(process.env.DB_PORT),
     });
     const query = `
-    SELECT u.user_id, tm.teammate_id, u.user_last_name, u.user_first_name, t.team_id, t.team_name,
+    SELECT u.user_id, tm.teammate_id, u.user_last_name, u.user_first_name, t.team_id, t.team_name, max_decl.declaration_date_start, max_decl.declaration_date_end,
     CASE
         WHEN max_decl.declaration_date::date = now()::date
         OR (
@@ -47,7 +47,9 @@ WHERE t.team_id IN (
   WHERE tm.teammate_user_id = $1
 )`;
     client.connect();
-    const poolResult: QueryResult = await client.query(query, [teammate_user_id]);
+    const poolResult: QueryResult = await client.query(query, [
+      teammate_user_id,
+    ]);
     await client.end();
 
     return poolResult.rows;

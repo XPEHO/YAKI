@@ -1,0 +1,5 @@
+DB_URL=//your db url
+DB_USER=//your db user
+DB_PASSWORD=//your db password
+NODE_ENV=//your node env
+```

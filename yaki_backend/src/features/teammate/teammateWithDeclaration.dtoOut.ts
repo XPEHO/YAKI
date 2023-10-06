@@ -9,6 +9,8 @@ export class TeammateWithDeclaration {
   declarationStatus: StatusDeclaration;
   teamId: number;
   teamName: string;
+  declarationDateStart: Date;
+  declarationDateEnd: Date;
 
   constructor(
     userId: number,
@@ -18,7 +20,9 @@ export class TeammateWithDeclaration {
     declarationDate: Date,
     declarationStatus: StatusDeclaration,
     teamId: number,
-    teamName: string
+    teamName: string,
+    declarationDateStart: Date,
+    declarationDateEnd: Date
   ) {
     this.userId = userId;
     this.teammateId = teammateId;
@@ -28,5 +32,7 @@ export class TeammateWithDeclaration {
     this.declarationStatus = declarationStatus;
     this.teamId = teamId;
     this.teamName = teamName;
+    this.declarationDateStart = declarationDateStart;
+    this.declarationDateEnd = declarationDateEnd;
   }
 }
