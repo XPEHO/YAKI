@@ -6,7 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 /// On mobile the API is String.fromEnvironment('API_BASE_URL') value
 final urlProvider = Provider<String>((ref) {
   if (kIsWeb) {
-    return '${Uri.base}/api';
+    return '${Uri.base.origin}/api';
   } else {
     return const String.fromEnvironment('API_BASE_URL');
   }
