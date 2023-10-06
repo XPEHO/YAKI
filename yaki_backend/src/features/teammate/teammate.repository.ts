@@ -1,7 +1,7 @@
 import { Client, QueryResult } from 'pg';
 
 export class TeammateRepository {
-  getByTeamIdWithLastDeclaration = async (team_id: number) => {
+  getByTeamIdWithLastDeclaration = async (teammate_user_id: number) => {
     const client = new Client({
       host: process.env.DB_HOST,
       user: process.env.DB_USER,
@@ -47,7 +47,7 @@ WHERE t.team_id IN (
   WHERE tm.teammate_user_id = $1
 )`;
     client.connect();
-    const poolResult: QueryResult = await client.query(query, [team_id]);
+    const poolResult: QueryResult = await client.query(query, [teammate_user_id]);
     await client.end();
 
     return poolResult.rows;

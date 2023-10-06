@@ -30,6 +30,8 @@ describe("TeammateService testing", () => {
         user_first_name: "John",
         declaration_date: new Date("2023/8/20"),
         declaration_status: StatusDeclaration.REMOTE,
+        team_id: 20,
+        team_name: "Test team",
       },
     ];
     const mockTeamDtoApiResponse = [
@@ -62,7 +64,9 @@ describe("TeammateService testing", () => {
             element.user_last_name,
             element.user_first_name,
             element.declaration_date,
-            element.declaration_status
+            element.declaration_status,
+            element.team_id,
+            element.team_name
           )
       )
     );
