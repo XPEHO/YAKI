@@ -23,7 +23,7 @@ Feature: GetTeammates
 
   @GetAllTeammateSuccessful
    Scenario: Get teammate by team ID with last declaration
-    Given path 'http://localhost:3000/teammates'
+    Given path 'http://localhost:8080/teammate'
     And param team_id = 1
     When method get
     Then status 200
