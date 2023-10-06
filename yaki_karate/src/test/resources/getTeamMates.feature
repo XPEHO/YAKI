@@ -1,7 +1,7 @@
 Feature: GetTeammates
 
   Background:
-    * def schema = [{userId : '#number', teammateId: '#number', userLastName: '#string', userFirstName: '#string', declarationDate: "#string", declarationStatus: "#string"}]
+    * def schema = [{userId : '#number', teammateId: '#number', userLastName: '#string', userFirstName: '#string', declarationDate: "#string", declarationStatus: "#string", team_id: "#number", team_name: "#string"}]
     Given url 'http://localhost:8080/login/authenticate'
     And request { login: 'owner', password: 'owner' }
     When method post
