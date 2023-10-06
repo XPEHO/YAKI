@@ -22,17 +22,19 @@ Feature: GetTeammates
     Then status 200
 
   @GetAllTeammateSuccessful 
-  Scenario: Get all teammate 
-  Given url 'http://localhost:3000/login' 
+ Scenario: Get all teammate 
+  Given url 'http://localhost:8080/login/authenticate' 
   And request { "login": "roger", "password": "roger" }
-  When method POST Then status 200 
+  When method POST 
+  Then status 200 
   And def token = response.token 
   And def userId = response.userId 
-  Given url 'http://localhost:3000/teammates' 
+  Given url 'http://localhost:8080/teammates' 
   And header x-access-token = token 
   And header user_id = userId 
   And param team_id = 1 
-  When method get Then status 200 
+  When method get 
+  Then status 200 
   And match response contains schema 
   * print response 
   * print schema
