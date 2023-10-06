@@ -21,13 +21,21 @@ Feature: GetTeammates
     When method GET
     Then status 200
 
-  @GetAllTeammateSuccessful
-   Scenario: Get teammate by team ID with last declaration
-    Given path 'http://localhost:3000/teammate'
-    And param team_id = 1
-    When method get
-    Then status 200
-    And match response == [{ user_id: '#number', teammate_id: '#number', user_last_name: '#string', user_first_name: '#string', team_id: '#number', team_name: '#string', declaration_date: '#string?', declaration_status: '#string?' }]
+  @GetAllTeammateSuccessful 
+  Scenario: Get all teammate 
+  Given url 'http://localhost:3000/login' 
+  And request { "login": "roger", "password": "roger" }
+  When method POST Then status 200 
+  And def token = response.token 
+  And def userId = response.userId 
+  Given url 'http://localhost:3000/teammates' 
+  And header x-access-token = token 
+  And header user_id = userId 
+  And param team_id = 1 
+  When method get Then status 200 
+  And match response contains schema 
+  * print response 
+  * print schema
 
   Scenario: Get the latest declaration fail
     Given url 'http://localhost:3000/teammate'
