@@ -20,7 +20,7 @@ describe("TeammateService testing", () => {
 
   it("should fetch teammates with their lastest declaration", async () => {
     // Mock the data
-    const mockCaptainId: number = 12;
+    const mockCaptainId: number = 1;
     const mockTeamId: number = 20;
     const mockTeammatesDataApiReponse = [
       {
