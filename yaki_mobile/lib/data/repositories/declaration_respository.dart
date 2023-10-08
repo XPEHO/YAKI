@@ -2,8 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:yaki/data/models/declaration_model.dart';
 import 'package:yaki/data/models/declaration_model_in.dart';
 import 'package:yaki/data/sources/remote/declaration_api.dart';
-import 'package:yaki/domain/entities/delcaration_entity_in.dart';
-import 'package:yaki/presentation/displaydata/status_page_utils.dart';
+import 'package:yaki/presentation/displaydata/declaration_status_enum.dart';
 
 class DeclarationRepository {
   final DeclarationApi _declarationApi;
@@ -12,74 +11,20 @@ class DeclarationRepository {
     this._declarationApi,
   );
 
-  /// Invoked in declaration Notifier
-  ///
-  /// String statusValue used in authentication page :
-  /// to determine if the response has a declaration object or not
-  /// if statusValue is emptyString, there is no declaration at the current day, otherwise a declaration was created.
-  ///
-  /// invoke declarationApi.getDeclaration()
-  /// Receive a HttpResponse, with :
-  ///
-  /// * HttpResponse.response, get the response statusCode
-  /// * HttpResponse.data to get the data from the response body
-  ///
-  /// Depending of the response statusCode corresponding actions are set
-  /// At statusCode 200 :
-  /// * Convert the HttpResponse.data into a DeclarationModelIn instance,
-  /// * Get the declarationStatus from the newly created object and assign it to the statusValue.
-  ///
-  /// This method return the statusValue value.
-  Future<DeclarationEntityIn> getLatestDeclaration(int teamMateId) async {
-    List<int> teamIdList = [];
-    List<String> statusGetDecl = [];
-    DateTime? dateStart;
-    DateTime? dateEnd;
-
+  Future<bool> getLatestDeclaration(int teamMateId) async {
+    bool isAlreadyHaveDeclaration = false;
     try {
       final getHttpResponse = await _declarationApi.getDeclaration(teamMateId);
       final statusCode = getHttpResponse.response.statusCode;
       switch (statusCode) {
         case 200:
-          // if the server returns one declaration it means it's a declaration
-          // for the whole day
-          if (getHttpResponse.data.length == 1) {
-            final getDeclarationIn = DeclarationModelIn.fromJson(
-              getHttpResponse.data.first,
-            );
-            if (getDeclarationIn.declarationTeamId != null) {
-              teamIdList.add(getDeclarationIn.declarationTeamId!);
-            } else {
-              throw Exception("No teamId in declaration");
-            }
-
-            statusGetDecl.add(getDeclarationIn.declarationStatus);
-
-            if (getDeclarationIn.declarationStatus == StatusEnum.absence.name) {
-              dateStart = getDeclarationIn.declarationDateStart;
-              dateEnd = getDeclarationIn.declarationDateEnd;
-            }
+          if (getHttpResponse.data.length == 1 ||
+              getHttpResponse.data.length == 2) {
+            isAlreadyHaveDeclaration = true;
           }
-          // else the server returns at least two declarations : half day declaration.
-          else {
-            final getDeclarationInMorning = DeclarationModelIn.fromJson(
-              getHttpResponse.data[0],
-            );
-            final getDeclarationInAfternoon = DeclarationModelIn.fromJson(
-              getHttpResponse.data[1],
-            );
-            if (getDeclarationInMorning.declarationTeamId != null &&
-                getDeclarationInAfternoon.declarationTeamId != null) {
-              teamIdList.add(getDeclarationInMorning.declarationTeamId!);
-              teamIdList.add(getDeclarationInAfternoon.declarationTeamId!);
-            } else {
-              throw Exception("No teamId in declaration");
-            }
-
-            statusGetDecl.add(getDeclarationInMorning.declarationStatus);
-            statusGetDecl.add(getDeclarationInAfternoon.declarationStatus);
+          if (getHttpResponse.data.length == 0) {
+            isAlreadyHaveDeclaration = false;
           }
-          // convert HttpResponse<dynamic> (Map<String, dynamic>) into Model using .fromJson method
           break;
         case 404:
           debugPrint("No declaration for this day");
@@ -92,12 +37,7 @@ class DeclarationRepository {
     } catch (err) {
       debugPrint('error during get last declaration : $err');
     }
-    return DeclarationEntityIn(
-      teamIdList: teamIdList,
-      fullDayStatus: statusGetDecl,
-      dateStart: dateStart,
-      dateEnd: dateEnd,
-    );
+    return isAlreadyHaveDeclaration;
   }
 
   /// Invoked in declaration Notifier

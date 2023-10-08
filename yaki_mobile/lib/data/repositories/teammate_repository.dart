@@ -1,54 +1,83 @@
 import 'package:flutter/material.dart';
 import 'package:retrofit/retrofit.dart';
-import 'package:yaki/data/models/teammate_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:yaki/data/models/teammate_with_declaration_model.dart';
 import 'package:yaki/data/sources/remote/teammate_api.dart';
-import 'package:yaki/domain/entities/teammate_entity.dart';
-import 'package:yaki/presentation/displaydata/status_page_utils.dart';
+import 'package:yaki/domain/entities/teammate_with_declaration_entity.dart';
+import 'package:yaki/presentation/displaydata/declaration_status_enum.dart';
 
 class TeammateRepository {
   final TeammateApi teammateApi;
-  List<TeammateEntity> teammateList;
-  TeammateEntity? teammateEntity;
 
   TeammateRepository(
-    this.teammateApi, {
-    this.teammateList = const [],
-    this.teammateEntity,
-  });
+    this.teammateApi,
+  );
 
   /// Retrieves information from the Teammate API <br>
   /// and stores the response in the modelList variable
-  Future<List<TeammateEntity>> getTeammate(String captainId) async {
+  Future<List<TeammateWithDeclarationEntity>> getTeammate() async {
     try {
-      final listHttpResponse = await teammateApi.getTeammate(captainId);
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      final int? userId = prefs.getInt("userId");
+      if (userId == null) {
+        throw Exception('invalid user');
+      }
+
+      final listHttpResponse = await teammateApi.getTeammate(userId);
       final statusCode = listHttpResponse.response.statusCode;
 
       switch (statusCode) {
         case 200:
-          final modelList = setTeammateModelList(listHttpResponse);
+          final List<TeammateWithDeclarationModel> modelList =
+              setTeammateWithDeclaModelList(listHttpResponse);
 
-          List<TeammateEntity> teammatelist = <TeammateEntity>[];
+          List<TeammateWithDeclarationEntity> entityList =
+              <TeammateWithDeclarationEntity>[];
 
           for (var i = 0; i < modelList.length; i++) {
-            final statusInCamelCase = StatusUtils.toCamelCase(
-              toFormat: modelList[i].declarationStatus ?? 'undeclared',
-            );
+            final TeammateWithDeclarationModel currentModel = modelList[i];
+            // skip item if incorrect data
+            if (currentModel.teamId == null || currentModel.userId == null) {
+              debugPrint('Incorrect data from : $currentModel $i');
+              continue;
+            }
 
+            //check if preview teammate is the same as the current one, meaning its a half day declaration
             if (i != 0 && modelList[i].userId == modelList[i - 1].userId) {
-              teammatelist.last.addHalfDayDeclaration(statusInCamelCase);
+              final TeammateWithDeclarationEntity halfDayUser = entityList.last;
+
+              halfDayUser.declarationStatusAfternoon = StatusEnum.fromValue(
+                modelList[i].declarationStatus ?? StatusEnum.undeclared.name,
+              );
+              halfDayUser.teamIdAfternoon = modelList[i].teamId;
+              halfDayUser.teamNameAfternoon =
+                  teamNameCheck(modelList[i].teamName, i);
             } else {
-              teammatelist.add(
-                TeammateEntity(
+              entityList.add(
+                TeammateWithDeclarationEntity(
+                  loggedUserId: userId,
+                  userId: modelList[i].userId!,
                   userFirstName: modelList[i].userFirstName,
                   userLastName: modelList[i].userLastName,
-                  declarationDate: modelList[i].declarationDate,
-                  declarationStatus: statusInCamelCase,
+                  declarationDate:
+                      modelList[i].declarationDate ?? DateTime.now(),
+                  declarationDateStart:
+                      modelList[i].declarationDateStart ?? DateTime.now(),
+                  declarationDateEnd:
+                      modelList[i].declarationDateEnd ?? DateTime.now(),
+                  declarationStatus: StatusEnum.fromValue(
+                    modelList[i].declarationStatus ??
+                        StatusEnum.undeclared.name,
+                  ),
+                  teamId: modelList[i].teamId!,
+                  teamName: teamNameCheck(modelList[i].teamName, i),
+                  declarationId: modelList[i].declarationId,
+                  declarationUserId: modelList[i].declarationUserId,
                 ),
               );
             }
           }
-
-          return teammatelist;
+          return entityList;
         default:
           throw Exception('Invalid statusCode : $statusCode');
       }
@@ -58,16 +87,24 @@ class TeammateRepository {
     }
   }
 
-  /// Function converting httpResponse.data ( a List<dynamic> of Map ) into a
-  /// List<TeammateModel> using map, which create a List<dynamic> of TeammateModel.
-  /// Convert it afterward into a List<TeammateModel>
-  List<TeammateModel> setTeammateModelList(HttpResponse response) {
-    final dynamicList = response.data.map(
-      (teammate) {
-        return TeammateModel.fromJson(teammate);
-      },
-    ).toList();
-    List<TeammateModel> modelList = List<TeammateModel>.from(dynamicList);
+  /// Helper method that parses the API response data and returns a list of
+  /// TeammateModel objects
+  List<TeammateWithDeclarationModel> setTeammateWithDeclaModelList(
+    HttpResponse response,
+  ) {
+    final List<TeammateWithDeclarationModel> modelList = [];
+    for (final teammateAndDeclaration in response.data) {
+      modelList
+          .add(TeammateWithDeclarationModel.fromJson(teammateAndDeclaration));
+    }
     return modelList;
+  }
+
+  String teamNameCheck(String? teamName, int index) {
+    if (teamName == null || teamName == '') {
+      return 'unknown $index';
+    } else {
+      return teamName;
+    }
   }
 }

@@ -7,7 +7,7 @@ import 'package:yaki/data/models/team_model.dart';
 import 'package:yaki/domain/entities/location_card_content.dart';
 import 'package:yaki/presentation/displaydata/declaration_enum.dart';
 import 'package:yaki/presentation/displaydata/declaration_summary_enum.dart';
-import 'package:yaki/presentation/displaydata/status_page_utils.dart';
+import 'package:yaki/presentation/displaydata/declaration_status_enum.dart';
 import 'package:yaki/presentation/features/declaration/view/header_declaration_half_day_choice.dart';
 import 'package:yaki/presentation/features/declaration/view/header_declaration_single_choice.dart';
 import 'package:yaki/presentation/state/providers/declaration_provider.dart';

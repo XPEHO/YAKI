@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yaki/presentation/displaydata/declaration_enum.dart';
 import 'package:yaki/presentation/displaydata/declaration_summary_enum.dart';
+import 'package:yaki/presentation/features/shared/app_bar_date.dart';
 import 'package:yaki/presentation/features/team_selection/view/team_selection_header.dart';
 import 'package:yaki/presentation/features/team_selection/view/team_selection_list.dart';
 import 'package:yaki/presentation/state/providers/team_provider.dart';
@@ -18,27 +19,10 @@ class TeamSelection extends ConsumerWidget {
     bool isValidationButtonEnabled = ref.watch(teamProvider).isButtonActivated;
 
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        actions: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              IconButton(
-                onPressed: () {
-                  context.go("/");
-                  ref.read(teamProvider.notifier).clearTeamList();
-                },
-                icon: const Icon(Icons.close),
-              ),
-            ],
-          ),
-        ],
-      ),
+      appBar: const AppBarWithDate(),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(16.0, 20, 16.0, 30),
+          padding: const EdgeInsets.fromLTRB(16.0, 8, 16.0, 30),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

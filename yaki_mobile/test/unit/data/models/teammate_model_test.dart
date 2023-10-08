@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:yaki/data/models/teammate_model.dart';
+import 'package:yaki/data/models/teammate_with_declaration_model.dart';
 
 void main() {
   // simulate json send by API
@@ -10,16 +10,28 @@ void main() {
     "userFirstName": "dupond",
     "teamMateId": 1,
     "declarationDate": "2023-03-20T10:00:00.950Z",
+    "declarationDateStart": "2023-03-20T10:00:00.950Z",
+    "declarationDateEnd": "2023-03-20T10:00:00.950Z",
     "declarationStatus": "Testing",
+    "teamId": 1,
+    "teamName": "Team 1",
+    "declarationId": 1,
+    "declarationUserId": 1,
   };
   // model instance once json is parsed into dart usable model
-  TeammateModel teammateModel = TeammateModel(
+  TeammateWithDeclarationModel teammateModel = TeammateWithDeclarationModel(
     userId: 1,
     userLastName: "dupond",
     userFirstName: "dupond",
     teamMateId: 1,
     declarationDate: DateTime.parse('2023-03-20T10:00:00.950Z'),
+    declarationDateStart: DateTime.parse('2023-03-20T10:00:00.950Z'),
+    declarationDateEnd: DateTime.parse('2023-03-20T10:00:00.950Z'),
     declarationStatus: "Testing",
+    teamId: 1,
+    teamName: "Team 1",
+    declarationId: 1,
+    declarationUserId: 1,
   );
 
   group(
@@ -28,8 +40,8 @@ void main() {
       test(
         'TeamMateModel fromJson',
         () {
-          TeammateModel teammateModelFromJson =
-              TeammateModel.fromJson(teammateModelAsJson);
+          TeammateWithDeclarationModel teammateModelFromJson =
+              TeammateWithDeclarationModel.fromJson(teammateModelAsJson);
 
           expect(
             teammateModelFromJson.toJson().toString() ==

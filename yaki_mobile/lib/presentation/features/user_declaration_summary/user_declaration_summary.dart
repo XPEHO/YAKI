@@ -5,19 +5,19 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yaki/domain/entities/declaration_status.dart';
 import 'package:yaki/presentation/displaydata/declaration_summary_enum.dart';
-import 'package:yaki/presentation/features/declaration_summary/view/summary_absence.dart';
-import 'package:yaki/presentation/features/declaration_summary/view/summary_chips_duo.dart';
-import 'package:yaki/presentation/features/declaration_summary/view/summary_half_day.dart';
+import 'package:yaki/presentation/features/user_declaration_summary/view/summary_absence.dart';
+import 'package:yaki/presentation/features/user_declaration_summary/view/summary_chips_duo.dart';
+import 'package:yaki/presentation/features/user_declaration_summary/view/summary_half_day.dart';
 import 'package:yaki/presentation/state/providers/declaration_provider.dart';
 import 'package:yaki/presentation/state/providers/team_provider.dart';
 import 'package:yaki/presentation/styles/color.dart';
 import 'package:yaki/presentation/styles/text_style.dart';
 import 'package:yaki_ui/yaki_ui.dart';
 
-class DeclarationSummary extends ConsumerWidget {
+class UserDeclarationSummary extends ConsumerWidget {
   final String summaryMode;
 
-  const DeclarationSummary({
+  const UserDeclarationSummary({
     super.key,
     required this.summaryMode,
   });
@@ -67,7 +67,9 @@ class DeclarationSummary extends ConsumerWidget {
                 const SizedBox(height: 8),
                 Button.secondary(
                   text: tr("seeTeam"),
-                  onPressed: () => {},
+                  onPressed: () => {
+                    context.go("/teams-declaration-summary"),
+                  },
                 ),
                 const SizedBox(height: 64),
               ],

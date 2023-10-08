@@ -6,7 +6,8 @@ import 'package:yaki/presentation/displaydata/declaration_enum.dart';
 import 'package:yaki/presentation/displaydata/declaration_summary_enum.dart';
 import 'package:yaki/presentation/features/authentication/authentication.dart';
 import 'package:yaki/presentation/features/declaration/declaration_page.dart';
-import 'package:yaki/presentation/features/declaration_summary/declaration_summary.dart';
+import 'package:yaki/presentation/features/teams_declarations_summary/teams_declarations_summary.dart';
+import 'package:yaki/presentation/features/user_declaration_summary/user_declaration_summary.dart';
 import 'package:yaki/presentation/features/team_selection/team_selection.dart';
 import 'package:yaki/presentation/ui/password/forgot_password.dart';
 import 'package:yaki/presentation/ui/default/user_default_redirection.dart';
@@ -113,7 +114,7 @@ final goRouterProvider = Provider<GoRouter>(
             ),
             GoRoute(
               path: 'summary/:mode',
-              builder: (context, state) => DeclarationSummary(
+              builder: (context, state) => UserDeclarationSummary(
                 summaryMode: state.pathParameters['mode']!,
               ),
               redirect: (BuildContext context, GoRouterState state) async {
@@ -127,6 +128,18 @@ final goRouterProvider = Provider<GoRouter>(
                 } else {
                   return '/team-selection';
                 }
+              },
+            ),
+            GoRoute(
+              path: 'teams-declaration-summary',
+              builder: (context, state) => const TeamsDeclarationSummary(),
+              redirect: (BuildContext context, GoRouterState state) async {
+                // null check
+
+                if (await SharedPref.isTokenPresent()) {
+                  return '/teams-declaration-summary';
+                }
+                return '/';
               },
             ),
           ],

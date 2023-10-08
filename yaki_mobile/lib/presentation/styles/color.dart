@@ -5,6 +5,13 @@ class AppColors {
 
   static const Color primaryColor = Color(0xFFFF936B);
   static const Color yakiPrimaryColor = Color(0xFFF2F6F9);
+  static const Color teamsDeclarationListBorder =
+      Color.fromRGBO(230, 236, 239, 1);
+  static const Color teamsDeclarationListDivider =
+      Color.fromRGBO(242, 246, 249, 1);
+  static const Color remote = Color.fromRGBO(255, 234, 215, 1);
+  static const Color onSite = Color.fromRGBO(237, 234, 255, 1);
+  static const Color cellChipDefault = Color.fromRGBO(246, 246, 249, 1);
 }
 
 MaterialColor createMaterialColor(Color color) {

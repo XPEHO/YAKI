@@ -7,18 +7,11 @@ class TeamSelectionHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final toDayDate = DateFormat('d MMMM y').format(DateTime.now());
-
     return Padding(
       padding: const EdgeInsets.only(left: 12.0, bottom: 35),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            toDayDate.toString(),
-            style: textStylePageDate(),
-          ),
-          const SizedBox(height: 20),
           Text(
             tr('teamSelectionPageTitle1'),
             style: textStylePageTitle(),

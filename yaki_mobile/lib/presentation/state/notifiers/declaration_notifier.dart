@@ -7,9 +7,8 @@ import 'package:yaki/data/models/team_model.dart';
 import 'package:yaki/data/repositories/declaration_respository.dart';
 import 'package:yaki/data/repositories/team_repository.dart';
 import 'package:yaki/domain/entities/declaration_status.dart';
-import 'package:yaki/domain/entities/delcaration_entity_in.dart';
 import 'package:yaki/presentation/displaydata/declaration_enum.dart';
-import 'package:yaki/presentation/displaydata/status_page_utils.dart';
+import 'package:yaki/presentation/displaydata/declaration_status_enum.dart';
 
 class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
   final DeclarationRepository declarationRepository;
@@ -22,66 +21,15 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
 
   /// Invoked at authentication "sign in" button press.
   Future<bool> getLatestDeclaration() async {
-    bool isDeclarationExist = false;
-
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final int? userId = prefs.getInt("userId");
 
     if (userId == null) return false;
 
-    // retrive user team list
-    List<TeamModel> teamList = await teamRepository.getTeam();
-    // retrive user latest declaration(s) values
-    final DeclarationEntityIn declarationEntityIn =
+    final bool isAlreadyDeclared =
         await declarationRepository.getLatestDeclaration(userId);
 
-    // depending of the case, set the state values
-    switch (declarationEntityIn.fullDayStatus.length) {
-      case 1:
-        if (declarationEntityIn.fullDayStatus.first == 'vacation') {
-          state.dateAbsenceStart =
-              declarationEntityIn.dateStart ?? DateTime.now();
-          state.dateAbsenceEnd = declarationEntityIn.dateEnd ?? DateTime.now();
-        } else {
-          state.fullDayTeam = teamList.firstWhere(
-            (team) => team.teamId == declarationEntityIn.teamIdList.first,
-          );
-          state.fullDayStatus = StatusEnum.fromValue(
-            declarationEntityIn.fullDayStatus.first,
-          );
-          state.isfullDay = true;
-          state.isHalfDay = false;
-          isDeclarationExist = true;
-        }
-        break;
-      case 2:
-        final TeamModel teamMorning = teamList.firstWhere(
-          (team) => team.teamId == declarationEntityIn.teamIdList.first,
-        );
-        final TeamModel teamAfternoon = teamList.firstWhere(
-          (team) => team.teamId == declarationEntityIn.teamIdList.last,
-        );
-
-        state.declarationsHalfDaySelections = DeclarationsHalfDaySelections(
-          morningTeam: teamMorning,
-          morningTeamStatus: StatusEnum.fromValue(
-            declarationEntityIn.fullDayStatus.first,
-          ),
-          afternoonTeam: teamAfternoon,
-          afternoonTeamStatus: StatusEnum.fromValue(
-            declarationEntityIn.fullDayStatus.last,
-          ),
-        );
-        state.isfullDay = false;
-        state.isHalfDay = true;
-        isDeclarationExist = true;
-        break;
-      default:
-        state.isfullDay = false;
-        state.isHalfDay = false;
-        return isDeclarationExist = false;
-    }
-    return isDeclarationExist;
+    return isAlreadyDeclared;
   }
 
   /// Function invoked in declaration page when a locationCard is selected.

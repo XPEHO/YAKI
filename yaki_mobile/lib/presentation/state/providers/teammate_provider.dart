@@ -1,10 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yaki/data/repositories/teammate_repository.dart';
 import 'package:yaki/data/sources/remote/teammate_api.dart';
-import 'package:yaki/domain/entities/teammate_entity.dart';
+import 'package:yaki/domain/entities/teammate_with_declaration_entity.dart';
 import 'package:yaki/presentation/state/dio/dio_interceptor.dart';
 import 'package:yaki/presentation/state/notifiers/teammate_notifier.dart';
-import 'package:yaki/presentation/state/providers/login_provider.dart';
+
 import 'package:yaki/presentation/state/providers/url_provider.dart';
 
 /// Retrieves informations from the API
@@ -21,10 +21,9 @@ final teammateRepositoryProvider = Provider(
 );
 
 /// Retrieves data from the team_mate_notifier.dart
-final teammateProvider =
-    StateNotifierProvider<TeammateNotifier, List<TeammateEntity>>(
+final teammateProvider = StateNotifierProvider<TeammateNotifier,
+    List<TeammateWithDeclarationEntity>>(
   (ref) => TeammateNotifier(
     ref.read(teammateRepositoryProvider),
-    ref.read(loginRepositoryProvider),
   ),
 );

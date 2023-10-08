@@ -1,5 +1,5 @@
 import 'package:yaki/data/models/team_model.dart';
-import 'package:yaki/presentation/displaydata/status_page_utils.dart';
+import 'package:yaki/presentation/displaydata/declaration_status_enum.dart';
 
 class SummaryHalfDayContent {
   final TeamModel morningTeam;

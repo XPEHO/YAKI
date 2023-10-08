@@ -41,7 +41,7 @@ export class TeammateService {
       );
     });
 
-    return result;
+    return this.getLatestDeclaration(result);
   };
 
   getLatestDeclaration = (declaredUsersList: UserWithDeclaration[]) => {
@@ -81,8 +81,6 @@ export class TeammateService {
         }
       }
     });
-
-    console.log("get latest declarations : ", latestTeammates);
 
     return latestTeammates;
   };
