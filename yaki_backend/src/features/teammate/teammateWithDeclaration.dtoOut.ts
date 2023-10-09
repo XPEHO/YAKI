@@ -1,4 +1,4 @@
-import {StatusDeclaration} from "../declaration/status.enum";
+import { StatusDeclaration } from '../declaration/status.enum';
 
 export class TeammateWithDeclaration {
   userId: number;
@@ -7,6 +7,10 @@ export class TeammateWithDeclaration {
   userFirstName: string;
   declarationDate: Date;
   declarationStatus: StatusDeclaration;
+  teamId: number;
+  teamName: string;
+  declarationDateStart: Date;
+  declarationDateEnd: Date;
 
   constructor(
     userId: number,
@@ -14,7 +18,11 @@ export class TeammateWithDeclaration {
     userLastName: string,
     userFirstName: string,
     declarationDate: Date,
-    declarationStatus: StatusDeclaration
+    declarationStatus: StatusDeclaration,
+    teamId: number,
+    teamName: string,
+    declarationDateStart: Date,
+    declarationDateEnd: Date
   ) {
     this.userId = userId;
     this.teammateId = teammateId;
@@ -22,5 +30,9 @@ export class TeammateWithDeclaration {
     this.userFirstName = userFirstName;
     this.declarationDate = declarationDate;
     this.declarationStatus = declarationStatus;
+    this.teamId = teamId;
+    this.teamName = teamName;
+    this.declarationDateStart = declarationDateStart;
+    this.declarationDateEnd = declarationDateEnd;
   }
 }

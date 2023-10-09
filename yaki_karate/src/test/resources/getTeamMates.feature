@@ -1,7 +1,7 @@
 Feature: GetTeammates
 
   Background:
-    * def schema = [{userId : '#number', teammateId: '#number', userLastName: '#string', userFirstName: '#string', declarationDate: "#string", declarationStatus: "#string"}]
+    * def schema = [{userId : '#number', teammateId: '#number', userLastName: '#string', userFirstName: '#string', declarationDate: '#string', declarationStatus: '#string', teamId: '#number', teamName: '#string', declarationDateStart: '#string', declarationDateEnd: '#string'}]
     Given url 'http://localhost:8080/login/authenticate'
     And request { login: 'owner', password: 'owner' }
     When method post
@@ -12,7 +12,6 @@ Feature: GetTeammates
     And request {id : 4, lastname: 'user4', firstname: 'user4', email: 'user4@gmail.com', login: 'user4', password: 'user4'}
     When method post
     Then status 200
-
     * def DbUtils = Java.type('org.example.utils.DbUtils')
     * def db = new DbUtils()
     * def token2 = db.readValue('SELECT token FROM public.verification_token WHERE verification_token_user_id = 18')
@@ -33,13 +32,13 @@ Feature: GetTeammates
     Given url 'http://localhost:3000/teammates'
     And header x-access-token = token
     And header user_id = userId
-    And param captainId = 3
+    And param userId = 12 
     When method get
     Then status 200
     And match response contains  schema
     * print response
     * print schema
-
+    
   Scenario: Get the latest declaration fail
     Given url 'http://localhost:3000/teammate'
     When method get
