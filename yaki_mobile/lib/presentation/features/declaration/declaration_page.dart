@@ -231,7 +231,7 @@ LocationCardContent setLocationCardContent({
       declarationMode == DeclarationPaths.halfDayEnd.text) {
     imageSrc = ['assets/images/Work-Office.svg', 'assets/images/Work-Home.svg'];
     title = ['Iam', 'Iam'];
-    subtitle = [StatusEnum.remote, StatusEnum.onSite];
+    subtitle = [StatusEnum.onSite, StatusEnum.remote];
   }
 
   return LocationCardContent(
