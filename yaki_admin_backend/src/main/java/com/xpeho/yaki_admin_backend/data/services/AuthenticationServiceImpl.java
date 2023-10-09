@@ -97,19 +97,25 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public String confirmRegister(String token) {
+        String htmlStart = "<div class=\"bloc-form\" style=\"width:40%;transform: translate(-50%, -50%);\"><div style=\"font-size: 24px;font-family: bold;\">Account created!</div><div class=\"verbose\">";
+        String htmlEnd = "</div></div>";
+        String message = "";
         VerificationTokenModel verificationToken = verificationTokenService.getVerificationToken(token);
         if(verificationToken == null){
-            return "badUser";
+            message = "badUser";
+            return htmlStart+message+htmlEnd;
         }
         UserModel user = verificationToken.getUser();
         Calendar cal = Calendar.getInstance();
         //if the token has expired
         if ((verificationToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
-            return "try to register again, your token has expired";
+            message =  "try to register again, your token has expired";
+            return htmlStart+message+htmlEnd;
         }
         user.setEnabled(true);
         repository.save(user);
-        return "Your account has been verified, you can now access to your account on the mobile application with your credential";
+        message = "Your account has been verified, you can now access to your account on the mobile application with your credential";
+        return htmlStart+message+htmlEnd;
     }
 
 
@@ -122,7 +128,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         try{
             userService.resetPassword(user.get(),this.passwordEncoder);
         }catch (Exception e){
-            throw new RuntimeException("an error has occured while trying to reset your password");
+            throw new RuntimeException("an error has occurred while trying to reset your password");
         }
         //send an email
     }
