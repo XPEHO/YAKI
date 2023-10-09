@@ -23,7 +23,7 @@ class VacationStatusNotifier extends StateNotifier<StateVacationPage> {
     String dateEndString =
         DateFormat.yMd('fr').format(dateEnd ?? DateTime.now());
     state = StateVacationPage(
-      image: 'assets/images/vacation.svg',
+      image: 'assets/images/absent.svg',
       dateStart: dateStartString,
       dateEnd: dateEndString,
       text:

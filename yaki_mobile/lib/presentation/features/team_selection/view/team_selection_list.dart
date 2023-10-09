@@ -65,7 +65,7 @@ void onSelection({
 //temporary : TeamModel should contain a pictoLink
 String pictoLink(TeamModel team) {
   final picto = team.teamName == "Absence"
-      ? 'assets/images/vacation.svg'
+      ? 'assets/images/absent.svg'
       : 'assets/images/onSite.svg';
   return picto;
 }

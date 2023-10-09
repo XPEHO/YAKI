@@ -32,7 +32,7 @@ class SummaryHalfDay extends StatelessWidget {
                 image: ClipRRect(
                   borderRadius: BorderRadius.circular(50),
                   child: declarationChipSvgPicture(
-                    imageSrc: "assets/images/absence.svg",
+                    imageSrc: "assets/images/absent.svg",
                   ),
                 ),
               )
@@ -50,7 +50,7 @@ class SummaryHalfDay extends StatelessWidget {
                 image: ClipRRect(
                   borderRadius: BorderRadius.circular(50),
                   child: declarationChipSvgPicture(
-                    imageSrc: "assets/images/absence.svg",
+                    imageSrc: "assets/images/absent.svg",
                   ),
                 ),
               )
