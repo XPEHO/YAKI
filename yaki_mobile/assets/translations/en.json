@@ -111,5 +111,7 @@
 
   "defaultTeamName": "Team",
   "for ": "for ",
-  "project": "Project"
+  "project": "Project",
+
+  "SummaryAbsence": "Summary of absences"
 }

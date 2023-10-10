@@ -12,6 +12,12 @@ class DeclarationStatus {
   bool isfullDay = false;
 
   DeclarationStatus();
+
+  get absenceStatus => null;
+
+  get dateStart => null;
+
+  get dateEnd => null;
 }
 
 class HalfDayWorkflow {

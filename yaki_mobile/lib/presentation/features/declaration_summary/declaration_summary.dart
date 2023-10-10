@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yaki/domain/entities/declaration_status.dart';
 import 'package:yaki/presentation/displaydata/declaration_summary_enum.dart';
+import 'package:yaki/presentation/features/declaration_summary/view/summary_absence.dart';
 import 'package:yaki/presentation/features/declaration_summary/view/summary_chips_duo.dart';
 import 'package:yaki/presentation/features/declaration_summary/view/summary_half_day.dart';
 import 'package:yaki/presentation/state/providers/declaration_provider.dart';
@@ -89,9 +90,15 @@ Widget setSummaryWidget({
       status: declarationStatus.fullDayStatus,
       team: declarationStatus.fullDayTeam,
     );
-  } else {
+  } else if(summaryMode == DeclarationSummaryPaths.halfDay.text){
     return SummaryHalfDay(
       halfDayData: declarationStatus.declarationsHalfDaySelections,
+    );
+  } else {
+    return SummaryAbsence(
+      status: declarationStatus.absenceStatus, 
+      dateStart:  declarationStatus.dateStart, 
+      dateEnd: declarationStatus.dateEnd,
     );
   }
 }
