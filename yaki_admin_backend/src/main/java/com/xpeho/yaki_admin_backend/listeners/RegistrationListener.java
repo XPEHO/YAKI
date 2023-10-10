@@ -21,11 +21,11 @@ public class RegistrationListener extends EmailListener<OnRegistrationCompleteEv
         String token = UUID.randomUUID().toString();
         service.createVerificationToken(user, token);
         String confirmationUrl
-                =  "/login/registerConfirm?token=" + token;
+                =  "/registerConfirm?token=" + token;
         String message = "Please follow the link below to verify your email address." +
                 " If your email address is not verified in 24 hours, your account will be deleted.";
         String subject = "Confirm your Yaki account";
-        String html = "<html><body>" + message + "<br><a href=" + apiUrl + confirmationUrl + ">Confirm Registration</a></body></html>";
+        String html = "<html><body>" + message + "<br><a href=" + uiUrl + confirmationUrl + ">Confirm Registration</a></body></html>";
         String customId = "Register";
         this.setSenderEmail(user.getEmail(), subject,html,customId);
     }

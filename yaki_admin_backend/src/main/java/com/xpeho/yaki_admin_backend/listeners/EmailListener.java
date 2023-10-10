@@ -27,8 +27,8 @@ public abstract class EmailListener<E extends ApplicationEvent> implements Appli
     //only for testing purposes, we need to give the email of the person
     @Value("${MAILJET_SENDER_EMAIL:mail}")
     String senderEmail;
-    @Value("${ADMIN_API_URL:url}")
-    String apiUrl;
+    @Value("${ADMIN_UI_URL:url}")
+    String uiUrl;
     protected MailjetRequest request;
     @Override
     public void onApplicationEvent(E event) {

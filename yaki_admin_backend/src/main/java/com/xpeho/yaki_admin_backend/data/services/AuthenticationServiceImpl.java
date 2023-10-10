@@ -99,7 +99,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public String confirmRegister(String token) {
         VerificationTokenModel verificationToken = verificationTokenService.getVerificationToken(token);
         if(verificationToken == null){
-            return "badUser";
+            return "invalid token";
         }
         UserModel user = verificationToken.getUser();
         Calendar cal = Calendar.getInstance();
@@ -122,7 +122,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         try{
             userService.resetPassword(user.get(),this.passwordEncoder);
         }catch (Exception e){
-            throw new RuntimeException("an error has occured while trying to reset your password");
+            throw new RuntimeException("an error has occurred while trying to reset your password");
         }
         //send an email
     }
