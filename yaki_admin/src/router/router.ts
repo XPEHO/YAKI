@@ -1,6 +1,7 @@
 import {createRouter, createWebHistory} from "vue-router";
 import {useAuthStore} from "@/stores/authStore";
 import PageLogin from "@/features/login/pages/PageLogin.vue";
+import RegistrationConfirmationPage from "@/features/registrationConfirmation/RegistrationConfirmationPage.vue";
 import UserInvitationPageContent from "@/features/invitation/layouts/UserInvitationPageContent.vue";
 
 import CaptainPage from "@/features/captain/CaptainPage.vue";
@@ -19,6 +20,13 @@ const router = createRouter({
       name: "Login",
       component: PageLogin,
       meta: {transition: "slide-left"},
+    },
+    {
+      path: "/registerConfirm",
+      name: "registerConfirm",
+      component: RegistrationConfirmationPage,
+      props: (route) => ({ token: route.query.token }),
+      
     },
     {
       path: "/captain",
@@ -66,7 +74,7 @@ const router = createRouter({
 // BEGIN: be15d9bcejpp
 router.beforeEach(async (to) => {
   // redirect to login page if not logged in and trying to access a restricted page
-  const publicPages = ["/"];
+  const publicPages = ["/", "/registerConfirm"];
   const authRequired = !publicPages.includes(to.path);
   const auth = useAuthStore();
 
