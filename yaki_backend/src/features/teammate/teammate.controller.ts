@@ -9,10 +9,10 @@ export class TeammateController {
   }
 
   getByTeamIdWithLastDeclaration = async (req: Request, res: Response) => {
-    const userId = Number(req.query.userId);
+    const teamId = Number(req.query.teamId);
     try {
       const teammates = await this.service.getByTeamIdWithLastDeclaration(
-        userId
+        teamId
       );
       res.send(teammates);
     } catch (error: any) {

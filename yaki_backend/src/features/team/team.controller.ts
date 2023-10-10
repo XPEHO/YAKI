@@ -29,4 +29,27 @@ export class TeamController {
       }
     }
   };
+
+   /**
+   * This function returns the list of teams that a team mate is in
+   * and returns an error if the team mate is not in any teams
+   * @param req the request object
+   * @param res the response object
+   * @returns a list of teams that the team mate is in
+   */
+   getTeamByUserId = async (req: any, res: any) => {
+    const userId = Number(req.query.userId);
+    try {
+      const teams = await this.teamService.getTeamByUserId(userId);
+      res.status(200).json(teams);
+    } catch (error: any) {
+      if (error instanceof TypeError) {
+        // catch not found errors
+        res.status(404).json({message: error.message});
+      } else {
+        // catch server errors
+        res.status(500).json({message: error.message});
+      }
+    }
+  };
 }

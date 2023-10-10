@@ -94,7 +94,7 @@ Feature: Captain
     And def userId = response.userId
 
     Given url 'http://localhost:3000/teammates'
-    And param userId = 2
+    And param teamId = 2
     And header x-access-token = token
     And header user_id = userId
     When method GET

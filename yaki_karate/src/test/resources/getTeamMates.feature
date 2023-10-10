@@ -1,7 +1,7 @@
 Feature: GetTeammates
 
   Background:
-    * def schema = [{userId : '#number', teammateId: '#number', userLastName: '#string', userFirstName: '#string', declarationDate: '#string', declarationStatus: '#string', teamId: '#number', teamName: '#string', declarationDateStart: '#string', declarationDateEnd: '#string'}]
+    * def schema = [{userId: '#number', userLastName: '#string', userFirstName: '#string', declarationDate: '#string', declarationStatus: '#string', teamId: '#number', teamName: '#string', declarationDateStart: '#string', declarationDateEnd: '#string', declarationId: '#number', declarationUserId: '#number'}]
     Given url 'http://localhost:8080/login/authenticate'
     And request { login: 'owner', password: 'owner' }
     When method post
@@ -32,7 +32,7 @@ Feature: GetTeammates
     Given url 'http://localhost:3000/teammates'
     And header x-access-token = token
     And header user_id = userId
-    And param userId = 12 
+    And param teamId = 2
     When method get
     Then status 200
     And match response contains  schema

@@ -20,7 +20,6 @@ describe('TeammateService', () => {
       const mockTeammates = [
         {
           user_id: 1,
-          teammate_id: 2,
           user_last_name: 'Doe',
           user_first_name: 'John',
           declaration_date: new Date('2023/8/20'),
@@ -29,6 +28,8 @@ describe('TeammateService', () => {
           team_name: 'Team A',
           declaration_date_start: new Date('2023/8/20'),
           declaration_date_end: new Date('2023/8/20'),
+          declaration_id: 1,
+          declaration_user_id: 1,
         },
       ];
 
@@ -41,7 +42,6 @@ describe('TeammateService', () => {
       expect(result).toEqual([
         new TeammateWithDeclaration(
           1,
-          2,
           'Doe',
           'John',
           new Date('2023/8/20'),
@@ -49,7 +49,9 @@ describe('TeammateService', () => {
           3,
           'Team A',
           new Date('2023/8/20'),
-          new Date('2023/8/20')
+          new Date('2023/8/20'),
+          1,
+          1
         ),
       ]);
     });
