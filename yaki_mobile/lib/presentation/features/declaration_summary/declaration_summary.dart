@@ -90,14 +90,13 @@ Widget setSummaryWidget({
       status: declarationStatus.fullDayStatus,
       team: declarationStatus.fullDayTeam,
     );
-  } else if(summaryMode == DeclarationSummaryPaths.halfDay.text){
+  } else if (summaryMode == DeclarationSummaryPaths.halfDay.text) {
     return SummaryHalfDay(
       halfDayData: declarationStatus.declarationsHalfDaySelections,
     );
   } else {
     return SummaryAbsence(
-   
-      dateStart:  declarationStatus.dateAbsenceStart, 
+      dateStart: declarationStatus.dateAbsenceStart,
       dateEnd: declarationStatus.dateAbsenceEnd,
     );
   }
