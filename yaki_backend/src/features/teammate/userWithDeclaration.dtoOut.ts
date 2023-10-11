@@ -1,6 +1,6 @@
-import { StatusDeclaration } from '../declaration/status.enum';
+import {StatusDeclaration} from "../declaration/status.enum";
 
-export class TeammateWithDeclaration {
+export class UserWithDeclaration {
   userId: number;
   userLastName: string;
   userFirstName: string;
