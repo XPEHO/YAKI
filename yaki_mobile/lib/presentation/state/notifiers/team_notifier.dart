@@ -8,7 +8,8 @@ class TeamNotifier extends StateNotifier<TeamPageState> {
   TeamNotifier()
       : super(
           TeamPageState(
-            selectedTeamList: [],
+            fetchedTeamList: [], // saved from team_selection_list.dart
+            selectedTeamList: [], // teams selected by the user from the team_selection_list.dart
             isButtonActivated: false,
           ),
         );
@@ -30,12 +31,14 @@ class TeamNotifier extends StateNotifier<TeamPageState> {
     if (state.selectedTeamList.isNotEmpty &&
         state.selectedTeamList.length < 3) {
       state = TeamPageState(
+        fetchedTeamList: state.fetchedTeamList,
         selectedTeamList: state.selectedTeamList,
         isButtonActivated: true,
       );
     } else if (state.selectedTeamList.isEmpty ||
         state.selectedTeamList.length > 2) {
       state = TeamPageState(
+        fetchedTeamList: state.fetchedTeamList,
         selectedTeamList: state.selectedTeamList,
         isButtonActivated: false,
       );
@@ -60,6 +63,7 @@ class TeamNotifier extends StateNotifier<TeamPageState> {
 
   void clearTeamList() {
     state = TeamPageState(
+      fetchedTeamList: state.fetchedTeamList,
       selectedTeamList: [],
       isButtonActivated: false,
     );

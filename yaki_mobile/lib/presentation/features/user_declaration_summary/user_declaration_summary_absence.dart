@@ -4,25 +4,25 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yaki/domain/entities/declaration_status.dart';
-import 'package:yaki/presentation/displaydata/declaration_summary_enum.dart';
-import 'package:yaki/presentation/features/user_declaration_summary/view/summary_chips_duo.dart';
-import 'package:yaki/presentation/features/user_declaration_summary/view/summary_half_day.dart';
+import 'package:yaki/presentation/features/user_declaration_summary/view/summary_absence.dart';
 import 'package:yaki/presentation/state/providers/declaration_provider.dart';
 import 'package:yaki/presentation/state/providers/team_provider.dart';
 import 'package:yaki/presentation/styles/color.dart';
 import 'package:yaki/presentation/styles/text_style.dart';
 import 'package:yaki_ui/yaki_ui.dart';
 
-class UserDeclarationSummary extends ConsumerWidget {
+class UserDeclarationSummaryAbsence extends ConsumerWidget {
   final String summaryMode;
 
-  const UserDeclarationSummary({
+  const UserDeclarationSummaryAbsence({
     super.key,
     required this.summaryMode,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    DeclarationStatus declarationStatus = ref.watch(declarationProvider);
+
     return Scaffold(
       backgroundColor: AppColors.primaryColor,
       body: SafeArea(
@@ -52,7 +52,12 @@ class UserDeclarationSummary extends ConsumerWidget {
                 Expanded(
                   flex: 1,
                   child: Center(
-                    child: setSummaryWidget(ref: ref, summaryMode: summaryMode),
+                    child: SummaryAbsence(
+                      dateStart:
+                          declarationStatus.dateAbsenceStart ?? DateTime.now(),
+                      dateEnd:
+                          declarationStatus.dateAbsenceEnd ?? DateTime.now(),
+                    ),
                   ),
                 ),
                 Button(
@@ -76,24 +81,6 @@ class UserDeclarationSummary extends ConsumerWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-Widget setSummaryWidget({
-  required String summaryMode,
-  required WidgetRef ref,
-}) {
-  DeclarationStatus declarationStatus = ref.read(declarationProvider);
-
-  if (summaryMode == DeclarationSummaryPaths.fullDay.text) {
-    return SummaryChipDuo(
-      status: declarationStatus.fullDayStatus,
-      team: declarationStatus.fullDayTeam,
-    );
-  } else {
-    return SummaryHalfDay(
-      halfDayData: declarationStatus.declarationsHalfDaySelections,
     );
   }
 }

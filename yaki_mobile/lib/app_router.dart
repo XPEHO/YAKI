@@ -9,6 +9,7 @@ import 'package:yaki/presentation/features/declaration/declaration_page.dart';
 import 'package:yaki/presentation/features/teams_declarations_summary/teams_declarations_summary.dart';
 import 'package:yaki/presentation/features/user_declaration_summary/user_declaration_summary.dart';
 import 'package:yaki/presentation/features/team_selection/team_selection.dart';
+import 'package:yaki/presentation/features/user_declaration_summary/user_declaration_summary_absence.dart';
 import 'package:yaki/presentation/ui/password/forgot_password.dart';
 import 'package:yaki/presentation/ui/default/user_default_redirection.dart';
 import 'package:yaki/presentation/ui/password/change_password.dart';
@@ -110,6 +111,19 @@ final goRouterProvider = Provider<GoRouter>(
                   return '/declaration/${state.pathParameters['mode']!}';
                 }
                 return '/';
+              },
+            ),
+            GoRoute(
+              path: 'summary/absence',
+              builder: (context, state) => const UserDeclarationSummaryAbsence(
+                summaryMode: "absence",
+              ),
+              redirect: (BuildContext context, GoRouterState state) async {
+                if (await SharedPref.isTokenPresent()) {
+                  return '/summary/absence';
+                } else {
+                  return '/team-selection';
+                }
               },
             ),
             GoRoute(
