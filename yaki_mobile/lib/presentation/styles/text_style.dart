@@ -44,6 +44,21 @@ TextStyle textStylePageHint() {
   );
 }
 
+TextStyle textTeamDeclarationButton() {
+  return const TextStyle(
+    fontSize: 15,
+    fontWeight: FontWeight.w600,
+  );
+}
+
+TextStyle textTeamsDeclarationListCategory() {
+  return const TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.w600,
+    color: Color.fromRGBO(119, 131, 134, 1),
+  );
+}
+
 // old styles
 // ------------------------------------------------------------
 TextStyle textStyleHeaderBig() {

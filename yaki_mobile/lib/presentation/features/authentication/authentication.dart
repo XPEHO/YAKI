@@ -50,7 +50,8 @@ class _AuthenticationState extends ConsumerState<Authentication> {
     required WidgetRef ref,
     required String login,
     required String password,
-    required Function goToDeclarationPage,
+    required Function goToTeamsDeclarationSummary,
+    required Function goToTeamSelectionPage,
     required Function goToUserDefaultRedirection,
   }) async {
     await SharedPref.deleteToken();
@@ -63,9 +64,14 @@ class _AuthenticationState extends ConsumerState<Authentication> {
       final bool isCaptain = ref.read(loginRepositoryProvider).isCaptain();
       final bool isTeammate = ref.read(loginRepositoryProvider).isTeammate();
       if (isTeammate || isCaptain) {
-        ref.read(declarationProvider.notifier).getLatestDeclaration();
+        final bool isDeclared =
+            await ref.read(declarationProvider.notifier).getLatestDeclaration();
 
-        goToDeclarationPage();
+        if (isDeclared) {
+          goToTeamsDeclarationSummary();
+        } else {
+          goToTeamSelectionPage();
+        }
       } else {
         goToUserDefaultRedirection();
       }
@@ -144,8 +150,10 @@ class _AuthenticationState extends ConsumerState<Authentication> {
                               ref: ref,
                               login: loginController.text,
                               password: passwordController.text,
-                              goToDeclarationPage: () =>
-                                  context.push('/team-selection'),
+                              goToTeamsDeclarationSummary: () =>
+                                  context.go('/teams-declaration-summary'),
+                              goToTeamSelectionPage: () =>
+                                  context.go('/team-selection'),
                               goToUserDefaultRedirection: () =>
                                   context.go('/userDefaultRedirection'),
                             ),

@@ -40,7 +40,7 @@ class MockTeammateApi extends _i1.Mock implements _i3.TeammateApi {
   }
 
   @override
-  _i4.Future<_i2.HttpResponse<dynamic>> getTeammate(String? id) =>
+  _i4.Future<_i2.HttpResponse<dynamic>> getTeammate(int? id) =>
       (super.noSuchMethod(
         Invocation.method(
           #getTeammate,

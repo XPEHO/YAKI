@@ -1,8 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:yaki/data/models/team_model.dart';
-import 'package:yaki/presentation/displaydata/status_page_utils.dart';
-import 'package:yaki/presentation/features/shared/chip_svg_picture.dart';
+import 'package:yaki/presentation/displaydata/declaration_status_enum.dart';
+import 'package:yaki/presentation/features/shared/sized_circle_avatar.dart';
 import 'package:yaki_ui/yaki_ui.dart';
 
 class SummaryChipDuo extends StatelessWidget {
@@ -25,7 +25,7 @@ class SummaryChipDuo extends StatelessWidget {
           backgroundColor: Colors.white,
           image: ClipRRect(
             borderRadius: BorderRadius.circular(50),
-            child: declarationChipSvgPicture(
+            child: const UserDeclarationChipSvgPicture(
               imageSrc: "assets/images/onSite.svg",
             ),
           ),
@@ -36,7 +36,7 @@ class SummaryChipDuo extends StatelessWidget {
           backgroundColor: Colors.white,
           image: ClipRRect(
             borderRadius: BorderRadius.circular(50),
-            child: declarationChipSvgPicture(
+            child: UserDeclarationChipSvgPicture(
               imageSrc: setTimeOfDayImage(status),
             ),
           ),

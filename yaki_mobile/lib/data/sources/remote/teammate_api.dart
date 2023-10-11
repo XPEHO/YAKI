@@ -14,6 +14,6 @@ abstract class TeammateApi {
   /// -> Sending to the Repository
   @GET('/teamMates')
   Future<HttpResponse> getTeammate(
-    @Query('captainId') String id,
+    @Query('userId') int id,
   );
 }

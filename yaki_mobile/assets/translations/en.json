@@ -100,9 +100,8 @@
   "Iam": "I am",
   "onSite": "On site",
   "remote": "To Remote",
-
-  "vacation": "Absence",
-  "undeclared": "Not notified",
+  "absence": "Absent",
+  "undeclared": "Has not yet submitted",
 
   "entryValidated": "Entry validated",
   "youCanCloseTheApp": "You can close the application",
@@ -113,5 +112,9 @@
   "for ": "for ",
   "project": "Project",
 
-  "SummaryAbsence": "Summary of absences"
+  "SummaryAbsence": "Summary of absences",
+  "me": "Me",
+  "myCoworkers": "My colleagues",
+  "notDeclared": "Not declared",
+  "absent": "Absent"
 }

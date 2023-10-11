@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yaki/domain/entities/chip_content.dart';
 import 'package:yaki/presentation/displaydata/declaration_enum.dart';
-import 'package:yaki/presentation/displaydata/status_page_utils.dart';
-import 'package:yaki/presentation/features/shared/chip_svg_picture.dart';
+import 'package:yaki/presentation/displaydata/declaration_status_enum.dart';
+import 'package:yaki/presentation/features/shared/sized_circle_avatar.dart';
 import 'package:yaki/presentation/state/providers/declaration_provider.dart';
 import 'package:yaki/presentation/styles/text_style.dart';
 import 'package:yaki_ui/icon_chip.dart';
@@ -59,7 +59,7 @@ class HeaderDeclarationHalfDayChoice extends ConsumerWidget {
               backgroundColor: Colors.white,
               image: ClipRRect(
                 borderRadius: BorderRadius.circular(50),
-                child: declarationChipSvgPicture(
+                child: const UserDeclarationChipSvgPicture(
                   imageSrc: 'assets/images/onSite.svg',
                 ),
               ),
@@ -77,7 +77,7 @@ class HeaderDeclarationHalfDayChoice extends ConsumerWidget {
               backgroundColor: Colors.white,
               image: ClipRRect(
                 borderRadius: BorderRadius.circular(50),
-                child: declarationChipSvgPicture(
+                child: UserDeclarationChipSvgPicture(
                   imageSrc: chipContent.imageSrc,
                 ),
               ),

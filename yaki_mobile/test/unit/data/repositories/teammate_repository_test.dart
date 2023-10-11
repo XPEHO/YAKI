@@ -2,9 +2,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yaki/data/repositories/teammate_repository.dart';
 import 'package:yaki/data/sources/remote/teammate_api.dart';
-import 'package:yaki/domain/entities/teammate_entity.dart';
+import 'package:yaki/domain/entities/teammate_with_declaration_entity.dart';
+import 'package:yaki/presentation/displaydata/declaration_status_enum.dart';
 
 import '../../mocking.mocks.dart';
 import 'teammate_repository_test.mocks.dart';
@@ -18,77 +20,113 @@ void main() {
 
   final teamMateRepository = TeammateRepository(mockedTeamMateApi);
 
+  SharedPreferences.setMockInitialValues(
+    {
+      'token': '',
+      'userId': 34,
+    },
+  );
+
   group(
     'Get() teamate list',
     () {
       test(
         'GetTeammate testing',
         () async {
-          String captainId = "1";
+          int userId = 34;
           List<Map<String, dynamic>> getResponseAsJson = [
             {
               "userId": 1,
               "userFirstName": "Dupond",
               "userLastName": "Dupond",
               "declarationDate": '2023-03-20T10:00:00.950Z',
-              "declarationStatus": "vacation",
+              "declarationDateStart": '2023-03-20T03:00:00.950Z',
+              "declarationDateEnd": '2023-03-20T23:00:00.950Z',
+              "declarationStatus": "remote",
+              "teamId": 1,
+              "teamName": "teamName",
+              "declarationId": 1,
+              "declarationUserId": 1,
             },
             {
               "userId": 2,
               "userFirstName": "Jean",
               "userLastName": "Val",
               "declarationDate": '2023-03-20T10:00:00.950Z',
+              "declarationDateStart": '2023-03-20T03:00:00.950Z',
+              "declarationDateEnd": '2023-03-20T23:00:00.950Z',
               "declarationStatus": "remote",
+              "teamId": 1,
+              "teamName": "teamName",
+              "declarationId": 2,
+              "declarationUserId": 2,
             }
           ];
 
-          List<TeammateEntity> teamMatelistReturned = [
-            TeammateEntity(
+          List<TeammateWithDeclarationEntity> teamMatelistReturned = [
+            TeammateWithDeclarationEntity(
+              loggedUserId: 34,
+              userId: 1,
               userFirstName: "Dupond",
               userLastName: "Dupond",
               declarationDate: DateTime.parse('2023-03-20T10:00:00.950Z'),
-              declarationStatus: "vacation",
+              declarationDateStart: DateTime.parse('2023-03-20T03:00:00.950Z'),
+              declarationDateEnd: DateTime.parse('2023-03-20T23:00:00.950Z'),
+              declarationStatus: StatusEnum.fromValue("remote"),
+              teamId: 1,
+              teamName: "teamName",
+              declarationId: 1,
+              declarationUserId: 1,
             ),
-            TeammateEntity(
+            TeammateWithDeclarationEntity(
+              loggedUserId: 34,
+              userId: 2,
               userFirstName: "Jean",
               userLastName: "Val",
               declarationDate: DateTime.parse('2023-03-20T10:00:00.950Z'),
-              declarationStatus: "remote",
+              declarationDateStart: DateTime.parse('2023-03-20T03:00:00.950Z'),
+              declarationDateEnd: DateTime.parse('2023-03-20T23:00:00.950Z'),
+              declarationStatus: StatusEnum.fromValue("remote"),
+              teamId: 1,
+              teamName: "teamName",
+              declarationId: 2,
+              declarationUserId: 2,
             ),
           ];
 
-          when(mockedTeamMateApi.getTeammate(captainId)).thenAnswer(
+          when(mockedTeamMateApi.getTeammate(userId)).thenAnswer(
             (realInvocation) => Future.value(httpResponseList),
           );
+
           when(httpResponseList.response).thenReturn(response);
           when(response.statusCode).thenReturn(200);
           when(httpResponseList.data).thenReturn(getResponseAsJson);
 
-          List<TeammateEntity> teamMatelist =
-              await teamMateRepository.getTeammate(captainId);
+          List<TeammateWithDeclarationEntity> teamMatelist =
+              await teamMateRepository.getTeammate();
 
-          expect(listEquals(teamMatelist, teamMatelistReturned), true);
+          expect(teamMatelist, equals(teamMatelistReturned));
         },
       );
       test(
         'throw  exception',
         () async {
-          String incorrectCaptainId = "50";
+          int incorrectUserId = 50;
           List<Map<String, dynamic>> incorrectResponse = [
             {
               "message": "no list",
             }
           ];
 
-          when(mockedTeamMateApi.getTeammate(incorrectCaptainId)).thenAnswer(
+          when(mockedTeamMateApi.getTeammate(incorrectUserId)).thenAnswer(
             (realInvocation) => Future.value(httpResponseList),
           );
           when(httpResponseList.response).thenReturn(response);
           when(response.statusCode).thenReturn(404);
           when(httpResponseList.data).thenReturn(incorrectResponse);
 
-          List<TeammateEntity> teamMatelist =
-              await teamMateRepository.getTeammate(incorrectCaptainId);
+          List<TeammateWithDeclarationEntity> teamMatelist =
+              await teamMateRepository.getTeammate();
 
           expect(listEquals(teamMatelist, []), true);
         },

@@ -4,7 +4,6 @@ import 'package:mockito/mockito.dart';
 import 'package:yaki/data/models/declaration_model.dart';
 import 'package:yaki/data/repositories/declaration_respository.dart';
 import 'package:yaki/data/sources/remote/declaration_api.dart';
-import 'package:yaki/domain/entities/delcaration_entity_in.dart';
 import '../../mocking.mocks.dart';
 import 'declaration_repository_test.mocks.dart';
 
@@ -62,10 +61,10 @@ void main() {
           when(response.statusCode).thenReturn(200);
           when(httpResponse.data).thenReturn(createResponseApi);
 
-          final DeclarationEntityIn status =
+          final bool isAlreadyDeclared =
               await declarationRepository.getLatestDeclaration(teammateId);
 
-          expect(status.fullDayStatus, ["REMOTE"]);
+          expect(isAlreadyDeclared, true);
         },
       );
       test(
@@ -79,10 +78,10 @@ void main() {
           when(response.statusCode).thenReturn(404);
           when(httpResponse.data).thenReturn(getErrorResponse);
 
-          final DeclarationEntityIn status =
+          final bool isAlreadyDeclared =
               await declarationRepository.getLatestDeclaration(teammateId);
 
-          expect(status.fullDayStatus, []);
+          expect(isAlreadyDeclared, false);
         },
       );
       test(
@@ -95,10 +94,10 @@ void main() {
           when(response.statusCode).thenReturn(418);
           when(httpResponse.data).thenReturn(getErrorResponse);
 
-          final DeclarationEntityIn status =
+          final bool isAlreadyDeclared =
               await declarationRepository.getLatestDeclaration(teammateId);
 
-          expect(status.fullDayStatus, []);
+          expect(isAlreadyDeclared, false);
         },
       );
     },

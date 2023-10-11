@@ -1,4 +1,4 @@
-import 'package:yaki/presentation/displaydata/status_page_utils.dart';
+import 'package:yaki/presentation/displaydata/declaration_status_enum.dart';
 
 class LocationCardContent {
   final List<String> imageSrc;

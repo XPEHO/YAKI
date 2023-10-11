@@ -15,7 +15,6 @@
   "headerHintDecla": "Quel est votre statut pour la journée ?",
   "headerHintDeclaMorning": "quel est votre statut pour la matinée ?",
   "headerHintDeclaAfternoon": "quel est votre statut pour l'aprés-midi ?",
-  "undeclared": "Non déclaré",
   "statusRemoteDay": "Vous êtes en distanciel aujourd'hui",
   "statusOnSiteDay": "Vous êtes sur site aujourd'hui",
   "statusVacationDayFrom": "Vous êtes absent du ",
@@ -103,7 +102,8 @@
   "Iam": "Je suis",
   "onSite": "Au bureau",
   "remote": "En Télétravail",
-  "vacation": "Absence",
+  "absence": "Absentּ-e",
+  "undeclared": "N'a pas encore saisi",
 
   "entryValidated": "Saisie validée",
   "youCanCloseTheApp": "Vous pouvez fermer l'application",
@@ -114,5 +114,9 @@
   "for ": "pour ",
   "project": "Projet",
 
-  "SummaryAbsence": "Résumé des absences"
+  "SummaryAbsence": "Résumé des absences",
+  "me": "Moi",
+  "myCoworkers": "Mes Collaborateurs",
+  "notDeclared": "Pas encore déclaré",
+  "absent": "Absentּ"
 }
