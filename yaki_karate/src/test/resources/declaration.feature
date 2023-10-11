@@ -99,7 +99,7 @@ Feature: CreationDeclaration
     And header user_id = userId
     And param mode = 'fullDay'
 
-    And def requestPayload = [{ declarationUserId: 12, declarationDate: '#(now())', declarationDateStart: '#(timeStart())', declarationDateEnd: '#(timeEnd())', declarationStatus: "remote", declarationTeamId: 2 }]
+    And def requestPayload = [{ declarationUserId: 12, declarationDate: '#(now())', declarationDateStart: '#(timeStart())', declarationDateEnd: '#(timeEnd())', declarationStatus: "remote", declarationTeamId: 3 }]
     * print requestPayload
     * print now
     And request requestPayload

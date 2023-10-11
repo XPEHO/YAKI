@@ -1,21 +1,25 @@
+import {TeamService} from "./features/team/team.service";
 import express from "express";
-import { UserController } from "./features/user/user.controller";
-import { UserService } from "./features/user/user.service";
-import { UserRepository } from "./features/user/user.repository";
-import { TeammateRepository } from "./features/teammate/teammate.repository";
-import { authService } from "./features/user/authentication.service";
-import { TeammateController } from "./features/teammate/teammate.controller";
-import { TeammateService } from "./features/teammate/teammate.service";
-import { limiter, signInLimiter } from "./middleware/rateLimiter";
-import { PasswordRepository } from "./features/password/password.repository";
-import { PasswordService } from "./features/password/password.service";
-import { PasswordController } from "./features/password/password.controller";
+import {UserController} from "./features/user/user.controller";
+import {UserService} from "./features/user/user.service";
+import {UserRepository} from "./features/user/user.repository";
+import {TeammateRepository} from "./features/teammate/teammate.repository";
+import {authService} from "./features/user/authentication.service";
+import {TeammateController} from "./features/teammate/teammate.controller";
+import {TeammateService} from "./features/teammate/teammate.service";
+import {limiter, signInLimiter} from "./middleware/rateLimiter";
+import {PasswordRepository} from "./features/password/password.repository";
+import {PasswordService} from "./features/password/password.service";
+import {PasswordController} from "./features/password/password.controller";
+import {TeamRepository} from "./features/team/team.repository";
 
 export const router = express.Router();
 
+const teamRepository = new TeamRepository();
+const teamService = new TeamService(teamRepository);
 //TEAM MATE
 const teammateRepository = new TeammateRepository();
-const teammateService = new TeammateService(teammateRepository);
+const teammateService = new TeammateService(teammateRepository, teamService);
 const teammateController = new TeammateController(teammateService);
 
 //USER
@@ -39,13 +43,9 @@ router.post("/login", signInLimiter, (req, res) =>
   userController.checkLogin(req, res)
 );
 router.use(limiter);
-router.post("/register", (req, res) =>
-  userController.registerNewUser(req, res)
-);
+router.post("/register", (req, res) => userController.registerNewUser(req, res));
 
-router.post("/register", (req, res) =>
-  userController.registerNewUser(req, res)
-);
+router.post("/register", (req, res) => userController.registerNewUser(req, res));
 
 router.get(
   "/teammates",
@@ -58,8 +58,7 @@ router.get(
                 schema: { captainId: 1 }
 }
   */ authService.verifyToken(req, res, next),
-  async (req, res) =>
-    teammateController.getByTeamIdWithLastDeclaration(req, res)
+  async (req, res) => teammateController.getByTeamIdWithLastDeclaration(req, res)
 );
 
 router.post(
