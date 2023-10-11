@@ -5,7 +5,7 @@
       "name": "yaki_mobile",
       "request": "launch",
       "type": "dart",
-      "args": ["--dart-define-from-file=config.json", "--web-port", "5000"]
+      "args": ["--dart-define-from-file=config.json"]
     },
     {
       "name": "yaki_mobile (profile mode)",
