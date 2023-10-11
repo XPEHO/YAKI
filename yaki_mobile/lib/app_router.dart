@@ -13,7 +13,6 @@ import 'package:yaki/presentation/ui/default/user_default_redirection.dart';
 import 'package:yaki/presentation/ui/password/change_password.dart';
 import 'package:yaki/presentation/ui/profile/profile.dart';
 import 'package:yaki/presentation/ui/registration/registration.dart';
-import 'package:yaki/presentation/ui/status/vacation_status.dart';
 
 /// router set as provider.
 final goRouterProvider = Provider<GoRouter>(
@@ -24,17 +23,6 @@ final goRouterProvider = Provider<GoRouter>(
           path: '/',
           builder: (context, state) => const Authentication(),
           routes: [
-            GoRoute(
-              path: 'vacationStatus',
-              builder: (context, state) => const VacationStatus(),
-              redirect: (BuildContext context, GoRouterState state) async {
-                if (await SharedPref.isTokenPresent()) {
-                  return '/vacationStatus';
-                } else {
-                  return '/';
-                }
-              },
-            ),
             GoRoute(
               path: 'profile',
               builder: (context, state) => const Profile(),

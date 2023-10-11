@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yaki/presentation/displaydata/declaration_enum.dart';
+import 'package:yaki/presentation/displaydata/declaration_summary_enum.dart';
 import 'package:yaki/presentation/features/team_selection/view/team_selection_header.dart';
 import 'package:yaki/presentation/features/team_selection/view/team_selection_list.dart';
 import 'package:yaki/presentation/state/providers/team_provider.dart';
@@ -80,7 +81,8 @@ void onValidationTap({
         VacationSelectionDialog(
           ref: ref,
           context: context,
-          goToPage: () => context.go('/vacationStatus'),
+          goToPage: () =>
+              context.go('/summary/${DeclarationSummaryPaths.absence.text}'),
         ).show();
       } else {
         context.go("/declaration/${DeclarationPaths.fullDay.text}");
