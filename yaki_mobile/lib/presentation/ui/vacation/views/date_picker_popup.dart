@@ -107,11 +107,11 @@ class _DatePickerPopupState extends ConsumerState<DatePickerPopup> {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop('cancel'),
-          child: const Text('Cancel'),
+          child: const Text('Cancel', style: TextStyle(color: Colors.black)),
         ),
         TextButton(
           onPressed: () => validateDate(ref),
-          child: const Text('OK'),
+          child: const Text('OK', style: TextStyle(color: Colors.black)),
         ),
       ],
     );

@@ -96,9 +96,9 @@ Widget setSummaryWidget({
     );
   } else {
     return SummaryAbsence(
-      status: declarationStatus.absenceStatus, 
-      dateStart:  declarationStatus.dateStart, 
-      dateEnd: declarationStatus.dateEnd,
+   
+      dateStart:  declarationStatus.dateAbsenceStart, 
+      dateEnd: declarationStatus.dateAbsenceEnd,
     );
   }
 }

@@ -7,9 +7,24 @@ TextStyle textStylePageTitle() {
   );
 }
 
+TextStyle textStylePageTitleSummary() {
+  return const TextStyle(
+    fontSize: 30,
+    fontWeight: FontWeight.w600,
+  );
+}
+
 TextStyle textStyleSummarySubtitle() {
   return const TextStyle(
     fontSize: 16,
+    fontWeight: FontWeight.w600,
+    color: Color.fromARGB(255, 83, 83, 84),
+  );
+}
+
+TextStyle textStyleSummary() {
+  return const TextStyle(
+    fontSize: 20,
     fontWeight: FontWeight.w600,
     color: Color.fromARGB(255, 83, 83, 84),
   );

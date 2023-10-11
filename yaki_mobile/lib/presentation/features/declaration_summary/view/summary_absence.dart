@@ -1,17 +1,14 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-
-import 'package:yaki/presentation/displaydata/status_page_utils.dart';
 import 'package:yaki/presentation/styles/text_style.dart';
+import 'package:intl/intl.dart';
 
 class SummaryAbsence extends StatelessWidget {
-  final StatusEnum status;
-  final DateFormat dateStart;
-  final DateFormat dateEnd;
+  final DateTime? dateStart;
+  final DateTime? dateEnd;
 
   const SummaryAbsence({
     super.key,
-    required this.status,
     required this.dateStart,
     required this.dateEnd,
   });
@@ -23,10 +20,38 @@ class SummaryAbsence extends StatelessWidget {
       children: [
         Text(
           tr('SummaryAbsence'),
-          style: textStylePageTitle(),
+          style: textStylePageTitleSummary(),
         ),
-        Text(tr('statusVacationDayFrom')),
-        Text(tr('statusVacationDayTo')),
+        const SizedBox(height: 16),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              tr('statusVacationDayFrom'),
+              style: textStyleSummary(),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              DateFormat('dd/MM/yyyy').format(dateStart!),
+              style: textStyleSummary(),
+            ),
+          ],
+        ),
+        const SizedBox(height: 16),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              tr('statusVacationDayTo'),
+              style: textStyleSummary(),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              DateFormat('dd/MM/yyyy').format(dateStart!),
+              style: textStyleSummary(),
+            ),
+          ],
+        ),
       ],
     );
   }
