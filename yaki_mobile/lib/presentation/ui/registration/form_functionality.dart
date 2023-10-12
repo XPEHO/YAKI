@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 
 // Validators for each input
 String? nameValidator(String? value) {
-  final nameRegex = RegExp(r"^[A-Za-z ç-]+$");
+  final nameRegex = RegExp(r"^[A-Za-zÀ-ÿœŒÆæïÎî ç-]+$");
   if (value == null || value.isEmpty) {
     return tr('registrationInputNameError1');
   }
