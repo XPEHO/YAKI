@@ -112,80 +112,72 @@ class _AuthenticationState extends ConsumerState<Authentication> {
           child: Center(
             child: SingleChildScrollView(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8),
-                    child: Text(
-                      tr('signInLowercase'),
-                      style: textStylePageTitle(),
-                    ),
+                  SizedBox(height: size.height / 10),
+                  Image.asset(
+                    'assets/images/yaki_basti_icon.png',
+                    height: 100,
+                    width: 100,
                   ),
+                  SizedBox(height: size.height / 20),
+                  Text(
+                    tr('signInLowercase'),
+                    style: textStylePageTitle(),
+                  ),
+                  SizedBox(height: size.height / 20),
                   Form(
                     child: Column(
                       children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.only(
-                            top: size.height / 15,
-                          ),
-                          child: InputText(
-                            type: InputTextType.email,
-                            label: tr('inputLogin'),
-                            controller: loginController,
+                        InputText(
+                          type: InputTextType.email,
+                          label: tr('inputLogin'),
+                          controller: loginController,
+                        ),
+                        const SizedBox(height: 20),
+                        InputText(
+                          type: InputTextType.password,
+                          label: tr('inputPassword'),
+                          controller: passwordController,
+                        ),
+                        const SizedBox(height: 10),
+                        Button(
+                          text: tr('signIn'),
+                          onPressed: () => onPressAuthent(
+                            ref: ref,
+                            login: loginController.text,
+                            password: passwordController.text,
+                            goToTeamsDeclarationSummary: () =>
+                                context.go('/teams-declaration-summary'),
+                            goToTeamSelectionPage: () =>
+                                context.go('/team-selection'),
+                            goToUserDefaultRedirection: () =>
+                                context.go('/userDefaultRedirection'),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 20),
-                          child: InputText(
-                            type: InputTextType.password,
-                            label: tr('inputPassword'),
-                            controller: passwordController,
+                        const SizedBox(height: 5),
+                        Button.secondary(
+                          text: tr('forgotPassword'),
+                          onPressed: () => onPressedForgotPassword(
+                            goToForgotPassword: () =>
+                                context.push('/forgotPassword'),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: Button(
-                            text: tr('signIn'),
-                            onPressed: () => onPressAuthent(
-                              ref: ref,
-                              login: loginController.text,
-                              password: passwordController.text,
-                              goToTeamsDeclarationSummary: () =>
-                                  context.go('/teams-declaration-summary'),
-                              goToTeamSelectionPage: () =>
-                                  context.go('/team-selection'),
-                              goToUserDefaultRedirection: () =>
-                                  context.go('/userDefaultRedirection'),
-                            ),
+                        const SizedBox(height: 10),
+                        InkWell(
+                          onTap: () => onPressSignUp(
+                            goToRegistrationPage: () =>
+                                context.push('/registration'),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 5),
-                          child: Button.secondary(
-                            text: tr('forgotPassword'),
-                            onPressed: () => onPressedForgotPassword(
-                              goToForgotPassword: () =>
-                                  context.push('/forgotPassword'),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: InkWell(
-                            onTap: () => onPressSignUp(
-                              goToRegistrationPage: () =>
-                                  context.push('/registration'),
-                            ),
-                            borderRadius: BorderRadius.circular(16),
-                            splashColor: const Color.fromARGB(125, 46, 46, 46),
-                            child: Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Text(
-                                tr('createAccountLink'),
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.blue.shade900,
-                                ),
+                          borderRadius: BorderRadius.circular(16),
+                          splashColor: const Color.fromARGB(125, 46, 46, 46),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Text(
+                              tr('createAccountLink'),
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.blue.shade900,
                               ),
                             ),
                           ),
