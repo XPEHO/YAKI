@@ -73,7 +73,7 @@
   "userDefaultThanks": "Merci d'utiliser l'application",
   "userDefaultTeamPart": "Vous n'êtes pas encore dans une ",
   "userDefaultTeam": "Équipe",
-  "userDefaultContact": "Veuillez contacter votre Capitaine",
+  "userDefaultContact": "Veuillez contacter votre capitaine",
 
   "changePassword": "Changer de mot de passe",
   "changePasswordPageTitle": "Changement de mot de passe",
@@ -101,7 +101,7 @@
   "IWorkthisAfternoon": "Je travaille cet",
   "Iam": "Je suis",
   "onSite": "Au bureau",
-  "remote": "En Télétravail",
+  "remote": "En télétravail",
   "absence": "Absentּ-e",
   "undeclared": "N'a pas encore saisi",
 
@@ -116,7 +116,7 @@
 
   "SummaryAbsence": "Résumé des absences",
   "me": "Moi",
-  "myCoworkers": "Mes Collaborateurs",
+  "myCoworkers": "Mes collaborateurs",
   "notDeclared": "Pas encore déclaré",
   "absent": "Absentּ"
 }
