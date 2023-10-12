@@ -1,0 +1,35 @@
+name: Bug Report
+description: Reporter un bug
+title: "[Bug]: "
+labels: ["bug", "triage"]
+projects: ["XPEHO/1"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Merci de prendre le temps de nous remonter un bug!
+  - type: input
+    id: contact
+    attributes:
+      label: Vos contacts
+      description: Comment pouvons-nous vous contacter si nous avons besoin de plus d'infos ?
+      placeholder: ex. email@example.com
+    validations:
+      required: false
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: Que se passe-t-il?
+      description: Dites nous aussi ce que vous attendiez à la place
+      placeholder: Dites nous ce qu'il se passe
+      value: "Un problème est survenu"
+    validations:
+      required: true
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code de conduite
+      description: En soumettant ce rapport vous vous conformez aux [règles de conduite](https://github.com/XPEHO/YAKI/blob/main/CODE_OF_CONDUCT.md)
+      options:
+        - label: J'accepte de suivre les règles de conduites de ce projet.
+          required: true
