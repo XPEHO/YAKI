@@ -48,9 +48,7 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
     final int? userId = prefs.getInt("userId");
 
     // exit function if improper data
-    if (userId == null ||
-        teamList.first.teamId == null ||
-        teamList.last.teamId == null) return;
+    if (userId == null) return;
 
     switch (declarationMode) {
       // FULL DAY
@@ -60,7 +58,7 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
 
         await createFullDay(
           status: StatusEnum.getValue(key: selectedStatus.name),
-          teamId: teamList.first.teamId!,
+          teamId: teamList.first.teamId,
           userId: userId,
         );
         break;
@@ -95,13 +93,12 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
           morningStatus: StatusEnum.getValue(
             key: state.declarationsHalfDaySelections.morningTeamStatus.name,
           ),
-          morningTeamId:
-              state.declarationsHalfDaySelections.morningTeam.teamId!,
+          morningTeamId: state.declarationsHalfDaySelections.morningTeam.teamId,
           afternoonStatus: StatusEnum.getValue(
             key: state.declarationsHalfDaySelections.afternoonTeamStatus.name,
           ),
           afternoonTeamId:
-              state.declarationsHalfDaySelections.afternoonTeam.teamId!,
+              state.declarationsHalfDaySelections.afternoonTeam.teamId,
           userId: userId,
         );
         break;
@@ -211,8 +208,10 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
     // SEND TO REPOSITORY
     await declarationRepository.createFullDay(newDeclaration);
 
-    state.dateAbsenceStart = dateStart;
-    state.dateAbsenceEnd = dateEnd;
+    state = state.copyWith(
+      dateAbsenceStart: dateStart,
+      dateAbsenceEnd: dateEnd,
+    );
   }
 
   setDeclarationHalfDaySelection() {

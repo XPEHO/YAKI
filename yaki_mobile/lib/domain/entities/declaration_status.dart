@@ -2,16 +2,35 @@ import 'package:yaki/data/models/team_model.dart';
 import 'package:yaki/presentation/displaydata/declaration_status_enum.dart';
 
 class DeclarationStatus {
-  late TeamModel fullDayTeam;
-  late StatusEnum fullDayStatus;
+  late TeamModel fullDayTeam = defaultTeam;
+  late StatusEnum fullDayStatus = StatusEnum.undeclared;
   late HalfDayWorkflow halfDayWorkflow = HalfDayWorkflow();
-  late DeclarationsHalfDaySelections declarationsHalfDaySelections;
-  late DateTime? dateAbsenceStart;
-  late DateTime? dateAbsenceEnd;
-  bool isHalfDay = false;
-  bool isfullDay = false;
+  late DeclarationsHalfDaySelections declarationsHalfDaySelections =
+      defaultHalfDay;
+  late DateTime? dateAbsenceStart = DateTime.now();
+  late DateTime? dateAbsenceEnd = DateTime.now();
 
   DeclarationStatus();
+
+  DeclarationStatus copyWith({
+    TeamModel? fullDayTeam,
+    StatusEnum? fullDayStatus,
+    HalfDayWorkflow? halfDayWorkflow,
+    DeclarationsHalfDaySelections? declarationsHalfDaySelections,
+    DateTime? dateAbsenceStart,
+    DateTime? dateAbsenceEnd,
+    bool? isHalfDay,
+    bool? isfullDay,
+  }) {
+    return DeclarationStatus()
+      ..fullDayTeam = fullDayTeam ?? this.fullDayTeam
+      ..fullDayStatus = fullDayStatus ?? this.fullDayStatus
+      ..halfDayWorkflow = halfDayWorkflow ?? this.halfDayWorkflow
+      ..declarationsHalfDaySelections =
+          declarationsHalfDaySelections ?? this.declarationsHalfDaySelections
+      ..dateAbsenceStart = dateAbsenceStart ?? this.dateAbsenceStart
+      ..dateAbsenceEnd = dateAbsenceEnd ?? this.dateAbsenceEnd;
+  }
 }
 
 class HalfDayWorkflow {
@@ -22,11 +41,6 @@ class HalfDayWorkflow {
   late StatusEnum secondStatus;
 
   HalfDayWorkflow();
-
-  @override
-  String toString() {
-    return 'HalfDayWorkflow{firstToDSelection: $firstToDSelection, firstTeam: ${firstTeam.teamName}, secondTeam: ${secondTeam.teamName}, firstStatus: $firstStatus, secondStatus: $secondStatus}';
-  }
 }
 
 class DeclarationsHalfDaySelections {
@@ -41,9 +55,19 @@ class DeclarationsHalfDaySelections {
     required this.afternoonTeam,
     required this.afternoonTeamStatus,
   });
-
-  @override
-  String toString() {
-    return 'DeclarationsHalfDaySelections{morningTeam: ${morningTeam.teamName}, morningTeamStatus: $morningTeamStatus, afternoonTeam: ${afternoonTeam.teamName}, afternoonTeamStatus: $afternoonTeamStatus}';
-  }
 }
+
+// DEFAULTS VALUES allow to use copyWith
+TeamModel defaultTeam = TeamModel(
+  teamId: -1,
+  teamName: "default",
+  teamActifFlag: false,
+);
+
+// DEFAULTS VALUES  allow to use copyWith
+DeclarationsHalfDaySelections defaultHalfDay = DeclarationsHalfDaySelections(
+  morningTeam: defaultTeam,
+  morningTeamStatus: StatusEnum.undeclared,
+  afternoonTeam: defaultTeam,
+  afternoonTeamStatus: StatusEnum.undeclared,
+);

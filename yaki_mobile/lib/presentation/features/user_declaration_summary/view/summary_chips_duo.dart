@@ -21,7 +21,7 @@ class SummaryChipDuo extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         IconChip(
-          label: team.teamName ?? tr('defaultTeamName'),
+          label: team.teamName,
           backgroundColor: Colors.white,
           image: ClipRRect(
             borderRadius: BorderRadius.circular(50),

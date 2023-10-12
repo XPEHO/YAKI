@@ -16,6 +16,8 @@ class TeamSelectionList extends ConsumerWidget {
 
     return teamListAsync.when(
       data: (teamList) {
+        // save fetched team list in state
+        ref.read(teamProvider).fetchedTeamList = teamList;
         return Expanded(
           child: ListView.builder(
             itemCount: teamList.length,
@@ -31,16 +33,13 @@ class TeamSelectionList extends ConsumerWidget {
                     ),
                   ),
                   title: tr("project"),
-                  subtitle: teamList[index].teamName ?? 'No team name',
+                  subtitle: teamList[index].teamName,
                   onSelectionChanged: (bool selected) {
-                    final teamId = teamList[index].teamId;
-                    if (teamId != null) {
-                      onSelection(
-                        ref: ref,
-                        isSelected: selected,
-                        team: teamList[index],
-                      );
-                    }
+                    onSelection(
+                      ref: ref,
+                      isSelected: selected,
+                      team: teamList[index],
+                    );
                   },
                 ),
               );

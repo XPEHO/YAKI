@@ -6,7 +6,12 @@ import 'package:yaki/presentation/state/providers/declaration_provider.dart';
 
 class DatePickerPopup extends ConsumerStatefulWidget {
   final Function goToPage;
-  const DatePickerPopup({super.key, required this.goToPage});
+  final int teamId;
+  const DatePickerPopup({
+    super.key,
+    required this.goToPage,
+    required this.teamId,
+  });
 
   @override
   ConsumerState<DatePickerPopup> createState() => _DatePickerPopupState();
@@ -23,7 +28,7 @@ class _DatePickerPopupState extends ConsumerState<DatePickerPopup> {
           dateStart: selectedDateRange.start,
           dateEnd: selectedDateRange.end,
           status: StatusEnum.absence.name,
-          teamId: 1,
+          teamId: widget.teamId,
         );
     widget.goToPage();
   }

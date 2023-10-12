@@ -26,9 +26,8 @@ class DeclarationPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final List<TeamModel> teamList = ref.read(teamProvider).selectedTeamList;
 
-    final List<String> teamNameList = teamList.isNotEmpty
-        ? teamList.map((e) => e.teamName ?? "default name").toList()
-        : [""];
+    final List<String> teamNameList =
+        teamList.isNotEmpty ? teamList.map((e) => e.teamName).toList() : [""];
 
     LocationCardContent locationCardContent = setLocationCardContent(
       declarationMode: declarationMode,

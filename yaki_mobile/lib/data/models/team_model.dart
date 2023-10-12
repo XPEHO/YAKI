@@ -4,9 +4,9 @@ part 'team_model.g.dart';
 
 @JsonSerializable()
 class TeamModel {
-  int? teamId;
-  String? teamName;
-  bool? teamActifFlag;
+  int teamId;
+  String teamName;
+  bool teamActifFlag;
 
   TeamModel({
     required this.teamId,

@@ -44,6 +44,7 @@ class TeamRepository {
   List<TeamModel> setTeamModelList(HttpResponse response) {
     final List<TeamModel> modelList = [];
     for (final team in response.data) {
+      if (team['teamId'] == null || team["teamName"] == null) continue;
       modelList.add(TeamModel.fromJson(team));
     }
     return modelList;

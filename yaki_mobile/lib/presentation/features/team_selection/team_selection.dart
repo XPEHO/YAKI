@@ -56,6 +56,14 @@ void onValidationTap({
   final teamList = ref.read(teamProvider).selectedTeamList;
   final selectCount = teamList.length;
 
+  final fetchedTeamList = ref.read(teamProvider).fetchedTeamList;
+  final int selectedTeamId = fetchedTeamList
+      .firstWhere(
+        (team) => team.teamId > 0,
+        orElse: () => fetchedTeamList.first,
+      )
+      .teamId;
+
   if (isButtonActivated) {
     if (selectCount == 1) {
       final bool isAbsenceSelected =
@@ -63,6 +71,7 @@ void onValidationTap({
 
       if (isAbsenceSelected) {
         VacationSelectionDialog(
+          teamId: selectedTeamId,
           ref: ref,
           context: context,
           goToPage: () =>

@@ -46,7 +46,7 @@ class SummaryAbsence extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              DateFormat('dd/MM/yyyy').format(dateStart!),
+              DateFormat('dd/MM/yyyy').format(dateEnd!),
               style: textStyleSummary(),
             ),
           ],

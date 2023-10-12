@@ -8,10 +8,12 @@ class VacationSelectionDialog {
   late DateTime selectedDateStart;
   late DateTime selectedDateEnd;
   final WidgetRef ref;
+  final int teamId;
   VacationSelectionDialog({
     required this.context,
     required this.goToPage,
     required this.ref,
+    required this.teamId,
     DateTime? selectedDateStart,
     DateTime? selectedDateEnd,
   })  : selectedDateStart = selectedDateStart ?? DateTime.now(),
@@ -21,6 +23,7 @@ class VacationSelectionDialog {
       context: context,
       builder: (BuildContext context) {
         return DatePickerPopup(
+          teamId: teamId,
           goToPage: goToPage,
         );
       },
