@@ -26,7 +26,7 @@ class CellCard extends ConsumerWidget {
       subtitle: isSubtitleDisplayed(
         teammate: teammate,
       )
-          ? 'subtitle'
+          ? displayTimeSinceDeclaration(teammate: teammate)
           : '',
       image: const CellAvatarSvg(
         imageSrc: "assets/images/avatar1.svg",
@@ -73,3 +73,25 @@ bool isSubtitleDisplayed({
                 teammate.declarationStatus == StatusEnum.absence)
         ? false
         : true;
+
+/// display the time since the teammate has been declared based on the declarationDate
+String displayTimeSinceDeclaration({
+  required TeammateWithDeclarationEntity teammate,
+}) {
+  final now = DateTime.now();
+  final declarationDate = teammate.declarationDate;
+  final difference = now.difference(declarationDate);
+  final differenceInHours = difference.inHours;
+  final differenceInMinutes = difference.inMinutes;
+  final differenceInSeconds = difference.inSeconds;
+
+  if (differenceInHours > 0) {
+    return '$differenceInHours h';
+  } else if (differenceInMinutes > 0) {
+    return '$differenceInMinutes min';
+  } else if (differenceInSeconds > 0) {
+    return '$differenceInSeconds sec';
+  } else {
+    return '0 sec';
+  }
+}
