@@ -16,19 +16,58 @@ class TeamsDeclarationSummary extends ConsumerWidget {
             icon: const NavIconCircleAvatar(
               imageSrc: 'assets/images/Filter.svg',
             ),
-            onPressed: () {},
+            onPressed: () {
+              // This is a modal bottom sheet. This need to be delete when the method will be implemented
+              showModalBottomSheet(
+                context: context,
+                builder: (BuildContext context) {
+                  return const SizedBox(
+                    height: 200,
+                    child: Center(
+                      child: Text('Coming soon'),
+                    ),
+                  );
+                },
+              );
+            },
           ),
           IconButton(
             icon: const NavIconCircleAvatar(
               imageSrc: 'assets/images/Search.svg',
             ),
-            onPressed: () {},
+            onPressed: () {
+              // This is a modal bottom sheet. This need to be delete when the method will be implemented
+              showModalBottomSheet(
+                context: context,
+                builder: (BuildContext context) {
+                  return const SizedBox(
+                    height: 200,
+                    child: Center(
+                      child: Text('Coming soon'),
+                    ),
+                  );
+                },
+              );
+            },
           ),
           IconButton(
             icon: const NavIconCircleAvatar(
               imageSrc: 'assets/images/Account.svg',
             ),
-            onPressed: () {},
+            onPressed: () {
+              // This is a modal bottom sheet. This need to be delete when the method will be implemented
+              showModalBottomSheet(
+                context: context,
+                builder: (BuildContext context) {
+                  return const SizedBox(
+                    height: 200,
+                    child: Center(
+                      child: Text('Coming soon'),
+                    ),
+                  );
+                },
+              );
+            },
           ),
         ],
       ),
