@@ -20,33 +20,36 @@ class CellChipsRow extends StatelessWidget {
   Widget build(BuildContext context) {
     if (statusAfternoon != null) {
       // half day
-      return Row(
-        children: [
-          if (status != StatusEnum.undeclared && status != StatusEnum.absence)
-            const CellCircleChipSvg(
-              imageSrc: "assets/images/onSite.svg",
-              backgroundColor: AppColors.cellChipDefault,
+      return Padding(
+        padding: const EdgeInsets.only(top: 6),
+        child: Row(
+          children: [
+            if (status != StatusEnum.undeclared && status != StatusEnum.absence)
+              const CellCircleChipSvg(
+                imageSrc: "assets/images/onSite.svg",
+                backgroundColor: AppColors.cellChipDefault,
+              ),
+            const SizedBox(width: 2.29),
+            CellCircleChipSvg(
+              imageSrc: setStatusImage(status),
+              backgroundColor: setStatusColor(status),
             ),
-          const SizedBox(width: 2.29),
-          CellCircleChipSvg(
-            imageSrc: setStatusImage(status),
-            backgroundColor: setStatusColor(status),
-          ),
-          const SizedBox(width: 2.29),
+            const SizedBox(width: 2.29),
 
-          // AFTERNOON DECLARATION
-          if (statusAfternoon != StatusEnum.undeclared &&
-              statusAfternoon != StatusEnum.absence)
-            const CellCircleChipSvg(
-              imageSrc: "assets/images/onSite.svg",
-              backgroundColor: AppColors.cellChipDefault,
+            // AFTERNOON DECLARATION
+            if (statusAfternoon != StatusEnum.undeclared &&
+                statusAfternoon != StatusEnum.absence)
+              const CellCircleChipSvg(
+                imageSrc: "assets/images/onSite.svg",
+                backgroundColor: AppColors.cellChipDefault,
+              ),
+            const SizedBox(width: 2.29),
+            CellCircleChipSvg(
+              imageSrc: setStatusImage(statusAfternoon!),
+              backgroundColor: setStatusColor(statusAfternoon!),
             ),
-          const SizedBox(width: 2.29),
-          CellCircleChipSvg(
-            imageSrc: setStatusImage(statusAfternoon!),
-            backgroundColor: setStatusColor(statusAfternoon!),
-          ),
-        ],
+          ],
+        ),
       );
     } else {
       // full day

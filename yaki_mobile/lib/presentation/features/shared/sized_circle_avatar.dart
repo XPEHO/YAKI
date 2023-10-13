@@ -52,14 +52,14 @@ class CellCircleChipSvg extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 20,
-      width: 20,
+      height: 32,
+      width: 32,
       child: CircleAvatar(
         backgroundColor: backgroundColor,
         child: SvgPicture.asset(
           imageSrc,
-          height: 11.43,
-          width: 11.43,
+          height: 24,
+          width: 24,
         ),
       ),
     );
