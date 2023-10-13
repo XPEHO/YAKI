@@ -7,6 +7,10 @@ import 'package:yaki/presentation/state/providers/declaration_provider.dart';
 import 'package:yaki/presentation/state/providers/login_provider.dart';
 import 'package:yaki/presentation/styles/text_style.dart';
 import 'package:yaki_ui/yaki_ui.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+final Uri _url =
+    Uri.parse('https://github.com/XPEHO/YAKI/blob/main/PRIVACY_POLICY.md');
 
 /// using ConsumerWidget (statelessWidget) to have access to the WidgetRef object
 /// allowing the current widget to have access to any provider.
@@ -185,6 +189,31 @@ class _AuthenticationState extends ConsumerState<Authentication> {
                       ],
                     ),
                   ),
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        tr('poweredByXPEHO'),
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey.shade600,
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      TextButton(
+                        onPressed: _launchUrl,
+                        child: Text(
+                          tr('privacyPolicy'),
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.grey.shade600,
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),
@@ -192,5 +221,11 @@ class _AuthenticationState extends ConsumerState<Authentication> {
         ),
       ),
     );
+  }
+}
+
+Future<void> _launchUrl() async {
+  if (!await launchUrl(_url)) {
+    throw Exception('Could not launch $_url');
   }
 }
