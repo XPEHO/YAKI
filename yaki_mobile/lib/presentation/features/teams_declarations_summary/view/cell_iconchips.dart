@@ -31,6 +31,7 @@ class CellIconChips extends StatelessWidget {
               IconChip(
                 label: teamName,
                 backgroundColor: AppColors.cellChipDefault,
+                fontWeightLabel: FontWeight.w500,
                 image: ClipRRect(
                   borderRadius: BorderRadius.circular(50),
                   child: const CellIconChipSvgPicture(
@@ -45,6 +46,7 @@ class CellIconChips extends StatelessWidget {
             IconChip(
               label: tr(status.name),
               backgroundColor: setStatusColor(status),
+              fontWeightLabel: FontWeight.w500,
               image: ClipRRect(
                 borderRadius: BorderRadius.circular(50),
                 child: CellIconChipSvgPicture(
@@ -67,6 +69,7 @@ class CellIconChips extends StatelessWidget {
                 IconChip(
                   label: teamNameAfternoon!,
                   backgroundColor: AppColors.cellChipDefault,
+                  fontWeightLabel: FontWeight.w500,
                   image: ClipRRect(
                     borderRadius: BorderRadius.circular(50),
                     child: const CellIconChipSvgPicture(
@@ -81,6 +84,7 @@ class CellIconChips extends StatelessWidget {
               IconChip(
                 label: tr(statusAfternoon!.name),
                 backgroundColor: setStatusColor(statusAfternoon!),
+                fontWeightLabel: FontWeight.w500,
                 image: ClipRRect(
                   borderRadius: BorderRadius.circular(50),
                   child: CellIconChipSvgPicture(

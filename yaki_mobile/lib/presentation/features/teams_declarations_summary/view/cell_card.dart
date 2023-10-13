@@ -51,6 +51,7 @@ class CellCard extends ConsumerWidget {
             ),
           if (isModifierBtnUsed)
             Button.secondary(
+              buttonHeight: 52,
               onPressed: () {
                 ref.read(teamProvider.notifier).clearTeamList();
                 context.go('/team-selection');

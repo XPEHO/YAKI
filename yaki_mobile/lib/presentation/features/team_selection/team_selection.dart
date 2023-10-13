@@ -30,6 +30,7 @@ class TeamSelection extends ConsumerWidget {
               const TeamSelectionList(),
               Button(
                 text: tr('buttonNext'),
+                buttonHeight: 64,
                 onPressed: () => onValidationTap(
                   ref: ref,
                   context: context,
@@ -39,7 +40,7 @@ class TeamSelection extends ConsumerWidget {
                     ? const Color(0xFFFF936B)
                     : const Color.fromARGB(255, 195, 190, 190),
               ),
-              const SizedBox(height: 32),
+              const SizedBox(height: 16),
             ],
           ),
         ),

@@ -48,6 +48,8 @@ class HeaderDeclarationSingleChoice extends StatelessWidget {
                   IconChip(
                     label: setTeam(teamList: teamNameList),
                     backgroundColor: Colors.white,
+                    borderWidth: 2,
+                    fontSizeLabel: 20,
                     image: ClipRRect(
                       borderRadius: BorderRadius.circular(50),
                       child: UserDeclarationChipSvgPicture(

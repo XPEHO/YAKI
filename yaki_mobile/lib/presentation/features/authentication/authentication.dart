@@ -146,6 +146,7 @@ class _AuthenticationState extends ConsumerState<Authentication> {
                         ),
                         const SizedBox(height: 10),
                         Button(
+                          buttonHeight: 72,
                           text: tr('signIn'),
                           onPressed: () => onPressAuthent(
                             ref: ref,
@@ -161,6 +162,7 @@ class _AuthenticationState extends ConsumerState<Authentication> {
                         ),
                         const SizedBox(height: 5),
                         Button.secondary(
+                          buttonHeight: 64,
                           text: tr('forgotPassword'),
                           onPressed: () => onPressedForgotPassword(
                             goToForgotPassword: () =>

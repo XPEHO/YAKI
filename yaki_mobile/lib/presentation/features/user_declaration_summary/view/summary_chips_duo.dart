@@ -23,6 +23,8 @@ class SummaryChipDuo extends StatelessWidget {
         IconChip(
           label: team.teamName,
           backgroundColor: Colors.white,
+          borderWidth: 2,
+          fontSizeLabel: 20,
           image: ClipRRect(
             borderRadius: BorderRadius.circular(50),
             child: const UserDeclarationChipSvgPicture(
@@ -34,6 +36,8 @@ class SummaryChipDuo extends StatelessWidget {
         IconChip(
           label: tr(status.name),
           backgroundColor: Colors.white,
+          borderWidth: 2,
+          fontSizeLabel: 20,
           image: ClipRRect(
             borderRadius: BorderRadius.circular(50),
             child: UserDeclarationChipSvgPicture(
