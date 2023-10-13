@@ -60,16 +60,17 @@ class UserDeclarationSummaryAbsence extends ConsumerWidget {
                     ),
                   ),
                 ),
-                Button(
+                Button.tertiary(
+                  buttonHeight: 68,
                   text: tr("modify"),
                   onPressed: () {
                     ref.read(teamProvider.notifier).clearTeamList();
                     context.go("/team-selection");
                   },
-                  color: const Color(0xFF37414C),
                 ),
                 const SizedBox(height: 8),
-                Button.secondary(
+                Button.tertiary(
+                  buttonHeight: 68,
                   text: tr("seeTeam"),
                   onPressed: () => {
                     context.go("/teams-declaration-summary"),

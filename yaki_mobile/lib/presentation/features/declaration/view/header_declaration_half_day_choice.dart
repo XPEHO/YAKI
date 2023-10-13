@@ -57,6 +57,8 @@ class HeaderDeclarationHalfDayChoice extends ConsumerWidget {
             IconChip(
               label: teamName,
               backgroundColor: Colors.white,
+              borderWidth: 2,
+              fontSizeLabel: 20,
               image: ClipRRect(
                 borderRadius: BorderRadius.circular(50),
                 child: const UserDeclarationChipSvgPicture(
@@ -75,6 +77,8 @@ class HeaderDeclarationHalfDayChoice extends ConsumerWidget {
             IconChip(
               label: tr(chipContent.label),
               backgroundColor: Colors.white,
+              borderWidth: 2,
+              fontSizeLabel: 20,
               image: ClipRRect(
                 borderRadius: BorderRadius.circular(50),
                 child: UserDeclarationChipSvgPicture(
