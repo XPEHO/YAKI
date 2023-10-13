@@ -4,11 +4,22 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:yaki/app.dart';
 import 'package:flutter/services.dart';
+import 'package:yaki/presentation/features/splash_screen/splash_screen.dart';
 import 'package:yaki/presentation/state/dio/dio_interceptor.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
+
+  runApp(
+    const MaterialApp(
+      home: SplashScreen(),
+    ),
+  );
+
+  await Future.delayed(const Duration(
+      seconds:
+          10)); // Replace 3 with the number of seconds you want your splash screen to be displayed
 
   runApp(
     EasyLocalization(
