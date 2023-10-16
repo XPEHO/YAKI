@@ -23,11 +23,7 @@ class CellCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Cell(
       title: '${teammate.userFirstName} ${teammate.userLastName}',
-      subtitle: isSubtitleDisplayed(
-        teammate: teammate,
-      )
-          ? displayTimeSinceDeclaration(teammate: teammate)
-          : '',
+      subtitle: '',
       image: const CellAvatarSvg(
         imageSrc: "assets/images/avatar1.svg",
       ),
