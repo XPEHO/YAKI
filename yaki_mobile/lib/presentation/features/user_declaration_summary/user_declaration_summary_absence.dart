@@ -69,14 +69,14 @@ class UserDeclarationSummaryAbsence extends ConsumerWidget {
                   },
                 ),
                 const SizedBox(height: 8),
-                Button.tertiary(
+                Button.secondary(
                   buttonHeight: 68,
                   text: tr("seeTeam"),
                   onPressed: () => {
                     context.go("/teams-declaration-summary"),
                   },
                 ),
-                const SizedBox(height: 64),
+                const SizedBox(height: 32),
               ],
             ),
           ),

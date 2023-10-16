@@ -71,7 +71,7 @@ class UserDeclarationSummary extends ConsumerWidget {
                     context.go("/teams-declaration-summary"),
                   },
                 ),
-                const SizedBox(height: 64),
+                const SizedBox(height: 32),
               ],
             ),
           ),
