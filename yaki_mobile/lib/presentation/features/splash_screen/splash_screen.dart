@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:yaki/presentation/styles/color.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -13,8 +14,8 @@ class SplashScreen extends StatelessWidget {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Color(0xFFFF936B),
-              Color(0xFFFF7746),
+              AppColors.primaryColor,
+              AppColors.secondaryColor,
             ],
           ),
         ),
