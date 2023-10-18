@@ -43,7 +43,8 @@ class Profile extends ConsumerWidget {
                   child: Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration,
-                  )
+                    
+                  ),
                 ),
               ),
             ),
