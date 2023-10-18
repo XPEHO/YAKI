@@ -4,6 +4,7 @@ class AppColors {
   // Primary Color of the app
 
   static const Color primaryColor = Color(0xFFFF936B);
+  static const Color secondaryColor = Color(0xFFFF7746);
   static const Color yakiPrimaryColor = Color(0xFFF2F6F9);
   static const Color teamsDeclarationListBorder =
       Color.fromRGBO(230, 236, 239, 1);
