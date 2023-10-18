@@ -17,9 +17,11 @@ void main() async {
     ),
   );
 
-  await Future.delayed(const Duration(
-      seconds:
-          10)); // Replace 3 with the number of seconds you want your splash screen to be displayed
+  await Future.delayed(
+    const Duration(
+      seconds: 3,
+    ),
+  );
 
   runApp(
     EasyLocalization(
