@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,7 +15,7 @@ class TeammateListAsync extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final groupedUsersWithDeclaration = ref.watch(teammateFutureProvider);
+    var groupedUsersWithDeclaration = ref.watch(teammateFutureProvider);
 
     return groupedUsersWithDeclaration.when(
       data: (data) {
@@ -28,30 +30,47 @@ class TeammateListAsync extends ConsumerWidget {
           ...data.absent,
         ];
 
-        return ListView.builder(
-          itemCount: items.length,
-          itemBuilder: (context, index) {
-            final item = items[index];
+        return ScrollConfiguration(
+          behavior: const ScrollBehavior().copyWith(
+            physics: const BouncingScrollPhysics(),
+            dragDevices: {
+              PointerDeviceKind.touch,
+              PointerDeviceKind.mouse,
+              PointerDeviceKind.trackpad,
+            },
+          ),
+          child: RefreshIndicator(
+            onRefresh: () async {
+              groupedUsersWithDeclaration =
+                  await ref.refresh(teammateFutureProvider);
+            },
+            child: ListView.builder(
+              itemCount: items.length,
+              itemBuilder: (context, index) {
+                final item = items[index];
 
-            if (item is String) {
-              return Padding(
-                padding: const EdgeInsets.only(left: 16, top: 24, bottom: 8),
-                child: Text(
-                  tr(item),
-                  style: textTeamsDeclarationListCategory(),
-                ),
-              );
-            }
-            final TeammateWithDeclarationEntity entity =
-                item as TeammateWithDeclarationEntity;
-            if (entity.userId == entity.loggedUserId) {
-              return CellCard(
-                teammate: item,
-                isModifierBtnUsed: true,
-              );
-            }
-            return CellCard(teammate: entity, isModifierBtnUsed: false);
-          },
+                if (item is String) {
+                  return Padding(
+                    padding:
+                        const EdgeInsets.only(left: 16, top: 24, bottom: 8),
+                    child: Text(
+                      tr(item),
+                      style: textTeamsDeclarationListCategory(),
+                    ),
+                  );
+                }
+                final TeammateWithDeclarationEntity entity =
+                    item as TeammateWithDeclarationEntity;
+                if (entity.userId == entity.loggedUserId) {
+                  return CellCard(
+                    teammate: item,
+                    isModifierBtnUsed: true,
+                  );
+                }
+                return CellCard(teammate: entity, isModifierBtnUsed: false);
+              },
+            ),
+          ),
         );
       },
       error: (error, stackTrace) => const Text(""),
