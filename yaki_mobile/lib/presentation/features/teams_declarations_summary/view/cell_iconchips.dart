@@ -102,7 +102,7 @@ class CellIconChips extends StatelessWidget {
 String setStatusImage(StatusEnum status) {
   switch (status) {
     case StatusEnum.absence:
-      return "assets/images/absence.svg";
+      return "assets/images/absent.svg";
     case StatusEnum.onSite:
       return "assets/images/Work-Office.svg";
     case StatusEnum.remote:

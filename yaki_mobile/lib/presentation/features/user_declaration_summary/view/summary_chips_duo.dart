@@ -57,6 +57,6 @@ String setTimeOfDayImage(StatusEnum status) {
     case StatusEnum.remote:
       return "assets/images/Work-Home.svg";
     default:
-      return "assets/images/unknown.svg";
+      return "assets/images/absent.svg";
   }
 }
