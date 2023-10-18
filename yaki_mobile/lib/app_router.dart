@@ -13,7 +13,7 @@ import 'package:yaki/presentation/features/user_declaration_summary/user_declara
 import 'package:yaki/presentation/ui/password/forgot_password.dart';
 import 'package:yaki/presentation/ui/default/user_default_redirection.dart';
 import 'package:yaki/presentation/ui/password/change_password.dart';
-import 'package:yaki/presentation/ui/profile/profile.dart';
+import 'package:yaki/presentation/features/profile/profile.dart';
 import 'package:yaki/presentation/ui/registration/registration.dart';
 
 /// router set as provider.
