@@ -81,7 +81,7 @@ dependencies:
 
   built_value: ^8.6.3
   json_annotation: ^4.8.0
-  mockito: ^5.4.0
+  mockito: ^5.4.2
   very_good_cli: ^0.15.0
   golden_toolkit: ^0.15.0
   url_launcher: ^6.0.14
