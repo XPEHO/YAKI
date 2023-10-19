@@ -25,7 +25,7 @@ class CellCard extends ConsumerWidget {
       title: '${teammate.userFirstName} ${teammate.userLastName}',
       subtitle: '',
       image: const CellAvatarSvg(
-        imageSrc: "assets/images/avatar1.svg",
+        imageSrc: "assets/images/Avatar.svg",
       ),
       chips: CellChipsRow(
         status: teammate.declarationStatus,
