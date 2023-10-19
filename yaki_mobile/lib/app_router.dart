@@ -15,6 +15,7 @@ import 'package:yaki/presentation/ui/default/user_default_redirection.dart';
 import 'package:yaki/presentation/ui/password/change_password.dart';
 import 'package:yaki/presentation/features/profile/profile.dart';
 import 'package:yaki/presentation/ui/registration/registration.dart';
+import 'package:yaki/presentation/features/profile/view/avatar_modal.dart';
 
 /// router set as provider.
 final goRouterProvider = Provider<GoRouter>(

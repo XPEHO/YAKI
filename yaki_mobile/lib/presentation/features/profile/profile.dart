@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yaki/domain/entities/logged_user.dart';
+import 'package:yaki/presentation/features/profile/view/avatar_modal.dart';
 import 'package:yaki/presentation/state/providers/login_provider.dart';
 import 'package:yaki_ui/yaki_ui.dart';
 
@@ -29,25 +30,37 @@ class Profile extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            CircleAvatar(
-              radius: 100,
-              backgroundImage: const AssetImage('assets/images/profil-men.svg'),
-              child: Positioned(
-                bottom: 0,
-                right: 0,
-                child: GestureDetector(
-                  OnTap: () {
-                    context.go('/changeAvatar');
-                    //add logic edit avatar
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration,
-                    
+            const CircleAvatar(
+              radius: 75,
+              backgroundImage: NetworkImage('https://picsum.photos/200'),
+            ),
+            Positioned(
+              bottom: 0,
+              right: 0,
+              child: GestureDetector(
+                onTap: () {
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return const AvatarModal();
+                    },
+                  );
+                },
+                child: Container(
+                  height: 40,
+                  width: 40,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: const Icon(
+                    Icons.edit,
+                    color: Color(0xFF7D818C),
                   ),
                 ),
               ),
             ),
+            const SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
               child: InputText(
