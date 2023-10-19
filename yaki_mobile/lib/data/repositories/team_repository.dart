@@ -35,7 +35,7 @@ class TeamRepository {
     } catch (err) {
       // Handle any errors that occur during the API request
       debugPrint('error during team list get : $err');
-      return [];
+      return Future.error('Team list is empty');
     }
   }
 
