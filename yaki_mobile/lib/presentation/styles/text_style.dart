@@ -59,6 +59,14 @@ TextStyle textTeamsDeclarationListCategory() {
   );
 }
 
+TextStyle textFetchError({required double fontSize}) {
+  return TextStyle(
+    color: Colors.grey,
+    fontSize: fontSize,
+    fontWeight: FontWeight.w900,
+  );
+}
+
 // old styles
 // ------------------------------------------------------------
 TextStyle textStyleHeaderBig() {

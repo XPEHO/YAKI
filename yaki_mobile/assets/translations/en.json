@@ -118,5 +118,9 @@
   "me": "Me",
   "myCoworkers": "My colleagues",
   "notDeclared": "Not declared",
-  "absent": "Absent"
+  "absent": "Absent",
+
+  "oops": "Oops !",
+  "somethingWentWrong": "Some data are lost along the way",
+  "swipeToRetry": "Swipe down to retry"
 }

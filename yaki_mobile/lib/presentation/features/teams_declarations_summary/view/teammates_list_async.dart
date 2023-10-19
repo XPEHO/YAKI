@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yaki/domain/entities/teammate_with_declaration_entity.dart';
 import 'package:yaki/presentation/displaydata/user_with_declaration_category_enum.dart';
+import 'package:yaki/presentation/features/shared/something_went_wrong.dart';
 import 'package:yaki/presentation/features/teams_declarations_summary/view/cell_card.dart';
 import 'package:yaki/presentation/state/providers/teammate_future_provider.dart';
 import 'package:yaki/presentation/styles/text_style.dart';
@@ -17,34 +18,34 @@ class TeammateListAsync extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     var groupedUsersWithDeclaration = ref.watch(teammateFutureProvider);
 
-    return groupedUsersWithDeclaration.when(
-      data: (data) {
-        final items = [
-          if (data.me.isNotEmpty) me,
-          ...data.me,
-          if (data.myCoworkers.isNotEmpty) myCoworkers,
-          ...data.myCoworkers,
-          if (data.notDeclared.isNotEmpty) notDeclared,
-          ...data.notDeclared,
-          if (data.absent.isNotEmpty) absent,
-          ...data.absent,
-        ];
+    return ScrollConfiguration(
+      behavior: const ScrollBehavior().copyWith(
+        physics: const BouncingScrollPhysics(),
+        dragDevices: {
+          PointerDeviceKind.touch,
+          PointerDeviceKind.mouse,
+          PointerDeviceKind.trackpad,
+        },
+      ),
+      child: RefreshIndicator(
+        onRefresh: () async {
+          groupedUsersWithDeclaration =
+              await ref.refresh(teammateFutureProvider);
+        },
+        child: groupedUsersWithDeclaration.when(
+          data: (data) {
+            final items = [
+              if (data.me.isNotEmpty) me,
+              ...data.me,
+              if (data.myCoworkers.isNotEmpty) myCoworkers,
+              ...data.myCoworkers,
+              if (data.notDeclared.isNotEmpty) notDeclared,
+              ...data.notDeclared,
+              if (data.absent.isNotEmpty) absent,
+              ...data.absent,
+            ];
 
-        return ScrollConfiguration(
-          behavior: const ScrollBehavior().copyWith(
-            physics: const BouncingScrollPhysics(),
-            dragDevices: {
-              PointerDeviceKind.touch,
-              PointerDeviceKind.mouse,
-              PointerDeviceKind.trackpad,
-            },
-          ),
-          child: RefreshIndicator(
-            onRefresh: () async {
-              groupedUsersWithDeclaration =
-                  await ref.refresh(teammateFutureProvider);
-            },
-            child: ListView.builder(
+            return ListView.builder(
               itemCount: items.length,
               itemBuilder: (context, index) {
                 final item = items[index];
@@ -69,12 +70,12 @@ class TeammateListAsync extends ConsumerWidget {
                 }
                 return CellCard(teammate: entity, isModifierBtnUsed: false);
               },
-            ),
-          ),
-        );
-      },
-      error: (error, stackTrace) => const Text(""),
-      loading: () => const Text(""),
+            );
+          },
+          error: (error, stackTrace) => const FailToFetchDataList(),
+          loading: () => const Text(""),
+        ),
+      ),
     );
   }
 }
