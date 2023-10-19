@@ -120,5 +120,9 @@
   "me": "Moi",
   "myCoworkers": "Mes collaborateurs",
   "notDeclared": "Pas encore déclaré",
-  "absent": "Absentּ"
+  "absent": "Absentּ",
+
+  "oops": "Oups !",
+  "somethingWentWrong": "Certaines informations se sont perdues en chemin",
+  "swipeToRetry": "Faites glisser pour réessayer"
 }

@@ -27,7 +27,9 @@ class TeamSelection extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const TeamSelectionHeader(),
-              const TeamSelectionList(),
+              const Expanded(
+                child: TeamSelectionList(),
+              ),
               Button(
                 text: tr('buttonNext'),
                 buttonHeight: 64,
@@ -54,37 +56,40 @@ void onValidationTap({
   required BuildContext context,
   required bool isButtonActivated,
 }) {
+  // do nothing if button isnt activated
+  if (!isButtonActivated) return;
+
   final teamList = ref.read(teamProvider).selectedTeamList;
   final selectCount = teamList.length;
 
   final fetchedTeamList = ref.read(teamProvider).fetchedTeamList;
-  final int selectedTeamId = fetchedTeamList
-      .firstWhere(
-        (team) => team.teamId > 0,
-        orElse: () => fetchedTeamList.first,
-      )
-      .teamId;
 
-  if (isButtonActivated) {
-    if (selectCount == 1) {
-      final bool isAbsenceSelected =
-          teamList.any((team) => team.teamName == "Absence");
+  if (selectCount == 1) {
+    final bool isAbsenceSelected =
+        teamList.any((team) => team.teamName == "Absence");
 
-      if (isAbsenceSelected) {
-        VacationSelectionDialog(
-          teamId: selectedTeamId,
-          ref: ref,
-          context: context,
-          goToPage: () =>
-              context.go('/summary/${DeclarationSummaryPaths.absence.text}'),
-        ).show();
-      } else {
-        context.go("/declaration/${DeclarationPaths.fullDay.text}");
-      }
-    } else if (selectCount == 2) {
-      ref.read(teamProvider.notifier).isAbsenceSelectedSetFirstOfList();
+    if (isAbsenceSelected) {
+      // get first team with valid teamId
+      final int selectedTeamId = fetchedTeamList
+          .firstWhere(
+            (team) => team.teamId > 0,
+            orElse: () => fetchedTeamList.first,
+          )
+          .teamId;
 
-      context.go("/declaration/${DeclarationPaths.timeOfDay.text}");
+      VacationSelectionDialog(
+        teamId: selectedTeamId,
+        ref: ref,
+        context: context,
+        goToPage: () =>
+            context.go('/summary/${DeclarationSummaryPaths.absence.text}'),
+      ).show();
+    } else {
+      context.go("/declaration/${DeclarationPaths.fullDay.text}");
     }
+  } else if (selectCount == 2) {
+    ref.read(teamProvider.notifier).isAbsenceSelectedSetFirstOfList();
+
+    context.go("/declaration/${DeclarationPaths.timeOfDay.text}");
   }
 }
