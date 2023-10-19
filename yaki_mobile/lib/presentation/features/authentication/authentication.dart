@@ -58,12 +58,14 @@ class _AuthenticationState extends ConsumerState<Authentication> {
     required Function goToTeamSelectionPage,
     required Function goToUserDefaultRedirection,
   }) async {
+    final String lowercaseLogin = login.toLowerCase();
+
     await SharedPref.deleteToken();
-    await SharedPref.setLoginDetails(login, password);
+    await SharedPref.setLoginDetails(lowercaseLogin, password);
 
     final bool authenticationResult = await ref
         .read(loginRepositoryProvider)
-        .userAuthentication(login, password);
+        .userAuthentication(lowercaseLogin, password);
     if (authenticationResult && await SharedPref.isTokenPresent()) {
       final bool isCaptain = ref.read(loginRepositoryProvider).isCaptain();
       final bool isTeammate = ref.read(loginRepositoryProvider).isTeammate();
