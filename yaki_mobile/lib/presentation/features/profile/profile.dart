@@ -69,7 +69,7 @@ class Profile extends ConsumerWidget {
                       ),
                     ),
                   ),
-                )
+                ),
               ],
             ),
             const SizedBox(height: 20),
