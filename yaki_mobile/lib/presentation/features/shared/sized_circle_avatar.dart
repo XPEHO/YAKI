@@ -99,3 +99,22 @@ class UserDeclarationChipSvgPicture extends StatelessWidget {
     );
   }
 }
+
+class AvatarSvg extends StatelessWidget {
+  final String imageSrc;
+  const AvatarSvg({
+    Key? key,
+    required this.imageSrc,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 160,
+      width: 160,
+      child: SvgPicture.asset(
+        imageSrc,
+      ),
+    );
+  }
+}

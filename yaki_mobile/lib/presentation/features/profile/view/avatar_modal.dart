@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yaki/domain/entities/logged_user.dart';
+import 'package:yaki/presentation/features/shared/sized_circle_avatar.dart';
 import 'package:yaki/presentation/state/providers/login_provider.dart';
 import 'package:yaki_ui/yaki_ui.dart';
 import 'package:flutter_svg/svg.dart';
@@ -36,32 +37,20 @@ class AvatarModal extends ConsumerWidget {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: 160,
-                    width: 160,
-                    child: SvgPicture.asset(
-                      'assets/images/avatar-men2.svg',
-                    ),
+                  const AvatarSvg(
+                    imageSrc: 'assets/images/avatar-men2.svg',
                   ),
                 ],
               ),
               const SizedBox(height: 20),
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  SizedBox(
-                    height: 160,
-                    width: 160,
-                    child: SvgPicture.asset(
-                      'assets/images/avatar-woman.svg',
-                    ),
+                  AvatarSvg(
+                    imageSrc: 'assets/images/avatar-woman.svg',
                   ),
-                  SizedBox(
-                    height: 160,
-                    width: 160,
-                    child: SvgPicture.asset(
-                      'assets/images/avatar-men.svg',
-                    ),
+                  AvatarSvg(
+                    imageSrc: 'assets/images/avatar-men.svg',
                   ),
                 ],
               ),
