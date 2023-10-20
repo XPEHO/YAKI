@@ -76,13 +76,13 @@ class Profile extends ConsumerWidget {
               ),
               const SizedBox(height: 10),
               InputText(
-                type: InputTextType.firstname,
+                type: InputTextType.text,
                 label: tr('inputLabelFirstName'),
                 controller: TextEditingController(text: user?.firstName ?? ''),
               ),
               const SizedBox(height: 10),
               InputText(
-                type: InputTextType.lastname,
+                type: InputTextType.text,
                 label: tr('inputLabelLastName'),
                 controller: TextEditingController(text: user?.lastName ?? ''),
               ),

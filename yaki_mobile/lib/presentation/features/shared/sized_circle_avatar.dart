@@ -100,9 +100,9 @@ class UserDeclarationChipSvgPicture extends StatelessWidget {
   }
 }
 
-class AvatarSvg extends StatelessWidget {
+class ProfilAvatarSvg extends StatelessWidget {
   final String imageSrc;
-  const AvatarSvg({
+  const ProfilAvatarSvg({
     Key? key,
     required this.imageSrc,
   }) : super(key: key);

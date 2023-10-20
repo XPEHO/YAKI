@@ -5,7 +5,6 @@ import 'package:yaki/domain/entities/logged_user.dart';
 import 'package:yaki/presentation/features/shared/sized_circle_avatar.dart';
 import 'package:yaki/presentation/state/providers/login_provider.dart';
 import 'package:yaki_ui/yaki_ui.dart';
-import 'package:flutter_svg/svg.dart';
 
 class AvatarModal extends ConsumerWidget {
   const AvatarModal({Key? key}) : super(key: key);
@@ -37,7 +36,7 @@ class AvatarModal extends ConsumerWidget {
                       ),
                     ),
                   ),
-                  const AvatarSvg(
+                  const ProfilAvatarSvg(
                     imageSrc: 'assets/images/avatar-men2.svg',
                   ),
                 ],
@@ -46,10 +45,10 @@ class AvatarModal extends ConsumerWidget {
               const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  AvatarSvg(
+                  ProfilAvatarSvg(
                     imageSrc: 'assets/images/avatar-woman.svg',
                   ),
-                  AvatarSvg(
+                  ProfilAvatarSvg(
                     imageSrc: 'assets/images/avatar-men.svg',
                   ),
                 ],
