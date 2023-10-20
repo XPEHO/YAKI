@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:yaki/presentation/features/shared/app_bar_date.dart';
 import 'package:yaki/presentation/features/shared/sized_circle_avatar.dart';
 import 'package:yaki/presentation/features/teams_declarations_summary/view/teammates_list_async.dart';
@@ -55,18 +56,7 @@ class TeamsDeclarationSummary extends ConsumerWidget {
               imageSrc: 'assets/images/Account.svg',
             ),
             onPressed: () {
-              // This is a modal bottom sheet. This need to be delete when the method will be implemented
-              showModalBottomSheet(
-                context: context,
-                builder: (BuildContext context) {
-                  return const SizedBox(
-                    height: 200,
-                    child: Center(
-                      child: Text('Coming soon'),
-                    ),
-                  );
-                },
-              );
+              context.go('/profile');
             },
           ),
         ],

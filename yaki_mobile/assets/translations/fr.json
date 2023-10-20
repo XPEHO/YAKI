@@ -43,7 +43,7 @@
   "inputCaptain": "Nom, Statut...",
   "hintCaptain": "Entrez un nom ou un statut",
   "authenticationFailed": "email ou mot de passe inconnu",
-  "logOutButton": "Se déconnecter",
+  "logOutButton": "SE DECONNECTER",
   "headerHintProfile": "Votre profil",
   "headerTitleProfile": "Profil",
   "inputLabelLastName": "Nom",
@@ -77,7 +77,7 @@
   "userDefaultTeam": "Équipe",
   "userDefaultContact": "Veuillez contacter votre capitaine",
 
-  "changePassword": "Changer de mot de passe",
+  "changePassword": "MODIFIER LE MOT DE PASSE",
   "changePasswordPageTitle": "Changement de mot de passe",
   "changePasswordPageOldPW": "Mot de passe actuel",
   "changePasswordPageNewPW": "Nouveau mot de passe",
@@ -124,5 +124,8 @@
 
   "oops": "Oups !",
   "somethingWentWrong": "Certaines informations se sont perdues en chemin",
-  "swipeToRetry": "Faites glisser pour réessayer"
+  "swipeToRetry": "Faites glisser pour réessayer",
+
+  "takePicture": "PRENDRE UNE PHOTO",
+  "imgGallery": "IMAGE À PARTIR DE MA GALLERIE"
 }

@@ -41,7 +41,7 @@
   "inputCaptain": "Name, Status...",
   "hintCaptain": "Enter a name or a status",
   "authenticationFailed": "Unknown username or password",
-  "logOutButton": "Log out",
+  "logOutButton": "LOG OUT",
   "headerHintProfile": "Your profile",
   "headerTitleProfile": "Profile",
   "inputLabelLastName": "Name",
@@ -75,7 +75,7 @@
   "userDefaultTeam": "TEAM",
   "userDefaultContact": "Please contact your Captain.",
 
-  "changePassword": "Change password",
+  "changePassword": "CHANGE PASSWORD",
   "changePasswordPageTitle": "Change your password",
   "changePasswordPageOldPW": "Current password",
   "changePasswordPageNewPW": "New password",
@@ -122,5 +122,8 @@
 
   "oops": "Oops !",
   "somethingWentWrong": "Some data are lost along the way",
-  "swipeToRetry": "Swipe down to retry"
+  "swipeToRetry": "Swipe down to retry",
+
+  "takePicture": "PRENDRE UNE PHOTO",
+  "imgGallery": "IMAGE FROM MY GALLERY"
 }
