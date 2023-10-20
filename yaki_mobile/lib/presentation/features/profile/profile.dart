@@ -44,24 +44,32 @@ class Profile extends ConsumerWidget {
                 Positioned(
                   bottom: 8,
                   right: 8,
-                  child: GestureDetector(
-                    onTap: () {
-                      showModalBottomSheet(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return const AvatarModal();
-                        },
-                      );
-                    },
-                    child: SizedBox(
-                      height: 40,
-                      width: 40,
-                      child: SvgPicture.asset(
-                        'assets/images/CTA.svg',
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFFF936B),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        showModalBottomSheet(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return const AvatarModal();
+                          },
+                        );
+                      },
+                      icon: SvgPicture.asset(
+                        'assets/images/edit.svg',
+                        height: 20,
+                        width: 20,
+                      ),
+                      label: const Text(''),
+                      style: ElevatedButton.styleFrom(
+                        shadowColor: Colors.transparent,
                       ),
                     ),
                   ),
-                ),
+                )
               ],
             ),
             const SizedBox(height: 20),
