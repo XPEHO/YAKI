@@ -13,142 +13,113 @@ class AvatarModal extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final LoggedUser? user = ref.watch(loginRepositoryProvider).loggedUser;
 
-    return Column(
-      children: [
-        ElevatedButton(
-          onPressed: () {
-            showModalBottomSheet(
-              context: context,
-              builder: (BuildContext context) {
-                return Dialog(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const SizedBox(height: 20),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          SizedBox(
-                            height: 40,
-                            width: 40,
-                            child: SvgPicture.asset(
-                              'assets/images/avatar-men2.svg',
-                            ),
-                          ),
-                          SizedBox(
-                            height: 40,
-                            width: 40,
-                            child: SvgPicture.asset(
-                              'assets/images/avatar-woman.svg',
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 20),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          SizedBox(
-                            height: 40,
-                            width: 40,
-                            child: SvgPicture.asset(
-                              'assets/images/avatar-men2.svg',
-                            ),
-                          ),
-                          SizedBox(
-                            height: 40,
-                            width: 40,
-                            child: SvgPicture.asset(
-                              'assets/images/avatar-woman.svg',
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 20),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          const CircleAvatar(
-                            radius: 50,
-                            backgroundImage:
-                                AssetImage('assets/images/avatar-damier.svg'),
-                          ),
-                          CircleAvatar(
-                            radius: 50,
-                            backgroundColor: const Color(0xFFFFD7C0),
-                            child: Text(
-                              '${user?.firstName?[0]}${user?.lastName?[0]}',
-                              style: const TextStyle(
-                                color: Color(0xFF7D818C),
-                                fontSize: 40,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 20),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              left: 16,
-                              right: 16,
-                              top: 4,
-                            ),
-                            child: Button.secondary(
-                              text: tr('takePicture'),
-                              onPressed: () {
-                                // This is a modal bottom sheet. This need to be delete when the method will be implemented
-                                showModalBottomSheet(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return const SizedBox(
-                                      height: 200,
-                                      child: Center(
-                                        child: Text('Coming soon'),
-                                      ),
-                                    );
-                                  },
-                                );
-                              },
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              left: 16,
-                              right: 16,
-                              top: 4,
-                            ),
-                            child: Button.secondary(
-                              text: tr('imgGallery'),
-                              onPressed: () {
-                                // This is a modal bottom sheet. This need to be delete when the method will be implemented
-                                showModalBottomSheet(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return const SizedBox(
-                                      height: 200,
-                                      child: Center(
-                                        child: Text('Coming soon'),
-                                      ),
-                                    );
-                                  },
-                                );
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+    return SingleChildScrollView(
+      child: SizedBox(
+        height: 1000,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                CircleAvatar(
+                  radius: 60,
+                  backgroundColor: const Color(0xFFFFD7C0),
+                  child: Text(
+                    '${user?.firstName?[0] ?? "A"}${user?.lastName?[0] ?? "B"}',
+                    style: const TextStyle(
+                      color: Color(0xFF7D818C),
+                      fontSize: 40,
+                    ),
                   ),
-                );
-              },
-            );
-          },
-          child: null,
+                ),
+                SizedBox(
+                  height: 160,
+                  width: 160,
+                  child: SvgPicture.asset(
+                    'assets/images/avatar-men2.svg',
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                SizedBox(
+                  height: 160,
+                  width: 160,
+                  child: SvgPicture.asset(
+                    'assets/images/avatar-woman.svg',
+                  ),
+                ),
+                SizedBox(
+                  height: 160,
+                  width: 160,
+                  child: SvgPicture.asset(
+                    'assets/images/avatar-men.svg',
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Container(
+                  padding: const EdgeInsets.only(
+                    left: 16,
+                    right: 16,
+                    top: 4,
+                  ),
+                  child: Button.secondary(
+                    text: tr('takePicture'),
+                    onPressed: () {
+                      // This is a modal bottom sheet. This need to be delete when the method will be implemented
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return const SizedBox(
+                            height: 200,
+                            child: Center(
+                              child: Text('Coming soon'),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.only(
+                    left: 16,
+                    right: 16,
+                    top: 4,
+                  ),
+                  child: Button.secondary(
+                    text: tr('imgGallery'),
+                    onPressed: () {
+                      // This is a modal bottom sheet. This need to be delete when the method will be implemented
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return const SizedBox(
+                            height: 200,
+                            child: Center(
+                              child: Text('Coming soon'),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }

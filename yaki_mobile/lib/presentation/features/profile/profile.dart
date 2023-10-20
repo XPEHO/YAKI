@@ -31,31 +31,38 @@ class Profile extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(
-              height: 160,
-              width: 160,
-              child: SvgPicture.asset(
-                'assets/images/avatar-men.svg',
-              ),
-            ),
-            Positioned(
-              child: GestureDetector(
-                onTap: () {
-                  showModalBottomSheet(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return const AvatarModal();
-                    },
-                  );
-                },
-                child: SizedBox(
-                  height: 40,
-                  width: 40,
+            Stack(
+              alignment: Alignment.bottomRight,
+              children: [
+                SizedBox(
+                  height: 160,
+                  width: 160,
                   child: SvgPicture.asset(
-                    'assets/images/CTA.svg',
+                    'assets/images/avatar-men.svg',
                   ),
                 ),
-              ),
+                Positioned(
+                  bottom: 8,
+                  right: 8,
+                  child: GestureDetector(
+                    onTap: () {
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return const AvatarModal();
+                        },
+                      );
+                    },
+                    child: SizedBox(
+                      height: 40,
+                      width: 40,
+                      child: SvgPicture.asset(
+                        'assets/images/CTA.svg',
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
             const SizedBox(height: 20),
             Padding(
