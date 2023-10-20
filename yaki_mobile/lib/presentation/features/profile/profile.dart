@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yaki/domain/entities/logged_user.dart';
 import 'package:yaki/presentation/features/profile/view/avatar_modal.dart';
@@ -30,13 +31,14 @@ class Profile extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const CircleAvatar(
-              radius: 75,
-              backgroundImage: NetworkImage('https://picsum.photos/200'),
+            SizedBox(
+              height: 160,
+              width: 160,
+              child: SvgPicture.asset(
+                'assets/images/avatar-men.svg',
+              ),
             ),
             Positioned(
-              bottom: 0,
-              right: 0,
               child: GestureDetector(
                 onTap: () {
                   showModalBottomSheet(
@@ -46,16 +48,11 @@ class Profile extends ConsumerWidget {
                     },
                   );
                 },
-                child: Container(
+                child: SizedBox(
                   height: 40,
                   width: 40,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: const Icon(
-                    Icons.edit,
-                    color: Color(0xFF7D818C),
+                  child: SvgPicture.asset(
+                    'assets/images/CTA.svg',
                   ),
                 ),
               ),

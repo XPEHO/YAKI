@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yaki/domain/entities/logged_user.dart';
 import 'package:yaki/presentation/state/providers/login_provider.dart';
 import 'package:yaki_ui/yaki_ui.dart';
+import 'package:flutter_svg/svg.dart';
 
 class AvatarModal extends ConsumerWidget {
   const AvatarModal({Key? key}) : super(key: key);
@@ -16,7 +17,7 @@ class AvatarModal extends ConsumerWidget {
       children: [
         ElevatedButton(
           onPressed: () {
-            showDialog(
+            showModalBottomSheet(
               context: context,
               builder: (BuildContext context) {
                 return Dialog(
@@ -24,34 +25,42 @@ class AvatarModal extends ConsumerWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       const SizedBox(height: 20),
-                      const Row(
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          CircleAvatar(
-                            radius: 50,
-                            backgroundImage:
-                                AssetImage('assets/images/profil-men.svg'),
+                          SizedBox(
+                            height: 40,
+                            width: 40,
+                            child: SvgPicture.asset(
+                              'assets/images/avatar-men2.svg',
+                            ),
                           ),
-                          CircleAvatar(
-                            radius: 50,
-                            backgroundImage:
-                                AssetImage('assets/images/profil-men2.svg'),
+                          SizedBox(
+                            height: 40,
+                            width: 40,
+                            child: SvgPicture.asset(
+                              'assets/images/avatar-woman.svg',
+                            ),
                           ),
                         ],
                       ),
                       const SizedBox(height: 20),
-                      const Row(
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          CircleAvatar(
-                            radius: 50,
-                            backgroundImage:
-                                AssetImage('assets/images/profil-woman.svg'),
+                          SizedBox(
+                            height: 40,
+                            width: 40,
+                            child: SvgPicture.asset(
+                              'assets/images/avatar-men2.svg',
+                            ),
                           ),
-                          CircleAvatar(
-                            radius: 50,
-                            backgroundImage:
-                                AssetImage('assets/images/profil-absent.svg'),
+                          SizedBox(
+                            height: 40,
+                            width: 40,
+                            child: SvgPicture.asset(
+                              'assets/images/avatar-woman.svg',
+                            ),
                           ),
                         ],
                       ),
@@ -62,7 +71,7 @@ class AvatarModal extends ConsumerWidget {
                           const CircleAvatar(
                             radius: 50,
                             backgroundImage:
-                                AssetImage('assets/images/profil-damier.svg'),
+                                AssetImage('assets/images/avatar-damier.svg'),
                           ),
                           CircleAvatar(
                             radius: 50,
@@ -83,18 +92,50 @@ class AvatarModal extends ConsumerWidget {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(
-                                left: 16, right: 16, top: 4),
+                              left: 16,
+                              right: 16,
+                              top: 4,
+                            ),
                             child: Button.secondary(
                               text: tr('takePicture'),
-                              onPressed: () {},
+                              onPressed: () {
+                                // This is a modal bottom sheet. This need to be delete when the method will be implemented
+                                showModalBottomSheet(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return const SizedBox(
+                                      height: 200,
+                                      child: Center(
+                                        child: Text('Coming soon'),
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
                             ),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(
-                                left: 16, right: 16, top: 4),
+                              left: 16,
+                              right: 16,
+                              top: 4,
+                            ),
                             child: Button.secondary(
                               text: tr('imgGallery'),
-                              onPressed: () {},
+                              onPressed: () {
+                                // This is a modal bottom sheet. This need to be delete when the method will be implemented
+                                showModalBottomSheet(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return const SizedBox(
+                                      height: 200,
+                                      child: Center(
+                                        child: Text('Coming soon'),
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
                             ),
                           ),
                         ],
