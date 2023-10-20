@@ -74,57 +74,43 @@ class Profile extends ConsumerWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
-              SizedBox(
-                height: 16,
-                child: InputText(
-                  type: InputTextType.firstname,
-                  label: tr('inputLabelFirstName'),
-                  controller:
-                      TextEditingController(text: user?.firstName ?? ''),
-                ),
+              const SizedBox(height: 10),
+              InputText(
+                type: InputTextType.firstname,
+                label: tr('inputLabelFirstName'),
+                controller: TextEditingController(text: user?.firstName ?? ''),
               ),
-              SizedBox(
-                height: 4,
-                child: InputText(
-                  type: InputTextType.lastname,
-                  label: tr('inputLabelLastName'),
-                  controller: TextEditingController(text: user?.lastName ?? ''),
-                ),
+              const SizedBox(height: 10),
+              InputText(
+                type: InputTextType.lastname,
+                label: tr('inputLabelLastName'),
+                controller: TextEditingController(text: user?.lastName ?? ''),
               ),
-              SizedBox(
-                height: 4,
-                child: InputText(
-                  type: InputTextType.email,
-                  label: 'Email',
-                  controller: TextEditingController(text: user?.email ?? ''),
-                ),
+              const SizedBox(height: 10),
+              InputText(
+                type: InputTextType.email,
+                label: 'Email',
+                controller: TextEditingController(text: user?.email ?? ''),
               ),
-              SizedBox(
-                height: 4,
-                child: InputText(
-                  type: InputTextType.password,
-                  label: tr('inputPassword'),
-                  controller: TextEditingController(),
-                ),
+              const SizedBox(height: 10),
+              InputText(
+                type: InputTextType.password,
+                label: tr('inputPassword'),
+                controller: TextEditingController(),
               ),
-              SizedBox(
-                height: 4,
-                child: Button.secondary(
-                  text: tr('changePassword'),
-                  onPressed: () {
-                    context.go('/changePassword');
-                  },
-                ),
+              const SizedBox(height: 10),
+              Button.secondary(
+                text: tr('changePassword'),
+                onPressed: () {
+                  context.go('/changePassword');
+                },
               ),
-              SizedBox(
-                height: 4,
-                child: Button.tertiary(
-                  text: tr('logOutButton'),
-                  onPressed: () {
-                    context.go('/');
-                  },
-                ),
+              const SizedBox(height: 10),
+              Button.tertiary(
+                text: tr('logOutButton'),
+                onPressed: () {
+                  context.go('/');
+                },
               ),
             ],
           ),
