@@ -42,7 +42,21 @@ export class DeclarationService {
       declarationList[0].declarationStatus.trim() !== "" &&
       declarationList[0].declarationTeamId
     ) {
-      return await this.declarationRepository.createDeclaration(declarationList);
+      const dateStart = YakiUtils.setToDateWithoutTime(declarationList[0].declarationDateStart);
+      const dateEnd = YakiUtils.setToDateWithoutTime(declarationList[0].declarationDateEnd);
+      const today = YakiUtils.todayDateOnly();
+
+      // If all check are true : declaration is for one day, and its made for the current date
+      // if any of the check is false, it mean its scheduled absence for the future
+      // an absence created for the current day will be considered as the latest declaration
+      if (dateStart.getTime() === dateEnd.getTime() && dateStart.getTime() === today.getTime()) {
+        // unflag from true to false the preview "latest" declaration
+        this.declarationRepository.unflagLatestDeclaration(declarationList[0].declarationUserId);
+
+        return await this.declarationRepository.createDeclaration(declarationList, true);
+      }
+      // Here : create an absence for the future OR/AND with a duration of more than one day
+      return await this.declarationRepository.createDeclaration(declarationList, false);
     } else {
       throw new TypeError("One or more mandatory information is missing.");
     }
@@ -97,7 +111,10 @@ export class DeclarationService {
       if (!isObjectsValid) break;
     }
     if (isObjectsValid) {
-      return await this.declarationRepository.createHalfDayDeclaration(declarationList);
+      // unflag from true to false the preview "latest" declaration
+      this.declarationRepository.unflagLatestDeclaration(declarationList[0].declarationUserId);
+
+      return await this.declarationRepository.createHalfDayDeclaration(declarationList, true);
     } else {
       throw new TypeError("One or more requiered information is missing.");
     }

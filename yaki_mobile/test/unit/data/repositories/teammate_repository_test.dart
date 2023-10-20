@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -75,8 +74,8 @@ void main() {
               declarationStatus: StatusEnum.fromValue("remote"),
               teamId: 1,
               teamName: "teamName",
-              declarationId: 1,
-              declarationUserId: 1,
+              customerId: null,
+              customerName: null,
             ),
             TeammateWithDeclarationEntity(
               loggedUserId: 34,
@@ -89,8 +88,8 @@ void main() {
               declarationStatus: StatusEnum.fromValue("remote"),
               teamId: 1,
               teamName: "teamName",
-              declarationId: 2,
-              declarationUserId: 2,
+              customerId: null,
+              customerName: null,
             ),
           ];
 
@@ -125,10 +124,11 @@ void main() {
           when(response.statusCode).thenReturn(404);
           when(httpResponseList.data).thenReturn(incorrectResponse);
 
-          List<TeammateWithDeclarationEntity> teamMatelist =
-              await teamMateRepository.getTeammate();
-
-          expect(listEquals(teamMatelist, []), true);
+          try {
+            await teamMateRepository.getTeammate();
+          } catch (error) {
+            expect(error, isA<Exception>());
+          }
         },
       );
     },

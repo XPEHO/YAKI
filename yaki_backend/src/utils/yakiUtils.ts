@@ -14,39 +14,6 @@ export default class YakiUtils {
   }
 
   /**
-   *
-   * @param arr list containing all objects to insert, will determine row(s) count.
-   * @param obj object to be inserted in a row, will determine values count to be saved ( columns ).
-   * @param startValue query VALUES start value.
-   * @returns query VALUE string : ($1, $2...), ($x, $y...),...
-   */
-  static queryValuesString(arr: Array<any>, obj: object, startValue: number): string {
-    if (!arr || !obj) {
-      throw new TypeError("data is requiered to create the query VALUES string");
-    }
-    // amount of object in the array ( row count )
-    const objectCount: number = arr.length;
-    // values count per object ( columns )
-    const valuesCount: number = Object.values(obj).length;
-
-    if (objectCount < 1 || valuesCount < 1) {
-      throw new TypeError("No data to create the query VALUES string");
-    }
-
-    const rows: Array<string> = Array(objectCount).fill("0");
-    const columns: Array<string> = Array(valuesCount).fill("0");
-
-    const postgresValues = rows
-      .map(() => {
-        const values = columns.map(() => `$${startValue++}`).join(", ");
-        return "(" + values + ")";
-      })
-      .join(", ");
-
-    return postgresValues;
-  }
-
-  /**
    *  Check if the data passed as argument is an object
    * @param toTest data to test
    * @returns boolean
@@ -78,5 +45,28 @@ export default class YakiUtils {
     }
     // else check if objects have the sames attributes & attributes count
     return obj1Attr.length === obj2Attr.length && obj1Attr.every((key, index) => key === obj2Attr[index]);
+  }
+
+  /**
+   * Sets the time of the given date to 00:00:00.
+   * @param {Date} date - The date to set the time to 00:00:00.
+   * @returns {Date} A new Date object with the time set to 00:00:00.
+   */
+  static setToDateWithoutTime(date: Date): Date {
+    const dateStr = date.toString().split("T")[0];
+    const dateNoTime = new Date(dateStr);
+
+    return dateNoTime;
+  }
+
+  /**
+   * Returns a new Date object with the time set to 00:00:00 of the current day.
+   * @returns {Date} A new Date object with the time set to 00:00:00 of the current day.
+   */
+  static todayDateOnly(): Date {
+    const today = new Date();
+    const todayNoTime = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+
+    return todayNoTime;
   }
 }

@@ -2,8 +2,8 @@ import {TeamService} from "./../features/team/team.service";
 import {StatusDeclaration} from "../features/declaration/status.enum";
 import {TeammateRepository} from "../features/teammate/teammate.repository";
 import {TeammateService} from "../features/teammate/teammate.service";
-import {UserWithDeclaration} from "../features/teammate/userWithDeclaration.dtoOut";
 import {TeamDtoIn} from "../features/team/team.dtoIn";
+import {UserWithDeclarationDepreciated} from "../features/teammate/userWithDeclarationDepreciated.dto";
 // Create a mock for the TeamService class
 
 describe("TeammateService", () => {
@@ -13,7 +13,7 @@ describe("TeammateService", () => {
   beforeEach(() => {
     teammateRepository = {
       getByTeamIdWithLastDeclaration: jest.fn(),
-    } as jest.Mocked<TeammateRepository>;
+    } as unknown as jest.Mocked<TeammateRepository>;
     teamService = {
       getTeamByUserId: jest.fn(),
     } as unknown as jest.Mocked<TeamService>;
@@ -158,7 +158,7 @@ describe("TeammateService", () => {
       console.log(userId);
       console.log(result);
       expect(result).toEqual([
-        new UserWithDeclaration(
+        new UserWithDeclarationDepreciated(
           1,
           "Doe",
           "John",
@@ -171,7 +171,7 @@ describe("TeammateService", () => {
           2,
           1
         ),
-        new UserWithDeclaration(
+        new UserWithDeclarationDepreciated(
           2,
           "Doe",
           "Jane",

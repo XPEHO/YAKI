@@ -14,7 +14,7 @@ export class DeclarationRepository {
    * @param declarationList The declaration to be inserted.
    * @returns A created declaration.
    */
-  async createDeclaration(declarationList: DeclarationDto[]) {
+  async createDeclaration(declarationList: DeclarationDto[], isLatest: boolean) {
     const client = new Client({
       host: process.env.DB_HOST,
       user: process.env.DB_USER,
@@ -23,7 +23,6 @@ export class DeclarationRepository {
       port: Number(process.env.DB_PORT),
     });
     client.connect();
-    const valuesString: string = YakiUtils.queryValuesString(declarationList, declarationList[0], 1);
     const declarationValuesList: Array<string> = YakiUtils.objectsListToValuesList(declarationList);
     const query = `INSERT INTO declaration 
     (
@@ -32,9 +31,10 @@ export class DeclarationRepository {
       declaration_date_start, 
       declaration_date_end, 
       declaration_status,
-      declaration_team_id
+      declaration_team_id,
+      declaration_is_latest
     ) 
-  VALUES ${valuesString} RETURNING *`;
+    VALUES ($1, $2, $3, $4, $5, $6, ${isLatest}) RETURNING *`;
     try {
       const result = await client.query(query, declarationValuesList);
       const declarationToFront = [
@@ -60,7 +60,7 @@ export class DeclarationRepository {
    * @param declarationList declaration list containing the declaratin to be inserted
    * @returns return the inserted halfDay declarations.
    */
-  async createHalfDayDeclaration(declarationList: DeclarationDto[]) {
+  async createHalfDayDeclaration(declarationList: DeclarationDto[], isLatest: boolean) {
     const client = new Client({
       host: process.env.DB_HOST,
       user: process.env.DB_USER,
@@ -80,9 +80,10 @@ export class DeclarationRepository {
           declaration_date_start, 
           declaration_date_end, 
           declaration_status,
-          declaration_team_id
+          declaration_team_id,
+          declaration_is_latest
         )
-        VALUES ($1, $2, $3, $4, $5, $6), ($7, $8, $9, $10, $11, $12) RETURNING *`,
+        VALUES ($1, $2, $3, $4, $5, $6, ${isLatest}), ($7, $8, $9, $10, $11, $12, ${isLatest}) RETURNING *`,
         declarationsValuesList
       );
 
@@ -156,6 +157,33 @@ export class DeclarationRepository {
       }
 
       return declarationListToFront;
+    } finally {
+      client.end();
+    }
+  }
+
+  async unflagLatestDeclaration(userId: number): Promise<number> {
+    const client = new Client({
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE,
+      port: Number(process.env.DB_PORT),
+    });
+    client.connect();
+
+    try {
+      const query = await client.query(
+        `UPDATE public.declaration d
+         SET declaration_is_latest = false
+         WHERE declaration_is_latest = true AND declaration_user_id = $1
+         RETURNING *`,
+        [userId]
+      );
+
+      const declarationChangedCount: number = query.rowCount;
+
+      return declarationChangedCount;
     } finally {
       client.end();
     }

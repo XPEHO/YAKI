@@ -3,19 +3,21 @@ import 'package:yaki/presentation/displaydata/declaration_status_enum.dart';
 class TeammateWithDeclarationEntity {
   int loggedUserId;
   int userId;
-  String? userFirstName;
-  String? userLastName;
-  DateTime declarationDate;
-  DateTime declarationDateStart;
+  String userFirstName;
+  String userLastName;
+  DateTime? declarationDate;
+  DateTime? declarationDateStart;
   DateTime? declarationDateEnd;
   StatusEnum declarationStatus;
-  int teamId;
-  String teamName;
+  int? teamId;
+  String? teamName;
+  int? customerId;
+  String? customerName;
   StatusEnum? declarationStatusAfternoon;
   int? teamIdAfternoon;
   String? teamNameAfternoon;
-  int declarationId;
-  int declarationUserId;
+  int? customerAfternoonId;
+  String? customerAfternoonName;
 
   TeammateWithDeclarationEntity({
     required this.loggedUserId,
@@ -28,11 +30,13 @@ class TeammateWithDeclarationEntity {
     required this.declarationStatus,
     required this.teamId,
     required this.teamName,
+    required this.customerId,
+    required this.customerName,
     this.declarationStatusAfternoon,
     this.teamIdAfternoon,
     this.teamNameAfternoon,
-    required this.declarationId,
-    required this.declarationUserId,
+    this.customerAfternoonId,
+    this.customerAfternoonName,
   });
 
   // method override for unit test purpose,
@@ -46,11 +50,13 @@ class TeammateWithDeclarationEntity {
         declarationStatus.hashCode,
         teamId.hashCode,
         teamName.hashCode,
+        customerId.hashCode,
+        customerName.hashCode,
         declarationStatusAfternoon.hashCode,
         teamIdAfternoon.hashCode,
         teamNameAfternoon.hashCode,
-        declarationId.hashCode,
-        declarationUserId.hashCode,
+        customerAfternoonId.hashCode,
+        customerAfternoonName.hashCode,
       );
 
   // method override for unit test purpose,

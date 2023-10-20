@@ -32,7 +32,7 @@ class _TeammateApi implements TeammateApi {
     )
             .compose(
               _dio.options,
-              '/teamMates',
+              '//users-with-declaration',
               queryParameters: queryParameters,
               data: _data,
             )
