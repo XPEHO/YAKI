@@ -58,54 +58,40 @@ class AvatarModal extends ConsumerWidget {
               Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Container(
-                    padding: const EdgeInsets.only(
-                      left: 16,
-                      right: 16,
-                      top: 4,
-                    ),
-                    child: Button.secondary(
-                      text: tr('takePicture'),
-                      onPressed: () {
-                        // This is a modal bottom sheet. This need to be delete when the method will be implemented
-                        showModalBottomSheet(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return const SizedBox(
-                              height: 200,
-                              child: Center(
-                                child: Text('Coming soon'),
-                              ),
-                            );
-                          },
-                        );
-                      },
-                    ),
+                  Button.secondary(
+                    text: tr('takePicture'),
+                    onPressed: () {
+                      // This is a modal bottom sheet. This need to be delete when the method will be implemented
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return const SizedBox(
+                            height: 200,
+                            child: Center(
+                              child: Text('Coming soon'),
+                            ),
+                          );
+                        },
+                      );
+                    },
                   ),
-                  Container(
-                    padding: const EdgeInsets.only(
-                      left: 16,
-                      right: 16,
-                      top: 4,
-                      bottom: 16,
-                    ),
-                    child: Button.secondary(
-                      text: tr('imgGallery'),
-                      onPressed: () {
-                        // This is a modal bottom sheet. This need to be delete when the method will be implemented
-                        showModalBottomSheet(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return const SizedBox(
-                              height: 200,
-                              child: Center(
-                                child: Text('Coming soon'),
-                              ),
-                            );
-                          },
-                        );
-                      },
-                    ),
+                  const SizedBox(height: 10),
+                  Button.secondary(
+                    text: tr('imgGallery'),
+                    onPressed: () {
+                      // This is a modal bottom sheet. This need to be delete when the method will be implemented
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return const SizedBox(
+                            height: 200,
+                            child: Center(
+                              child: Text('Coming soon'),
+                            ),
+                          );
+                        },
+                      );
+                    },
                   ),
                 ],
               ),
