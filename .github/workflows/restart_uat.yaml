@@ -9,23 +9,23 @@ on:
   workflow_dispatch:
     inputs:
       branch:
-        description: 'Reason for restart'
+        description: "Reason for restart"
         required: true
-        default: ''
+        default: ""
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Restart UAT services
-      uses: garygrossgarten/github-action-ssh@release
-      with:
-        command: sh restart_uat.sh
-        host: ${{ secrets.SERVER_IP }}
-        username: debian
-        passphrase: ${{ secrets.SSH_PASS }}
-        privateKey: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: Restart UAT services
+        uses: garygrossgarten/github-action-ssh@release
+        with:
+          command: sh restart_full.sh
+          host: ${{ secrets.SERVER_IP }}
+          username: debian
+          passphrase: ${{ secrets.SSH_PASS }}
+          privateKey: ${{ secrets.SSH_PRIVATE_KEY }}
