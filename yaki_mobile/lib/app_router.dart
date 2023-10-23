@@ -11,6 +11,7 @@ import 'package:yaki/presentation/features/teams_declarations_summary/teams_decl
 import 'package:yaki/presentation/features/user_declaration_summary/user_declaration_summary.dart';
 import 'package:yaki/presentation/features/team_selection/team_selection.dart';
 import 'package:yaki/presentation/features/user_declaration_summary/user_declaration_summary_absence.dart';
+import 'package:yaki/presentation/ui/default/user_default_redirection.dart';
 import 'package:yaki/presentation/ui/password/forgot_password.dart';
 import 'package:yaki/presentation/ui/password/change_password.dart';
 import 'package:yaki/presentation/features/profile/profile.dart';
@@ -37,8 +38,8 @@ final goRouterProvider = Provider<GoRouter>(
               },
             ),
             GoRoute(
-              path: 'profile',
-              builder: (context, state) => const Profile(),
+              path: 'userDefaultRedirection',
+              builder: (context, state) => const UserDefaultRedirection(),
               redirect: (BuildContext context, GoRouterState state) async {
                 if (await SharedPref.isTokenPresent()) {
                   return '/userDefaultRedirection';
