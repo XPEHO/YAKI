@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:yaki/data/sources/local/shared_preference.dart';
 import 'package:yaki/presentation/state/providers/declaration_provider.dart';
 import 'package:yaki/presentation/state/providers/login_provider.dart';
+import 'package:yaki/presentation/styles/color.dart';
 import 'package:yaki/presentation/styles/text_style.dart';
 import 'package:yaki_ui/yaki_ui.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -25,7 +26,7 @@ class _AuthenticationState extends ConsumerState<Authentication> {
   final loginController = TextEditingController();
   final passwordController = TextEditingController();
   final Color backgroundColor = const Color(0xFFF2F6F9);
-
+  bool _isLoading = false;
   // store the user default login details
   List<String> loginDetails = ["", ""];
 
@@ -57,9 +58,10 @@ class _AuthenticationState extends ConsumerState<Authentication> {
     required Function goToTeamsDeclarationSummary,
     required Function goToTeamSelectionPage,
     required Function goToUserDefaultRedirection,
+    required Function(bool) setLoading,
   }) async {
+    setLoading(true); // show the loader
     final String lowercaseLogin = login.toLowerCase();
-
     await SharedPref.deleteToken();
     await SharedPref.setLoginDetails(lowercaseLogin, password);
 
@@ -84,6 +86,7 @@ class _AuthenticationState extends ConsumerState<Authentication> {
     } else {
       showSnackBar();
     }
+    setLoading(false); // hide the loader
   }
 
   // Show a snackbar at the bottom of the screen to notice the user that
@@ -147,21 +150,33 @@ class _AuthenticationState extends ConsumerState<Authentication> {
                           controller: passwordController,
                         ),
                         const SizedBox(height: 10),
-                        Button(
-                          buttonHeight: 72,
-                          text: tr('signIn'),
-                          onPressed: () => onPressAuthent(
-                            ref: ref,
-                            login: loginController.text,
-                            password: passwordController.text,
-                            goToTeamsDeclarationSummary: () =>
-                                context.go('/teams-declaration-summary'),
-                            goToTeamSelectionPage: () =>
-                                context.go('/team-selection'),
-                            goToUserDefaultRedirection: () =>
-                                context.go('/userDefaultRedirection'),
-                          ),
-                        ),
+                        _isLoading
+                            ? const Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: CircularProgressIndicator(
+                                  color: AppColors.primaryColor,
+                                  strokeWidth: 5,
+                                  semanticsLabel: 'Loading',
+                                ),
+                              ) // show the loader
+                            : Button(
+                                buttonHeight: 72,
+                                text: tr('signIn'),
+                                onPressed: () => onPressAuthent(
+                                  ref: ref,
+                                  login: loginController.text,
+                                  password: passwordController.text,
+                                  goToTeamsDeclarationSummary: () =>
+                                      context.go('/teams-declaration-summary'),
+                                  goToTeamSelectionPage: () =>
+                                      context.go('/team-selection'),
+                                  goToUserDefaultRedirection: () =>
+                                      context.go('/userDefaultRedirection'),
+                                  setLoading: (bool isLoading) => setState(() {
+                                    _isLoading = isLoading;
+                                  }),
+                                ),
+                              ),
                         const SizedBox(height: 5),
                         Button.secondary(
                           buttonHeight: 64,
