@@ -9,6 +9,7 @@ const font = TextStyle(
 
 class YakiApp extends ConsumerWidget {
   const YakiApp({super.key});
+
   final Color backgroundColor = const Color(0xFFF2F6F9);
 
   // This widget is the root of your application.
