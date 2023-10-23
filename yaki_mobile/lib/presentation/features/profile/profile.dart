@@ -29,90 +29,93 @@ class Profile extends ConsumerWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Stack(
-                alignment: Alignment.bottomRight,
-                children: [
-                  SizedBox(
-                    height: 160,
-                    width: 160,
-                    child: SvgPicture.asset(
-                      'assets/images/avatar-men.svg',
-                    ),
-                  ),
-                  Positioned(
-                    bottom: 8,
-                    right: 8,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFFF936B),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: ElevatedButton.icon(
-                        onPressed: () {
-                          showModalBottomSheet(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return const AvatarModal();
-                            },
-                          );
-                        },
-                        icon: SvgPicture.asset(
-                          'assets/images/edit.svg',
-                          height: 20,
-                          width: 20,
-                        ),
-                        label: const Text(''),
-                        style: ElevatedButton.styleFrom(
-                          shadowColor: Colors.transparent,
-                        ),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Stack(
+                  alignment: Alignment.bottomRight,
+                  children: [
+                    SizedBox(
+                      height: 160,
+                      width: 160,
+                      child: SvgPicture.asset(
+                        'assets/images/avatar-men.svg',
                       ),
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 10),
-              InputText(
-                type: InputTextType.email,
-                label: tr('inputLabelFirstName'),
-                controller: TextEditingController(text: user?.firstName ?? ''),
-              ),
-              const SizedBox(height: 10),
-              InputText(
-                type: InputTextType.email,
-                label: tr('inputLabelLastName'),
-                controller: TextEditingController(text: user?.lastName ?? ''),
-              ),
-              const SizedBox(height: 10),
-              InputText(
-                type: InputTextType.email,
-                label: 'Email',
-                controller: TextEditingController(text: user?.email ?? ''),
-              ),
-              const SizedBox(height: 10),
-              InputText(
-                type: InputTextType.password,
-                label: tr('inputPassword'),
-                controller: TextEditingController(),
-              ),
-              const SizedBox(height: 10),
-              Button.secondary(
-                text: tr('changePassword'),
-                onPressed: () {
-                  context.go('/changePassword');
-                },
-              ),
-              const SizedBox(height: 10),
-              Button.tertiary(
-                text: tr('logOutButton'),
-                onPressed: () {
-                  context.go('/');
-                },
-              ),
-            ],
+                    Positioned(
+                      bottom: 8,
+                      right: 8,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFFF936B),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: ElevatedButton.icon(
+                          onPressed: () {
+                            showModalBottomSheet(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return const AvatarModal();
+                              },
+                            );
+                          },
+                          icon: SvgPicture.asset(
+                            'assets/images/edit.svg',
+                            height: 20,
+                            width: 20,
+                          ),
+                          label: const Text(''),
+                          style: ElevatedButton.styleFrom(
+                            shadowColor: Colors.transparent,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                InputText(
+                  type: InputTextType.email,
+                  label: tr('inputLabelFirstName'),
+                  controller:
+                      TextEditingController(text: user?.firstName ?? ''),
+                ),
+                const SizedBox(height: 10),
+                InputText(
+                  type: InputTextType.email,
+                  label: tr('inputLabelLastName'),
+                  controller: TextEditingController(text: user?.lastName ?? ''),
+                ),
+                const SizedBox(height: 10),
+                InputText(
+                  type: InputTextType.email,
+                  label: 'Email',
+                  controller: TextEditingController(text: user?.email ?? ''),
+                ),
+                const SizedBox(height: 10),
+                InputText(
+                  type: InputTextType.password,
+                  label: tr('inputPassword'),
+                  controller: TextEditingController(),
+                ),
+                const SizedBox(height: 10),
+                Button.secondary(
+                  text: tr('changePassword'),
+                  onPressed: () {
+                    context.go('/changePassword');
+                  },
+                ),
+                const SizedBox(height: 10),
+                Button.tertiary(
+                  text: tr('logOutButton'),
+                  onPressed: () {
+                    context.go('/');
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
