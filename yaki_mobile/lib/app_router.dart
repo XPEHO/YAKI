@@ -37,11 +37,11 @@ final goRouterProvider = Provider<GoRouter>(
               },
             ),
             GoRoute(
-              path: 'profile',
+              path: 'userDefaultRedirection',
               builder: (context, state) => const Profile(),
               redirect: (BuildContext context, GoRouterState state) async {
                 if (await SharedPref.isTokenPresent()) {
-                  return '/userDefaultRedirection';
+                  return '/profile';
                 } else {
                   return '/';
                 }
