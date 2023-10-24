@@ -15,6 +15,7 @@ class Profile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final LoggedUser? user = ref.watch(loginRepositoryProvider).loggedUser;
+    debugPrint(user.toString());
 
     void onLogout({required Function goToAuthentication}) {
       goToAuthentication();
