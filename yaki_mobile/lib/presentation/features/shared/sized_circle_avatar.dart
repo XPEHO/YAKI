@@ -23,10 +23,7 @@ class NavIconCircleAvatar extends StatelessWidget {
 
 class CellAvatarSvg extends StatelessWidget {
   final String imageSrc;
-  const CellAvatarSvg({
-    super.key,
-    required this.imageSrc,
-  });
+  const CellAvatarSvg({super.key, required this.imageSrc});
 
   @override
   Widget build(BuildContext context) {

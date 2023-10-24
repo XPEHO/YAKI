@@ -111,7 +111,7 @@ class Profile extends ConsumerWidget {
                 Button.tertiary(
                   text: tr('logOutButton'),
                   onPressed: () {
-                    context.go('/');
+                    context.go('/authentication');
                   },
                 ),
               ],
