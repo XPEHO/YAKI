@@ -54,7 +54,7 @@ class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
           ),
           actionLabel: tr('registrationSnackValidation'),
           barAction: () {
-            context.go('/');
+            context.go('/authentication');
           },
         );
       } else {
