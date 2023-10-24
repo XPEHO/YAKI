@@ -17,7 +17,6 @@ class AvatarModal extends ConsumerWidget {
       padding: const EdgeInsets.all(8.0),
       child: SingleChildScrollView(
         child: SizedBox(
-          height: 1000,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -25,31 +24,95 @@ class AvatarModal extends ConsumerWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  CircleAvatar(
-                    radius: 60,
-                    backgroundColor: const Color(0xFFFFD7C0),
-                    child: Text(
-                      '${user?.firstName?[0] ?? "A"}${user?.lastName?[0] ?? "B"}',
-                      style: const TextStyle(
-                        color: Color(0xFF7D818C),
-                        fontSize: 40,
+                  InkWell(
+                    onTap: () {
+                      // This is a modal bottom sheet. This need to be delete when the method will be implemented
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return const SizedBox(
+                            height: 200,
+                            child: Center(
+                              child: Text('Coming soon'),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                    child: CircleAvatar(
+                      radius: 60,
+                      backgroundColor: const Color(0xFFFFD7C0),
+                      child: Text(
+                        '${user?.firstName?[0] ?? "A"}${user?.lastName?[0] ?? "B"}',
+                        style: const TextStyle(
+                          color: Color(0xFF7D818C),
+                          fontSize: 40,
+                        ),
                       ),
                     ),
                   ),
-                  const ProfilAvatarSvg(
-                    imageSrc: 'assets/images/avatar-men2.svg',
+                  InkWell(
+                    onTap: () {
+                      // This is a modal bottom sheet. This need to be delete when the method will be implemented
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return const SizedBox(
+                            height: 200,
+                            child: Center(
+                              child: Text('Coming soon'),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                    child: const ProfilAvatarSvg(
+                      imageSrc: 'assets/images/avatar-men2.svg',
+                    ),
                   ),
                 ],
               ),
               const SizedBox(height: 20),
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  ProfilAvatarSvg(
-                    imageSrc: 'assets/images/avatar-woman.svg',
+                  InkWell(
+                    onTap: () {
+                      // This is a modal bottom sheet. This need to be delete when the method will be implemented
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return const SizedBox(
+                            height: 200,
+                            child: Center(
+                              child: Text('Coming soon'),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                    child: const ProfilAvatarSvg(
+                      imageSrc: 'assets/images/avatar-woman.svg',
+                    ),
                   ),
-                  ProfilAvatarSvg(
-                    imageSrc: 'assets/images/avatar-men.svg',
+                  InkWell(
+                    onTap: () {
+                      // This is a modal bottom sheet. This need to be delete when the method will be implemented
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return const SizedBox(
+                            height: 200,
+                            child: Center(
+                              child: Text('Coming soon'),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                    child: const ProfilAvatarSvg(
+                      imageSrc: 'assets/images/avatar-men.svg',
+                    ),
                   ),
                 ],
               ),
