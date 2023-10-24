@@ -58,37 +58,33 @@ class Profile extends ConsumerWidget {
                         'assets/images/avatar-men.svg',
                       ),
                     ),
-                    Positioned(
-                      bottom: 8,
-                      right: 8,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFFF936B),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: ElevatedButton.icon(
-                          onPressed: () {
-                            showModalBottomSheet(
-                              isScrollControlled: true,
-                              shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(48),
-                                  topRight: Radius.circular(48),
-                                ),
+                    SizedBox(
+                      width: 48,
+                      child: Button(
+                        buttonHeight: 48,
+                        onPressed: () {
+                          showModalBottomSheet(
+                            isScrollControlled: true,
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(48),
+                                topRight: Radius.circular(48),
                               ),
-                              context: context,
-                              builder: (BuildContext context) {
-                                return const AvatarModal();
-                              },
-                            );
-                          },
-                          icon: SvgPicture.asset(
+                            ),
+                            context: context,
+                            builder: (BuildContext context) {
+                              return const AvatarModal();
+                            },
+                          );
+                        },
+                        icon: Center(
+                          child: SvgPicture.asset(
                             'assets/images/edit.svg',
-                            height: 20,
-                            width: 20,
+                            height: 48,
+                            width: 48,
                           ),
-                          label: const Text(''),
                         ),
+                        text: "",
                       ),
                     ),
                   ],

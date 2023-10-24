@@ -92,7 +92,7 @@ dependencies:
     git:
       url: https://github.com/XPEHO/yaki_ui.git
       path: flutter
-      ref: 0.5.2
+      ref: 0.7.0
   collection: ^1.17.2
 
 dev_dependencies:
