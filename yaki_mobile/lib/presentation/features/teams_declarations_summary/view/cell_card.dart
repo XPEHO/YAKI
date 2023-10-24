@@ -41,11 +41,10 @@ class CellCard extends ConsumerWidget {
             statusAfternoon: teammate.declarationStatusAfternoon,
           ),
           //display the button only if the modifier button is used
-          if (isModifierBtnUsed)
+          if (isModifierBtnUsed) ...[
             const SizedBox(
               height: 16,
             ),
-          if (isModifierBtnUsed)
             Button.secondary(
               buttonHeight: 52,
               onPressed: () {
@@ -54,6 +53,7 @@ class CellCard extends ConsumerWidget {
               },
               text: 'MODIFIER',
             ),
+          ],
         ],
       ),
     );
@@ -77,7 +77,7 @@ String displayTimeSinceDeclaration({
 }) {
   final now = DateTime.now();
   final declarationDate = teammate.declarationDate;
-  final difference = now.difference(declarationDate);
+  final difference = now.difference(declarationDate!);
   final differenceInHours = difference.inHours;
   final differenceInMinutes = difference.inMinutes;
   final differenceInSeconds = difference.inSeconds;

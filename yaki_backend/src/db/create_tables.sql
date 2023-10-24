@@ -300,6 +300,7 @@ CREATE TABLE IF NOT EXISTS public.declaration
     declaration_date_end timestamp with time zone,
     declaration_status character varying(30),
     declaration_team_id integer NOT NULL,
+    declaration_is_latest boolean NOT NULL,
     CONSTRAINT declaration_pkey PRIMARY KEY (declaration_id),
     CONSTRAINT declaration_user_id_fkey FOREIGN KEY (declaration_user_id)
         REFERENCES public.user (user_id) MATCH SIMPLE
@@ -351,3 +352,6 @@ CREATE TABLE IF NOT EXISTS public.captains_teams(
 TABLESPACE pg_default;
 ALTER TABLE IF EXISTS public.captains_teams
     OWNER to yaki;
+
+ALTER TABLE public.declaration
+ADD COLUMN IF NOT EXISTS declaration_is_latest BOOLEAN DEFAULT FALSE;

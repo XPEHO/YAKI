@@ -47,18 +47,34 @@ router.post("/register", (req, res) => userController.registerNewUser(req, res))
 
 router.post("/register", (req, res) => userController.registerNewUser(req, res));
 
+// DEPRECIATED - TO BE REMOVED WHEN 1.10 isnt used anymore
+//========================================================
 router.get(
   "/teammates",
   (req, res, next) =>
-    /*#swagger.parameters['captainId'] = {
+    /*#swagger.parameters['userId'] = {
                 in: 'query',
-                description: 'Captain id',
+                description: 'user id',
                 required: true,
                 type: 'number',
-                schema: { captainId: 1 }
+                schema: { userId: 1 }
 }
   */ authService.verifyToken(req, res, next),
   async (req, res) => teammateController.getByTeamIdWithLastDeclaration(req, res)
+);
+
+router.get(
+  "/users-with-declaration",
+  (req, res, next) =>
+    /*#swagger.parameters['userId'] = {
+                in: 'query',
+                description: 'user id',
+                required: true,
+                type: 'number',
+                schema: { userId: 1 }
+}
+  */ authService.verifyToken(req, res, next),
+  async (req, res) => teammateController.getTeammatesDeclarationsFromUserTeams(req, res)
 );
 
 router.post(

@@ -7,29 +7,27 @@ class TeammateWithDeclarationModel {
   int? userId;
   String? userLastName;
   String? userFirstName;
-  int? teamMateId;
   DateTime? declarationDate;
   DateTime? declarationDateStart;
   DateTime? declarationDateEnd;
   String? declarationStatus;
   int? teamId;
-  String teamName;
-  int declarationId;
-  int declarationUserId;
+  String? teamName;
+  int? customerId;
+  String? customerName;
 
   TeammateWithDeclarationModel({
     required this.userId,
     required this.userLastName,
     required this.userFirstName,
-    required this.teamMateId,
     required this.declarationDate,
     required this.declarationDateStart,
     required this.declarationDateEnd,
     required this.declarationStatus,
     required this.teamId,
     required this.teamName,
-    required this.declarationId,
-    required this.declarationUserId,
+    required this.customerId,
+    required this.customerName,
   });
 
   factory TeammateWithDeclarationModel.fromJson(Map<String, dynamic> json) =>

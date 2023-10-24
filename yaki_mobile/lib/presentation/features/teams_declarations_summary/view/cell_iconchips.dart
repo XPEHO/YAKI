@@ -6,7 +6,7 @@ import 'package:yaki/presentation/styles/color.dart';
 import 'package:yaki_ui/yaki_ui.dart';
 
 class CellIconChips extends StatelessWidget {
-  final String teamName;
+  final String? teamName;
   final StatusEnum status;
   final String? teamNameAfternoon;
   final StatusEnum? statusAfternoon;
@@ -29,7 +29,7 @@ class CellIconChips extends StatelessWidget {
           children: [
             if (status != StatusEnum.undeclared && status != StatusEnum.absence)
               IconChip(
-                label: teamName,
+                label: teamName ?? "err name",
                 backgroundColor: AppColors.cellChipDefault,
                 fontWeightLabel: FontWeight.w500,
                 image: ClipRRect(
@@ -67,7 +67,7 @@ class CellIconChips extends StatelessWidget {
               if (statusAfternoon != StatusEnum.undeclared &&
                   statusAfternoon != StatusEnum.absence)
                 IconChip(
-                  label: teamNameAfternoon!,
+                  label: teamNameAfternoon ?? "err name",
                   backgroundColor: AppColors.cellChipDefault,
                   fontWeightLabel: FontWeight.w500,
                   image: ClipRRect(

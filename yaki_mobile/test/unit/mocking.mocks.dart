@@ -111,22 +111,6 @@ class MockResponse<T> extends _i1.Mock implements _i4.Response<T> {
         returnValueForMissingStub: null,
       );
   @override
-  _i3.Headers get headers => (super.noSuchMethod(
-        Invocation.getter(#headers),
-        returnValue: _FakeHeaders_1(
-          this,
-          Invocation.getter(#headers),
-        ),
-      ) as _i3.Headers);
-  @override
-  set headers(_i3.Headers? _headers) => super.noSuchMethod(
-        Invocation.setter(
-          #headers,
-          _headers,
-        ),
-        returnValueForMissingStub: null,
-      );
-  @override
   bool get isRedirect => (super.noSuchMethod(
         Invocation.getter(#isRedirect),
         returnValue: false,
@@ -162,6 +146,22 @@ class MockResponse<T> extends _i1.Mock implements _i4.Response<T> {
         Invocation.setter(
           #extra,
           _extra,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  _i3.Headers get headers => (super.noSuchMethod(
+        Invocation.getter(#headers),
+        returnValue: _FakeHeaders_1(
+          this,
+          Invocation.getter(#headers),
+        ),
+      ) as _i3.Headers);
+  @override
+  set headers(_i3.Headers? _headers) => super.noSuchMethod(
+        Invocation.setter(
+          #headers,
+          _headers,
         ),
         returnValueForMissingStub: null,
       );

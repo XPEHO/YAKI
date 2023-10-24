@@ -1,41 +1,41 @@
 import {StatusDeclaration} from "../declaration/status.enum";
 
-export class UserWithDeclaration {
+export class UserWithDeclarationDepreciated {
   userId: number;
   userLastName: string;
   userFirstName: string;
   declarationDate: Date;
-  declarationDateStart: Date;
-  declarationDateEnd: Date;
   declarationStatus: StatusDeclaration;
   teamId: number;
   teamName: string;
-  teamCustomerId: number;
-  customerName: string;
+  declarationDateStart: Date;
+  declarationDateEnd: Date;
+  declarationId: number;
+  declarationUserId: number;
 
   constructor(
     userId: number,
     userLastName: string,
     userFirstName: string,
     declarationDate: Date,
-    declarationDateStart: Date,
-    declarationDateEnd: Date,
     declarationStatus: StatusDeclaration,
     teamId: number,
     teamName: string,
-    teamCustomerId: number,
-    customerName: string
+    declarationDateStart: Date,
+    declarationDateEnd: Date,
+    declarationId: number,
+    declarationUserId: number
   ) {
     this.userId = userId;
     this.userLastName = userLastName;
     this.userFirstName = userFirstName;
     this.declarationDate = declarationDate;
-    this.declarationDateStart = declarationDateStart;
-    this.declarationDateEnd = declarationDateEnd;
     this.declarationStatus = declarationStatus;
     this.teamId = teamId;
     this.teamName = teamName;
-    this.teamCustomerId = teamCustomerId;
-    this.customerName = customerName;
+    this.declarationDateStart = declarationDateStart;
+    this.declarationDateEnd = declarationDateEnd;
+    this.declarationId = declarationId;
+    this.declarationUserId = declarationUserId;
   }
 }

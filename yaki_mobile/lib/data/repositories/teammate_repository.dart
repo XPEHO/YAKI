@@ -34,45 +34,48 @@ class TeammateRepository {
           List<TeammateWithDeclarationEntity> entityList =
               <TeammateWithDeclarationEntity>[];
 
+          // Create the list of TeammateWithDeclarationEntity
           for (var i = 0; i < modelList.length; i++) {
             final TeammateWithDeclarationModel currentModel = modelList[i];
-            // skip item if incorrect data
-            if (currentModel.teamId == null || currentModel.userId == null) {
+
+            // skip item if necessary data is incorrect
+            if (currentModel.userId == null ||
+                currentModel.declarationStatus != null &&
+                    currentModel.declarationStatus != StatusEnum.absence.name &&
+                    currentModel.teamId == null) {
               debugPrint('Incorrect data from : $currentModel $i');
               continue;
             }
 
-            //check if preview teammate is the same as the current one, meaning its a half day declaration
-            if (i != 0 && modelList[i].userId == modelList[i - 1].userId) {
+            // If preview teammate is the same as the current one, meaning "current" is the afternoon declaration part
+            if (i != 0 && currentModel.userId == modelList[i - 1].userId) {
               final TeammateWithDeclarationEntity halfDayUser = entityList.last;
 
               halfDayUser.declarationStatusAfternoon = StatusEnum.fromValue(
-                modelList[i].declarationStatus ?? StatusEnum.undeclared.name,
+                currentModel.declarationStatus!,
               );
-              halfDayUser.teamIdAfternoon = modelList[i].teamId;
-              halfDayUser.teamNameAfternoon =
-                  teamNameCheck(modelList[i].teamName, i);
+              halfDayUser.teamIdAfternoon = currentModel.teamId;
+              halfDayUser.teamNameAfternoon = currentModel.teamName;
+              halfDayUser.customerAfternoonId = currentModel.customerId;
+              halfDayUser.customerAfternoonName = currentModel.customerName;
             } else {
               entityList.add(
                 TeammateWithDeclarationEntity(
                   loggedUserId: userId,
-                  userId: modelList[i].userId!,
-                  userFirstName: modelList[i].userFirstName,
-                  userLastName: modelList[i].userLastName,
-                  declarationDate:
-                      modelList[i].declarationDate ?? DateTime.now(),
-                  declarationDateStart:
-                      modelList[i].declarationDateStart ?? DateTime.now(),
-                  declarationDateEnd:
-                      modelList[i].declarationDateEnd ?? DateTime.now(),
+                  userId: currentModel.userId!,
+                  userFirstName: currentModel.userFirstName!,
+                  userLastName: currentModel.userLastName!,
+                  declarationDate: currentModel.declarationDate,
+                  declarationDateStart: currentModel.declarationDateStart,
+                  declarationDateEnd: currentModel.declarationDateEnd,
                   declarationStatus: StatusEnum.fromValue(
-                    modelList[i].declarationStatus ??
+                    currentModel.declarationStatus ??
                         StatusEnum.undeclared.name,
                   ),
-                  teamId: modelList[i].teamId!,
-                  teamName: teamNameCheck(modelList[i].teamName, i),
-                  declarationId: modelList[i].declarationId,
-                  declarationUserId: modelList[i].declarationUserId,
+                  teamId: currentModel.teamId,
+                  teamName: currentModel.teamName,
+                  customerId: currentModel.customerId,
+                  customerName: currentModel.customerName,
                 ),
               );
             }
@@ -82,8 +85,7 @@ class TeammateRepository {
           throw Exception('Invalid statusCode : $statusCode');
       }
     } catch (err) {
-      debugPrint('error during teammate list get : $err');
-      return [];
+      return Future.error(Exception('Error during teammate list fetch'));
     }
   }
 
@@ -98,13 +100,5 @@ class TeammateRepository {
           .add(TeammateWithDeclarationModel.fromJson(teammateAndDeclaration));
     }
     return modelList;
-  }
-
-  String teamNameCheck(String? teamName, int index) {
-    if (teamName == null || teamName == '') {
-      return 'unknown $index';
-    } else {
-      return teamName;
-    }
   }
 }
