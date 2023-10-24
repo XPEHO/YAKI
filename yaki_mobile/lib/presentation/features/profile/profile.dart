@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:yaki/data/sources/local/shared_preference.dart';
 import 'package:yaki/domain/entities/logged_user.dart';
 import 'package:yaki/presentation/features/profile/view/avatar_modal.dart';
 import 'package:yaki/presentation/state/providers/login_provider.dart';
@@ -16,9 +16,16 @@ class Profile extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final LoggedUser? user = ref.watch(loginRepositoryProvider).loggedUser;
 
-    Future<void> deleteToken() async {
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.remove('token');
+    void onLogout({required Function goToAuthentication}) {
+      goToAuthentication();
+    }
+
+    void onDeleteToken({
+      required WidgetRef ref,
+      required Function goToAuthentication,
+    }) async {
+      await SharedPref.deleteToken();
+      onLogout(goToAuthentication: goToAuthentication);
     }
 
     return Scaffold(
@@ -116,10 +123,10 @@ class Profile extends ConsumerWidget {
                 const SizedBox(height: 10),
                 Button.tertiary(
                   text: tr('logOutButton'),
-                  onPressed: () async {
-                    await deleteToken();
-                    context.go('/authentication');
-                  },
+                  onPressed: () => onDeleteToken(
+                    ref: ref,
+                    goToAuthentication: () => context.go('/authentication'),
+                  ),
                 ),
               ],
             ),
