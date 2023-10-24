@@ -44,7 +44,7 @@ final goRouterProvider = Provider<GoRouter>(
                 if (await SharedPref.isTokenPresent()) {
                   return '/userDefaultRedirection';
                 } else {
-                  return '/';
+                  return '/authentication';
                 }
               },
             ),
@@ -55,7 +55,7 @@ final goRouterProvider = Provider<GoRouter>(
                 if (await SharedPref.isTokenPresent()) {
                   return '/profile';
                 } else {
-                  return '/';
+                  return '/authentication';
                 }
               },
             ),
@@ -66,7 +66,7 @@ final goRouterProvider = Provider<GoRouter>(
                 if (await SharedPref.isTokenPresent()) {
                   return '/changePassword';
                 } else {
-                  return '/';
+                  return '/authentication';
                 }
               },
             ),
@@ -77,7 +77,7 @@ final goRouterProvider = Provider<GoRouter>(
                 if (await SharedPref.isTokenPresent()) {
                   return '/team-selection';
                 } else {
-                  return '/';
+                  return '/authentication';
                 }
               },
             ),
@@ -90,7 +90,7 @@ final goRouterProvider = Provider<GoRouter>(
                 if (await SharedPref.isTokenPresent()) {
                   return '/declaration/half-day-start';
                 }
-                return '/';
+                return '/authentication';
               },
             ),
             GoRoute(
@@ -104,7 +104,7 @@ final goRouterProvider = Provider<GoRouter>(
                 if (await SharedPref.isTokenPresent()) {
                   return '/declaration/half-day-end';
                 }
-                return '/';
+                return '/authentication';
               },
             ),
             GoRoute(
@@ -122,7 +122,7 @@ final goRouterProvider = Provider<GoRouter>(
                 if (await SharedPref.isTokenPresent() && isValidPath) {
                   return '/declaration/${state.pathParameters['mode']!}';
                 }
-                return '/';
+                return '/authentication';
               },
             ),
             GoRoute(
@@ -165,7 +165,7 @@ final goRouterProvider = Provider<GoRouter>(
                 if (await SharedPref.isTokenPresent()) {
                   return '/teams-declaration-summary';
                 }
-                return '/';
+                return '/authentication';
               },
             ),
           ],

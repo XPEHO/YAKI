@@ -59,7 +59,7 @@ class _ChangePasswordState extends ConsumerState<ChangePassword> {
           ),
           actionLabel: tr('registrationSnackValidation'),
           barAction: () {
-            context.go('/');
+            context.go('/authentication');
           },
         );
       } else {
