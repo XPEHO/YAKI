@@ -68,6 +68,13 @@ class Profile extends ConsumerWidget {
                         child: ElevatedButton.icon(
                           onPressed: () {
                             showModalBottomSheet(
+                              isScrollControlled: true,
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(48),
+                                  topRight: Radius.circular(48),
+                                ),
+                              ),
                               context: context,
                               builder: (BuildContext context) {
                                 return const AvatarModal();
@@ -80,9 +87,6 @@ class Profile extends ConsumerWidget {
                             width: 20,
                           ),
                           label: const Text(''),
-                          style: ElevatedButton.styleFrom(
-                            shadowColor: Colors.transparent,
-                          ),
                         ),
                       ),
                     ),
@@ -128,6 +132,7 @@ class Profile extends ConsumerWidget {
                     goToAuthentication: () => context.go('/authentication'),
                   ),
                 ),
+                const SizedBox(height: 40),
               ],
             ),
           ),
