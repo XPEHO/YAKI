@@ -34,7 +34,7 @@ class VacationStatus extends ConsumerWidget {
                 child: AvatarIcon(
                   pictoIcon: 'assets/images/avatar1.svg',
                   onPressed: () {
-                    context.push('/profile');
+                    context.go('/profile');
                   },
                 ),
               ),
