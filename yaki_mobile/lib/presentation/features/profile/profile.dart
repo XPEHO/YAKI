@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:yaki/data/sources/local/shared_preference.dart';
 import 'package:yaki/domain/entities/logged_user.dart';
 import 'package:yaki/presentation/features/profile/view/avatar_modal.dart';
+import 'package:yaki/presentation/features/shared/feedback_user.dart';
 import 'package:yaki/presentation/state/providers/login_provider.dart';
 import 'package:yaki_ui/yaki_ui.dart';
 
@@ -129,6 +130,8 @@ class Profile extends ConsumerWidget {
                     goToAuthentication: () => context.go('/authentication'),
                   ),
                 ),
+                const SizedBox(height: 40),
+                const FeedbackUser(),
                 const SizedBox(height: 40),
               ],
             ),

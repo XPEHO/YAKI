@@ -67,6 +67,13 @@ TextStyle textFetchError({required double fontSize}) {
   );
 }
 
+TextStyle textFeedback() {
+  return const TextStyle(
+    color: Colors.grey,
+    fontSize: 16,
+  );
+}
+
 // old styles
 // ------------------------------------------------------------
 TextStyle textStyleHeaderBig() {

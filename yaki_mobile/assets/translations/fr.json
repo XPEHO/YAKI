@@ -127,5 +127,7 @@
   "retry": "réessayer",
 
   "takePicture": "PRENDRE UNE PHOTO",
-  "imgGallery": "IMAGE À PARTIR DE MA GALLERIE"
+  "imgGallery": "IMAGE À PARTIR DE MA GALERIE",
+
+  "feedback": "Besoin d'aide ?"
 }
