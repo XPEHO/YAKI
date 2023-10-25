@@ -24,11 +24,17 @@ final goRouterProvider = Provider<GoRouter>(
       routes: <GoRoute>[
         GoRoute(
           path: '/',
-          builder: (context, state) => const SplashScreen(),
+          builder: (context, state) => WillPopScope(
+            onWillPop: () async => false,
+            child: const SplashScreen(),
+          ),
           routes: [
             GoRoute(
               path: 'authentication',
-              builder: (context, state) => const Authentication(),
+              builder: (context, state) => WillPopScope(
+                onWillPop: () async => false,
+                child: const Authentication(),
+              ),
               redirect: (BuildContext context, GoRouterState state) async {
                 if (await SharedPref.isTokenPresent()) {
                   return '/teams-declaration-summary';
@@ -39,7 +45,10 @@ final goRouterProvider = Provider<GoRouter>(
             ),
             GoRoute(
               path: 'userDefaultRedirection',
-              builder: (context, state) => const UserDefaultRedirection(),
+              builder: (context, state) => WillPopScope(
+                onWillPop: () async => false,
+                child: const UserDefaultRedirection(),
+              ),
               redirect: (BuildContext context, GoRouterState state) async {
                 if (await SharedPref.isTokenPresent()) {
                   return '/userDefaultRedirection';
@@ -50,7 +59,10 @@ final goRouterProvider = Provider<GoRouter>(
             ),
             GoRoute(
               path: 'profile',
-              builder: (context, state) => const Profile(),
+              builder: (context, state) => WillPopScope(
+                onWillPop: () async => false,
+                child: const Profile(),
+              ),
               redirect: (BuildContext context, GoRouterState state) async {
                 if (await SharedPref.isTokenPresent()) {
                   return '/profile';
@@ -61,7 +73,10 @@ final goRouterProvider = Provider<GoRouter>(
             ),
             GoRoute(
               path: 'changePassword',
-              builder: (context, state) => const ChangePassword(),
+              builder: (context, state) => WillPopScope(
+                onWillPop: () async => false,
+                child: const ChangePassword(),
+              ),
               redirect: (BuildContext context, GoRouterState state) async {
                 if (await SharedPref.isTokenPresent()) {
                   return '/changePassword';
@@ -72,7 +87,10 @@ final goRouterProvider = Provider<GoRouter>(
             ),
             GoRoute(
               path: 'team-selection',
-              builder: (context, state) => const TeamSelection(),
+              builder: (context, state) => WillPopScope(
+                onWillPop: () async => false,
+                child: const TeamSelection(),
+              ),
               redirect: (BuildContext context, GoRouterState state) async {
                 if (await SharedPref.isTokenPresent()) {
                   return '/team-selection';
@@ -83,8 +101,11 @@ final goRouterProvider = Provider<GoRouter>(
             ),
             GoRoute(
               path: 'declaration/half-day-start',
-              builder: (context, state) => const DeclarationPage(
-                declarationMode: "half-day-start",
+              builder: (context, state) => WillPopScope(
+                onWillPop: () async => false,
+                child: const DeclarationPage(
+                  declarationMode: "half-day-start",
+                ),
               ),
               redirect: (BuildContext context, GoRouterState state) async {
                 if (await SharedPref.isTokenPresent()) {
@@ -95,8 +116,11 @@ final goRouterProvider = Provider<GoRouter>(
             ),
             GoRoute(
               path: 'declaration/half-day-end',
-              builder: (context, state) => const DeclarationPage(
-                declarationMode: "half-day-end",
+              builder: (context, state) => WillPopScope(
+                onWillPop: () async => false,
+                child: const DeclarationPage(
+                  declarationMode: "half-day-end",
+                ),
               ),
               redirect: (BuildContext context, GoRouterState state) async {
                 // null check
@@ -109,8 +133,11 @@ final goRouterProvider = Provider<GoRouter>(
             ),
             GoRoute(
               path: 'declaration/:mode',
-              builder: (context, state) => DeclarationPage(
-                declarationMode: state.pathParameters['mode']!,
+              builder: (context, state) => WillPopScope(
+                onWillPop: () async => false,
+                child: DeclarationPage(
+                  declarationMode: state.pathParameters['mode']!,
+                ),
               ),
               redirect: (BuildContext context, GoRouterState state) async {
                 // null check
@@ -127,8 +154,11 @@ final goRouterProvider = Provider<GoRouter>(
             ),
             GoRoute(
               path: 'summary/absence',
-              builder: (context, state) => const UserDeclarationSummaryAbsence(
-                summaryMode: "absence",
+              builder: (context, state) => WillPopScope(
+                onWillPop: () async => false,
+                child: const UserDeclarationSummaryAbsence(
+                  summaryMode: "absence",
+                ),
               ),
               redirect: (BuildContext context, GoRouterState state) async {
                 if (await SharedPref.isTokenPresent()) {
@@ -140,8 +170,11 @@ final goRouterProvider = Provider<GoRouter>(
             ),
             GoRoute(
               path: 'summary/:mode',
-              builder: (context, state) => UserDeclarationSummary(
-                summaryMode: state.pathParameters['mode']!,
+              builder: (context, state) => WillPopScope(
+                onWillPop: () async => false,
+                child: UserDeclarationSummary(
+                  summaryMode: state.pathParameters['mode']!,
+                ),
               ),
               redirect: (BuildContext context, GoRouterState state) async {
                 final String pathParam = state.pathParameters['mode'] ?? '';
@@ -158,7 +191,10 @@ final goRouterProvider = Provider<GoRouter>(
             ),
             GoRoute(
               path: 'teams-declaration-summary',
-              builder: (context, state) => const TeamsDeclarationSummary(),
+              builder: (context, state) => WillPopScope(
+                onWillPop: () async => false,
+                child: const TeamsDeclarationSummary(),
+              ),
               redirect: (BuildContext context, GoRouterState state) async {
                 // null check
 
@@ -172,11 +208,17 @@ final goRouterProvider = Provider<GoRouter>(
         ),
         GoRoute(
           path: '/registration',
-          builder: (context, state) => const Registration(),
+          builder: (context, state) => WillPopScope(
+            onWillPop: () async => false,
+            child: const Registration(),
+          ),
         ),
         GoRoute(
           path: '/forgotPassword',
-          builder: (context, state) => const ForgotPassword(),
+          builder: (context, state) => WillPopScope(
+            onWillPop: () async => false,
+            child: const ForgotPassword(),
+          ),
         ),
       ],
     );

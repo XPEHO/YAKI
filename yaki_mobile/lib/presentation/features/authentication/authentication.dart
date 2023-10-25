@@ -85,8 +85,8 @@ class _AuthenticationState extends ConsumerState<Authentication> {
       }
     } else {
       showSnackBar();
+      setLoading(false);
     }
-    setLoading(false); // hide the loader
   }
 
   // Show a snackbar at the bottom of the screen to notice the user that
@@ -183,14 +183,14 @@ class _AuthenticationState extends ConsumerState<Authentication> {
                           text: tr('forgotPassword'),
                           onPressed: () => onPressedForgotPassword(
                             goToForgotPassword: () =>
-                                context.push('/forgotPassword'),
+                                context.go('/forgotPassword'),
                           ),
                         ),
                         const SizedBox(height: 10),
                         InkWell(
                           onTap: () => onPressSignUp(
                             goToRegistrationPage: () =>
-                                context.push('/registration'),
+                                context.go('/registration'),
                           ),
                           borderRadius: BorderRadius.circular(16),
                           splashColor: const Color.fromARGB(125, 46, 46, 46),
