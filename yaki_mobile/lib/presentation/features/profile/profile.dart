@@ -79,7 +79,7 @@ class Profile extends ConsumerWidget {
                         },
                         icon: Center(
                           child: SvgPicture.asset(
-                            'assets/images/edit.svg',
+                            'assets/images/Edit.svg',
                             height: 24,
                             width: 24,
                           ),
