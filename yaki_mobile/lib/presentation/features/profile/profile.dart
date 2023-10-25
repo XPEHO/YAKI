@@ -80,8 +80,8 @@ class Profile extends ConsumerWidget {
                         icon: Center(
                           child: SvgPicture.asset(
                             'assets/images/edit.svg',
-                            height: 48,
-                            width: 48,
+                            height: 24,
+                            width: 24,
                           ),
                         ),
                         text: "",
