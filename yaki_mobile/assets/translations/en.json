@@ -125,5 +125,7 @@
   "retry": "Retry",
 
   "takePicture": "PRENDRE UNE PHOTO",
-  "imgGallery": "IMAGE FROM MY GALLERY"
+  "imgGallery": "IMAGE FROM MY GALLERY",
+
+  "feedback": "Help center ?"
 }
