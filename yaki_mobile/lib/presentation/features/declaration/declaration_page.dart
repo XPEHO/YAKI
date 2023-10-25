@@ -59,74 +59,71 @@ class DeclarationPage extends ConsumerWidget {
                   teamNameList: teamNameList,
                 ),
                 const SizedBox(height: 48),
-                SizedBox(
-                  height: 250,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        flex: 1,
-                        child: LocationSelectionCard(
-                          picture: SvgPicture.asset(
-                            locationCardContent.imageSrc.first,
-                            width: 112,
-                            height: 112,
-                          ),
-                          title: tr(
-                            locationCardContent.title.first,
-                          ),
-                          subtitle: tr(
-                            locationCardContent.subtitle.first.name,
-                          ),
-                          onSelectionChanged: (selected) {
-                            onPress(
-                              ref: ref,
-                              declarationMode:
-                                  DeclarationPaths.fromText(declarationMode),
-                              teamList: teamList,
-                              buttonValue: locationCardContent.subtitle.first,
-                            );
-                            redirection(
-                              context: context,
-                              declarationMode: declarationMode,
-                              teamNameList: teamNameList,
-                            );
-                          },
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: LocationSelectionCard(
+                        picture: SvgPicture.asset(
+                          locationCardContent.imageSrc.first,
+                          width: 112,
+                          height: 112,
                         ),
-                      ),
-                      const SizedBox(width: 9),
-                      Expanded(
-                        flex: 1,
-                        child: LocationSelectionCard(
-                          picture: SvgPicture.asset(
-                            locationCardContent.imageSrc.last,
-                            width: 112,
-                            height: 112,
-                          ),
-                          title: tr(
-                            locationCardContent.title.last,
-                          ),
-                          subtitle: tr(
-                            locationCardContent.subtitle.last.name,
-                          ),
-                          onSelectionChanged: (selected) {
-                            onPress(
-                              ref: ref,
-                              declarationMode:
-                                  DeclarationPaths.fromText(declarationMode),
-                              teamList: teamList,
-                              buttonValue: locationCardContent.subtitle.last,
-                            );
-                            redirection(
-                              context: context,
-                              declarationMode: declarationMode,
-                              teamNameList: teamNameList,
-                            );
-                          },
+                        title: tr(
+                          locationCardContent.title.first,
                         ),
+                        subtitle: tr(
+                          locationCardContent.subtitle.first.name,
+                        ),
+                        onSelectionChanged: (selected) {
+                          onPress(
+                            ref: ref,
+                            declarationMode:
+                                DeclarationPaths.fromText(declarationMode),
+                            teamList: teamList,
+                            buttonValue: locationCardContent.subtitle.first,
+                          );
+                          redirection(
+                            context: context,
+                            declarationMode: declarationMode,
+                            teamNameList: teamNameList,
+                          );
+                        },
                       ),
-                    ],
-                  ),
+                    ),
+                    const SizedBox(width: 9),
+                    Expanded(
+                      flex: 1,
+                      child: LocationSelectionCard(
+                        picture: SvgPicture.asset(
+                          locationCardContent.imageSrc.last,
+                          width: 112,
+                          height: 112,
+                        ),
+                        title: tr(
+                          locationCardContent.title.last,
+                        ),
+                        subtitle: tr(
+                          locationCardContent.subtitle.last.name,
+                        ),
+                        onSelectionChanged: (selected) {
+                          onPress(
+                            ref: ref,
+                            declarationMode:
+                                DeclarationPaths.fromText(declarationMode),
+                            teamList: teamList,
+                            buttonValue: locationCardContent.subtitle.last,
+                          );
+                          redirection(
+                            context: context,
+                            declarationMode: declarationMode,
+                            teamNameList: teamNameList,
+                          );
+                        },
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
