@@ -6,8 +6,6 @@ import 'package:yaki/presentation/state/providers/password_provider.dart';
 import 'package:yaki/presentation/styles/color.dart';
 import 'package:yaki/presentation/styles/text_style.dart';
 import 'package:yaki/presentation/ui/registration/view/registration_snackbar.dart';
-import 'package:yaki/presentation/ui/shared/views/input_registration_page.dart';
-import 'package:yaki/presentation/ui/registration/form_functionality.dart';
 import 'package:yaki_ui/yaki_ui.dart';
 
 class ForgotPassword extends ConsumerStatefulWidget {
@@ -98,12 +96,13 @@ class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
             ),
             Form(
               key: _formKey,
-              child: InputRegistration(
-                textInputAction: TextInputAction.done,
-                controller: emailController,
-                label: tr('registrationInputEmailLabel'),
-                validatorFunction: emailValidator,
-                isShown: false,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: InputText(
+                  type: InputTextType.password,
+                  controller: emailController,
+                  label: tr('inputLogin'),
+                ),
               ),
             ),
             const SizedBox(height: 10),
