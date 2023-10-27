@@ -81,6 +81,7 @@ export class TeammateRepository {
         AND d.declaration_date::date = now()::date
         )
     WHERE u.user_id IN (${valuesList}) 
+    AND u.user_enabled = true
     ORDER BY d.declaration_date DESC`;
     client.connect();
     const poolResult: QueryResult = await client.query(query, usersId);
@@ -107,12 +108,15 @@ export class TeammateRepository {
     SELECT DISTINCT tm.teammate_user_id
     FROM public.teammate tm
     INNER JOIN public.team t ON tm.teammate_team_id = t.team_id
+    INNER JOIN public.user u ON tm.teammate_user_id = u.user_id
     WHERE t.team_id IN (
         SELECT subtm.teammate_team_id 
         FROM public.teammate subtm
         WHERE subtm.teammate_user_id = $1 
     )
-    AND t.team_actif_flag = true`;
+    AND u.user_enabled = true
+    AND t.team_actif_flag = true
+    `;
     client.connect();
     const poolResult: QueryResult = await client.query(query, [userId]);
     await client.end();
