@@ -152,7 +152,7 @@ export class TeammateRepository {
     	d.declaration_user_id IN (${valuesList})
     	AND d.declaration_status = 'absence' 
     	AND d.declaration_date_start::date <= now()::date 
-    	AND d.declaration_date_end::date > now()::date
+    	AND d.declaration_date_end::date >= now()::date
     	)
     ORDER BY d.declaration_date DESC, ABS(DATE_PART('day', d.declaration_date_start - NOW()))
     LIMIT 1;
