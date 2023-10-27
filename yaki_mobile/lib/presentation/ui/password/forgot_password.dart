@@ -74,6 +74,16 @@ class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.yakiPrimaryColor,
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        leading: IconButton(
+          onPressed: () {
+            context.go('/authentication');
+          },
+          icon: const Icon(Icons.arrow_back),
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30),
         child: Column(
@@ -110,7 +120,7 @@ class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
               padding: const EdgeInsets.only(top: 25),
               child: ConfirmationElevatedButton(
                 text: tr('registrationCancelButton'),
-                onPressed: () => context.go("/"),
+                onPressed: () => context.go("/authentication"),
                 foregroundColor: const Color.fromARGB(212, 183, 146, 14),
                 backgroundColor: const Color.fromARGB(255, 107, 97, 96),
                 btnTextStyle: registrationCancelTextStyle(),
