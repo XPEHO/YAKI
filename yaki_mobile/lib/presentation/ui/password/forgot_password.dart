@@ -6,9 +6,9 @@ import 'package:yaki/presentation/state/providers/password_provider.dart';
 import 'package:yaki/presentation/styles/color.dart';
 import 'package:yaki/presentation/styles/text_style.dart';
 import 'package:yaki/presentation/ui/registration/view/registration_snackbar.dart';
-import 'package:yaki/presentation/ui/shared/views/confirmation_elevated_button.dart';
 import 'package:yaki/presentation/ui/shared/views/input_registration_page.dart';
 import 'package:yaki/presentation/ui/registration/form_functionality.dart';
+import 'package:yaki_ui/yaki_ui.dart';
 
 class ForgotPassword extends ConsumerStatefulWidget {
   const ForgotPassword({super.key});
@@ -106,25 +106,17 @@ class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
                 isShown: false,
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 40),
-              child: ConfirmationElevatedButton(
-                text: tr('changePasswordPageConfimButton'),
-                onPressed: forgotPasswordValidation,
-                foregroundColor: const Color.fromARGB(212, 183, 146, 14),
-                backgroundColor: const Color.fromARGB(255, 220, 219, 219),
-                btnTextStyle: registrationBtnTextStyle(),
-              ),
+            const SizedBox(height: 10),
+            Button(
+              buttonHeight: 72,
+              text: tr('changePasswordPageConfimButton').toUpperCase(),
+              onPressed: forgotPasswordValidation,
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 25),
-              child: ConfirmationElevatedButton(
-                text: tr('registrationCancelButton'),
-                onPressed: () => context.go("/authentication"),
-                foregroundColor: const Color.fromARGB(212, 183, 146, 14),
-                backgroundColor: const Color.fromARGB(255, 107, 97, 96),
-                btnTextStyle: registrationCancelTextStyle(),
-              ),
+            const SizedBox(height: 5),
+            Button.secondary(
+              buttonHeight: 64,
+              text: tr('registrationCancelButton').toUpperCase(),
+              onPressed: () => context.go("/authentication"),
             ),
           ],
         ),
