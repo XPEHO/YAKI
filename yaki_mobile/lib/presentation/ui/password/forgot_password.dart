@@ -6,9 +6,7 @@ import 'package:yaki/presentation/state/providers/password_provider.dart';
 import 'package:yaki/presentation/styles/color.dart';
 import 'package:yaki/presentation/styles/text_style.dart';
 import 'package:yaki/presentation/ui/registration/view/registration_snackbar.dart';
-import 'package:yaki/presentation/ui/shared/views/confirmation_elevated_button.dart';
-import 'package:yaki/presentation/ui/shared/views/input_registration_page.dart';
-import 'package:yaki/presentation/ui/registration/form_functionality.dart';
+import 'package:yaki_ui/yaki_ui.dart';
 
 class ForgotPassword extends ConsumerStatefulWidget {
   const ForgotPassword({super.key});
@@ -72,6 +70,8 @@ class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+
     return Scaffold(
       backgroundColor: AppColors.yakiPrimaryColor,
       appBar: AppBar(
@@ -85,46 +85,40 @@ class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30),
+        padding: const EdgeInsets.all(16),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 40),
-              child: Text(
-                tr('resetPassword'),
-                style: registrationPageTitleTextStyle(),
-              ),
+          children: <Widget>[
+            SizedBox(height: size.height / 10),
+            Image.asset(
+              'assets/images/yaki_basti_icon.png',
+              height: 100,
+              width: 100,
             ),
+            SizedBox(height: size.height / 20),
+            Text(
+              tr('resetPassword'),
+              style: textStylePageTitle(),
+            ),
+            const SizedBox(height: 20),
             Form(
               key: _formKey,
-              child: InputRegistration(
-                textInputAction: TextInputAction.done,
+              child: InputText(
+                type: InputTextType.email,
                 controller: emailController,
-                label: tr('registrationInputEmailLabel'),
-                validatorFunction: emailValidator,
-                isShown: false,
+                label: tr('inputLogin'),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 40),
-              child: ConfirmationElevatedButton(
-                text: tr('changePasswordPageConfimButton'),
-                onPressed: forgotPasswordValidation,
-                foregroundColor: const Color.fromARGB(212, 183, 146, 14),
-                backgroundColor: const Color.fromARGB(255, 220, 219, 219),
-                btnTextStyle: registrationBtnTextStyle(),
-              ),
+            const SizedBox(height: 10),
+            Button(
+              buttonHeight: 72,
+              text: tr('changePasswordPageConfimButton').toUpperCase(),
+              onPressed: forgotPasswordValidation,
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 25),
-              child: ConfirmationElevatedButton(
-                text: tr('registrationCancelButton'),
-                onPressed: () => context.go("/authentication"),
-                foregroundColor: const Color.fromARGB(212, 183, 146, 14),
-                backgroundColor: const Color.fromARGB(255, 107, 97, 96),
-                btnTextStyle: registrationCancelTextStyle(),
-              ),
+            const SizedBox(height: 5),
+            Button.secondary(
+              buttonHeight: 64,
+              text: tr('registrationCancelButton').toUpperCase(),
+              onPressed: () => context.go("/authentication"),
             ),
           ],
         ),
