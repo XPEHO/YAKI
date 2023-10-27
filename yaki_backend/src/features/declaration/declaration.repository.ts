@@ -35,8 +35,13 @@ export class DeclarationRepository {
       declaration_is_latest
     ) 
     VALUES ($1, $2, $3, $4, $5, $6, ${isLatest}) RETURNING *`;
+
     try {
       const result = await client.query(query, declarationValuesList);
+      // make sure current day declaration is correctly tagged as true
+      if (isLatest === true && result.rows[0].declaration_is_latest === false) {
+        throw new TypeError("Error while creating declaration");
+      }
       const declarationToFront = [
         new DeclarationDtoIn(
           result.rows[0].declaration_id,
@@ -86,6 +91,13 @@ export class DeclarationRepository {
         VALUES ($1, $2, $3, $4, $5, $6, ${isLatest}), ($7, $8, $9, $10, $11, $12, ${isLatest}) RETURNING *`,
         declarationsValuesList
       );
+
+      // make sure both current half day declaration are correctly tagged as true
+      for (let declaration of result.rows) {
+        if (isLatest === true && declaration.declaration_is_latest === false) {
+          throw new TypeError("Error while creating declaration");
+        }
+      }
 
       const declarationListToFront = result.rows.map((item) => {
         return new DeclarationDtoIn(
