@@ -70,6 +70,8 @@ class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+
     return Scaffold(
       backgroundColor: AppColors.yakiPrimaryColor,
       appBar: AppBar(
@@ -83,26 +85,27 @@ class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30),
+        padding: const EdgeInsets.all(16),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 40),
-              child: Text(
-                tr('resetPassword'),
-                style: registrationPageTitleTextStyle(),
-              ),
+          children: <Widget>[
+            SizedBox(height: size.height / 10),
+            Image.asset(
+              'assets/images/yaki_basti_icon.png',
+              height: 100,
+              width: 100,
             ),
+            SizedBox(height: size.height / 20),
+            Text(
+              tr('resetPassword'),
+              style: textStylePageTitle(),
+            ),
+            const SizedBox(height: 20),
             Form(
               key: _formKey,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: InputText(
-                  type: InputTextType.password,
-                  controller: emailController,
-                  label: tr('inputLogin'),
-                ),
+              child: InputText(
+                type: InputTextType.email,
+                controller: emailController,
+                label: tr('inputLogin'),
               ),
             ),
             const SizedBox(height: 10),
