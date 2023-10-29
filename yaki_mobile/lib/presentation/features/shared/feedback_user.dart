@@ -13,14 +13,16 @@ class FeedbackUser extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () {
-            // This is a modal bottom sheet. This need to be delete when the method will be implemented
             showModalBottomSheet(
               context: context,
               builder: (BuildContext context) {
-                return const SizedBox(
+                return SizedBox(
                   height: 200,
                   child: Center(
-                    child: Text('Coming soon'),
+                    child: Text(
+                      tr('feedbackMessage'),
+                      style: textFeedback(),
+                    ),
                   ),
                 );
               },
