@@ -78,5 +78,29 @@ export class UserRepository {
     }
   };
 
+  getUserById = async (userId: number) => {
+    const client = new Client({
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE,
+      port: Number(process.env.DB_PORT),
+    });
+    const query = `
+        SELECT user_last_name, user_first_name, user_email
+        FROM public.user u
+        WHERE user_id = $1
+      `;
 
+    try {
+      await client.connect();
+      const poolResult: QueryResult = await client.query(query, [userId]);
+      await client.end();
+
+      return poolResult.rows;
+    } catch (error: any) {
+      console.log(error);
+      throw error;
+    }
+  };
 }

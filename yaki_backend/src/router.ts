@@ -1,17 +1,17 @@
-import {TeamService} from "./features/team/team.service";
+import { TeamService } from "./features/team/team.service";
 import express from "express";
-import {UserController} from "./features/user/user.controller";
-import {UserService} from "./features/user/user.service";
-import {UserRepository} from "./features/user/user.repository";
-import {TeammateRepository} from "./features/teammate/teammate.repository";
-import {authService} from "./features/user/authentication.service";
-import {TeammateController} from "./features/teammate/teammate.controller";
-import {TeammateService} from "./features/teammate/teammate.service";
-import {limiter, signInLimiter} from "./middleware/rateLimiter";
-import {PasswordRepository} from "./features/password/password.repository";
-import {PasswordService} from "./features/password/password.service";
-import {PasswordController} from "./features/password/password.controller";
-import {TeamRepository} from "./features/team/team.repository";
+import { UserController } from "./features/user/user.controller";
+import { UserService } from "./features/user/user.service";
+import { UserRepository } from "./features/user/user.repository";
+import { TeammateRepository } from "./features/teammate/teammate.repository";
+import { authService } from "./features/user/authentication.service";
+import { TeammateController } from "./features/teammate/teammate.controller";
+import { TeammateService } from "./features/teammate/teammate.service";
+import { limiter, signInLimiter } from "./middleware/rateLimiter";
+import { PasswordRepository } from "./features/password/password.repository";
+import { PasswordService } from "./features/password/password.service";
+import { PasswordController } from "./features/password/password.controller";
+import { TeamRepository } from "./features/team/team.repository";
 
 export const router = express.Router();
 
@@ -43,9 +43,17 @@ router.post("/login", signInLimiter, (req, res) =>
   userController.checkLogin(req, res)
 );
 router.use(limiter);
-router.post("/register", (req, res) => userController.registerNewUser(req, res));
+router.post("/register", (req, res) =>
+  userController.registerNewUser(req, res)
+);
 
-router.post("/register", (req, res) => userController.registerNewUser(req, res));
+router.post("/register", (req, res) =>
+  userController.registerNewUser(req, res)
+);
+
+router.get("/users/:userId", (req, res) => {
+  userController.getUserById(req, res);
+});
 
 // DEPRECIATED - TO BE REMOVED WHEN 1.10 isnt used anymore
 //========================================================
@@ -60,7 +68,8 @@ router.get(
                 schema: { userId: 1 }
 }
   */ authService.verifyToken(req, res, next),
-  async (req, res) => teammateController.getByTeamIdWithLastDeclaration(req, res)
+  async (req, res) =>
+    teammateController.getByTeamIdWithLastDeclaration(req, res)
 );
 
 router.get(
@@ -74,7 +83,8 @@ router.get(
                 schema: { userId: 1 }
 }
   */ authService.verifyToken(req, res, next),
-  async (req, res) => teammateController.getTeammatesDeclarationsFromUserTeams(req, res)
+  async (req, res) =>
+    teammateController.getTeammatesDeclarationsFromUserTeams(req, res)
 );
 
 router.post(

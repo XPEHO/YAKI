@@ -34,6 +34,21 @@ export class UserController {
     }
   };
 
+  getUserById = async (req: Request, res: Response) => {
+    const userId = Number(req.params.userId);
+    console.log(userId);
 
-
+    try {
+      const response = await this.service.getUserById(userId);
+      console.log(userId);
+      res.send(response);
+      console.log("controller", response);
+    } catch (error: any) {
+      if (error instanceof TypeError) {
+        res.status(404).json({ message: error.message });
+      } else {
+        res.status(500).json({ message: error.message });
+      }
+    }
+  };
 }
