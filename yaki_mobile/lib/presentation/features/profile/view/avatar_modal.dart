@@ -1,6 +1,8 @@
+import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:yaki/domain/entities/logged_user.dart';
 import 'package:yaki/presentation/features/shared/sized_circle_avatar.dart';
 import 'package:yaki/presentation/state/providers/login_provider.dart';
@@ -12,6 +14,14 @@ class AvatarModal extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final LoggedUser? user = ref.watch(loginRepositoryProvider).loggedUser;
+
+    Future<void> takePicture() async {
+      final imageFile =
+          await ImagePicker().pickImage(source: ImageSource.camera);
+      if (imageFile != null) {
+        // Do something with the image file
+      }
+    }
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -122,20 +132,7 @@ class AvatarModal extends ConsumerWidget {
                 children: [
                   Button.secondary(
                     text: tr('takePicture'),
-                    onPressed: () {
-                      // This is a modal bottom sheet. This need to be delete when the method will be implemented
-                      showModalBottomSheet(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return const SizedBox(
-                            height: 200,
-                            child: Center(
-                              child: Text('Coming soon'),
-                            ),
-                          );
-                        },
-                      );
-                    },
+                    onPressed: takePicture,
                   ),
                   const SizedBox(height: 10),
                   Button.secondary(
