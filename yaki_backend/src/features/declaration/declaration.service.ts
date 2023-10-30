@@ -51,7 +51,7 @@ export class DeclarationService {
       // an absence created for the current day will be considered as the latest declaration
       if (dateStart.getTime() === dateEnd.getTime() && dateStart.getTime() === today.getTime()) {
         // unflag from true to false the preview "latest" declaration
-        this.declarationRepository.unflagLatestDeclaration(declarationList[0].declarationUserId);
+        await this.declarationRepository.unflagLatestDeclaration(declarationList[0].declarationUserId);
 
         return await this.declarationRepository.createDeclaration(declarationList, true);
       }
@@ -112,7 +112,7 @@ export class DeclarationService {
     }
     if (isObjectsValid) {
       // unflag from true to false the preview "latest" declaration
-      this.declarationRepository.unflagLatestDeclaration(declarationList[0].declarationUserId);
+      await this.declarationRepository.unflagLatestDeclaration(declarationList[0].declarationUserId);
 
       return await this.declarationRepository.createHalfDayDeclaration(declarationList, true);
     } else {
