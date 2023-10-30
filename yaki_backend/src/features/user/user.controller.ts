@@ -38,7 +38,7 @@ export class UserController {
     const userId = Number(req.params.userId);
     try {
       const response = await this.service.getUserById(userId);
-      res.send(response);
+      res.send(response); 
     } catch (error: any) {
       if (error instanceof TypeError) {
         res.status(404).json({ message: error.message });

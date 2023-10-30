@@ -99,7 +99,7 @@ export class UserRepository {
 
       return poolResult.rows;
     } catch (error: any) {
-      console.error(error);
+      console.log(error);
       throw error;
     }
   };
