@@ -1,3 +1,8 @@
+import {AvatarDto} from "../features/user/avatar.dto";
+import {AvatarEnum} from "../features/user/avatar.enum";
+import fs from "fs";
+import * as path from "path";
+
 export default class YakiUtils {
   /**
    * Transform a object list into a flat array containing only the objects values.
@@ -69,4 +74,26 @@ export default class YakiUtils {
 
     return todayNoTime;
   }
+
+  /**
+   * Convert a bytea to a picture file.
+   * It will either be a svg or a jpg file, depending of the avatar reference.
+   * @param avatarData
+   * @returns
+   */
+  static byteaToPicture = (avatarData: AvatarDto) => {
+    let fileExtension;
+    if (avatarData.avatarReference !== AvatarEnum.USERPICTURE) {
+      fileExtension = ".svg";
+    } else if (avatarData.avatarReference === AvatarEnum.USERPICTURE) {
+      fileExtension = ".jpg";
+    }
+
+    // Convert byte array to Buffer
+    const buffer = Buffer.from(avatarData.avatarBlob);
+    // Write Buffer to file
+    const filePath = path.join(__dirname, `avatar${fileExtension}`);
+    fs.writeFileSync(filePath, buffer);
+    return filePath;
+  };
 }
