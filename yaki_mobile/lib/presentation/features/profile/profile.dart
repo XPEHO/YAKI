@@ -4,10 +4,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yaki/data/sources/local/shared_preference.dart';
-import 'package:yaki/domain/entities/logged_user.dart';
+import 'package:yaki/domain/entities/user_entity.dart';
 import 'package:yaki/presentation/features/profile/view/avatar_modal.dart';
 import 'package:yaki/presentation/features/shared/feedback_user.dart';
-import 'package:yaki/presentation/state/providers/login_provider.dart';
+import 'package:yaki/presentation/state/providers/user_provider.dart';
 import 'package:yaki_ui/yaki_ui.dart';
 
 class Profile extends ConsumerWidget {
@@ -15,7 +15,7 @@ class Profile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final LoggedUser? user = ref.read(loginRepositoryProvider).loggedUser;
+    final UserEntity? user = ref.read(userRepositoryProvider).userEntity;
     debugPrint(user.toString());
 
     void onLogout({required Function goToAuthentication}) {
@@ -96,24 +96,32 @@ class Profile extends ConsumerWidget {
                   label: tr('inputLabelFirstName'),
                   controller:
                       TextEditingController(text: user?.firstName ?? ''),
+                  //to add when yaki_ui will be updated with the possiblity to enable the field
+                  //enabled: false,
                 ),
                 const SizedBox(height: 10),
                 InputText(
                   type: InputTextType.email,
                   label: tr('inputLabelLastName'),
                   controller: TextEditingController(text: user?.lastName ?? ''),
+                  //to add when yaki_ui will be updated with the possiblity to enable the field
+                  //enabled: false,
                 ),
                 const SizedBox(height: 10),
                 InputText(
                   type: InputTextType.email,
                   label: 'Email',
                   controller: TextEditingController(text: user?.email ?? ''),
+                  //to add when yaki_ui will be updated with the possiblity to enable the field
+                  //enabled: false,
                 ),
                 const SizedBox(height: 10),
                 InputText(
                   type: InputTextType.password,
                   label: tr('inputPassword'),
-                  controller: TextEditingController(),
+                  controller: TextEditingController(text: "********"),
+                  //to add when yaki_ui will be updated with the possiblity to enable the field
+                  //enabled: false,
                 ),
                 const SizedBox(height: 10),
                 Button.secondary(
