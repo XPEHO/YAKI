@@ -7,8 +7,9 @@ import 'package:yaki/data/sources/local/shared_preference.dart';
 import 'package:yaki/domain/entities/user_entity.dart';
 import 'package:yaki/presentation/features/profile/view/avatar_modal.dart';
 import 'package:yaki/presentation/features/shared/feedback_user.dart';
-import 'package:yaki/presentation/state/providers/user_provider.dart';
 import 'package:yaki_ui/yaki_ui.dart';
+import 'package:yaki/domain/entities/user_entity.dart';
+import 'package:yaki/presentation/state/providers/user_provider.dart';
 
 class Profile extends ConsumerWidget {
   const Profile({super.key});
