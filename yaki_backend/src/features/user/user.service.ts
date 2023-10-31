@@ -104,4 +104,8 @@ export class UserService {
       }
     }
   };
+
+  getUserById = async (userId: number) => {
+    return await this.userRepository.getUserById(userId);
+  };
 }
