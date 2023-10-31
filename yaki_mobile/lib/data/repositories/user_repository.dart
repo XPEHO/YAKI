@@ -1,12 +1,15 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yaki/data/models/user_info_profile.dart';
 import 'package:yaki/data/sources/remote/user_api.dart';
+import 'package:yaki/domain/entities/user_entity.dart';
 
 class UserRepository {
   final UserApi userApi;
+  UserEntity? userEntity;
 
   UserRepository(
     this.userApi,
+    this.userEntity,
   );
 
   /// Retrieves information from the User API
