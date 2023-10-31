@@ -178,7 +178,7 @@ class AvatarModalState extends ConsumerState<AvatarModal> {
                         _imageFile!,
                       ),
                     ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 20),
                   if (_imageFile != null)
                     Button.secondary(
                       text: tr('upload'),
