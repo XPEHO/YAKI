@@ -32,7 +32,7 @@ class _UserApi implements UserApi {
     )
             .compose(
               _dio.options,
-              '/users/{userId}',
+              '/users/${id}',
               queryParameters: queryParameters,
               data: _data,
             )

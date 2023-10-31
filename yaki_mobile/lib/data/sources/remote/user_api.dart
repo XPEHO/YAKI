@@ -13,6 +13,6 @@ abstract class UserApi {
   /// -> Sending to the Repository
   @GET('/users/{userId}')
   Future<HttpResponse> getUserById(
-    @Path('id') int id,
+    @Path('userId') int id,
   );
 }

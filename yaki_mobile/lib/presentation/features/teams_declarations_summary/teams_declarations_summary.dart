@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:yaki/presentation/features/shared/app_bar_date.dart';
 import 'package:yaki/presentation/features/shared/sized_circle_avatar.dart';
 import 'package:yaki/presentation/features/teams_declarations_summary/view/teammates_list_async.dart';
+import 'package:yaki/presentation/state/providers/user_provider.dart';
 
 class TeamsDeclarationSummary extends ConsumerWidget {
   const TeamsDeclarationSummary({super.key});
@@ -56,6 +57,7 @@ class TeamsDeclarationSummary extends ConsumerWidget {
               imageSrc: 'assets/images/Account.svg',
             ),
             onPressed: () {
+              ref.read(userProvider.notifier).getUser();
               context.go('/profile');
             },
           ),

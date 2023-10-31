@@ -26,4 +26,9 @@ class User {
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
   Map<String, dynamic> toJson() => _$UserToJson(this);
+
+  @override
+  String toString() {
+    return "{captainId: $captainId, teammateId: $teammateId, teamId: $teamId, userId: $userId, lastName: $lastName, firstName: $firstName, email: $email, token: $token}";
+  }
 }
