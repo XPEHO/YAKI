@@ -166,7 +166,7 @@ class _AuthenticationState extends ConsumerState<Authentication> {
                             : Button(
                                 buttonHeight:
                                     size.height * 0.09, // 9% of screen height
-                                text: tr('signIn'),
+                                text: tr('signIn').toUpperCase(),
                                 onPressed: () => onPressAuthent(
                                   ref: ref,
                                   login: loginController.text,
@@ -188,7 +188,7 @@ class _AuthenticationState extends ConsumerState<Authentication> {
                         Button.secondary(
                           buttonHeight:
                               size.height * 0.08, // 8% of screen height
-                          text: tr('forgotPassword'),
+                          text: tr('forgotPassword').toUpperCase(),
                           onPressed: () => onPressedForgotPassword(
                             goToForgotPassword: () =>
                                 context.go('/forgotPassword'),

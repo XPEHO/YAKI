@@ -62,7 +62,7 @@ class UserDeclarationSummaryAbsence extends ConsumerWidget {
                 ),
                 Button.tertiary(
                   buttonHeight: 68,
-                  text: tr("modify"),
+                  text: tr("modify").toUpperCase(),
                   onPressed: () {
                     ref.read(teamProvider.notifier).clearTeamList();
                     context.go("/team-selection");
@@ -71,7 +71,7 @@ class UserDeclarationSummaryAbsence extends ConsumerWidget {
                 const SizedBox(height: 8),
                 Button.secondary(
                   buttonHeight: 68,
-                  text: tr("seeTeam"),
+                  text: tr("seeTeam").toUpperCase(),
                   onPressed: () => {
                     context.go("/teams-declaration-summary"),
                   },

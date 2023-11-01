@@ -6,11 +6,11 @@
   "inputPassword": "Mot de passe",
   "hintPassword": "Entrez votre mot de passe",
   "rememberMe": "Se souvenir de moi",
-  "signIn": "SE CONNECTER",
+  "signIn": "se connecter",
   "poweredByXPEHO": "Produit par XPEHO",
   "privacyPolicy": "Politique de confidentialité",
   "signInLowercase": "Se connecter",
-  "forgotPassword": "MOT DE PASSE OUBLIÉ",
+  "forgotPassword": "mot de passe oublié ?",
   "resetPasswordSuccess": "Vérifier vos emails afin de réinitialiser votre mot de passe.",
   "resetPassword": "Réinitialiser mon mot de passe",
   "headerTitleDecla": "Déclaration",
@@ -43,7 +43,7 @@
   "inputCaptain": "Nom, Statut...",
   "hintCaptain": "Entrez un nom ou un statut",
   "authenticationFailed": "email ou mot de passe inconnu",
-  "logOutButton": "SE DECONNECTER",
+  "logOutButton": "se déconnecter",
   "headerHintProfile": "Votre profil",
   "headerTitleProfile": "Profil",
   "inputLabelLastName": "Nom",
@@ -77,7 +77,7 @@
   "userDefaultTeam": "Équipe",
   "userDefaultContact": "Veuillez contacter votre capitaine",
 
-  "changePassword": "MODIFIER LE MOT DE PASSE",
+  "changePassword": "modifier le mot de passe",
   "changePasswordPageTitle": "Changement de mot de passe",
   "changePasswordPageOldPW": "Mot de passe actuel",
   "changePasswordPageNewPW": "Nouveau mot de passe",
@@ -86,7 +86,7 @@
   "changePasswordSucess": "Mot de passe changé avec succès, veuillez vous reconnecter",
   "changePasswordError": "Erreur lors du changement de mot de passe, veuillez réessayer",
 
-  "buttonNext": "SUIVANT",
+  "buttonNext": "suivant",
 
   "teamSelectionPageTitle1": "Quoi de prévu",
   "teamSelectionPageTitle2": "aujourd'hui ?",
@@ -109,8 +109,8 @@
 
   "entryValidated": "Saisie validée",
   "youCanCloseTheApp": "Vous pouvez fermer l'application",
-  "modify": "MODIFIER",
-  "seeTeam": "VOIR MON ÉQUIPE",
+  "modify": "modifier",
+  "seeTeam": "voir mon équipe",
 
   "defaultTeamName": "Équipe",
   "for ": "pour ",
@@ -126,9 +126,10 @@
   "somethingWentWrong": "Certaines informations se sont perdues en chemin",
   "retry": "réessayer",
 
-  "takePicture": "PRENDRE UNE PHOTO",
-  "imgGallery": "IMAGE À PARTIR DE MA GALERIE",
-  "upload": "ENVOYER",
+  
+  "upload": "Envoyer",
+  "takePicture": "prendre une photo",
+  "imgGallery": "image à partir de ma gallerie",
 
   "feedback": "Besoin d'aide ?",
   "feedbackMessage": "N'hésitez pas à nous contacter à l'adresse suivante : yaki@xpeho.fr",

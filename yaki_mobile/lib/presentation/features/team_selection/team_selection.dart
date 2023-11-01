@@ -31,7 +31,7 @@ class TeamSelection extends ConsumerWidget {
                 child: TeamSelectionList(),
               ),
               Button(
-                text: tr('buttonNext'),
+                text: tr('buttonNext').toUpperCase(),
                 buttonHeight: 64,
                 onPressed: () => onValidationTap(
                   ref: ref,
