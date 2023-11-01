@@ -169,19 +169,54 @@ For this project, naming convention for all language use in this project should 
 Components references in Yaki Admin (VueJS) should be on kebab-case.
 And files names and PostgreSQL, both should be name types using snake_case.
 
+## Es-lint configuration
+
+We use es-lint to check the code quality and to make sure that the code is well written.
+Please add this line to your es-lint configuration before pushing your code:
+
+```{
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "files.eol": "\n",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "prettier.jsxSingleQuote": true,
+  "prettier.singleQuote": true,
+  "files.autoSave": "afterDelay",
+  "git.confirmSync": false,
+  "eslint.options": {
+    "parserOptions": {
+      "ecmaFeatures": {
+        "jsx": true
+      },
+      "ecmaVersion": 12,
+      "sourceType": "module"
+    }
+  },
+}
+```
+
 **Example**
 
 ```
+
 For a new files : new_file_create.dart
+
 ```
 
 ```
+
 For new class: titlePresentation
 Components in the template in yaki-admin: title-presentation
+
 ```
 
 ```
+
 For a new constant variable : const myNewConst = x
+
 ```
 
 ## Project architecture
@@ -278,3 +313,4 @@ The `application.properties` file is used to store sensitive information and oth
 [Java] https://www.java.com/fr/download/: Java is a programming language and computing platform launched by Sun Microsystems in 1995. Since its humble beginnings, Java has evolved significantly. Currently, a large portion of the digital world relies on Java: numerous services and applications are built on this dependable platform. Likewise, new innovative digital products and future-oriented services also depend on Java.
 
 [Docker] https://www.docker.com/ : Docker is an open-source software platform that allows you to create, deploy, and run applications in lightweight, self-contained containers. Docker containers are isolated execution units that encapsulate all the elements necessary to run an application, including code, libraries, dependencies, and environment variables. In summary, Docker is a technology that simplifies the deployment and management of applications by encapsulating them in lightweight and portable containers, offering greater flexibility, improved resource efficiency, and ease of cross-platform implementation.
+```
