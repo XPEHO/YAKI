@@ -29,11 +29,11 @@ class CellCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Cell(
       title: '${teammate.userFirstName} ${teammate.userLastName}',
-      subtitle: '',
-      image: setUserAvatarImage(
-        ref: ref,
-        isModifierBtnUsed: isModifierBtnUsed,
-        teammate: teammate,
+      subtitle: teammate.declarationDate != null
+          ? timeSinceDeclaration(teammate.declarationDate!)
+          : '',
+      image: const CellAvatarSvg(
+        imageSrc: "assets/images/avatar-men.svg",
       ),
       chips: CellChipsRow(
         status: teammate.declarationStatus,
@@ -79,25 +79,16 @@ bool isSubtitleDisplayed({
         ? false
         : true;
 
-/// display the time since the teammate has been declared based on the declarationDate
-String displayTimeSinceDeclaration({
-  required TeammateWithDeclarationEntity teammate,
-}) {
-  final now = DateTime.now();
-  final declarationDate = teammate.declarationDate;
-  final difference = now.difference(declarationDate!);
-  final differenceInHours = difference.inHours;
-  final differenceInMinutes = difference.inMinutes;
-  final differenceInSeconds = difference.inSeconds;
-
-  if (differenceInHours > 0) {
-    return '$differenceInHours h';
-  } else if (differenceInMinutes > 0) {
-    return '$differenceInMinutes min';
-  } else if (differenceInSeconds > 0) {
-    return '$differenceInSeconds sec';
+String timeSinceDeclaration(DateTime declarationDate) {
+  final duration = DateTime.now().difference(declarationDate);
+  if (duration.inDays > 0) {
+    return '${duration.inDays} days ago';
+  } else if (duration.inHours > 0) {
+    return '${duration.inHours} hours ago';
+  } else if (duration.inMinutes > 0) {
+    return '${duration.inMinutes} minutes ago';
   } else {
-    return '0 sec';
+    return 'Just now';
   }
 }
 
