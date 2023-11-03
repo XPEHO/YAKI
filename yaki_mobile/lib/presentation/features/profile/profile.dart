@@ -96,32 +96,28 @@ class Profile extends ConsumerWidget {
                   label: tr('inputLabelFirstName'),
                   controller:
                       TextEditingController(text: user?.firstName ?? ''),
-                  //to add when yaki_ui will be updated with the possiblity to enable the field
-                  //enabled: false,
+                  enabled: false,
                 ),
                 const SizedBox(height: 10),
                 InputText(
                   type: InputTextType.email,
                   label: tr('inputLabelLastName'),
                   controller: TextEditingController(text: user?.lastName ?? ''),
-                  //to add when yaki_ui will be updated with the possiblity to enable the field
-                  //enabled: false,
+                  enabled: false,
                 ),
                 const SizedBox(height: 10),
                 InputText(
                   type: InputTextType.email,
                   label: 'Email',
                   controller: TextEditingController(text: user?.email ?? ''),
-                  //to add when yaki_ui will be updated with the possiblity to enable the field
-                  //enabled: false,
+                  enabled: false,
                 ),
                 const SizedBox(height: 10),
                 InputText(
                   type: InputTextType.password,
                   label: tr('inputPassword'),
                   controller: TextEditingController(text: "********"),
-                  //to add when yaki_ui will be updated with the possiblity to enable the field
-                  //enabled: false,
+                  enabled: false,
                 ),
                 const SizedBox(height: 10),
                 Button.secondary(
