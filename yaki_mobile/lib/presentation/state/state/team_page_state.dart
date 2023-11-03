@@ -10,4 +10,6 @@ class TeamPageState {
     required this.selectedTeamList,
     required this.isButtonActivated,
   });
+
+  get teamName => null;
 }
