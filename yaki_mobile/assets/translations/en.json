@@ -128,5 +128,7 @@
   "imgGallery": "IMAGE FROM MY GALLERY",
 
   "feedback": "Help center ?",
-  "feedbackMessage": "Do you have a question ? send us a mail at : yaki@xpeho.fr"
+  "feedbackMessage": "Do you have a question ? send us a mail at : yaki@xpeho.fr",
+
+  "filter": "Filter"
 }
