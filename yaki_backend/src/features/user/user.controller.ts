@@ -2,9 +2,8 @@ import {UserService} from "./user.service";
 import {Response, Request} from "express";
 import EmailAlreadyExistsError from "../../errors/EmailAlreadyExistError";
 
-import fs from "fs";
-import YakiUtils from "../../utils/yakiUtils";
-import path from "path";
+import {AvatarEnum} from "./avatar.enum";
+import PictureProcessing from "../../utils/PictureProcessing";
 
 export class UserController {
   service: UserService;
@@ -52,6 +51,22 @@ export class UserController {
     }
   };
 
+  getPersonalAvatarByUserId = async (req: Request, res: Response) => {
+    const userId = Number(req.params.id);
+
+    try {
+      const personalAvatar: Buffer = await this.service.getPersonalAvatarByUserId(userId);
+      const filePath = PictureProcessing.byteaToImage(personalAvatar);
+      res.status(200).sendFile(filePath);
+    } catch (error: any) {
+      if (error instanceof TypeError) {
+        res.status(404).json({message: error.message});
+      } else {
+        res.status(500).json({message: error.message});
+      }
+    }
+  };
+
   /**
    * Register in the database a new avatar for a user
    * @param req
@@ -63,35 +78,31 @@ export class UserController {
     const avatarReference = req.body.avatarName;
 
     const file: Express.Multer.File | undefined = req.file;
-    if (file === undefined) {
-      res.status(400).json({message: "No file uploaded"});
-      return;
+
+    const avatarChoices: string[] = Object.values(AvatarEnum);
+    if (!avatarChoices.includes(avatarReference)) {
+      throw new TypeError(`${avatarReference} isn't an existing avatar choice`);
     }
 
     try {
-      const registeredAvatar = await this.service.registerNewAvatar(userId, file, avatarReference);
+      if (avatarReference !== AvatarEnum.USERPICTURE) {
+        const updatedDefaultAvatar = await this.service.setDefaultAvatarChoice(userId, avatarReference);
+        // if getting an image along with the default avatar choice, delete the image as its not meant to be saved in the database
+        if (file !== undefined) PictureProcessing.deleteUploadedFile(file);
+        res.status(200).json({message: updatedDefaultAvatar});
 
-      //delete the uploaded files after saving in databases
-      fs.unlink(path.basename(file.path), (err) => {
-        if (err) {
-          console.error("Error deleting file:", err);
-        }
-      });
+        // if the avatar is a user picture, save it in the database
+      } else if (avatarReference === AvatarEnum.USERPICTURE && file !== undefined) {
+        const registeredAvatar = await this.service.registerNewAvatar(userId, file, avatarReference);
 
-      const filePath = YakiUtils.byteaToPicture(registeredAvatar);
+        //delete the uploaded files after saving in databases
+        PictureProcessing.deleteUploadedFile(file);
 
-      res.status(200).sendFile(filePath, (err) => {
-        if (err) {
-          console.error("Error sending file:", err);
-        } else {
-          //delete the file after sending it
-          fs.unlink(filePath, (err) => {
-            if (err) {
-              console.error("Error deleting file:", err);
-            }
-          });
-        }
-      });
+        const filePath = PictureProcessing.byteaToImage(registeredAvatar.avatarBlob);
+        res.status(200).sendFile(filePath);
+      } else {
+        throw new TypeError("No file uploaded");
+      }
     } catch (error: any) {
       if (error instanceof TypeError) {
         res.status(400).json({message: error.message});

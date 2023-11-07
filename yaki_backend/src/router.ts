@@ -55,9 +55,17 @@ router.get("/users/:userId", (req, res) => {
   userController.getUserById(req, res);
 });
 
-//"avatar" is the field of the form being sent from the front
-router.post("/users/:id/avatar-selection", upload.single("avatar"), (req, res) =>
-  userController.registerNewAvatar(req, res)
+router.post(
+  "/users/:id/avatar-selection",
+  upload.single("avatar"),
+  (req, res, next) => authService.verifyToken(req, res, next),
+  async (req, res) => userController.registerNewAvatar(req, res)
+);
+
+router.get(
+  "/users/:id/personal-avatar",
+  (req, res, next) => authService.verifyToken(req, res, next),
+  async (req, res) => userController.getPersonalAvatarByUserId(req, res)
 );
 
 // DEPRECIATED - TO BE REMOVED WHEN 1.10 isnt used anymore
