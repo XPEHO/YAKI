@@ -7,11 +7,13 @@ class UserInfoProfile {
   String? lastName;
   String? firstName;
   String? email;
+  int? avatar;
 
   UserInfoProfile({
     required this.lastName,
     required this.firstName,
     required this.email,
+    required this.avatar,
   });
 
   factory UserInfoProfile.fromJson(Map<String, dynamic> json) =>
@@ -20,6 +22,6 @@ class UserInfoProfile {
 
   @override
   String toString() {
-    return 'UserInfoProfile(lastName: $lastName, firstName: $firstName, email: $email)';
+    return 'UserInfoProfile(lastName: $lastName, firstName: $firstName, email: $email, avatar: $avatar)';
   }
 }

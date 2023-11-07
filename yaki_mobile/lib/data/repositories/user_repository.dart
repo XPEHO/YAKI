@@ -30,6 +30,7 @@ class UserRepository {
             lastName: userJson['user_last_name'],
             firstName: userJson['user_first_name'],
             email: userJson['user_email'],
+            avatar: userJson['user_avatar_choice'],
           );
 
           return user;

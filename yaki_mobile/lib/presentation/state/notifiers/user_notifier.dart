@@ -8,7 +8,9 @@ class UserNotifier extends StateNotifier<UserEntity> {
 
   UserNotifier({required this.userRepository})
       : super(
-          UserEntity(lastName: '', firstName: '', email: ''),
+          UserEntity(lastName: '', firstName: '', email: ''
+              //, avatarId: 0
+              ),
         );
 
   Future<void> getUser() async {
@@ -18,6 +20,7 @@ class UserNotifier extends StateNotifier<UserEntity> {
       lastName: user.lastName,
       firstName: user.firstName,
       email: user.email,
+      //avatarId: user.avatarId,
     );
   }
 }

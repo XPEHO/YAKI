@@ -12,6 +12,7 @@ class User {
   String? firstName;
   String? email;
   String? token;
+  //int? avatarId;
 
   User({
     required this.captainId,
@@ -22,6 +23,7 @@ class User {
     required this.firstName,
     required this.email,
     required this.token,
+    //required this.avatarId,
   });
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
