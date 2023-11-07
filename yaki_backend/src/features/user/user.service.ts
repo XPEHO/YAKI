@@ -109,7 +109,28 @@ export class UserService {
    * @returns
    */
   getUserById = async (userId: number) => {
+    if (userId === undefined || userId === null) {
+      throw new TypeError("No user id provided");
+    }
     return await this.userRepository.getUserById(userId);
+  };
+
+  /**
+   * Retrive the user avatar if one is registered in the database
+   * @param userId
+   */
+  getPersonalAvatarByUserId = async (userId: number): Promise<Buffer> => {
+    if (userId === undefined || userId === null) {
+      throw new TypeError("No user id provided");
+    }
+
+    const userAvatar: Buffer | null = await this.userRepository.getPersonalAvatarByUserId(userId);
+
+    if (userAvatar === null) {
+      throw new Error("No avatar found for this user");
+    }
+
+    return userAvatar;
   };
 
   /**
@@ -127,26 +148,12 @@ export class UserService {
     file: Express.Multer.File,
     avatarReference: string
   ): Promise<AvatarDto> => {
-    const avatarChoices: string[] = Object.values(AvatarEnum);
-    if (!avatarChoices.includes(avatarReference)) {
-      throw new TypeError(`${avatarReference} isn't an existing avatar choice`);
-    }
     // get the file buffer (binary data)
     const fileData = fs.readFileSync(file.path);
 
-    // Is the avatar already in the database ? (compare blob data)
-    const isAvatarInDataBase: AvatarDto | null = await this.userRepository.isAvatarInDataBase(userId, avatarReference);
+    const update = await this.isUserAvatarNeedUpdate(userId, fileData, avatarReference);
+    if (update) return update;
 
-    if (isAvatarInDataBase !== null && isAvatarInDataBase.avatarReference === avatarReference) {
-      if (isAvatarInDataBase.avatarBlob.toString("base64") === fileData.toString("base64")) {
-        await this.userRepository.setAvatarChoiceInUser(userId, isAvatarInDataBase.avatarId);
-        return isAvatarInDataBase;
-      }
-      const updatedAvatarRow = await this.userRepository.updateAvatarBlob(fileData, userId, avatarReference);
-      return updatedAvatarRow;
-    }
-
-    // Else register the avatar in the database
     // if the avatar is the user picture, it needs to be validated by an admin
     let isValidated: boolean;
     // TODO: change first isValidated = true to = false this when the admin validation will be implemented
@@ -157,8 +164,56 @@ export class UserService {
       fileData,
       isValidated
     );
-    await this.userRepository.setAvatarChoiceInUser(userId, registeredAvatar.avatarId);
+    await this.userRepository.setUserAvatarChoice(userId, registeredAvatar.avatarId);
 
     return registeredAvatar;
+  };
+
+  /**
+   * Determine if the user avatar picture needs to be updated or not.
+   * If not, return the avatar infos from the database. And updated the avatar choice on the user table.
+   * @param userId
+   * @param fileData
+   * @param avatarReference
+   * @returns
+   */
+  isUserAvatarNeedUpdate = async (
+    userId: number,
+    fileData: any,
+    avatarReference: string
+  ): Promise<AvatarDto | void> => {
+    // check if avatar is in the database (by userId and avatarReference)
+    const isAvatarInDataBase: AvatarDto | null = await this.userRepository.isAvatarInDataBase(userId, avatarReference);
+
+    if (isAvatarInDataBase !== null && isAvatarInDataBase.avatarReference === avatarReference) {
+      // if the blob is the same, then set the avatar choice to the user
+      if (isAvatarInDataBase.avatarBlob.toString("base64") === fileData.toString("base64")) {
+        await this.userRepository.setUserAvatarChoice(userId, isAvatarInDataBase.avatarId);
+        return isAvatarInDataBase;
+      }
+      // else update the avatar blob as the user has send a different one
+      const updatedAvatarRow = await this.userRepository.updateAvatarBlob(fileData, userId, avatarReference);
+      return updatedAvatarRow;
+    }
+  };
+
+  /**
+   * Set the default avatar choice for a user.
+   * Either update the existing row in the database or create a new one.
+   * @param userId
+   * @param avatarReference
+   * @returns avatar id of the default avatar choice
+   */
+  setDefaultAvatarChoice = async (userId: number, avatarReference: string): Promise<number> => {
+    const avatarIdRowToUpdate = await this.userRepository.isDefaultAvatarRowExist(userId);
+
+    // if a row already exist for the default avatar choice, update it
+    if (avatarIdRowToUpdate) {
+      const updatedAvatarInfo = await this.userRepository.updatedDefaultAvatarRow(avatarIdRowToUpdate, avatarReference);
+      return await this.userRepository.setUserAvatarChoice(userId, updatedAvatarInfo.avatarId);
+    } else {
+      const registeredDefaultAvatar = await this.userRepository.registerDefaultAvatar(userId, avatarReference);
+      return await this.userRepository.setUserAvatarChoice(userId, registeredDefaultAvatar.avatarId);
+    }
   };
 }

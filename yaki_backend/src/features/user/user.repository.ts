@@ -4,6 +4,7 @@ import {UserToRegisterOut} from "./toRegister.dtoOut";
 import ToRegisterRes from "./toRegisterRes.dto";
 import EmailAlreadyExistsError from "../../errors/EmailAlreadyExistError";
 import {AvatarDto} from "./avatar.dto";
+import {UserInformationDto} from "./userInformations.dto";
 
 export class UserRepository {
   /**
@@ -42,7 +43,6 @@ export class UserRepository {
     }
     // If the user still hasn't confirmed his account
     if (poolResult.rows[0].user_enabled === false) {
-      console.log("this user isn't activated");
       throw new Error("This account isn't activated");
     }
     // "else" return the user
@@ -85,20 +85,149 @@ export class UserRepository {
       port: Number(process.env.DB_PORT),
     });
     const query = `
-        SELECT user_last_name, user_first_name, user_email
+        SELECT user_last_name, user_first_name, user_email, user_avatar_choice
         FROM public.user u
         WHERE user_id = $1
       `;
-
+    client.connect();
     try {
-      await client.connect();
       const poolResult: QueryResult = await client.query(query, [userId]);
+      if (poolResult.rowCount === 0) {
+        throw new TypeError("Error during user informations fetching");
+      }
+      const result = poolResult.rows[0];
+      const userInformations = new UserInformationDto(
+        result.user_last_name,
+        result.user_first_name,
+        result.user_email,
+        result.user_avatar_choice
+      );
+      return userInformations;
+    } finally {
       await client.end();
+    }
+  };
 
-      return poolResult.rows;
-    } catch (error: any) {
-      console.error(error);
-      throw error;
+  /**
+   * Retrive the personal user avatar if one is registered in the database
+   * @param userId
+   * @returns buffer of the avatar blob, value can be null if no avatar is registered
+   */
+  getPersonalAvatarByUserId = async (userId: number): Promise<Buffer | null> => {
+    const client = new Client({
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE,
+      port: Number(process.env.DB_PORT),
+    });
+
+    const query = `
+        SELECT avatar_blob
+        FROM public.avatar a
+        WHERE a.avatar_user_id = $1
+        AND a.avatar_reference = 'userPicture'
+      `;
+
+    client.connect();
+    try {
+      const result = await client.query(query, [userId]);
+
+      if (result.rowCount === 0) {
+        throw new TypeError("Error during user avatar fetching");
+      }
+      return result.rows[0].avatar_blob;
+    } finally {
+      await client.end();
+    }
+  };
+
+  /**
+   * Check if the user already has an avatar in the database saved under the selected reference
+   * @param userId
+   * @param avatarReference
+   * @returns null if the user doesn't have avatar, or the avatar blob if exists
+   */
+  isAvatarInDataBase = async (userId: number, avatarReference: string): Promise<AvatarDto | null> => {
+    const client = new Client({
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE,
+      port: Number(process.env.DB_PORT),
+    });
+
+    const query = `
+          SELECT *
+          FROM public.avatar a 
+          WHERE a.avatar_user_id = $1 
+          AND a.avatar_reference = $2
+          `;
+    client.connect();
+    try {
+      const poolResult = await client.query(query, [userId, avatarReference]);
+
+      if (poolResult.rowCount === 0) {
+        return null;
+      }
+      const result = poolResult.rows[0];
+
+      const registeredAvatar = new AvatarDto(
+        result.avatar_id ?? 0,
+        result.avatar_user_id,
+        result.avatar_reference,
+        result.avatar_blob,
+        result.avatar_is_validated
+      );
+      return registeredAvatar;
+    } finally {
+      await client.end();
+    }
+  };
+
+  /**
+   * Update an avatar row in the database if one already exist with a given avatarReference, but the image comparison failed.
+   * Meaning the user has send a new image to replace the old one.
+   * @param userId
+   * @param blob
+   * @returns
+   */
+  updateAvatarBlob = async (blob: Buffer, userId: number, avatarReference: string): Promise<AvatarDto> => {
+    const client = new Client({
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE,
+      port: Number(process.env.DB_PORT),
+    });
+
+    // TODO : WILL NEED TO CHANGE THE AVATAR IS VALIDATED TO FALSE WHEN ADMIN VALIDATION WILL BE IMPLEMENTED
+    const query = `
+        UPDATE avatar
+        SET avatar_blob = $1, avatar_is_validated = true
+        WHERE avatar_user_id = $2 AND avatar_reference = $3
+        RETURNING *
+      `;
+    client.connect();
+    try {
+      const poolResult = await client.query(query, [blob, userId, avatarReference]);
+
+      if (poolResult.rowCount === 0) {
+        throw new Error("Error while updating the avatar");
+      }
+
+      const result = poolResult.rows[0];
+
+      const registeredAvatar = new AvatarDto(
+        result.avatar_id,
+        result.avatar_user_id,
+        result.avatar_reference,
+        result.avatar_blob,
+        result.avatar_is_validated
+      );
+      return registeredAvatar;
+    } finally {
+      await client.end();
     }
   };
 
@@ -109,7 +238,12 @@ export class UserRepository {
    * @param blob avatar blob bytea
    * @param isValidated (will be set to true for applications avatar)
    */
-  registerNewAvatar = async (userId: number, avatarReference: string, blob: Buffer, isValidated: boolean) => {
+  registerNewAvatar = async (
+    userId: number,
+    avatarReference: string,
+    blob: Buffer,
+    isValidated: boolean
+  ): Promise<AvatarDto> => {
     const client = new Client({
       host: process.env.DB_HOST,
       user: process.env.DB_USER,
@@ -135,7 +269,7 @@ export class UserRepository {
       const poolResult = await client.query(query, [userId, avatarReference, blob, isValidated]);
 
       if (poolResult.rowCount === 0) {
-        throw new Error("Error while registering the avatar");
+        throw new Error("Error while registering a new avatar");
       }
 
       const result = poolResult.rows[0];
@@ -154,13 +288,45 @@ export class UserRepository {
   };
 
   /**
-   * Update an avatar row in the database if one already exist with a given avatarReference, but the image comparison failed.
-   * Meaning the user has send a new image to replace the old one.
+   * check if a row exist in the avatar table for a given user id with default avatar reference
    * @param userId
-   * @param blob
-   * @returns
+   * @returns avatar id if exist, null if not
    */
-  updateAvatarBlob = async (blob: Buffer, userId: number, avatarReference: string) => {
+  isDefaultAvatarRowExist = async (userId: number): Promise<number | null> => {
+    const client = new Client({
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE,
+      port: Number(process.env.DB_PORT),
+    });
+
+    const query = `
+      SELECT * 
+      FROM public.avatar a
+      WHERE a.avatar_user_id = $1 
+      AND a.avatar_reference IN ('avatarH', 'avatarF', 'avatarM', 'avatarN') 
+    `;
+    client.connect();
+    try {
+      const result = await client.query(query, [userId]);
+
+      if (result.rowCount === 0) {
+        return null;
+      }
+      return result.rows[0].avatar_id;
+    } finally {
+      await client.end();
+    }
+  };
+
+  /**
+   * Update the row with the default avatar choice for a user, with the new avatar reference
+   * @param avatarId
+   * @param avatarReference
+   * @returns AvatarDto with information of the default avatar row updated
+   */
+  updatedDefaultAvatarRow = async (avatarId: number, avatarReference: string): Promise<AvatarDto> => {
     const client = new Client({
       host: process.env.DB_HOST,
       user: process.env.DB_USER,
@@ -171,40 +337,39 @@ export class UserRepository {
 
     const query = `
       UPDATE avatar
-      SET avatar_blob = $1
-      WHERE avatar_user_id = $2 AND avatar_reference = $3::avatar_enum
+      SET avatar_reference = $1
+      WHERE avatar_id = $2
       RETURNING *
     `;
     client.connect();
     try {
-      const poolResult = await client.query(query, [blob, userId, avatarReference]);
+      const result = await client.query(query, [avatarReference, avatarId]);
 
-      if (poolResult.rowCount === 0) {
-        throw new Error("Error while updating the avatar");
+      if (result.rowCount === 0) {
+        throw new Error("Error while updating default avatar row");
       }
 
-      const result = poolResult.rows[0];
-
-      const registeredAvatar = new AvatarDto(
-        result.avatar_id,
-        result.avatar_user_id,
-        result.avatar_reference,
-        result.avatar_blob,
-        result.avatar_is_validated
+      const updatedRow = new AvatarDto(
+        result.rows[0].avatar_id,
+        result.rows[0].avatar_user_id,
+        result.rows[0].avatar_reference,
+        result.rows[0].avatar_blob,
+        result.rows[0].avatar_is_validated
       );
-      return registeredAvatar;
+
+      return updatedRow;
     } finally {
       await client.end();
     }
   };
 
   /**
-   * Check if the user already has an avatar in the database saved under the selected reference
+   * Create a new row in the avatar table for the default avatar choice
    * @param userId
    * @param avatarReference
-   * @returns null if the user doesn't have avatar, or the avatar blob if exists
+   * @returns AvatarDto with information about the default avatar row created
    */
-  isAvatarInDataBase = async (userId: number, avatarReference: string): Promise<AvatarDto | null> => {
+  registerDefaultAvatar = async (userId: number, avatarReference: string): Promise<AvatarDto> => {
     const client = new Client({
       host: process.env.DB_HOST,
       user: process.env.DB_USER,
@@ -214,28 +379,33 @@ export class UserRepository {
     });
 
     const query = `
-        SELECT *
-        FROM public.avatar a 
-        WHERE a.avatar_user_id = $1 
-        AND a.avatar_reference = $2::avatar_enum
-        `;
+      INSERT INTO avatar 
+      (
+        avatar_user_id, 
+        avatar_reference, 
+        avatar_blob,
+        avatar_is_validated
+      )
+      VALUES ($1, $2, $3, $4)
+      RETURNING *
+    `;
     client.connect();
+
     try {
-      const poolResult = await client.query(query, [userId, avatarReference]);
-
-      if (poolResult.rowCount === 0) {
-        return null;
+      const result = await client.query(query, [userId, avatarReference, null, true]);
+      if (result.rowCount === 0) {
+        throw new Error("Error while registering defaut avatar");
       }
-      const result = poolResult.rows[0];
 
-      const registeredAvatar = new AvatarDto(
-        result.avatar_id ?? 0,
-        result.avatar_user_id,
-        result.avatar_reference,
-        result.avatar_blob,
-        result.avatar_is_validated
+      const registeredDefaultAvatarRow = new AvatarDto(
+        result.rows[0].avatar_id,
+        result.rows[0].avatar_user_id,
+        result.rows[0].avatar_reference,
+        result.rows[0].avatar_blob,
+        result.rows[0].avatar_is_validated
       );
-      return registeredAvatar;
+
+      return registeredDefaultAvatarRow;
     } finally {
       await client.end();
     }
@@ -245,9 +415,9 @@ export class UserRepository {
    * update the user table to set the avatar Id, representing the avatar selected by the user
    * @param userId
    * @param avatarId
-   * @returns
+   * @returns the avatar id selected by the user
    */
-  setAvatarChoiceInUser = async (userId: number, avatarId: number) => {
+  setUserAvatarChoice = async (userId: number, avatarId: number): Promise<number> => {
     const client = new Client({
       host: process.env.DB_HOST,
       user: process.env.DB_USER,
