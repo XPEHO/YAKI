@@ -21,13 +21,12 @@ class _AvatarApi implements AvatarApi {
   @override
   Future<HttpResponse<dynamic>> postAvatarById(
     int id,
-    Map<String, dynamic> body,
+    FormData formData,
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(body);
+    final _data = formData;
     final _result =
         await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(Options(
       method: 'POST',
@@ -36,7 +35,7 @@ class _AvatarApi implements AvatarApi {
     )
             .compose(
               _dio.options,
-              '/users/{id}/avatar-selection',
+              '/users/${id}/avatar-selection',
               queryParameters: queryParameters,
               data: _data,
             )

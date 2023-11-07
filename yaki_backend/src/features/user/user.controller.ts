@@ -55,9 +55,16 @@ export class UserController {
     const userId = Number(req.params.id);
 
     try {
-      const personalAvatar: Buffer = await this.service.getPersonalAvatarByUserId(userId);
-      const filePath = PictureProcessing.byteaToImage(personalAvatar);
-      res.status(200).sendFile(filePath);
+      const personalAvatar: Buffer | string | null = await this.service.getPersonalAvatarByUserId(userId);
+
+      if (personalAvatar instanceof Buffer) {
+        const filePath = PictureProcessing.byteaToImage(personalAvatar);
+        res.status(200).sendFile(filePath);
+        return;
+      } else {
+        res.status(204).json({message: personalAvatar});
+        return;
+      }
     } catch (error: any) {
       if (error instanceof TypeError) {
         res.status(404).json({message: error.message});
@@ -86,10 +93,10 @@ export class UserController {
 
     try {
       if (avatarReference !== AvatarEnum.USERPICTURE) {
-        const updatedDefaultAvatar = await this.service.setDefaultAvatarChoice(userId, avatarReference);
+        const updatedDefaultAvatarReference = await this.service.setDefaultAvatarChoice(userId, avatarReference);
         // if getting an image along with the default avatar choice, delete the image as its not meant to be saved in the database
         if (file !== undefined) PictureProcessing.deleteUploadedFile(file);
-        res.status(200).json({message: updatedDefaultAvatar});
+        res.status(200).json({message: updatedDefaultAvatarReference});
 
         // if the avatar is a user picture, save it in the database
       } else if (avatarReference === AvatarEnum.USERPICTURE && file !== undefined) {

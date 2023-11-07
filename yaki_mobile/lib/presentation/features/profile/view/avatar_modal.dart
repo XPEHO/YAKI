@@ -5,7 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:yaki/domain/entities/logged_user.dart';
-import 'package:yaki/presentation/displaydata/avatar_enum.dart';
 import 'package:yaki/presentation/features/shared/sized_circle_avatar.dart';
 import 'package:yaki/presentation/state/providers/avatar_provider.dart';
 import 'package:yaki/presentation/state/providers/login_provider.dart';
@@ -49,13 +48,14 @@ class AvatarModalState extends ConsumerState<AvatarModal> {
 
     void uploadImage(
       String avatarReference,
-      String? fileName,
+      File? fileName,
+      Function closeModal,
     ) async {
       await ref.read(avatarProvider.notifier).postAvatar(
             avatarReference,
             fileName,
           );
-      Navigator.of(context).pop();
+      closeModal();
     }
 
     return Padding(
@@ -70,7 +70,11 @@ class AvatarModalState extends ConsumerState<AvatarModal> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   InkWell(
-                    onTap: () => uploadImage('avatarNone', null),
+                    onTap: () => uploadImage(
+                      'avatarNone',
+                      null,
+                      () => Navigator.of(context).pop(),
+                    ),
                     child: CircleAvatar(
                       radius: 60,
                       backgroundColor: const Color(0xFFFFD7C0),
@@ -84,7 +88,11 @@ class AvatarModalState extends ConsumerState<AvatarModal> {
                     ),
                   ),
                   InkWell(
-                    onTap: () => uploadImage('avatarN', null),
+                    onTap: () => uploadImage(
+                      'avatarN',
+                      null,
+                      () => Navigator.of(context).pop(),
+                    ),
                     child: const ProfilAvatarSvg(
                       imageSrc: 'assets/images/Avatar.svg',
                     ),
@@ -96,13 +104,21 @@ class AvatarModalState extends ConsumerState<AvatarModal> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   InkWell(
-                    onTap: () => uploadImage('avatarF', null),
+                    onTap: () => uploadImage(
+                      'avatarF',
+                      null,
+                      () => Navigator.of(context).pop(),
+                    ),
                     child: const ProfilAvatarSvg(
                       imageSrc: 'assets/images/avatar-woman.svg',
                     ),
                   ),
                   InkWell(
-                    onTap: () => uploadImage('avatarH', null),
+                    onTap: () => uploadImage(
+                      'avatarH',
+                      null,
+                      () => Navigator.of(context).pop(),
+                    ),
                     child: const ProfilAvatarSvg(
                       imageSrc: 'assets/images/avatar-men.svg',
                     ),
@@ -138,7 +154,8 @@ class AvatarModalState extends ConsumerState<AvatarModal> {
                       text: tr('upload'),
                       onPressed: () => uploadImage(
                         'userPicture',
-                        _imageFile?.path,
+                        _imageFile,
+                        () => Navigator.of(context).pop(),
                       ),
                     ),
                 ],

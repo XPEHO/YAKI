@@ -11,6 +11,7 @@ UserInfoProfile _$UserInfoProfileFromJson(Map<String, dynamic> json) =>
       lastName: json['lastName'] as String?,
       firstName: json['firstName'] as String?,
       email: json['email'] as String?,
+      avatarChoice: json['avatarChoice'] as String?,
     );
 
 Map<String, dynamic> _$UserInfoProfileToJson(UserInfoProfile instance) =>
@@ -18,4 +19,5 @@ Map<String, dynamic> _$UserInfoProfileToJson(UserInfoProfile instance) =>
       'lastName': instance.lastName,
       'firstName': instance.firstName,
       'email': instance.email,
+      'avatarChoice': instance.avatarChoice,
     };

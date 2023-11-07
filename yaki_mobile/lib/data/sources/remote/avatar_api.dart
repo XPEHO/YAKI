@@ -16,7 +16,7 @@ abstract class AvatarApi {
 
   @POST('/users/{id}/avatar-selection')
   Future<HttpResponse> postAvatarById(
-    @Path('userId') int id,
-    @Body() Map<String, dynamic> body,
+    @Path('id') int id,
+    @Body() FormData formData,
   );
 }

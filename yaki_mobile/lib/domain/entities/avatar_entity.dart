@@ -1,16 +1,16 @@
+import 'dart:io';
+
 class AvatarEntity {
-  int? avatarUserId;
   String? avatarReference;
-  int? avatarFile;
+  File? avatar;
 
   AvatarEntity({
-    required this.avatarUserId,
     required this.avatarReference,
-    required this.avatarFile,
+    required this.avatar,
   });
 
   @override
   String toString() {
-    return "{avatarUserId: $avatarUserId, avatarReference: $avatarReference, avatarFile: $avatarFile";
+    return "{avatarReference: $avatarReference, avatarFile: $avatar";
   }
 }
