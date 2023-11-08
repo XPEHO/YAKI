@@ -113,7 +113,7 @@ dev_dependencies:
   flutter_lints: ^2.0.0
 
   # Retrofit dependency
-  retrofit_generator: ^7.0.8
+  retrofit_generator: ^8.0.3
   build_runner: '>=2.3.0 <4.0.0'
   json_serializable: ^6.7.1
 
