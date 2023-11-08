@@ -119,12 +119,18 @@ export class UserService {
    * Retrive the user avatar if one is registered in the database
    * @param userId
    */
-  getPersonalAvatarByUserId = async (userId: number): Promise<Buffer> => {
+  getPersonalAvatarByUserId = async (userId: number): Promise<Buffer | string | null> => {
     if (userId === undefined || userId === null) {
       throw new TypeError("No user id provided");
     }
 
-    const userAvatar: Buffer | null = await this.userRepository.getPersonalAvatarByUserId(userId);
+    const selectedAvatarId = await this.userRepository.getUserAvatarChoice(userId);
+    // the user has no avatar selected
+    if (selectedAvatarId === null) {
+      return null;
+    }
+
+    const userAvatar: Buffer | string = await this.userRepository.getUserSelectedAvatarInfo(selectedAvatarId);
 
     if (userAvatar === null) {
       throw new Error("No avatar found for this user");
@@ -164,6 +170,7 @@ export class UserService {
       fileData,
       isValidated
     );
+
     await this.userRepository.setUserAvatarChoice(userId, registeredAvatar.avatarId);
 
     return registeredAvatar;
@@ -193,6 +200,7 @@ export class UserService {
       }
       // else update the avatar blob as the user has send a different one
       const updatedAvatarRow = await this.userRepository.updateAvatarBlob(fileData, userId, avatarReference);
+      await this.userRepository.setUserAvatarChoice(userId, updatedAvatarRow.avatarId);
       return updatedAvatarRow;
     }
   };
@@ -202,18 +210,23 @@ export class UserService {
    * Either update the existing row in the database or create a new one.
    * @param userId
    * @param avatarReference
-   * @returns avatar id of the default avatar choice
+   * @returns avatar reference of the default avatar choice
    */
-  setDefaultAvatarChoice = async (userId: number, avatarReference: string): Promise<number> => {
+  setDefaultAvatarChoice = async (userId: number, avatarReference: string): Promise<string> => {
     const avatarIdRowToUpdate = await this.userRepository.isDefaultAvatarRowExist(userId);
 
     // if a row already exist for the default avatar choice, update it
     if (avatarIdRowToUpdate) {
-      const updatedAvatarInfo = await this.userRepository.updatedDefaultAvatarRow(avatarIdRowToUpdate, avatarReference);
-      return await this.userRepository.setUserAvatarChoice(userId, updatedAvatarInfo.avatarId);
+      const updatedAvatarInfo = await this.userRepository.updatedDefaultAvatarRow(
+        avatarIdRowToUpdate.avatarId,
+        avatarReference
+      );
+      await this.userRepository.setUserAvatarChoice(userId, updatedAvatarInfo.avatarId);
+      return updatedAvatarInfo.avatarReference;
     } else {
       const registeredDefaultAvatar = await this.userRepository.registerDefaultAvatar(userId, avatarReference);
-      return await this.userRepository.setUserAvatarChoice(userId, registeredDefaultAvatar.avatarId);
+      await this.userRepository.setUserAvatarChoice(userId, registeredDefaultAvatar.avatarId);
+      return registeredDefaultAvatar.avatarReference;
     }
   };
 }

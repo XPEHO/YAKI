@@ -85,9 +85,14 @@ export class UserRepository {
       port: Number(process.env.DB_PORT),
     });
     const query = `
-        SELECT user_last_name, user_first_name, user_email, user_avatar_choice
-        FROM public.user u
-        WHERE user_id = $1
+      SELECT 
+      user_last_name, 
+      user_first_name, 
+      user_email, 
+      a.avatar_reference
+      FROM public.user u
+      LEFT JOIN public.avatar a ON u.user_id = a.avatar_user_id
+      WHERE user_id = $1
       `;
     client.connect();
     try {
@@ -96,13 +101,46 @@ export class UserRepository {
         throw new TypeError("Error during user informations fetching");
       }
       const result = poolResult.rows[0];
+
       const userInformations = new UserInformationDto(
         result.user_last_name,
         result.user_first_name,
         result.user_email,
-        result.user_avatar_choice
+        result.avatar_reference
       );
+
       return userInformations;
+    } finally {
+      await client.end();
+    }
+  };
+
+  /**
+   *  retrieve the avatar id selected by the user
+   * @param userId
+   * @returns avatar id selected by the user or null if no avatar is selected
+   */
+  getUserAvatarChoice = async (userId: number): Promise<number | null> => {
+    const client = new Client({
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE,
+    });
+    const query = `
+      SELECT u.user_avatar_choice 
+      FROM public.user u
+      WHERE u.user_id = $1
+    `;
+    client.connect();
+    try {
+      const result = await client.query(query, [userId]);
+
+      if (result.rowCount === 0) {
+        throw new TypeError("Error during user avatar choice fetching");
+      }
+
+      return result.rows[0].user_avatar_choice;
     } finally {
       await client.end();
     }
@@ -113,7 +151,7 @@ export class UserRepository {
    * @param userId
    * @returns buffer of the avatar blob, value can be null if no avatar is registered
    */
-  getPersonalAvatarByUserId = async (userId: number): Promise<Buffer | null> => {
+  getUserSelectedAvatarInfo = async (avatarId: number): Promise<Buffer | string> => {
     const client = new Client({
       host: process.env.DB_HOST,
       user: process.env.DB_USER,
@@ -123,20 +161,19 @@ export class UserRepository {
     });
 
     const query = `
-        SELECT avatar_blob
+        SELECT *
         FROM public.avatar a
-        WHERE a.avatar_user_id = $1
-        AND a.avatar_reference = 'userPicture'
+        WHERE a.avatar_id = $1
       `;
 
     client.connect();
     try {
-      const result = await client.query(query, [userId]);
+      const result = await client.query(query, [avatarId]);
 
       if (result.rowCount === 0) {
         throw new TypeError("Error during user avatar fetching");
       }
-      return result.rows[0].avatar_blob;
+      return result.rows[0].avatar_blob ?? result.rows[0].avatar_reference;
     } finally {
       await client.end();
     }
@@ -267,7 +304,6 @@ export class UserRepository {
 
     try {
       const poolResult = await client.query(query, [userId, avatarReference, blob, isValidated]);
-
       if (poolResult.rowCount === 0) {
         throw new Error("Error while registering a new avatar");
       }
@@ -292,7 +328,7 @@ export class UserRepository {
    * @param userId
    * @returns avatar id if exist, null if not
    */
-  isDefaultAvatarRowExist = async (userId: number): Promise<number | null> => {
+  isDefaultAvatarRowExist = async (userId: number): Promise<AvatarDto | null> => {
     const client = new Client({
       host: process.env.DB_HOST,
       user: process.env.DB_USER,
@@ -305,16 +341,24 @@ export class UserRepository {
       SELECT * 
       FROM public.avatar a
       WHERE a.avatar_user_id = $1 
-      AND a.avatar_reference IN ('avatarH', 'avatarF', 'avatarM', 'avatarN') 
+      AND a.avatar_reference IN ('avatarH', 'avatarF', 'avatarM', 'avatarN', 'avatarNone') 
     `;
     client.connect();
     try {
       const result = await client.query(query, [userId]);
-
       if (result.rowCount === 0) {
         return null;
       }
-      return result.rows[0].avatar_id;
+
+      const updatedRow = new AvatarDto(
+        result.rows[0].avatar_id,
+        result.rows[0].avatar_user_id,
+        result.rows[0].avatar_reference,
+        result.rows[0].avatar_blob,
+        result.rows[0].avatar_is_validated
+      );
+
+      return updatedRow;
     } finally {
       await client.end();
     }
@@ -356,7 +400,6 @@ export class UserRepository {
         result.rows[0].avatar_blob,
         result.rows[0].avatar_is_validated
       );
-
       return updatedRow;
     } finally {
       await client.end();

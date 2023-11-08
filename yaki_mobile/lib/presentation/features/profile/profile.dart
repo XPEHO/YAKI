@@ -5,8 +5,10 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yaki/data/sources/local/shared_preference.dart';
 import 'package:yaki/domain/entities/user_entity.dart';
+import 'package:yaki/presentation/displaydata/avatar_enum.dart';
 import 'package:yaki/presentation/features/profile/view/avatar_modal.dart';
 import 'package:yaki/presentation/features/shared/feedback_user.dart';
+import 'package:yaki/presentation/state/providers/avatar_provider.dart';
 import 'package:yaki/presentation/state/providers/user_provider.dart';
 import 'package:yaki_ui/yaki_ui.dart';
 
@@ -16,7 +18,6 @@ class Profile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final UserEntity? user = ref.watch(userProvider);
-    debugPrint(user.toString());
 
     void onLogout({required Function goToAuthentication}) {
       goToAuthentication();
@@ -55,9 +56,7 @@ class Profile extends ConsumerWidget {
                     SizedBox(
                       height: 160,
                       width: 160,
-                      child: SvgPicture.asset(
-                        'assets/images/avatar-men.svg',
-                      ),
+                      child: changeAvatarImage(ref),
                     ),
                     SizedBox(
                       width: 48,
@@ -140,6 +139,37 @@ class Profile extends ConsumerWidget {
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+Widget changeAvatarImage(WidgetRef ref) {
+  final avatarData = ref.watch(avatarProvider);
+  final UserEntity? user = ref.watch(userProvider);
+
+  if (avatarData.avatarReference != null &&
+      avatarData.avatarReference != "avatarNone") {
+    return SvgPicture.asset(
+      AvatarEnum.values.byName(avatarData.avatarReference!).text,
+    );
+  } else if (avatarData.avatarReference == null && avatarData.avatar != null) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(
+        100.0,
+      ), // adjust the radius as needed
+      child: Image.memory(avatarData.avatar!),
+    );
+  } else {
+    return CircleAvatar(
+      radius: 60,
+      backgroundColor: const Color(0xFFFFD7C0),
+      child: Text(
+        '${user?.firstName?[0] ?? "A"}${user?.lastName?[0] ?? "B"}',
+        style: const TextStyle(
+          color: Color(0xFF7D818C),
+          fontSize: 40,
         ),
       ),
     );

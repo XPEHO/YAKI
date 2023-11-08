@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:yaki/domain/entities/logged_user.dart';
 import 'package:yaki/presentation/features/shared/sized_circle_avatar.dart';
+import 'package:yaki/presentation/state/providers/avatar_provider.dart';
 import 'package:yaki/presentation/state/providers/login_provider.dart';
 import 'package:yaki_ui/yaki_ui.dart';
 import 'package:image/image.dart' as img;
@@ -45,11 +46,16 @@ class AvatarModalState extends ConsumerState<AvatarModal> {
       }
     }
 
-    Future<void> uploadImage() async {
-      // Upload the image file to the server
-      // ...
-      // Once the upload is complete, close the modal bottom sheet
-      Navigator.of(context).pop();
+    void uploadImage(
+      String avatarReference,
+      File? fileName,
+      Function closeModal,
+    ) async {
+      await ref.read(avatarProvider.notifier).postAvatar(
+            avatarReference,
+            fileName,
+          );
+      closeModal();
     }
 
     return Padding(
@@ -64,20 +70,11 @@ class AvatarModalState extends ConsumerState<AvatarModal> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   InkWell(
-                    onTap: () {
-                      // This is a modal bottom sheet. This need to be delete when the method will be implemented
-                      showModalBottomSheet(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return const SizedBox(
-                            height: 200,
-                            child: Center(
-                              child: Text('Coming soon'),
-                            ),
-                          );
-                        },
-                      );
-                    },
+                    onTap: () => uploadImage(
+                      'avatarNone',
+                      null,
+                      () => Navigator.of(context).pop(),
+                    ),
                     child: CircleAvatar(
                       radius: 60,
                       backgroundColor: const Color(0xFFFFD7C0),
@@ -91,22 +88,13 @@ class AvatarModalState extends ConsumerState<AvatarModal> {
                     ),
                   ),
                   InkWell(
-                    onTap: () {
-                      // This is a modal bottom sheet. This need to be delete when the method will be implemented
-                      showModalBottomSheet(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return const SizedBox(
-                            height: 200,
-                            child: Center(
-                              child: Text('Coming soon'),
-                            ),
-                          );
-                        },
-                      );
-                    },
+                    onTap: () => uploadImage(
+                      'avatarN',
+                      null,
+                      () => Navigator.of(context).pop(),
+                    ),
                     child: const ProfilAvatarSvg(
-                      imageSrc: 'assets/images/avatar-men2.svg',
+                      imageSrc: 'assets/images/Avatar.svg',
                     ),
                   ),
                 ],
@@ -116,39 +104,21 @@ class AvatarModalState extends ConsumerState<AvatarModal> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   InkWell(
-                    onTap: () {
-                      // This is a modal bottom sheet. This need to be delete when the method will be implemented
-                      showModalBottomSheet(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return const SizedBox(
-                            height: 200,
-                            child: Center(
-                              child: Text('Coming soon'),
-                            ),
-                          );
-                        },
-                      );
-                    },
+                    onTap: () => uploadImage(
+                      'avatarF',
+                      null,
+                      () => Navigator.of(context).pop(),
+                    ),
                     child: const ProfilAvatarSvg(
                       imageSrc: 'assets/images/avatar-woman.svg',
                     ),
                   ),
                   InkWell(
-                    onTap: () {
-                      // This is a modal bottom sheet. This need to be delete when the method will be implemented
-                      showModalBottomSheet(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return const SizedBox(
-                            height: 200,
-                            child: Center(
-                              child: Text('Coming soon'),
-                            ),
-                          );
-                        },
-                      );
-                    },
+                    onTap: () => uploadImage(
+                      'avatarH',
+                      null,
+                      () => Navigator.of(context).pop(),
+                    ),
                     child: const ProfilAvatarSvg(
                       imageSrc: 'assets/images/avatar-men.svg',
                     ),
@@ -182,7 +152,11 @@ class AvatarModalState extends ConsumerState<AvatarModal> {
                   if (_imageFile != null)
                     Button.secondary(
                       text: tr('upload'),
-                      onPressed: uploadImage,
+                      onPressed: () => uploadImage(
+                        'userPicture',
+                        _imageFile,
+                        () => Navigator.of(context).pop(),
+                      ),
                     ),
                 ],
               ),
