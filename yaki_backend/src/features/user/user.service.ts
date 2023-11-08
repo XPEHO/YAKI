@@ -116,7 +116,7 @@ export class UserService {
   };
 
   /**
-   * Retrive the user avatar if one is registered in the database
+   * Retrive the user avatar if one is registered in the database.
    * @param userId
    */
   getPersonalAvatarByUserId = async (userId: number): Promise<Buffer | string | null> => {
