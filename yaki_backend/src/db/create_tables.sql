@@ -8,6 +8,14 @@ CREATE SEQUENCE IF NOT EXISTS public.user_id_seq
     CACHE 1;
 ALTER SEQUENCE public.user_id_seq
     OWNER TO yaki;
+CREATE SEQUENCE IF NOT EXISTS public.avatar_id_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    CACHE 1;
+ALTER SEQUENCE public.avatar_id_seq
+    OWNER TO yaki;    
 CREATE SEQUENCE IF NOT EXISTS public.verification_token_id_seq
     INCREMENT 1
     START 1
@@ -133,8 +141,10 @@ CREATE TABLE IF NOT EXISTS public.user
 )
 TABLESPACE pg_default;
 ALTER TABLE IF EXISTS public.user
---     ADD COLUMN IF NOT EXISTS user_enabled boolean DEFAULT true,
-    OWNER to yaki;
+    OWNER to yaki; 
+
+
+
 -- CREATE TABLE FOR LOCATIONS
 CREATE TABLE IF NOT EXISTS public.locations
 (
@@ -262,7 +272,7 @@ CREATE TABLE IF NOT EXISTS public.team
 TABLESPACE pg_default;
 ALTER TABLE IF EXISTS public.team
     OWNER to yaki;
---- CREATE TABLE FOR TEAM MATES
+--- CREATE TABLE FOR TEAMMATES
 CREATE TABLE IF NOT EXISTS public.teammate
 (
     teammate_id integer NOT NULL DEFAULT nextval('teammate_id_seq'::regclass),
@@ -316,6 +326,9 @@ CREATE TABLE IF NOT EXISTS public.declaration
 TABLESPACE pg_default;
 ALTER TABLE IF EXISTS public.declaration
     OWNER to yaki;
+
+
+
 -- CREATE TABLE FOR VERIFICATION_TOKEN
 CREATE TABLE IF NOT EXISTS public.verification_token
 (
@@ -333,6 +346,7 @@ CREATE TABLE IF NOT EXISTS public.verification_token
 TABLESPACE pg_default;
 ALTER TABLE IF EXISTS public.verification_token
     OWNER to yaki;
+-- CREATE TABLE FOR CAPTAINS_TEAMS    
 CREATE TABLE IF NOT EXISTS public.captains_teams(
     captains_teams_id integer NOT NULL DEFAULT nextval('captains_teams_id_seq'::regclass),
     captains_teams_captain_id integer NOT NULL,
@@ -353,5 +367,27 @@ TABLESPACE pg_default;
 ALTER TABLE IF EXISTS public.captains_teams
     OWNER to yaki;
 
+
+-- CREATE TABLE FOR AVATAR    
+CREATE TABLE IF NOT EXISTS public.avatar(
+    avatar_id integer NOT NULL DEFAULT nextval('public.avatar_id_seq'::regclass),
+    avatar_user_id integer NOT NULL,
+    avatar_reference VARCHAR(255) NOT NULL,
+    avatar_blob bytea,
+    avatar_is_validated boolean NOT NULL,
+    CONSTRAINT avatar_pkey PRIMARY KEY (avatar_id),
+    CONSTRAINT avatar_user_id_fkey FOREIGN KEY (avatar_user_id)
+        REFERENCES public.user (user_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+TABLESPACE pg_default;
+ALTER TABLE IF EXISTS public.avatar
+    OWNER to yaki;
+
 ALTER TABLE public.declaration
 ADD COLUMN IF NOT EXISTS declaration_is_latest BOOLEAN DEFAULT FALSE;
+
+ALTER TABLE public.user
+ADD COLUMN IF NOT EXISTS user_avatar_choice INTEGER;

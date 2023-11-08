@@ -24,12 +24,13 @@ class UserRepository {
 
       switch (statusCode) {
         case 200:
-          final userJson = userHttpResponse.response.data.first;
+          final userJson = userHttpResponse.response.data;
 
           final UserInfoProfile user = UserInfoProfile(
-            lastName: userJson['user_last_name'],
-            firstName: userJson['user_first_name'],
-            email: userJson['user_email'],
+            lastName: userJson['lastname'],
+            firstName: userJson['firstname'],
+            email: userJson['email'],
+            avatarChoice: userJson['avatarChoice'],
           );
 
           return user;

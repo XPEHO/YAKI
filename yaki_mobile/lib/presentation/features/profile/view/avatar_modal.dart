@@ -1,17 +1,62 @@
+import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:yaki/domain/entities/logged_user.dart';
 import 'package:yaki/presentation/features/shared/sized_circle_avatar.dart';
+import 'package:yaki/presentation/state/providers/avatar_provider.dart';
 import 'package:yaki/presentation/state/providers/login_provider.dart';
 import 'package:yaki_ui/yaki_ui.dart';
+import 'package:image/image.dart' as img;
 
-class AvatarModal extends ConsumerWidget {
+class AvatarModal extends ConsumerStatefulWidget {
   const AvatarModal({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  AvatarModalState createState() => AvatarModalState();
+}
+
+class AvatarModalState extends ConsumerState<AvatarModal> {
+  File? _imageFile;
+
+  @override
+  Widget build(BuildContext context) {
     final LoggedUser? user = ref.watch(loginRepositoryProvider).loggedUser;
+
+    Future<void> pickImage(ImageSource source) async {
+      final pickedFile = await ImagePicker().pickImage(source: source);
+      if (pickedFile != null) {
+        final originalImage = img.decodeImage(await pickedFile.readAsBytes());
+        final resizedImage = img.copyResize(
+          originalImage!,
+          width: 160,
+          height: 160,
+        );
+
+        final directory = await getApplicationDocumentsDirectory();
+        final path = directory.path;
+        final File resizedImageFile = File('$path/resized_image.jpg')
+          ..writeAsBytesSync(img.encodeJpg(resizedImage));
+
+        setState(() {
+          _imageFile = resizedImageFile;
+        });
+      }
+    }
+
+    void uploadImage(
+      String avatarReference,
+      File? fileName,
+      Function closeModal,
+    ) async {
+      await ref.read(avatarProvider.notifier).postAvatar(
+            avatarReference,
+            fileName,
+          );
+      closeModal();
+    }
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -25,20 +70,11 @@ class AvatarModal extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   InkWell(
-                    onTap: () {
-                      // This is a modal bottom sheet. This need to be delete when the method will be implemented
-                      showModalBottomSheet(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return const SizedBox(
-                            height: 200,
-                            child: Center(
-                              child: Text('Coming soon'),
-                            ),
-                          );
-                        },
-                      );
-                    },
+                    onTap: () => uploadImage(
+                      'avatarNone',
+                      null,
+                      () => Navigator.of(context).pop(),
+                    ),
                     child: CircleAvatar(
                       radius: 60,
                       backgroundColor: const Color(0xFFFFD7C0),
@@ -52,22 +88,13 @@ class AvatarModal extends ConsumerWidget {
                     ),
                   ),
                   InkWell(
-                    onTap: () {
-                      // This is a modal bottom sheet. This need to be delete when the method will be implemented
-                      showModalBottomSheet(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return const SizedBox(
-                            height: 200,
-                            child: Center(
-                              child: Text('Coming soon'),
-                            ),
-                          );
-                        },
-                      );
-                    },
+                    onTap: () => uploadImage(
+                      'avatarN',
+                      null,
+                      () => Navigator.of(context).pop(),
+                    ),
                     child: const ProfilAvatarSvg(
-                      imageSrc: 'assets/images/avatar-men2.svg',
+                      imageSrc: 'assets/images/Avatar.svg',
                     ),
                   ),
                 ],
@@ -77,39 +104,21 @@ class AvatarModal extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   InkWell(
-                    onTap: () {
-                      // This is a modal bottom sheet. This need to be delete when the method will be implemented
-                      showModalBottomSheet(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return const SizedBox(
-                            height: 200,
-                            child: Center(
-                              child: Text('Coming soon'),
-                            ),
-                          );
-                        },
-                      );
-                    },
+                    onTap: () => uploadImage(
+                      'avatarF',
+                      null,
+                      () => Navigator.of(context).pop(),
+                    ),
                     child: const ProfilAvatarSvg(
                       imageSrc: 'assets/images/avatar-woman.svg',
                     ),
                   ),
                   InkWell(
-                    onTap: () {
-                      // This is a modal bottom sheet. This need to be delete when the method will be implemented
-                      showModalBottomSheet(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return const SizedBox(
-                            height: 200,
-                            child: Center(
-                              child: Text('Coming soon'),
-                            ),
-                          );
-                        },
-                      );
-                    },
+                    onTap: () => uploadImage(
+                      'avatarH',
+                      null,
+                      () => Navigator.of(context).pop(),
+                    ),
                     child: const ProfilAvatarSvg(
                       imageSrc: 'assets/images/avatar-men.svg',
                     ),
@@ -122,39 +131,33 @@ class AvatarModal extends ConsumerWidget {
                 children: [
                   Button.secondary(
                     text: tr('takePicture'),
-                    onPressed: () {
-                      // This is a modal bottom sheet. This need to be delete when the method will be implemented
-                      showModalBottomSheet(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return const SizedBox(
-                            height: 200,
-                            child: Center(
-                              child: Text('Coming soon'),
-                            ),
-                          );
-                        },
-                      );
-                    },
+                    onPressed: () => pickImage(ImageSource.camera),
                   ),
                   const SizedBox(height: 10),
                   Button.secondary(
                     text: tr('imgGallery'),
-                    onPressed: () {
-                      // This is a modal bottom sheet. This need to be delete when the method will be implemented
-                      showModalBottomSheet(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return const SizedBox(
-                            height: 200,
-                            child: Center(
-                              child: Text('Coming soon'),
-                            ),
-                          );
-                        },
-                      );
-                    },
+                    onPressed: () => pickImage(ImageSource.gallery),
                   ),
+                  const SizedBox(height: 10),
+                  if (_imageFile != null)
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(
+                        100.0,
+                      ), // adjust the radius as needed
+                      child: Image.file(
+                        _imageFile!,
+                      ),
+                    ),
+                  const SizedBox(height: 20),
+                  if (_imageFile != null)
+                    Button.secondary(
+                      text: tr('upload'),
+                      onPressed: () => uploadImage(
+                        'userPicture',
+                        _imageFile,
+                        () => Navigator.of(context).pop(),
+                      ),
+                    ),
                 ],
               ),
             ],
