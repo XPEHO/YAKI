@@ -304,7 +304,7 @@ export class UserRepository {
 
     try {
       const poolResult = await client.query(query, [userId, avatarReference, blob, isValidated]);
-
+console.log('poolResult', poolResult);
       if (poolResult.rowCount === 0) {
         throw new Error("Error while registering a new avatar");
       }
@@ -347,7 +347,7 @@ export class UserRepository {
     client.connect();
     try {
       const result = await client.query(query, [userId]);
-
+      console.log('result', result);
       if (result.rowCount === 0) {
         return null;
       }
@@ -402,7 +402,7 @@ export class UserRepository {
         result.rows[0].avatar_blob,
         result.rows[0].avatar_is_validated
       );
-
+        console.log('updatedRow', updatedRow);
       return updatedRow;
     } finally {
       await client.end();

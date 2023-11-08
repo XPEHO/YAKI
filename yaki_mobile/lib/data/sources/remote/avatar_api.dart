@@ -11,7 +11,7 @@ abstract class AvatarApi {
   /// -> Sending to the Repository
   // @GET('/users/{id}/personal-avatar')
   // Future<HttpResponse> getAvatarById(
-  //   @Path('userId') int id,
+  //   @Path('id') int id,
   // );
 
   @POST('/users/{id}/avatar-selection')
