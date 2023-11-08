@@ -1,8 +1,8 @@
-import 'dart:io';
+import 'dart:typed_data';
 
 class AvatarEntity {
   String? avatarReference;
-  File? avatar;
+  Uint8List? avatar;
 
   AvatarEntity({
     required this.avatarReference,
@@ -11,6 +11,6 @@ class AvatarEntity {
 
   @override
   String toString() {
-    return "{avatarReference: $avatarReference, avatarFile: $avatar";
+    return "{avatarReference: $avatarReference";
   }
 }

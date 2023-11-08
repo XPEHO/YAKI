@@ -58,11 +58,12 @@ export class UserController {
       const personalAvatar: Buffer | string | null = await this.service.getPersonalAvatarByUserId(userId);
 
       if (personalAvatar instanceof Buffer) {
-        const filePath = PictureProcessing.byteaToImage(personalAvatar);
-        res.status(200).sendFile(filePath);
+        const byteArray = [...personalAvatar];
+        //const filePath = PictureProcessing.byteaToImage(personalAvatar);
+        res.status(200).send(byteArray);
         return;
       } else {
-        res.status(204).json({message: personalAvatar});
+        res.status(200).json({message: personalAvatar});
         return;
       }
     } catch (error: any) {
@@ -105,8 +106,9 @@ export class UserController {
         //delete the uploaded files after saving in databases
         PictureProcessing.deleteUploadedFile(file);
 
-        const filePath = PictureProcessing.byteaToImage(registeredAvatar.avatarBlob);
-        res.status(200).sendFile(filePath);
+        const byteArray = [...registeredAvatar.avatarBlob];
+        // const filePath = PictureProcessing.byteaToImage(registeredAvatar.avatarBlob);
+        res.status(200).send(byteArray);
       } else {
         throw new TypeError("No file uploaded");
       }

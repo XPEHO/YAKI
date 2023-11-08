@@ -2,7 +2,6 @@ class UserEntity {
   String? lastName;
   String? firstName;
   String? email;
-  
 
   UserEntity({
     required this.lastName,

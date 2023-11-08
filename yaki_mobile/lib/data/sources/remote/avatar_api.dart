@@ -8,11 +8,10 @@ abstract class AvatarApi {
   /// set in the environment variables (see user_provider.dart)
   factory AvatarApi(Dio dio, {required String baseUrl}) = _AvatarApi;
 
-  /// -> Sending to the Repository
-  // @GET('/users/{id}/personal-avatar')
-  // Future<HttpResponse> getAvatarById(
-  //   @Path('id') int id,
-  // );
+  @GET('/users/{id}/personal-avatar')
+  Future<HttpResponse> getAvatarById(
+    @Path('id') int id,
+  );
 
   @POST('/users/{id}/avatar-selection')
   Future<HttpResponse> postAvatarById(

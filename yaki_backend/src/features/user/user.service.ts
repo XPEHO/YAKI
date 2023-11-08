@@ -170,6 +170,7 @@ export class UserService {
       fileData,
       isValidated
     );
+
     await this.userRepository.setUserAvatarChoice(userId, registeredAvatar.avatarId);
 
     return registeredAvatar;
@@ -199,6 +200,7 @@ export class UserService {
       }
       // else update the avatar blob as the user has send a different one
       const updatedAvatarRow = await this.userRepository.updateAvatarBlob(fileData, userId, avatarReference);
+      await this.userRepository.setUserAvatarChoice(userId, updatedAvatarRow.avatarId);
       return updatedAvatarRow;
     }
   };

@@ -8,28 +8,20 @@ class AvatarNotifier extends StateNotifier<AvatarEntity> {
 
   AvatarNotifier({required this.avatarRepository})
       : super(
-          AvatarEntity(avatar: File(''), avatarReference: "avatarNone"),
+          AvatarEntity(avatar: null, avatarReference: null),
         );
 
   Future<void> postAvatar(
     String avatarReference,
     File? fileName,
   ) async {
-    await avatarRepository.postAvatarById(
+    state = await avatarRepository.postAvatarById(
       avatarReference: avatarReference,
       avatar: fileName,
     );
   }
 
-  // Future<void> getAvatar() async {
-  //   final Avatar avatar = await AvatarRepository.getAvatarById();
-
-  //   state = AvatarEntity(
-  //     avatarId: avatar.avatarId,
-  //     avatarUserId: avatar.avatarUserId,
-  //     avatarReference: avatar.avatarReference,
-  //     avatarBlob: avatar.avatarBlob,
-  //     avatarIsValidated: avatar.avatarIsValidated,
-  //   );
-  // }
+  Future<void> getAvatar() async {
+    state = await avatarRepository.getAvatarById();
+  }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:yaki/presentation/state/providers/avatar_provider.dart';
 import 'package:yaki/presentation/state/providers/declaration_provider.dart';
 import 'package:yaki/presentation/styles/color.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -25,6 +26,8 @@ class SplashScreenState extends ConsumerState<SplashScreen> {
     bool isDeclared =
         await ref.read(declarationProvider.notifier).getLatestDeclaration();
     bool isLoggedIn = prefs.containsKey('token');
+
+    ref.read(avatarProvider.notifier).getAvatar();
 
     if (isLoggedIn && isDeclared) {
       Future.delayed(const Duration(seconds: 3), () {

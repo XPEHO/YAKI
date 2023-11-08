@@ -130,7 +130,7 @@ export class UserRepository {
     const query = `
       SELECT u.user_avatar_choice 
       FROM public.user u
-      WHERE u.user_id = 3
+      WHERE u.user_id = $1
     `;
     client.connect();
     try {
@@ -304,7 +304,6 @@ export class UserRepository {
 
     try {
       const poolResult = await client.query(query, [userId, avatarReference, blob, isValidated]);
-console.log('poolResult', poolResult);
       if (poolResult.rowCount === 0) {
         throw new Error("Error while registering a new avatar");
       }
@@ -347,7 +346,6 @@ console.log('poolResult', poolResult);
     client.connect();
     try {
       const result = await client.query(query, [userId]);
-      console.log('result', result);
       if (result.rowCount === 0) {
         return null;
       }
@@ -402,7 +400,6 @@ console.log('poolResult', poolResult);
         result.rows[0].avatar_blob,
         result.rows[0].avatar_is_validated
       );
-        console.log('updatedRow', updatedRow);
       return updatedRow;
     } finally {
       await client.end();
