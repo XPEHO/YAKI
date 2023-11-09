@@ -27,20 +27,16 @@ class SplashScreenState extends ConsumerState<SplashScreen> {
         await ref.read(declarationProvider.notifier).getLatestDeclaration();
     bool isLoggedIn = prefs.containsKey('token');
 
-    ref.read(avatarProvider.notifier).getAvatar();
+    if (isLoggedIn) {
+      await ref.read(avatarProvider.notifier).getAvatar();
+    }
 
     if (isLoggedIn && isDeclared) {
-      Future.delayed(const Duration(seconds: 3), () {
-        context.go('/teams-declaration-summary');
-      });
+      context.go('/teams-declaration-summary');
     } else if (isLoggedIn) {
-      Future.delayed(const Duration(seconds: 3), () {
-        context.go('/team-selection');
-      });
+      context.go('/team-selection');
     } else {
-      Future.delayed(const Duration(seconds: 3), () {
-        context.go('/authentication');
-      });
+      context.go('/authentication');
     }
   }
 
