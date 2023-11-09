@@ -1,4 +1,4 @@
-import {AvatarEnum} from "./avatar.enum";
+import {AvatarEnum} from "../user_avatar/avatar.enum";
 export class UserInformationDto {
   lastname: string;
   firstname: string;
