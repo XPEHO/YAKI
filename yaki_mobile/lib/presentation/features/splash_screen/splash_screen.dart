@@ -31,13 +31,16 @@ class SplashScreenState extends ConsumerState<SplashScreen> {
       await ref.read(avatarProvider.notifier).getAvatar();
     }
 
-    if (isLoggedIn && isDeclared) {
-      context.go('/teams-declaration-summary');
-    } else if (isLoggedIn) {
-      context.go('/team-selection');
-    } else {
-      context.go('/authentication');
-    }
+    // to ensure that the navigation happens after the widget tree has been built
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (isLoggedIn && isDeclared) {
+        context.go('/teams-declaration-summary');
+      } else if (isLoggedIn) {
+        context.go('/team-selection');
+      } else {
+        context.go('/authentication');
+      }
+    });
   }
 
   @override

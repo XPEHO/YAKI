@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yaki/data/models/message.dart';
 import 'package:yaki/data/sources/remote/avatar_api.dart';
@@ -82,7 +83,8 @@ class AvatarRepository {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final int? userId = prefs.getInt("userId");
     if (userId == null) {
-      throw Exception('invalid avatar');
+      debugPrint("error while fetching avatar : no userid found");
+      return avatarJson;
     }
 
     try {
@@ -108,14 +110,17 @@ class AvatarRepository {
             );
             return avatarJson;
           }
+        case 404: // no avatar found
+          return avatarJson;
         default:
           throw Exception(
             'Error while fetching avatar : ${jsonDecode(avatarHttpResponse.data)['message']}',
           );
       }
-      return avatarJson;
     } catch (err) {
-      throw Exception('Error while fetching avatar $err');
+      debugPrint("error while fetching avatar : $err");
     }
+
+    return avatarJson;
   }
 }
