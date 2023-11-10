@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yaki/data/sources/local/shared_preference.dart';
 import 'package:yaki/presentation/features/shared/feedback_user.dart';
+import 'package:yaki/presentation/state/providers/avatar_provider.dart';
 import 'package:yaki/presentation/state/providers/declaration_provider.dart';
 import 'package:yaki/presentation/state/providers/login_provider.dart';
 import 'package:yaki/presentation/styles/color.dart';
@@ -101,7 +102,11 @@ class _AuthenticationState extends ConsumerState<Authentication> {
     );
   }
 
-  void onPressSignUp({required Function goToRegistrationPage}) {
+  void onPressSignUp({
+    required Function goToRegistrationPage,
+    required Function getAvatar,
+  }) {
+    getAvatar();
     goToRegistrationPage();
   }
 
@@ -190,6 +195,8 @@ class _AuthenticationState extends ConsumerState<Authentication> {
                         const SizedBox(height: 10),
                         InkWell(
                           onTap: () => onPressSignUp(
+                            getAvatar: () =>
+                                ref.read(avatarProvider.notifier).getAvatar(),
                             goToRegistrationPage: () =>
                                 context.go('/registration'),
                           ),

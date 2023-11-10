@@ -18,8 +18,18 @@ class DatePickerPopup extends ConsumerStatefulWidget {
 }
 
 class _DatePickerPopupState extends ConsumerState<DatePickerPopup> {
-  DateTimeRange selectedDateRange =
-      DateTimeRange(end: DateTime.now(), start: DateTime.now());
+  DateTimeRange selectedDateRange = DateTimeRange(
+    end: DateTime(
+      DateTime.now().year,
+      DateTime.now().month,
+      DateTime.now().day,
+    ),
+    start: DateTime(
+      DateTime.now().year,
+      DateTime.now().month,
+      DateTime.now().day,
+    ),
+  );
   String selectedDateStartString = DateFormat.yMd('fr').format(DateTime.now());
   String selectedDateEndString = DateFormat.yMd('fr').format(DateTime.now());
 

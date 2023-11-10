@@ -1,6 +1,8 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yaki/data/models/message.dart';
 import 'package:yaki/data/sources/remote/avatar_api.dart';
@@ -41,6 +43,7 @@ class AvatarRepository {
 
       switch (statusCode) {
         case 200:
+          //response is an map, therefore a string
           if (avatarHttpResponse.data is Map<String, dynamic>) {
             final message = Message.fromJson(avatarHttpResponse.data);
             avatarJson = AvatarEntity(
@@ -48,6 +51,7 @@ class AvatarRepository {
               avatar: null,
             );
             return avatarJson;
+            // response is a List, therefore an byte array, so an image
           } else if (avatarHttpResponse.data is List<dynamic>) {
             List<dynamic> rawData = avatarHttpResponse.data;
             Uint8List imageData = Uint8List.fromList(rawData.cast<int>());
@@ -56,15 +60,14 @@ class AvatarRepository {
               avatarReference: null,
               avatar: imageData,
             );
-
             return avatarJson;
           }
         default:
-          throw Exception('Error while posting avatar');
+          'Error while posting avatar : ${jsonDecode(avatarHttpResponse.data)['message']}';
       }
       return avatarJson;
     } catch (err) {
-      throw Exception('Error while posting avatar');
+      throw Exception('Error while posting avatar : $err');
     }
   }
 
@@ -80,7 +83,8 @@ class AvatarRepository {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final int? userId = prefs.getInt("userId");
     if (userId == null) {
-      throw Exception('invalid avatar');
+      debugPrint("error while fetching avatar : no userid found");
+      return avatarJson;
     }
 
     try {
@@ -104,15 +108,19 @@ class AvatarRepository {
               avatarReference: null,
               avatar: imageData,
             );
-
             return avatarJson;
           }
+        case 404: // no avatar found
+          return avatarJson;
         default:
-          throw Exception('Error while fetching avatar');
+          throw Exception(
+            'Error while fetching avatar : ${jsonDecode(avatarHttpResponse.data)['message']}',
+          );
       }
-      return avatarJson;
     } catch (err) {
-      throw Exception('Error while fetching avatar');
+      debugPrint("error while fetching avatar : $err");
     }
+
+    return avatarJson;
   }
 }

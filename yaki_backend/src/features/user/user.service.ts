@@ -121,6 +121,7 @@ export class UserService {
    */
   getPersonalAvatarByUserId = async (userId: number): Promise<Buffer | string | null> => {
     if (userId === undefined || userId === null) {
+      console.warn("No user id provided");
       throw new TypeError("No user id provided");
     }
 
@@ -133,6 +134,7 @@ export class UserService {
     const userAvatar: Buffer | string = await this.userRepository.getUserSelectedAvatarInfo(selectedAvatarId);
 
     if (userAvatar === null) {
+      console.warn("No avatar found for this user");
       throw new Error("No avatar found for this user");
     }
 
