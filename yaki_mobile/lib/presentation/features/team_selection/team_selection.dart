@@ -22,18 +22,20 @@ class TeamSelection extends ConsumerWidget {
     bool isValidationButtonEnabled = ref.watch(teamProvider).isButtonActivated;
 
     return Scaffold(
-      appBar: AppBarWithDate(actions: <Widget>[
-        IconButton(
-          icon: const NavIconCircleAvatar(
-            imageSrc: 'assets/images/Account.svg',
+      appBar: AppBarWithDate(
+        actions: <Widget>[
+          IconButton(
+            icon: const NavIconCircleAvatar(
+              imageSrc: 'assets/images/Account.svg',
+            ),
+            onPressed: () {
+              ref.read(userProvider.notifier).getUser();
+              ref.read(avatarProvider.notifier).getAvatar();
+              context.go('/profile');
+            },
           ),
-          onPressed: () {
-            ref.read(userProvider.notifier).getUser();
-            ref.read(avatarProvider.notifier).getAvatar();
-            context.go('/profile');
-          },
-        ),
-      ]),
+        ],
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(16.0, 8, 16.0, 30),
