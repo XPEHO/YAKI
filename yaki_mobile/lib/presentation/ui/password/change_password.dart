@@ -82,72 +82,74 @@ class _ChangePasswordState extends ConsumerState<ChangePassword> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 40),
-                child: Text(
-                  tr('changePasswordPageTitle'),
-                  style: registrationPageTitleTextStyle(),
-                ),
-              ),
-              Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    InputRegistration(
-                      textInputAction: TextInputAction.next,
-                      controller: currentPassword,
-                      label: tr('changePasswordPageOldPW'),
-                      validatorFunction: passwordValidator,
-                      isShown: true,
-                    ),
-                    InputRegistration(
-                      textInputAction: TextInputAction.next,
-                      controller: newPassword,
-                      label: tr('changePasswordPageNewPW'),
-                      validatorFunction: passwordValidator,
-                      isShown: true,
-                    ),
-                    InputRegistration(
-                      textInputAction: TextInputAction.done,
-                      controller: newPasswordConfirmation,
-                      label: tr('changePasswordPageNewPWConfirm'),
-                      validatorFunction: (value) =>
-                          pwConfirmationValidator(value, newPassword.text),
-                      isShown: true,
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 40),
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ConfirmationElevatedButton(
-                    text: tr('changePasswordPageConfimButton'),
-                    onPressed: passwordChangeValidation,
-                    foregroundColor: const Color.fromARGB(212, 183, 146, 14),
-                    backgroundColor: const Color.fromARGB(255, 220, 219, 219),
-                    btnTextStyle: registrationBtnTextStyle(),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 40),
+                  child: Text(
+                    tr('changePasswordPageTitle'),
+                    style: registrationPageTitleTextStyle(),
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 25),
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ConfirmationElevatedButton(
-                    text: tr('registrationCancelButton'),
-                    onPressed: () => context.go("/profile"),
-                    foregroundColor: const Color.fromARGB(212, 183, 146, 14),
-                    backgroundColor: const Color.fromARGB(255, 107, 97, 96),
-                    btnTextStyle: registrationCancelTextStyle(),
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      InputRegistration(
+                        textInputAction: TextInputAction.next,
+                        controller: currentPassword,
+                        label: tr('changePasswordPageOldPW'),
+                        validatorFunction: passwordValidator,
+                        isShown: true,
+                      ),
+                      InputRegistration(
+                        textInputAction: TextInputAction.next,
+                        controller: newPassword,
+                        label: tr('changePasswordPageNewPW'),
+                        validatorFunction: passwordValidator,
+                        isShown: true,
+                      ),
+                      InputRegistration(
+                        textInputAction: TextInputAction.done,
+                        controller: newPasswordConfirmation,
+                        label: tr('changePasswordPageNewPWConfirm'),
+                        validatorFunction: (value) =>
+                            pwConfirmationValidator(value, newPassword.text),
+                        isShown: true,
+                      ),
+                    ],
                   ),
                 ),
-              ),
-            ],
+                Padding(
+                  padding: const EdgeInsets.only(top: 40),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: ConfirmationElevatedButton(
+                      text: tr('changePasswordPageConfimButton'),
+                      onPressed: passwordChangeValidation,
+                      foregroundColor: const Color.fromARGB(212, 183, 146, 14),
+                      backgroundColor: const Color.fromARGB(255, 220, 219, 219),
+                      btnTextStyle: registrationBtnTextStyle(),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 25),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: ConfirmationElevatedButton(
+                      text: tr('registrationCancelButton'),
+                      onPressed: () => context.go("/profile"),
+                      foregroundColor: const Color.fromARGB(212, 183, 146, 14),
+                      backgroundColor: const Color.fromARGB(255, 107, 97, 96),
+                      btnTextStyle: registrationCancelTextStyle(),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
