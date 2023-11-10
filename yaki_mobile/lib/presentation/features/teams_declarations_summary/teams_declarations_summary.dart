@@ -61,7 +61,7 @@ class TeamsDeclarationSummary extends ConsumerWidget {
       ),
       body: const SafeArea(
         child: Padding(
-          padding: EdgeInsets.only(left: 16, right: 16),
+          padding: EdgeInsets.only(left: 16, right: 16, bottom: 24),
           child: TeammateListAsync(),
         ),
       ),
