@@ -166,7 +166,7 @@ Widget changeAvatarImage(WidgetRef ref) {
       radius: 60,
       backgroundColor: const Color(0xFFFFD7C0),
       child: Text(
-        '${user?.firstName?[0] ?? "A"}${user?.lastName?[0] ?? "B"}',
+        '${(user?.firstName != null && user!.firstName!.isNotEmpty) ? user.firstName![0] : "A"}${(user?.lastName != null && user!.lastName!.isNotEmpty) ? user.lastName![0] : "B"}',
         style: const TextStyle(
           color: Color(0xFF7D818C),
           fontSize: 40,
