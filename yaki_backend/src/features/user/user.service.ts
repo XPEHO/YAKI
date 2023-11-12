@@ -9,6 +9,7 @@ import {UserToRegisterOut} from "./toRegister.dtoOut";
 import {RegisterResponse} from "./registerResponse";
 import EmailAlreadyExistsError from "../../errors/EmailAlreadyExistError";
 import {LoginDtoIn} from "./login.dtoIn";
+import {DataError} from "../../errors/dataOrDataBaseError";
 
 export class UserService {
   userRepository: UserRepository;
@@ -105,14 +106,14 @@ export class UserService {
    * @returns
    */
   getUserById = async (userId: number) => {
-    if (userId === undefined || userId === null) {
-      throw new TypeError("No user id provided");
+    try {
+      if (!userId) {
+        throw new DataError("No user id provided");
+      }
+      return await this.userRepository.getUserById(userId);
+    } catch (error: any) {
+      console.error(error);
+      throw error;
     }
-    return await this.userRepository.getUserById(userId);
   };
-
-  /**
-   * Retrive the user avatar, if one is registered in the database.
-   * @param userId
-   */
 }

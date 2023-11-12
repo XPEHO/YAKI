@@ -4,6 +4,7 @@ import {UserToRegisterOut} from "./toRegister.dtoOut";
 import ToRegisterRes from "./toRegisterRes.dto";
 import EmailAlreadyExistsError from "../../errors/EmailAlreadyExistError";
 import {UserInformationDto} from "./userInformations.dto";
+import {DatabaseError} from "../../errors/dataOrDataBaseError";
 
 export class UserRepository {
   /**
@@ -97,7 +98,7 @@ export class UserRepository {
     try {
       const poolResult: QueryResult = await client.query(query, [userId]);
       if (poolResult.rowCount === 0) {
-        throw new TypeError("Error during user informations fetching");
+        throw new DatabaseError(`The user ${userId} doesn't exist`);
       }
       const result = poolResult.rows[0];
 
