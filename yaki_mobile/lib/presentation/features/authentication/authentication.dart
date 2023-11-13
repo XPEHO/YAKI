@@ -15,8 +15,6 @@ import 'package:url_launcher/url_launcher.dart';
 final Uri _url =
     Uri.parse('https://github.com/XPEHO/YAKI/blob/main/PRIVACY_POLICY.md');
 
-/// using ConsumerWidget (statelessWidget) to have access to the WidgetRef object
-/// allowing the current widget to have access to any provider.
 class Authentication extends ConsumerStatefulWidget {
   const Authentication({super.key});
 
@@ -29,12 +27,8 @@ class _AuthenticationState extends ConsumerState<Authentication> {
   final passwordController = TextEditingController();
   final Color backgroundColor = const Color(0xFFF2F6F9);
   bool _isLoading = false;
-  // store the user default login details
   List<String> loginDetails = ["", ""];
 
-  // function that retrieve from the shared preferences the user default
-  // login details and the 'rememberMe' checkbox default value before
-  // the widgets are mounted
   void _initiateCheckboxValue() async {
     var storedLoginDetails = await SharedPref.getLoginDetails();
 
@@ -52,7 +46,6 @@ class _AuthenticationState extends ConsumerState<Authentication> {
     super.initState();
   }
 
-  /// on 'Sign in' button press/tap :
   void onPressAuthent({
     required WidgetRef ref,
     required String login,
@@ -62,7 +55,7 @@ class _AuthenticationState extends ConsumerState<Authentication> {
     required Function goToUserDefaultRedirection,
     required Function(bool) setLoading,
   }) async {
-    setLoading(true); // show the loader
+    setLoading(true);
     final String lowercaseLogin = login.toLowerCase();
     await SharedPref.deleteToken();
     await SharedPref.setLoginDetails(lowercaseLogin, password);
@@ -91,8 +84,6 @@ class _AuthenticationState extends ConsumerState<Authentication> {
     }
   }
 
-  // Show a snackbar at the bottom of the screen to notice the user that
-  // the login information he put are wrong
   showSnackBar() {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -116,24 +107,23 @@ class _AuthenticationState extends ConsumerState<Authentication> {
 
   @override
   Widget build(BuildContext context) {
-    // Size of the device
     var size = MediaQuery.of(context).size;
 
     return Scaffold(
       body: Container(
         color: backgroundColor,
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: EdgeInsets.all(size.width * 0.04), // 4% of screen width
           child: Center(
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  SizedBox(height: size.height / 10),
+                  SizedBox(height: size.height / 20),
                   Image.asset(
                     'assets/images/yaki_basti_icon.png',
-                    height: 100,
-                    width: 100,
+                    height: size.width * 0.2, // 20% of screen width
+                    width: size.width * 0.2, // 20% of screen width
                   ),
                   SizedBox(height: size.height / 20),
                   Text(
@@ -149,24 +139,31 @@ class _AuthenticationState extends ConsumerState<Authentication> {
                           label: tr('inputLogin'),
                           controller: loginController,
                         ),
-                        const SizedBox(height: 20),
+                        SizedBox(
+                          height: size.height * 0.02,
+                        ), // 2% of screen height
                         InputText(
                           type: InputTextType.password,
                           label: tr('inputPassword'),
                           controller: passwordController,
                         ),
-                        const SizedBox(height: 10),
+                        SizedBox(
+                          height: size.height * 0.01,
+                        ), // 1% of screen height
                         _isLoading
-                            ? const Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: CircularProgressIndicator(
+                            ? Padding(
+                                padding: EdgeInsets.all(
+                                  size.width * 0.02,
+                                ), // 2% of screen width
+                                child: const CircularProgressIndicator(
                                   color: AppColors.primaryColor,
                                   strokeWidth: 5,
                                   semanticsLabel: 'Loading',
                                 ),
-                              ) // show the loader
+                              )
                             : Button(
-                                buttonHeight: 72,
+                                buttonHeight:
+                                    size.height * 0.09, // 9% of screen height
                                 text: tr('signIn'),
                                 onPressed: () => onPressAuthent(
                                   ref: ref,
@@ -183,16 +180,21 @@ class _AuthenticationState extends ConsumerState<Authentication> {
                                   }),
                                 ),
                               ),
-                        const SizedBox(height: 5),
+                        SizedBox(
+                          height: size.height * 0.005,
+                        ), // 0.5% of screen height
                         Button.secondary(
-                          buttonHeight: 64,
+                          buttonHeight:
+                              size.height * 0.08, // 8% of screen height
                           text: tr('forgotPassword'),
                           onPressed: () => onPressedForgotPassword(
                             goToForgotPassword: () =>
                                 context.go('/forgotPassword'),
                           ),
                         ),
-                        const SizedBox(height: 10),
+                        SizedBox(
+                          height: size.height * 0.01,
+                        ), // 1% of screen height
                         InkWell(
                           onTap: () => onPressSignUp(
                             getAvatar: () =>
@@ -203,7 +205,9 @@ class _AuthenticationState extends ConsumerState<Authentication> {
                           borderRadius: BorderRadius.circular(16),
                           splashColor: const Color.fromARGB(125, 46, 46, 46),
                           child: Padding(
-                            padding: const EdgeInsets.all(10.0),
+                            padding: EdgeInsets.all(
+                              size.width * 0.02,
+                            ), // 2% of screen width
                             child: Text(
                               tr('createAccountLink'),
                               style: TextStyle(
@@ -213,12 +217,14 @@ class _AuthenticationState extends ConsumerState<Authentication> {
                             ),
                           ),
                         ),
-                        const SizedBox(height: 10),
+                        SizedBox(
+                          height: size.height * 0.01,
+                        ), // 1% of screen height
                         const FeedbackUser(),
                       ],
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  SizedBox(height: size.height * 0.02), // 2% of screen height
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -229,7 +235,7 @@ class _AuthenticationState extends ConsumerState<Authentication> {
                           color: Colors.grey.shade600,
                         ),
                       ),
-                      const SizedBox(width: 10),
+                      SizedBox(width: size.width * 0.02), // 2% of screen width
                       TextButton(
                         onPressed: _launchUrl,
                         child: Text(
