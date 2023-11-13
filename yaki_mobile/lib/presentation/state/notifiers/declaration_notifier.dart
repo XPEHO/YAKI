@@ -24,11 +24,15 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final int? userId = prefs.getInt("userId");
 
-    if (userId == null) return false;
+    if (userId == null) {
+      state = state.copyWith(isAlreadyDeclared: false);
+      return false;
+    }
 
     final bool isAlreadyDeclared =
         await declarationRepository.getLatestDeclaration(userId);
 
+    state = state.copyWith(isAlreadyDeclared: isAlreadyDeclared);
     return isAlreadyDeclared;
   }
 
@@ -131,6 +135,7 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
     );
     // SEND TO REPOSITORY
     await declarationRepository.createFullDay(newDeclaration);
+    state = state.copyWith(isAlreadyDeclared: true);
   }
 
   /// Create declaration for the morning by setting
@@ -177,6 +182,7 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
       newDeclarationAfternoon,
     ];
     await declarationRepository.createHalfDay(declarations);
+    state = state.copyWith(isAlreadyDeclared: true);
   }
 
   // ABSENCE declaration creation.
@@ -211,6 +217,7 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
     state = state.copyWith(
       dateAbsenceStart: dateStart,
       dateAbsenceEnd: dateEnd,
+      isAlreadyDeclared: true,
     );
   }
 
