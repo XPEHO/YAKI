@@ -22,6 +22,7 @@ class _ChangePasswordState extends ConsumerState<ChangePassword> {
   final newPasswordConfirmation = TextEditingController();
   //form state
   final _formKey = GlobalKey<FormState>();
+  bool _isLoading = false;
 
   // function calling the snackbar
   showSnackBar({
@@ -41,7 +42,10 @@ class _ChangePasswordState extends ConsumerState<ChangePassword> {
   }
 
   // Validation of the form
-  Future<void> passwordChangeValidation() async {
+  Future passwordChangeValidation({
+    required Function(bool) setLoading,
+  }) async {
+    setLoading(true); //show the loader
     if (_formKey.currentState!.validate()) {
       await ref.read(passwordProvider.notifier).changePassword(
             currentPassword.text,
@@ -70,6 +74,7 @@ class _ChangePasswordState extends ConsumerState<ChangePassword> {
           actionLabel: tr('registrationCancelButton'),
           barAction: () {},
         );
+        setLoading(false);
       }
     }
   }
@@ -116,7 +121,7 @@ class _ChangePasswordState extends ConsumerState<ChangePassword> {
                         type: InputTextType.password,
                         controller: currentPassword,
                         label: tr('changePasswordPageOldPW'),
-                        validator: passwordValidator,
+                        // validator: passwordValidator,
                       ),
                       const SizedBox(height: 20),
                       InputText(
@@ -137,11 +142,23 @@ class _ChangePasswordState extends ConsumerState<ChangePassword> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                Button(
-                  buttonHeight: 72,
-                  text: tr('changePasswordPageConfimButton'),
-                  onPressed: passwordChangeValidation,
-                ),
+                _isLoading && _formKey.currentState!.validate()
+                    ? const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: CircularProgressIndicator(
+                          color: AppColors.primaryColor,
+                          strokeWidth: 5,
+                          semanticsLabel: 'Loading',
+                        ),
+                      )
+                    : Button(
+                        buttonHeight: 72,
+                        text: tr('changePasswordPageConfimButton'),
+                        onPressed: () => passwordChangeValidation(
+                          setLoading: (bool isLoading) =>
+                              setState(() => _isLoading = isLoading),
+                        ),
+                      ),
                 const SizedBox(height: 20),
                 Button.secondary(
                   buttonHeight: 64,
