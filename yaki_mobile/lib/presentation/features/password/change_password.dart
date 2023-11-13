@@ -121,7 +121,7 @@ class _ChangePasswordState extends ConsumerState<ChangePassword> {
                         type: InputTextType.password,
                         controller: currentPassword,
                         label: tr('changePasswordPageOldPW'),
-                        // validator: passwordValidator,
+                        validator: passwordValidator,
                       ),
                       const SizedBox(height: 20),
                       InputText(
