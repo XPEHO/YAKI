@@ -66,7 +66,7 @@ export class AvatarController {
         );
         // if getting an image along with the default avatar choice, delete the image as its not meant to be saved in the database
         if (file !== undefined) PictureProcessing.deleteUploadedFile(file);
-        return this.sendSuccessResponse(res, STATUS_CODES.OK, defaultAvatarReference?.avatarReference);
+        return this.sendSuccessResponse(res, STATUS_CODES.OK, {message: defaultAvatarReference?.avatarReference});
       }
 
       if (avatarReference === AvatarEnum.USERPICTURE && file !== undefined) {
