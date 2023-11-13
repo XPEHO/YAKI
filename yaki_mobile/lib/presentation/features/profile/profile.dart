@@ -149,6 +149,7 @@ class Profile extends ConsumerWidget {
                         controller:
                             TextEditingController(text: snapshot.data ?? ''),
                         enabled: true,
+                        readOnly: true,
                       ),
                       const SizedBox(height: 10),
                       Button.secondary(
