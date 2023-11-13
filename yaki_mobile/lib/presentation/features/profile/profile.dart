@@ -19,7 +19,6 @@ class Profile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final UserEntity? user = ref.watch(userProvider);
-    // ignore: unused_local_variable
     final ScrollController scrollController = ScrollController();
 
     void onLogout({required Function goToAuthentication}) {
@@ -67,113 +66,118 @@ class Profile extends ConsumerWidget {
       //   ),
       // ),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-          child: SingleChildScrollView(
-            child: FutureBuilder<String>(
-              future: getPassword(),
-              builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const CircularProgressIndicator();
-                } else {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Stack(
-                        alignment: Alignment.bottomRight,
-                        children: [
-                          SizedBox(
-                            height: 160,
-                            width: 160,
-                            child: changeAvatarImage(ref),
-                          ),
-                          SizedBox(
-                            width: 48,
-                            child: Button(
-                              buttonHeight: 48,
-                              onPressed: () {
-                                showModalBottomSheet(
-                                  isScrollControlled: true,
-                                  shape: const RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(48),
-                                      topRight: Radius.circular(48),
-                                    ),
-                                  ),
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return const AvatarModal();
-                                  },
-                                );
-                              },
-                              icon: Center(
-                                child: SvgPicture.asset(
-                                  'assets/images/Edit.svg',
-                                  height: 24,
-                                  width: 24,
-                                ),
-                              ),
-                              text: "",
+        child: Scrollbar(
+          thumbVisibility: true,
+          controller: scrollController,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+            child: SingleChildScrollView(
+              child: FutureBuilder<String>(
+                future: getPassword(),
+                builder:
+                    (BuildContext context, AsyncSnapshot<String> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CircularProgressIndicator();
+                  } else {
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Stack(
+                          alignment: Alignment.bottomRight,
+                          children: [
+                            SizedBox(
+                              height: 160,
+                              width: 160,
+                              child: changeAvatarImage(ref),
                             ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-                      InputText(
-                        type: InputTextType.email,
-                        label: tr('inputLabelFirstName'),
-                        controller:
-                            TextEditingController(text: user?.firstName ?? ''),
-                        readOnly: true,
-                      ),
-                      const SizedBox(height: 10),
-                      InputText(
-                        type: InputTextType.email,
-                        label: tr('inputLabelLastName'),
-                        controller:
-                            TextEditingController(text: user?.lastName ?? ''),
-                        readOnly: true,
-                      ),
-                      const SizedBox(height: 10),
-                      InputText(
-                        type: InputTextType.email,
-                        label: 'Email',
-                        controller:
-                            TextEditingController(text: user?.email ?? ''),
-                        readOnly: true,
-                      ),
-                      const SizedBox(height: 10),
-                      InputText(
-                        type: InputTextType.password,
-                        label: tr('inputPassword'),
-                        controller:
-                            TextEditingController(text: snapshot.data ?? ''),
-                        readOnly: true,
-                      ),
-                      const SizedBox(height: 10),
-                      Button.secondary(
-                        text: tr('changePassword'),
-                        onPressed: () {
-                          context.go('/changePassword');
-                        },
-                      ),
-                      const SizedBox(height: 10),
-                      Button.tertiary(
-                        text: tr('logOutButton'),
-                        onPressed: () => onDeleteToken(
-                          ref: ref,
-                          goToAuthentication: () =>
-                              context.go('/authentication'),
+                            SizedBox(
+                              width: 48,
+                              child: Button(
+                                buttonHeight: 48,
+                                onPressed: () {
+                                  showModalBottomSheet(
+                                    isScrollControlled: true,
+                                    shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(48),
+                                        topRight: Radius.circular(48),
+                                      ),
+                                    ),
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return const AvatarModal();
+                                    },
+                                  );
+                                },
+                                icon: Center(
+                                  child: SvgPicture.asset(
+                                    'assets/images/Edit.svg',
+                                    height: 24,
+                                    width: 24,
+                                  ),
+                                ),
+                                text: "",
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                      const SizedBox(height: 40),
-                      const FeedbackUser(),
-                      const SizedBox(height: 40),
-                    ],
-                  );
-                }
-              },
+                        const SizedBox(height: 10),
+                        InputText(
+                          type: InputTextType.email,
+                          label: tr('inputLabelFirstName'),
+                          controller: TextEditingController(
+                              text: user?.firstName ?? ''),
+                          readOnly: true,
+                        ),
+                        const SizedBox(height: 10),
+                        InputText(
+                          type: InputTextType.email,
+                          label: tr('inputLabelLastName'),
+                          controller:
+                              TextEditingController(text: user?.lastName ?? ''),
+                          readOnly: true,
+                        ),
+                        const SizedBox(height: 10),
+                        InputText(
+                          type: InputTextType.email,
+                          label: 'Email',
+                          controller:
+                              TextEditingController(text: user?.email ?? ''),
+                          readOnly: true,
+                        ),
+                        const SizedBox(height: 10),
+                        InputText(
+                          type: InputTextType.password,
+                          label: tr('inputPassword'),
+                          controller:
+                              TextEditingController(text: snapshot.data ?? ''),
+                          readOnly: true,
+                        ),
+                        const SizedBox(height: 10),
+                        Button.secondary(
+                          text: tr('changePassword'),
+                          onPressed: () {
+                            context.go('/changePassword');
+                          },
+                        ),
+                        const SizedBox(height: 10),
+                        Button.tertiary(
+                          text: tr('logOutButton'),
+                          onPressed: () => onDeleteToken(
+                            ref: ref,
+                            goToAuthentication: () =>
+                                context.go('/authentication'),
+                          ),
+                        ),
+                        const SizedBox(height: 40),
+                        const FeedbackUser(),
+                        const SizedBox(height: 40),
+                      ],
+                    );
+                  }
+                },
+              ),
             ),
           ),
         ),
