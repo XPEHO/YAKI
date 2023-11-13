@@ -19,6 +19,7 @@ class Profile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final UserEntity? user = ref.watch(userProvider);
+    // ignore: unused_local_variable
     final ScrollController scrollController = ScrollController();
 
     void onLogout({required Function goToAuthentication}) {
