@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
@@ -134,10 +135,12 @@ class AvatarModalState extends ConsumerState<AvatarModal> {
                     onPressed: () => pickImage(ImageSource.camera),
                   ),
                   const SizedBox(height: 10),
-                  Button.secondary(
-                    text: tr('imgGallery'),
-                    onPressed: () => pickImage(ImageSource.gallery),
-                  ),
+                  kIsWeb
+                      ? const SizedBox.shrink()
+                      : Button.secondary(
+                          text: tr('imgGallery'),
+                          onPressed: () => pickImage(ImageSource.gallery),
+                        ),
                   const SizedBox(height: 10),
                   if (_imageFile != null)
                     ClipRRect(
