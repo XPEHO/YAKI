@@ -18,19 +18,6 @@ class AppBarWithDate extends ConsumerWidget implements PreferredSizeWidget {
 
     final isAlreadyDeclared = ref.watch(declarationProvider).isAlreadyDeclared;
 
-    // Future<bool> getIsDeclared() async {
-    //   return await ref
-    //       .read(declarationProvider.notifier)
-    //       .getLatestDeclaration();
-    // }
-
-    // return FutureBuilder<bool>(
-    //   future: getIsDeclared(),
-    //   builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-    //     if (snapshot.connectionState == ConnectionState.waiting) {
-    //       return const CircularProgressIndicator(); // or some other widget while waiting for data
-    //     } else {
-    //       final isDeclared = snapshot.data ?? false;
     return AppBar(
       centerTitle: false,
       automaticallyImplyLeading: showBackButton && isAlreadyDeclared,
