@@ -127,7 +127,8 @@ class Profile extends ConsumerWidget {
                           type: InputTextType.email,
                           label: tr('inputLabelFirstName'),
                           controller: TextEditingController(
-                              text: user?.firstName ?? ''),
+                            text: user?.firstName ?? '',
+                          ),
                           readOnly: true,
                         ),
                         const SizedBox(height: 10),
