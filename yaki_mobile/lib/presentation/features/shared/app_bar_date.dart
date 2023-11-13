@@ -17,7 +17,7 @@ class AppBarWithDate extends ConsumerWidget implements PreferredSizeWidget {
     final showBackButton = currentRoute == 'team-selection';
 
     final isAlreadyDeclared = ref.watch(declarationProvider).isAlreadyDeclared;
-    print(isAlreadyDeclared);
+
     // Future<bool> getIsDeclared() async {
     //   return await ref
     //       .read(declarationProvider.notifier)
