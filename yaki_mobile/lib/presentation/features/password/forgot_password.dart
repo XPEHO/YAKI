@@ -106,6 +106,7 @@ class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
                 type: InputTextType.email,
                 controller: emailController,
                 label: tr('inputLogin'),
+                readOnly: false,
               ),
             ),
             const SizedBox(height: 10),

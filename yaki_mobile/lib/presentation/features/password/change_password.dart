@@ -122,6 +122,7 @@ class _ChangePasswordState extends ConsumerState<ChangePassword> {
                         controller: currentPassword,
                         label: tr('changePasswordPageOldPW'),
                         validator: passwordValidator,
+                        readOnly: false,
                       ),
                       const SizedBox(height: 20),
                       InputText(
@@ -129,6 +130,7 @@ class _ChangePasswordState extends ConsumerState<ChangePassword> {
                         label: tr('changePasswordPageNewPW'),
                         controller: newPassword,
                         validator: passwordValidator,
+                        readOnly: false,
                       ),
                       const SizedBox(height: 20),
                       InputText(
@@ -137,6 +139,7 @@ class _ChangePasswordState extends ConsumerState<ChangePassword> {
                         controller: newPasswordConfirmation,
                         validator: (value) =>
                             pwConfirmationValidator(value, newPassword.text),
+                        readOnly: false,
                       ),
                     ],
                   ),

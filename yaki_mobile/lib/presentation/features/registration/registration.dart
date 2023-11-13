@@ -134,6 +134,7 @@ class _RegistrationState extends ConsumerState<Registration> {
                         type: InputTextType.email,
                         label: tr('registrationInputFirstnameLabel'),
                         controller: firstNameController,
+                        readOnly: false,
                         onChange: (value) {
                           firstNameController.value = TextEditingValue(
                             text: capitalize(value),
@@ -146,6 +147,7 @@ class _RegistrationState extends ConsumerState<Registration> {
                         type: InputTextType.email,
                         label: tr('registrationInputLastnameLabel'),
                         controller: lastNameController,
+                        readOnly: false,
                         onChange: (value) {
                           lastNameController.value = TextEditingValue(
                             text: value.toUpperCase(),
@@ -159,6 +161,7 @@ class _RegistrationState extends ConsumerState<Registration> {
                         label: tr('registrationInputEmailLabel'),
                         controller: emailController,
                         validator: emailValidator,
+                        readOnly: false,
                         // textCapit,
                       ),
                       const SizedBox(height: 20),
@@ -167,12 +170,14 @@ class _RegistrationState extends ConsumerState<Registration> {
                         label: tr('registrationInputPasswordLabel'),
                         controller: passwordController,
                         validator: passwordValidator,
+                        readOnly: false,
                       ),
                       const SizedBox(height: 20),
                       InputText(
                         type: InputTextType.password,
                         label: tr('registrationInputPassConfirmLabel'),
                         controller: passwordConfirmController,
+                        readOnly: false,
                         validator: (value) => pwConfirmationValidator(
                           value,
                           passwordController.text,
