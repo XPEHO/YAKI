@@ -124,7 +124,7 @@ class Profile extends ConsumerWidget {
                         label: tr('inputLabelFirstName'),
                         controller:
                             TextEditingController(text: user?.firstName ?? ''),
-                        enabled: false,
+                        readOnly: true,
                       ),
                       const SizedBox(height: 10),
                       InputText(
@@ -132,7 +132,7 @@ class Profile extends ConsumerWidget {
                         label: tr('inputLabelLastName'),
                         controller:
                             TextEditingController(text: user?.lastName ?? ''),
-                        enabled: false,
+                        readOnly: true,
                       ),
                       const SizedBox(height: 10),
                       InputText(
@@ -140,7 +140,7 @@ class Profile extends ConsumerWidget {
                         label: 'Email',
                         controller:
                             TextEditingController(text: user?.email ?? ''),
-                        enabled: false,
+                        readOnly: true,
                       ),
                       const SizedBox(height: 10),
                       InputText(
@@ -148,7 +148,6 @@ class Profile extends ConsumerWidget {
                         label: tr('inputPassword'),
                         controller:
                             TextEditingController(text: snapshot.data ?? ''),
-                        enabled: true,
                         readOnly: true,
                       ),
                       const SizedBox(height: 10),

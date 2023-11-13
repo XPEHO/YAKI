@@ -138,6 +138,7 @@ class _AuthenticationState extends ConsumerState<Authentication> {
                           type: InputTextType.email,
                           label: tr('inputLogin'),
                           controller: loginController,
+                          readOnly: false,
                         ),
                         SizedBox(
                           height: size.height * 0.02,
@@ -146,6 +147,7 @@ class _AuthenticationState extends ConsumerState<Authentication> {
                           type: InputTextType.password,
                           label: tr('inputPassword'),
                           controller: passwordController,
+                          readOnly: false,
                         ),
                         SizedBox(
                           height: size.height * 0.01,
