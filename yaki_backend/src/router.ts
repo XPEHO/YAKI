@@ -41,7 +41,7 @@ const avatarController = new AvatarController(avatarServiece);
 
 //PASSWORD
 const passwordRepository = new PasswordRepository();
-const passwordService = new PasswordService(passwordRepository);
+const passwordService = new PasswordService(passwordRepository, userService);
 const passwordController = new PasswordController(passwordService);
 
 router.post("/login", signInLimiter, (req, res) =>

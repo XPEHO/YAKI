@@ -1,6 +1,7 @@
 import {UserService} from "./user.service";
 import {Response, Request} from "express";
 import EmailAlreadyExistsError from "../../errors/EmailAlreadyExistError";
+import {DataError} from "../../errors/dataOrDataBaseError";
 
 export class UserController {
   service: UserService;
@@ -41,7 +42,7 @@ export class UserController {
       const response = await this.service.getUserById(userId);
       res.send(response);
     } catch (error: any) {
-      if (error instanceof TypeError) {
+      if (error instanceof DataError) {
         res.status(404).json({message: error.message});
       } else {
         res.status(500).json({message: error.message});
