@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yaki/domain/entities/teammate_with_declaration_entity.dart';
+import 'package:yaki/domain/entities/user_entity.dart';
+import 'package:yaki/presentation/displaydata/avatar_enum.dart';
 import 'package:yaki/presentation/displaydata/declaration_status_enum.dart';
 import 'package:yaki/presentation/features/shared/sized_circle_avatar.dart';
 import 'package:yaki/presentation/features/teams_declarations_summary/view/cell_chips_row.dart';
 import 'package:yaki/presentation/features/teams_declarations_summary/view/cell_iconchips.dart';
+import 'package:yaki/presentation/state/providers/avatar_provider.dart';
 import 'package:yaki/presentation/state/providers/team_provider.dart';
+import 'package:yaki/presentation/state/providers/user_provider.dart';
 import 'package:yaki_ui/yaki_ui.dart';
 
 class CellCard extends ConsumerWidget {
@@ -90,5 +94,36 @@ String displayTimeSinceDeclaration({
     return '$differenceInSeconds sec';
   } else {
     return '0 sec';
+  }
+}
+
+Widget setUserAvatarImage(WidgetRef ref) {
+  final avatarData = ref.watch(avatarProvider);
+  final UserEntity? user = ref.watch(userProvider);
+
+  if (avatarData.avatarReference != null &&
+      avatarData.avatarReference != "avatarNone") {
+    return CellAvatarSvg(
+      imageSrc: AvatarEnum.values.byName(avatarData.avatarReference!).text,
+    );
+  } else if (avatarData.avatarReference == null && avatarData.avatar != null) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(
+        48.0,
+      ), // adjust the radius as needed
+      child: Image.memory(avatarData.avatar!),
+    );
+  } else {
+    return CircleAvatar(
+      radius: 48.0,
+      backgroundColor: const Color(0xFFFFD7C0),
+      child: Text(
+        '${(user?.firstName != null && user!.firstName!.isNotEmpty) ? user.firstName![0] : "A"}${(user?.lastName != null && user!.lastName!.isNotEmpty) ? user.lastName![0] : "B"}',
+        style: const TextStyle(
+          color: Color(0xFF7D818C),
+          fontSize: 20,
+        ),
+      ),
+    );
   }
 }
