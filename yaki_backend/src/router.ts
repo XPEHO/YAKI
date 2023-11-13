@@ -12,6 +12,9 @@ import {PasswordRepository} from "./features/password/password.repository";
 import {PasswordService} from "./features/password/password.service";
 import {PasswordController} from "./features/password/password.controller";
 import {TeamRepository} from "./features/team/team.repository";
+import {AvatarService} from "./features/user_avatar/avatar.service";
+import {AvatarRepository} from "./features/user_avatar/avatar.repository";
+import {AvatarController} from "./features/user_avatar/avatar.controller";
 
 export const router = express.Router();
 
@@ -30,6 +33,11 @@ const upload = multer({dest: "uploads/"});
 const userRepository = new UserRepository();
 const userService = new UserService(userRepository);
 const userController = new UserController(userService);
+
+//USER AVATAR
+const avatarRepository = new AvatarRepository();
+const avatarServiece = new AvatarService(avatarRepository);
+const avatarController = new AvatarController(avatarServiece);
 
 //PASSWORD
 const passwordRepository = new PasswordRepository();
@@ -55,17 +63,18 @@ router.get("/users/:userId", (req, res) => {
   userController.getUserById(req, res);
 });
 
+// upload.single("avatar") is the multer middleware to handle the file upload
 router.post(
   "/users/:id/avatar-selection",
   upload.single("avatar"),
   (req, res, next) => authService.verifyToken(req, res, next),
-  async (req, res) => userController.registerNewAvatar(req, res)
+  async (req, res) => avatarController.setAvatarByUserId(req, res)
 );
 
 router.get(
   "/users/:id/personal-avatar",
   (req, res, next) => authService.verifyToken(req, res, next),
-  async (req, res) => userController.getPersonalAvatarByUserId(req, res)
+  async (req, res) => avatarController.getAvatarByUserId(req, res)
 );
 
 // DEPRECIATED - TO BE REMOVED WHEN 1.10 isnt used anymore
