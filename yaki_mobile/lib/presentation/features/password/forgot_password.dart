@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:yaki/presentation/state/providers/password_provider.dart';
 import 'package:yaki/presentation/styles/color.dart';
 import 'package:yaki/presentation/styles/text_style.dart';
-import 'package:yaki/presentation/ui/registration/view/registration_snackbar.dart';
+import 'package:yaki/presentation/features/registration/view/registration_snackbar.dart';
 import 'package:yaki_ui/yaki_ui.dart';
 
 class ForgotPassword extends ConsumerStatefulWidget {

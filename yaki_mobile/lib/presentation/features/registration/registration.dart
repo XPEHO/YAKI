@@ -5,10 +5,9 @@ import 'package:go_router/go_router.dart';
 import 'package:yaki/presentation/state/providers/user_registration_provider.dart';
 import 'package:yaki/presentation/styles/color.dart';
 import 'package:yaki/presentation/styles/text_style.dart';
-import 'package:yaki/presentation/ui/registration/form_functionality.dart';
-import 'package:yaki/presentation/ui/registration/view/registration_snackbar.dart';
-import 'package:yaki/presentation/ui/shared/views/confirmation_elevated_button.dart';
-import 'package:yaki/presentation/ui/shared/views/input_registration_page.dart';
+import 'package:yaki/presentation/features/registration/form_functionality.dart';
+import 'package:yaki/presentation/features/registration/view/registration_snackbar.dart';
+import 'package:yaki_ui/yaki_ui.dart';
 
 class Registration extends ConsumerStatefulWidget {
   const Registration({super.key});
@@ -95,32 +94,46 @@ class _RegistrationState extends ConsumerState<Registration> {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+
     return Scaffold(
       backgroundColor: AppColors.yakiPrimaryColor,
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        leading: IconButton(
+          onPressed: () {
+            context.go('/authentication');
+          },
+          icon: const Icon(Icons.arrow_back),
+        ),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
+            padding: const EdgeInsets.all(16),
             child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 40, bottom: 30),
-                  child: Text(
-                    tr('registrationPageTitle'),
-                    style: registrationPageTitleTextStyle(),
-                  ),
+              children: <Widget>[
+                Image.asset(
+                  'assets/images/yaki_basti_icon.png',
+                  height: 100,
+                  width: 100,
                 ),
+                SizedBox(height: size.height / 20),
+                Text(
+                  tr('registrationPageTitle'),
+                  style: registrationPageTitleTextStyle(),
+                ),
+                const SizedBox(height: 20),
                 Form(
                   key: _formKey,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      InputRegistration(
-                        textInputAction: TextInputAction.next,
-                        controller: firstNameController,
+                      InputText(
+                        type: InputTextType.email,
                         label: tr('registrationInputFirstnameLabel'),
-                        validatorFunction: nameValidator,
-                        isShown: false,
+                        controller: firstNameController,
                         onChange: (value) {
                           firstNameController.value = TextEditingValue(
                             text: capitalize(value),
@@ -128,12 +141,11 @@ class _RegistrationState extends ConsumerState<Registration> {
                           );
                         }, // textCapitalization: capitalize,
                       ),
-                      InputRegistration(
-                        textInputAction: TextInputAction.next,
-                        controller: lastNameController,
+                      const SizedBox(height: 20),
+                      InputText(
+                        type: InputTextType.email,
                         label: tr('registrationInputLastnameLabel'),
-                        validatorFunction: nameValidator,
-                        isShown: false,
+                        controller: lastNameController,
                         onChange: (value) {
                           lastNameController.value = TextEditingValue(
                             text: value.toUpperCase(),
@@ -141,53 +153,45 @@ class _RegistrationState extends ConsumerState<Registration> {
                           );
                         }, // textCapitalization: toUpperCase,
                       ),
-                      InputRegistration(
-                        textInputAction: TextInputAction.next,
-                        controller: emailController,
+                      const SizedBox(height: 20),
+                      InputText(
+                        type: InputTextType.email,
                         label: tr('registrationInputEmailLabel'),
-                        validatorFunction: emailValidator,
-                        isShown: false,
+                        controller: emailController,
+                        validator: emailValidator,
                         // textCapit,
                       ),
-                      InputRegistration(
-                        textInputAction: TextInputAction.next,
-                        controller: passwordController,
+                      const SizedBox(height: 20),
+                      InputText(
+                        type: InputTextType.password,
                         label: tr('registrationInputPasswordLabel'),
-                        validatorFunction: passwordValidator,
-                        isShown: true,
+                        controller: passwordController,
+                        validator: passwordValidator,
                       ),
-                      InputRegistration(
-                        textInputAction: TextInputAction.done,
-                        controller: passwordConfirmController,
+                      const SizedBox(height: 20),
+                      InputText(
+                        type: InputTextType.password,
                         label: tr('registrationInputPassConfirmLabel'),
-                        validatorFunction: (value) => pwConfirmationValidator(
+                        controller: passwordConfirmController,
+                        validator: (value) => pwConfirmationValidator(
                           value,
                           passwordController.text,
                         ),
-                        isShown: true,
                       ),
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 40),
-                  child: ConfirmationElevatedButton(
-                    text: tr('registrationButton'),
-                    onPressed: formButtonValidation,
-                    foregroundColor: const Color.fromARGB(212, 183, 146, 14),
-                    backgroundColor: const Color.fromARGB(255, 220, 219, 219),
-                    btnTextStyle: registrationBtnTextStyle(),
-                  ),
+                const SizedBox(height: 20),
+                Button(
+                  buttonHeight: 72,
+                  text: tr('registrationButton'),
+                  onPressed: formButtonValidation,
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 40),
-                  child: ConfirmationElevatedButton(
-                    text: tr('registrationCancelButton'),
-                    onPressed: () => context.go("/authentication"),
-                    foregroundColor: const Color.fromARGB(212, 183, 146, 14),
-                    backgroundColor: const Color.fromARGB(255, 107, 97, 96),
-                    btnTextStyle: registrationCancelTextStyle(),
-                  ),
+                const SizedBox(height: 20),
+                Button.secondary(
+                  buttonHeight: 64,
+                  text: tr('registrationCancelButton'),
+                  onPressed: () => context.go("/authentication"),
                 ),
               ],
             ),

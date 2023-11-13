@@ -5,10 +5,9 @@ import 'package:go_router/go_router.dart';
 import 'package:yaki/presentation/state/providers/password_provider.dart';
 import 'package:yaki/presentation/styles/color.dart';
 import 'package:yaki/presentation/styles/text_style.dart';
-import 'package:yaki/presentation/ui/registration/form_functionality.dart';
-import 'package:yaki/presentation/ui/registration/view/registration_snackbar.dart';
-import 'package:yaki/presentation/ui/shared/views/confirmation_elevated_button.dart';
-import 'package:yaki/presentation/ui/shared/views/input_registration_page.dart';
+import 'package:yaki/presentation/features/registration/form_functionality.dart';
+import 'package:yaki/presentation/features/registration/view/registration_snackbar.dart';
+import 'package:yaki_ui/yaki_ui.dart';
 
 class ChangePassword extends ConsumerStatefulWidget {
   const ChangePassword({super.key});
@@ -77,76 +76,77 @@ class _ChangePasswordState extends ConsumerState<ChangePassword> {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+
     return Scaffold(
       backgroundColor: AppColors.yakiPrimaryColor,
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        leading: IconButton(
+          onPressed: () {
+            context.go('/authentication');
+          },
+          icon: const Icon(Icons.arrow_back),
+        ),
+      ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
+          padding: const EdgeInsets.all(16),
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 40),
-                  child: Text(
-                    tr('changePasswordPageTitle'),
-                    style: registrationPageTitleTextStyle(),
-                  ),
+              children: <Widget>[
+                Image.asset(
+                  'assets/images/yaki_basti_icon.png',
+                  height: 100,
+                  width: 100,
                 ),
+                SizedBox(height: size.height / 20),
+                Text(
+                  tr('changePasswordPageTitle'),
+                  style: registrationPageTitleTextStyle(),
+                ),
+                const SizedBox(height: 20),
                 Form(
                   key: _formKey,
                   child: Column(
                     children: [
-                      InputRegistration(
-                        textInputAction: TextInputAction.next,
+                      InputText(
+                        type: InputTextType.password,
                         controller: currentPassword,
                         label: tr('changePasswordPageOldPW'),
-                        validatorFunction: passwordValidator,
-                        isShown: true,
+                        validator: passwordValidator,
                       ),
-                      InputRegistration(
-                        textInputAction: TextInputAction.next,
-                        controller: newPassword,
+                      const SizedBox(height: 20),
+                      InputText(
+                        type: InputTextType.password,
                         label: tr('changePasswordPageNewPW'),
-                        validatorFunction: passwordValidator,
-                        isShown: true,
+                        controller: newPassword,
+                        validator: passwordValidator,
                       ),
-                      InputRegistration(
-                        textInputAction: TextInputAction.done,
-                        controller: newPasswordConfirmation,
+                      const SizedBox(height: 20),
+                      InputText(
+                        type: InputTextType.password,
                         label: tr('changePasswordPageNewPWConfirm'),
-                        validatorFunction: (value) =>
+                        controller: newPasswordConfirmation,
+                        validator: (value) =>
                             pwConfirmationValidator(value, newPassword.text),
-                        isShown: true,
                       ),
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 40),
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: ConfirmationElevatedButton(
-                      text: tr('changePasswordPageConfimButton'),
-                      onPressed: passwordChangeValidation,
-                      foregroundColor: const Color.fromARGB(212, 183, 146, 14),
-                      backgroundColor: const Color.fromARGB(255, 220, 219, 219),
-                      btnTextStyle: registrationBtnTextStyle(),
-                    ),
-                  ),
+                const SizedBox(height: 20),
+                Button(
+                  buttonHeight: 72,
+                  text: tr('changePasswordPageConfimButton'),
+                  onPressed: passwordChangeValidation,
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 25),
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: ConfirmationElevatedButton(
-                      text: tr('registrationCancelButton'),
-                      onPressed: () => context.go("/profile"),
-                      foregroundColor: const Color.fromARGB(212, 183, 146, 14),
-                      backgroundColor: const Color.fromARGB(255, 107, 97, 96),
-                      btnTextStyle: registrationCancelTextStyle(),
-                    ),
-                  ),
+                const SizedBox(height: 20),
+                Button.secondary(
+                  buttonHeight: 64,
+                  text: tr('registrationCancelButton'),
+                  onPressed: () => context.go("/profile"),
                 ),
               ],
             ),
