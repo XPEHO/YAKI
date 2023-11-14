@@ -46,7 +46,7 @@ class _ChangePasswordState extends ConsumerState<ChangePassword> {
   Future passwordChangeValidation({
     required Function(bool) setLoading,
   }) async {
-    setLoading(true); //show the loader
+    setLoading(true); //show the loader.
     if (_formKey.currentState!.validate()) {
       await ref.read(passwordProvider.notifier).changePassword(
             currentPassword.text,
