@@ -3,12 +3,9 @@ import 'package:go_router/go_router.dart';
 import 'package:yaki/presentation/displaydata/declaration_enum.dart';
 import 'package:yaki/presentation/displaydata/declaration_summary_enum.dart';
 import 'package:yaki/presentation/features/shared/app_bar_date.dart';
-// import 'package:yaki/presentation/features/shared/sized_circle_avatar.dart';
 import 'package:yaki/presentation/features/team_selection/view/team_selection_header.dart';
 import 'package:yaki/presentation/features/team_selection/view/team_selection_list.dart';
-// import 'package:yaki/presentation/state/providers/avatar_provider.dart';
 import 'package:yaki/presentation/state/providers/team_provider.dart';
-// import 'package:yaki/presentation/state/providers/user_provider.dart';
 import 'package:yaki/presentation/ui/vacation/vacation_selection_dialog.dart';
 import 'package:yaki_ui/yaki_ui.dart';
 import 'package:flutter/material.dart';
@@ -22,20 +19,7 @@ class TeamSelection extends ConsumerWidget {
     bool isValidationButtonEnabled = ref.watch(teamProvider).isButtonActivated;
 
     return Scaffold(
-      appBar: const AppBarWithDate(
-          // actions: <Widget>[
-          //   // IconButton(
-          //   //   icon: const NavIconCircleAvatar(
-          //   //     imageSrc: 'assets/images/Account.svg',
-          //   //   ),
-          //   //   onPressed: () {
-          //   //     ref.read(userProvider.notifier).getUser();
-          //   //     ref.read(avatarProvider.notifier).getAvatar();
-          //   //     context.go('/profile');
-          //   //   },
-          //   // ),
-          // ],
-          ),
+      appBar: const AppBarWithDate(),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(16.0, 8, 16.0, 30),
