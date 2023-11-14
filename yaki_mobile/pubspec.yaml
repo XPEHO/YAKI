@@ -77,7 +77,7 @@ dependencies:
   # no guarantee that writes will be persisted to disk after returning,
   # this plugin must not be used for storing critical data
   # https://pub.dev/packages/shared_preferences
-  shared_preferences: ^2.2.0
+  shared_preferences: ^2.2.2
 
   built_value: ^8.6.3
   json_annotation: ^4.8.0
