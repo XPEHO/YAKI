@@ -37,11 +37,6 @@ class Profile extends ConsumerWidget {
       return loginDetails[1];
     }
 
-    Future<String> getPassword() async {
-      List<String> loginDetails = await SharedPref.getLoginDetails();
-      return loginDetails[1];
-    }
-
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
