@@ -32,15 +32,15 @@ class SplashScreenState extends ConsumerState<SplashScreen> {
     }
 
     if (isLoggedIn && isDeclared) {
-      Future.delayed(const Duration(milliseconds: 100), () {
+      Future.delayed(Duration.zero, () {
         context.go('/teams-declaration-summary');
       });
     } else if (isLoggedIn) {
-      Future.delayed(const Duration(milliseconds: 100), () {
+      Future.delayed(Duration.zero, () {
         context.go('/team-selection');
       });
     } else {
-      Future.delayed(const Duration(milliseconds: 100), () {
+      Future.delayed(Duration.zero, () {
         context.go('/authentication');
       });
     }
