@@ -79,7 +79,7 @@ dependencies:
   # https://pub.dev/packages/shared_preferences
   shared_preferences: ^2.2.0
 
-  built_value: ^8.6.3
+  built_value: ^8.7.0
   json_annotation: ^4.8.0
   mockito: ^5.4.2
   very_good_cli: ^0.15.0
