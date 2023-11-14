@@ -24,16 +24,16 @@ final goRouterProvider = Provider<GoRouter>(
       routes: <GoRoute>[
         GoRoute(
           path: '/',
-          builder: (context, state) => WillPopScope(
-            onWillPop: () async => false,
-            child: const SplashScreen(),
+          builder: (context, state) => const PopScope(
+            canPop: false,
+            child: SplashScreen(),
           ),
           routes: [
             GoRoute(
               path: 'authentication',
-              builder: (context, state) => WillPopScope(
-                onWillPop: () async => false,
-                child: const Authentication(),
+              builder: (context, state) => const PopScope(
+                canPop: false,
+                child: Authentication(),
               ),
               redirect: (BuildContext context, GoRouterState state) async {
                 if (await SharedPref.isTokenPresent()) {
@@ -45,9 +45,9 @@ final goRouterProvider = Provider<GoRouter>(
             ),
             GoRoute(
               path: 'userDefaultRedirection',
-              builder: (context, state) => WillPopScope(
-                onWillPop: () async => false,
-                child: const UserDefaultRedirection(),
+              builder: (context, state) => const PopScope(
+                canPop: false,
+                child: UserDefaultRedirection(),
               ),
               redirect: (BuildContext context, GoRouterState state) async {
                 if (await SharedPref.isTokenPresent()) {
@@ -59,9 +59,9 @@ final goRouterProvider = Provider<GoRouter>(
             ),
             GoRoute(
               path: 'profile',
-              builder: (context, state) => WillPopScope(
-                onWillPop: () async => false,
-                child: const Profile(),
+              builder: (context, state) => const PopScope(
+                canPop: false,
+                child: Profile(),
               ),
               redirect: (BuildContext context, GoRouterState state) async {
                 if (await SharedPref.isTokenPresent()) {
@@ -73,9 +73,9 @@ final goRouterProvider = Provider<GoRouter>(
             ),
             GoRoute(
               path: 'changePassword',
-              builder: (context, state) => WillPopScope(
-                onWillPop: () async => false,
-                child: const ChangePassword(),
+              builder: (context, state) => const PopScope(
+                canPop: false,
+                child: ChangePassword(),
               ),
               redirect: (BuildContext context, GoRouterState state) async {
                 if (await SharedPref.isTokenPresent()) {
@@ -87,9 +87,9 @@ final goRouterProvider = Provider<GoRouter>(
             ),
             GoRoute(
               path: 'team-selection',
-              builder: (context, state) => WillPopScope(
-                onWillPop: () async => false,
-                child: const TeamSelection(),
+              builder: (context, state) => const PopScope(
+                canPop: false,
+                child: TeamSelection(),
               ),
               redirect: (BuildContext context, GoRouterState state) async {
                 if (await SharedPref.isTokenPresent()) {
@@ -101,9 +101,9 @@ final goRouterProvider = Provider<GoRouter>(
             ),
             GoRoute(
               path: 'declaration/half-day-start',
-              builder: (context, state) => WillPopScope(
-                onWillPop: () async => false,
-                child: const DeclarationPage(
+              builder: (context, state) => const PopScope(
+                canPop: false,
+                child: DeclarationPage(
                   declarationMode: "half-day-start",
                 ),
               ),
@@ -116,9 +116,9 @@ final goRouterProvider = Provider<GoRouter>(
             ),
             GoRoute(
               path: 'declaration/half-day-end',
-              builder: (context, state) => WillPopScope(
-                onWillPop: () async => false,
-                child: const DeclarationPage(
+              builder: (context, state) => const PopScope(
+                canPop: false,
+                child: DeclarationPage(
                   declarationMode: "half-day-end",
                 ),
               ),
@@ -133,8 +133,8 @@ final goRouterProvider = Provider<GoRouter>(
             ),
             GoRoute(
               path: 'declaration/:mode',
-              builder: (context, state) => WillPopScope(
-                onWillPop: () async => false,
+              builder: (context, state) => PopScope(
+                canPop: false,
                 child: DeclarationPage(
                   declarationMode: state.pathParameters['mode']!,
                 ),
@@ -154,9 +154,9 @@ final goRouterProvider = Provider<GoRouter>(
             ),
             GoRoute(
               path: 'summary/absence',
-              builder: (context, state) => WillPopScope(
-                onWillPop: () async => false,
-                child: const UserDeclarationSummaryAbsence(
+              builder: (context, state) => const PopScope(
+                canPop: false,
+                child: UserDeclarationSummaryAbsence(
                   summaryMode: "absence",
                 ),
               ),
@@ -170,8 +170,8 @@ final goRouterProvider = Provider<GoRouter>(
             ),
             GoRoute(
               path: 'summary/:mode',
-              builder: (context, state) => WillPopScope(
-                onWillPop: () async => false,
+              builder: (context, state) => PopScope(
+                canPop: false,
                 child: UserDeclarationSummary(
                   summaryMode: state.pathParameters['mode']!,
                 ),
@@ -191,9 +191,9 @@ final goRouterProvider = Provider<GoRouter>(
             ),
             GoRoute(
               path: 'teams-declaration-summary',
-              builder: (context, state) => WillPopScope(
-                onWillPop: () async => false,
-                child: const TeamsDeclarationSummary(),
+              builder: (context, state) => const PopScope(
+                canPop: false,
+                child: TeamsDeclarationSummary(),
               ),
               redirect: (BuildContext context, GoRouterState state) async {
                 // null check
@@ -208,16 +208,16 @@ final goRouterProvider = Provider<GoRouter>(
         ),
         GoRoute(
           path: '/registration',
-          builder: (context, state) => WillPopScope(
-            onWillPop: () async => false,
-            child: const Registration(),
+          builder: (context, state) => const PopScope(
+            canPop: false,
+            child: Registration(),
           ),
         ),
         GoRoute(
           path: '/forgotPassword',
-          builder: (context, state) => WillPopScope(
-            onWillPop: () async => false,
-            child: const ForgotPassword(),
+          builder: (context, state) => const PopScope(
+            canPop: false,
+            child: ForgotPassword(),
           ),
         ),
       ],

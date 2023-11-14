@@ -26,6 +26,8 @@ TeammateWithDeclarationModel _$TeammateWithDeclarationModelFromJson(
       teamName: json['teamName'] as String?,
       customerId: json['customerId'] as int?,
       customerName: json['customerName'] as String?,
+      avatarReference: json['avatarReference'] as String?,
+      avatarByteArray: json['avatarByteArray'] as List<dynamic>?,
     );
 
 Map<String, dynamic> _$TeammateWithDeclarationModelToJson(
@@ -42,4 +44,6 @@ Map<String, dynamic> _$TeammateWithDeclarationModelToJson(
       'teamName': instance.teamName,
       'customerId': instance.customerId,
       'customerName': instance.customerName,
+      'avatarReference': instance.avatarReference,
+      'avatarByteArray': instance.avatarByteArray,
     };

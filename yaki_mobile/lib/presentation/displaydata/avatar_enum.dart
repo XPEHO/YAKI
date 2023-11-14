@@ -7,4 +7,17 @@ enum AvatarEnum {
 
   final String text;
   const AvatarEnum(this.text);
+
+  static List<String> defaultAvatarList() {
+    return AvatarEnum.values
+        .where(
+          (element) =>
+              element != AvatarEnum.avatarNone &&
+              element != AvatarEnum.userPicture,
+        )
+        .map((e) => e.name)
+        .toList();
+  }
+
+  static final List<String> defaultAvatars = defaultAvatarList();
 }

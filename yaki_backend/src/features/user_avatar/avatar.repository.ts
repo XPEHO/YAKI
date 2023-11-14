@@ -1,5 +1,6 @@
 import {Client} from "pg";
 import {AvatarDto} from "./avatar.dto";
+import {DataError} from "../../errors/dataOrDataBaseError";
 
 export class AvatarRepository {
   /**
@@ -25,9 +26,8 @@ export class AvatarRepository {
           SELECT u.user_avatar_choice 
             FROM public.user u
             WHERE u.user_id = $1
-       )
-      `;
-    client.connect();
+       )`;
+    await client.connect();
     try {
       const result = await client.query(query, [userId]);
 
@@ -35,8 +35,56 @@ export class AvatarRepository {
         return null;
       }
       return result.rows[0].avatar_blob ?? result.rows[0].avatar_reference;
-    } catch (error) {
-      throw new Error("Error during avatar fetching: " + (error as Error).message);
+    } catch (error: any) {
+      throw new DataError("Error during avatar fetching: " + error.message);
+    } finally {
+      await client.end();
+    }
+  };
+
+  /**
+   * Return the avatar choices of the users by their IDs if it exist
+   * @param usersId list of users id to get the avatar choice
+   * @returns
+   */
+  getUsersAvartarChoiceByUsersID = async (usersId: number[]): Promise<AvatarDto[] | null> => {
+    const valuesList = usersId.map((_, index) => `$${index + 1}`).join(",");
+
+    const client = new Client({
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE,
+      port: Number(process.env.DB_PORT),
+    });
+    const query = `
+        SELECT *
+        FROM public.avatar a
+        WHERE a.avatar_id IN (
+          SELECT u.user_avatar_choice 
+          FROM public.user u
+          WHERE u.user_id in (${valuesList})
+        )`;
+    await client.connect();
+    try {
+      const result = await client.query(query, usersId);
+
+      if (result.rowCount === 0) {
+        return null;
+      }
+      const usersAvatarChoice = result.rows.map((selectedAvatar) => {
+        return new AvatarDto(
+          selectedAvatar.avatar_id,
+          selectedAvatar.avatar_user_id,
+          selectedAvatar.avatar_reference,
+          selectedAvatar.avatar_blob,
+          selectedAvatar.avatar_is_validated
+        );
+      });
+
+      return usersAvatarChoice;
+    } catch (error: any) {
+      throw new DataError("Error during users avatar fetching: " + error.message);
     } finally {
       await client.end();
     }
@@ -62,15 +110,15 @@ export class AvatarRepository {
         WHERE user_id = $2
         RETURNING user_avatar_choice
       `;
-    client.connect();
+    await client.connect();
     try {
       const result = await client.query(query, [avatarId, userId]);
       if (result.rows[0].user_avatar_choice !== avatarId) {
         throw new Error("Error while setting the avatar choice");
       }
       return result.rows[0].user_avatar_choice;
-    } catch (error) {
-      throw new Error("Error during user avatar selection updated: " + (error as Error).message);
+    } catch (error: any) {
+      throw new DataError("Error during user avatar selection updated: " + error.message);
     } finally {
       await client.end();
     }
@@ -108,10 +156,13 @@ export class AvatarRepository {
       VALUES ($1, $2, $3, $4)
       RETURNING *
     `;
-    client.connect();
+    await client.connect();
     try {
       // TODO : WILL NEED TO CHANGE THE AVATAR IS VALIDATED TO FALSE WHEN ADMIN VALIDATION WILL BE IMPLEMENTED
       const poolResult = await client.query(query, [userId, avatarReference, blob, isValidated]);
+      if (poolResult.rowCount === 0) {
+        throw new DataError("Error during avatar insertion");
+      }
       const result = poolResult.rows[0];
       const registeredAvatar = new AvatarDto(
         result.avatar_id,
@@ -121,8 +172,8 @@ export class AvatarRepository {
         result.avatar_is_validated
       );
       return registeredAvatar;
-    } catch (error) {
-      throw new Error("Error during avatar insertion: " + (error as Error).message);
+    } catch (error: any) {
+      throw new DataError("Error during avatar insertion: " + error.message);
     } finally {
       await client.end();
     }
@@ -147,7 +198,7 @@ export class AvatarRepository {
       database: process.env.DB_DATABASE,
       port: Number(process.env.DB_PORT),
     });
-    // porperly format the array in a single string to be used in the query
+    // porperly format the array in a single string to be used in the query : 'avatar1', not just avatar1
     const avatarsReferenceString = avatarsReference.map((value) => `'${value}'`).join(", ");
 
     const query = `
@@ -157,7 +208,7 @@ export class AvatarRepository {
       AND a.avatar_reference IN (${avatarsReferenceString}) 
     `;
 
-    client.connect();
+    await client.connect();
     try {
       const result = await client.query(query, [userId]);
 
@@ -172,8 +223,8 @@ export class AvatarRepository {
         result.rows[0].avatar_is_validated
       );
       return updatedRow;
-    } catch (error) {
-      throw new Error("Get avatar info error : " + (error as Error).message);
+    } catch (error: any) {
+      throw new DataError("Get avatar info error : " + error.message);
     } finally {
       await client.end();
     }
@@ -223,11 +274,11 @@ export class AvatarRepository {
       params = [avatarReference!, avatarId];
     }
 
-    client.connect();
+    await client.connect();
     try {
       const poolResult = await client.query(query, params);
       if (poolResult.rowCount === 0) {
-        throw new Error("No rows updated during avatar update");
+        throw new Error("No avatar row updated");
       }
       const result = poolResult.rows[0];
       const registeredAvatar = new AvatarDto(
@@ -238,8 +289,8 @@ export class AvatarRepository {
         result.avatar_is_validated
       );
       return registeredAvatar;
-    } catch (error) {
-      throw new Error("Error at avatar update : " + (error as Error).message);
+    } catch (error: any) {
+      throw new DataError("Error at avatar update : " + error.message);
     } finally {
       await client.end();
     }

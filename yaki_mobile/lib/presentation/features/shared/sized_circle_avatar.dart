@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -32,6 +34,51 @@ class CellAvatarSvg extends StatelessWidget {
         imageSrc,
         width: 48,
         height: 48,
+      ),
+    );
+  }
+}
+
+class CellAvatarImg extends StatelessWidget {
+  final Uint8List imageAvatar;
+  const CellAvatarImg({super.key, required this.imageAvatar});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 48,
+      width: 48,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(
+          48.0,
+        ), // adjust the radius as needed
+        child: Image.memory(imageAvatar),
+      ),
+    );
+  }
+}
+
+class CellAvatarLetters extends StatelessWidget {
+  final String userFirstLetters;
+  const CellAvatarLetters({super.key, required this.userFirstLetters});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 48.0,
+      height: 48.0,
+      decoration: const BoxDecoration(
+        color: Color(0xFFFFD7C0),
+        shape: BoxShape.circle,
+      ),
+      child: Center(
+        child: Text(
+          userFirstLetters,
+          style: const TextStyle(
+            color: Color(0xFF7D818C),
+            fontSize: 18,
+          ),
+        ),
       ),
     );
   }

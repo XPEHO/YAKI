@@ -4,14 +4,14 @@ export class AvatarDto {
   avatarId: number;
   avatarUserId: number;
   avatarReference: AvatarEnum;
-  avatarBlob: Buffer;
+  avatarBlob: Buffer | null;
   avatarIsValidated: boolean;
 
   constructor(
     avatarId: number,
     avatarUserId: number,
     avatarReference: AvatarEnum,
-    avatarBlob: Buffer,
+    avatarBlob: Buffer | null,
     avatarIsValidated: boolean
   ) {
     this.avatarId = avatarId;

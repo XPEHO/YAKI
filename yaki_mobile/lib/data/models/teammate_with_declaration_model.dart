@@ -15,6 +15,8 @@ class TeammateWithDeclarationModel {
   String? teamName;
   int? customerId;
   String? customerName;
+  String? avatarReference;
+  List<dynamic>? avatarByteArray;
 
   TeammateWithDeclarationModel({
     required this.userId,
@@ -28,6 +30,8 @@ class TeammateWithDeclarationModel {
     required this.teamName,
     required this.customerId,
     required this.customerName,
+    required this.avatarReference,
+    required this.avatarByteArray,
   });
 
   factory TeammateWithDeclarationModel.fromJson(Map<String, dynamic> json) =>

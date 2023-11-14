@@ -16,6 +16,8 @@ void main() {
     "teamName": "Team 1",
     "customerId": 1,
     "customerName": "customerName",
+    "avatarReference": null,
+    "avatarByteArray": null,
   };
   // model instance once json is parsed into dart usable model
   TeammateWithDeclarationModel teammateModel = TeammateWithDeclarationModel(
@@ -30,6 +32,8 @@ void main() {
     teamName: "Team 1",
     customerId: 1,
     customerName: "customerName",
+    avatarReference: null,
+    avatarByteArray: null,
   );
 
   group(

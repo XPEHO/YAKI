@@ -46,6 +46,8 @@ void main() {
               "teamName": "teamName",
               "declarationId": 1,
               "declarationUserId": 1,
+              "avatarReference": null,
+              "avatar": null,
             },
             {
               "userId": 2,
@@ -59,6 +61,8 @@ void main() {
               "teamName": "teamName",
               "declarationId": 2,
               "declarationUserId": 2,
+              "avatarReference": null,
+              "avatar": null,
             }
           ];
 
@@ -76,6 +80,8 @@ void main() {
               teamName: "teamName",
               customerId: null,
               customerName: null,
+              avatarReference: null,
+              avatar: null,
             ),
             TeammateWithDeclarationEntity(
               loggedUserId: 34,
@@ -90,6 +96,8 @@ void main() {
               teamName: "teamName",
               customerId: null,
               customerName: null,
+              avatarReference: null,
+              avatar: null,
             ),
           ];
 

@@ -65,6 +65,7 @@ class _AuthenticationState extends ConsumerState<Authentication> {
         .read(loginRepositoryProvider)
         .userAuthentication(lowercaseLogin, trimPassword);
     if (authenticationResult && await SharedPref.isTokenPresent()) {
+      await ref.read(avatarProvider.notifier).getAvatar();
       final bool isCaptain = ref.read(loginRepositoryProvider).isCaptain();
       final bool isTeammate = ref.read(loginRepositoryProvider).isTeammate();
       if (isTeammate || isCaptain) {

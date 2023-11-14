@@ -20,9 +20,15 @@ export const router = express.Router();
 
 const teamRepository = new TeamRepository();
 const teamService = new TeamService(teamRepository);
+
+//USER AVATAR
+const avatarRepository = new AvatarRepository();
+const avatarServiece = new AvatarService(avatarRepository);
+const avatarController = new AvatarController(avatarServiece);
+
 //TEAM MATE
 const teammateRepository = new TeammateRepository();
-const teammateService = new TeammateService(teammateRepository, teamService);
+const teammateService = new TeammateService(teammateRepository, teamService, avatarServiece);
 const teammateController = new TeammateController(teammateService);
 
 // MULTER to handle file upload
@@ -33,11 +39,6 @@ const upload = multer({dest: "uploads/"});
 const userRepository = new UserRepository();
 const userService = new UserService(userRepository);
 const userController = new UserController(userService);
-
-//USER AVATAR
-const avatarRepository = new AvatarRepository();
-const avatarServiece = new AvatarService(avatarRepository);
-const avatarController = new AvatarController(avatarServiece);
 
 //PASSWORD
 const passwordRepository = new PasswordRepository();
@@ -77,36 +78,6 @@ router.get(
   async (req, res) => avatarController.getAvatarByUserId(req, res)
 );
 
-// DEPRECIATED - TO BE REMOVED WHEN 1.10 isnt used anymore
-//========================================================
-router.get(
-  "/teammates",
-  (req, res, next) =>
-    /*#swagger.parameters['userId'] = {
-                in: 'query',
-                description: 'user id',
-                required: true,
-                type: 'number',
-                schema: { userId: 1 }
-}
-  */ authService.verifyToken(req, res, next),
-  async (req, res) => teammateController.getByTeamIdWithLastDeclaration(req, res)
-);
-
-router.get(
-  "/users-with-declaration",
-  (req, res, next) =>
-    /*#swagger.parameters['userId'] = {
-                in: 'query',
-                description: 'user id',
-                required: true,
-                type: 'number',
-                schema: { userId: 1 }
-}
-  */ authService.verifyToken(req, res, next),
-  async (req, res) => teammateController.getTeammatesDeclarationsFromUserTeams(req, res)
-);
-
 router.post(
   "/password/change",
   (req, res, next) => authService.verifyToken(req, res, next),
@@ -124,4 +95,50 @@ router.post("/forgot", async (req, res) =>
                 schema: { email: 'string' }
   */
   passwordController.forgotPassword(req, res)
+);
+
+router.get(
+  "/users-declaration-and-avatar",
+  (req, res, next) =>
+    /*#swagger.parameters['userId'] = {
+                in: 'query',
+                description: 'user id',
+                required: true,
+                type: 'number',
+                schema: { userId: 1 }
+}
+  */ authService.verifyToken(req, res, next),
+  async (req, res) => teammateController.getTeammatesDeclarationsAndAvatarFromUserTeams(req, res)
+);
+
+// DEPRECIATED - TO BE REMOVED WHEN 1.10 isnt used anymore
+//========================================================
+router.get(
+  "/teammates",
+  (req, res, next) =>
+    /*#swagger.parameters['userId'] = {
+                in: 'query',
+                description: 'user id',
+                required: true,
+                type: 'number',
+                schema: { userId: 1 }
+}
+  */ authService.verifyToken(req, res, next),
+  async (req, res) => teammateController.getByTeamIdWithLastDeclaration(req, res)
+);
+
+// DEPRECIATED - TO BE REMOVED WHEN 1.15 isnt used anymore
+//========================================================
+router.get(
+  "/users-with-declaration",
+  (req, res, next) =>
+    /*#swagger.parameters['userId'] = {
+                in: 'query',
+                description: 'user id',
+                required: true,
+                type: 'number',
+                schema: { userId: 1 }
+}
+  */ authService.verifyToken(req, res, next),
+  async (req, res) => teammateController.getTeammatesDeclarationsFromUserTeams(req, res)
 );

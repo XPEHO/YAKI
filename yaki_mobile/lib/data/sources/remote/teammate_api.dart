@@ -12,7 +12,7 @@ abstract class TeammateApi {
   /// Establishes a connection to the "/TeamMate" route and <br>
   /// retrieves the informations by registering it in the "getTeamMate()" function
   /// -> Sending to the Repository
-  @GET('//users-with-declaration')
+  @GET('/users-declaration-and-avatar')
   Future<HttpResponse> getTeammate(
     @Query('userId') int id,
   );

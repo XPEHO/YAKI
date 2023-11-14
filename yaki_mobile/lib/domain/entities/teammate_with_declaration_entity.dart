@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:yaki/presentation/displaydata/declaration_status_enum.dart';
 
 class TeammateWithDeclarationEntity {
@@ -18,6 +20,8 @@ class TeammateWithDeclarationEntity {
   String? teamNameAfternoon;
   int? customerAfternoonId;
   String? customerAfternoonName;
+  String? avatarReference;
+  Uint8List? avatar;
 
   TeammateWithDeclarationEntity({
     required this.loggedUserId,
@@ -37,6 +41,8 @@ class TeammateWithDeclarationEntity {
     this.teamNameAfternoon,
     this.customerAfternoonId,
     this.customerAfternoonName,
+    required this.avatarReference,
+    required this.avatar,
   });
 
   // method override for unit test purpose,
@@ -57,6 +63,8 @@ class TeammateWithDeclarationEntity {
         teamNameAfternoon.hashCode,
         customerAfternoonId.hashCode,
         customerAfternoonName.hashCode,
+        avatarReference.hashCode,
+        avatar.hashCode,
       );
 
   // method override for unit test purpose,
@@ -67,5 +75,10 @@ class TeammateWithDeclarationEntity {
         other is TeammateWithDeclarationEntity &&
             runtimeType == other.runtimeType &&
             hashCode == other.hashCode;
+  }
+
+  @override
+  String toString() {
+    return "{loggedUserId: $loggedUserId, userId: $userId, userFirstName: $userFirstName, userLastName: $userLastName, avatarReference: $avatarReference, avatar: $avatar";
   }
 }

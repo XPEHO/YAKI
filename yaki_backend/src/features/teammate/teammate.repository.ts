@@ -1,45 +1,9 @@
 import {Client, QueryResult} from "pg";
+import {UserWithDeclaration} from "./userWithDeclaration.dtoOut";
+import {DatabaseError} from "../../errors/dataOrDataBaseError";
+import {AbsenceDeclarationDto} from "./absenceDeclaration.dto";
 
 export class TeammateRepository {
-  // DEPRECIATED - TO BE REMOVED WHEN 1.10 isnt used anymore
-  //========================================================
-  getByTeamIdWithLastDeclaration = async (teamsIdList: number[]) => {
-    let teamIdListString = teamsIdList.join(",");
-
-    const client = new Client({
-      host: process.env.DB_HOST,
-      user: process.env.DB_USER,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_DATABASE,
-      port: Number(process.env.DB_PORT),
-    });
-    const query = `
-    SELECT DISTINCT * FROM (
-      SELECT 
-        d.declaration_id,
-        d.declaration_user_id,
-        d.declaration_date,
-        d.declaration_date_start,
-        d.declaration_date_end,
-        d.declaration_status,
-        team_name,
-        team_id,
-        user_last_name,
-        user_first_name,
-        user_id
-      FROM declaration as d
-      JOIN public.team ON (team_id in (${teamIdListString}) and d.declaration_team_id = team_id)
-        JOIN public.user as u on (u.user_id = d.declaration_user_id)
-      WHERE d.declaration_date::date = now()::date
-    ) as distinctsDecl
-    ORDER BY distinctsDecl.declaration_date DESC`;
-    client.connect();
-    const poolResult: QueryResult = await client.query(query);
-    await client.end();
-
-    return poolResult.rows;
-  };
-
   /**
    * Retrive all uers's declaration for the current day.
    * If there is no declaration, all declaration related values will be null.
@@ -47,7 +11,7 @@ export class TeammateRepository {
    * @param usersId users id list used to get their declarations
    * @returns
    */
-  getTeammatesDeclarationsFromUserTeams = async (usersId: number[]) => {
+  getTeammatesDeclarationsFromUserTeams = async (usersId: number[]): Promise<UserWithDeclaration[]> => {
     const valuesList = usersId.map((_, index) => `$${index + 1}`).join(",");
 
     const client = new Client({
@@ -83,11 +47,37 @@ export class TeammateRepository {
     WHERE u.user_id IN (${valuesList}) 
     AND u.user_enabled = true
     ORDER BY d.declaration_date DESC`;
-    client.connect();
-    const poolResult: QueryResult = await client.query(query, usersId);
-    await client.end();
+    await client.connect();
+    try {
+      const poolResult: QueryResult = await client.query(query, usersId);
 
-    return poolResult.rows;
+      if (poolResult.rows.length === 0) {
+        throw new DatabaseError("Error during the search of the teammates's declarations.");
+      }
+
+      const result: UserWithDeclaration[] = poolResult.rows.map((user) => {
+        return new UserWithDeclaration(
+          user.user_id,
+          user.user_last_name,
+          user.user_first_name,
+          user.declaration_date,
+          user.declaration_date_start,
+          user.declaration_date_end,
+          user.declaration_status,
+          user.team_id,
+          user.team_name,
+          user.team_customer_id,
+          user.customer_name
+        );
+      });
+
+      return result;
+    } catch (error: any) {
+      console.log(error);
+      throw new DatabaseError(error.message);
+    } finally {
+      await client.end();
+    }
   };
 
   /**
@@ -117,11 +107,20 @@ export class TeammateRepository {
     AND u.user_enabled = true
     AND t.team_actif_flag = true
     `;
-    client.connect();
-    const poolResult: QueryResult = await client.query(query, [userId]);
-    await client.end();
+    await client.connect();
+    try {
+      const poolResult: QueryResult = await client.query(query, [userId]);
 
-    return poolResult.rows.map((row) => row.teammate_user_id);
+      if (poolResult.rows.length === 0) {
+        throw new DatabaseError("There is no users to search for a declaration.");
+      }
+
+      return poolResult.rows.map((row) => row.teammate_user_id);
+    } catch (error: any) {
+      throw new DatabaseError(error.message);
+    } finally {
+      await client.end();
+    }
   };
 
   /**
@@ -129,7 +128,7 @@ export class TeammateRepository {
    * @param usersId number[]
    * @returns AbsenceDeclarationDto[]
    */
-  getUsersAbsence = async (usersId: number[]) => {
+  getUsersAbsence = async (usersId: number[]): Promise<AbsenceDeclarationDto[] | null> => {
     const valuesList = usersId.map((_, index) => `$${index + 1}`).join(",");
 
     const client = new Client({
@@ -157,8 +156,65 @@ export class TeammateRepository {
     ORDER BY d.declaration_date DESC, ABS(DATE_PART('day', d.declaration_date_start - NOW()))
     LIMIT 1;
     `;
-    client.connect();
-    const poolResult: QueryResult = await client.query(query, usersId);
+    await client.connect();
+
+    try {
+      const poolResult: QueryResult = await client.query(query, usersId);
+      if (poolResult.rows.length === 0) {
+        return null;
+      }
+      const absenceList: AbsenceDeclarationDto[] = poolResult.rows.map((row) => {
+        return new AbsenceDeclarationDto(
+          row.declaration_user_id,
+          row.declaration_date,
+          row.declaration_date_start,
+          row.declaration_date_end,
+          row.declaration_status
+        );
+      });
+      return absenceList;
+    } catch (error: any) {
+      console.error(error);
+      throw new DatabaseError(error.message);
+    } finally {
+      await client.end();
+    }
+  };
+
+  // DEPRECIATED - TO BE REMOVED WHEN 1.10 isnt used anymore
+  //=====================================================================================================================
+  getByTeamIdWithLastDeclaration = async (teamsIdList: number[]) => {
+    let teamIdListString = teamsIdList.join(",");
+
+    const client = new Client({
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE,
+      port: Number(process.env.DB_PORT),
+    });
+    const query = `
+    SELECT DISTINCT * FROM (
+      SELECT 
+        d.declaration_id,
+        d.declaration_user_id,
+        d.declaration_date,
+        d.declaration_date_start,
+        d.declaration_date_end,
+        d.declaration_status,
+        team_name,
+        team_id,
+        user_last_name,
+        user_first_name,
+        user_id
+      FROM declaration as d
+      JOIN public.team ON (team_id in (${teamIdListString}) and d.declaration_team_id = team_id)
+        JOIN public.user as u on (u.user_id = d.declaration_user_id)
+      WHERE d.declaration_date::date = now()::date
+    ) as distinctsDecl
+    ORDER BY distinctsDecl.declaration_date DESC`;
+    await client.connect();
+    const poolResult: QueryResult = await client.query(query);
     await client.end();
 
     return poolResult.rows;

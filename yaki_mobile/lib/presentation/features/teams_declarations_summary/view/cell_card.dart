@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -28,8 +30,10 @@ class CellCard extends ConsumerWidget {
     return Cell(
       title: '${teammate.userFirstName} ${teammate.userLastName}',
       subtitle: '',
-      image: const CellAvatarSvg(
-        imageSrc: "assets/images/avatar-men.svg",
+      image: setUserAvatarImage(
+        ref: ref,
+        isModifierBtnUsed: isModifierBtnUsed,
+        teammate: teammate,
       ),
       chips: CellChipsRow(
         status: teammate.declarationStatus,
@@ -97,33 +101,46 @@ String displayTimeSinceDeclaration({
   }
 }
 
-Widget setUserAvatarImage(WidgetRef ref) {
-  final avatarData = ref.watch(avatarProvider);
-  final UserEntity? user = ref.watch(userProvider);
+Widget setUserAvatarImage({
+  required WidgetRef ref,
+  required bool isModifierBtnUsed,
+  required TeammateWithDeclarationEntity teammate,
+}) {
+  String? firstName;
+  String? lastName;
+  String? avatarReference;
+  Uint8List? avatar;
 
-  if (avatarData.avatarReference != null &&
-      avatarData.avatarReference != "avatarNone") {
-    return CellAvatarSvg(
-      imageSrc: AvatarEnum.values.byName(avatarData.avatarReference!).text,
-    );
-  } else if (avatarData.avatarReference == null && avatarData.avatar != null) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(
-        48.0,
-      ), // adjust the radius as needed
-      child: Image.memory(avatarData.avatar!),
-    );
+  // if its the current user, we get the data from the userProvider
+  if (isModifierBtnUsed) {
+    final avatarData = ref.watch(avatarProvider);
+    final UserEntity? user = ref.watch(userProvider);
+
+    if (user != null) {
+      firstName = user.firstName;
+      lastName = user.lastName;
+    }
+    avatarReference = avatarData.avatarReference;
+    avatar = avatarData.avatar;
   } else {
-    return CircleAvatar(
-      radius: 48.0,
-      backgroundColor: const Color(0xFFFFD7C0),
-      child: Text(
-        '${(user?.firstName != null && user!.firstName!.isNotEmpty) ? user.firstName![0] : "A"}${(user?.lastName != null && user!.lastName!.isNotEmpty) ? user.lastName![0] : "B"}',
-        style: const TextStyle(
-          color: Color(0xFF7D818C),
-          fontSize: 20,
-        ),
-      ),
+    firstName = teammate.userFirstName;
+    lastName = teammate.userLastName;
+    avatarReference = teammate.avatarReference;
+    avatar = teammate.avatar;
+  }
+
+  String firstLestters =
+      '${firstName != null && firstName.isNotEmpty ? firstName[0] : "A"}${lastName != null && lastName.isNotEmpty ? lastName[0] : "B"}';
+
+  if (avatarReference != null &&
+      AvatarEnum.defaultAvatars.contains(avatarReference)) {
+    return CellAvatarSvg(
+      imageSrc: AvatarEnum.values.byName(avatarReference).text,
+    );
+  } else if (avatar != null) {
+    return CellAvatarImg(
+      imageAvatar: avatar,
     );
   }
+  return CellAvatarLetters(userFirstLetters: firstLestters);
 }
