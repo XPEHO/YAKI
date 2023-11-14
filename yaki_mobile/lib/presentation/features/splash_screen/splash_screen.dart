@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -31,19 +32,15 @@ class SplashScreenState extends ConsumerState<SplashScreen> {
       await ref.read(avatarProvider.notifier).getAvatar();
     }
 
-    if (isLoggedIn && isDeclared) {
-      Future.delayed(Duration.zero, () {
+    Timer(Duration.zero, () {
+      if (isLoggedIn && isDeclared) {
         context.go('/teams-declaration-summary');
-      });
-    } else if (isLoggedIn) {
-      Future.delayed(Duration.zero, () {
+      } else if (isLoggedIn) {
         context.go('/team-selection');
-      });
-    } else {
-      Future.delayed(Duration.zero, () {
+      } else {
         context.go('/authentication');
-      });
-    }
+      }
+    });
   }
 
   @override
