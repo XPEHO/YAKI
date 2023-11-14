@@ -51,7 +51,7 @@ dependencies:
   # import 'package:retrofit/retrofit.dart';
   # import 'package:dio/dio.dart';
   # link : https://pub.dev/packages/retrofit
-  retrofit: ">=4.0.0 <5.0.0"
+  retrofit: ^4.0.3
   logger: ^2.0.2 #for logging purpose
 
   # easy_localization : manage app translation, use folder defined in assets "translations",
