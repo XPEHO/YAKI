@@ -9,7 +9,6 @@ import 'package:yaki/presentation/displaydata/avatar_enum.dart';
 import 'package:yaki/presentation/features/profile/view/avatar_modal.dart';
 import 'package:yaki/presentation/features/shared/feedback_user.dart';
 import 'package:yaki/presentation/state/providers/avatar_provider.dart';
-// import 'package:yaki/presentation/state/providers/declaration_provider.dart';
 import 'package:yaki/presentation/state/providers/user_provider.dart';
 import 'package:yaki_ui/yaki_ui.dart';
 
@@ -33,38 +32,20 @@ class Profile extends ConsumerWidget {
       onLogout(goToAuthentication: goToAuthentication);
     }
 
-    // void onReturn({
-    //   required Function goToTeamsDeclarationSummary,
-    //   required Function goToTeamSelectionPage,
-    // }) async {
-    //   final bool isDeclared =
-    //       await ref.read(declarationProvider.notifier).getLatestDeclaration();
-    //   if (isDeclared) {
-    //     goToTeamsDeclarationSummary();
-    //   } else {
-    //     goToTeamSelectionPage();
-    //   }
-    // }
-
     Future<String> getPassword() async {
       List<String> loginDetails = await SharedPref.getLoginDetails();
       return loginDetails[1];
     }
 
     return Scaffold(
-      // The appbar is not needed for the moment, we need to fix it with the issues n° 1024
-      // appBar: AppBar(
-      //   elevation: 0,
-      //   backgroundColor: Colors.transparent,
-      //   leading: IconButton(
-      //     onPressed: () => onReturn(
-      //       goToTeamsDeclarationSummary: () =>
-      //           context.go('/teams-declaration-summary'),
-      //       goToTeamSelectionPage: () => context.go('/team-selection'),
-      //     ),
-      //     icon: const Icon(Icons.arrow_back),
-      //   ),
-      // ),
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        leading: IconButton(
+          onPressed: () => context.go('/teams-declaration-summary'),
+          icon: const Icon(Icons.arrow_back),
+        ),
+      ),
       body: SafeArea(
         child: Scrollbar(
           thumbVisibility: true,
