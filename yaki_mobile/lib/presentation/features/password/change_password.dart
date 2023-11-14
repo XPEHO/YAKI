@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:yaki/data/sources/local/shared_preference.dart';
 import 'package:yaki/presentation/state/providers/password_provider.dart';
 import 'package:yaki/presentation/styles/color.dart';
 import 'package:yaki/presentation/styles/text_style.dart';
@@ -62,7 +63,10 @@ class _ChangePasswordState extends ConsumerState<ChangePassword> {
           ),
           actionLabel: tr('registrationSnackValidation'),
           barAction: () {
-            context.go('/authentication');
+            onDeleteToken(
+              ref: ref,
+              goToAuthentication: () => context.go('/authentication'),
+            );
           },
         );
       } else {
@@ -74,8 +78,8 @@ class _ChangePasswordState extends ConsumerState<ChangePassword> {
           actionLabel: tr('registrationCancelButton'),
           barAction: () {},
         );
-        setLoading(false);
       }
+      setLoading(false);
     }
   }
 
@@ -175,4 +179,12 @@ class _ChangePasswordState extends ConsumerState<ChangePassword> {
       ),
     );
   }
+}
+
+void onDeleteToken({
+  required WidgetRef ref,
+  required Function goToAuthentication,
+}) async {
+  await SharedPref.deleteToken();
+  goToAuthentication();
 }
