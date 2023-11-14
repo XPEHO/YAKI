@@ -49,7 +49,7 @@ class _RegistrationState extends ConsumerState<Registration> {
       await ref.read(userRegisterRepositoryProvider).registerUser(
             firstname: firstNameController.text,
             lastname: lastNameController.text,
-            email: emailController.text,
+            email: emailController.text.toLowerCase(),
             password: passwordConfirmController.text,
           );
 

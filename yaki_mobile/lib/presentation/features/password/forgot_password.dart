@@ -39,7 +39,7 @@ class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
   Future<void> forgotPasswordValidation() async {
     if (_formKey.currentState!.validate()) {
       await ref.read(passwordProvider.notifier).forgotPassword(
-            emailController.text,
+            emailController.text.toLowerCase(),
           );
 
       final forgotPasswordState = ref.read(passwordProvider);
