@@ -52,19 +52,21 @@ class Profile extends ConsumerWidget {
     }
 
     return Scaffold(
-      // The appbar is not needed for the moment, we need to fix it with the issues n° 1024
-      // appBar: AppBar(
-      //   elevation: 0,
-      //   backgroundColor: Colors.transparent,
-      //   leading: IconButton(
-      //     onPressed: () => onReturn(
-      //       goToTeamsDeclarationSummary: () =>
-      //           context.go('/teams-declaration-summary'),
-      //       goToTeamSelectionPage: () => context.go('/team-selection'),
-      //     ),
-      //     icon: const Icon(Icons.arrow_back),
-      //   ),
-      // ),
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        leading: IconButton(
+          onPressed: () => context.go('/teams-declaration-summary'),
+
+          // onReturn(
+          //   goToTeamsDeclarationSummary: () =>
+          //       context.go('/teams-declaration-summary'),
+          //   goToTeamSelectionPage: () => context.go('/team-selection'),
+          // ),
+
+          icon: const Icon(Icons.arrow_back),
+        ),
+      ),
       body: SafeArea(
         child: Scrollbar(
           thumbVisibility: true,
