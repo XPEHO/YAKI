@@ -31,16 +31,19 @@ class SplashScreenState extends ConsumerState<SplashScreen> {
       await ref.read(avatarProvider.notifier).getAvatar();
     }
 
-    // to ensure that the navigation happens after the widget tree has been built
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (isLoggedIn && isDeclared) {
+    if (isLoggedIn && isDeclared) {
+      Future.delayed(const Duration(milliseconds: 100), () {
         context.go('/teams-declaration-summary');
-      } else if (isLoggedIn) {
+      });
+    } else if (isLoggedIn) {
+      Future.delayed(const Duration(milliseconds: 100), () {
         context.go('/team-selection');
-      } else {
+      });
+    } else {
+      Future.delayed(const Duration(milliseconds: 100), () {
         context.go('/authentication');
-      }
-    });
+      });
+    }
   }
 
   @override
