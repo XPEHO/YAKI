@@ -135,6 +135,7 @@ class _RegistrationState extends ConsumerState<Registration> {
                         label: tr('registrationInputFirstnameLabel'),
                         controller: firstNameController,
                         readOnly: false,
+                        validator: nameValidator,
                         onChange: (value) {
                           firstNameController.value = TextEditingValue(
                             text: capitalize(value),
@@ -148,6 +149,7 @@ class _RegistrationState extends ConsumerState<Registration> {
                         label: tr('registrationInputLastnameLabel'),
                         controller: lastNameController,
                         readOnly: false,
+                        validator: nameValidator,
                         onChange: (value) {
                           lastNameController.value = TextEditingValue(
                             text: value.toUpperCase(),
@@ -160,8 +162,8 @@ class _RegistrationState extends ConsumerState<Registration> {
                         type: InputTextType.email,
                         label: tr('registrationInputEmailLabel'),
                         controller: emailController,
-                        validator: emailValidator,
                         readOnly: false,
+                        validator: emailValidator,
                         // textCapit,
                       ),
                       const SizedBox(height: 20),
@@ -169,8 +171,8 @@ class _RegistrationState extends ConsumerState<Registration> {
                         type: InputTextType.password,
                         label: tr('registrationInputPasswordLabel'),
                         controller: passwordController,
-                        validator: passwordValidator,
                         readOnly: false,
+                        validator: passwordValidator,
                       ),
                       const SizedBox(height: 20),
                       InputText(
