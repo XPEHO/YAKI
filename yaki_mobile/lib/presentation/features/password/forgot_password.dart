@@ -86,42 +86,44 @@ class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
-        child: Column(
-          children: <Widget>[
-            SizedBox(height: size.height / 10),
-            Image.asset(
-              'assets/images/yaki_basti_icon.png',
-              height: 100,
-              width: 100,
-            ),
-            SizedBox(height: size.height / 20),
-            Text(
-              tr('resetPassword'),
-              style: textStylePageTitle(),
-            ),
-            const SizedBox(height: 20),
-            Form(
-              key: _formKey,
-              child: InputText(
-                type: InputTextType.email,
-                controller: emailController,
-                label: tr('inputLogin'),
-                readOnly: false,
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              SizedBox(height: size.height / 10),
+              Image.asset(
+                'assets/images/yaki_basti_icon.png',
+                height: 100,
+                width: 100,
               ),
-            ),
-            const SizedBox(height: 10),
-            Button(
-              buttonHeight: 72,
-              text: tr('changePasswordPageConfimButton').toUpperCase(),
-              onPressed: forgotPasswordValidation,
-            ),
-            const SizedBox(height: 5),
-            Button.secondary(
-              buttonHeight: 64,
-              text: tr('registrationCancelButton').toUpperCase(),
-              onPressed: () => context.go("/authentication"),
-            ),
-          ],
+              SizedBox(height: size.height / 20),
+              Text(
+                tr('resetPassword'),
+                style: textStylePageTitle(),
+              ),
+              const SizedBox(height: 20),
+              Form(
+                key: _formKey,
+                child: InputText(
+                  type: InputTextType.email,
+                  controller: emailController,
+                  label: tr('inputLogin'),
+                  readOnly: false,
+                ),
+              ),
+              const SizedBox(height: 10),
+              Button(
+                buttonHeight: 72,
+                text: tr('changePasswordPageConfimButton').toUpperCase(),
+                onPressed: forgotPasswordValidation,
+              ),
+              const SizedBox(height: 5),
+              Button.secondary(
+                buttonHeight: 64,
+                text: tr('registrationCancelButton').toUpperCase(),
+                onPressed: () => context.go("/authentication"),
+              ),
+            ],
+          ),
         ),
       ),
     );
