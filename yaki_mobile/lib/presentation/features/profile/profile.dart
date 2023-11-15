@@ -42,8 +42,16 @@ class Profile extends ConsumerWidget {
         elevation: 0,
         backgroundColor: Colors.transparent,
         leading: IconButton(
-          onPressed: () => context.go('/teams-declaration-summary'),
           icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            String previousPage =
+                context.location.queryParameters['previousPage'];
+            if (previousPage == '/teams-declaration-summary') {
+              context.go('/teams-declaration-summary');
+            } else {
+              context.go('/team-selection');
+            }
+          },
         ),
       ),
       body: SafeArea(
