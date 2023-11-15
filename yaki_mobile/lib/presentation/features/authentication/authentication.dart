@@ -57,7 +57,7 @@ class _AuthenticationState extends ConsumerState<Authentication> {
   }) async {
     setLoading(true); // show the loader
     final String lowercaseLogin = login.toLowerCase().trim();
-    final String trimPassword = password..trim();
+    final String trimPassword = password.trim();
     await SharedPref.deleteToken();
     await SharedPref.setLoginDetails(lowercaseLogin, trimPassword);
 
