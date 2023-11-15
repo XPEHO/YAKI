@@ -138,14 +138,14 @@ class Profile extends ConsumerWidget {
                         ),
                         const SizedBox(height: 10),
                         Button.secondary(
-                          text: tr('changePassword'),
+                          text: tr('changePassword').toUpperCase(),
                           onPressed: () {
                             context.go('/changePassword');
                           },
                         ),
                         const SizedBox(height: 10),
                         Button.tertiary(
-                          text: tr('logOutButton'),
+                          text: tr('logOutButton').toUpperCase(),
                           onPressed: () => onDeleteToken(
                             ref: ref,
                             goToAuthentication: () =>

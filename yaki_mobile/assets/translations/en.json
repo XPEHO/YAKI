@@ -6,11 +6,11 @@
   "inputPassword": "Password",
   "hintPassword": "Enter your password",
   "rememberMe": "Remember me",
-  "signIn": "SIGN IN",
+  "signIn": "sign in",
   "signInLowercase": "Sign In",
   "poweredByXPEHO": "Powered by XPEHO",
   "privacyPolicy": "Privacy Policy",
-  "forgotPassword": "FORGOT PASSWORD",
+  "forgotPassword": "forgot Password",
   "resetPasswordSuccess": "Verify your email for reset password",
   "resetPassword": "Reset my password",
   "headerTitleDecla": "Declaration",
@@ -41,7 +41,7 @@
   "inputCaptain": "Name, Status...",
   "hintCaptain": "Enter a name or a status",
   "authenticationFailed": "Unknown username or password",
-  "logOutButton": "LOG OUT",
+  "logOutButton": "Log out",
   "headerHintProfile": "Your profile",
   "headerTitleProfile": "Profile",
   "inputLabelLastName": "Name",
@@ -75,7 +75,7 @@
   "userDefaultTeam": "TEAM",
   "userDefaultContact": "Please contact your Captain.",
 
-  "changePassword": "CHANGE PASSWORD",
+  "changePassword": "change password",
   "changePasswordPageTitle": "Change your password",
   "changePasswordPageOldPW": "Current password",
   "changePasswordPageNewPW": "New password",
@@ -84,7 +84,7 @@
   "changePasswordSucess": "Password changed successfully",
   "changePasswordError": "An error has occured, please try again later",
 
-  "buttonNext": "NEXT",
+  "buttonNext": "next",
 
   "teamSelectionPageTitle1": "What's planned",
   "teamSelectionPageTitle2": "for today ?",
@@ -107,8 +107,8 @@
 
   "entryValidated": "Entry validated",
   "youCanCloseTheApp": "You can close the application",
-  "modify": "MODIFY",
-  "seeTeam": "SEE MY TEAM",
+  "modify": "modify",
+  "seeTeam": "see my team",
 
   "defaultTeamName": "Team",
   "for ": "for ",
@@ -124,9 +124,10 @@
   "somethingWentWrong": "Some data are lost along the way",
   "retry": "Retry",
 
-  "takePicture": "PRENDRE UNE PHOTO",
-  "imgGallery": "IMAGE FROM MY GALLERY",
-  "upload": "UPLOAD",
+  
+  "upload": "Upload",
+  "takePicture": "Take a picture",
+  "imgGallery": "Gallery",
 
   "feedback": "Help center ?",
   "feedbackMessage": "Do you have a question ? send us a mail at : yaki@xpeho.fr",

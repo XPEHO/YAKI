@@ -131,14 +131,14 @@ class AvatarModalState extends ConsumerState<AvatarModal> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Button.secondary(
-                    text: tr('takePicture'),
+                    text: tr('takePicture').toUpperCase(),
                     onPressed: () => pickImage(ImageSource.camera),
                   ),
                   const SizedBox(height: 10),
                   kIsWeb
                       ? const SizedBox.shrink()
                       : Button.secondary(
-                          text: tr('imgGallery'),
+                          text: tr('imgGallery').toUpperCase(),
                           onPressed: () => pickImage(ImageSource.gallery),
                         ),
                   const SizedBox(height: 10),
@@ -154,7 +154,7 @@ class AvatarModalState extends ConsumerState<AvatarModal> {
                   const SizedBox(height: 20),
                   if (_imageFile != null)
                     Button.secondary(
-                      text: tr('upload'),
+                      text: tr('upload').toUpperCase(),
                       onPressed: () => uploadImage(
                         'userPicture',
                         _imageFile,
