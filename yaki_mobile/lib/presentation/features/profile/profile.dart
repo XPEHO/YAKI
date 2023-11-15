@@ -1,3 +1,5 @@
+import 'dart:js';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -37,6 +39,10 @@ class Profile extends ConsumerWidget {
       return loginDetails[1];
     }
 
+    void previousPage(String route) {
+      context.go(route);
+    }
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -44,12 +50,10 @@ class Profile extends ConsumerWidget {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            String previousPage =
-                context.location.queryParameters['previousPage'];
             if (previousPage == '/teams-declaration-summary') {
-              context.go('/teams-declaration-summary');
+              previousPage('/teams-declaration-summary');
             } else {
-              context.go('/team-selection');
+              previousPage('/team-selection');
             }
           },
         ),
