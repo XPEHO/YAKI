@@ -49,8 +49,8 @@ class _RegistrationState extends ConsumerState<Registration> {
       await ref.read(userRegisterRepositoryProvider).registerUser(
             firstname: firstNameController.text,
             lastname: lastNameController.text,
-            email: emailController.text.toLowerCase(),
-            password: passwordConfirmController.text,
+            email: emailController.text.toLowerCase().trim(),
+            password: passwordConfirmController.text.trim(),
           );
 
       // after registration response get "isRegistered" value, being the object send from mobile API
