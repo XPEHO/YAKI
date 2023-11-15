@@ -6,15 +6,6 @@ import 'package:yaki/presentation/styles/text_style.dart';
 class FeedbackUser extends StatelessWidget {
   const FeedbackUser({Key? key}) : super(key: key);
 
-  Future<void> _launchURL() async {
-    const url = 'mailto:yaki@xpeho.fr?subject=Feedback&body=';
-    if (await canLaunchUrl(url as Uri)) {
-      await launchUrl(url as Uri);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -22,22 +13,17 @@ class FeedbackUser extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         GestureDetector(
-          onTap: () {
-            _launchURL();
-            showModalBottomSheet(
-              context: context,
-              builder: (BuildContext context) {
-                return SizedBox(
-                  height: 200,
-                  child: Center(
-                    child: Text(
-                      tr('feedbackMessage'),
-                      style: textFeedback(),
-                    ),
-                  ),
-                );
-              },
-            );
+          onTap: () async {
+            const String url = 'mailto:yaki@xpeho.fr';
+            final Uri uri = Uri.parse(url);
+            if (await canLaunchUrl(uri)) {
+              if (!await launchUrl(
+                uri,
+                mode: LaunchMode.externalApplication,
+              )) {
+                throw Exception('Could not launch $url');
+              }
+            }
           },
           child: Row(
             children: [
