@@ -31,7 +31,7 @@ class TeamSelection extends ConsumerWidget {
             onPressed: () {
               ref.read(userProvider.notifier).getUser();
               ref.read(avatarProvider.notifier).getAvatar();
-              context.go('/profile?previousPage=/teams-declaration-summary');
+              context.go('/profile/fromTeamSelection');
             },
           ),
         ],

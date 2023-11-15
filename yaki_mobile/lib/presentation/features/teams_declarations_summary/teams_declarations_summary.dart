@@ -54,7 +54,7 @@ class TeamsDeclarationSummary extends ConsumerWidget {
             onPressed: () {
               ref.read(userProvider.notifier).getUser();
               ref.read(avatarProvider.notifier).getAvatar();
-              context.go('/profile?previousPage=/team-selection');
+              context.go('/profile/fromTeamsDeclarationSummary');
             },
           ),
         ],

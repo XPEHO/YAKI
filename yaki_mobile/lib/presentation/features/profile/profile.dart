@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,7 +13,7 @@ import 'package:yaki/presentation/state/providers/user_provider.dart';
 import 'package:yaki_ui/yaki_ui.dart';
 
 class Profile extends ConsumerWidget {
-  const Profile({super.key});
+  const Profile({super.key, required String from});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -39,10 +37,6 @@ class Profile extends ConsumerWidget {
       return loginDetails[1];
     }
 
-    void previousPage(String route) {
-      context.go(route);
-    }
-
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -50,11 +44,7 @@ class Profile extends ConsumerWidget {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            if (previousPage == '/teams-declaration-summary') {
-              previousPage('/teams-declaration-summary');
-            } else {
-              previousPage('/team-selection');
-            }
+            context.go('/');
           },
         ),
       ),
