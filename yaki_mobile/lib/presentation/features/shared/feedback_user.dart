@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:yaki/presentation/styles/text_style.dart';
 
 class FeedbackUser extends StatelessWidget {
@@ -12,21 +13,17 @@ class FeedbackUser extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         GestureDetector(
-          onTap: () {
-            showModalBottomSheet(
-              context: context,
-              builder: (BuildContext context) {
-                return SizedBox(
-                  height: 200,
-                  child: Center(
-                    child: Text(
-                      tr('feedbackMessage'),
-                      style: textFeedback(),
-                    ),
-                  ),
-                );
-              },
-            );
+          onTap: () async {
+            const String url = 'mailto:yaki@xpeho.fr';
+            final Uri uri = Uri.parse(url);
+            if (await canLaunchUrl(uri)) {
+              if (!await launchUrl(
+                uri,
+                mode: LaunchMode.externalApplication,
+              )) {
+                throw Exception('Could not launch $url');
+              }
+            }
           },
           child: Row(
             children: [
