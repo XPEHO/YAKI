@@ -27,43 +27,48 @@ class CellCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Cell(
-      title: '${teammate.userFirstName} ${teammate.userLastName}',
-      subtitle: '',
-      image: setUserAvatarImage(
-        ref: ref,
-        isModifierBtnUsed: isModifierBtnUsed,
-        teammate: teammate,
-      ),
-      chips: CellChipsRow(
-        status: teammate.declarationStatus,
-        statusAfternoon: teammate.declarationStatusAfternoon,
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          CellIconChips(
-            teamName: teammate.teamName,
+    return StreamBuilder(
+      stream: Stream.periodic(const Duration(minutes: 1)),
+      builder: (context, snapshot) {
+        return Cell(
+          title: '${teammate.userFirstName} ${teammate.userLastName}',
+          subtitle: teammate.declarationDate != null
+              ? timeSinceDeclaration(teammate.declarationDate!)
+              : '',
+          image: const CellAvatarSvg(
+            imageSrc: "assets/images/avatar-men.svg",
+          ),
+          chips: CellChipsRow(
             status: teammate.declarationStatus,
-            teamNameAfternoon: teammate.teamNameAfternoon,
             statusAfternoon: teammate.declarationStatusAfternoon,
           ),
-          //display the button only if the modifier button is used
-          if (isModifierBtnUsed) ...[
-            const SizedBox(
-              height: 16,
-            ),
-            Button.secondary(
-              buttonHeight: 52,
-              onPressed: () {
-                ref.read(teamProvider.notifier).clearTeamList();
-                context.go('/team-selection');
-              },
-              text: 'MODIFIER',
-            ),
-          ],
-        ],
-      ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CellIconChips(
+                teamName: teammate.teamName,
+                status: teammate.declarationStatus,
+                teamNameAfternoon: teammate.teamNameAfternoon,
+                statusAfternoon: teammate.declarationStatusAfternoon,
+              ),
+              //display the button only if the modifier button is used
+              if (isModifierBtnUsed) ...[
+                const SizedBox(
+                  height: 16,
+                ),
+                Button.secondary(
+                  buttonHeight: 52,
+                  onPressed: () {
+                    ref.read(teamProvider.notifier).clearTeamList();
+                    context.go('/team-selection');
+                  },
+                  text: 'MODIFIER',
+                ),
+              ],
+            ],
+          ),
+        );
+      },
     );
   }
 }
@@ -79,25 +84,16 @@ bool isSubtitleDisplayed({
         ? false
         : true;
 
-/// display the time since the teammate has been declared based on the declarationDate
-String displayTimeSinceDeclaration({
-  required TeammateWithDeclarationEntity teammate,
-}) {
-  final now = DateTime.now();
-  final declarationDate = teammate.declarationDate;
-  final difference = now.difference(declarationDate!);
-  final differenceInHours = difference.inHours;
-  final differenceInMinutes = difference.inMinutes;
-  final differenceInSeconds = difference.inSeconds;
-
-  if (differenceInHours > 0) {
-    return '$differenceInHours h';
-  } else if (differenceInMinutes > 0) {
-    return '$differenceInMinutes min';
-  } else if (differenceInSeconds > 0) {
-    return '$differenceInSeconds sec';
+String timeSinceDeclaration(DateTime declarationDate) {
+  final duration = DateTime.now().difference(declarationDate);
+  if (duration.inDays > 0) {
+    return '${duration.inDays} days ago';
+  } else if (duration.inHours > 0) {
+    return '${duration.inHours} hours ago';
+  } else if (duration.inMinutes > 0) {
+    return '${duration.inMinutes} minutes ago';
   } else {
-    return '0 sec';
+    return 'Just now';
   }
 }
 
