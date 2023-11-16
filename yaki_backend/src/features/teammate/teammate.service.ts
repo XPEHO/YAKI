@@ -81,7 +81,7 @@ export class TeammateService {
     if (!usersAbsence) return usersList;
 
     const usersAbsenceMap = new Map(usersAbsence.map((absence) => [absence.declarationUserId, absence]));
-    return usersList.map((currentUser) => {
+    const userDeclarationAbsences = usersList.map((currentUser) => {
       if (usersAbsenceMap.has(currentUser.userId)) {
         const absence = usersAbsenceMap.get(currentUser.userId)!;
         currentUser.declarationDate = absence.declarationDate;
@@ -91,6 +91,7 @@ export class TeammateService {
       }
       return currentUser;
     });
+    return userDeclarationAbsences;
   }
 
   /**
@@ -104,20 +105,24 @@ export class TeammateService {
     userWithDeclaration: UserWithDeclaration[],
     usersAvatarChoices: AvatarDto[]
   ): Promise<UsersWithDeclarationAndAvatar[]> => {
-    // create Map for easier search
-    const userDeclaredMap = new Map(userWithDeclaration.map((user) => [user.userId, user]));
     const userAvatarMap =
       usersAvatarChoices !== null ? new Map(usersAvatarChoices!.map((avatar) => [avatar.avatarUserId, avatar])) : null;
 
     let usersWithDeclarationAndAvatar: UsersWithDeclarationAndAvatar[] = [];
-    for (const [userId, user] of userDeclaredMap) {
+    for (const user of userWithDeclaration) {
       const userAndAvatar: UsersWithDeclarationAndAvatarInterface = {
         ...user,
         avatarReference: null,
         avatarByteArray: null,
       };
-      if (userAvatarMap && userAvatarMap.has(userId)) {
-        const avatarInfo = userAvatarMap.get(userId)!;
+      // add avatar once for haldDay declaration
+      const isUserInArray = usersWithDeclarationAndAvatar.some((userAndAvatar) => userAndAvatar.userId === user.userId);
+      if (isUserInArray) {
+        usersWithDeclarationAndAvatar.push(userAndAvatar);
+        continue;
+      }
+      if (userAvatarMap && userAvatarMap.has(user.userId)) {
+        const avatarInfo = userAvatarMap.get(user.userId)!;
 
         userAndAvatar.avatarReference = avatarInfo.avatarReference;
         userAndAvatar.avatarByteArray = avatarInfo.avatarBlob ? Array.from(avatarInfo.avatarBlob) : null;
