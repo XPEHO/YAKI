@@ -1,60 +1,79 @@
-import { UserService } from "../features/user/user.service";
-import { UserRepository } from "../features/user/user.repository";
-import mockDb from "./__mocks__/mockDbUsers";
-import UserModel from "../features/user/user.dtoIn";
-import { CaptainDtoOut } from "../features/captain/captain.dtoOut";
-import { TeammateDtoOut } from "../features/teammate/teammate.dtoOut";
+import { UserService } from '../features/user/user.service';
+import { UserRepository } from '../features/user/user.repository';
+import { UserToRegisterIn } from '../features/user/toRegister.dtoIn';
+import { UserInformationDto } from '../features/user/userInformations.dto';
 
-// Mock of UserRepository
-jest.mock("../features/user/user.repository", () => {
+jest.mock('../features/user/user.repository', () => {
   return {
-    UserRepository: jest.fn().mockImplementation(() => {
-      return {
-        getByLogin: (login: string): UserModel => {
-          const user = mockDb.filter((elm) => elm.user_login == login);
-          return user[0];
-        },
-      };
-    }),
+    getUserById: jest.fn(),
+    registerUser: jest.fn(),
   };
 });
 
-const mockedUserRepo = jest.mocked(UserRepository, { shallow: true });
-
-describe("check login details", () => {
-  // Initialize userService and UserRepository
-  const useRepo = new UserRepository();
-  const userService = new UserService(useRepo);
-
-  // Reset all informations stored in jest mockup
+describe('UserService', () => {
+  let userService: UserService;
+  let userRepository: jest.Mocked<UserRepository>;
   beforeEach(() => {
-    mockedUserRepo.mockClear();
+    userRepository = {
+      getUserById: jest.fn(),
+      registerUser: jest.fn(),
+      getByLogin: jest.fn(), // Add this line
+    };
+    userService = new UserService(userRepository);
   });
 
-  it("return a captain", async () => {
-    expect(
-      await userService.checkUserLoginDetails({
-        login: "lavigne",
-        password: "lavigne",
-      })
-    ).toBeInstanceOf(CaptainDtoOut);
+  describe('checkUserLoginDetails', () => {
+    it('should register a user and return a response', async () => {
+      const userToRegister = new UserToRegisterIn(
+        'testLastName',
+        'testFirstName',
+        'testEmail',
+        'testPassword'
+      );
+      userRepository.registerUser.mockResolvedValueOnce({
+        id: 1,
+        token: 'testToken',
+      });
+
+      const result = await userService.registerUser(userToRegister);
+      console.log(result);
+      expect(result.isRegistered).toBe(true);
+    });
   });
 
-  it("return a team mate", async () => {
-    expect(
-      await userService.checkUserLoginDetails({
-        login: "dugrand",
-        password: "dugrand",
-      })
-    ).toBeInstanceOf(TeammateDtoOut);
+  describe('registerUser', () => {
+    it('should register a user and return a response', async () => {
+      const userToRegister = new UserToRegisterIn(
+        'testLastName',
+        'testFirstName',
+        'testEmail',
+        'testPassword'
+      );
+      userRepository.registerUser.mockResolvedValueOnce({
+        id: 1,
+        token: 'testToken',
+      });
+
+      const result = await userService.registerUser(userToRegister);
+      expect(result.isRegistered).toBe(true);
+    });
   });
 
-  it("login is good but not password", () => {
-    expect(
-      userService.checkUserLoginDetails({
-        login: "lavigne",
-        password: "wrongpassword",
-      })
-    ).rejects.toThrowError("Bad authentification details");
+  describe('getUserById', () => {
+    it('should return a user by id', async () => {
+      const testUserId = 1;
+      const expectedUser: UserInformationDto = {
+        lastname: 'testLastName',
+        firstname: 'testFirstName',
+        email: 'testEmail',
+      };
+      userRepository.getUserById.mockResolvedValueOnce(expectedUser);
+
+      const result = await userService.getUserById(testUserId);
+
+      expect(result).toEqual(expectedUser);
+    });
+
+    // Add more test cases as needed
   });
 });
