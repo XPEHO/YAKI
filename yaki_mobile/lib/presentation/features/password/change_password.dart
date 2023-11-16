@@ -94,7 +94,7 @@ class _ChangePasswordState extends ConsumerState<ChangePassword> {
         backgroundColor: Colors.transparent,
         leading: IconButton(
           onPressed: () {
-            context.go('/authentication');
+            context.pop();
           },
           icon: const Icon(Icons.arrow_back),
         ),
@@ -170,7 +170,7 @@ class _ChangePasswordState extends ConsumerState<ChangePassword> {
                 Button.secondary(
                   buttonHeight: 64,
                   text: tr('registrationCancelButton'),
-                  onPressed: () => context.go("/profile"),
+                  onPressed: () => context.pop(),
                 ),
               ],
             ),

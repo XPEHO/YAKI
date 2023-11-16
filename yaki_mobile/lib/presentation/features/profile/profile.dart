@@ -143,7 +143,7 @@ class Profile extends ConsumerWidget {
                         Button.secondary(
                           text: tr('changePassword').toUpperCase(),
                           onPressed: () {
-                            context.go('/changePassword');
+                            context.push('/changePassword');
                           },
                         ),
                         const SizedBox(height: 10),
