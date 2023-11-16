@@ -13,7 +13,7 @@ import 'package:yaki/presentation/state/providers/user_provider.dart';
 import 'package:yaki_ui/yaki_ui.dart';
 
 class Profile extends ConsumerWidget {
-  const Profile({super.key, required String from});
+  const Profile({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -44,7 +44,7 @@ class Profile extends ConsumerWidget {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            context.go('/');
+            context.pop();
           },
         ),
       ),
