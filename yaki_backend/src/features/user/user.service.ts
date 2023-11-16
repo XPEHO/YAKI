@@ -1,7 +1,6 @@
 import {UserRepository} from "./user.repository";
 import {authService} from "./authentication.service";
 import YakiUtils from "../../utils/yakiUtils";
-
 import {TeammateDtoOut} from "../teammate/teammate.dtoOut";
 import {CaptainDtoOut} from "../captain/captain.dtoOut";
 import {UserToRegisterIn} from "./toRegister.dtoIn";
