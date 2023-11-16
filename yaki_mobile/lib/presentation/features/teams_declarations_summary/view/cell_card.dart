@@ -27,43 +27,48 @@ class CellCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Cell(
-      title: '${teammate.userFirstName} ${teammate.userLastName}',
-      subtitle: teammate.declarationDate != null
-          ? timeSinceDeclaration(teammate.declarationDate!)
-          : '',
-      image: const CellAvatarSvg(
-        imageSrc: "assets/images/avatar-men.svg",
-      ),
-      chips: CellChipsRow(
-        status: teammate.declarationStatus,
-        statusAfternoon: teammate.declarationStatusAfternoon,
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          CellIconChips(
-            teamName: teammate.teamName,
+    return StreamBuilder(
+      stream: Stream.periodic(const Duration(minutes: 1)),
+      builder: (context, snapshot) {
+        return Cell(
+          title: '${teammate.userFirstName} ${teammate.userLastName}',
+          subtitle: teammate.declarationDate != null
+              ? timeSinceDeclaration(teammate.declarationDate!)
+              : '',
+          image: const CellAvatarSvg(
+            imageSrc: "assets/images/avatar-men.svg",
+          ),
+          chips: CellChipsRow(
             status: teammate.declarationStatus,
-            teamNameAfternoon: teammate.teamNameAfternoon,
             statusAfternoon: teammate.declarationStatusAfternoon,
           ),
-          //display the button only if the modifier button is used
-          if (isModifierBtnUsed) ...[
-            const SizedBox(
-              height: 16,
-            ),
-            Button.secondary(
-              buttonHeight: 52,
-              onPressed: () {
-                ref.read(teamProvider.notifier).clearTeamList();
-                context.go('/team-selection');
-              },
-              text: 'MODIFIER',
-            ),
-          ],
-        ],
-      ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CellIconChips(
+                teamName: teammate.teamName,
+                status: teammate.declarationStatus,
+                teamNameAfternoon: teammate.teamNameAfternoon,
+                statusAfternoon: teammate.declarationStatusAfternoon,
+              ),
+              //display the button only if the modifier button is used
+              if (isModifierBtnUsed) ...[
+                const SizedBox(
+                  height: 16,
+                ),
+                Button.secondary(
+                  buttonHeight: 52,
+                  onPressed: () {
+                    ref.read(teamProvider.notifier).clearTeamList();
+                    context.go('/team-selection');
+                  },
+                  text: 'MODIFIER',
+                ),
+              ],
+            ],
+          ),
+        );
+      },
     );
   }
 }
