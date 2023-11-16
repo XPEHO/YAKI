@@ -18,8 +18,9 @@ export class TeammateController {
     } catch (error: any) {
       if (error instanceof DatabaseError) {
         res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json({message: error.message});
+      } else {
+        res.status(STATUS_CODES.NOT_FOUND).json({message: error.message});
       }
-      res.status(STATUS_CODES.NOT_FOUND).json({message: error.message});
     }
   };
 
