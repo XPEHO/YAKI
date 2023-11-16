@@ -35,8 +35,10 @@ class CellCard extends ConsumerWidget {
           subtitle: teammate.declarationDate != null
               ? timeSinceDeclaration(teammate.declarationDate!)
               : '',
-          image: const CellAvatarSvg(
-            imageSrc: "assets/images/avatar-men.svg",
+          image: setUserAvatarImage(
+            ref: ref,
+            isModifierBtnUsed: isModifierBtnUsed,
+            teammate: teammate,
           ),
           chips: CellChipsRow(
             status: teammate.declarationStatus,
