@@ -4,12 +4,14 @@ import {TeammateRepository} from "../features/teammate/teammate.repository";
 import {TeammateService} from "../features/teammate/teammate.service";
 import {TeamDtoIn} from "../features/team/team.dtoIn";
 import {UserWithDeclarationDepreciated} from "../features/teammate/userWithDeclarationDepreciated.dto";
+import {AvatarService} from "../features/user_avatar/avatar.service";
 // Create a mock for the TeamService class
 
 describe("TeammateService", () => {
   let teammateService: TeammateService;
   let teammateRepository: jest.Mocked<TeammateRepository>;
   let teamService: jest.Mocked<TeamService>;
+  let avatarService: jest.Mocked<AvatarService>;
   beforeEach(() => {
     teammateRepository = {
       getByTeamIdWithLastDeclaration: jest.fn(),
@@ -17,7 +19,7 @@ describe("TeammateService", () => {
     teamService = {
       getTeamByUserId: jest.fn(),
     } as unknown as jest.Mocked<TeamService>;
-    teammateService = new TeammateService(teammateRepository, teamService);
+    teammateService = new TeammateService(teammateRepository, teamService, avatarService);
   });
   describe("getByTeamIdWithLastDeclaration", () => {
     it("should return an empty array if the user is not in any team", async () => {

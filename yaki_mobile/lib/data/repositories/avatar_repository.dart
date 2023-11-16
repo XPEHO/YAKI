@@ -73,7 +73,6 @@ class AvatarRepository {
 
   /// Retrieves information from the Avatar API
   /// and stores the response in the avatarModel variable
-
   Future<AvatarEntity> getAvatarById() async {
     var avatarJson = AvatarEntity(
       avatarReference: null,

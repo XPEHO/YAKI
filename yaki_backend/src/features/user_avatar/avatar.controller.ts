@@ -19,7 +19,7 @@ export class AvatarController {
       const personalAvatar: Buffer | string | null = await this.avatarService.getAvatarByUserId(userId);
 
       if (personalAvatar instanceof Buffer) {
-        const byteArray = [...personalAvatar];
+        const byteArray = Array.from(personalAvatar);
         //const filePath = PictureProcessing.byteaToImage(personalAvatar);
         return this.sendSuccessResponse(res, STATUS_CODES.OK, byteArray);
       } else if (typeof personalAvatar === "string") {
@@ -80,7 +80,7 @@ export class AvatarController {
         );
         //delete the uploaded files after saving in databases
         PictureProcessing.deleteUploadedFile(file);
-        const byteArray = [...customAvatar.avatarBlob];
+        const byteArray = Array.from(customAvatar.avatarBlob!);
         return this.sendSuccessResponse(res, STATUS_CODES.OK, byteArray);
       }
 

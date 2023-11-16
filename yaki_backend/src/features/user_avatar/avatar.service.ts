@@ -6,7 +6,7 @@ import {AvatarEnum} from "./avatar.enum";
 export class AvatarService {
   avatarRepository: AvatarRepository;
 
-  defaultAvatarListAsString: string[] = Object.values(AvatarEnum).filter((value) => value !== AvatarEnum.USERPICTURE);
+  defaultAvatarsList: string[] = Object.values(AvatarEnum).filter((value) => value !== AvatarEnum.USERPICTURE);
 
   constructor(repository: AvatarRepository) {
     this.avatarRepository = repository;
@@ -31,6 +31,24 @@ export class AvatarService {
   };
 
   /**
+   * Retrive the avatar choices of the users by their IDs if it exist
+   * @param usersId List of users id to get the avatar choice from
+   * @returns list of AvatarDto containing the avatar infos related to the users choice
+   */
+  getAvatarsByUsersId = async (usersId: number[]): Promise<AvatarDto[] | null> => {
+    if (!usersId) {
+      throw new Error("No user id provided");
+    }
+    try {
+      const avatarList: AvatarDto[] | null = await this.avatarRepository.getUsersAvartarChoiceByUsersID(usersId);
+      return avatarList;
+    } catch (error: any) {
+      console.error("Error get users avatar choice : ", error.message);
+      throw error;
+    }
+  };
+
+  /**
    * Register a new avatar for a user.
    * It reads the avatar file buffer which is a binary data, it's used to save the image in the database as bytea.
    *
@@ -49,16 +67,15 @@ export class AvatarService {
     isSettingDefaultAvatar: boolean
   ): Promise<AvatarDto> => {
     try {
-      let avatarInfo: AvatarDto | null;
-      const referencesList = isSettingDefaultAvatar ? this.defaultAvatarListAsString : [AvatarEnum.USERPICTURE];
+      const referencesList = isSettingDefaultAvatar ? this.defaultAvatarsList : [AvatarEnum.USERPICTURE];
       const isAvatarExists: AvatarDto | null = await this.avatarRepository.getAvatarIfExistsByUserIdAndReference(
         userId,
         referencesList
       );
-
       // with default avatar the file param is null
       const fileData = file ? await fs.promises.readFile(file.path) : file;
 
+      let avatarInfo: AvatarDto | null;
       if (isAvatarExists) {
         avatarInfo = await this.avatarRepository.updateAvatarWithBlobOrReference(
           isAvatarExists.avatarId,
@@ -66,10 +83,8 @@ export class AvatarService {
           fileData
         );
       } else {
-        const buffer = !isSettingDefaultAvatar ? fileData : null;
-        avatarInfo = await this.avatarRepository.insertUserAvatar(userId, avatarReference, buffer, true);
+        avatarInfo = await this.avatarRepository.insertUserAvatar(userId, avatarReference, fileData, true);
       }
-
       await this.avatarRepository.updateUserAvatarChoice(userId, avatarInfo.avatarId);
       return avatarInfo;
     } catch (error: any) {

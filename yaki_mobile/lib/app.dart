@@ -24,6 +24,7 @@ class YakiApp extends ConsumerWidget {
       localizationsDelegates: context.localizationDelegates,
       title: 'Yaki',
       theme: ThemeData(
+        useMaterial3: false,
         primarySwatch: const MaterialColor(0xFFF2F6F9, {
           50: Color(0xFFE5EAF0),
           100: Color(0xFFBFCEDC),

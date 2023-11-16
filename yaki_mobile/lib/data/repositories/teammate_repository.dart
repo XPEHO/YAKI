@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -76,6 +78,12 @@ class TeammateRepository {
                   teamName: currentModel.teamName,
                   customerId: currentModel.customerId,
                   customerName: currentModel.customerName,
+                  avatarReference: currentModel.avatarReference,
+                  avatar: currentModel.avatarByteArray != null
+                      ? Uint8List.fromList(
+                          (currentModel.avatarByteArray!.cast<int>()),
+                        )
+                      : null,
                 ),
               );
             }

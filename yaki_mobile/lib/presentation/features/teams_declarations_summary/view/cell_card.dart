@@ -1,12 +1,18 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yaki/domain/entities/teammate_with_declaration_entity.dart';
+import 'package:yaki/domain/entities/user_entity.dart';
+import 'package:yaki/presentation/displaydata/avatar_enum.dart';
 import 'package:yaki/presentation/displaydata/declaration_status_enum.dart';
 import 'package:yaki/presentation/features/shared/sized_circle_avatar.dart';
 import 'package:yaki/presentation/features/teams_declarations_summary/view/cell_chips_row.dart';
 import 'package:yaki/presentation/features/teams_declarations_summary/view/cell_iconchips.dart';
+import 'package:yaki/presentation/state/providers/avatar_provider.dart';
 import 'package:yaki/presentation/state/providers/team_provider.dart';
+import 'package:yaki/presentation/state/providers/user_provider.dart';
 import 'package:yaki_ui/yaki_ui.dart';
 
 class CellCard extends ConsumerWidget {
@@ -24,8 +30,10 @@ class CellCard extends ConsumerWidget {
     return Cell(
       title: '${teammate.userFirstName} ${teammate.userLastName}',
       subtitle: '',
-      image: const CellAvatarSvg(
-        imageSrc: "assets/images/avatar-men.svg",
+      image: setUserAvatarImage(
+        ref: ref,
+        isModifierBtnUsed: isModifierBtnUsed,
+        teammate: teammate,
       ),
       chips: CellChipsRow(
         status: teammate.declarationStatus,
@@ -91,4 +99,48 @@ String displayTimeSinceDeclaration({
   } else {
     return '0 sec';
   }
+}
+
+Widget setUserAvatarImage({
+  required WidgetRef ref,
+  required bool isModifierBtnUsed,
+  required TeammateWithDeclarationEntity teammate,
+}) {
+  String? firstName;
+  String? lastName;
+  String? avatarReference;
+  Uint8List? avatar;
+
+  // if its the current user, we get the data from the userProvider
+  if (isModifierBtnUsed) {
+    final avatarData = ref.watch(avatarProvider);
+    final UserEntity? user = ref.watch(userProvider);
+
+    if (user != null) {
+      firstName = user.firstName;
+      lastName = user.lastName;
+    }
+    avatarReference = avatarData.avatarReference;
+    avatar = avatarData.avatar;
+  } else {
+    firstName = teammate.userFirstName;
+    lastName = teammate.userLastName;
+    avatarReference = teammate.avatarReference;
+    avatar = teammate.avatar;
+  }
+
+  String firstLestters =
+      '${firstName != null && firstName.isNotEmpty ? firstName[0] : "A"}${lastName != null && lastName.isNotEmpty ? lastName[0] : "B"}';
+
+  if (avatarReference != null &&
+      AvatarEnum.defaultAvatars.contains(avatarReference)) {
+    return CellAvatarSvg(
+      imageSrc: AvatarEnum.values.byName(avatarReference).text,
+    );
+  } else if (avatar != null) {
+    return CellAvatarImg(
+      imageAvatar: avatar,
+    );
+  }
+  return CellAvatarLetters(userFirstLetters: firstLestters);
 }
