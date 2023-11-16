@@ -42,8 +42,10 @@ class Profile extends ConsumerWidget {
         elevation: 0,
         backgroundColor: Colors.transparent,
         leading: IconButton(
-          onPressed: () => context.go('/teams-declaration-summary'),
           icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            context.pop();
+          },
         ),
       ),
       body: SafeArea(
