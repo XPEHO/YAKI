@@ -71,7 +71,6 @@ final goRouterProvider = Provider<GoRouter>(
                 }
               },
             ),
-        
             GoRoute(
               path: 'changePassword',
               builder: (context, state) => const PopScope(
