@@ -14,7 +14,6 @@ class FeedbackUser extends StatelessWidget {
       children: [
         InkWell(
           onTap: () async {
-            debugPrint('test');
             final Uri uri = Uri.parse('mailto:yaki@xpeho.fr');
             if (await canLaunchUrl(uri)) {
               if (!await launchUrl(
