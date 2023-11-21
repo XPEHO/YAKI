@@ -7,7 +7,6 @@ import modalState from "@/features/shared/modal/services/modalState";
 
 <template>
   <modal-frame v-show="modalState.isShowed" />
-  <header-yaki />
   <section class="sidebar-content-container-grid">
     <side-bar>
       <slot name="sidebarContent"></slot>
