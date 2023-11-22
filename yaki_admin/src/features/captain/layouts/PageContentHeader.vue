@@ -2,8 +2,6 @@
 import buttonTextIcon from "@/components/ButtonTextIcon.vue";
 import buttonIcon from "@/components/ButtonIcon.vue";
 
-import {TeamType} from "@/models/team.type";
-import {PropType} from "vue";
 import router from "@/router/router";
 
 import teamImage from "@/assets/images/splashscreen.svg";
@@ -34,7 +32,7 @@ const onClickDeleteTeam = () => {
         <button-text-icon
           @click.prevent="router.push({path: `invitation`})"
           :icon="addIcon"
-          text="INVIT" />
+          text="INVITATION" />
 
         <button-icon
           :icon="dotIcon"

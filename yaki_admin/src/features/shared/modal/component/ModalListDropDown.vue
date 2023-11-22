@@ -2,7 +2,7 @@
 import {useCaptainStore} from "@/stores/captainStore";
 import {useSelectedRoleStore} from "@/stores/selectedRole";
 import {useTeamStore} from "@/stores/teamStore";
-import {onBeforeMount, reactive, ref, watch} from "vue";
+import {onBeforeMount} from "vue";
 import modalState from "../services/modalState";
 
 const captainStore = useCaptainStore();
