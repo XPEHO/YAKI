@@ -20,7 +20,7 @@ import modalState from "@/features/shared/modal/services/modalState";
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap");
 .sidebar-content-container-grid {
   display: grid;
-  grid-template-columns: minmax(18rem, 20rem) minmax(80%, 1fr);
+  grid-template-columns: minmax(15rem, 20rem) 1fr;
   height: 100%;
 }
 .page-content {
