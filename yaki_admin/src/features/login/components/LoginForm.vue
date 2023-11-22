@@ -1,19 +1,24 @@
 <script>
+import buttonPrimary from "@/components/buttonPrimary.vue";
+import buttonSecondary from "@/components/buttonSecondary.vue";
+import inputText from "@/components/inputText.vue";
+import inputPassword from "@/components/inputPassword.vue";
 import {useAuthStore} from "@/stores/authStore";
 
-import eyesIcon from "@/assets/images/eye.png";
-
 export default {
+  components: {
+    buttonPrimary,
+    buttonSecondary,
+    inputText,
+    inputPassword,
+  },
   mounted() {
     this.audioContainer = document.getElementById("audioContainer");
   },
   data() {
     return {
-      eyesIcon: eyesIcon,
-      audioContainer: null,
       usernamePlaceholder: "Login",
       passwordPlaceholder: "Password",
-      showPassword: false,
       form: {
         username: "",
         password: "",
@@ -21,12 +26,12 @@ export default {
     };
   },
   methods: {
-    togglePasswordVisibility() {
-      this.showPassword = !this.showPassword;
+    onInputLogin(value) {
+      this.form.username = value;
     },
 
-    onInputLogin(e) {
-      this.usernameText = e.target.value;
+    onInputPassword(value) {
+      this.form.password = value;
     },
 
     login() {
@@ -36,82 +41,66 @@ export default {
       }
       return;
     },
-
     forgottenPassword() {},
   },
 };
 </script>
 
 <template>
-  <form>
-    <input
-      class="input-general"
-      type="text"
-      v-model="form.username"
-      @input="onInputLogin"
-      :placeholder="usernamePlaceholder" />
+  <section class="login_form_container">
+    <div>
+      <p class="login-title">Administration</p>
+      <form>
+        <input-text
+          :labelText="usernamePlaceholder"
+          @inputValue="onInputLogin" />
 
-    <input
-      class="input-general"
-      v-model="form.password"
-      :type="showPassword ? 'text' : 'password'"
-      :placeholder="passwordPlaceholder" />
-    <figure>
-      <img
-        v-bind:src="eyesIcon"
-        @click.prevent="togglePasswordVisibility" />
-    </figure>
-    <button
-      type="submit"
-      class="button-style-common button-style-primary button-text-main"
-      @click.prevent="login">
-      Sign In
-    </button>
-    <button
-      class="button-style-common button-style-secondary button-text-secondary"
-      @click.prevent="forgottenPassword">
-      Forgot password ?
-    </button>
-  </form>
+        <input-password
+          :labelText="passwordPlaceholder"
+          @inputValue="onInputPassword" />
+
+        <button-primary
+          button-text="SIGN IN"
+          @click.prevent="login" />
+        <buttonSecondary
+          button-text="FORGOTTEN PASSWORD?"
+          @click.prevent="forgottenPassword" />
+      </form>
+    </div>
+  </section>
 </template>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-form {
+.login_form_container {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  padding-block-start: 8rem;
-  margin-inline: auto;
-  width: min(90%, 400px);
+  justify-content: center;
+  align-self: center;
+  gap: 2rem;
 
-  position: relative;
+  width: 100%;
+  height: 100%;
 
-  input {
-    padding-inline-start: 2rem;
-    padding-block: 1.3rem;
+  div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-self: center;
+
+    width: min(90%, 450px);
   }
 
-  input:nth-of-type(2) {
-    margin-bottom: 1.5rem;
-  }
-
-  figure {
-    width: 1.4rem;
-    position: absolute;
-    top: 55%;
-    right: 1%;
-    transform: translate(-50%, -50%);
-
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.4rem;
   }
 }
-
-h3 {
-  margin: 40px 0 0;
+.login-title {
+  font-size: 2rem;
+  font-weight: bold;
+  padding-inline-start: 2rem;
+  padding-block-end: 4rem;
 }
 </style>
