@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const props = defineProps({
-  buttonText: {
+  text: {
     type: String,
     required: true,
   },
@@ -19,6 +19,6 @@ const classList = [
 
 <template>
   <button :class="classList">
-    {{ props.buttonText }}
+    {{ props.text }}
   </button>
 </template>

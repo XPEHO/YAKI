@@ -1,8 +1,8 @@
 <script>
-import buttonPrimary from "@/components/buttonPrimary.vue";
-import buttonSecondary from "@/components/buttonSecondary.vue";
-import inputText from "@/components/inputText.vue";
-import inputPassword from "@/components/inputPassword.vue";
+import buttonPrimary from "@/components/ButtonPrimary.vue";
+import buttonSecondary from "@/components/ButtonSecondary.vue";
+import inputText from "@/components/InputText.vue";
+import inputPassword from "@/components/InputPassword.vue";
 import {useAuthStore} from "@/stores/authStore";
 
 export default {
@@ -60,10 +60,10 @@ export default {
           @inputValue="onInputPassword" />
 
         <button-primary
-          button-text="SIGN IN"
+          text="SIGN IN"
           @click.prevent="login" />
         <buttonSecondary
-          button-text="FORGOTTEN PASSWORD?"
+          text="FORGOTTEN PASSWORD?"
           @click.prevent="forgottenPassword" />
       </form>
     </div>
