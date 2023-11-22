@@ -4,9 +4,9 @@ import {useTeamStore} from "@/stores/teamStore.js";
 import router from "@/router/router";
 
 import PageContentLayout from "@/global-layouts/PageContentLayout.vue";
-import HeaderContentPage from "@/features/shared/components/HeaderContentPage.vue";
 import UserCard from "@/features/shared/components/UserCard.vue";
 import SideBarButton from "@/features/shared/components/SideBarButton.vue";
+import PageContentHeader from "@/features/captain/layouts/PageContentheader.vue";
 
 import plusIcon from "@/assets/images/plus.png";
 import {useTeammateStore} from "@/stores/teammateStore";
@@ -22,16 +22,9 @@ onBeforeMount(async () => {
 <template>
   <page-content-layout>
     <template #pageContentHeader>
-      <header-content-page
-        v-bind:title="'Team Members'"
-        v-bind:text="'Manage your team members here'" />
+      <page-content-header />
     </template>
     <template #content>
-      <side-bar-button
-        v-bind:inner-text="'Add Teammate'"
-        v-bind:icon-path="plusIcon"
-        @click.prevent="router.push({path: `invitation`})" />
-
       <user-card
         v-for="teammate in teammateStore.getTeammateList"
         :user="teammate"

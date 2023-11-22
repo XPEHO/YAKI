@@ -11,7 +11,7 @@ const modalState = reactive({
   // for teams management
   mode: "" as MODALMODE,
   teamInputValue: "" as string,
-  teamName: "" as string,
+  teamName: "unknown team name" as string,
 
   defaultButtonValue: "Select a captain" as string,
   dropDownButtonText: "Select a captain" as string,
