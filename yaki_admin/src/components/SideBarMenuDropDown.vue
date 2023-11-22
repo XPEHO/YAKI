@@ -139,7 +139,7 @@ const props = defineProps({
   }
 
   &:hover {
-    background-color: #f97140;
+    background-color: #fab9a1;
   }
 
   &:active {

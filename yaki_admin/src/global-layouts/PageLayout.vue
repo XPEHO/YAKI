@@ -25,5 +25,6 @@ import modalState from "@/features/shared/modal/services/modalState";
 }
 .page-content {
   padding: 30px;
+  background-color: $background-color-theme-primary;
 }
 </style>

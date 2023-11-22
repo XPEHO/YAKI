@@ -8,10 +8,7 @@
 
 <style scoped lang="scss">
 .content-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  gap: 1.25rem;
+  margin-top: 48px;
+  padding-inline: 40px;
 }
 </style>
