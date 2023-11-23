@@ -1,8 +1,15 @@
 import 'package:yaki/data/models/team_model.dart';
 import 'package:yaki/presentation/displaydata/declaration_status_enum.dart';
 
+enum LatestDeclarationStatus {
+  unknown,
+  declared,
+  notDeclared,
+}
+
 class DeclarationStatus {
-  late bool isAlreadyDeclared = false;
+  late LatestDeclarationStatus latestDeclarationStatus =
+      LatestDeclarationStatus.unknown;
   late TeamModel fullDayTeam = defaultTeam;
   late StatusEnum fullDayStatus = StatusEnum.undeclared;
   late HalfDayWorkflow halfDayWorkflow = HalfDayWorkflow();
@@ -14,7 +21,7 @@ class DeclarationStatus {
   DeclarationStatus();
 
   DeclarationStatus copyWith({
-    bool? isAlreadyDeclared,
+    LatestDeclarationStatus? latestDeclarationStatus,
     TeamModel? fullDayTeam,
     StatusEnum? fullDayStatus,
     HalfDayWorkflow? halfDayWorkflow,
@@ -25,7 +32,8 @@ class DeclarationStatus {
     bool? isfullDay,
   }) {
     return DeclarationStatus()
-      ..isAlreadyDeclared = isAlreadyDeclared ?? this.isAlreadyDeclared
+      ..latestDeclarationStatus =
+          latestDeclarationStatus ?? this.latestDeclarationStatus
       ..fullDayTeam = fullDayTeam ?? this.fullDayTeam
       ..fullDayStatus = fullDayStatus ?? this.fullDayStatus
       ..halfDayWorkflow = halfDayWorkflow ?? this.halfDayWorkflow
