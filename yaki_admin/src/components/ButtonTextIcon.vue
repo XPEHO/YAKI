@@ -12,7 +12,7 @@ const props = defineProps({
 
 const classList = [
   "button--general",
-  "button--color-delete",
+  "button--color-primary",
   "button--sized-content",
   "button--height-secondary",
   "button--icon-text-style",
