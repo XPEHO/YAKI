@@ -24,7 +24,11 @@ import modalState from "@/features/shared/modal/services/modalState";
   height: 100%;
 }
 .page-content {
-  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  padding-block-start: 44px;
+
   background-color: $background-color-theme-primary;
+  overflow: hidden;
 }
 </style>

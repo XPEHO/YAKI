@@ -112,9 +112,9 @@ const props = defineProps({
 }
 
 .drop-down__create-team {
-  margin-block: 10px;
-  padding-block: 16px;
+  margin-block: 4px;
   padding-inline-start: 16px;
+  height: 56px;
 
   display: flex;
   align-items: center;
@@ -139,7 +139,14 @@ const props = defineProps({
   }
 
   &:hover {
-    background-color: #fab9a1;
+    background-color: #ff9169;
+    cursor: pointer;
+    color: rgb(238, 237, 237);
+    figure {
+      img {
+        filter: invert(0.9);
+      }
+    }
   }
 
   &:active {

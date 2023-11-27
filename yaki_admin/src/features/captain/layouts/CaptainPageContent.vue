@@ -22,11 +22,14 @@ onBeforeMount(async () => {
     </template>
     <template #content>
       <section class="user-list__container">
+        <p>Team description : Coming soon.</p>
         <p v-if="teammateStore.getTeammateList.length > 0">Teammates :</p>
-        <user-info-card
-          v-for="teammate in teammateStore.getTeammateList"
-          :user="teammate"
-          :key="teammate.id" />
+        <section class="user-list__in-team-container">
+          <user-info-card
+            v-for="teammate in teammateStore.getTeammateList"
+            :user="teammate"
+            :key="teammate.id" />
+        </section>
       </section>
     </template>
   </page-content-layout>
@@ -35,9 +38,20 @@ onBeforeMount(async () => {
 <style scoped lang="scss">
 $border-radius: 24px;
 .user-list__container {
-  border-radius: $border-radius;
+  padding-block-end: 10rem;
 
-  > p {
+  > p:nth-of-type(1) {
+    color: #7d818c;
+    font-family: Rubik;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%;
+
+    padding-block-end: 32px;
+  }
+
+  > p:nth-of-type(2) {
     color: #7d818c;
     font-size: 16px;
     font-style: normal;
@@ -47,14 +61,17 @@ $border-radius: 24px;
     padding-block-end: 16px;
   }
 
-  article:nth-of-type(1) {
-    border-top-left-radius: $border-radius;
-    border-top-right-radius: $border-radius;
-  }
+  .user-list__in-team-container {
+    border-radius: $border-radius;
+    article:nth-of-type(1) {
+      border-top-left-radius: $border-radius;
+      border-top-right-radius: $border-radius;
+    }
 
-  article:last-of-type {
-    border-bottom-left-radius: $border-radius;
-    border-bottom-right-radius: $border-radius;
+    article:last-of-type {
+      border-bottom-left-radius: $border-radius;
+      border-bottom-right-radius: $border-radius;
+    }
   }
 }
 </style>

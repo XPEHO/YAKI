@@ -39,8 +39,6 @@ const onClickDeleteTeam = () => {
           @click.prevent="onClickDeleteTeam" />
       </div>
     </div>
-
-    <p>team description : coming soon</p>
   </section>
 </template>
 
@@ -50,8 +48,8 @@ const onClickDeleteTeam = () => {
   flex-direction: column;
   gap: 16px;
 
+  padding-block-end: 24px;
   padding-inline: 40px;
-  padding-block: 24px 16px;
 
   figure {
     background-color: black;
@@ -87,15 +85,6 @@ const onClickDeleteTeam = () => {
     font-weight: 500;
     line-height: 100%; /* 40px */
     letter-spacing: -2px;
-  }
-
-  p {
-    color: #7d818c;
-    font-family: Rubik;
-    font-size: 15px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 150%;
   }
 }
 </style>

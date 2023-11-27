@@ -8,7 +8,11 @@
 
 <style scoped lang="scss">
 .content-wrapper {
-  margin-top: 48px;
   padding-inline: 40px;
+  overflow: auto;
+
+  scrollbar-width: thin;
+  scrollbar-gutter: stable both-edges;
+  scrollbar-color: rgba(3, 3, 3, 0.446) transparent;
 }
 </style>
