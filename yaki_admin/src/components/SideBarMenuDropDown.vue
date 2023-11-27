@@ -8,8 +8,8 @@ import {useTeamStore} from "@/stores/teamStore";
 import {useRoleStore} from "@/stores/roleStore";
 import {onBeforeMount} from "vue";
 import {selectTeamAndFetchTeammates} from "@/features/captain/services/teamList.service";
-import modalState from "@/features/shared/modal/services/modalState";
-import {MODALMODE} from "@/features/shared/modal/services/modalMode";
+import modalState from "@/features/modal/services/modalState";
+import {MODALMODE} from "@/constants/modalMode";
 import router from "@/router/router";
 
 const teamStore = useTeamStore();
@@ -154,3 +154,4 @@ const props = defineProps({
   }
 }
 </style>
+@/constants/modalMode @/constants/modalMode @/features/modal/services/modalState

@@ -14,13 +14,14 @@ const onInputUse = (e: Event) => {
 </script>
 
 <template>
-  <section class="input__border-background input__container-flex input__container-height input__label-style">
-    <input
+  <section class="input__border-background input__container-flex textarea__container-height-pos input__label-style">
+    <textarea
       @input="onInputUse"
       class="input__text input__no-border-background"
-      type="text"
       placeholder=""
-      id="input-text" />
-    <label for="input-text">{{ props.labelText }}</label>
+      id="textarea"
+      cols="10"
+      rows="5"></textarea>
+    <label for="textarea">Text area label</label>
   </section>
 </template>

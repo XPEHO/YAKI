@@ -2,7 +2,7 @@
 import {TeamType} from "@/models/team.type";
 import {PropType, ref} from "vue";
 
-import modalState from "@/features/shared/modal/services/modalState";
+import modalState from "@/features/modal/services/modalState";
 import {useTeamStore} from "@/stores/teamStore";
 
 import EditAndDeleteButtons from "@/features/shared/components/EditAndDeleteButtons.vue";
@@ -200,3 +200,4 @@ $heigth-team-captain: 4.3rem;
   }
 }
 </style>
+@/features/modal/services/modalState

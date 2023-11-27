@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import SideBar from "@/global-layouts/SideBar.vue";
-import modalFrame from "@/features/shared/modal/ModalFrame.vue";
-import modalState from "@/features/shared/modal/services/modalState";
+import modalFrame from "@/features/modal/ModalFrame.vue";
+import modalState from "@/features/modal/services/modalState";
 </script>
 
 <template>
-  <modal-frame v-show="modalState.isShowed" />
+  <transition name="fade">
+    <modal-frame v-show="modalState.isShowed" />
+  </transition>
   <section class="sidebar-content-container-grid">
     <side-bar>
       <slot name="sidebarContent"></slot>
@@ -31,4 +33,14 @@ import modalState from "@/features/shared/modal/services/modalState";
   background-color: $background-color-theme-primary;
   overflow: hidden;
 }
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
 </style>
+@/features/modal/services/modalState

@@ -3,8 +3,8 @@ import {onBeforeMount} from "vue";
 
 import HeaderContentPage from "@/features/shared/components/HeaderContentPage.vue";
 import {useTeamStore} from "@/stores/teamStore";
-import modalState from "@/features/shared/modal/services/modalState";
-import {MODALMODE} from "@/features/shared/modal/services/modalMode";
+import modalState from "@/features/modal/services/modalState";
+import {MODALMODE} from "@/constants/modalMode";
 
 import PageContentLayout from "@/global-layouts/PageContentLayout.vue";
 import SideBarButton from "@/features/shared/components/SideBarButton.vue";
@@ -47,3 +47,4 @@ const customerTeamCreation = () => {
     </template>
   </page-content-layout>
 </template>
+@/constants/modalMode @/constants/modalMode @/features/modal/services/modalState

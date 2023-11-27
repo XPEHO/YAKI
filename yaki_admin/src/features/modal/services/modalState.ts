@@ -1,17 +1,18 @@
 import {reactive} from "vue";
 import {useTeamStore} from "@/stores/teamStore.js";
-import {MODALMODE} from "@/features/shared/modal/services/modalMode";
+import {MODALMODE} from "@/constants/modalMode";
 import {useTeammateStore} from "@/stores/teammateStore";
 import {useRoleStore} from "@/stores/roleStore";
 
 const modalState = reactive({
+  // used to display or not the modal via v-show
   isShowed: false as boolean,
   // for teammate to delete
   temmateName: "" as string,
   // for teams management
   mode: "" as MODALMODE,
   teamInputValue: "" as string,
-  teamName: "unknown team name" as string,
+  teamName: "" as string,
 
   defaultButtonValue: "Select a captain" as string,
   dropDownButtonText: "Select a captain" as string,
@@ -141,6 +142,7 @@ const modalState = reactive({
   },
 
   async editTeamName() {
+    console.log("edit name methode from modalState");
     const teamStore = useTeamStore();
     await teamStore.updateTeam(
       teamStore.getSelectedTeamId,
