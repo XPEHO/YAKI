@@ -9,24 +9,17 @@ import teamImage from "@/assets/images/splashscreen.svg";
 import addIcon from "@/assets/images/plus_icon.png";
 import dotIcon from "@/assets/images/dots-vertical-rounded-regular-24.png";
 import modalState from "@/features/modal/services/modalState";
-import {MODALMODE} from "@/constants/modalMode";
 import {onMounted, onUnmounted, ref} from "vue";
-
-const onClickDeleteTeam = () => {
-  modalState.setTeamName(modalState.teamName);
-  modalState.switchModalVisibility(true, MODALMODE.teamDelete);
-};
 
 const isModalVisible = ref(false);
 const switchEditModalVisibility = () => {
   isModalVisible.value = !isModalVisible.value;
 };
 
-let mousedownEvent: any = null;
-
-const onClickOutside = (event: any) => {
+const onClickOutsideCloseModal = (event: any) => {
   const modal = document.querySelector(".modal-edit-delete__container");
   const dotButton = document.querySelector(".button-icon-selector");
+  // check user is not clicking on the modal or the dot button
   if (
     isModalVisible.value === true &&
     modal &&
@@ -38,13 +31,11 @@ const onClickOutside = (event: any) => {
   }
 };
 onMounted(() => {
-  mousedownEvent = onClickOutside;
-  window.addEventListener("mousedown", onClickOutside);
+  window.addEventListener("mousedown", onClickOutsideCloseModal);
 });
+// clean up even on unmount
 onUnmounted(() => {
-  if (mousedownEvent) {
-    window.removeEventListener("mousedown", mousedownEvent);
-  }
+  window.removeEventListener("mousedown", onClickOutsideCloseModal);
 });
 </script>
 

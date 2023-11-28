@@ -24,6 +24,8 @@ const validationModalAccept = async () => {
 const setTeamName = (value: any) => {
   modalState.setTeamInputValue(value);
 };
+
+const setTeamDescription = (value: any) => {};
 </script>
 
 <template>
@@ -49,11 +51,11 @@ const setTeamName = (value: any) => {
         <div class="popup__input-container">
           <input-text
             label-text="Team name"
-            @inputValue="setTeamName" />
+            @inputValue.prevent="setTeamName" />
 
           <input-text-area
             label-text="'Team description'"
-            @input-value="" />
+            @inputValue.prevent="setTeamDescription" />
 
           <section class="container__buttons--popup">
             <button-text-sized

@@ -142,7 +142,6 @@ const modalState = reactive({
   },
 
   async editTeamName() {
-    console.log("edit name methode from modalState");
     const teamStore = useTeamStore();
     await teamStore.updateTeam(
       teamStore.getSelectedTeamId,
