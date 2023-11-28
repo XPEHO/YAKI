@@ -57,7 +57,6 @@ export const useTeamStore = defineStore("teamStore", {
       return false;
     },
 
-    // NOT USED YET
     setCaptainsIdWithinTeam(captainsId: number[]) {
       this.captainsIdForTeamSelected = captainsId;
     },

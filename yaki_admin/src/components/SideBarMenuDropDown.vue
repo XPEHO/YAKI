@@ -11,6 +11,7 @@ import {selectTeamAndFetchTeammates} from "@/features/captain/services/teamList.
 import modalState from "@/features/modal/services/modalState";
 import {MODALMODE} from "@/constants/modalMode";
 import router from "@/router/router";
+import {TeamType} from "@/models/team.type";
 
 const teamStore = useTeamStore();
 const roleStore = useRoleStore();
@@ -30,8 +31,9 @@ const onClickAddTeam = () => {
   modalState.switchModalVisibility(true, MODALMODE.teamCreate);
 };
 
-const onClickSelectTeam = (id: number) => {
-  selectTeamAndFetchTeammates(id);
+const onClickSelectTeam = (team: TeamType) => {
+  selectTeamAndFetchTeammates(team.id);
+  teamStore.setCaptainsIdWithinTeam(team.captainsId);
   router.push({path: "/captain/manage-team"});
 };
 
@@ -90,7 +92,7 @@ const props = defineProps({
           :key="index"
           v-bind:id="team.id"
           v-bind:teamName="team.teamName"
-          @click.prevent="() => onClickSelectTeam(team.id)" />
+          @click.prevent="() => onClickSelectTeam(team)" />
       </div>
       <div v-else>
         <p class="no-teams">There is no team yet</p>

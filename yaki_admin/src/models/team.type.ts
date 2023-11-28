@@ -2,6 +2,7 @@ export type TeamType = {
   id: number;
   teamName: string;
   customerId: number;
+  captainsId: number[];
   captains: CaptainDetails[];
 };
 
