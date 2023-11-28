@@ -1,5 +1,5 @@
 import {useTeamStore} from "@/stores/teamStore";
-import modalState from "@/features/shared/modal/services/modalState";
+import modalState from "@/features/modal/services/modalState";
 import {useTeammateStore} from "@/stores/teammateStore";
 
 /**

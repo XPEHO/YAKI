@@ -2,7 +2,7 @@
 import router from "@/router/router";
 import {environmentVar} from "@/envPlaceholder";
 import {onBeforeMount, reactive} from "vue";
-import modalState from "@/features/shared/modal/services/modalState";
+import modalState from "@/features/modal/services/modalState";
 
 import type {UserWithIdType} from "@/models/userWithId.type";
 import {usersService} from "@/services/users.service";
@@ -71,3 +71,4 @@ onBeforeMount(async () => {
     </template>
   </page-content-layout>
 </template>
+@/features/modal/services/modalState

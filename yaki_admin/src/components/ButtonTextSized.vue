@@ -16,18 +16,11 @@ const props = defineProps({
   },
 });
 
-const classList = [
-  "button--general",
-  "button--height-primary",
-  "button--width-100-pct",
-  "button--text",
-  "text-uppercase",
-  "unselectabla-text",
-];
+const classList = ["button--general", "button--height-secondary", "button--inline-padding-16"];
 </script>
 
 <template>
   <button :class="[classList, color]">
-    {{ props.text }}
+    <p class="button--text text-uppercase unselectabla-text">{{ text }}</p>
   </button>
 </template>

@@ -1,14 +1,23 @@
 <script setup lang="ts">
+import {BUTTONCOLORS} from "@/constants/componentsSettings";
+
 const props = defineProps({
   text: {
     type: String,
     required: true,
   },
+  color: {
+    type: String,
+    required: false,
+    default: BUTTONCOLORS.secondary,
+    validator: (value: string) => {
+      return Object.values(BUTTONCOLORS).includes(value as BUTTONCOLORS);
+    },
+  },
 });
 
 const classList = [
   "button--general",
-  "button--color-secondary",
   "button--height-secondary",
   "button--width-100-pct",
   "button--text",
@@ -18,7 +27,7 @@ const classList = [
 </script>
 
 <template>
-  <button :class="classList">
+  <button :class="[classList, color]">
     {{ props.text }}
   </button>
 </template>

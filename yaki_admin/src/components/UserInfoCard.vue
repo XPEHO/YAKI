@@ -6,8 +6,8 @@ import userAvatar from "@/assets/images/avatar_2.png";
 
 import {PropType} from "vue";
 import {UserWithIdType} from "@/models/userWithId.type";
-import modalState from "@/features/shared/modal/services/modalState";
-import {MODALMODE} from "@/features/shared/modal/services/modalMode";
+import modalState from "@/features/modal/services/modalState";
+import {MODALMODE} from "@/constants/modalMode";
 
 const props = defineProps({
   user: {
@@ -50,3 +50,4 @@ const UserToBeRemoved = () => {
     <section></section>
   </article>
 </template>
+@/constants/modalMode @/constants/modalMode @/features/modal/services/modalState
