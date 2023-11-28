@@ -145,7 +145,7 @@ const modalState = reactive({
     const teamStore = useTeamStore();
     await teamStore.updateTeam(
       teamStore.getSelectedTeamId,
-      teamStore.getCaptainIdToBeAssign,
+      teamStore.getCaptainsIdWithinTeam[0],
       this.teamInputValue,
       null
     );

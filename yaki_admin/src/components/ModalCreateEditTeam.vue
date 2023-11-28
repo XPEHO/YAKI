@@ -51,11 +51,11 @@ const setTeamDescription = (value: any) => {};
         <div class="popup__input-container">
           <input-text
             label-text="Team name"
-            @inputValue.prevent="setTeamName" />
+            @inputValue="setTeamName" />
 
           <input-text-area
             label-text="'Team description'"
-            @inputValue.prevent="setTeamDescription" />
+            @inputValue="setTeamDescription" />
 
           <section class="container__buttons--popup">
             <button-text-sized
