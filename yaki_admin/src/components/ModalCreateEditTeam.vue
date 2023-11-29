@@ -8,21 +8,23 @@ import pencilIcon from "@/assets/images/pencil-regular-24.png";
 import deleteIcon from "@/assets/images/x_close.png";
 
 import {BUTTONCOLORS} from "@/constants/componentsSettings";
-import modalState from "@/features/modal/services/modalState";
+import {useModalStore} from "@/stores/modalStore";
+
+const modalStore = useModalStore();
 
 const cancelModalBtn = () => {
-  modalState.switchModalVisibility(false, null);
+  modalStore.switchModalVisibility(false, null);
 };
 
 const validationModalAccept = async () => {
-  modalState.validationActions();
+  modalStore.validationActions();
 
-  modalState.switchModalVisibility(false, null);
+  modalStore.switchModalVisibility(false, null);
   return;
 };
 
 const setTeamName = (value: any) => {
-  modalState.setTeamInputValue(value);
+  modalStore.setTeamNameInputValue(value);
 };
 
 const setTeamDescription = (value: any) => {};

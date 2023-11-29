@@ -6,8 +6,12 @@ import userAvatar from "@/assets/images/avatar_2.png";
 
 import {PropType} from "vue";
 import {UserWithIdType} from "@/models/userWithId.type";
-import modalState from "@/features/modal/services/modalState";
 import {MODALMODE} from "@/constants/modalMode";
+import {useModalStore} from "@/stores/modalStore";
+import {useTeammateStore} from "@/stores/teammateStore";
+
+const modalStore = useModalStore();
+const teammateStore = useTeammateStore();
 
 const props = defineProps({
   user: {
@@ -17,8 +21,9 @@ const props = defineProps({
 });
 
 const UserToBeRemoved = () => {
-  modalState.setTeammateIDAndInformations(props.user.teammateId, `${props.user.firstname} ${props.user.lastname}`);
-  modalState.switchModalVisibility(true, MODALMODE.userDelete);
+  teammateStore.setIdOfTeammateToDelete(props.user.teammateId);
+  modalStore.setTeammateNameToDelete(`${props.user.firstname} ${props.user.lastname}`);
+  modalStore.switchModalVisibility(true, MODALMODE.userDelete);
 };
 </script>
 
@@ -50,4 +55,3 @@ const UserToBeRemoved = () => {
     <section></section>
   </article>
 </template>
-@/constants/modalMode @/constants/modalMode @/features/modal/services/modalState

@@ -3,16 +3,16 @@ import SideBarMenuLink from "@/components/SideBarMenuLink.vue";
 import pencilIcon from "@/assets/images/pencil-regular-24.png";
 import deleteIcon from "@/assets/images/x_close.png";
 import {MODALMODE} from "@/constants/modalMode";
-import modalState from "@/features/modal/services/modalState";
+import {useModalStore} from "@/stores/modalStore";
+
+const modalStore = useModalStore();
 
 const editTeam = () => {
-  modalState.setTeamName(modalState.teamName);
-  modalState.switchModalVisibility(true, MODALMODE.teamEdit);
+  modalStore.switchModalVisibility(true, MODALMODE.teamEdit);
 };
 
 const deleteTeam = () => {
-  modalState.setTeamName(modalState.teamName);
-  modalState.switchModalVisibility(true, MODALMODE.teamDelete);
+  modalStore.switchModalVisibility(true, MODALMODE.teamDelete);
 };
 </script>
 
@@ -30,4 +30,3 @@ const deleteTeam = () => {
       :is-modal-element="true" />
   </section>
 </template>
-@/constants/modalMode @/constants/modalMode @/features/modal/services/modalState

@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import SideBar from "@/global-layouts/SideBar.vue";
 import modalFrame from "@/features/modal/ModalFrame.vue";
-import modalState from "@/features/modal/services/modalState";
+import {useModalStore} from "@/stores/modalStore";
+
+const modalStore = useModalStore();
 </script>
 
 <template>
   <transition name="fade">
-    <modal-frame v-show="modalState.isShowed" />
+    <modal-frame v-show="modalStore.getIsShow" />
   </transition>
   <section class="sidebar-content-container-grid">
     <side-bar>
@@ -43,4 +45,3 @@ import modalState from "@/features/modal/services/modalState";
   opacity: 0;
 }
 </style>
-@/features/modal/services/modalState

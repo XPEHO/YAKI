@@ -2,12 +2,16 @@
 import ButtonTextIcon from "@/components/ButtonTextIcon.vue";
 import ButtonTextSized from "@/components/ButtonTextSized.vue";
 import deleteIcon from "@/assets/images/x_close.png";
-import modalState from "@/features/modal/services/modalState";
 import {MODALMODE} from "@/constants/modalMode";
 import {BUTTONCOLORS} from "@/constants/componentsSettings";
+import {useModalStore} from "@/stores/modalStore";
+import {useTeamStore} from "@/stores/teamStore";
+
+const modalStore = useModalStore();
+const teamStore = useTeamStore();
 
 const defineTitle = () => {
-  switch (modalState.mode) {
+  switch (modalStore.getMode) {
     case MODALMODE.userDelete:
       return "Remove user ?";
     case MODALMODE.teamDelete:
@@ -16,14 +20,14 @@ const defineTitle = () => {
 };
 
 const validationModalAccept = async () => {
-  modalState.validationActions();
+  modalStore.validationActions();
 
-  modalState.switchModalVisibility(false, null);
+  modalStore.switchModalVisibility(false, null);
   return;
 };
 
 const cancelModalBtn = () => {
-  modalState.switchModalVisibility(false, null);
+  modalStore.switchModalVisibility(false, null);
 };
 </script>
 
@@ -32,19 +36,21 @@ const cancelModalBtn = () => {
     <h1 class="modal__container-title">{{ defineTitle() }}</h1>
 
     <p
-      v-if="modalState.mode === MODALMODE.userDelete"
+      v-if="modalStore.getMode === MODALMODE.userDelete"
       class="modal__container-text">
-      Are you sure you want to remove
-      <span class="text__bold"> {{ modalState.temmateName }}</span>
-      From the team
-      <span class="text__bold">{{ modalState.teamName }}</span> ? This action is irreversible !
+      Are you sure you want to remove <br />
+      <span class="text__bold"> {{ modalStore.getTeammateNameToDelete }}</span>
+      From :
+      <span class="text__bold">{{ teamStore.getTeamSelected.teamName }}</span> ? <br />
+      This action is irreversible !
     </p>
 
     <p
-      v-if="modalState.mode === MODALMODE.teamDelete"
+      v-else-if="modalStore.getMode === MODALMODE.teamDelete"
       class="modal__container-text">
-      Are you sure you want to delete <span class="text__bold"> {{ modalState.temmateName }}</span> team ? This action
-      is irreversible !
+      Are you sure you want to delete :
+      <span class="text__bold"> {{ teamStore.getTeamSelected.teamName }}</span> ? <br />
+      This action is irreversible !
     </p>
 
     <div class="modal__location-button">
@@ -53,11 +59,10 @@ const cancelModalBtn = () => {
         :color="BUTTONCOLORS.secondary"
         @click.prevent="cancelModalBtn" />
       <button-text-icon
-        :text="modalState.mode === MODALMODE.userDelete ? 'REMOVE' : 'DELETE'"
+        :text="modalStore.getMode === MODALMODE.userDelete ? 'REMOVE' : 'DELETE'"
         :icon="deleteIcon"
         :color="BUTTONCOLORS.delete"
         @click.prevent="validationModalAccept" />
     </div>
   </section>
 </template>
-@/constants/modalMode @/constants/modalMode @/features/modal/services/modalState

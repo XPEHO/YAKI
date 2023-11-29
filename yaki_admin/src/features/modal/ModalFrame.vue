@@ -1,16 +1,19 @@
 <script setup lang="ts">
 import ModalCreateEditTeam from "@/components/ModalCreateEditTeam.vue";
-import modalState from "@/features/modal/services/modalState";
 import ModalDelete from "@/components/ModalDelete.vue";
 import {MODALMODE} from "@/constants/modalMode";
+import {useModalStore} from "@/stores/modalStore";
+
+const modalStore = useModalStore();
 </script>
 
 <template>
   <section class="modal-background">
     <dialog class="modal-container">
       <modal-create-edit-team
-        v-if="modalState.mode === MODALMODE.teamCreate || modalState.mode === MODALMODE.teamEdit" />
-      <modal-delete v-else-if="modalState.mode === MODALMODE.teamDelete || modalState.mode === MODALMODE.userDelete" />
+        v-if="modalStore.getMode === MODALMODE.teamCreate || modalStore.getMode === MODALMODE.teamEdit" />
+      <modal-delete
+        v-else-if="modalStore.getMode === MODALMODE.teamDelete || modalStore.getMode === MODALMODE.userDelete" />
     </dialog>
   </section>
 </template>
