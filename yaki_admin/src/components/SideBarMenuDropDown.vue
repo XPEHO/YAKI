@@ -7,14 +7,14 @@ import addIcon from "@/assets/images/plus_icon.png";
 import {useTeamStore} from "@/stores/teamStore";
 import {useRoleStore} from "@/stores/roleStore";
 import {onBeforeMount} from "vue";
-import {selectTeamAndFetchTeammates} from "@/features/captain/services/teamList.service";
-import modalState from "@/features/modal/services/modalState";
 import {MODALMODE} from "@/constants/modalMode";
 import router from "@/router/router";
 import {TeamType} from "@/models/team.type";
+import {useModalStore} from "@/stores/modalStore";
 
 const teamStore = useTeamStore();
 const roleStore = useRoleStore();
+const modalStore = useModalStore();
 
 //before mount, fetch teams, select first team from the saved list, get team name, fetch teammates.
 onBeforeMount(async () => {
@@ -22,18 +22,17 @@ onBeforeMount(async () => {
   // automaticaly select first team right after team fetch, and save name
 
   if (teamStore.getTeamList.length > 0) {
-    selectTeamAndFetchTeammates(teamStore.getTeamList[0].id);
+    teamStore.setTeamInfoAndFetchTeammates(teamStore.getTeamList[0]);
   }
 });
 
 // add team button press to open modal
 const onClickAddTeam = () => {
-  modalState.switchModalVisibility(true, MODALMODE.teamCreate);
+  modalStore.switchModalVisibility(true, MODALMODE.teamCreate);
 };
 
 const onClickSelectTeam = (team: TeamType) => {
-  selectTeamAndFetchTeammates(team.id);
-  teamStore.setCaptainsIdWithinTeam(team.captainsId);
+  teamStore.setTeamInfoAndFetchTeammates(team);
   router.push({path: "/captain/manage-team"});
 };
 
@@ -156,4 +155,3 @@ const props = defineProps({
   }
 }
 </style>
-@/constants/modalMode @/constants/modalMode @/features/modal/services/modalState

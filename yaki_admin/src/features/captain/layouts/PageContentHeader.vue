@@ -8,8 +8,10 @@ import modalTeamEditDelete from "@/components/ModalTeamEditDelete.vue";
 import teamImage from "@/assets/images/splashscreen.svg";
 import addIcon from "@/assets/images/plus_icon.png";
 import dotIcon from "@/assets/images/dots-vertical-rounded-regular-24.png";
-import modalState from "@/features/modal/services/modalState";
 import {onMounted, onUnmounted, ref} from "vue";
+import {useTeamStore} from "@/stores/teamStore";
+
+const teamStore = useTeamStore();
 
 const isModalVisible = ref(false);
 const switchEditModalVisibility = () => {
@@ -48,7 +50,7 @@ onUnmounted(() => {
             :src="teamImage"
             alt="" />
         </figure>
-        <h1>{{ modalState.teamName }}</h1>
+        <h1>{{ teamStore.getTeamSelected.teamName }}</h1>
       </section>
 
       <section>
@@ -141,4 +143,3 @@ onUnmounted(() => {
   }
 }
 </style>
-@/constants/modalMode @/constants/modalMode @/features/modal/services/modalState

@@ -1,6 +1,6 @@
 /**
  * Regroup the current possible modal mode, which will determin modal content to display and behavior.
- * The mode will be determined as argument of switchModalVisibility function. (see modalState.ts)
+ * The mode will be determined as argument of switchModalVisibility function. (see modalStore.ts)
  *
  * Current modal mode :
  *
