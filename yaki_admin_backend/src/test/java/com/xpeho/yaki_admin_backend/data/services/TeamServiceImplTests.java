@@ -61,6 +61,7 @@ class TeamServiceImplTests {
         team2 = new TeamModel(2, captains, "Team Yakoi", 1, entityLogModel.getId(), "description team Yakoi");
         teamE1 = new TeamEntity(team1.getId(), List.of(1), "Team Yaki", 1, "description team Yaki");
         teamE2 = new TeamEntity(team2.getId(), List.of(1), "Team Yakoi", 1, "description team Yakoi");
+
     }
 
     @Test
@@ -102,8 +103,7 @@ class TeamServiceImplTests {
         //given
         int idUsed = 3;
         TeamModel replacedModel = new TeamModel(idUsed, this.captains, "Team Céou", 1, entityLogModel.getId(), "Team Céou asks: where is it?");
-        TeamModel expectedModel = new TeamModel(
-                idUsed, team2.getCaptains(), team2.getTeamName(), 1, entityLogModel.getId(), "Team Céou asks: where is it?");
+        TeamModel expectedModel = new TeamModel(idUsed, team2.getCaptains(), team2.getTeamName(), 1, entityLogModel.getId(), "description team Yakoi");
         given(captainService.findAllById(List.of(1))).willReturn(captains);
         given(teamJpaRepository.save(expectedModel)).willReturn(expectedModel);
         given(teamJpaRepository.findById(idUsed)).willReturn(Optional.of(replacedModel));
@@ -143,11 +143,11 @@ class TeamServiceImplTests {
         //given
         List<TeamModel> teamList = Arrays.asList(
                 team2, team1,
-                new TeamModel(3, captains, "Team 1", 1, entityLogModel.getId(), "description team 1")
+                new TeamModel(3, captains, "Team Yakoi", 1, entityLogModel.getId(), "description team Yakoi")
         );
         List<TeamEntity> teamEList = Arrays.asList(
                 teamE2, teamE1,
-                new TeamEntity(3, List.of(1), "Team 1", 1, "description team 1")
+                new TeamEntity(3, List.of(1), "Team Yakoi", 1, "description team Yakoi")
         );
 
         given(captainsTeamsService.findAllTeamsByCaptain(1)).willReturn(teamList);
@@ -170,7 +170,6 @@ class TeamServiceImplTests {
 
         // Create valid CaptainModel instances with associated UserModel
         List<CaptainModel> captains = new ArrayList<>();
-
         CaptainModel captain1 = new CaptainModel(1, 1, 1, 1);
         captain1.setUser(user);  // Associate the mock UserModel
         captains.add(captain1);
@@ -180,8 +179,8 @@ class TeamServiceImplTests {
         captains.add(captain2);
 
         List<TeamModel> teamModels = new ArrayList<>();
-        teamModels.add(new TeamModel(1,captains, "Team 1", 1, 1, "description team 1"));
-        teamModels.add(new TeamModel(2,captains, "Team 2", 1, 2, "description team 2"));
+        teamModels.add(new TeamModel(1, captains, "Team Yaki", 1, 1, "description team Yaki"));
+        teamModels.add(new TeamModel(2, captains, "Team Yakoi", 1, 2, "description team Yakoi"));
         Mockito.when(teamJpaRepository.findAllByCustomerIdAndActifIsTrue(customerId)).thenReturn(teamModels);
 
         // Create expectedTeamEntities with CaptainEntityWithDetails instances
@@ -189,12 +188,13 @@ class TeamServiceImplTests {
         List<CaptainEntityWithDetails> expectedCaptains = new ArrayList<>();
         expectedCaptains.add(new CaptainEntityWithDetails(1, "Hautmont", "Robert"));
         expectedCaptains.add(new CaptainEntityWithDetails(2, "Basmont", "Rubert"));
-        expectedTeamEntities.add(new TeamEntityWithCaptainsDetails(1, "Team 1", 1, expectedCaptains));
-        expectedTeamEntities.add(new TeamEntityWithCaptainsDetails(2, "Team 2", 1, expectedCaptains));
+        expectedTeamEntities.add(new TeamEntityWithCaptainsDetails(1, "Team Yaki", 1, expectedCaptains));
+        expectedTeamEntities.add(new TeamEntityWithCaptainsDetails(2, "Team Yakoi", 1, expectedCaptains));
 
         List<TeamEntityWithCaptainsDetails> actualTeamEntities = teamService.findAllTeamByCustomerId(customerId);
         //then
         assertEquals(expectedTeamEntities, actualTeamEntities);
     }
+
 }
 

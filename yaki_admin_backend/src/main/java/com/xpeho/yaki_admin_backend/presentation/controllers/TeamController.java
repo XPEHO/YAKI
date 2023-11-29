@@ -24,8 +24,7 @@ public class TeamController {
 
         return teamService.createTeam(teamEntity);
     }
-
-
+    
     @GetMapping("{id}")
     public TeamEntity getTeam(@PathVariable int id) {
         return teamService.getTeam(id);
