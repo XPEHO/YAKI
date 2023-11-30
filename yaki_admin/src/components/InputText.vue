@@ -4,6 +4,10 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  inputValue: {
+    type: String,
+    required: true,
+  },
 });
 
 const emit = defineEmits(["inputValue"]);
@@ -20,6 +24,7 @@ const onInputUse = (e: Event) => {
       class="input__text input__no-border-background"
       type="text"
       placeholder=""
+      :value="inputValue"
       id="input-text" />
     <label for="input-text">{{ props.labelText }}</label>
   </section>

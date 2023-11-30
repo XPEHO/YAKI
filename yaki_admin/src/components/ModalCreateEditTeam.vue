@@ -64,12 +64,13 @@ const setTeamDescription = (value: any) => {};
         <form class="popup__input-container">
           <input-text
             label-text="Team name"
+            :inputValue="modalStore.getTeamNameInputValue"
             @inputValue="setTeamName" />
 
           <input-text-area
             label-text="'Team description'"
+            :inputValue="''"
             @inputValue="setTeamDescription" />
-
           <section class="container__buttons--popup">
             <button-text-sized
               text="Cancel"

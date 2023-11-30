@@ -4,6 +4,10 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  inputValue: {
+    type: String,
+    required: true,
+  },
 });
 
 const emit = defineEmits(["inputValue"]);
@@ -17,6 +21,7 @@ const onInputUse = (e: Event) => {
   <section class="input__border-background input__container-flex textarea__container-height-pos input__label-style">
     <textarea
       @input="onInputUse"
+      :value="inputValue"
       class="input__text input__no-border-background"
       placeholder=""
       id="textarea"
