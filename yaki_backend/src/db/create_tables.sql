@@ -391,3 +391,6 @@ ADD COLUMN IF NOT EXISTS declaration_is_latest BOOLEAN DEFAULT FALSE;
 
 ALTER TABLE public.user
 ADD COLUMN IF NOT EXISTS user_avatar_choice INTEGER;
+
+ALTER TABLE public.team 
+ADD COLUMN IF NOT EXISTS team_description TEXT DEFAULT '';

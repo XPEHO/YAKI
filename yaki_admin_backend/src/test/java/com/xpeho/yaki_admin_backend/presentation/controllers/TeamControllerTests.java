@@ -30,9 +30,11 @@ import static org.mockito.BDDMockito.given;
 @ExtendWith(MockitoExtension.class)
 class TeamControllerTests {
     private final ObjectMapper objectMapper = new ObjectMapper();
-    private final TeamEntity team1 = new TeamEntity(1, Arrays.asList(1), "teamFeliz",1);
-    private final TeamEntity team2 = new TeamEntity(2, Arrays.asList(1), "teamHappy",1);
-    private final List<TeamEntity> teams = Arrays.asList(team1, team2);
+    private final TeamEntity TeamFeliz = new TeamEntity(1, List.of(1), "TeamFeliz", 1,
+            "description team Feliz");
+    private final TeamEntity TeamHappy = new TeamEntity(2, List.of(1), "TeamHappy", 1,
+            "description team Happy");
+    private final List<TeamEntity> teams = Arrays.asList(TeamFeliz, TeamHappy);
     private MockMvc mvc;
 
     @Mock
@@ -54,9 +56,8 @@ class TeamControllerTests {
     //testing the teamController.getTeam(id) method
     @Test
     void mustGetATeam() throws Exception {
-
         //given
-        given(teamService.getTeam(2)).willReturn(team2);
+        given(teamService.getTeam(2)).willReturn(TeamHappy);
 
         //when
         MockHttpServletResponse response = mvc.perform(
@@ -66,7 +67,7 @@ class TeamControllerTests {
 
         //then
         assertThat(response.getStatus(), is(equalTo(HttpStatus.OK.value())));
-        String expectedResponse = objectMapper.writeValueAsString(team2);
+        String expectedResponse = objectMapper.writeValueAsString(TeamHappy);
         assertThat(response.getContentAsString(), is(equalTo(
                 expectedResponse)));
     }
@@ -93,19 +94,19 @@ class TeamControllerTests {
     void mustCreateANewTeam() throws Exception {
 
         //given
-        given(teamService.createTeam(team2)).willReturn(team2);
+        given(teamService.createTeam(TeamHappy)).willReturn(TeamHappy);
 
         //when
         MockHttpServletResponse response = mvc.perform(
                         MockMvcRequestBuilders.post("/teams")
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content(objectMapper.writeValueAsString(team2)))
+                                .content(objectMapper.writeValueAsString(TeamHappy)))
                 .andReturn().getResponse();
 
         //then
         assertThat(response.getStatus(), is(equalTo(HttpStatus.OK.value())));
         JsonNode returnedResponse = objectMapper.readTree(response.getContentAsString());
-        assertThat(returnedResponse.get("teamName").asText(), is(equalTo("teamHappy")));
+        assertThat(returnedResponse.get("teamName").asText(), is(equalTo("TeamHappy")));
     }
 
     //testing the teamController.deleteTeam() method
@@ -113,7 +114,7 @@ class TeamControllerTests {
     void mustDeleteATeam() throws Exception {
 
         //given
-        given(teamService.deleteById(2)).willReturn(team2);
+        given(teamService.deleteById(2)).willReturn(TeamHappy);
 
         //when
         MockHttpServletResponse response = mvc.perform(
@@ -123,7 +124,7 @@ class TeamControllerTests {
 
         //then
         assertThat(response.getStatus(), is(equalTo(HttpStatus.OK.value())));
-        String expectedResponse = objectMapper.writeValueAsString(team2);
+        String expectedResponse = objectMapper.writeValueAsString(TeamHappy);
         assertThat(response.getContentAsString(), is(equalTo(
                 expectedResponse)));
     }
@@ -132,16 +133,16 @@ class TeamControllerTests {
     @Test
     void mustPutATeam() throws Exception {
         TeamEntity team3 = new TeamEntity(
-                2, team1.captainsId(), team1.teamName(),team1.customerId());
+                2, TeamFeliz.captainsId(), TeamFeliz.teamName(), TeamFeliz.customerId(), TeamFeliz.description());
 
         //given
-        given(teamService.saveOrUpdate(team1, 2)).willReturn(team3);
+        given(teamService.saveOrUpdate(TeamFeliz, 2)).willReturn(team3);
 
         //when
         MockHttpServletResponse response = mvc.perform(
                         MockMvcRequestBuilders.put("/teams/2")
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content(objectMapper.writeValueAsString(team1)))
+                                .content(objectMapper.writeValueAsString(TeamFeliz)))
                 .andReturn().getResponse();
 
         //then

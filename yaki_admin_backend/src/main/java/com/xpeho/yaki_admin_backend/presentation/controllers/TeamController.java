@@ -1,6 +1,5 @@
 package com.xpeho.yaki_admin_backend.presentation.controllers;
 
-import com.xpeho.yaki_admin_backend.domain.entities.CaptainEntity;
 import com.xpeho.yaki_admin_backend.domain.entities.TeamEntity;
 import com.xpeho.yaki_admin_backend.domain.entities.TeamEntityWithCaptainsDetails;
 import com.xpeho.yaki_admin_backend.domain.services.TeamService;
@@ -25,11 +24,9 @@ public class TeamController {
 
         return teamService.createTeam(teamEntity);
     }
-
-
+    
     @GetMapping("{id}")
     public TeamEntity getTeam(@PathVariable int id) {
-
         return teamService.getTeam(id);
     }
 
@@ -52,8 +49,9 @@ public class TeamController {
     public List<TeamEntityWithCaptainsDetails> findAllTeamByCustomerId(@PathVariable int id) {
         return teamService.findAllTeamByCustomerId(id);
     }
+
     @PutMapping("/disabled/{id}")
-    public TeamEntity disabled(@PathVariable int id){
+    public TeamEntity disabled(@PathVariable int id) {
         return teamService.disabled(id);
     }
 }

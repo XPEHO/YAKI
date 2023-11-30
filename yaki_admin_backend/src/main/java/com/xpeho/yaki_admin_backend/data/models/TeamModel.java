@@ -31,32 +31,38 @@ public class TeamModel {
     @Column(name = "team_entity_log_id")
     private int entityLogId;
 
+    @Column(name = "team_description", nullable = true)
+    private String description;
+
+
+    public TeamModel(List<CaptainModel> captainsModel, String teamName, int customerId, int entityLogId, String description) {
+        this.captains = captainsModel;
+        this.teamName = teamName;
+        this.actif = true;
+        this.customerId = customerId;
+        this.entityLogId = entityLogId;
+        this.description = description;
+    }
+
+    public TeamModel(int id, List<CaptainModel> captainsModel, String teamName, int customerId, int entityLogId, String description) {
+        this.id = id;
+        this.captains = captainsModel;
+        this.teamName = teamName;
+        this.actif = true;
+        this.customerId = customerId;
+        this.entityLogId = entityLogId;
+        this.description = description;
+    }
+
+    public TeamModel() {
+    }
+
     public int getCustomerId() {
         return customerId;
     }
 
     public void setCustomerId(int customerId) {
         this.customerId = customerId;
-    }
-
-    public TeamModel(List<CaptainModel> captainsModel, String teamName, int customerId,int entityLogId) {
-        this.captains= captainsModel;
-        this.teamName = teamName;
-        this.actif = true;
-        this.customerId = customerId;
-        this.entityLogId = entityLogId;
-    }
-
-    public TeamModel() {
-    }
-
-    public TeamModel(int id, List<CaptainModel> captainsModel, String teamName, int customerId,int entityLogId) {
-        this.teamName = teamName;
-        this.id = id;
-        this.captains = captainsModel;
-        this.actif = true;
-        this.customerId = customerId;
-        this.entityLogId = entityLogId;
     }
 
     public boolean isActif() {
@@ -99,6 +105,14 @@ public class TeamModel {
         this.entityLogId = entityLogId;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -111,4 +125,6 @@ public class TeamModel {
     public int hashCode() {
         return Objects.hash(id, captains, teamName);
     }
+
+
 }
