@@ -61,7 +61,8 @@ export default {
 
         <button-primary
           text="SIGN IN"
-          @click.prevent="login" />
+          @click.prevent="login"
+          type="submit" />
         <buttonSecondary
           text="FORGOTTEN PASSWORD?"
           @click.prevent="forgottenPassword" />
