@@ -7,9 +7,9 @@ import ButtonTextSized from "./ButtonTextSized.vue";
 import pencilIcon from "@/assets/images/pencil-regular-24.png";
 import deleteIcon from "@/assets/images/x_close.png";
 
-import {BUTTONCOLORS} from "@/constants/componentsSettings";
-import {useModalStore} from "@/stores/modalStore";
-import {ref} from "vue";
+import { BUTTONCOLORS } from "@/constants/componentsSettings";
+import { useModalStore } from "@/stores/modalStore";
+import { ref } from "vue";
 
 const modalStore = useModalStore();
 const isMissingTeamNameError = ref(false);
@@ -46,7 +46,9 @@ const setTeamName = (value: any) => {
   modalStore.setTeamNameInputValue(value);
 };
 
-const setTeamDescription = (value: any) => {};
+const setTeamDescription = (value: any) => {
+  modalStore.setTeamDescriptionInputValue(value);
+};
 </script>
 
 <template>
@@ -57,9 +59,7 @@ const setTeamDescription = (value: any) => {};
     <section class="popup__content">
       <section class="popup__avatar-section">
         <figure>
-          <img
-            src="../assets/images/avatar_2.png"
-            alt="avatar" />
+          <img src="../assets/images/avatar_2.png" alt="avatar" />
         </figure>
 
         <aside class="container__buttons">
@@ -78,8 +78,13 @@ const setTeamDescription = (value: any) => {};
 
           <input-text-area
             label-text="'Team description'"
+<<<<<<< HEAD
             :inputValue="''"
             @emittedInput="setTeamDescription" />
+=======
+            :inputValue="modalStore.getTeamDescriptionInputValue"
+            @inputValue="setTeamDescription" />
+>>>>>>> 7bb7023f (feat(description_team_front): fetch description)
           <section class="container__buttons--popup">
             <button-text-sized
               text="Cancel"

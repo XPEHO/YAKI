@@ -1,15 +1,16 @@
-import {MODALMODE} from "@/constants/modalMode";
-import {defineStore} from "pinia";
-import {useTeamStore} from "@/stores/teamStore";
-import {useTeammateStore} from "@/stores/teammateStore";
-import {useRoleStore} from "@/stores/roleStore";
-import {TeamType} from "@/models/team.type";
+import { MODALMODE } from "@/constants/modalMode";
+import { defineStore } from "pinia";
+import { useTeamStore } from "@/stores/teamStore";
+import { useTeammateStore } from "@/stores/teammateStore";
+import { useRoleStore } from "@/stores/roleStore";
+import { TeamType } from "@/models/team.type";
 
 interface State {
   isShow: boolean;
   mode: MODALMODE;
   teamNameInputValue: string;
   teammateNameToDelete: string;
+  teamDescriptionInputValue: string;
 }
 
 export const useModalStore = defineStore("userModalStore", {
@@ -18,12 +19,15 @@ export const useModalStore = defineStore("userModalStore", {
     mode: "" as MODALMODE,
     teamNameInputValue: "" as string,
     teammateNameToDelete: "" as string,
+    teamDescriptionInputValue: "" as string,
   }),
   getters: {
     getIsShow: (state: State) => state.isShow,
     getMode: (state: State) => state.mode,
     getTeamNameInputValue: (state: State) => state.teamNameInputValue,
     getTeammateNameToDelete: (state: State) => state.teammateNameToDelete,
+    getTeamDescriptionInputValue: (state: State) =>
+      state.teamDescriptionInputValue,
   },
   actions: {
     setIsShow(isShow: boolean) {
@@ -37,6 +41,9 @@ export const useModalStore = defineStore("userModalStore", {
     },
     setTeammateNameToDelete(teammateName: string) {
       this.teammateNameToDelete = teammateName;
+    },
+    setTeamDescriptionInputValue(teamDescriptionInputValue: string) {
+      this.teamDescriptionInputValue = teamDescriptionInputValue;
     },
 
     /**
@@ -115,7 +122,8 @@ export const useModalStore = defineStore("userModalStore", {
         teamStore.getTeamSelected.id,
         teamStore.getTeamSelected.captainsId[0],
         this.getTeamNameInputValue,
-        null
+        null,
+        teamStore.getTeamSelected.description
       );
 
       teamStore.setTeamSelected(editedTeam);
@@ -141,7 +149,9 @@ export const useModalStore = defineStore("userModalStore", {
      */
     async handleUserDelete() {
       const teammateStore = useTeammateStore();
-      await teammateStore.deleteTeammateFromTeam(teammateStore.getIdOfTeammateToDelete);
+      await teammateStore.deleteTeammateFromTeam(
+        teammateStore.getIdOfTeammateToDelete
+      );
     },
 
     /**
