@@ -31,7 +31,7 @@ public class TeamModel {
     @Column(name = "team_entity_log_id")
     private int entityLogId;
 
-    @Column(name = "description", nullable = true)
+    @Column(name = "team_description", nullable = true)
     private String description;
 
 
