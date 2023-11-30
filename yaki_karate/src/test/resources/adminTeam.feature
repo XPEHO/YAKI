@@ -8,6 +8,7 @@ Feature: Team
     When method post
     Then status 200
     And def token = 'Bearer ' + response.token
+
   Scenario: 01 Create users
     Given path '/users'
     And header Authorization = token
@@ -61,7 +62,7 @@ Feature: Team
 
     Given path '/teams'
     And header Authorization = token
-    And request { captainsId : [2], teamName: "adTeam_team_name", customerId: 2, description: "description adTeam_team_name" }
+    And request { captainsId : [2], teamName: "team_rocket", customerId: 2, description: "description team_rocket" }
     When method post
     Then status 200
 
