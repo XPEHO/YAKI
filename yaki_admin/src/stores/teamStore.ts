@@ -58,10 +58,11 @@ export const useTeamStore = defineStore("teamStore", {
      */
     async setTeamListOfACaptain(captainsId: number[]) {
       this.teamList = [];
-      for (const captainId of captainsId) {
-        const a = await teamService.getAllTeamsWithinCaptain(captainId);
-        this.teamList = this.getTeamList.concat(a);
-      }
+      const promises: Promise<TeamType[]>[] = captainsId.map((captainId) =>
+        teamService.getAllTeamsWithinCaptain(captainId)
+      );
+      const teams = await Promise.all(promises);
+      this.teamList = [...teams.flat()];
     },
 
     // add a selected user to a team
