@@ -38,7 +38,8 @@ const switchPasswordVisibility = () => {
     <label for="input-pw"> {{ labelText }}</label>
     <button
       @click.prevent="switchPasswordVisibility"
-      class="input__password-btn-switch">
+      class="input__password-btn-switch"
+      type="button">
       <figure>
         <img
           :src="isPasswordVisible ? eyesClosedIcon : eyesOpenedIcon"

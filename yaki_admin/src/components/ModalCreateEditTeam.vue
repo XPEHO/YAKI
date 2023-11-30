@@ -50,7 +50,7 @@ const setTeamDescription = (value: any) => {};
       </section>
 
       <section class="popup__content">
-        <div class="popup__input-container">
+        <form class="popup__input-container">
           <input-text
             label-text="Team name"
             @inputValue="setTeamName" />
@@ -63,14 +63,15 @@ const setTeamDescription = (value: any) => {};
             <button-text-sized
               text="Cancel"
               :color="BUTTONCOLORS.secondary"
-              @click.prevent="cancelModalBtn" />
-
+              @click.prevent="cancelModalBtn"
+              type="button" />
             <button-text-sized
               text="Modify"
               :color="BUTTONCOLORS.primary"
-              @click.prevent="validationModalAccept" />
+              @click.prevent="validationModalAccept"
+              type="submit" />
           </section>
-        </div>
+        </form>
       </section>
     </section>
   </section>
