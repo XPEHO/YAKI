@@ -90,7 +90,7 @@ const props = defineProps({
           @click.prevent="() => onClickSelectTeam(team)" />
       </div>
       <div v-else>
-        <p class="no-teams">No team available</p>
+        <p class="no-teams unselectabla-text">No team available</p>
       </div>
     </section>
   </section>

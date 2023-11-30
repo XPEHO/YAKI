@@ -32,9 +32,7 @@ const onAcceptPress = async () => {
   const result = await modalStore.validationActions();
   modalStore.switchModalVisibility(false, null);
 
-  const current = router.currentRoute.value;
-  const currentPath = current.path;
-
+  const currentPath = router.currentRoute.value.path;
   if (modalStore.getMode === MODALMODE.teamCreate && isATeamType(result)) {
     if (currentPath === `/captain/team/${TEAMPARAMS.empty}` || currentPath === `/captain/team/${TEAMPARAMS.deleted}`) {
       router.push({path: "/captain/manage-team"});

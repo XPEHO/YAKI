@@ -14,7 +14,7 @@ const props = defineProps({
   },
 });
 
-const classList = ["text-icon__container", "drop-down__menu_item--height-padding-color"];
+const classList = ["text-icon__container", "drop-down__menu_item--height-padding-color unselectabla-text"];
 </script>
 
 <template>

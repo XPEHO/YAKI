@@ -7,7 +7,7 @@ import modalState from "@/features/modal/services/modalState";
 import type {UserWithIdType} from "@/models/userWithId.type";
 import {usersService} from "@/services/users.service";
 
-import PageContentLayout from "@/global-layouts/PageContentLayout.vue";
+import PageContentLayout from "@/layouts/PageContentLayout.vue";
 import UserInvitationCard from "@/features/invitation/components/InvitationCard.vue";
 import SideBarButton from "@/features/shared/components/SideBarButton.vue";
 import HeaderContentPage from "@/features/shared/components/HeaderContentPage.vue";

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import PageLayout from "@/global-layouts/PageLayout.vue";
+import PageLayout from "@/layouts/PageLayout.vue";
 import SideBarCustomer from "@/features/customer/components/SideBarCustomer.vue";
 import {RouterView} from "vue-router";
 </script>
