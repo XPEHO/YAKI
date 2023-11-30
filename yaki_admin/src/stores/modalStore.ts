@@ -62,8 +62,6 @@ export const useModalStore = defineStore("userModalStore", {
         this.setMode(mode!);
       }
       this.setIsShow(setVisible);
-
-      console.log(this.getTeamNameInputValue);
     },
 
     /**
@@ -105,12 +103,13 @@ export const useModalStore = defineStore("userModalStore", {
      */
     async handleTeamEdit() {
       const teamStore = useTeamStore();
-      await teamStore.updateTeam(
+      const editedTeam = await teamStore.updateTeam(
         teamStore.getTeamSelected.id,
         teamStore.getTeamSelected.captainsId[0],
         this.getTeamNameInputValue,
         null
       );
+      teamStore.setTeamSelected(editedTeam);
       await this.refreshTeamList();
       this.setTeamNameInputValue("");
     },

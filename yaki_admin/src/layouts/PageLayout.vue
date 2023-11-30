@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import SideBar from "@/global-layouts/SideBar.vue";
+import SideBar from "@/layouts/SideBar.vue";
 import modalFrame from "@/features/modal/ModalFrame.vue";
 import {useModalStore} from "@/stores/modalStore";
 

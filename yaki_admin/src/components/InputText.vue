@@ -45,7 +45,7 @@ const classList = [
 
 <style scoped lang="scss">
 .input__error:after {
-  content: "You must provide a team name !";
+  content: "Please provide a name for your team.";
   position: absolute;
   bottom: 6%;
   left: 25px;

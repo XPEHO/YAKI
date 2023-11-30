@@ -28,7 +28,7 @@ const teamParamState = route.params.state;
         class="margin-top-3">
         <p class="p_secondary p_common">You have no team left</p>
         <p class="p_secondary p_common margin-top-1">
-          You can create a new team with the <span>create team</span> option
+          You can create a new team using the <span>create team</span> option
         </p>
       </div>
     </div>
@@ -37,7 +37,7 @@ const teamParamState = route.params.state;
       v-else
       class="no-team-in-list">
       <p class="p_main p_common">You dont have any team</p>
-      <p class="p_secondary p_common margin-top-3">Teams can be created with the <span>create team</span> option</p>
+      <p class="p_secondary p_common margin-top-3">Teams can be created using the <span>create team</span> option</p>
       <figure class="no_team__figure">
         <img
           :src="Tutorial"
@@ -71,7 +71,7 @@ const teamParamState = route.params.state;
 }
 
 .no-team-in-list {
-  max-width: 30rem;
+  max-width: 35rem;
 
   display: flex;
   flex-direction: column;

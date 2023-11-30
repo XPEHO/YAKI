@@ -2,7 +2,7 @@
 import router from "@/router/router";
 import {onBeforeMount} from "vue";
 
-import PageContentLayout from "@/global-layouts/PageContentLayout.vue";
+import PageContentLayout from "@/layouts/PageContentLayout.vue";
 import SideBarButton from "@/features/shared/components/SideBarButton.vue";
 import HeaderContentPage from "@/features/shared/components/HeaderContentPage.vue";
 import UserCard from "@/features/shared/components/UserCard.vue";

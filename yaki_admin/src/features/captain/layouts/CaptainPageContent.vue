@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import PageContentHeader from "@/features/captain/layouts/PageContentHeader.vue";
-import PageContentLayout from "@/global-layouts/PageContentLayout.vue";
+import PageContentLayout from "@/layouts/PageContentLayout.vue";
 import UserInfoCard from "@/components/UserInfoCard.vue";
 import {useTeammateStore} from "@/stores/teammateStore";
 
