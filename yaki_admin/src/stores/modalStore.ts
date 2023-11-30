@@ -48,12 +48,13 @@ export const useModalStore = defineStore("userModalStore", {
      * @param mode : MODALMODE to change modal content | null if modal is going to be hidden, this is not changing the previewsly set mode
      * @param teamName : Optionnal parameter, set teamName for edit name purpose, else ignore.
      */
-    switchModalVisibility(setVisible: boolean, mode: MODALMODE | null, teamName?: string) {
+    switchModalVisibility(setVisible: boolean, mode: MODALMODE | null) {
+      const teamStore = useTeamStore();
       // get current teamName and set it as input value for edition
-      if (teamName && mode === MODALMODE.teamEdit) {
-        this.setTeamNameInputValue(teamName);
+      if (teamStore.getTeamSelected.teamName && mode === MODALMODE.teamEdit) {
+        this.setTeamNameInputValue(teamStore.getTeamSelected.teamName);
       }
-      if (mode === MODALMODE.teamCreate) {
+      if (mode === MODALMODE.teamCreate || mode === MODALMODE.teamDelete) {
         this.setTeamNameInputValue("");
       }
 
@@ -61,6 +62,8 @@ export const useModalStore = defineStore("userModalStore", {
         this.setMode(mode!);
       }
       this.setIsShow(setVisible);
+
+      console.log(this.getTeamNameInputValue);
     },
 
     /**
@@ -94,6 +97,7 @@ export const useModalStore = defineStore("userModalStore", {
       teamStore.setTeamInfoAndFetchTeammates(createdTeam);
       await this.refreshTeamList();
 
+      this.setTeamNameInputValue("");
       return createdTeam;
     },
     /**
@@ -107,8 +111,8 @@ export const useModalStore = defineStore("userModalStore", {
         this.getTeamNameInputValue,
         null
       );
-      this.setTeamNameInputValue("");
       await this.refreshTeamList();
+      this.setTeamNameInputValue("");
     },
     /**
      * Delete the team.
