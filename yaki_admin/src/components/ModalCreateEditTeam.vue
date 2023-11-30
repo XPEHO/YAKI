@@ -13,14 +13,22 @@ import {isATeamType} from "@/models/team.type";
 import {MODALMODE} from "@/constants/modalMode";
 import router from "@/router/router";
 import {TEAMPARAMS} from "@/constants/pathParam";
+import {ref} from "vue";
 
 const modalStore = useModalStore();
+const isMissingTeamNameError = ref(false);
 
 const onCancelPress = () => {
   modalStore.switchModalVisibility(false, null);
+  isMissingTeamNameError.value = false;
 };
 
 const onAcceptPress = async () => {
+  if (modalStore.getTeamNameInputValue === "") {
+    isMissingTeamNameError.value = true;
+    return;
+  }
+
   const result = await modalStore.validationActions();
   modalStore.switchModalVisibility(false, null);
 
@@ -35,6 +43,9 @@ const onAcceptPress = async () => {
 };
 
 const setTeamName = (value: any) => {
+  if (value !== "") {
+    isMissingTeamNameError.value = false;
+  }
   modalStore.setTeamNameInputValue(value);
 };
 
@@ -65,6 +76,7 @@ const setTeamDescription = (value: any) => {};
           <input-text
             label-text="Team name"
             :inputValue="modalStore.getTeamNameInputValue"
+            :isError="isMissingTeamNameError"
             @inputValue="setTeamName" />
 
           <input-text-area
