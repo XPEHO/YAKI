@@ -72,7 +72,7 @@ export const useModalStore = defineStore("userModalStore", {
       switch (this.getMode) {
         case MODALMODE.teamCreate:
           await this.handleTeamCreate();
-          break;
+          return;
         case MODALMODE.teamEdit:
           await this.handleTeamEdit();
           break;
@@ -87,7 +87,11 @@ export const useModalStore = defineStore("userModalStore", {
     },
     async handleTeamCreate() {
       const teamStore = useTeamStore();
-      await teamStore.createTeam(this.getTeamNameInputValue);
+      const createdTeam = await teamStore.createTeam(this.getTeamNameInputValue);
+
+      teamStore.setTeamInfoAndFetchTeammates(createdTeam);
+
+      await this.refreshTeamList();
     },
     async handleTeamEdit() {
       const teamStore = useTeamStore();

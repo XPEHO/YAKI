@@ -75,13 +75,13 @@ export const useTeamStore = defineStore("teamStore", {
      * Create a team, assign to the connected captain and his customer
      * @param teamName name of the team
      */
-    async createTeam(teamName: string): Promise<void> {
+    async createTeam(teamName: string): Promise<TeamType> {
       const selectedRoleStore = useSelectedRoleStore();
       const customerId = selectedRoleStore.getCustomerIdSelected;
       const captainId = selectedRoleStore.getCaptainIdSelected;
 
       //the back handle if the captainId is null or not
-      await teamService.createTeam(captainId, teamName, customerId);
+      return await teamService.createTeam(captainId, teamName, customerId);
     },
 
     /**
