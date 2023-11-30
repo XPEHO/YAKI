@@ -3,6 +3,7 @@ import {defineStore} from "pinia";
 import {useTeamStore} from "@/stores/teamStore";
 import {useTeammateStore} from "@/stores/teammateStore";
 import {useRoleStore} from "@/stores/roleStore";
+import {TeamType} from "@/models/team.type";
 
 interface State {
   isShow: boolean;
@@ -44,7 +45,7 @@ export const useModalStore = defineStore("userModalStore", {
      * If true, must set modal mode, MODALMODE enum must be used.
      * Set null if modal is going to be hidden
      * @param setVisible : boolean to display or not the modal
-     * @param mode : MODALMODE to change modal content | null if modal is going to be hidden
+     * @param mode : MODALMODE to change modal content | null if modal is going to be hidden, this is not changing the previewsly set mode
      * @param teamName : Optionnal parameter, set teamName for edit name purpose, else ignore.
      */
     switchModalVisibility(setVisible: boolean, mode: MODALMODE | null, teamName?: string) {
@@ -68,31 +69,36 @@ export const useModalStore = defineStore("userModalStore", {
      * See MODALMODE enum for more information
      * Called inside ModalFrame.vue.
      */
-    async validationActions() {
+    async validationActions(): Promise<void | TeamType> {
       switch (this.getMode) {
         case MODALMODE.teamCreate:
-          await this.handleTeamCreate();
-          return;
+          return await this.handleTeamCreate();
         case MODALMODE.teamEdit:
           await this.handleTeamEdit();
-          break;
+          return;
         case MODALMODE.teamDelete:
-          await this.handleTeamDelete();
-          break;
+          return await this.handleTeamDelete();
         case MODALMODE.userDelete:
           await this.handleUserDelete();
           return;
       }
-      this.refreshTeamList();
     },
-    async handleTeamCreate() {
+    /**
+     * Create a team, and select it as the current team (setTeamInfoAndFetchTeammates).
+     * Refresh the team list.
+     * @return createdTeam: TeamType
+     */
+    async handleTeamCreate(): Promise<TeamType> {
       const teamStore = useTeamStore();
       const createdTeam = await teamStore.createTeam(this.getTeamNameInputValue);
-
       teamStore.setTeamInfoAndFetchTeammates(createdTeam);
-
       await this.refreshTeamList();
+
+      return createdTeam;
     },
+    /**
+     * Edit the team name. Reset the input value afterwards.
+     */
     async handleTeamEdit() {
       const teamStore = useTeamStore();
       await teamStore.updateTeam(
@@ -102,41 +108,40 @@ export const useModalStore = defineStore("userModalStore", {
         null
       );
       this.setTeamNameInputValue("");
+      await this.refreshTeamList();
     },
-    async handleTeamDelete() {
+    /**
+     * Delete the team.
+     * Refresh the team list.
+     * @return deletedTeam: TeamType
+     */
+    async handleTeamDelete(): Promise<TeamType> {
       const teamStore = useTeamStore();
-      await teamStore.deleteTeam(teamStore.getTeamSelected.id);
+      const deletedTeam = await teamStore.deleteTeam(teamStore.getTeamSelected.id);
+      await this.refreshTeamList();
+
+      return deletedTeam;
     },
+    /**
+     * Delete a user from a team.
+     * Refresh the teammate list.
+     */
     async handleUserDelete() {
       const teammateStore = useTeammateStore();
       await teammateStore.deleteTeammateFromTeam(teammateStore.getIdOfTeammateToDelete);
-      this.refreshTeammatesList();
-      return;
     },
 
-    /**
-     * refetch the teammate list of a given team.
-     * Get the selected team id from the teamStore
-     */
-    refreshTeammatesList() {
-      const teamStore = useTeamStore();
-      const teammateStore = useTeammateStore();
-      setTimeout(() => {
-        teammateStore.setListOfTeammatesWithinTeam(teamStore.getTeamSelected.id);
-      }, 125);
-    },
     /**
      * Refetch the team list of a given captain.
      * Get all the captainsID from the roleStore the current connected user have.
      *
      * Invoked in modalStore createNewteam / editTeamName / deleteTeam
      */
-    refreshTeamList() {
+    async refreshTeamList() {
       const teamStore = useTeamStore();
       const roleStore = useRoleStore();
-      setTimeout(() => {
-        teamStore.setTeamListOfACaptain(roleStore.getCaptainsId);
-      }, 125);
+
+      await teamStore.setTeamListOfACaptain(roleStore.getCaptainsId);
     },
   }, //actions end
 });

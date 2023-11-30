@@ -6,6 +6,9 @@ import {MODALMODE} from "@/constants/modalMode";
 import {BUTTONCOLORS} from "@/constants/componentsSettings";
 import {useModalStore} from "@/stores/modalStore";
 import {useTeamStore} from "@/stores/teamStore";
+import {isATeamType} from "@/models/team.type";
+import router from "@/router/router";
+import {TEAMPARAMS} from "@/constants/pathParam";
 
 const modalStore = useModalStore();
 const teamStore = useTeamStore();
@@ -19,14 +22,16 @@ const defineTitle = () => {
   }
 };
 
-const validationModalAccept = async () => {
-  modalStore.validationActions();
-
+const onDeletePress = async () => {
+  const result = await modalStore.validationActions();
   modalStore.switchModalVisibility(false, null);
-  return;
+
+  if (isATeamType(result)) {
+    router.push({path: `/captain/team/${TEAMPARAMS.deleted}`});
+  }
 };
 
-const cancelModalBtn = () => {
+const onCancelPress = () => {
   modalStore.switchModalVisibility(false, null);
 };
 </script>
@@ -57,12 +62,12 @@ const cancelModalBtn = () => {
       <button-text-sized
         text="Cancel"
         :color="BUTTONCOLORS.secondary"
-        @click.prevent="cancelModalBtn" />
+        @click.prevent="onCancelPress" />
       <button-text-icon
         :text="modalStore.getMode === MODALMODE.userDelete ? 'REMOVE' : 'DELETE'"
         :icon="deleteIcon"
         :color="BUTTONCOLORS.delete"
-        @click.prevent="validationModalAccept" />
+        @click.prevent="onDeletePress" />
     </div>
   </section>
 </template>

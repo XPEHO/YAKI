@@ -5,7 +5,6 @@ import arrowIcon from "@/assets/images/chevron-down-regular-24.png";
 import addIcon from "@/assets/images/plus_icon.png";
 
 import {useTeamStore} from "@/stores/teamStore";
-import {useRoleStore} from "@/stores/roleStore";
 import {onBeforeMount} from "vue";
 import {MODALMODE} from "@/constants/modalMode";
 import router from "@/router/router";
@@ -13,15 +12,12 @@ import {TeamType} from "@/models/team.type";
 import {useModalStore} from "@/stores/modalStore";
 
 const teamStore = useTeamStore();
-const roleStore = useRoleStore();
 const modalStore = useModalStore();
 
 //before mount, fetch teams, select first team from the saved list, get team name, fetch teammates.
 onBeforeMount(async () => {
-  await teamStore.setTeamListOfACaptain(roleStore.getCaptainsId);
-  // automaticaly select first team right after team fetch, and save name
-
-  if (teamStore.getTeamList.length > 0) {
+  // automaticaly select first team right after team fetch on component mount ( right after the first connexion)
+  if (teamStore.getTeamList && teamStore.getTeamList.length > 0) {
     teamStore.setTeamInfoAndFetchTeammates(teamStore.getTeamList[0]);
   }
 });
@@ -94,7 +90,7 @@ const props = defineProps({
           @click.prevent="() => onClickSelectTeam(team)" />
       </div>
       <div v-else>
-        <p class="no-teams">There is no team yet</p>
+        <p class="no-teams">No team available</p>
       </div>
     </section>
   </section>

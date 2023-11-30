@@ -6,10 +6,14 @@ import UserInvitationPageContent from "@/features/invitation/layouts/UserInvitat
 
 import CaptainPage from "@/features/captain/CaptainPage.vue";
 import CaptainPageContent from "@/features/captain/layouts/CaptainPageContent.vue";
+import PageContentNoteam from "@/components/PageContentNoTeam.vue";
 
 import CustomerPage from "@/features/customer/CustomerPage.vue";
 import CustomerPageContentTeamList from "@/features/customer/layouts/CustomerPageContentTeamList.vue";
 import CustomerPageContentCaptainList from "@/features/customer/layouts/CustomerPageContentCaptainList.vue";
+import {useTeamStore} from "@/stores/teamStore";
+import {useRoleStore} from "@/stores/roleStore";
+import {TEAMPARAMS} from "@/constants/pathParam";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -25,8 +29,7 @@ const router = createRouter({
       path: "/registerConfirm",
       name: "registerConfirm",
       component: RegistrationConfirmationPage,
-      props: (route) => ({ token: route.query.token }),
-      
+      props: (route) => ({token: route.query.token}),
     },
     {
       path: "/captain",
@@ -37,10 +40,27 @@ const router = createRouter({
         {
           path: "manage-team",
           component: CaptainPageContent,
+          beforeEnter: async (to, from, next) => {
+            const teamStore = useTeamStore();
+            const roleStore = useRoleStore();
+
+            if (teamStore.getIsTeamListSetOnLoggin === false) {
+              await teamStore.setTeamListOfACaptain(roleStore.getCaptainsId);
+            }
+            if (teamStore.getTeamList.length === 0) {
+              next(`/captain/team/${TEAMPARAMS.empty}`);
+            } else {
+              next();
+            }
+          },
         },
         {
           path: "invitation",
           component: UserInvitationPageContent,
+        },
+        {
+          path: "team/:state",
+          component: PageContentNoteam,
         },
       ],
     },
@@ -65,7 +85,7 @@ const router = createRouter({
         {
           path: "admin-invitation",
           component: UserInvitationPageContent,
-        }
+        },
       ],
     },
   ],

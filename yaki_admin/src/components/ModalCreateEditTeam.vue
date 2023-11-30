@@ -9,18 +9,29 @@ import deleteIcon from "@/assets/images/x_close.png";
 
 import {BUTTONCOLORS} from "@/constants/componentsSettings";
 import {useModalStore} from "@/stores/modalStore";
+import {isATeamType} from "@/models/team.type";
+import {MODALMODE} from "@/constants/modalMode";
+import router from "@/router/router";
+import {TEAMPARAMS} from "@/constants/pathParam";
 
 const modalStore = useModalStore();
 
-const cancelModalBtn = () => {
+const onCancelPress = () => {
   modalStore.switchModalVisibility(false, null);
 };
 
-const validationModalAccept = async () => {
-  modalStore.validationActions();
-
+const onAcceptPress = async () => {
+  const result = await modalStore.validationActions();
   modalStore.switchModalVisibility(false, null);
-  return;
+
+  const current = router.currentRoute.value;
+  const currentPath = current.path;
+
+  if (modalStore.getMode === MODALMODE.teamCreate && isATeamType(result)) {
+    if (currentPath === `/captain/team/${TEAMPARAMS.empty}` || currentPath === `/captain/team/${TEAMPARAMS.deleted}`) {
+      router.push({path: "/captain/manage-team"});
+    }
+  }
 };
 
 const setTeamName = (value: any) => {
@@ -63,12 +74,12 @@ const setTeamDescription = (value: any) => {};
             <button-text-sized
               text="Cancel"
               :color="BUTTONCOLORS.secondary"
-              @click.prevent="cancelModalBtn"
+              @click.prevent="onCancelPress"
               type="button" />
             <button-text-sized
               text="Modify"
               :color="BUTTONCOLORS.primary"
-              @click.prevent="validationModalAccept"
+              @click.prevent="onAcceptPress"
               type="submit" />
           </section>
         </form>

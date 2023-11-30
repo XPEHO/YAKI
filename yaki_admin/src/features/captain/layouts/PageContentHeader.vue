@@ -82,7 +82,7 @@ onUnmounted(() => {
   flex-direction: column;
   gap: 16px;
 
-  padding-block-end: 24px;
+  padding-block: 44px 24px;
   padding-inline: 40px;
 
   figure {
