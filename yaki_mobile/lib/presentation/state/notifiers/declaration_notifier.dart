@@ -17,23 +17,29 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
   DeclarationNotifier({
     required this.declarationRepository,
     required this.teamRepository,
-  }) : super(DeclarationStatus());
+  }) : super(DeclarationStatus()) {
+    getLatestDeclaration();
+  }
 
   /// Invoked at authentication "sign in" button press.
-  Future<bool> getLatestDeclaration() async {
+  Future<void> getLatestDeclaration() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final int? userId = prefs.getInt("userId");
 
     if (userId == null) {
-      state = state.copyWith(isAlreadyDeclared: false);
-      return false;
+      state = state.copyWith(
+        latestDeclarationStatus: LatestDeclarationStatus.notDeclared,
+      );
+    } else {
+      final bool isAlreadyDeclared =
+          await declarationRepository.getLatestDeclaration(userId);
+
+      state = state.copyWith(
+        latestDeclarationStatus: isAlreadyDeclared
+            ? LatestDeclarationStatus.declared
+            : LatestDeclarationStatus.notDeclared,
+      );
     }
-
-    final bool isAlreadyDeclared =
-        await declarationRepository.getLatestDeclaration(userId);
-
-    state = state.copyWith(isAlreadyDeclared: isAlreadyDeclared);
-    return isAlreadyDeclared;
   }
 
   /// Function invoked in declaration page when a locationCard is selected.
@@ -135,7 +141,9 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
     );
     // SEND TO REPOSITORY
     await declarationRepository.createFullDay(newDeclaration);
-    state = state.copyWith(isAlreadyDeclared: true);
+    state = state.copyWith(
+      latestDeclarationStatus: LatestDeclarationStatus.declared,
+    );
   }
 
   /// Create declaration for the morning by setting
@@ -182,7 +190,9 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
       newDeclarationAfternoon,
     ];
     await declarationRepository.createHalfDay(declarations);
-    state = state.copyWith(isAlreadyDeclared: true);
+    state = state.copyWith(
+      latestDeclarationStatus: LatestDeclarationStatus.declared,
+    );
   }
 
   // ABSENCE declaration creation.
@@ -217,7 +227,7 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
     state = state.copyWith(
       dateAbsenceStart: dateStart,
       dateAbsenceEnd: dateEnd,
-      isAlreadyDeclared: true,
+      latestDeclarationStatus: LatestDeclarationStatus.declared,
     );
   }
 
