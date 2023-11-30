@@ -30,8 +30,10 @@ import static org.mockito.BDDMockito.given;
 @ExtendWith(MockitoExtension.class)
 class TeamControllerTests {
     private final ObjectMapper objectMapper = new ObjectMapper();
-    private final TeamEntity TeamFeliz = new TeamEntity(1, List.of(1), "TeamFeliz", 1, "description team Feliz");
-    private final TeamEntity TeamHappy = new TeamEntity(2, List.of(1), "TeamHappy", 1, "description team Happy");
+    private final TeamEntity TeamFeliz = new TeamEntity(1, List.of(1), "TeamFeliz", 1,
+            "description team Feliz");
+    private final TeamEntity TeamHappy = new TeamEntity(2, List.of(1), "TeamHappy", 1,
+            "description team Happy");
     private final List<TeamEntity> teams = Arrays.asList(TeamFeliz, TeamHappy);
     private MockMvc mvc;
 

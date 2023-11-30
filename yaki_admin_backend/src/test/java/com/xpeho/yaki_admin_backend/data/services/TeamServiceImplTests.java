@@ -102,8 +102,10 @@ class TeamServiceImplTests {
 
         //given
         int idUsed = 3;
-        TeamModel replacedModel = new TeamModel(idUsed, this.captains, "Team Céou", 1, entityLogModel.getId(), "Team Céou asks: where is it?");
-        TeamModel expectedModel = new TeamModel(idUsed, team2.getCaptains(), team2.getTeamName(), 1, entityLogModel.getId(), "description team Yakoi");
+        TeamModel replacedModel = new TeamModel(idUsed, this.captains, "Team Céou", 1, entityLogModel.getId(),
+                "Team Céou asks: where is it?");
+        TeamModel expectedModel = new TeamModel(idUsed, team2.getCaptains(), team2.getTeamName(), 1, entityLogModel.getId(),
+                "description team Yakoi");
         given(captainService.findAllById(List.of(1))).willReturn(captains);
         given(teamJpaRepository.save(expectedModel)).willReturn(expectedModel);
         given(teamJpaRepository.findById(idUsed)).willReturn(Optional.of(replacedModel));
@@ -125,7 +127,8 @@ class TeamServiceImplTests {
 
         //given
         int deletedId = 1;
-        TeamModel deletedModel = new TeamModel(deletedId, this.captains, "team Cékoi", 1, entityLogModel.getId(), "Cékoi is a team that asks a lot of questions");
+        TeamModel deletedModel = new TeamModel(deletedId, this.captains, "team Cékoi", 1, entityLogModel.getId(),
+                "Cékoi is a team that asks a lot of questions");
         willDoNothing().given(teamJpaRepository).deleteById(deletedId);
         given(teamJpaRepository.findById(deletedId)).willReturn(Optional.of(deletedModel));
 
