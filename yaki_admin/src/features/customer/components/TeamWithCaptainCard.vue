@@ -22,7 +22,7 @@ const props = defineProps({
 });
 
 const acceptFunc = async () => {
-  await teamStore.updateTeam(props.teamContent.id, teamStore.getCaptainIdToBeAssign, modalState.teamInputValue, null);
+  await teamStore.updateTeam(props.teamContent.id, teamStore.getCaptainIdToBeAssign, modalState.teamInputValue, null, null);
   isEdit.value = !isEdit.value;
   await teamStore.setTeamsFromCustomer();
 };
