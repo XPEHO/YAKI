@@ -18,6 +18,12 @@ const switchEditModalVisibility = () => {
   isModalVisible.value = !isModalVisible.value;
 };
 
+/**
+ * Get the modal & dotButton HtmlElement.
+ * Check if the user is clicking outside of the modal or the dotButton.
+ * If so, switch isModalVisible ref to close the modal.
+ * @param event MouseClickEvent
+ */
 const onClickOutsideCloseModal = (event: any) => {
   const modal = document.querySelector(".modal-edit-delete__container");
   const dotButton = document.querySelector(".button-icon-selector");

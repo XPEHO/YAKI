@@ -1,12 +1,12 @@
 import {createRouter, createWebHistory} from "vue-router";
 import {useAuthStore} from "@/stores/authStore";
 import PageLogin from "@/features/login/pages/PageLogin.vue";
-import RegistrationConfirmationPage from "@/features/registrationConfirmation/RegistrationConfirmationPage.vue";
 import UserInvitationPageContent from "@/features/invitation/layouts/UserInvitationPageContent.vue";
 
-import CaptainPage from "@/features/captain/CaptainPage.vue";
+//import CaptainPage from "@/features/captain/CaptainPage.vue";
 import CaptainPageContent from "@/features/captain/layouts/CaptainPageContent.vue";
 import PageContentNoteam from "@/components/PageContentNoTeam.vue";
+import PageGeneralLayout from "@/layouts/PageGeneralLayout.vue";
 
 import CustomerPage from "@/features/customer/CustomerPage.vue";
 import CustomerPageContentTeamList from "@/features/customer/layouts/CustomerPageContentTeamList.vue";
@@ -25,15 +25,9 @@ const router = createRouter({
       meta: {transition: "slide-left"},
     },
     {
-      path: "/registerConfirm",
-      name: "registerConfirm",
-      component: RegistrationConfirmationPage,
-      props: (route) => ({token: route.query.token}),
-    },
-    {
-      path: "/captain",
-      name: "Captain",
-      component: CaptainPage,
+      path: "/dashboard",
+      name: "dashboard",
+      component: PageGeneralLayout,
       meta: {transition: "slide-right"},
       children: [
         {
@@ -47,7 +41,7 @@ const router = createRouter({
               await teamStore.setTeamListOfACaptain(roleStore.getCaptainsId);
             }
             if (teamStore.getTeamList.length === 0) {
-              next(`/captain/team/${TEAMPARAMS.empty}`);
+              next(`/dashboard/team/${TEAMPARAMS.empty}`);
             } else {
               next();
             }

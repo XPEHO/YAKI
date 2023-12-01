@@ -1,18 +1,55 @@
 <script setup lang="ts">
+import router from "@/router/router";
 import ModalCreateEditTeam from "@/components/ModalCreateEditTeam.vue";
 import ModalDelete from "@/components/ModalDelete.vue";
-import {MODALMODE} from "@/constants/modalMode";
 import {useModalStore} from "@/stores/modalStore";
+import {isATeamType} from "@/models/team.type";
+import {MODALMODE} from "@/constants/modalMode";
+import {TEAMPARAMS} from "@/constants/pathParam";
 
 const modalStore = useModalStore();
+
+const onCancel = () => {
+  modalStore.switchModalVisibility(false, null);
+};
+
+/**
+ * When a modal is validated.
+ * Trigger the onMdodalChoiceValidation method of the modalStore.
+ * Given the result type and modal mode, redirect to the right page.
+ *
+ * * If the current page is team/empty or team/deleted, redirect to /manage-team after a team creation.
+ * * After a team deletion, redirect to team/deleted.
+ *
+ */
+const onAccept = async () => {
+  const result = await modalStore.onModalChoiceValidation();
+  modalStore.switchModalVisibility(false, null);
+
+  if (isATeamType(result)) {
+    const currentPath = router.currentRoute.value.path;
+    if (
+      modalStore.getMode === MODALMODE.teamCreate &&
+      (currentPath === `/dashboard/team/${TEAMPARAMS.empty}` || currentPath === `/dashboard/team/${TEAMPARAMS.deleted}`)
+    ) {
+      router.push({path: "/dashboard/manage-team"});
+    } else if (modalStore.getMode === MODALMODE.teamDelete) {
+      router.push({path: `/dashboard/team/${TEAMPARAMS.deleted}`});
+    }
+  }
+};
 </script>
 
 <template>
   <section class="modal-background">
     <dialog class="modal-container">
       <modal-create-edit-team
+        @on-accept="onAccept"
+        @on-cancel="onCancel"
         v-if="modalStore.getMode === MODALMODE.teamCreate || modalStore.getMode === MODALMODE.teamEdit" />
       <modal-delete
+        @on-accept="onAccept"
+        @on-cancel="onCancel"
         v-else-if="modalStore.getMode === MODALMODE.teamDelete || modalStore.getMode === MODALMODE.userDelete" />
     </dialog>
   </section>
@@ -39,4 +76,3 @@ const modalStore = useModalStore();
   }
 }
 </style>
-../../../constants/modalMode @/constants/modalMode

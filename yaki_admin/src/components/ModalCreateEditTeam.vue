@@ -9,39 +9,38 @@ import deleteIcon from "@/assets/images/x_close.png";
 
 import {BUTTONCOLORS} from "@/constants/componentsSettings";
 import {useModalStore} from "@/stores/modalStore";
-import {isATeamType} from "@/models/team.type";
-import {MODALMODE} from "@/constants/modalMode";
-import router from "@/router/router";
-import {TEAMPARAMS} from "@/constants/pathParam";
 import {ref} from "vue";
 
 const modalStore = useModalStore();
 const isMissingTeamNameError = ref(false);
 
+const emit = defineEmits(["onAccept", "onCancel"]);
+
 const onCancelPress = () => {
-  modalStore.switchModalVisibility(false, null);
+  emit("onCancel");
   isMissingTeamNameError.value = false;
 };
 
+/**
+ * Check if the inputvalue saved in the modalStore is empty.
+ * if it is, set the error to true to display the error message. Preventing the accept action to be executed.
+ * If the input is not empty, execute the accept action (using emit to send the event to the ModalFrame parent component)
+ */
 const onAcceptPress = async () => {
   if (modalStore.getTeamNameInputValue === "") {
     isMissingTeamNameError.value = true;
     return;
   }
-
-  const result = await modalStore.validationActions();
-  modalStore.switchModalVisibility(false, null);
-
-  const currentPath = router.currentRoute.value.path;
-  if (modalStore.getMode === MODALMODE.teamCreate && isATeamType(result)) {
-    if (currentPath === `/captain/team/${TEAMPARAMS.empty}` || currentPath === `/captain/team/${TEAMPARAMS.deleted}`) {
-      router.push({path: "/captain/manage-team"});
-    }
-  }
+  emit("onAccept");
 };
 
+/**
+ * Register the input value in the modalStore.
+ * If the input is not empty and the error is true, set the error to false to remove the error message (the user is typing)
+ * @param value being emitted by the InputText component
+ */
 const setTeamName = (value: any) => {
-  if (value !== "") {
+  if (value !== "" && isMissingTeamNameError.value === true) {
     isMissingTeamNameError.value = false;
   }
   modalStore.setTeamNameInputValue(value);
@@ -75,12 +74,12 @@ const setTeamDescription = (value: any) => {};
             label-text="Team name"
             :inputValue="modalStore.getTeamNameInputValue"
             :isError="isMissingTeamNameError"
-            @inputValue="setTeamName" />
+            @emittedInput="setTeamName" />
 
           <input-text-area
             label-text="'Team description'"
             :inputValue="''"
-            @inputValue="setTeamDescription" />
+            @emittedInput="setTeamDescription" />
           <section class="container__buttons--popup">
             <button-text-sized
               text="Cancel"

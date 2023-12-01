@@ -10,10 +10,10 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["inputValue"]);
+const emit = defineEmits(["emittedInput"]);
 
 const onInputUse = (e: Event) => {
-  emit("inputValue", (e.target as HTMLInputElement).value);
+  emit("emittedInput", (e.target as HTMLInputElement).value);
 };
 </script>
 
