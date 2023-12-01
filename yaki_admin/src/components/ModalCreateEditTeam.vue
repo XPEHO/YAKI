@@ -84,12 +84,8 @@ const setTeamDescription = (value: any) => {
 
           <input-text-area
             label-text="'Team description'"
-            :inputValue="''"
-            @emittedInput="setTeamDescription" />
-
             :inputValue="modalStore.getTeamDescriptionInputValue"
-            :isError="isMissingTeamDescriptionError"
-            @inputValue="setTeamDescription" />
+            @emittedInput="setTeamDescription" />
 
           <section class="container__buttons--popup">
             <button-text-sized
