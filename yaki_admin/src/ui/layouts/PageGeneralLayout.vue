@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import modalFrame from "@/features/modal/ModalFrame.vue";
+import modalFrameView from "@/ui/views/ModalFrameView.vue";
 import {useModalStore} from "@/stores/modalStore";
-import SideBarContent from "@/features/shared/components/SideBarContent.vue";
+import SideBarContent from "@/ui/components/sidebar/SideBarContent.vue";
 
 const modalStore = useModalStore();
 </script>
 
 <template>
   <transition name="fade">
-    <modal-frame v-show="modalStore.getIsShow" />
+    <modal-frame-view v-show="modalStore.getIsShow" />
   </transition>
   <section class="sidebar-content-container-grid">
     <!-- Common sidebar -->

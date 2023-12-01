@@ -53,8 +53,7 @@ export const useTeamStore = defineStore("teamStore", {
     },
 
     /**
-     * Save teamId and team's captainId in teamStore.
-     * Save teamName in the modalStore.
+     * save team info in the store (teamSelected)
      * And trigger the team's teammates fetch.
      * @param team TeamType
      */
