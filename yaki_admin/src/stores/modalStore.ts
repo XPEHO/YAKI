@@ -91,15 +91,19 @@ export const useModalStore = defineStore("userModalStore", {
       }
     },
     /**
-     * Create a team, and select it as the current team (setTeamInfoAndFetchTeammates).
+     * Create a team, and select it as the current team (setTeamSelected).
+     * Reset the teammate list on teamateStore, as a new team do not come with teammates.
+     * (it preventy to do an API call to fetch the teammate list)
      * Refresh the team list.
      * @return createdTeam: TeamType
      */
     async handleTeamCreate(): Promise<TeamType> {
       const teamStore = useTeamStore();
+      const teammateStore = useTeammateStore();
 
       const createdTeam = await teamStore.createTeam(this.getTeamNameInputValue);
-      teamStore.setTeamInfoAndFetchTeammates(createdTeam);
+      teamStore.setTeamSelected(createdTeam);
+      teammateStore.resetTeamatesList();
       await this.refreshTeamList();
 
       this.setTeamNameInputValue("");

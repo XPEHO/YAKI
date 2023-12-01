@@ -8,7 +8,6 @@ import {MODALMODE} from "@/constants/modalMode";
 
 import PageContentLayout from "@/layouts/PageContentLayout.vue";
 import SideBarButton from "@/features/shared/components/SideBarButton.vue";
-import TeamWithCaptainCard from "@/features/customer/components/TeamWithCaptainCard.vue";
 import plusIcon from "@/assets/images/plus.png";
 import {useCaptainStore} from "@/stores/captainStore";
 import {useSelectedRoleStore} from "@/stores/selectedRole";

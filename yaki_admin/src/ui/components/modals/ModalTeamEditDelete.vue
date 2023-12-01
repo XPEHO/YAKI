@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import SideBarMenuLink from "@/components/SideBarMenuLink.vue";
+import SideBarMenuLink from "@/ui/components/sidebar/SideBarMenuLink.vue";
 import pencilIcon from "@/assets/images/pencil-regular-24.png";
 import deleteIcon from "@/assets/images/x_close.png";
 import {MODALMODE} from "@/constants/modalMode";

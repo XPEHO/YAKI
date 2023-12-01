@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import SideBarMenuLink from "@/components/SideBarMenuLink.vue";
-import sideBarMenuDropDown from "@/components/SideBarMenuDropDown.vue";
-import LoggedUserCard from "@/components/LoggedUserCard.vue";
+import SideBarMenuLink from "@/ui/components/sidebar/SideBarMenuLink.vue";
+import sideBarMenuDropDown from "@/ui/components/sidebar/SideBarMenuDropDown.vue";
+import LoggedUserCard from "@/ui/components/LoggedUserCard.vue";
 
 import Banner from "@/assets/images/splashscreen.svg";
 import caseIcon from "@/assets/images/briefcase-regular-24.png";

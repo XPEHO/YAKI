@@ -1,8 +1,8 @@
 <script>
-import buttonPrimary from "@/components/ButtonPrimary.vue";
-import buttonSecondary from "@/components/ButtonSecondary.vue";
-import inputText from "@/components/InputText.vue";
-import inputPassword from "@/components/InputPassword.vue";
+import buttonPrimary from "@/ui/views/components/ButtonPrimary.vue";
+import buttonSecondary from "@/ui/views/components/ButtonSecondary.vue";
+import inputText from "@/ui/views/components/InputText.vue";
+import inputPassword from "@/ui/views/components/InputPassword.vue";
 import {useAuthStore} from "@/stores/authStore";
 
 export default {

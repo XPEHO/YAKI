@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import router from "@/router/router";
-import ModalCreateEditTeam from "@/components/ModalCreateEditTeam.vue";
-import ModalDelete from "@/components/ModalDelete.vue";
+import ModalCreateEditTeam from "@/ui/views/components/ModalCreateEditTeam.vue";
+import ModalDelete from "@/ui/views/components/ModalDelete.vue";
 import {useModalStore} from "@/stores/modalStore";
 import {isATeamType} from "@/models/team.type";
 import {MODALMODE} from "@/constants/modalMode";

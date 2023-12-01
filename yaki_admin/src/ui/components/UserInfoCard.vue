@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import buttonIcon from "@/components/ButtonIcon.vue";
+import buttonIcon from "@/ui/components/buttons/ButtonIcon.vue";
 import pencilIcon from "@/assets/images/pencil-regular-24.png";
 import deleteIcon from "@/assets/images/x_close.png";
 import userAvatar from "@/assets/images/avatar_2.png";

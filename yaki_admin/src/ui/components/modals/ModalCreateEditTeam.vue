@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import ButtonIcon from "@/components/ButtonIcon.vue";
-import InputText from "@/components/InputText.vue";
-import InputTextArea from "@/components/InputTextArea.vue";
-import ButtonTextSized from "./ButtonTextSized.vue";
+import ButtonIcon from "@/ui/components/buttons/ButtonIcon.vue";
+import InputText from "@/ui/components/inputs/InputText.vue";
+import InputTextArea from "@/ui/components/inputs/InputTextArea.vue";
+import ButtonTextSized from "@/ui/components/buttons/ButtonTextSized.vue";
 
 import pencilIcon from "@/assets/images/pencil-regular-24.png";
 import deleteIcon from "@/assets/images/x_close.png";

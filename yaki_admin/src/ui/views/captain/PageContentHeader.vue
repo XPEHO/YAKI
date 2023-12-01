@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import buttonTextIcon from "@/components/ButtonTextIcon.vue";
-import buttonIcon from "@/components/ButtonIcon.vue";
+import buttonTextIcon from "@/ui/components/buttons/ButtonTextIcon.vue";
+import buttonIcon from "@/ui/components/buttons/ButtonIcon.vue";
 
 import router from "@/router/router";
 
-import modalTeamEditDelete from "@/components/ModalTeamEditDelete.vue";
+import modalTeamEditDelete from "@/ui/components/modals/ModalTeamEditDelete.vue";
 import teamImage from "@/assets/images/splashscreen.svg";
 import addIcon from "@/assets/images/plus_icon.png";
 import dotIcon from "@/assets/images/dots-vertical-rounded-regular-24.png";

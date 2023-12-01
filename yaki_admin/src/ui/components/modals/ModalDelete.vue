@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import ButtonTextIcon from "@/components/ButtonTextIcon.vue";
-import ButtonTextSized from "@/components/ButtonTextSized.vue";
+import ButtonTextIcon from "@/ui/views/components/buttons/ButtonTextIcon.vue";
+import ButtonTextSized from "@/ui/views/components/buttons/ButtonTextSized.vue";
 import deleteIcon from "@/assets/images/x_close.png";
 
 import {BUTTONCOLORS} from "@/constants/componentsSettings";
