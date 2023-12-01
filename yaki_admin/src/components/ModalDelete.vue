@@ -2,13 +2,12 @@
 import ButtonTextIcon from "@/components/ButtonTextIcon.vue";
 import ButtonTextSized from "@/components/ButtonTextSized.vue";
 import deleteIcon from "@/assets/images/x_close.png";
-import {MODALMODE} from "@/constants/modalMode";
+
 import {BUTTONCOLORS} from "@/constants/componentsSettings";
+import {MODALMODE} from "@/constants/modalMode";
+
 import {useModalStore} from "@/stores/modalStore";
 import {useTeamStore} from "@/stores/teamStore";
-import {isATeamType} from "@/models/team.type";
-import router from "@/router/router";
-import {TEAMPARAMS} from "@/constants/pathParam";
 
 const modalStore = useModalStore();
 const teamStore = useTeamStore();
@@ -22,17 +21,14 @@ const defineTitle = () => {
   }
 };
 
-const onDeletePress = async () => {
-  const result = await modalStore.validationActions();
-  modalStore.switchModalVisibility(false, null);
-
-  if (isATeamType(result)) {
-    router.push({path: `/captain/team/${TEAMPARAMS.deleted}`});
-  }
-};
+const emit = defineEmits(["onAccept", "onCancel"]);
 
 const onCancelPress = () => {
-  modalStore.switchModalVisibility(false, null);
+  emit("onCancel");
+};
+
+const onDeletePress = async () => {
+  emit("onAccept");
 };
 </script>
 

@@ -5,7 +5,7 @@ import {useSelectedRoleStore} from "@/stores/selectedRole";
 import {useTeamStore} from "@/stores/teamStore";
 import {useTeammateStore} from "@/stores/teammateStore";
 
-const captainPageRoute = "/captain/invitation";
+const captainPageRoute = "/dashboard/invitation";
 const customerPageRoute = "/customer/invitation";
 const customeraddAdminPageRoute = "/customer/admin-invitation";
 

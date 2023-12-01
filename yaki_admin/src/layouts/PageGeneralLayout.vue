@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import SideBar from "@/layouts/SideBar.vue";
 import modalFrame from "@/features/modal/ModalFrame.vue";
 import {useModalStore} from "@/stores/modalStore";
+import SideBarContent from "@/features/shared/components/SideBarContent.vue";
 
 const modalStore = useModalStore();
 </script>
@@ -11,11 +11,11 @@ const modalStore = useModalStore();
     <modal-frame v-show="modalStore.getIsShow" />
   </transition>
   <section class="sidebar-content-container-grid">
-    <side-bar>
-      <slot name="sidebarContent"></slot>
-    </side-bar>
+    <!-- Common sidebar -->
+    <side-bar-content />
+    <!-- Content of the page -->
     <section class="page-content">
-      <slot name="pageContent"></slot>
+      <router-view />
     </section>
   </section>
 </template>

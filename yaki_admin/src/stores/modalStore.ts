@@ -8,22 +8,22 @@ import {TeamType} from "@/models/team.type";
 interface State {
   isShow: boolean;
   mode: MODALMODE;
-  teammateNameToDelete: string;
   teamNameInputValue: string;
+  teammateNameToDelete: string;
 }
 
 export const useModalStore = defineStore("userModalStore", {
   state: () => ({
     isShow: false as boolean,
     mode: "" as MODALMODE,
-    teammateNameToDelete: "" as string,
     teamNameInputValue: "" as string,
+    teammateNameToDelete: "" as string,
   }),
   getters: {
     getIsShow: (state: State) => state.isShow,
     getMode: (state: State) => state.mode,
-    getTeammateNameToDelete: (state: State) => state.teammateNameToDelete,
     getTeamNameInputValue: (state: State) => state.teamNameInputValue,
+    getTeammateNameToDelete: (state: State) => state.teammateNameToDelete,
   },
   actions: {
     setIsShow(isShow: boolean) {
@@ -32,11 +32,11 @@ export const useModalStore = defineStore("userModalStore", {
     setMode(mode: MODALMODE) {
       this.mode = mode;
     },
-    setTeammateNameToDelete(teammateName: string) {
-      this.teammateNameToDelete = teammateName;
-    },
     setTeamNameInputValue(teamNameInputValue: string) {
       this.teamNameInputValue = teamNameInputValue;
+    },
+    setTeammateNameToDelete(teammateName: string) {
+      this.teammateNameToDelete = teammateName;
     },
 
     /**
@@ -65,12 +65,18 @@ export const useModalStore = defineStore("userModalStore", {
     },
 
     /**
-     * Modal management
-     * Trigger corresponding methods at modal validation depending on the current modal mode
+     * Modal action management :
+     * Trigger corresponding methods depending on the current modal mode set when invoking switchModalVisibility.
      * See MODALMODE enum for more information
-     * Called inside ModalFrame.vue.
+     *
+     * Actions :
+     *
+     * * teamCreate : create a team
+     * * teamEdit : edit a team informations
+     * * teamDelete : delete a team from the logged captain's team list
+     * * userDelete : delete a user from a team
      */
-    async validationActions(): Promise<void | TeamType> {
+    async onModalChoiceValidation(): Promise<void | TeamType> {
       switch (this.getMode) {
         case MODALMODE.teamCreate:
           return await this.handleTeamCreate();
@@ -91,6 +97,7 @@ export const useModalStore = defineStore("userModalStore", {
      */
     async handleTeamCreate(): Promise<TeamType> {
       const teamStore = useTeamStore();
+
       const createdTeam = await teamStore.createTeam(this.getTeamNameInputValue);
       teamStore.setTeamInfoAndFetchTeammates(createdTeam);
       await this.refreshTeamList();
@@ -103,12 +110,14 @@ export const useModalStore = defineStore("userModalStore", {
      */
     async handleTeamEdit() {
       const teamStore = useTeamStore();
+
       const editedTeam = await teamStore.updateTeam(
         teamStore.getTeamSelected.id,
         teamStore.getTeamSelected.captainsId[0],
         this.getTeamNameInputValue,
         null
       );
+
       teamStore.setTeamSelected(editedTeam);
       await this.refreshTeamList();
       this.setTeamNameInputValue("");
@@ -120,6 +129,7 @@ export const useModalStore = defineStore("userModalStore", {
      */
     async handleTeamDelete(): Promise<TeamType> {
       const teamStore = useTeamStore();
+
       const deletedTeam = await teamStore.deleteTeam(teamStore.getTeamSelected.id);
       await this.refreshTeamList();
 

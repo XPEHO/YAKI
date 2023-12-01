@@ -29,7 +29,7 @@ const onClickAddTeam = () => {
 
 const onClickSelectTeam = (team: TeamType) => {
   teamStore.setTeamInfoAndFetchTeammates(team);
-  router.push({path: "/captain/manage-team"});
+  router.push({path: "/dashboard/manage-team"});
 };
 
 const props = defineProps({

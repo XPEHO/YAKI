@@ -53,11 +53,11 @@ export default {
       <form>
         <input-text
           :labelText="usernamePlaceholder"
-          @inputValue="onInputLogin" />
+          @emittedInput="onInputLogin" />
 
         <input-password
           :labelText="passwordPlaceholder"
-          @inputValue="onInputPassword" />
+          @emittedInput="onInputPassword" />
 
         <button-primary
           text="SIGN IN"
