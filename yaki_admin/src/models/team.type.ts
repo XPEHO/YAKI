@@ -4,6 +4,7 @@ export type TeamType = {
   customerId: number;
   captainsId: number[];
   captains: CaptainDetails[];
+  teamDescription: string | null;
 };
 
 export function isATeamType(obj: any): obj is TeamType {
@@ -13,7 +14,8 @@ export function isATeamType(obj: any): obj is TeamType {
     typeof obj.teamName === "string" &&
     typeof obj.customerId === "number" &&
     Array.isArray(obj.captainsId) &&
-    obj.captainsId.every((id: number) => typeof id === "number")
+    obj.captainsId.every((id: number) => typeof id === "number") &&
+    typeof obj.teamDescription === "string"
   );
 }
 
@@ -27,4 +29,5 @@ export type TeamTypeOut = {
   captainsId: (number | null)[];
   teamName: string | null;
   customerId: number | null;
+  teamDescription: string | null;
 };

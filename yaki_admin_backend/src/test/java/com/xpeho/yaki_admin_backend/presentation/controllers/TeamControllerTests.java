@@ -133,7 +133,7 @@ class TeamControllerTests {
     @Test
     void mustPutATeam() throws Exception {
         TeamEntity team3 = new TeamEntity(
-                2, TeamFeliz.captainsId(), TeamFeliz.teamName(), TeamFeliz.customerId(), TeamFeliz.description());
+                2, TeamFeliz.captainsId(), TeamFeliz.teamName(), TeamFeliz.customerId(), TeamFeliz.teamDescription());
 
         //given
         given(teamService.saveOrUpdate(TeamFeliz, 2)).willReturn(team3);

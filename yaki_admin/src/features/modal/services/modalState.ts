@@ -1,8 +1,8 @@
-import {reactive} from "vue";
-import {useTeamStore} from "@/stores/teamStore.js";
-import {MODALMODE} from "@/constants/modalMode";
-import {useTeammateStore} from "@/stores/teammateStore";
-import {useRoleStore} from "@/stores/roleStore";
+import { reactive } from "vue";
+import { useTeamStore } from "@/stores/teamStore.js";
+import { MODALMODE } from "@/constants/modalMode";
+import { useTeammateStore } from "@/stores/teammateStore";
+import { useRoleStore } from "@/stores/roleStore";
 
 // DEPRECIATED REMOVE WHEN CUSTOMER IS MADE
 //==================================================================================================
@@ -12,16 +12,24 @@ const modalState = reactive({
   mode: "" as MODALMODE,
   teamInputValue: "" as string,
   teamName: "" as string,
+  teamDescription: "" as string,
 
   defaultButtonValue: "Select a captain" as string,
   dropDownButtonText: "Select a captain" as string,
   dropDownSelectedCaptainId: null as number | null,
 
-  switchModalVisibility(setVisible: boolean, mode: MODALMODE | null, teamName?: string) {
+  switchModalVisibility(
+    setVisible: boolean,
+    mode: MODALMODE | null,
+    teamName?: string
+  ) {
     if (teamName && mode === MODALMODE.teamEdit) {
       this.setTeamInputValue(teamName);
     }
-    if (mode === MODALMODE.teamCreate || mode === MODALMODE.teamCreateCustomer) {
+    if (
+      mode === MODALMODE.teamCreate ||
+      mode === MODALMODE.teamCreateCustomer
+    ) {
       this.setTeamInputValue("");
     }
 
@@ -84,7 +92,7 @@ const modalState = reactive({
 
   async createNewteam() {
     const teamStore = useTeamStore();
-    await teamStore.createTeam(this.teamInputValue);
+    await teamStore.createTeam(this.teamName, this.teamDescription);
     this.refreshTeamList();
   },
 
@@ -94,7 +102,8 @@ const modalState = reactive({
       teamStore.getTeamSelected.id,
       teamStore.getTeamSelected.captainsId[0],
       this.teamInputValue,
-      null
+      null,
+      this.teamInputValue
     );
     this.refreshTeamList();
     //reset value
@@ -114,7 +123,9 @@ const modalState = reactive({
 
   async deleteUserFromTeam() {
     const teammateStore = useTeammateStore();
-    await teammateStore.deleteTeammateFromTeam(teammateStore.getIdOfTeammateToDelete);
+    await teammateStore.deleteTeammateFromTeam(
+      teammateStore.getIdOfTeammateToDelete
+    );
     this.refreshTeammatesList();
   },
 
@@ -143,7 +154,11 @@ const modalState = reactive({
 
   async createNewTeamWithOptionalCaptain() {
     const teamStore = useTeamStore();
-    teamStore.createTeamOptionalAssignCaptain(this.teamInputValue, teamStore.getCaptainIdToBeAssign);
+    teamStore.createTeamOptionalAssignCaptain(
+      this.teamName,
+      teamStore.getCaptainIdToBeAssign,
+      this.teamDescription
+    );
     this.refreshTeamListForCustomer();
     //reset values
     teamStore.setCaptainIdToBeAssign(null);

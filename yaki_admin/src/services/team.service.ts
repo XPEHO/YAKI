@@ -1,7 +1,7 @@
-import type {TeamType, TeamTypeOut} from "../models/team.type";
-import {environmentVar} from "@/envPlaceholder";
-import {authHeader} from "@/utils/authUtils";
-import {handleResponse} from "@/utils/responseUtils";
+import type { TeamType, TeamTypeOut } from "../models/team.type";
+import { environmentVar } from "@/envPlaceholder";
+import { authHeader } from "@/utils/authUtils";
+import { handleResponse } from "@/utils/responseUtils";
 
 const URL: string = environmentVar.baseURL;
 
@@ -34,8 +34,18 @@ export class TeamService {
     return response;
   };
 
-  createTeam = async (cptId: number | null, teamName: string, customerId: number): Promise<TeamType> => {
-    const newTeam: TeamTypeOut = {captainsId: [cptId], teamName: teamName, customerId: customerId};
+  createTeam = async (
+    cptId: number | null,
+    teamName: string,
+    customerId: number,
+    teamDescription: string
+  ): Promise<TeamType> => {
+    const newTeam: TeamTypeOut = {
+      captainsId: [cptId],
+      teamName: teamName,
+      customerId: customerId,
+      teamDescription: teamDescription,
+    };
     const requestOptions = {
       method: "POST",
       body: JSON.stringify(newTeam),
@@ -53,14 +63,21 @@ export class TeamService {
     teamId: number,
     cptId: number | null,
     teamName: string | null,
-    customerId: number | null
+    customerId: number | null,
+    teamDescription: string | null
   ): Promise<TeamType> => {
-    const updatedTeam: TeamTypeOut = {captainsId: [cptId], teamName: teamName, customerId: customerId};
+    const updatedTeam: TeamTypeOut = {
+      captainsId: [cptId],
+      teamName: teamName,
+      customerId: customerId,
+      teamDescription: teamDescription,
+    };
     const requestOptions = {
       method: "PUT",
       body: JSON.stringify(updatedTeam),
       headers: authHeader(`${URL}/teams/${teamId}`),
     };
+
     const res = await fetch(`${URL}/teams/${teamId}`, requestOptions)
       .then(handleResponse)
       .catch((err) => console.warn(err));

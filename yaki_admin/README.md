@@ -4,9 +4,9 @@ Yaki is Working localization declaration app.
 
 Yaki admin frontend is the desktop front-end of the Admin Yaki application, so that :
 
-- the owner can manage his customer
-- the customer can manage his captain
-- the captain can manage their teams and teamMates
+- the owner can manage his customer,
+- the customer can manage his captain,
+- the captain can manage their teams and teamMates.
 
 ## Recommended IDE Setup
 

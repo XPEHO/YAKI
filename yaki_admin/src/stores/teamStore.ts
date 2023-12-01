@@ -1,9 +1,9 @@
-import {TeamType} from "./../models/team.type";
-import {defineStore} from "pinia";
-import {teammateService} from "@/services/teammate.service";
-import {teamService} from "@/services/team.service";
-import {useSelectedRoleStore} from "@/stores/selectedRole";
-import {useTeammateStore} from "@/stores/teammateStore";
+import { TeamType } from "./../models/team.type";
+import { defineStore } from "pinia";
+import { teammateService } from "@/services/teammate.service";
+import { teamService } from "@/services/team.service";
+import { useSelectedRoleStore } from "@/stores/selectedRole";
+import { useTeammateStore } from "@/stores/teammateStore";
 
 interface State {
   teamList: TeamType[];
@@ -86,7 +86,7 @@ export const useTeamStore = defineStore("teamStore", {
     // add a selected user to a team
     async addUserToTeam(userId: number): Promise<void> {
       const teammateStore = useTeammateStore();
-      const data = {teamId: this.getTeamSelected.id, userId: userId};
+      const data = { teamId: this.getTeamSelected.id, userId: userId };
       await teammateService.createTeammate(data);
       await teammateStore.setListOfTeammatesWithinTeam(this.getTeamSelected.id);
     },
@@ -94,15 +94,24 @@ export const useTeamStore = defineStore("teamStore", {
     /**
      * Create a team, assign to the connected captain and his customer
      * @param teamName name of the team
+     * @param teamDescription description of the team
      * @returns created team: TeamType
      */
-    async createTeam(teamName: string): Promise<TeamType> {
+    async createTeam(
+      teamName: string,
+      teamDescription: string
+    ): Promise<TeamType> {
       const selectedRoleStore = useSelectedRoleStore();
       const customerId = selectedRoleStore.getCustomerIdSelected;
       const captainId = selectedRoleStore.getCaptainIdSelected;
 
       //the back handle if the captainId is null or not
-      return await teamService.createTeam(captainId, teamName, customerId);
+      return await teamService.createTeam(
+        captainId,
+        teamName,
+        customerId,
+        teamDescription
+      );
     },
 
     /**
@@ -112,16 +121,23 @@ export const useTeamStore = defineStore("teamStore", {
      * @param cptId captain of the team. This can be null if no captain is assigned.
      * @param teamName New team name. null if the team name is not being updated.
      * @param customerId id of the customer that the team belongs to.
-     *
+     * @param teamDescription New team description. null if the team description is not being updated.
      * @returns updated team: TeamType.
      */
     async updateTeam(
       teamID: number,
       cptId: number | null,
       teamName: string | null,
-      customerId: number | null
+      customerId: number | null,
+      teamDescription: string | null
     ): Promise<TeamType> {
-      return await teamService.updateTeam(teamID, cptId, teamName, customerId);
+      return await teamService.updateTeam(
+        teamID,
+        cptId,
+        teamName,
+        customerId,
+        teamDescription
+      );
     },
 
     /**
@@ -140,11 +156,20 @@ export const useTeamStore = defineStore("teamStore", {
       this.captainIdToBeAssign = captainId;
     },
 
-    async createTeamOptionalAssignCaptain(teamName: string, captainId: number | null): Promise<void> {
+    async createTeamOptionalAssignCaptain(
+      teamName: string,
+      captainId: number | null,
+      teamDescription: string
+    ): Promise<void> {
       const selectedRoleStore = useSelectedRoleStore();
       const customerId = selectedRoleStore.getCustomerIdSelected;
 
-      await teamService.createTeam(captainId, teamName, customerId);
+      await teamService.createTeam(
+        captainId,
+        teamName,
+        customerId,
+        teamDescription
+      );
     },
 
     /**
@@ -154,7 +179,9 @@ export const useTeamStore = defineStore("teamStore", {
     async setTeamsFromCustomer() {
       const selectedRoleStore = useSelectedRoleStore();
 
-      this.teamList = await teamService.getAllTeamsByCustomerId(selectedRoleStore.customerIdSelected);
+      this.teamList = await teamService.getAllTeamsByCustomerId(
+        selectedRoleStore.customerIdSelected
+      );
     },
   },
 });
