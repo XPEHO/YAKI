@@ -105,6 +105,13 @@ export const useTeamStore = defineStore("teamStore", {
       const customerId = selectedRoleStore.getCustomerIdSelected;
       const captainId = selectedRoleStore.getCaptainIdSelected;
 
+      console.log(
+        "teamStore: createTeam",
+        teamName,
+        teamDescription,
+        customerId,
+        captainId
+      );
       //the back handle if the captainId is null or not
       return await teamService.createTeam(
         captainId,
@@ -131,6 +138,15 @@ export const useTeamStore = defineStore("teamStore", {
       customerId: number | null,
       teamDescription: string | null
     ): Promise<TeamType> {
+      console.log(
+        "teamStore: updateTeam",
+        teamID,
+        cptId,
+        teamName,
+        customerId,
+        teamDescription
+      );
+
       return await teamService.updateTeam(
         teamID,
         cptId,

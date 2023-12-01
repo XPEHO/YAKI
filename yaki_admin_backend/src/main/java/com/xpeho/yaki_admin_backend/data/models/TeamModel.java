@@ -32,26 +32,26 @@ public class TeamModel {
     private int entityLogId;
 
     @Column(name = "team_description", nullable = true)
-    private String description;
+    private String teamDescription;
 
 
-    public TeamModel(List<CaptainModel> captainsModel, String teamName, int customerId, int entityLogId, String description) {
+    public TeamModel(List<CaptainModel> captainsModel, String teamName, int customerId, int entityLogId, String teamDescription) {
         this.captains = captainsModel;
         this.teamName = teamName;
         this.actif = true;
         this.customerId = customerId;
         this.entityLogId = entityLogId;
-        this.description = description;
+        this.teamDescription = teamDescription;
     }
 
-    public TeamModel(int id, List<CaptainModel> captainsModel, String teamName, int customerId, int entityLogId, String description) {
+    public TeamModel(int id, List<CaptainModel> captainsModel, String teamName, int customerId, int entityLogId, String teamDescription) {
         this.id = id;
         this.captains = captainsModel;
         this.teamName = teamName;
         this.actif = true;
         this.customerId = customerId;
         this.entityLogId = entityLogId;
-        this.description = description;
+        this.teamDescription = teamDescription;
     }
 
     public TeamModel() {
@@ -105,12 +105,12 @@ public class TeamModel {
         this.entityLogId = entityLogId;
     }
 
-    public String getDescription() {
-        return description;
+    public String getTeamDescription() {
+        return teamDescription;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDescription(String teamDescription) {
+        this.teamDescription = teamDescription;
     }
 
     @Override

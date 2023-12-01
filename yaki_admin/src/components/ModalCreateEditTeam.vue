@@ -45,10 +45,12 @@ const setTeamName = (value: any) => {
   }
   modalStore.setTeamNameInputValue(value);
 };
+console.log("modalCreateEditTeam", setTeamName);
 
 const setTeamDescription = (value: any) => {
   modalStore.setTeamDescriptionInputValue(value);
 };
+console.log("modalCreateEditTeam", setTeamDescription);
 </script>
 
 <template>

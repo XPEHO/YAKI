@@ -38,7 +38,7 @@ export class TeamService {
     cptId: number | null,
     teamName: string,
     customerId: number,
-    teamDescription: string | null
+    teamDescription: string
   ): Promise<TeamType> => {
     const newTeam: TeamTypeOut = {
       captainsId: [cptId],
@@ -54,6 +54,7 @@ export class TeamService {
     const res = await fetch(`${URL}/teams`, requestOptions)
       .then(handleResponse)
       .catch((err) => console.warn(err));
+    console.log("service: createTeam", res);
 
     return res;
   };
@@ -77,9 +78,14 @@ export class TeamService {
       body: JSON.stringify(updatedTeam),
       headers: authHeader(`${URL}/teams/${teamId}`),
     };
+    
+    console.log("service: updateTeam", requestOptions.body);
+
     const res = await fetch(`${URL}/teams/${teamId}`, requestOptions)
       .then(handleResponse)
       .catch((err) => console.warn(err));
+
+    console.log("service: updateTeam", res);
 
     return res;
   };

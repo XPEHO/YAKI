@@ -8,6 +8,7 @@ import { useModalStore } from "@/stores/modalStore";
 const teammateStore = useTeammateStore();
 const modalStore = useModalStore();
 
+console.log("captainPageContent", modalStore.getTeamDescriptionInputValue);
 </script>
 
 <template>

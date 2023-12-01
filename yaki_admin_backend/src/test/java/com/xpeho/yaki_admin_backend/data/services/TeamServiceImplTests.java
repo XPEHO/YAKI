@@ -116,7 +116,7 @@ class TeamServiceImplTests {
         //then
         String returnedResponse = objectMapper.writeValueAsString(teamDto);
         TeamEntity teamE3 = new TeamEntity(
-                idUsed, List.of(1), expectedModel.getTeamName(), 1, expectedModel.getDescription());
+                idUsed, List.of(1), expectedModel.getTeamName(), 1, expectedModel.getTeamDescription());
         String expectedResponse = objectMapper.writeValueAsString(teamE3);
         assertEquals(returnedResponse,
                 expectedResponse);
@@ -138,7 +138,7 @@ class TeamServiceImplTests {
         //then
         assertEquals(teamMateDeleted,
                 new TeamEntity(deletedModel.getId(),
-                        List.of(1), deletedModel.getTeamName(), 1, deletedModel.getDescription()));
+                        List.of(1), deletedModel.getTeamName(), 1, deletedModel.getTeamDescription()));
     }
 
     @Test

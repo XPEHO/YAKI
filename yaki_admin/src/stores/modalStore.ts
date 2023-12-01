@@ -114,6 +114,7 @@ export const useModalStore = defineStore("userModalStore", {
         this.getTeamNameInputValue,
         this.getTeamDescriptionInputValue
       );
+      console.log(createdTeam);
       teamStore.setTeamInfoAndFetchTeammates(createdTeam);
       await this.refreshTeamList();
 
@@ -122,7 +123,7 @@ export const useModalStore = defineStore("userModalStore", {
       return createdTeam;
     },
     /**
-     * Edit the team name. Reset the input value afterwards.
+     * Edit the team name and the team description. Reset the input value afterwards.
      */
     async handleTeamEdit() {
       const teamStore = useTeamStore();
@@ -134,7 +135,7 @@ export const useModalStore = defineStore("userModalStore", {
         null,
         this.getTeamDescriptionInputValue
       );
-
+     
       teamStore.setTeamSelected(editedTeam);
       await this.refreshTeamList();
       this.setTeamNameInputValue("");
