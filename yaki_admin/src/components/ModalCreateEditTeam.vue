@@ -50,9 +50,6 @@ const setTeamName = (value: any) => {
 };
 
 const setTeamDescription = (value: any) => {
-  if (value !== "") {
-    isMissingTeamDescriptionError.value = false;
-  }
   modalStore.setTeamDescriptionInputValue(value);
 };
 </script>
