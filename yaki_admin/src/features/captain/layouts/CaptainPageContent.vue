@@ -2,9 +2,11 @@
 import PageContentHeader from "@/features/captain/layouts/PageContentHeader.vue";
 import PageContentLayout from "@/layouts/PageContentLayout.vue";
 import UserInfoCard from "@/components/UserInfoCard.vue";
-import {useTeammateStore} from "@/stores/teammateStore";
+import { useTeammateStore } from "@/stores/teammateStore";
+import { useModalStore } from "@/stores/modalStore";
 
 const teammateStore = useTeammateStore();
+const modalStore = useModalStore();
 </script>
 
 <template>
@@ -14,8 +16,14 @@ const teammateStore = useTeammateStore();
     </template>
     <template #content>
       <section class="user-list__container">
-        <p>Team description : Coming soon.</p>
-        <p v-if="teammateStore.getTeammateList && teammateStore.getTeammateList.length > 0">Teammates :</p>
+        <p>Team description : {{ modalStore.getTeamDescriptionInputValue }}</p>
+        <p
+          v-if="
+            teammateStore.getTeammateList &&
+            teammateStore.getTeammateList.length > 0
+          ">
+          Teammates :
+        </p>
         <section class="user-list__in-team-container">
           <user-info-card
             v-for="teammate in teammateStore.getTeammateList"
