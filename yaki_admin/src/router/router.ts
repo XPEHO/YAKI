@@ -1,12 +1,12 @@
 import {createRouter, createWebHistory} from "vue-router";
 import {useAuthStore} from "@/stores/authStore";
-import LoginView from "@/features/login/LoginView.vue";
+import LoginView from "@/ui/views/LoginView.vue";
 import UserInvitationPageContent from "@/features/invitation/layouts/UserInvitationPageContent.vue";
 
 import PageGeneralLayout from "@/ui/layouts/PageGeneralLayout.vue";
-import CaptainView from "@/ui/views/captain/CaptainView.vue";
-import CaptainNoTeamView from "@/ui/views/captain/CaptainNoTeamView.vue";
-import CustomerCaptainsView from "@/ui/views/customer/CustomerCaptainsView.vue";
+import TeamManagementView from "@/ui/views/TeamManagementView.vue";
+import TeamStatusNotification from "@/ui/views/TeamStatusNotification.vue";
+import CaptainsManagementView from "@/ui/views/CaptainsManagementView.vue";
 
 import {useTeamStore} from "@/stores/teamStore";
 import {useRoleStore} from "@/stores/roleStore";
@@ -29,7 +29,7 @@ const router = createRouter({
       children: [
         {
           path: "manage-team",
-          component: CaptainView,
+          component: TeamManagementView,
           beforeEnter: async (to, from, next) => {
             const teamStore = useTeamStore();
             const roleStore = useRoleStore();
@@ -46,15 +46,15 @@ const router = createRouter({
         },
         {
           path: "team/:state",
-          component: CaptainNoTeamView,
+          component: TeamStatusNotification,
         },
         {
-          path: "invitation",
+          path: "manage-captains",
+          component: CaptainsManagementView,
+        },
+        {
+          path: "invitation/:role",
           component: UserInvitationPageContent,
-        },
-        {
-          path: "captains",
-          component: CustomerCaptainsView,
         },
       ],
     },

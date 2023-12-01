@@ -14,14 +14,12 @@ import {ref} from "vue";
 
 const modalStore = useModalStore();
 const isMissingTeamNameError = ref(false);
-const isMissingTeamDescriptionError = ref(false);
 
 const emit = defineEmits(["onAccept", "onCancel"]);
 
 const onCancelPress = () => {
   emit("onCancel");
   isMissingTeamNameError.value = false;
-  isMissingTeamDescriptionError.value = false;
 };
 
 /**
@@ -32,7 +30,6 @@ const onCancelPress = () => {
 const onAcceptPress = async () => {
   if (modalStore.getTeamNameInputValue === "") {
     isMissingTeamNameError.value = true;
-    isMissingTeamDescriptionError.value = true;
     return;
   }
   emit("onAccept");
@@ -43,14 +40,14 @@ const onAcceptPress = async () => {
  * If the input is not empty and the error is true, set the error to false to remove the error message (the user is typing)
  * @param value being emitted by the InputText component
  */
-const setTeamName = (value: any) => {
+const setTeamName = (value: string) => {
   if (value !== "" && isMissingTeamNameError.value === true) {
     isMissingTeamNameError.value = false;
   }
   modalStore.setTeamNameInputValue(value);
 };
 
-const setTeamDescription = (value: any) => {
+const setTeamDescription = (value: string) => {
   modalStore.setTeamDescriptionInputValue(value);
 };
 </script>
@@ -79,8 +76,8 @@ const setTeamDescription = (value: any) => {
           <input-text
             label-text="Team name"
             :inputValue="modalStore.getTeamNameInputValue"
-            :isError="isMissingTeamNameError"
-            @emittedInput="setTeamName" />
+            @emittedInput="setTeamName"
+            :isError="isMissingTeamNameError" />
 
           <input-text-area
             label-text="'Team description'"

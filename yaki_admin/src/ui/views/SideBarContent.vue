@@ -26,8 +26,7 @@ import statIcon from "@/assets/images/stats.png";
         text="Captains" />
       <side-bar-menu-drop-down
         inner-text="My teams"
-        icon-path="groupIcon"
-        :is-selected="true" />
+        icon-path="groupIcon" />
       <side-bar-menu-link
         :icon="statIcon"
         text="Statistics" />

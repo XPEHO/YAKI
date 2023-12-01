@@ -1,49 +1,35 @@
-<script>
+<script setup lang="ts">
 import buttonPrimary from "@/ui/components/buttons/ButtonPrimary.vue";
 import buttonSecondary from "@/ui/components/buttons/ButtonSecondary.vue";
 import inputText from "@/ui/components/inputs/InputText.vue";
 import inputPassword from "@/ui/components/inputs/InputPassword.vue";
 import {useAuthStore} from "@/stores/authStore";
+import {reactive} from "vue";
 
-export default {
-  components: {
-    buttonPrimary,
-    buttonSecondary,
-    inputText,
-    inputPassword,
-  },
-  mounted() {
-    this.audioContainer = document.getElementById("audioContainer");
-  },
-  data() {
-    return {
-      usernamePlaceholder: "Login",
-      passwordPlaceholder: "Password",
-      form: {
-        username: "",
-        password: "",
-      },
-    };
-  },
-  methods: {
-    onInputLogin(value) {
-      this.form.username = value;
-    },
+const usernamePlaceholder = "Login";
+const passwordPlaceholder = "Password";
+const form = reactive({
+  username: "",
+  password: "",
+});
 
-    onInputPassword(value) {
-      this.form.password = value;
-    },
-
-    login() {
-      const authStore = useAuthStore();
-      if (this.form.username !== "" && this.form.password !== "") {
-        return authStore.login(this.form.username, this.form.password).catch((error) => setErrors({apiError: error}));
-      }
-      return;
-    },
-    forgottenPassword() {},
-  },
+const onInputLogin = (value: string) => {
+  form.username = value;
 };
+
+const onInputPassword = (value: string) => {
+  form.password = value;
+};
+
+const login = () => {
+  const authStore = useAuthStore();
+  if (form.username !== "" && form.password !== "") {
+    return authStore.login(form.username, form.password).catch((error) => console.warn(error));
+  }
+  return;
+};
+
+const forgottenPassword = () => {};
 </script>
 
 <template>

@@ -1,14 +1,13 @@
 <script setup lang="ts">
-import router from "@/router/router";
 import {onBeforeMount} from "vue";
 
 import PageContentLayout from "@/ui/layouts/PageContentLayout.vue";
-import SideBarButton from "@/features/shared/components/SideBarButton.vue";
-import HeaderContentPage from "@/features/shared/components/HeaderContentPage.vue";
-import UserCard from "@/features/shared/components/UserCard.vue";
-import plusIcon from "@/assets/images/plus.png";
 import {useCaptainStore} from "@/stores/captainStore";
 import {useSelectedRoleStore} from "@/stores/selectedRole";
+import {INVITEDROLE} from "@/constants/pathParam";
+
+import PageContentHeader from "@/ui/views/PageContentHeader.vue";
+import UserList from "@/ui/components/UserList.vue";
 
 const captainStore = useCaptainStore();
 const selectedRoleStore = useSelectedRoleStore();
@@ -21,20 +20,12 @@ onBeforeMount(async () => {
 <template>
   <page-content-layout>
     <template #pageContentHeader>
-      <header-content-page
-        v-bind:title="'Captains List'"
-        v-bind:text="'Manage your captains :'" />
+      <page-content-header :invited-role="INVITEDROLE.captain" />
     </template>
     <template #content>
-      <SideBarButton
-        v-bind:inner-text="'Invite a captain'"
-        v-bind:icon-path="plusIcon"
-        @click.prevent="router.push({path: 'invitation'})" />
-
-      <user-card
-        v-for="captain in captainStore.getCaptainList"
-        :user="captain"
-        :key="captain.id" />
+      <user-list
+        :userList="captainStore.getCaptainList"
+        :isUsingTeamDescription="false" />
     </template>
   </page-content-layout>
 </template>

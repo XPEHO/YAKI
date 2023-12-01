@@ -24,6 +24,9 @@ import {
 
 import {useRoute} from "vue-router";
 const route = useRoute();
+const invitationRole = route.params.role as string;
+
+console.log(invitationRole);
 
 const props = reactive({
   userList: [] as UserWithIdType[],
@@ -35,13 +38,12 @@ const props = reactive({
 //don't want to fetch them in each separated component
 
 onBeforeMount(async () => {
-  props.fromRoute = route.path;
-  props.alreadyInList = await getListOfUserAlreadyAccepted(props.fromRoute);
+  props.alreadyInList = await getListOfUserAlreadyAccepted(invitationRole);
   props.userList = await usersService.fetchUserInRange(
     environmentVar.tempUserIdRangeStart,
     environmentVar.tempUserIdRAngeEnd
   );
-  props.invitationStatusText = getInvitationStatusText(props.fromRoute);
+  props.invitationStatusText = getInvitationStatusText(invitationRole);
 });
 // invit button from user-component
 </script>
@@ -49,14 +51,14 @@ onBeforeMount(async () => {
   <page-content-layout>
     <template #pageContentHeader>
       <header-content-page
-        v-bind:title="changeHeaderTitle(props.fromRoute)"
-        v-bind:text="changeHeaderSubText(props.fromRoute, modalState.teamName)" />
+        v-bind:title="changeHeaderTitle(invitationRole)"
+        v-bind:text="changeHeaderSubText(invitationRole, modalState.teamName)" />
     </template>
 
     <template #content>
       <side-bar-button
-        v-if="props.fromRoute != '/customer/admin-invitation'"
-        v-bind:inner-text="getReturnText(props.fromRoute)"
+        v-if="invitationRole != '/customer/admin-invitation'"
+        v-bind:inner-text="getReturnText(invitationRole)"
         v-bind:icon-path="backIcon"
         @click.prevent="router.go(-1)" />
 
@@ -64,7 +66,7 @@ onBeforeMount(async () => {
         v-for="user in props.userList"
         v-bind:key="user.id"
         v-bind:user="user"
-        v-bind:fromRoute="props.fromRoute"
+        v-bind:invitation-role="invitationRole"
         v-bind:adminList="props.alreadyInList"
         v-bind:invitationStatusText="props.invitationStatusText"
         @invitUserToTeam="invitUser" />

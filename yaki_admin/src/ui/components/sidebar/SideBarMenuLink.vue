@@ -8,7 +8,12 @@ const props = defineProps({
     type: String,
     required: true,
   },
-  // by default false as its more likely to be used in the sidebar
+  //
+  /**
+   * Parameter to check if the component is used in a modal
+   * Which will determine css class related to background color and hover effect
+   * By default false, meaning it is used in the sidebar.
+   */
   isModalElement: {
     type: Boolean,
     default: false,

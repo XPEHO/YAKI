@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import modalFrameView from "@/ui/views/ModalFrameView.vue";
 import {useModalStore} from "@/stores/modalStore";
-import SideBarContent from "@/ui/components/sidebar/SideBarContent.vue";
+import SideBarContent from "@/ui/views/SideBarContent.vue";
 
 const modalStore = useModalStore();
 </script>

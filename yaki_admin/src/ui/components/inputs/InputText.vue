@@ -6,7 +6,6 @@ const props = defineProps({
   },
   inputValue: {
     type: String,
-    required: true,
   },
   isError: {
     type: Boolean,
@@ -15,7 +14,7 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["emittedInput"]);
+const emit = defineEmits<{emittedInput: [value: string]}>();
 
 const onInputUse = (e: Event) => {
   emit("emittedInput", (e.target as HTMLInputElement).value);
@@ -34,10 +33,10 @@ const classList = [
     <div class="input-warning"></div>
     <input
       @input="onInputUse"
+      :value="inputValue"
       class="input__text input__no-border-background"
       type="text"
       placeholder=""
-      :value="inputValue"
       id="input-text" />
     <label for="input-text">{{ props.labelText }}</label>
   </section>

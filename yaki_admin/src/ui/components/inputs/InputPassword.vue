@@ -8,13 +8,9 @@ const props = defineProps({
     type: String,
     required: true,
   },
-  inputValue: {
-    type: String,
-    required: true,
-  },
 });
 
-const emit = defineEmits(["emittedInput"]);
+const emit = defineEmits<{emittedInput: [value: string]}>();
 
 const onInputUse = (e: Event) => {
   emit("emittedInput", (e.target as HTMLInputElement).value);

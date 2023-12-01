@@ -37,7 +37,7 @@ export const useAuthStore = defineStore("loginStore", {
         const roleStore = useRoleStore();
         //in what route the user will be redirect depending of his rights.
         if (userEntity.customerId.length >= 1) {
-          this.returnedUrl = "/customer/manage-captain";
+          this.returnedUrl = "/dashboard/manage-captains";
           selectedRoleStore.setCustomerIdSelected(userEntity.customerId[0]);
         } else {
           //if not a customer it's necessarily a captain
