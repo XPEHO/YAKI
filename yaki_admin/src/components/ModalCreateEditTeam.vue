@@ -13,12 +13,14 @@ import { ref } from "vue";
 
 const modalStore = useModalStore();
 const isMissingTeamNameError = ref(false);
+const isMissingTeamDescriptionError = ref(false);
 
 const emit = defineEmits(["onAccept", "onCancel"]);
 
 const onCancelPress = () => {
   emit("onCancel");
   isMissingTeamNameError.value = false;
+  isMissingTeamDescriptionError.value = false;
 };
 
 /**
@@ -29,6 +31,7 @@ const onCancelPress = () => {
 const onAcceptPress = async () => {
   if (modalStore.getTeamNameInputValue === "") {
     isMissingTeamNameError.value = true;
+    isMissingTeamDescriptionError.value = true;
     return;
   }
   emit("onAccept");
@@ -45,12 +48,13 @@ const setTeamName = (value: any) => {
   }
   modalStore.setTeamNameInputValue(value);
 };
-console.log("modalCreateEditTeam", setTeamName);
 
 const setTeamDescription = (value: any) => {
+  if (value !== "") {
+    isMissingTeamDescriptionError.value = false;
+  }
   modalStore.setTeamDescriptionInputValue(value);
 };
-console.log("modalCreateEditTeam", setTeamDescription);
 </script>
 
 <template>
@@ -80,13 +84,13 @@ console.log("modalCreateEditTeam", setTeamDescription);
 
           <input-text-area
             label-text="'Team description'"
-<<<<<<< HEAD
             :inputValue="''"
             @emittedInput="setTeamDescription" />
-=======
+
             :inputValue="modalStore.getTeamDescriptionInputValue"
+            :isError="isMissingTeamDescriptionError"
             @inputValue="setTeamDescription" />
->>>>>>> 7bb7023f (feat(description_team_front): fetch description)
+
           <section class="container__buttons--popup">
             <button-text-sized
               text="Cancel"

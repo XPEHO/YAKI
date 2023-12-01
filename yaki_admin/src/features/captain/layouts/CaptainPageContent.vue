@@ -3,12 +3,10 @@ import PageContentHeader from "@/features/captain/layouts/PageContentHeader.vue"
 import PageContentLayout from "@/layouts/PageContentLayout.vue";
 import UserInfoCard from "@/components/UserInfoCard.vue";
 import { useTeammateStore } from "@/stores/teammateStore";
-import { useModalStore } from "@/stores/modalStore";
+import { useTeamStore } from "@/stores/teamStore";
 
 const teammateStore = useTeammateStore();
-const modalStore = useModalStore();
-
-console.log("captainPageContent", modalStore.getTeamDescriptionInputValue);
+const teamStore = useTeamStore();
 </script>
 
 <template>
@@ -18,7 +16,9 @@ console.log("captainPageContent", modalStore.getTeamDescriptionInputValue);
     </template>
     <template #content>
       <section class="user-list__container">
-        <p>Team description : {{ modalStore.getTeamDescriptionInputValue }}</p>
+        <p>
+          Team description : {{ teamStore.getTeamSelected.teamDescription }}
+        </p>
         <p
           v-if="
             teammateStore.getTeammateList &&

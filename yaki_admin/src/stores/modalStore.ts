@@ -114,7 +114,7 @@ export const useModalStore = defineStore("userModalStore", {
         this.getTeamNameInputValue,
         this.getTeamDescriptionInputValue
       );
-      console.log(createdTeam);
+  
       teamStore.setTeamInfoAndFetchTeammates(createdTeam);
       await this.refreshTeamList();
 
