@@ -94,20 +94,23 @@ export const useTeamStore = defineStore("teamStore", {
     /**
      * Create a team, assign to the connected captain and his customer
      * @param teamName name of the team
+     * @param teamDescription description of the team
      * @returns created team: TeamType
      */
-    async createTeam(teamName: string): Promise<TeamType> {
+    async createTeam(
+      teamName: string,
+      teamDescription: string
+    ): Promise<TeamType> {
       const selectedRoleStore = useSelectedRoleStore();
       const customerId = selectedRoleStore.getCustomerIdSelected;
       const captainId = selectedRoleStore.getCaptainIdSelected;
-      const description = null;
 
       //the back handle if the captainId is null or not
       return await teamService.createTeam(
         captainId,
         teamName,
         customerId,
-        description
+        teamDescription
       );
     },
 
@@ -118,7 +121,7 @@ export const useTeamStore = defineStore("teamStore", {
      * @param cptId captain of the team. This can be null if no captain is assigned.
      * @param teamName New team name. null if the team name is not being updated.
      * @param customerId id of the customer that the team belongs to.
-     *
+     * @param teamDescription New team description. null if the team description is not being updated.
      * @returns updated team: TeamType.
      */
     async updateTeam(
@@ -126,14 +129,14 @@ export const useTeamStore = defineStore("teamStore", {
       cptId: number | null,
       teamName: string | null,
       customerId: number | null,
-      description: string | null
+      teamDescription: string | null
     ): Promise<TeamType> {
       return await teamService.updateTeam(
         teamID,
         cptId,
         teamName,
         customerId,
-        description
+        teamDescription
       );
     },
 
@@ -155,13 +158,18 @@ export const useTeamStore = defineStore("teamStore", {
 
     async createTeamOptionalAssignCaptain(
       teamName: string,
-      captainId: number | null
+      captainId: number | null,
+      teamDescription: string
     ): Promise<void> {
       const selectedRoleStore = useSelectedRoleStore();
       const customerId = selectedRoleStore.getCustomerIdSelected;
-      const description = null;
 
-      await teamService.createTeam(captainId, teamName, customerId, description);
+      await teamService.createTeam(
+        captainId,
+        teamName,
+        customerId,
+        teamDescription
+      );
     },
 
     /**

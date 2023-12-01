@@ -7,6 +7,7 @@ import { useModalStore } from "@/stores/modalStore";
 
 const teammateStore = useTeammateStore();
 const modalStore = useModalStore();
+
 </script>
 
 <template>

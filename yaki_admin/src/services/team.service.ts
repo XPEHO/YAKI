@@ -38,13 +38,13 @@ export class TeamService {
     cptId: number | null,
     teamName: string,
     customerId: number,
-    description: string | null
+    teamDescription: string | null
   ): Promise<TeamType> => {
     const newTeam: TeamTypeOut = {
       captainsId: [cptId],
       teamName: teamName,
       customerId: customerId,
-      description: description,
+      teamDescription: teamDescription,
     };
     const requestOptions = {
       method: "POST",
@@ -64,13 +64,13 @@ export class TeamService {
     cptId: number | null,
     teamName: string | null,
     customerId: number | null,
-    description: string | null
+    teamDescription: string | null
   ): Promise<TeamType> => {
     const updatedTeam: TeamTypeOut = {
       captainsId: [cptId],
       teamName: teamName,
       customerId: customerId,
-      description: description,
+      teamDescription: teamDescription,
     };
     const requestOptions = {
       method: "PUT",

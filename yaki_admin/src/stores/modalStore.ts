@@ -57,12 +57,18 @@ export const useModalStore = defineStore("userModalStore", {
      */
     switchModalVisibility(setVisible: boolean, mode: MODALMODE | null) {
       const teamStore = useTeamStore();
-      // get current teamName and set it as input value for edition
-      if (teamStore.getTeamSelected.teamName && mode === MODALMODE.teamEdit) {
-        this.setTeamNameInputValue(teamStore.getTeamSelected.teamName);
+      const { teamName, teamDescription } = teamStore.getTeamSelected;
+
+      // get current teamName and teamDescription and set it as input value for edition
+      if (mode === MODALMODE.teamEdit && teamName) {
+        this.setTeamNameInputValue(teamName);
+        if (teamDescription) {
+          this.setTeamDescriptionInputValue(teamDescription);
+        }
       }
       if (mode === MODALMODE.teamCreate || mode === MODALMODE.teamDelete) {
         this.setTeamNameInputValue("");
+        this.setTeamDescriptionInputValue("");
       }
 
       if (setVisible === true && mode !== null) {
@@ -104,12 +110,15 @@ export const useModalStore = defineStore("userModalStore", {
      */
     async handleTeamCreate(): Promise<TeamType> {
       const teamStore = useTeamStore();
-
-      const createdTeam = await teamStore.createTeam(this.getTeamNameInputValue);
+      const createdTeam = await teamStore.createTeam(
+        this.getTeamNameInputValue,
+        this.getTeamDescriptionInputValue
+      );
       teamStore.setTeamInfoAndFetchTeammates(createdTeam);
       await this.refreshTeamList();
 
       this.setTeamNameInputValue("");
+      this.setTeamDescriptionInputValue("");
       return createdTeam;
     },
     /**
@@ -123,12 +132,13 @@ export const useModalStore = defineStore("userModalStore", {
         teamStore.getTeamSelected.captainsId[0],
         this.getTeamNameInputValue,
         null,
-        teamStore.getTeamSelected.description
+        this.getTeamDescriptionInputValue
       );
 
       teamStore.setTeamSelected(editedTeam);
       await this.refreshTeamList();
       this.setTeamNameInputValue("");
+      this.setTeamDescriptionInputValue("");
     },
     /**
      * Delete the team.
