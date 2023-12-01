@@ -1,15 +1,16 @@
 <script setup lang="ts">
-import ButtonIcon from "@/components/ButtonIcon.vue";
-import InputText from "@/components/InputText.vue";
-import InputTextArea from "@/components/InputTextArea.vue";
-import ButtonTextSized from "./ButtonTextSized.vue";
+import ButtonIcon from "@/ui/components/buttons/ButtonIcon.vue";
+import InputText from "@/ui/components/inputs/InputText.vue";
+import InputTextArea from "@/ui/components/inputs/InputTextArea.vue";
+import ButtonTextSized from "@/ui/components/buttons/ButtonTextSized.vue";
 
 import pencilIcon from "@/assets/images/pencil-regular-24.png";
 import deleteIcon from "@/assets/images/x_close.png";
+import avatar from "@/assets/images/avatar_2.png";
 
-import { BUTTONCOLORS } from "@/constants/componentsSettings";
-import { useModalStore } from "@/stores/modalStore";
-import { ref } from "vue";
+import {BUTTONCOLORS} from "@/constants/componentsSettings";
+import {useModalStore} from "@/stores/modalStore";
+import {ref} from "vue";
 
 const modalStore = useModalStore();
 const isMissingTeamNameError = ref(false);
@@ -62,7 +63,9 @@ const setTeamDescription = (value: any) => {
     <section class="popup__content">
       <section class="popup__avatar-section">
         <figure>
-          <img src="../assets/images/avatar_2.png" alt="avatar" />
+          <img
+            :src="avatar"
+            alt="avatar" />
         </figure>
 
         <aside class="container__buttons">

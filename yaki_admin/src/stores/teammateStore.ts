@@ -22,6 +22,9 @@ export const useTeammateStore = defineStore("teammateStore", {
     setIdOfTeammateToDelete(id: number) {
       this.IdOfTeammateToDelete = id;
     },
+    resetTeamatesList() {
+      this.teammates = [];
+    },
     async setListOfTeammatesWithinTeam(teamId: number): Promise<void> {
       this.teammates = await teammateService.getAllWithinTeam(teamId);
     },

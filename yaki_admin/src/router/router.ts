@@ -1,16 +1,13 @@
 import {createRouter, createWebHistory} from "vue-router";
 import {useAuthStore} from "@/stores/authStore";
-import PageLogin from "@/features/login/pages/PageLogin.vue";
+import LoginView from "@/features/login/LoginView.vue";
 import UserInvitationPageContent from "@/features/invitation/layouts/UserInvitationPageContent.vue";
 
-//import CaptainPage from "@/features/captain/CaptainPage.vue";
-import CaptainPageContent from "@/features/captain/layouts/CaptainPageContent.vue";
-import PageContentNoteam from "@/components/PageContentNoTeam.vue";
-import PageGeneralLayout from "@/layouts/PageGeneralLayout.vue";
+import PageGeneralLayout from "@/ui/layouts/PageGeneralLayout.vue";
+import CaptainView from "@/ui/views/captain/CaptainView.vue";
+import CaptainNoTeamView from "@/ui/views/captain/CaptainNoTeamView.vue";
+import CustomerCaptainsView from "@/ui/views/customer/CustomerCaptainsView.vue";
 
-import CustomerPage from "@/features/customer/CustomerPage.vue";
-import CustomerPageContentTeamList from "@/features/customer/layouts/CustomerPageContentTeamList.vue";
-import CustomerPageContentCaptainList from "@/features/customer/layouts/CustomerPageContentCaptainList.vue";
 import {useTeamStore} from "@/stores/teamStore";
 import {useRoleStore} from "@/stores/roleStore";
 import {TEAMPARAMS} from "@/constants/pathParam";
@@ -21,7 +18,7 @@ const router = createRouter({
     {
       path: "/",
       name: "Login",
-      component: PageLogin,
+      component: LoginView,
       meta: {transition: "slide-left"},
     },
     {
@@ -32,7 +29,7 @@ const router = createRouter({
       children: [
         {
           path: "manage-team",
-          component: CaptainPageContent,
+          component: CaptainView,
           beforeEnter: async (to, from, next) => {
             const teamStore = useTeamStore();
             const roleStore = useRoleStore();
@@ -48,36 +45,16 @@ const router = createRouter({
           },
         },
         {
-          path: "invitation",
-          component: UserInvitationPageContent,
-        },
-        {
           path: "team/:state",
-          component: PageContentNoteam,
-        },
-      ],
-    },
-    {
-      path: "/customer",
-      name: "Customer",
-      component: CustomerPage,
-      meta: {transition: "slide-left"},
-      children: [
-        {
-          path: "manage-captain",
-          component: CustomerPageContentCaptainList,
-        },
-        {
-          path: "manage-team",
-          component: CustomerPageContentTeamList,
+          component: CaptainNoTeamView,
         },
         {
           path: "invitation",
           component: UserInvitationPageContent,
         },
         {
-          path: "admin-invitation",
-          component: UserInvitationPageContent,
+          path: "captains",
+          component: CustomerCaptainsView,
         },
       ],
     },

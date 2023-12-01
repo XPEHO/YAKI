@@ -1,9 +1,9 @@
-import { MODALMODE } from "@/constants/modalMode";
-import { defineStore } from "pinia";
-import { useTeamStore } from "@/stores/teamStore";
-import { useTeammateStore } from "@/stores/teammateStore";
-import { useRoleStore } from "@/stores/roleStore";
-import { TeamType } from "@/models/team.type";
+import {MODALMODE} from "@/constants/modalMode";
+import {defineStore} from "pinia";
+import {useTeamStore} from "@/stores/teamStore";
+import {useTeammateStore} from "@/stores/teammateStore";
+import {useRoleStore} from "@/stores/roleStore";
+import {TeamType} from "@/models/team.type";
 
 interface State {
   isShow: boolean;
@@ -26,8 +26,7 @@ export const useModalStore = defineStore("userModalStore", {
     getMode: (state: State) => state.mode,
     getTeamNameInputValue: (state: State) => state.teamNameInputValue,
     getTeammateNameToDelete: (state: State) => state.teammateNameToDelete,
-    getTeamDescriptionInputValue: (state: State) =>
-      state.teamDescriptionInputValue,
+    getTeamDescriptionInputValue: (state: State) => state.teamDescriptionInputValue,
   },
   actions: {
     setIsShow(isShow: boolean) {
@@ -57,7 +56,7 @@ export const useModalStore = defineStore("userModalStore", {
      */
     switchModalVisibility(setVisible: boolean, mode: MODALMODE | null) {
       const teamStore = useTeamStore();
-      const { teamName, teamDescription } = teamStore.getTeamSelected;
+      const {teamName, teamDescription} = teamStore.getTeamSelected;
 
       // get current teamName and teamDescription and set it as input value for edition
       if (mode === MODALMODE.teamEdit && teamName) {
@@ -104,18 +103,19 @@ export const useModalStore = defineStore("userModalStore", {
       }
     },
     /**
-     * Create a team, and select it as the current team (setTeamInfoAndFetchTeammates).
+     * Create a team, and select it as the current team (setTeamSelected).
+     * Reset the teammate list on teamateStore, as a new team do not come with teammates.
+     * (it preventy to do an API call to fetch the teammate list)
      * Refresh the team list.
      * @return createdTeam: TeamType
      */
     async handleTeamCreate(): Promise<TeamType> {
       const teamStore = useTeamStore();
-      const createdTeam = await teamStore.createTeam(
-        this.getTeamNameInputValue,
-        this.getTeamDescriptionInputValue
-      );
-  
-      teamStore.setTeamInfoAndFetchTeammates(createdTeam);
+      const teammateStore = useTeammateStore();
+
+      const createdTeam = await teamStore.createTeam(this.getTeamNameInputValue, this.getTeamDescriptionInputValue);
+      teamStore.setTeamSelected(createdTeam);
+      teammateStore.resetTeamatesList();
       await this.refreshTeamList();
 
       this.setTeamNameInputValue("");
@@ -135,7 +135,7 @@ export const useModalStore = defineStore("userModalStore", {
         null,
         this.getTeamDescriptionInputValue
       );
-     
+
       teamStore.setTeamSelected(editedTeam);
       await this.refreshTeamList();
       this.setTeamNameInputValue("");
@@ -160,9 +160,7 @@ export const useModalStore = defineStore("userModalStore", {
      */
     async handleUserDelete() {
       const teammateStore = useTeammateStore();
-      await teammateStore.deleteTeammateFromTeam(
-        teammateStore.getIdOfTeammateToDelete
-      );
+      await teammateStore.deleteTeammateFromTeam(teammateStore.getIdOfTeammateToDelete);
     },
 
     /**

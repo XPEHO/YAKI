@@ -3,6 +3,11 @@ import {CaptainType} from "@/models/captain.type";
 import {captainService} from "@/services/captain.service";
 import {UserWithIdType} from "@/models/userWithId.type";
 
+interface State {
+  captainList: UserWithIdType[];
+  captainToDelete: number;
+}
+
 export const useCaptainStore = defineStore("captainStore", {
   state: () => ({
     //list of captains display in the view customer
@@ -12,15 +17,15 @@ export const useCaptainStore = defineStore("captainStore", {
     captainToDelete: 0 as number,
   }),
   getters: {
-    getCaptainList(): UserWithIdType[] {
-      return this.captainList;
-    },
-    getCaptainToDelete(): number {
-      return this.captainToDelete;
-    },
+    getCaptainList: (state: State) => state.captainList,
+    getCaptainToDelete: (state: State) => state.captainToDelete,
   },
-
   actions: {
+    //get the captainId to delete
+    setCaptainToDelete(captainId: number) {
+      this.captainToDelete = captainId;
+    },
+
     // get all captains of a customer
     async setAllCaptainsByCustomerId(customerId: number) {
       this.captainList = await captainService.getAllCaptainsByCustomerId(customerId);
@@ -29,11 +34,6 @@ export const useCaptainStore = defineStore("captainStore", {
     // create a captain
     async createCaptain(data: CaptainType): Promise<void> {
       await captainService.createCaptain(data);
-    },
-
-    //get the captainId to delete
-    setCaptainToDelete(captainId: number) {
-      this.captainToDelete = captainId;
     },
 
     //delete a captain

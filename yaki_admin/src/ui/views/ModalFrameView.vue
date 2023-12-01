@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import router from "@/router/router";
-import ModalCreateEditTeam from "@/components/ModalCreateEditTeam.vue";
-import ModalDelete from "@/components/ModalDelete.vue";
+import ModalCreateEditTeam from "@/ui/components/modals/ModalCreateEditTeam.vue";
+import ModalDelete from "@/ui/components/modals/ModalDelete.vue";
 import {useModalStore} from "@/stores/modalStore";
 import {isATeamType} from "@/models/team.type";
 import {MODALMODE} from "@/constants/modalMode";
@@ -14,7 +14,7 @@ const onCancel = () => {
 };
 
 /**
- * When a modal is validated.
+ * At modal accept validation.
  * Trigger the onMdodalChoiceValidation method of the modalStore.
  * Given the result type and modal mode, redirect to the right page.
  *
