@@ -1,4 +1,4 @@
-import {INVITEDROLE} from "@/constants/pathParam";
+import {INVITEDROLE} from "@/constants/pathParam.enum";
 import {UserWithIdType} from "@/models/userWithId.type";
 import {customerService} from "@/services/customer.service";
 import {useCaptainStore} from "@/stores/captainStore";

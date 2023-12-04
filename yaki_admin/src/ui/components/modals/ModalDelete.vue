@@ -3,8 +3,8 @@ import ButtonTextIcon from "@/ui/components/buttons/ButtonTextIcon.vue";
 import ButtonTextSized from "@/ui/components/buttons/ButtonTextSized.vue";
 import deleteIcon from "@/assets/images/x_close.png";
 
-import {BUTTONCOLORS} from "@/constants/componentsSettings";
-import {MODALMODE} from "@/constants/modalMode";
+import {BUTTONCOLORS} from "@/constants/componentsSettings.enum";
+import {MODALMODE} from "@/constants/modalMode.enum";
 
 import {useModalStore} from "@/stores/modalStore";
 import {useTeamStore} from "@/stores/teamStore";

@@ -10,7 +10,7 @@ import CaptainsManagementView from "@/ui/views/CaptainsManagementView.vue";
 
 import {useTeamStore} from "@/stores/teamStore";
 import {useRoleStore} from "@/stores/roleStore";
-import {TEAMPARAMS} from "@/constants/pathParam";
+import {TEAMPARAMS} from "@/constants/pathParam.enum";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

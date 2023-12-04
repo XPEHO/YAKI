@@ -9,12 +9,6 @@ Feature: Owner
     Then status 200
     And def token = 'Bearer ' + response.token
   Scenario: 01 Create owner
-    Given path '/users'
-    And header Authorization = token
-    And request {id : 2, lastname: 'owner3', firstname: 'owner3', email: 'owner3@gmail.com', login: 'owner3', password: 'owner3'}
-    When method post
-    Then status 200
-
     Given path '/owners'
     And header Authorization = token
     And request { userId : 2 }

@@ -2,7 +2,6 @@
 import router from "@/router/router";
 import {environmentVar} from "@/envPlaceholder";
 import {onBeforeMount, reactive} from "vue";
-import modalState from "@/features/modal/services/modalState";
 
 import type {UserWithIdType} from "@/models/userWithId.type";
 import {usersService} from "@/services/users.service";
@@ -23,10 +22,10 @@ import {
 } from "@/features/invitation/services/invitationService";
 
 import {useRoute} from "vue-router";
+import {useTeamStore} from "@/stores/teamStore";
 const route = useRoute();
 const invitationRole = route.params.role as string;
-
-console.log(invitationRole);
+const teamStore = useTeamStore();
 
 const props = reactive({
   userList: [] as UserWithIdType[],
@@ -52,7 +51,7 @@ onBeforeMount(async () => {
     <template #pageContentHeader>
       <header-content-page
         v-bind:title="changeHeaderTitle(invitationRole)"
-        v-bind:text="changeHeaderSubText(invitationRole, modalState.teamName)" />
+        v-bind:text="changeHeaderSubText(invitationRole, teamStore.getTeamSelected.teamName)" />
     </template>
 
     <template #content>
@@ -73,4 +72,3 @@ onBeforeMount(async () => {
     </template>
   </page-content-layout>
 </template>
-@/features/modal/services/modalState

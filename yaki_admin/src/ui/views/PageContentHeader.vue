@@ -11,7 +11,7 @@ import modalTeamEditDelete from "@/ui/components/modals/ModalTeamEditDelete.vue"
 import {useTeamStore} from "@/stores/teamStore";
 import {useModalToggleWithOutsideClickHandler} from "@/composable/useModalToggleWithOutsideClickHandler";
 import {computed} from "vue";
-import {INVITEDROLE} from "@/constants/pathParam";
+import {INVITEDROLE} from "@/constants/pathParam.enum";
 
 const teamStore = useTeamStore();
 

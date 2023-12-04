@@ -13,7 +13,7 @@ import deleteIcon from "@/assets/images/Delete.png";
 import {UserWithIdType} from "@/models/userWithId.type";
 
 import modalState from "@/features/modal/services/modalState";
-import {MODALMODE} from "@/constants/modalMode";
+import {MODALMODE} from "@/constants/modalMode.enum";
 
 const props = defineProps({
   user: {
@@ -116,4 +116,3 @@ const UserToBeRemoved = () => {
   }
 }
 </style>
-@/constants/modalMode @/constants/modalMode @/features/modal/services/modalState

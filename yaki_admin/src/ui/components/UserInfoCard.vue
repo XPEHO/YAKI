@@ -2,13 +2,14 @@
 import buttonIcon from "@/ui/components/buttons/ButtonIcon.vue";
 import pencilIcon from "@/assets/images/pencil-regular-24.png";
 import deleteIcon from "@/assets/images/x_close.png";
-import userAvatar from "@/assets/images/avatar_2.png";
 
 import {PropType} from "vue";
 import {UserWithIdType} from "@/models/userWithId.type";
-import {MODALMODE} from "@/constants/modalMode";
+import {MODALMODE} from "@/constants/modalMode.enum";
 import {useModalStore} from "@/stores/modalStore";
 import {useTeammateStore} from "@/stores/teammateStore";
+
+import {setUserAvatarUrl} from "@/utils/images.utils";
 
 const modalStore = useModalStore();
 const teammateStore = useTeammateStore();
@@ -29,9 +30,10 @@ const UserToBeRemoved = () => {
 
 <template>
   <article class="user-card__container user-card__accepted_status">
-    <figure class="user-card__avatar">
+    <figure class="user-card__avatar rounded">
       <img
-        :src="userAvatar"
+        class="user-card__avatar-img"
+        :src="setUserAvatarUrl(props.user)"
         alt="user-card" />
     </figure>
     <div class="user-card__wrapper-user-infos">

@@ -1,8 +1,8 @@
-import { reactive } from "vue";
-import { useTeamStore } from "@/stores/teamStore.js";
-import { MODALMODE } from "@/constants/modalMode";
-import { useTeammateStore } from "@/stores/teammateStore";
-import { useRoleStore } from "@/stores/roleStore";
+import {reactive} from "vue";
+import {useTeamStore} from "@/stores/teamStore.js";
+import {MODALMODE} from "@/constants/modalMode.enum";
+import {useTeammateStore} from "@/stores/teammateStore";
+import {useRoleStore} from "@/stores/roleStore";
 
 // DEPRECIATED REMOVE WHEN CUSTOMER IS MADE
 //==================================================================================================
@@ -18,18 +18,11 @@ const modalState = reactive({
   dropDownButtonText: "Select a captain" as string,
   dropDownSelectedCaptainId: null as number | null,
 
-  switchModalVisibility(
-    setVisible: boolean,
-    mode: MODALMODE | null,
-    teamName?: string
-  ) {
+  switchModalVisibility(setVisible: boolean, mode: MODALMODE | null, teamName?: string) {
     if (teamName && mode === MODALMODE.teamEdit) {
       this.setTeamInputValue(teamName);
     }
-    if (
-      mode === MODALMODE.teamCreate ||
-      mode === MODALMODE.teamCreateCustomer
-    ) {
+    if (mode === MODALMODE.teamCreate || mode === MODALMODE.teamCreateCustomer) {
       this.setTeamInputValue("");
     }
 
@@ -123,9 +116,7 @@ const modalState = reactive({
 
   async deleteUserFromTeam() {
     const teammateStore = useTeammateStore();
-    await teammateStore.deleteTeammateFromTeam(
-      teammateStore.getIdOfTeammateToDelete
-    );
+    await teammateStore.deleteTeammateFromTeam(teammateStore.getIdOfTeammateToDelete);
     this.refreshTeammatesList();
   },
 
@@ -154,11 +145,7 @@ const modalState = reactive({
 
   async createNewTeamWithOptionalCaptain() {
     const teamStore = useTeamStore();
-    teamStore.createTeamOptionalAssignCaptain(
-      this.teamName,
-      teamStore.getCaptainIdToBeAssign,
-      this.teamDescription
-    );
+    teamStore.createTeamOptionalAssignCaptain(this.teamName, teamStore.getCaptainIdToBeAssign, this.teamDescription);
     this.refreshTeamListForCustomer();
     //reset values
     teamStore.setCaptainIdToBeAssign(null);

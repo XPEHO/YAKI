@@ -94,7 +94,9 @@ class CaptainServiceImpl(private val captainJpaRepository: CaptainJpaRepository,
                         null,
                         userWithDetails.lastName,
                         userWithDetails.firstName,
-                        userWithDetails.email
+                        userWithDetails.email,
+                        userWithDetails.avatarReference,
+                        userWithDetails.avatarBlob
                     )
                 }
     }

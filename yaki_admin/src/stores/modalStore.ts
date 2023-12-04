@@ -1,4 +1,4 @@
-import {MODALMODE} from "@/constants/modalMode";
+import {MODALMODE} from "@/constants/modalMode.enum";
 import {defineStore} from "pinia";
 import {useTeamStore} from "@/stores/teamStore";
 import {useTeammateStore} from "@/stores/teammateStore";
@@ -167,7 +167,7 @@ export const useModalStore = defineStore("userModalStore", {
      * Refetch the team list of a given captain.
      * Get all the captainsID from the roleStore the current connected user have.
      *
-     * Invoked in modalStore createNewteam / editTeamName / deleteTeam
+     * Invoked in modalStore handleTeamCreate / handleTeamEdit / handleTeamDelete
      */
     async refreshTeamList() {
       const teamStore = useTeamStore();

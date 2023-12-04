@@ -49,11 +49,11 @@ class TeammateServiceImplTest {
         teammate2 = new TeammateModel(1, 8,entityLogModel.getId());
         teammateE1 = new TeammateEntity(teammate1.getId(), 1, 5);
         teammateE2 = new TeammateEntity(teammate2.getId(), 1, 8);
-        UserEntityWithID teammateUserE1 = new UserEntityWithID(1, null, 1,"Albert", "Redmont", "albert.redmont@mail.com");
-        UserEntityWithID teammateUserE2 = new UserEntityWithID(2, null, 1,"Michel", "Bertrand", "michel.bertrand@mail.com");
+        UserEntityWithID teammateUserE1 = new UserEntityWithID(1, null, 1,"Albert", "Redmont", "albert.redmont@mail.com", "avatarRef", null);
+        UserEntityWithID teammateUserE2 = new UserEntityWithID(2, null, 1,"Michel", "Bertrand", "michel.bertrand@mail.com", "avatarRef", null);
 
-        Object[] teammateUser1 = new Object[]{1, 1,  "Albert", "Redmont", "albert.redmont@mail.com"};
-        Object[] teammateUser2 = new Object[]{2, 1, "Michel", "Bertrand", "michel.bertrand@mail.com"};
+        Object[] teammateUser1 = new Object[]{1, 1,  "Albert", "Redmont", "albert.redmont@mail.com", "avatarRef", null};
+        Object[] teammateUser2 = new Object[]{2, 1, "Michel", "Bertrand", "michel.bertrand@mail.com", "avatarRef", null};
         teammatesEFromTeamOne = Arrays.asList(teammateUserE1, teammateUserE2);
         teammatesFromTeamOne = Arrays.asList(teammateUser1, teammateUser2);
     }

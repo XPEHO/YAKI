@@ -1,6 +1,5 @@
 package com.xpeho.yaki_admin_backend.data.models;
 
-
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -38,14 +37,22 @@ public class UserModel implements UserDetails {
 
     @Column(name = "user_enabled")
     private boolean enabled;
+
+    @Column(name = "user_avatar_choice")
+    private Integer userAvatarChoice;
+
     @ManyToMany
     @JoinTable(name = "customer_rights", joinColumns = @JoinColumn(name = "customer_rights_user_id"), inverseJoinColumns = @JoinColumn(name = "customer_rights_customer_id"))
     private List<CustomerModel> customers = new ArrayList<>();
 
     //if the user is delete, the token will be deleted too
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "verification_token_user_id", insertable = false, updatable = false)
     private VerificationTokenModel verificationTokenModel;
+
+    //if the user is delete, the avatar will be deleted too
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<AvatarModel> avatars;
 
     public UserModel(int userId, String lastName, String firstName, String email, String login, String password) {
         this.userId = userId;
@@ -57,16 +64,16 @@ public class UserModel implements UserDetails {
         this.enabled = false;
     }
 
-    public UserModel() {
-        this.enabled = false;
-    }
-
     public UserModel(String lastName, String firstName, String email, String login, String password) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.login = login;
         this.password = password;
+        this.enabled = false;
+    }
+
+    public UserModel() {
         this.enabled = false;
     }
 
@@ -152,7 +159,6 @@ public class UserModel implements UserDetails {
         return true;
     }
 
-
     @Override
     public boolean isEnabled() {
         return this.enabled;
@@ -162,11 +168,27 @@ public class UserModel implements UserDetails {
         this.enabled = enabled;
     }
 
+    public Integer getUserAvatarChoice() {
+        return userAvatarChoice;
+    }
+
+    public void setUserAvatarChoice(Integer userAvatarChoice) {
+        this.userAvatarChoice = userAvatarChoice;
+    }
+
     public List<CustomerModel> getCustomers() {
         return customers;
     }
 
     public void setCustomers(List<CustomerModel> customers) {
         this.customers = customers;
+    }
+
+    public List<AvatarModel> getAvatars() {
+        return avatars;
+    }
+
+    public void setAvatars(List<AvatarModel> avatars) {
+        this.avatars = avatars;
     }
 }
