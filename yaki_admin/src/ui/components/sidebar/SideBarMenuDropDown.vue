@@ -4,17 +4,17 @@ import groupIcon from "@/assets/images/group-regular-24.png";
 import arrowIcon from "@/assets/images/chevron-down-regular-24.png";
 import addIcon from "@/assets/images/plus_icon.png";
 
-import {useTeamStore} from "@/stores/teamStore";
-import {onBeforeMount} from "vue";
-import {MODALMODE} from "@/constants/modalMode";
 import router from "@/router/router";
-import {TeamType} from "@/models/team.type";
+import {onBeforeMount} from "vue";
+import {useTeamStore} from "@/stores/teamStore";
 import {useModalStore} from "@/stores/modalStore";
+import {MODALMODE} from "@/constants/modalMode";
+import {TeamType} from "@/models/team.type";
 
 const teamStore = useTeamStore();
 const modalStore = useModalStore();
 
-//before mount, fetch teams, select first team from the saved list, get team name, fetch teammates.
+//before mount, fetch teams, select first team from the list
 onBeforeMount(async () => {
   // automaticaly select first team right after team fetch on component mount ( right after the first connexion)
   if (teamStore.getTeamList && teamStore.getTeamList.length > 0) {
@@ -40,11 +40,6 @@ const props = defineProps({
   iconPath: {
     type: String,
     required: true,
-  },
-  isSelected: {
-    type: Boolean,
-    required: false,
-    default: false,
   },
 });
 </script>
@@ -83,8 +78,8 @@ const props = defineProps({
         v-if="teamStore.getTeamList && teamStore.getTeamList.length > 0"
         class="gap_add">
         <side-bar-menu-drop-down-element
-          v-for="(team, index) in teamStore.getTeamList"
-          :key="index"
+          v-for="team in teamStore.getTeamList"
+          :key="team.id"
           v-bind:id="team.id"
           v-bind:teamName="team.teamName"
           @click.prevent="() => onClickSelectTeam(team)" />

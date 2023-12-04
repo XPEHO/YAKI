@@ -4,12 +4,12 @@ import {useTeamStore} from "@/stores/teamStore";
 const teamStore = useTeamStore();
 
 const props = defineProps({
-  teamName: {
-    type: String,
-    required: true,
-  },
   id: {
     type: Number,
+    required: true,
+  },
+  teamName: {
+    type: String,
     required: true,
   },
 });
@@ -18,13 +18,7 @@ const classList = ["text-icon__container", "drop-down__menu_item--height-padding
 </script>
 
 <template>
-  <p
-    :class="[
-      classList,
-      {
-        'team-selected': teamStore.isSameTeamId(props.id),
-      },
-    ]">
+  <p :class="[classList, {'team-selected': teamStore.isSameTeamId(props.id)}]">
     {{ props.teamName }}
   </p>
 </template>

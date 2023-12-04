@@ -12,7 +12,7 @@ const props = defineProps({
     type: Object as PropType<UserWithIdType>,
     required: true,
   },
-  fromRoute: {
+  invitationRole: {
     type: String,
     required: true,
   },
@@ -26,18 +26,6 @@ const props = defineProps({
   },
 });
 
-onMounted(() => {
-  updateReactive(settings, checkInvitationStatus(props.user, props.adminList, props.invitationStatusText));
-});
-
-const emit = defineEmits<{
-  invitUserToTeam: [fromRoute: string, userId: number];
-}>();
-
-const emitterRedirect = () => {
-  emit("invitUserToTeam", props.fromRoute, props.user.id);
-};
-
 //Setting reactive with card and button configuration
 // text and style
 const settings = reactive({
@@ -47,9 +35,17 @@ const settings = reactive({
   cardCSS: "",
 });
 
+onMounted(() => {
+  updateReactive(settings, checkInvitationStatus(props.user, props.adminList, props.invitationStatusText));
+});
+
+const emit = defineEmits<{
+  invitUserToTeam: [invitationRole: string, userId: number];
+}>();
+
 const invitBtnClick = async () => {
   if (!settings.isInvited) {
-    emitterRedirect();
+    emit("invitUserToTeam", props.invitationRole, props.user.id);
 
     cssEffect();
 

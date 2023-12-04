@@ -11,6 +11,10 @@ const props = defineProps({
     type: Object as PropType<UserWithIdType[]>,
     required: true,
   },
+  /**
+   * Parameter to set if the component will be using the team description
+   * By default is false, as only Team page will use it.
+   */
   isUsingTeamDescription: {
     type: Boolean,
     default: false,
@@ -21,7 +25,7 @@ const props = defineProps({
 <template>
   <section class="user-list__container">
     <p v-if="isUsingTeamDescription && teamStore.getTeamSelected.teamDescription">
-      Team description : {{ teamStore.getTeamSelected.teamDescription }}
+      {{ teamStore.getTeamSelected.teamDescription }}
     </p>
     <p v-if="userList && userList.length > 0">Teammates :</p>
     <section class="user-list__in-team-container">

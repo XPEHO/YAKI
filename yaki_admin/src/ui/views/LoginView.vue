@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import LoginForm from "@/features/login/components/LoginForm.vue";
+import LoginForm from "@/ui/components/LoginForm.vue";
 import Banner from "@/assets/images/splashscreen.svg";
 </script>
 
