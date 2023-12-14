@@ -43,7 +43,7 @@ dependencies:
   # This dependency allows for dependency injection and manage states
   # import 'package:hooks_riverpod/hooks_riverpod.dart'
   # link : https://riverpod.dev/docs/getting_started
-  flutter_riverpod: ^2.4.4
+  flutter_riverpod: ^2.4.9
 
   # // Retrofit dependency //
   # this dependency allows to make api requests thanks to annotations
