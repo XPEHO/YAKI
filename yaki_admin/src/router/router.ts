@@ -7,12 +7,12 @@ import PageGeneralLayout from "@/ui/layouts/PageGeneralLayout.vue";
 import TeamManagementView from "@/ui/views/TeamManagementView.vue";
 import TeamStatusNotification from "@/ui/views/TeamStatusNotification.vue";
 import CaptainsManagementView from "@/ui/views/CaptainsManagementView.vue";
+import ProfileView from "@/ui/views/ProfileView.vue";
+import StatisticsView from "@/ui/views/StatisticsView.vue";
 
 import { useTeamStore } from "@/stores/teamStore";
 import { useRoleStore } from "@/stores/roleStore";
 import { TEAMPARAMS } from "@/constants/pathParam.enum";
-import Profile from "@/ui/views/Profile.vue";
-import Statistics from "@/ui/views/Statistics.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -60,11 +60,11 @@ const router = createRouter({
         },
         {
           path: "profile",
-          component: Profile,
+          component: ProfileView,
         },
         {
           path: "statistics",
-          component: Statistics,
+          component: StatisticsView,
         },
       ],
     },
