@@ -8,7 +8,7 @@ import pencilIcon from "@/assets/images/pencil-regular-24.png";
 import deleteIcon from "@/assets/images/x_close.png";
 import avatar from "@/assets/images/avatar_2.png";
 
-import {BUTTONCOLORS} from "@/constants/componentsSettings";
+import {BUTTONCOLORS} from "@/constants/componentsSettings.enum";
 import {useModalStore} from "@/stores/modalStore";
 import {ref} from "vue";
 

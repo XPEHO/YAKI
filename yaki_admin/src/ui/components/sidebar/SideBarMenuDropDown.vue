@@ -5,30 +5,21 @@ import arrowIcon from "@/assets/images/chevron-down-regular-24.png";
 import addIcon from "@/assets/images/plus_icon.png";
 
 import router from "@/router/router";
-import {onBeforeMount} from "vue";
 import {useTeamStore} from "@/stores/teamStore";
 import {useModalStore} from "@/stores/modalStore";
-import {MODALMODE} from "@/constants/modalMode";
+import {MODALMODE} from "@/constants/modalMode.enum";
 import {TeamType} from "@/models/team.type";
 
-const teamStore = useTeamStore();
 const modalStore = useModalStore();
-
-//before mount, fetch teams, select first team from the list
-onBeforeMount(async () => {
-  // automaticaly select first team right after team fetch on component mount ( right after the first connexion)
-  if (teamStore.getTeamList && teamStore.getTeamList.length > 0) {
-    teamStore.setTeamInfoAndFetchTeammates(teamStore.getTeamList[0]);
-  }
-});
+const teamStore = useTeamStore();
 
 // add team button press to open modal
 const onClickAddTeam = () => {
   modalStore.switchModalVisibility(true, MODALMODE.teamCreate);
 };
 
-const onClickSelectTeam = (team: TeamType) => {
-  teamStore.setTeamInfoAndFetchTeammates(team);
+const onClickSelectTeam = async (team: TeamType) => {
+  await teamStore.setTeamInfoAndFetchTeammates(team);
   router.push({path: "/dashboard/manage-team"});
 };
 

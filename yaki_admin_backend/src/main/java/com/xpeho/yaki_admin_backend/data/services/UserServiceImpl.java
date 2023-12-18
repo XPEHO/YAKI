@@ -96,7 +96,10 @@ public class UserServiceImpl implements UserService {
                     null,
                     user.getLastName(),
                     user.getFirstName(),
-                    user.getEmail());
+                    user.getEmail(),
+                    null,
+                    null
+                );
             userWithIdList.add(newUserWIthId);
         }
         return userWithIdList;

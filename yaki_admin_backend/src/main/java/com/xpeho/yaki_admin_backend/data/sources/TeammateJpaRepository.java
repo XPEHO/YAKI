@@ -8,9 +8,10 @@ import java.util.List;
 
 public interface TeammateJpaRepository extends JpaRepository<TeammateModel, Integer> {
     @Query("""
-            SELECT tm.userId, tm.id, u.lastName, u.firstName , u.email
+            SELECT tm.userId, tm.id, u.lastName, u.firstName , u.email, a.avatarReference, a.avatarBlob
             FROM TeammateModel tm 
             JOIN UserModel u ON tm.userId = u.userId
+            JOIN AvatarModel a ON u.userAvatarChoice = a.avatarId
             WHERE tm.teamId = ?1 and tm.actif = true
             """)
     List<Object[]> findAllByTeam(int id);

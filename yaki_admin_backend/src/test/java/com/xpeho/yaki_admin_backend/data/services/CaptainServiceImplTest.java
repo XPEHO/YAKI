@@ -161,15 +161,15 @@ class CaptainServiceImplTest {
         //given
         int customerId = 1;
         List<UserWithDetailsDto> userWithDetailsDtos = new ArrayList<>();
-        userWithDetailsDtos.add(new UserWithDetailsDto(1, 1, "Chette", "Barbie", "barbie@email.com"));
-        userWithDetailsDtos.add(new UserWithDetailsDto(2,2, "Mattel", "Ken", "ken@email.com"));
+        userWithDetailsDtos.add(new UserWithDetailsDto(1, 1, "Chette", "Barbie", "barbie@email.com", "avatarRef", null));
+        userWithDetailsDtos.add(new UserWithDetailsDto(2,2, "Mattel", "Ken", "ken@email.com", "avatarRef", null));
 
         //when
         when(captainJpaRepository.findAllCaptainByCustomerId(customerId)).thenReturn(userWithDetailsDtos);
 
         List<UserEntityWithID> expecteduserEntityWithIDS = new ArrayList<>();
-        expecteduserEntityWithIDS.add(new UserEntityWithID(1, 1,null,"Chette", "Barbie", "barbie@email.com"));
-        expecteduserEntityWithIDS.add(new UserEntityWithID(2, 2,null,"Mattel", "Ken", "ken@email.com"));
+        expecteduserEntityWithIDS.add(new UserEntityWithID(1, 1,null,"Chette", "Barbie", "barbie@email.com", "avatarRef", null));
+        expecteduserEntityWithIDS.add(new UserEntityWithID(2, 2,null,"Mattel", "Ken", "ken@email.com", "avatarRef", null));
 
         List<UserEntityWithID> actualCaptainEntities = captainService.getAllCaptainByCustomerId(customerId);
 

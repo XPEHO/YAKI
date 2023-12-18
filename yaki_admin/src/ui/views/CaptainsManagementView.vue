@@ -4,7 +4,7 @@ import {onBeforeMount} from "vue";
 import PageContentLayout from "@/ui/layouts/PageContentLayout.vue";
 import {useCaptainStore} from "@/stores/captainStore";
 import {useSelectedRoleStore} from "@/stores/selectedRole";
-import {INVITEDROLE} from "@/constants/pathParam";
+import {INVITEDROLE} from "@/constants/pathParam.enum";
 
 import PageContentHeader from "@/ui/views/PageContentHeader.vue";
 import UserList from "@/ui/components/UserList.vue";

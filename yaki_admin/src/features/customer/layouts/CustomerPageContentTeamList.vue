@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import { onBeforeMount } from "vue";
+import {onBeforeMount} from "vue";
 
 import HeaderContentPage from "@/features/shared/components/HeaderContentPage.vue";
-import { useTeamStore } from "@/stores/teamStore";
+import {useTeamStore} from "@/stores/teamStore";
 import modalState from "@/features/modal/services/modalState";
-import { MODALMODE } from "@/constants/modalMode";
+import {MODALMODE} from "@/constants/modalMode.enum";
 
 import PageContentLayout from "@/ui/layouts/PageContentLayout.vue";
 import SideBarButton from "@/features/shared/components/SideBarButton.vue";
 import plusIcon from "@/assets/images/plus.png";
-import { useCaptainStore } from "@/stores/captainStore";
-import { useSelectedRoleStore } from "@/stores/selectedRole";
+import {useCaptainStore} from "@/stores/captainStore";
+import {useSelectedRoleStore} from "@/stores/selectedRole";
 
 const teamStore = useTeamStore();
 const captainStore = useCaptainStore();
@@ -18,9 +18,7 @@ const selectedRoleStore = useSelectedRoleStore();
 
 onBeforeMount(async () => {
   await teamStore.setTeamsFromCustomer();
-  await captainStore.setAllCaptainsByCustomerId(
-    selectedRoleStore.getCustomerIdSelected
-  );
+  await captainStore.setAllCaptainsByCustomerId(selectedRoleStore.getCustomerIdSelected);
 });
 
 const customerTeamCreation = () => {
@@ -48,3 +46,4 @@ const customerTeamCreation = () => {
     </template>
   </page-content-layout>
 </template>
+@/constants/modalMode.enum

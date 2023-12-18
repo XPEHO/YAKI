@@ -4,8 +4,8 @@ import ModalCreateEditTeam from "@/ui/components/modals/ModalCreateEditTeam.vue"
 import ModalDelete from "@/ui/components/modals/ModalDelete.vue";
 import {useModalStore} from "@/stores/modalStore";
 import {isATeamType} from "@/models/team.type";
-import {MODALMODE} from "@/constants/modalMode";
-import {TEAMPARAMS} from "@/constants/pathParam";
+import {MODALMODE} from "@/constants/modalMode.enum";
+import {TEAMPARAMS} from "@/constants/pathParam.enum";
 
 const modalStore = useModalStore();
 
