@@ -28,7 +28,7 @@ Yaki admin frontend is the desktop front-end of the Admin Yaki application, so t
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+### Compile and Hot-Reload for Development.
 
 ```
 npm run dev
