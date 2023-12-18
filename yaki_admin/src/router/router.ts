@@ -13,8 +13,6 @@ import StatisticsView from "@/ui/views/StatisticsView.vue";
 import { useTeamStore } from "@/stores/teamStore";
 import { useRoleStore } from "@/stores/roleStore";
 import { TEAMPARAMS } from "@/constants/pathParam.enum";
-import Profile from "@/ui/views/Profile.vue";
-import Statistics from "@/ui/views/Statistics.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
