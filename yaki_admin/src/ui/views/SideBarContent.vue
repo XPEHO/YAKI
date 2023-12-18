@@ -7,27 +7,26 @@ import Banner from "@/assets/images/splashscreen.svg";
 import caseIcon from "@/assets/images/briefcase-regular-24.png";
 import hatIcon from "@/assets/images/hard-hat-regular-24.png";
 import statIcon from "@/assets/images/stats.png";
+
+import router from "@/router/router";
+
+const onClickStatistics = () => {
+  router.push("/dashboard/statistics");
+};
 </script>
 
 <template>
   <nav class="sidebar__container">
     <div>
       <figure>
-        <img
-          :src="Banner"
-          alt="" />
+        <img :src="Banner" alt="" />
       </figure>
 
+      <side-bar-menu-link :icon="caseIcon" text="Clients" />
+      <side-bar-menu-link :icon="hatIcon" text="Captains" />
+      <side-bar-menu-drop-down inner-text="My teams" icon-path="groupIcon" />
       <side-bar-menu-link
-        :icon="caseIcon"
-        text="Clients" />
-      <side-bar-menu-link
-        :icon="hatIcon"
-        text="Captains" />
-      <side-bar-menu-drop-down
-        inner-text="My teams"
-        icon-path="groupIcon" />
-      <side-bar-menu-link
+        @click.prevent="onClickStatistics"
         :icon="statIcon"
         text="Statistics" />
     </div>
