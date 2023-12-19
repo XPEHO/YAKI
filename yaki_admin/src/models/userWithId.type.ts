@@ -6,5 +6,5 @@ export type UserWithIdType = {
   lastname: string;
   email: string;
   avatarReference: string;
-  avatarBlob: Uint8Array;
+  avatarBlob: Uint8Array | null;
 };
