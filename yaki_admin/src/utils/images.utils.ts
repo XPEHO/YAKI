@@ -6,22 +6,16 @@ import avatarN from "@/assets/images/avatarN.svg";
 import userAvatar from "@/assets/images/avatar_2.png";
 
 export const setUserAvatarUrl = (user: UserWithIdType) => {
-  let avatarUrl;
   switch (user.avatarReference) {
     case AVATARENUM.userPicture:
-      avatarUrl = `data:image/jpeg;base64,${user.avatarBlob}`;
-      break;
+      return `data:image/jpeg;base64,${user.avatarBlob}`;
     case AVATARENUM.avatarH:
-      avatarUrl = avatarH;
-      break;
+      return avatarH;
     case AVATARENUM.avatarF:
-      avatarUrl = avatarF;
-      break;
+      return avatarF;
     case AVATARENUM.avatarN:
-      avatarUrl = avatarN;
-      break;
+      return avatarN;
     default:
-      avatarUrl = userAvatar;
+      return userAvatar;
   }
-  return avatarUrl;
 };
