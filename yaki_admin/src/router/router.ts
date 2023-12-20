@@ -1,5 +1,5 @@
-import {createRouter, createWebHistory} from "vue-router";
-import {useAuthStore} from "@/stores/authStore";
+import { createRouter, createWebHistory } from "vue-router";
+import { useAuthStore } from "@/stores/authStore";
 import LoginView from "@/ui/views/LoginView.vue";
 import UserInvitationPageContent from "@/features/invitation/layouts/UserInvitationPageContent.vue";
 
@@ -7,10 +7,12 @@ import PageGeneralLayout from "@/ui/layouts/PageGeneralLayout.vue";
 import TeamManagementView from "@/ui/views/TeamManagementView.vue";
 import TeamStatusNotification from "@/ui/views/TeamStatusNotification.vue";
 import CaptainsManagementView from "@/ui/views/CaptainsManagementView.vue";
+import ProfileView from "@/ui/views/ProfileView.vue";
+import StatisticsView from "@/ui/views/StatisticsView.vue";
 
-import {useTeamStore} from "@/stores/teamStore";
-import {useRoleStore} from "@/stores/roleStore";
-import {TEAMPARAMS} from "@/constants/pathParam.enum";
+import { useTeamStore } from "@/stores/teamStore";
+import { useRoleStore } from "@/stores/roleStore";
+import { TEAMPARAMS } from "@/constants/pathParam.enum";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -19,13 +21,13 @@ const router = createRouter({
       path: "/",
       name: "Login",
       component: LoginView,
-      meta: {transition: "slide-left"},
+      meta: { transition: "slide-left" },
     },
     {
       path: "/dashboard",
       name: "dashboard",
       component: PageGeneralLayout,
-      meta: {transition: "slide-right"},
+      meta: { transition: "slide-right" },
       children: [
         {
           path: "manage-team",
@@ -55,6 +57,14 @@ const router = createRouter({
         {
           path: "invitation/:role",
           component: UserInvitationPageContent,
+        },
+        {
+          path: "profile",
+          component: ProfileView,
+        },
+        {
+          path: "statistics",
+          component: StatisticsView,
         },
       ],
     },
