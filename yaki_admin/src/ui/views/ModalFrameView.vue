@@ -2,14 +2,19 @@
 import router from "@/router/router";
 import ModalCreateEditTeam from "@/ui/components/modals/ModalCreateEditTeam.vue";
 import ModalDelete from "@/ui/components/modals/ModalDelete.vue";
-import {useModalStore} from "@/stores/modalStore";
-import {isATeamType} from "@/models/team.type";
-import {MODALMODE} from "@/constants/modalMode.enum";
-import {TEAMPARAMS} from "@/constants/pathParam.enum";
+import ModalComingSoon from "@/ui/components/modals/ModalComingSoon.vue";
+import { useModalStore } from "@/stores/modalStore";
+import { isATeamType } from "@/models/team.type";
+import { MODALMODE } from "@/constants/modalMode.enum";
+import { TEAMPARAMS } from "@/constants/pathParam.enum";
 
 const modalStore = useModalStore();
 
 const onCancel = () => {
+  modalStore.switchModalVisibility(false, null);
+};
+
+const closeModal = () => {
   modalStore.switchModalVisibility(false, null);
 };
 
@@ -30,11 +35,12 @@ const onAccept = async () => {
     const currentPath = router.currentRoute.value.path;
     if (
       modalStore.getMode === MODALMODE.teamCreate &&
-      (currentPath === `/dashboard/team/${TEAMPARAMS.empty}` || currentPath === `/dashboard/team/${TEAMPARAMS.deleted}`)
+      (currentPath === `/dashboard/team/${TEAMPARAMS.empty}` ||
+        currentPath === `/dashboard/team/${TEAMPARAMS.deleted}`)
     ) {
-      router.push({path: "/dashboard/manage-team"});
+      router.push({ path: "/dashboard/manage-team" });
     } else if (modalStore.getMode === MODALMODE.teamDelete) {
-      router.push({path: `/dashboard/team/${TEAMPARAMS.deleted}`});
+      router.push({ path: `/dashboard/team/${TEAMPARAMS.deleted}` });
     }
   }
 };
@@ -46,11 +52,20 @@ const onAccept = async () => {
       <modal-create-edit-team
         @on-accept="onAccept"
         @on-cancel="onCancel"
-        v-if="modalStore.getMode === MODALMODE.teamCreate || modalStore.getMode === MODALMODE.teamEdit" />
+        v-if="
+          modalStore.getMode === MODALMODE.teamCreate ||
+          modalStore.getMode === MODALMODE.teamEdit
+        " />
       <modal-delete
         @on-accept="onAccept"
         @on-cancel="onCancel"
-        v-else-if="modalStore.getMode === MODALMODE.teamDelete || modalStore.getMode === MODALMODE.userDelete" />
+        v-else-if="
+          modalStore.getMode === MODALMODE.teamDelete ||
+          modalStore.getMode === MODALMODE.userDelete
+        " />
+      <modal-coming-soon
+        @close="closeModal"
+        v-else-if="modalStore.getMode === MODALMODE.userEdit" />
     </dialog>
   </section>
 </template>
