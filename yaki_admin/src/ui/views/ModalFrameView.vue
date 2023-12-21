@@ -54,7 +54,7 @@ const onAccept = async () => {
         @on-cancel="onCancel"
         v-if="
           modalStore.getMode === MODALMODE.teamCreate ||
-          modalStore.getMode === MODALMODE.teamEdit
+          modalStore.getMode === MODALMODE.comingSoon
         " />
       <modal-delete
         @on-accept="onAccept"

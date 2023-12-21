@@ -28,7 +28,7 @@ const UserToBeRemoved = () => {
 };
 
 const OpenModalNotImplemented = () => {
-  modalStore.switchModalVisibility(true, MODALMODE.userEdit);
+  modalStore.switchModalVisibility(true, MODALMODE.comingSoon);
 };
 </script>
 
