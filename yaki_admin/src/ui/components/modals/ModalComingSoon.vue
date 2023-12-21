@@ -11,14 +11,14 @@ const closeModal = async () => {
 </script>
 
 <template>
-  <section class="modal-background">
-    <dialog class="modal-container">
-      <h2>Coming soon</h2>
+  <section class="modal__container modal__delete-size">
+    <h1 class="modal__container-title">Coming soon</h1>
+    <div class="modal__location-button">
       <button-text-icon
         :text="'CLOSE'"
         :icon="deleteIcon"
         :color="BUTTONCOLORS.delete"
         @click.prevent="closeModal" />
-    </dialog>
+    </div>
   </section>
 </template>
