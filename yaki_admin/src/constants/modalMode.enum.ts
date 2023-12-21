@@ -11,6 +11,7 @@
  */
 export enum MODALMODE {
   userDelete = "userDelete",
+  comingSoon = "comingSoon",
   teamCreateCustomer = "teamCreateCustomer",
   teamCreate = "teamCreate",
   teamEdit = "teamEdit",

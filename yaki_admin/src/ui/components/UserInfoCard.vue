@@ -2,14 +2,12 @@
 import buttonIcon from "@/ui/components/buttons/ButtonIcon.vue";
 import pencilIcon from "@/assets/images/pencil-regular-24.png";
 import deleteIcon from "@/assets/images/x_close.png";
-
-import {PropType} from "vue";
-import {UserWithIdType} from "@/models/userWithId.type";
-import {MODALMODE} from "@/constants/modalMode.enum";
-import {useModalStore} from "@/stores/modalStore";
-import {useTeammateStore} from "@/stores/teammateStore";
-
-import {setUserAvatarUrl} from "@/utils/images.utils";
+import { PropType } from "vue";
+import { UserWithIdType } from "@/models/userWithId.type";
+import { MODALMODE } from "@/constants/modalMode.enum";
+import { useModalStore } from "@/stores/modalStore";
+import { useTeammateStore } from "@/stores/teammateStore";
+import { setUserAvatarUrl } from "@/utils/images.utils";
 
 const modalStore = useModalStore();
 const teammateStore = useTeammateStore();
@@ -23,8 +21,14 @@ const props = defineProps({
 
 const UserToBeRemoved = () => {
   teammateStore.setIdOfTeammateToDelete(props.user.teammateId);
-  modalStore.setTeammateNameToDelete(`${props.user.firstname} ${props.user.lastname}`);
+  modalStore.setTeammateNameToDelete(
+    `${props.user.firstname} ${props.user.lastname}`
+  );
   modalStore.switchModalVisibility(true, MODALMODE.userDelete);
+};
+
+const OpenModalNotImplemented = () => {
+  modalStore.switchModalVisibility(true, MODALMODE.comingSoon);
 };
 </script>
 
@@ -37,7 +41,9 @@ const UserToBeRemoved = () => {
         alt="user-card" />
     </figure>
     <div class="user-card__wrapper-user-infos">
-      <p class="user-card__name-text">{{ user.firstname }} {{ user.lastname }}</p>
+      <p class="user-card__name-text">
+        {{ user.firstname }} {{ user.lastname }}
+      </p>
       <p>{{ user.email }}</p>
     </div>
     <section class="user-card__wrapper-status">
@@ -46,14 +52,15 @@ const UserToBeRemoved = () => {
       </div>
       <div class="user-card__wrapper-status_buttons">
         <button-icon
+          @click.prevent="OpenModalNotImplemented"
           :icon="pencilIcon"
-          alt="accepter" />
+          alt="modifier" />
+
         <button-icon
           @click.prevent="UserToBeRemoved"
           :icon="deleteIcon"
-          alt="refuser" />
+          alt="supprimer" />
       </div>
     </section>
-    <section></section>
   </article>
 </template>
