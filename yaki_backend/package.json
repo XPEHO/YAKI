@@ -43,7 +43,7 @@
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "express-rate-limit": "^6.11.0",
-    "jest-mock": "^29.6.2",
+    "jest-mock": "^29.7.0",
     "jsonwebtoken": "^9.0.0",
     "multer": "^1.4.5-lts.1",
     "pg": "^8.11.3",
