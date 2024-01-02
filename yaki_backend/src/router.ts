@@ -45,6 +45,10 @@ const passwordRepository = new PasswordRepository();
 const passwordService = new PasswordService(passwordRepository, userService);
 const passwordController = new PasswordController(passwordService);
 
+router.get("/verify-token", authService.verifyToken, (_, res) =>
+  res.status(200).send("Token is valid")
+);
+
 router.post("/login", signInLimiter, (req, res) =>
   /* #swagger.parameters['Login'] = {
                 in: 'body',
@@ -108,7 +112,8 @@ router.get(
                 schema: { userId: 1 }
 }
   */ authService.verifyToken(req, res, next),
-  async (req, res) => teammateController.getTeammatesDeclarationsAndAvatarFromUserTeams(req, res)
+  async (req, res) =>
+    teammateController.getTeammatesDeclarationsAndAvatarFromUserTeams(req, res)
 );
 
 // DEPRECIATED - TO BE REMOVED WHEN 1.10 isnt used anymore
