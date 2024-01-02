@@ -19,7 +19,10 @@ export class CaptainService {
     return response;
   };
 
-  getAllCaptainsByCustomerId = async (customerId: number): Promise<UserWithIdType[]> => {
+
+  getAllCaptainsByCustomerId = async (
+    customerId: number
+  ): Promise<UserWithIdType[]> => {
     const requestOptions = {
       method: "GET",
       headers: authHeader(`${URL}/captains/customer/${customerId}`),
@@ -55,6 +58,8 @@ export class CaptainService {
       .then(handleResponse)
       .catch((err) => console.warn(err));
   };
+
+  // get a captain by id
   getCaptain = async (captainId: number): Promise<CaptainType> => {
     const requestOptions = {
       method: "GET",

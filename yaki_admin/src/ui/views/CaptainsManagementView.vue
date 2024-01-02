@@ -13,7 +13,9 @@ const captainStore = useCaptainStore();
 const selectedRoleStore = useSelectedRoleStore();
 
 onBeforeMount(async () => {
-  await captainStore.setAllCaptainsByCustomerId(selectedRoleStore.getCustomerIdSelected);
+  await captainStore.setAllCaptainsByCustomerId(
+    selectedRoleStore.getCustomerIdSelected
+  );
 });
 </script>
 
