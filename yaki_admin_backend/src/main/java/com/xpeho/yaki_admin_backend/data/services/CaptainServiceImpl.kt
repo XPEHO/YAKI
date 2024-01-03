@@ -74,7 +74,7 @@ class CaptainServiceImpl(private val captainJpaRepository: CaptainJpaRepository,
     override fun getAllCaptainsIdByUserId(userId: Int): List<Int> {
         return captainJpaRepository
                 .findAllByUserId(userId)
-                .filter { captainModel -> captainModel.isActif }
+                .filter { captainModel -> captainModel.actifFlag }
                 .map { captainModel: CaptainModel ->
                     captainModel.captainId
                 }
@@ -113,7 +113,7 @@ class CaptainServiceImpl(private val captainJpaRepository: CaptainJpaRepository,
         }
         val captainModel = captainModelOpt.get()
         entityLogService.disabledEntity(captainModel.entityLogId)
-        captainModel.isActif = false
+        captainModel.actifFlag = false
         captainJpaRepository.save(captainModel)
         println(captainModel)
         return CaptainEntity(captainModel.captainId, captainModel.userId, captainModel.customerId)
