@@ -77,9 +77,7 @@ final goRouterProvider = Provider<GoRouter>(
                 child: Authentication(),
               ),
               redirect: (BuildContext context, GoRouterState state) async {
-                final isTokenSaves = await SharedPref.isTokenPresent();
-
-                if (isTokenSaves) {
+                if (await SharedPref.isTokenPresent()) {
                   return '/teams-declaration-summary';
                 } else {
                   return '/authentication';
