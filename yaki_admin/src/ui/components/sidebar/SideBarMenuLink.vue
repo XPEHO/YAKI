@@ -18,6 +18,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  isUserAutorized: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const defaultClassList = [
@@ -29,7 +33,16 @@ const defaultClassList = [
 </script>
 
 <template>
-  <div :class="[defaultClassList, isModalElement ? 'text-icon--background-white' : 'text-icon--sidebar-color']">
+  <div
+    :class="[
+      defaultClassList,
+      isModalElement
+        ? 'text-icon--background-white'
+        : isUserAutorized
+        ? 'text-icon--sidebar-color'
+        : '',
+      isUserAutorized ? '' : 'menu-link-disable',
+    ]">
     <figure>
       <img
         :src="icon"
@@ -38,3 +51,19 @@ const defaultClassList = [
     <p class="text-icon--text">{{ props.text }}</p>
   </div>
 </template>
+
+<style scoped lang="scss">
+.menu-link-disable {
+  figure {
+    img {
+      filter: invert(0.8) brightness(0.5);
+    }
+  }
+
+  p {
+    color: rgb(113, 104, 104);
+  }
+
+  cursor: default;
+}
+</style>
