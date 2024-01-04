@@ -1,8 +1,8 @@
-import {reactive} from "vue";
-import {useTeamStore} from "@/stores/teamStore.js";
-import {MODALMODE} from "@/constants/modalMode.enum";
-import {useTeammateStore} from "@/stores/teammateStore";
-import {useRoleStore} from "@/stores/roleStore";
+import { reactive } from "vue";
+import { useTeamStore } from "@/stores/teamStore.js";
+import { MODALMODE } from "@/constants/modalMode.enum";
+import { useTeammateStore } from "@/stores/teammateStore";
+import { useRoleStore } from "@/stores/roleStore";
 
 // DEPRECIATED REMOVE WHEN CUSTOMER IS MADE
 //==================================================================================================
@@ -96,7 +96,7 @@ const modalState = reactive({
       teamStore.getTeamSelected.captainsId[0],
       this.teamInputValue,
       null,
-      this.teamInputValue
+      this.teamInputValue,
     );
     this.refreshTeamList();
     //reset value
@@ -145,7 +145,11 @@ const modalState = reactive({
 
   async createNewTeamWithOptionalCaptain() {
     const teamStore = useTeamStore();
-    teamStore.createTeamOptionalAssignCaptain(this.teamName, teamStore.getCaptainIdToBeAssign, this.teamDescription);
+    teamStore.createTeamOptionalAssignCaptain(
+      this.teamName,
+      teamStore.getCaptainIdToBeAssign,
+      this.teamDescription,
+    );
     this.refreshTeamListForCustomer();
     //reset values
     teamStore.setCaptainIdToBeAssign(null);

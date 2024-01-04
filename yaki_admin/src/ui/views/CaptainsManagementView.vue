@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import {onBeforeMount} from "vue";
+import { onBeforeMount } from "vue";
 
 import PageContentLayout from "@/ui/layouts/PageContentLayout.vue";
-import {useCaptainStore} from "@/stores/captainStore";
-import {useSelectedRoleStore} from "@/stores/selectedRole";
-import {INVITEDROLE} from "@/constants/pathParam.enum";
+import { useCaptainStore } from "@/stores/captainStore";
+import { useSelectedRoleStore } from "@/stores/selectedRole";
+import { INVITEDROLE } from "@/constants/pathParam.enum";
 
 import PageContentHeader from "@/ui/views/PageContentHeader.vue";
 import UserList from "@/ui/components/UserList.vue";
@@ -25,7 +25,8 @@ onBeforeMount(async () => {
     <template #content>
       <user-list
         :userList="captainStore.getCaptainList"
-        :isUsingTeamDescription="false" />
+        :isUsingTeamDescription="false"
+      />
     </template>
   </page-content-layout>
 </template>

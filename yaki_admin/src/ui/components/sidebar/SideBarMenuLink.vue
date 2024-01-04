@@ -39,14 +39,16 @@ const defaultClassList = [
       isModalElement
         ? 'text-icon--background-white'
         : isUserAutorized
-        ? 'text-icon--sidebar-color'
-        : '',
+          ? 'text-icon--sidebar-color'
+          : '',
       isUserAutorized ? '' : 'menu-link-disable',
-    ]">
+    ]"
+  >
     <figure>
       <img
         :src="icon"
-        alt="close" />
+        alt="close"
+      />
     </figure>
     <p class="text-icon--text">{{ props.text }}</p>
   </div>

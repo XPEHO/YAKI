@@ -1,11 +1,14 @@
 <script setup lang="ts">
-import {PropType, onMounted, reactive} from "vue";
-import type {UserWithIdType} from "@/models/userWithId.type";
+import { PropType, onMounted, reactive } from "vue";
+import type { UserWithIdType } from "@/models/userWithId.type";
 
 import avatarIcon from "@/assets/images/avatar.png";
 import defaultButton from "@/features/shared/components/DefaultButton.vue";
 
-import {checkInvitationStatus, updateReactive} from "@/features/invitation/services/invitationService";
+import {
+  checkInvitationStatus,
+  updateReactive,
+} from "@/features/invitation/services/invitationService";
 
 const props = defineProps({
   user: {
@@ -36,7 +39,10 @@ const settings = reactive({
 });
 
 onMounted(() => {
-  updateReactive(settings, checkInvitationStatus(props.user, props.adminList, props.invitationStatusText));
+  updateReactive(
+    settings,
+    checkInvitationStatus(props.user, props.adminList, props.invitationStatusText),
+  );
 });
 
 const emit = defineEmits<{
@@ -55,7 +61,7 @@ const invitBtnClick = async () => {
 
 const cssEffect = () => {
   // meant to be removed when mailing system is made, demo purpose
-  let time = Math.floor(Math.random() * (3000 - 1000)) + 1000;
+  const time = Math.floor(Math.random() * (3000 - 1000)) + 1000;
 
   settings.text = "Pending...";
   settings.btnCSS = "button-class-test btn-bg-color-pending";
@@ -73,13 +79,15 @@ const cssEffect = () => {
 <template>
   <section
     class="user-component__card"
-    :class="settings.cardCSS">
+    :class="settings.cardCSS"
+  >
     <div>
       <article class="card__img-identity">
         <figure>
           <img
             v-bind:src="avatarIcon"
-            alt="Image de profil" />
+            alt="Image de profil"
+          />
         </figure>
         <article>
           <p>{{ user.firstname }} {{ user.lastname }}</p>
@@ -89,7 +97,8 @@ const cssEffect = () => {
       <default-button
         :text="settings.text"
         :css-class="settings.btnCSS"
-        @click.prevent="invitBtnClick" />
+        @click.prevent="invitBtnClick"
+      />
     </div>
   </section>
 </template>

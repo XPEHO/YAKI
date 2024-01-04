@@ -3,8 +3,8 @@ import buttonPrimary from "@/ui/components/buttons/ButtonPrimary.vue";
 import buttonSecondary from "@/ui/components/buttons/ButtonSecondary.vue";
 import inputText from "@/ui/components/inputs/InputText.vue";
 import inputPassword from "@/ui/components/inputs/InputPassword.vue";
-import {useAuthStore} from "@/stores/authStore";
-import {reactive} from "vue";
+import { useAuthStore } from "@/stores/authStore";
+import { reactive } from "vue";
 
 const usernamePlaceholder = "Login";
 const passwordPlaceholder = "Password";
@@ -39,19 +39,23 @@ const forgottenPassword = () => {};
       <form>
         <input-text
           :labelText="usernamePlaceholder"
-          @emittedInput="onInputLogin" />
+          @emittedInput="onInputLogin"
+        />
 
         <input-password
           :labelText="passwordPlaceholder"
-          @emittedInput="onInputPassword" />
+          @emittedInput="onInputPassword"
+        />
 
         <button-primary
           text="SIGN IN"
           @click.prevent="login"
-          type="submit" />
+          type="submit"
+        />
         <buttonSecondary
           text="FORGOTTEN PASSWORD?"
-          @click.prevent="forgottenPassword" />
+          @click.prevent="forgottenPassword"
+        />
       </form>
     </div>
   </section>

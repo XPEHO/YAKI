@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import UserInfoCard from "@/ui/components/UserInfoCard.vue";
-import {UserWithIdType} from "@/models/userWithId.type";
-import {PropType} from "vue";
-import {useTeamStore} from "@/stores/teamStore";
+import { UserWithIdType } from "@/models/userWithId.type";
+import { PropType } from "vue";
+import { useTeamStore } from "@/stores/teamStore";
 
 const teamStore = useTeamStore();
 
@@ -32,7 +32,8 @@ const props = defineProps({
       <user-info-card
         v-for="user in userList"
         :user="user"
-        :key="user.id" />
+        :key="user.id"
+      />
     </section>
   </section>
 </template>

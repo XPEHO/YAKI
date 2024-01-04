@@ -3,12 +3,12 @@ import ButtonTextIcon from "@/ui/components/buttons/ButtonTextIcon.vue";
 import ButtonTextSized from "@/ui/components/buttons/ButtonTextSized.vue";
 import deleteIcon from "@/assets/images/x_close.png";
 
-import {BUTTONCOLORS} from "@/constants/componentsSettings.enum";
-import {MODALMODE} from "@/constants/modalMode.enum";
+import { BUTTONCOLORS } from "@/constants/componentsSettings.enum";
+import { MODALMODE } from "@/constants/modalMode.enum";
 
-import {useModalStore} from "@/stores/modalStore";
-import {useTeamStore} from "@/stores/teamStore";
-import {computed} from "vue";
+import { useModalStore } from "@/stores/modalStore";
+import { useTeamStore } from "@/stores/teamStore";
+import { computed } from "vue";
 
 const modalStore = useModalStore();
 const teamStore = useTeamStore();
@@ -73,12 +73,14 @@ const onDeletePress = async () => {
       <button-text-sized
         text="Cancel"
         :color="BUTTONCOLORS.secondary"
-        @click.prevent="onCancelPress" />
+        @click.prevent="onCancelPress"
+      />
       <button-text-icon
         :text="modalStore.getMode === MODALMODE.userDelete ? 'REMOVE' : 'DELETE'"
         :icon="deleteIcon"
         :color="BUTTONCOLORS.delete"
-        @click.prevent="onDeletePress" />
+        @click.prevent="onDeletePress"
+      />
     </div>
   </section>
 </template>

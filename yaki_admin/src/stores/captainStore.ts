@@ -1,7 +1,7 @@
-import {defineStore} from "pinia";
-import {CaptainType} from "@/models/captain.type";
-import {captainService} from "@/services/captain.service";
-import {UserWithIdType} from "@/models/userWithId.type";
+import { defineStore } from "pinia";
+import { CaptainType } from "@/models/captain.type";
+import { captainService } from "@/services/captain.service";
+import { UserWithIdType } from "@/models/userWithId.type";
 
 interface State {
   captainList: UserWithIdType[];

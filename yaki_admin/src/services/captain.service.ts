@@ -12,27 +12,19 @@ export class CaptainService {
       method: "GET",
       headers: authHeader(`${URL}/captains/user/${userId}`),
     };
-    const response = await fetch(
-      `${URL}/captains/user/${userId}`,
-      requestOptions
-    )
+    const response = await fetch(`${URL}/captains/user/${userId}`, requestOptions)
       .then(handleResponse)
       .catch((err) => console.warn(err));
 
     return response;
   };
 
-  getAllCaptainsByCustomerId = async (
-    customerId: number
-  ): Promise<UserWithIdType[]> => {
+  getAllCaptainsByCustomerId = async (customerId: number): Promise<UserWithIdType[]> => {
     const requestOptions = {
       method: "GET",
       headers: authHeader(`${URL}/captains/customer/${customerId}`),
     };
-    const response = await fetch(
-      `${URL}/captains/customer/${customerId}`,
-      requestOptions
-    )
+    const response = await fetch(`${URL}/captains/customer/${customerId}`, requestOptions)
       .then(handleResponse)
       .catch((err) => console.warn(err));
 
@@ -62,21 +54,18 @@ export class CaptainService {
     await fetch(`${URL}/captains/delete/${captainId}`, requestOptions)
       .then(handleResponse)
       .catch((err) => console.warn(err));
-  } 
+  };
   getCaptain = async (captainId: number): Promise<CaptainType> => {
     const requestOptions = {
       method: "GET",
       headers: authHeader(`${URL}/captains/${captainId}`),
     };
-    const response = await fetch(
-      `${URL}/captains/${captainId}`,
-      requestOptions
-    )
+    const response = await fetch(`${URL}/captains/${captainId}`, requestOptions)
       .then(handleResponse)
       .catch((err) => console.warn(err));
 
     return response;
-  }
+  };
 }
 
 export const captainService = Object.freeze(new CaptainService());

@@ -5,10 +5,10 @@ import arrowIcon from "@/assets/images/chevron-down-regular-24.png";
 import addIcon from "@/assets/images/plus_icon.png";
 
 import router from "@/router/router";
-import {useTeamStore} from "@/stores/teamStore";
-import {useModalStore} from "@/stores/modalStore";
-import {MODALMODE} from "@/constants/modalMode.enum";
-import {TeamType} from "@/models/team.type";
+import { useTeamStore } from "@/stores/teamStore";
+import { useModalStore } from "@/stores/modalStore";
+import { MODALMODE } from "@/constants/modalMode.enum";
+import { TeamType } from "@/models/team.type";
 
 const modalStore = useModalStore();
 const teamStore = useTeamStore();
@@ -20,7 +20,7 @@ const onClickAddTeam = () => {
 
 const onClickSelectTeam = async (team: TeamType) => {
   await teamStore.setTeamInfoAndFetchTeammates(team);
-  router.push({path: "/dashboard/manage-team"});
+  router.push({ path: "/dashboard/manage-team" });
 };
 
 const props = defineProps({
@@ -47,11 +47,13 @@ const props = defineProps({
         'text-icon__container-height--padding',
         'text_icon--icon',
         isUserAutorized ? 'drop-down--sidebar-color' : '',
-      ]">
+      ]"
+    >
       <figure>
         <img
           :src="groupIcon"
-          alt="group icon" />
+          alt="group icon"
+        />
       </figure>
       <p class="text-icon--text">{{ props.innerText }}</p>
     </div>
@@ -61,36 +63,43 @@ const props = defineProps({
       class="drop-down__checkbox"
       type="checkbox"
       id="sidebar-dropdown"
-      :disabled="!isUserAutorized" />
+      :disabled="!isUserAutorized"
+    />
     <!-- AUTORIZATION -->
     <figure
       v-if="isUserAutorized"
-      class="drop-down__icon image-filter">
+      class="drop-down__icon image-filter"
+    >
       <img
         :src="arrowIcon"
-        alt="drop down menu arrow" />
+        alt="drop down menu arrow"
+      />
     </figure>
 
     <section class="drop-down__menu">
       <button
         @click.prevent="onClickAddTeam"
-        class="drop-down__create-team">
+        class="drop-down__create-team"
+      >
         <figure>
           <img
             :src="addIcon"
-            alt="Add icon" />
+            alt="Add icon"
+          />
         </figure>
         <p>Create team</p>
       </button>
       <div
         v-if="teamStore.getTeamList && teamStore.getTeamList.length > 0"
-        class="gap_add">
+        class="gap_add"
+      >
         <side-bar-menu-drop-down-element
           v-for="team in teamStore.getTeamList"
           :key="team.id"
           v-bind:id="team.id"
           v-bind:teamName="team.teamName"
-          @click.prevent="() => onClickSelectTeam(team)" />
+          @click.prevent="() => onClickSelectTeam(team)"
+        />
       </div>
       <div v-else>
         <p class="no-teams unselectabla-text">No team available</p>

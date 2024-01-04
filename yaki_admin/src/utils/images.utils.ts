@@ -1,5 +1,5 @@
-import {UserWithIdType} from "@/models/userWithId.type";
-import {AVATARENUM} from "@/constants/avatar.enum";
+import { UserWithIdType } from "@/models/userWithId.type";
+import { AVATARENUM } from "@/constants/avatar.enum";
 import avatarH from "@/assets/images/avatarH.svg";
 import avatarF from "@/assets/images/avatarF.svg";
 import avatarN from "@/assets/images/avatarN.svg";

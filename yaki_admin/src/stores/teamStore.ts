@@ -1,9 +1,9 @@
-import {TeamType} from "./../models/team.type";
-import {defineStore} from "pinia";
-import {teammateService} from "@/services/teammate.service";
-import {teamService} from "@/services/team.service";
-import {useSelectedRoleStore} from "@/stores/selectedRole";
-import {useTeammateStore} from "@/stores/teammateStore";
+import { TeamType } from "./../models/team.type";
+import { defineStore } from "pinia";
+import { teammateService } from "@/services/teammate.service";
+import { teamService } from "@/services/team.service";
+import { useSelectedRoleStore } from "@/stores/selectedRole";
+import { useTeammateStore } from "@/stores/teammateStore";
 
 interface State {
   teamList: TeamType[];
@@ -71,7 +71,7 @@ export const useTeamStore = defineStore("teamStore", {
     async setTeamListOfACaptain(captainsId: number[]) {
       this.teamList = [];
       const promises: Promise<TeamType[]>[] = captainsId.map((captainId) =>
-        teamService.getAllTeamsWithinCaptain(captainId)
+        teamService.getAllTeamsWithinCaptain(captainId),
       );
       const teams = await Promise.all(promises);
       this.teamList = [...teams.flat()];
@@ -85,7 +85,7 @@ export const useTeamStore = defineStore("teamStore", {
     // add a selected user to a team
     async addUserToTeam(userId: number): Promise<void> {
       const teammateStore = useTeammateStore();
-      const data = {teamId: this.getTeamSelected.id, userId: userId};
+      const data = { teamId: this.getTeamSelected.id, userId: userId };
       await teammateService.createTeammate(data);
       await teammateStore.setListOfTeammatesWithinTeam(this.getTeamSelected.id);
     },
@@ -120,7 +120,7 @@ export const useTeamStore = defineStore("teamStore", {
       cptId: number | null,
       teamName: string | null,
       customerId: number | null,
-      teamDescription: string | null
+      teamDescription: string | null,
     ): Promise<TeamType> {
       return await teamService.updateTeam(teamID, cptId, teamName, customerId, teamDescription);
     },
@@ -144,7 +144,7 @@ export const useTeamStore = defineStore("teamStore", {
     async createTeamOptionalAssignCaptain(
       teamName: string,
       captainId: number | null,
-      teamDescription: string
+      teamDescription: string,
     ): Promise<void> {
       const selectedRoleStore = useSelectedRoleStore();
       const customerId = selectedRoleStore.getCustomerIdSelected;
@@ -159,7 +159,9 @@ export const useTeamStore = defineStore("teamStore", {
     async setTeamsFromCustomer() {
       const selectedRoleStore = useSelectedRoleStore();
 
-      this.teamList = await teamService.getAllTeamsByCustomerId(selectedRoleStore.customerIdSelected);
+      this.teamList = await teamService.getAllTeamsByCustomerId(
+        selectedRoleStore.customerIdSelected,
+      );
     },
   },
 });

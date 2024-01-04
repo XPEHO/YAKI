@@ -1,5 +1,5 @@
-import { useAuthStore } from '@/stores/authStore';
-export function handleResponse(response:globalThis.Response):Promise<any> {
+import { useAuthStore } from "@/stores/authStore";
+export function handleResponse(response: globalThis.Response): Promise<any> {
   return response.text().then((text) => {
     const data = text && JSON.parse(text);
 

@@ -9,7 +9,8 @@ import Banner from "@/assets/images/splashscreen.svg";
       <figure class="banner-figure">
         <img
           class="banner"
-          v-bind:src="Banner" />
+          v-bind:src="Banner"
+        />
       </figure>
     </article>
 

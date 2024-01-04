@@ -4,6 +4,5 @@ export type CustomerType = {
   name: string;
   ownerId: number;
   locationId: number;
-  users: [],
-
+  users: [];
 };

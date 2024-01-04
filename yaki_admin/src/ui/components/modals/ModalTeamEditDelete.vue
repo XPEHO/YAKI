@@ -2,8 +2,8 @@
 import SideBarMenuLink from "@/ui/components/sidebar/SideBarMenuLink.vue";
 import pencilIcon from "@/assets/images/pencil-regular-24.png";
 import deleteIcon from "@/assets/images/x_close.png";
-import {MODALMODE} from "@/constants/modalMode.enum";
-import {useModalStore} from "@/stores/modalStore";
+import { MODALMODE } from "@/constants/modalMode.enum";
+import { useModalStore } from "@/stores/modalStore";
 
 // allow to trigger the event on the parent component
 // and close the modal once a choice has been made
@@ -29,11 +29,13 @@ const deleteTeam = () => {
       @click.prevent="editTeam"
       :text="'Edit team'"
       :icon="pencilIcon"
-      :is-modal-element="true" />
+      :is-modal-element="true"
+    />
     <side-bar-menu-link
       @click.prevent="deleteTeam"
       :text="'Delete team'"
       :icon="deleteIcon"
-      :is-modal-element="true" />
+      :is-modal-element="true"
+    />
   </section>
 </template>

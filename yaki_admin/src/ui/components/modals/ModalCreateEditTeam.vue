@@ -8,9 +8,9 @@ import pencilIcon from "@/assets/images/pencil-regular-24.png";
 import deleteIcon from "@/assets/images/x_close.png";
 import avatar from "@/assets/images/avatar_2.png";
 
-import {BUTTONCOLORS} from "@/constants/componentsSettings.enum";
-import {useModalStore} from "@/stores/modalStore";
-import {ref} from "vue";
+import { BUTTONCOLORS } from "@/constants/componentsSettings.enum";
+import { useModalStore } from "@/stores/modalStore";
+import { ref } from "vue";
 
 const modalStore = useModalStore();
 const isMissingTeamNameError = ref(false);
@@ -62,7 +62,8 @@ const setTeamDescription = (value: string) => {
         <figure>
           <img
             :src="avatar"
-            alt="avatar" />
+            alt="avatar"
+          />
         </figure>
 
         <aside class="container__buttons">
@@ -77,24 +78,28 @@ const setTeamDescription = (value: string) => {
             label-text="Team name"
             :inputValue="modalStore.getTeamNameInputValue"
             @emittedInput="setTeamName"
-            :isError="isMissingTeamNameError" />
+            :isError="isMissingTeamNameError"
+          />
 
           <input-text-area
             label-text="'Team description'"
             :inputValue="modalStore.getTeamDescriptionInputValue"
-            @emittedInput="setTeamDescription" />
+            @emittedInput="setTeamDescription"
+          />
 
           <section class="container__buttons--popup">
             <button-text-sized
               text="Cancel"
               :color="BUTTONCOLORS.secondary"
               @click.prevent="onCancelPress"
-              type="button" />
+              type="button"
+            />
             <button-text-sized
               text="Modify"
               :color="BUTTONCOLORS.primary"
               @click.prevent="onAcceptPress"
-              type="submit" />
+              type="submit"
+            />
           </section>
         </form>
       </section>

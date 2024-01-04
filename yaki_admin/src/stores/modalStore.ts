@@ -1,9 +1,9 @@
-import {MODALMODE} from "@/constants/modalMode.enum";
-import {defineStore} from "pinia";
-import {useTeamStore} from "@/stores/teamStore";
-import {useTeammateStore} from "@/stores/teammateStore";
-import {useRoleStore} from "@/stores/roleStore";
-import {TeamType} from "@/models/team.type";
+import { MODALMODE } from "@/constants/modalMode.enum";
+import { defineStore } from "pinia";
+import { useTeamStore } from "@/stores/teamStore";
+import { useTeammateStore } from "@/stores/teammateStore";
+import { useRoleStore } from "@/stores/roleStore";
+import { TeamType } from "@/models/team.type";
 
 interface State {
   isShow: boolean;
@@ -56,7 +56,7 @@ export const useModalStore = defineStore("userModalStore", {
      */
     switchModalVisibility(setVisible: boolean, mode: MODALMODE | null) {
       const teamStore = useTeamStore();
-      const {teamName, teamDescription} = teamStore.getTeamSelected;
+      const { teamName, teamDescription } = teamStore.getTeamSelected;
 
       // get current teamName and teamDescription and set it as input value for edition
       if (mode === MODALMODE.teamEdit && teamName) {
@@ -113,7 +113,10 @@ export const useModalStore = defineStore("userModalStore", {
       const teamStore = useTeamStore();
       const teammateStore = useTeammateStore();
 
-      const createdTeam = await teamStore.createTeam(this.getTeamNameInputValue, this.getTeamDescriptionInputValue);
+      const createdTeam = await teamStore.createTeam(
+        this.getTeamNameInputValue,
+        this.getTeamDescriptionInputValue,
+      );
       teamStore.setTeamSelected(createdTeam);
       teammateStore.resetTeamatesList();
       await this.refreshTeamList();
@@ -133,7 +136,7 @@ export const useModalStore = defineStore("userModalStore", {
         teamStore.getTeamSelected.captainsId[0],
         this.getTeamNameInputValue,
         null,
-        this.getTeamDescriptionInputValue
+        this.getTeamDescriptionInputValue,
       );
 
       teamStore.setTeamSelected(editedTeam);
