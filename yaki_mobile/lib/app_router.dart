@@ -14,7 +14,6 @@ import 'package:yaki/presentation/features/user_declaration_summary/user_declara
 import 'package:yaki/presentation/features/team_selection/team_selection.dart';
 import 'package:yaki/presentation/features/user_declaration_summary/user_declaration_summary_absence.dart';
 import 'package:yaki/presentation/state/providers/declaration_provider.dart';
-import 'package:yaki/presentation/state/providers/token_provider.dart';
 import 'package:yaki/presentation/ui/default/user_default_redirection.dart';
 import 'package:yaki/presentation/features/password/forgot_password.dart';
 import 'package:yaki/presentation/features/password/change_password.dart';
@@ -32,14 +31,6 @@ final goRouterProvider = Provider<GoRouter>(
             // only redirect if we are on the Splash Screen
             if (state.fullPath == '/') {
               SharedPreferences prefs = await SharedPreferences.getInstance();
-
-              final isJWTValid =
-                  await ref.read(tokenRepositoryProvider).verifyTokenValidity();
-
-              if (!isJWTValid) {
-                prefs.remove('token');
-                return '/authentication';
-              }
 
               final declaration = ref.watch(declarationProvider);
 
