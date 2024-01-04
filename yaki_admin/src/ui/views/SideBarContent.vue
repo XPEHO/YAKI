@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import router from "@/router/router";
-import {onMounted, reactive} from "vue";
-import {useRoleStore} from "@/stores/roleStore";
+import { onMounted, reactive } from "vue";
+import { useRoleStore } from "@/stores/roleStore";
 
 import SideBarMenuLink from "@/ui/components/sidebar/SideBarMenuLink.vue";
 import sideBarMenuDropDown from "@/ui/components/sidebar/SideBarMenuDropDown.vue";
@@ -43,27 +43,32 @@ const redirection = (path: string) => {
       <figure>
         <img
           :src="Banner"
-          alt="" />
+          alt=""
+        />
       </figure>
 
       <side-bar-menu-link
         :is-user-autorized="userCredentials.owner"
         :icon="caseIcon"
-        text="Clients" />
+        text="Clients"
+      />
       <side-bar-menu-link
         :is-user-autorized="userCredentials.customer"
         @click.prevent="redirection('/dashboard/manage-captains')"
         :icon="hatIcon"
-        text="Captains" />
+        text="Captains"
+      />
       <side-bar-menu-drop-down
         :is-user-autorized="userCredentials.captain"
         inner-text="My teams"
-        icon-path="groupIcon" />
+        icon-path="groupIcon"
+      />
       <side-bar-menu-link
         :is-user-autorized="true"
         @click.prevent="redirection('/dashboard/statistics')"
         :icon="statIcon"
-        text="Statistics" />
+        text="Statistics"
+      />
     </div>
 
     <div>

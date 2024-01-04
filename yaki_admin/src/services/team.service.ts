@@ -38,7 +38,7 @@ export class TeamService {
     cptId: number | null,
     teamName: string,
     customerId: number,
-    teamDescription: string
+    teamDescription: string,
   ): Promise<TeamType> => {
     const newTeam: TeamTypeOut = {
       captainsId: [cptId],
@@ -64,7 +64,7 @@ export class TeamService {
     cptId: number | null,
     teamName: string | null,
     customerId: number | null,
-    teamDescription: string | null
+    teamDescription: string | null,
   ): Promise<TeamType> => {
     const updatedTeam: TeamTypeOut = {
       captainsId: [cptId],

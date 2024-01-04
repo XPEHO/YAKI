@@ -1,7 +1,7 @@
-import {UserWithIdType} from "@/models/userWithId.type";
-import {teammateService} from "@/services/teammate.service";
-import {defineStore} from "pinia";
-import {useTeamStore} from "@/stores/teamStore";
+import { UserWithIdType } from "@/models/userWithId.type";
+import { teammateService } from "@/services/teammate.service";
+import { defineStore } from "pinia";
+import { useTeamStore } from "@/stores/teamStore";
 
 interface State {
   teammates: UserWithIdType[];

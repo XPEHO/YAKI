@@ -4,7 +4,7 @@ import editAltIcon from "@/assets/images/edit-alt.png";
 import deleteIcon from "@/assets/images/Delete_2.png";
 import validateIcon from "@/assets/images/check-circle.png";
 
-import {ref} from "vue";
+import { ref } from "vue";
 
 const isEdit = ref(false);
 
@@ -41,25 +41,29 @@ const isAcceptButtonDisplayed = () => {
   <section class="edit-delete-wrapper">
     <button
       v-show="isAcceptButtonDisplayed()"
-      @click.prevent="onClickAccept">
+      @click.prevent="onClickAccept"
+    >
       <figure :class="isAcceptButtonDisplayed() ? 'user-icon-edit' : 'user-icon-default'">
         <img
           v-bind:src="validateIcon"
-          alt="" />
+          alt=""
+        />
       </figure>
     </button>
     <button @click.prevent="onClickEdit">
       <figure :class="isAcceptButtonDisplayed() ? 'user-icon-edit' : 'user-icon-default'">
         <img
           v-bind:src="isAcceptButtonDisplayed() ? editAltIcon : editIcon"
-          alt="" />
+          alt=""
+        />
       </figure>
     </button>
     <button @click.prevent="onClickDelete">
       <figure class="user-icon-default">
         <img
           v-bind:src="deleteIcon"
-          alt="" />
+          alt=""
+        />
       </figure>
     </button>
   </section>

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import Tutorial from "@/assets/images/tuto_team_creation.png";
 import avatar from "@/assets/images/avatar_2.png";
-import {useTeamStore} from "@/stores/teamStore";
-import {useRoute} from "vue-router";
+import { useTeamStore } from "@/stores/teamStore";
+import { useRoute } from "vue-router";
 
 const teamStore = useTeamStore();
 
@@ -14,18 +14,21 @@ const teamParamState = route.params.state;
   <section class="no-team__container">
     <div
       v-if="teamParamState === 'deleted'"
-      class="no-team-in-list">
+      class="no-team-in-list"
+    >
       <p class="p_main p_common">The team : {{ teamStore.getTeamDeleted.teamName }}</p>
       <figure class="deleted_team__figure">
         <img
           :src="avatar"
-          alt="" />
+          alt=""
+        />
       </figure>
       <p class="p_secondary p_common margin-top-2">was correctly deleted.</p>
 
       <div
         v-if="teamStore.getTeamList.length === 0"
-        class="margin-top-3">
+        class="margin-top-3"
+      >
         <p class="p_secondary p_common">You have no team left</p>
         <p class="p_secondary p_common margin-top-1">
           You can create a new team using the <span>create team</span> option
@@ -35,13 +38,17 @@ const teamParamState = route.params.state;
 
     <div
       v-else
-      class="no-team-in-list">
+      class="no-team-in-list"
+    >
       <p class="p_main p_common">You dont have any team</p>
-      <p class="p_secondary p_common margin-top-3">Teams can be created using the <span>create team</span> option</p>
+      <p class="p_secondary p_common margin-top-3">
+        Teams can be created using the <span>create team</span> option
+      </p>
       <figure class="no_team__figure">
         <img
           :src="Tutorial"
-          alt="" />
+          alt=""
+        />
       </figure>
     </div>
   </section>

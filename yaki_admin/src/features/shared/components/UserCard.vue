@@ -5,15 +5,15 @@
  -->
 
 <script setup lang="ts">
-import {PropType} from "vue";
+import { PropType } from "vue";
 
 import avatarIcon from "@/assets/images/avatar.png";
 import editIcon from "@/assets/images/Edit.png";
 import deleteIcon from "@/assets/images/Delete.png";
-import {UserWithIdType} from "@/models/userWithId.type";
+import { UserWithIdType } from "@/models/userWithId.type";
 
 import modalState from "@/features/modal/services/modalState";
-import {MODALMODE} from "@/constants/modalMode.enum";
+import { MODALMODE } from "@/constants/modalMode.enum";
 
 const props = defineProps({
   user: {
@@ -23,7 +23,10 @@ const props = defineProps({
 });
 
 const UserToBeRemoved = () => {
-  modalState.setTeammateIDAndInformations(props.user.teammateId, `${props.user.firstname} ${props.user.lastname}`);
+  modalState.setTeammateIDAndInformations(
+    props.user.teammateId,
+    `${props.user.firstname} ${props.user.lastname}`,
+  );
   modalState.switchModalVisibility(true, MODALMODE.userDelete);
 };
 </script>
@@ -34,7 +37,8 @@ const UserToBeRemoved = () => {
       <img
         class="avatar"
         v-bind:src="avatarIcon"
-        alt="Avatar" />
+        alt="Avatar"
+      />
       <div class="user-info">
         <h1 class="name">{{ user.firstname }} {{ user.lastname }}</h1>
         <h2 class="email">{{ user.email }}</h2>
@@ -46,7 +50,8 @@ const UserToBeRemoved = () => {
           <img
             class="user-icon"
             v-bind:src="editIcon"
-            alt="" />
+            alt=""
+          />
         </figure>
       </button>
       <button @click.prevent="UserToBeRemoved">
@@ -54,7 +59,8 @@ const UserToBeRemoved = () => {
           <img
             class="user-icon"
             v-bind:src="deleteIcon"
-            alt="" />
+            alt=""
+          />
         </figure>
       </button>
     </div>

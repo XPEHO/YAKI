@@ -18,7 +18,8 @@ const closeModal = async () => {
         :text="'CLOSE'"
         :icon="deleteIcon"
         :color="BUTTONCOLORS.delete"
-        @click.prevent="closeModal" />
+        @click.prevent="closeModal"
+      />
     </div>
   </section>
 </template>

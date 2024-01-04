@@ -8,10 +8,10 @@ import dotIcon from "@/assets/images/dots-vertical-rounded-regular-24.png";
 import router from "@/router/router";
 
 import modalTeamEditDelete from "@/ui/components/modals/ModalTeamEditDelete.vue";
-import {useTeamStore} from "@/stores/teamStore";
-import {useModalToggleWithOutsideClickHandler} from "@/composable/useModalToggleWithOutsideClickHandler";
-import {computed} from "vue";
-import {INVITEDROLE} from "@/constants/pathParam.enum";
+import { useTeamStore } from "@/stores/teamStore";
+import { useModalToggleWithOutsideClickHandler } from "@/composable/useModalToggleWithOutsideClickHandler";
+import { computed } from "vue";
+import { INVITEDROLE } from "@/constants/pathParam.enum";
 
 const teamStore = useTeamStore();
 
@@ -47,9 +47,9 @@ const title = computed(() => {
   }
 });
 
-const {isModalVisible, switchModalVisibility} = useModalToggleWithOutsideClickHandler(
+const { isModalVisible, switchModalVisibility } = useModalToggleWithOutsideClickHandler(
   ".modal-edit-delete__container",
-  ".button-icon-selector"
+  ".button-icon-selector",
 );
 </script>
 
@@ -60,29 +60,33 @@ const {isModalVisible, switchModalVisibility} = useModalToggleWithOutsideClickHa
         <figure v-if="isTeamManagement">
           <img
             :src="teamImage"
-            alt="" />
+            alt=""
+          />
         </figure>
         <h1>{{ title }}</h1>
       </section>
 
       <section class="header__buttons-modal_container">
         <button-text-icon
-          @click.prevent="router.push({path: `invitation/${invitedRole}`})"
+          @click.prevent="router.push({ path: `invitation/${invitedRole}` })"
           :icon="addIcon"
-          text="INVITATION" />
+          text="INVITATION"
+        />
 
         <button-icon
           v-if="isTeamManagement"
           :icon="dotIcon"
           class="button-icon-selector"
-          @click.prevent="switchModalVisibility" />
+          @click.prevent="switchModalVisibility"
+        />
 
         <div
           v-if="isTeamManagement"
           :class="[
             'modal-edit-delete__container',
             isModalVisible ? 'modal-edit-delete__visible' : 'modal-edit-delete__hidden',
-          ]">
+          ]"
+        >
           <modal-team-edit-delete @on-choice-selection="switchModalVisibility" />
         </div>
       </section>
@@ -141,7 +145,9 @@ const {isModalVisible, switchModalVisibility} = useModalToggleWithOutsideClickHa
       position: absolute;
       top: 130%;
       right: 0;
-      transition: visibility 0.15s, opacity 0.15s ease;
+      transition:
+        visibility 0.15s,
+        opacity 0.15s ease;
     }
     .modal-edit-delete__hidden {
       visibility: hidden;

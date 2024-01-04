@@ -1,10 +1,10 @@
-import {INVITEDROLE} from "@/constants/pathParam.enum";
-import {UserWithIdType} from "@/models/userWithId.type";
-import {customerService} from "@/services/customer.service";
-import {useCaptainStore} from "@/stores/captainStore";
-import {useSelectedRoleStore} from "@/stores/selectedRole";
-import {useTeamStore} from "@/stores/teamStore";
-import {useTeammateStore} from "@/stores/teammateStore";
+import { INVITEDROLE } from "@/constants/pathParam.enum";
+import { UserWithIdType } from "@/models/userWithId.type";
+import { customerService } from "@/services/customer.service";
+import { useCaptainStore } from "@/stores/captainStore";
+import { useSelectedRoleStore } from "@/stores/selectedRole";
+import { useTeamStore } from "@/stores/teamStore";
+import { useTeammateStore } from "@/stores/teammateStore";
 
 const customeraddAdminPageRoute = "/customer/admin-invitation";
 
@@ -26,7 +26,11 @@ export const getListOfUserAlreadyAccepted = async (invitedRole: string) => {
   }
 };
 
-export const checkInvitationStatus = (user: UserWithIdType, isUserAlreadyIn: number[], textStatus: string) => {
+export const checkInvitationStatus = (
+  user: UserWithIdType,
+  isUserAlreadyIn: number[],
+  textStatus: string,
+) => {
   const invitationStatus = {
     isInvited: false,
     text: "Invite",

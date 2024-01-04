@@ -17,7 +17,8 @@ const props = defineProps({
       <figure>
         <img
           v-bind:src="iconPath"
-          alt="Plus icon" />
+          alt="Plus icon"
+        />
       </figure>
       <p>{{ innerText }}</p>
     </div>

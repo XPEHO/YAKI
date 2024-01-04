@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import PageContentHeader from "@/ui/views/PageContentHeader.vue";
 import PageContentLayout from "@/ui/layouts/PageContentLayout.vue";
-import {useTeammateStore} from "@/stores/teammateStore";
+import { useTeammateStore } from "@/stores/teammateStore";
 import UserList from "@/ui/components/UserList.vue";
-import {INVITEDROLE} from "@/constants/pathParam.enum";
-import {useTeamStore} from "@/stores/teamStore";
-import {onBeforeMount} from "vue";
+import { INVITEDROLE } from "@/constants/pathParam.enum";
+import { useTeamStore } from "@/stores/teamStore";
+import { onBeforeMount } from "vue";
 
 const teammateStore = useTeammateStore();
 const teamStore = useTeamStore();
@@ -28,12 +28,14 @@ onBeforeMount(async () => {
     <template #pageContentHeader>
       <page-content-header
         :is-team-management="true"
-        :invited-role="INVITEDROLE.teammate" />
+        :invited-role="INVITEDROLE.teammate"
+      />
     </template>
     <template #content>
       <user-list
         :userList="teammateStore.teammates"
-        :isUsingTeamDescription="true" />
+        :isUsingTeamDescription="true"
+      />
     </template>
   </page-content-layout>
 </template>

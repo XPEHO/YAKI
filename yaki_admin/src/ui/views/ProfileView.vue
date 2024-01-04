@@ -11,7 +11,10 @@ const logOff = () => {
   <section class="profile_container">
     <h1>Profile</h1>
     <p>Coming Soon</p>
-    <buttonSecondary text="Log off" @click.prevent="logOff" />
+    <buttonSecondary
+      text="Log off"
+      @click.prevent="logOff"
+    />
   </section>
 </template>
 

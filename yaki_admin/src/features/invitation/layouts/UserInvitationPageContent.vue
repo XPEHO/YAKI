@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import router from "@/router/router";
-import {environmentVar} from "@/envPlaceholder";
-import {onBeforeMount, reactive} from "vue";
+import { environmentVar } from "@/envPlaceholder";
+import { onBeforeMount, reactive } from "vue";
 
-import type {UserWithIdType} from "@/models/userWithId.type";
-import {usersService} from "@/services/users.service";
+import type { UserWithIdType } from "@/models/userWithId.type";
+import { usersService } from "@/services/users.service";
 
 import PageContentLayout from "@/ui/layouts/PageContentLayout.vue";
 import UserInvitationCard from "@/features/invitation/components/InvitationCard.vue";
@@ -21,8 +21,8 @@ import {
   getReturnText,
 } from "@/features/invitation/services/invitationService";
 
-import {useRoute} from "vue-router";
-import {useTeamStore} from "@/stores/teamStore";
+import { useRoute } from "vue-router";
+import { useTeamStore } from "@/stores/teamStore";
 const route = useRoute();
 const invitationRole = route.params.role as string;
 const teamStore = useTeamStore();
@@ -40,7 +40,7 @@ onBeforeMount(async () => {
   props.alreadyInList = await getListOfUserAlreadyAccepted(invitationRole);
   props.userList = await usersService.fetchUserInRange(
     environmentVar.tempUserIdRangeStart,
-    environmentVar.tempUserIdRAngeEnd
+    environmentVar.tempUserIdRAngeEnd,
   );
   props.invitationStatusText = getInvitationStatusText(invitationRole);
 });
@@ -51,7 +51,8 @@ onBeforeMount(async () => {
     <template #pageContentHeader>
       <header-content-page
         v-bind:title="changeHeaderTitle(invitationRole)"
-        v-bind:text="changeHeaderSubText(invitationRole, teamStore.getTeamSelected.teamName)" />
+        v-bind:text="changeHeaderSubText(invitationRole, teamStore.getTeamSelected.teamName)"
+      />
     </template>
 
     <template #content>
@@ -59,7 +60,8 @@ onBeforeMount(async () => {
         v-if="invitationRole != '/customer/admin-invitation'"
         v-bind:inner-text="getReturnText(invitationRole)"
         v-bind:icon-path="backIcon"
-        @click.prevent="router.go(-1)" />
+        @click.prevent="router.go(-1)"
+      />
 
       <user-invitation-card
         v-for="user in props.userList"
@@ -68,7 +70,8 @@ onBeforeMount(async () => {
         v-bind:invitation-role="invitationRole"
         v-bind:adminList="props.alreadyInList"
         v-bind:invitationStatusText="props.invitationStatusText"
-        @invitUserToTeam="invitUser" />
+        @invitUserToTeam="invitUser"
+      />
     </template>
   </page-content-layout>
 </template>

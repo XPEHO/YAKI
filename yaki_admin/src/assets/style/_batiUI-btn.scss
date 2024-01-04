@@ -16,7 +16,9 @@ $shadow-color-secondary: #c3c1b9;
   border-radius: 16px;
   padding-block: 0.9rem 1.1rem;
 
-  transition: transform 0.02s ease, box-shadow 0.02s ease;
+  transition:
+    transform 0.02s ease,
+    box-shadow 0.02s ease;
 
   &:active {
     transform: translateY($translation-y);

@@ -99,7 +99,9 @@ body {
   cursor: pointer;
   border-radius: 16px;
   padding-block: 0.9rem 1.1rem;
-  transition: transform 0.02s ease, box-shadow 0.02s ease;
+  transition:
+    transform 0.02s ease,
+    box-shadow 0.02s ease;
 }
 .button-style-common:active {
   transform: translateY(4px);
@@ -134,4 +136,4 @@ body {
   font-size: 0.85rem;
   font-weight: 600;
   color: rgb(75, 74, 74);
-}/*# sourceMappingURL=main.css.map */
+} /*# sourceMappingURL=main.css.map */

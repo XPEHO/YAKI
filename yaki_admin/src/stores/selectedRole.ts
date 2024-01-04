@@ -33,18 +33,19 @@ export const useSelectedRoleStore = defineStore("selectedRoleStore", {
     },
     async fetchCustomerIdSelected(captainId: number) {
       const captain = await captainService.getCaptain(captainId);
-      this.setCustomerIdSelected(captain.customerId)
+      this.setCustomerIdSelected(captain.customerId);
     },
-    async addAdminToCompany(userId: number){
-      await customerService.addCustomerRights(this.customerIdSelected,userId);
+    async addAdminToCompany(userId: number) {
+      await customerService.addCustomerRights(this.customerIdSelected, userId);
     },
-    async addCaptainToCompany(userId: number){
+    async addCaptainToCompany(userId: number) {
       const captainStore = useCaptainStore();
-      captainStore.createCaptain({id: 0,userId : userId,customerId : this.customerIdSelected})
-      .then(() => {
-        //reload the captain list
-        captainStore.setAllCaptainsByCustomerId(this.customerIdSelected);
-      })
-    }, 
+      captainStore
+        .createCaptain({ id: 0, userId: userId, customerId: this.customerIdSelected })
+        .then(() => {
+          //reload the captain list
+          captainStore.setAllCaptainsByCustomerId(this.customerIdSelected);
+        });
+    },
   },
 });

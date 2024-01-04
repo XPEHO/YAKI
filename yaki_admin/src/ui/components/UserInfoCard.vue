@@ -21,9 +21,7 @@ const props = defineProps({
 
 const UserToBeRemoved = () => {
   teammateStore.setIdOfTeammateToDelete(props.user.teammateId);
-  modalStore.setTeammateNameToDelete(
-    `${props.user.firstname} ${props.user.lastname}`
-  );
+  modalStore.setTeammateNameToDelete(`${props.user.firstname} ${props.user.lastname}`);
   modalStore.switchModalVisibility(true, MODALMODE.userDelete);
 };
 
@@ -38,12 +36,11 @@ const OpenModalNotImplemented = () => {
       <img
         class="user-card__avatar-img"
         :src="setUserAvatarUrl(props.user)"
-        alt="user-card" />
+        alt="user-card"
+      />
     </figure>
     <div class="user-card__wrapper-user-infos">
-      <p class="user-card__name-text">
-        {{ user.firstname }} {{ user.lastname }}
-      </p>
+      <p class="user-card__name-text">{{ user.firstname }} {{ user.lastname }}</p>
       <p>{{ user.email }}</p>
     </div>
     <section class="user-card__wrapper-status">
@@ -54,12 +51,14 @@ const OpenModalNotImplemented = () => {
         <button-icon
           @click.prevent="OpenModalNotImplemented"
           :icon="pencilIcon"
-          alt="modifier" />
+          alt="modifier"
+        />
 
         <button-icon
           @click.prevent="UserToBeRemoved"
           :icon="deleteIcon"
-          alt="supprimer" />
+          alt="supprimer"
+        />
       </div>
     </section>
   </article>
