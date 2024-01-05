@@ -8,9 +8,11 @@ import { MODALMODE } from "@/constants/modalMode.enum";
 import { useModalStore } from "@/stores/modalStore";
 import { useTeammateStore } from "@/stores/teammateStore";
 import { setUserAvatarUrl } from "@/utils/images.utils";
+import { useCaptainStore } from "@/stores/captainStore";
 
 const modalStore = useModalStore();
 const teammateStore = useTeammateStore();
+const captainStore = useCaptainStore();
 
 const props = defineProps({
   user: {
@@ -21,7 +23,10 @@ const props = defineProps({
 
 const UserToBeRemoved = () => {
   teammateStore.setIdOfTeammateToDelete(props.user.teammateId);
-  modalStore.setTeammateNameToDelete(`${props.user.firstname} ${props.user.lastname}`);
+  modalStore.setTeammateNameToDelete(
+    `${props.user.firstname} ${props.user.lastname}`
+  );
+  captainStore.deleteCaptain;
   modalStore.switchModalVisibility(true, MODALMODE.userDelete);
 };
 

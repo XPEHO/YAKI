@@ -19,7 +19,7 @@ export class CaptainService {
     return response;
   };
 
-
+  //get all captains of a customer
   getAllCaptainsByCustomerId = async (
     customerId: number
   ): Promise<UserWithIdType[]> => {
@@ -55,6 +55,17 @@ export class CaptainService {
       headers: authHeader(`${URL}/captains/delete/${captainId}`),
     };
     await fetch(`${URL}/captains/delete/${captainId}`, requestOptions)
+      .then(handleResponse)
+      .catch((err) => console.warn(err));
+  };
+
+  //disabled a captain
+  disabledCaptain = async (captainId: number): Promise<void> => {
+    const requestOptions = {
+      method: "PUT",
+      headers: authHeader(`${URL}/captains/disable/${captainId}`),
+    };
+    await fetch(`${URL}/captains/disable/${captainId}`, requestOptions)
       .then(handleResponse)
       .catch((err) => console.warn(err));
   };

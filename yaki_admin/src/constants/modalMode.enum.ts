@@ -5,6 +5,7 @@
  * Current modal mode :
  *
  * - userDelete : Handle teammate deletion
+ * - disabledUser : Handle captain disabled
  * - teamCreate : Handle team creation
  * - teamEdit : Handle team name edition
  * - teamDelete : Handle team deletion
