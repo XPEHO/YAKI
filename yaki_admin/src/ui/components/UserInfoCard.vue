@@ -29,9 +29,7 @@ const UserToBeRemoved = () => {
 
   captainStore.setCaptainToDelete(props.user.captainId);
   console.log("userinfocard captain id props user", props.user.captainId);
-  modalStore.setCaptainNameToDelete(
-    `${props.user.firstname} ${props.user.lastname}`
-  );
+  modalStore.setCaptainNameToDelete(`${props.user.firstname} ${props.user.lastname}`);
   modalStore.switchModalVisibility(true, MODALMODE.userDelete);
 };
 

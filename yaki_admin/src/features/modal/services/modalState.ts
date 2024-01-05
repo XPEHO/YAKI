@@ -19,18 +19,11 @@ const modalState = reactive({
   dropDownButtonText: "Select a captain" as string,
   dropDownSelectedCaptainId: null as number | null,
 
-  switchModalVisibility(
-    setVisible: boolean,
-    mode: MODALMODE | null,
-    teamName?: string
-  ) {
+  switchModalVisibility(setVisible: boolean, mode: MODALMODE | null, teamName?: string) {
     if (teamName && mode === MODALMODE.teamEdit) {
       this.setTeamInputValue(teamName);
     }
-    if (
-      mode === MODALMODE.teamCreate ||
-      mode === MODALMODE.teamCreateCustomer
-    ) {
+    if (mode === MODALMODE.teamCreate || mode === MODALMODE.teamCreateCustomer) {
       this.setTeamInputValue("");
     }
 
@@ -130,9 +123,7 @@ const modalState = reactive({
 
   async deleteUserFromTeam() {
     const teammateStore = useTeammateStore();
-    await teammateStore.deleteTeammateFromTeam(
-      teammateStore.getIdOfTeammateToDelete
-    );
+    await teammateStore.deleteTeammateFromTeam(teammateStore.getIdOfTeammateToDelete);
     this.refreshTeammatesList();
   },
 
@@ -172,7 +163,7 @@ const modalState = reactive({
     teamStore.createTeamOptionalAssignCaptain(
       this.teamName,
       teamStore.getCaptainIdToBeAssign,
-      this.teamDescription
+      this.teamDescription,
     );
     this.refreshTeamListForCustomer();
     //reset values

@@ -20,9 +20,7 @@ export class CaptainService {
   };
 
   //get all captains of a customer
-  getAllCaptainsByCustomerId = async (
-    customerId: number
-  ): Promise<UserWithIdType[]> => {
+  getAllCaptainsByCustomerId = async (customerId: number): Promise<UserWithIdType[]> => {
     const requestOptions = {
       method: "GET",
       headers: authHeader(`${URL}/captains/customer/${customerId}`),

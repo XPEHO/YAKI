@@ -28,8 +28,7 @@ export const useModalStore = defineStore("userModalStore", {
     getMode: (state: State) => state.mode,
     getTeamNameInputValue: (state: State) => state.teamNameInputValue,
     getTeammateNameToDelete: (state: State) => state.teammateNameToDelete,
-    getTeamDescriptionInputValue: (state: State) =>
-      state.teamDescriptionInputValue,
+    getTeamDescriptionInputValue: (state: State) => state.teamDescriptionInputValue,
     getCaptainNameToDelete: (state: State) => state.captainNameToDelete,
   },
   actions: {
@@ -123,7 +122,7 @@ export const useModalStore = defineStore("userModalStore", {
 
       const createdTeam = await teamStore.createTeam(
         this.getTeamNameInputValue,
-        this.getTeamDescriptionInputValue
+        this.getTeamDescriptionInputValue,
       );
       teamStore.setTeamSelected(createdTeam);
       teammateStore.resetTeamatesList();
@@ -160,9 +159,7 @@ export const useModalStore = defineStore("userModalStore", {
     async handleTeamDelete(): Promise<TeamType> {
       const teamStore = useTeamStore();
 
-      const deletedTeam = await teamStore.deleteTeam(
-        teamStore.getTeamSelected.id
-      );
+      const deletedTeam = await teamStore.deleteTeam(teamStore.getTeamSelected.id);
       await this.refreshTeamList();
 
       return deletedTeam;
@@ -173,9 +170,7 @@ export const useModalStore = defineStore("userModalStore", {
      */
     async handleUserDelete() {
       const teammateStore = useTeammateStore();
-      await teammateStore.deleteTeammateFromTeam(
-        teammateStore.getIdOfTeammateToDelete
-      );
+      await teammateStore.deleteTeammateFromTeam(teammateStore.getIdOfTeammateToDelete);
     },
 
     /**
