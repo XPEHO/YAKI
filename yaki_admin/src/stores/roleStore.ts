@@ -11,6 +11,7 @@ export const useRoleStore = defineStore("roleStore", {
     // all captains id a user can have
     captainsId: [] as number[],
     customerId: 0 as number,
+    captainId: 0 as number,
   }),
   getters: {
     getCustomersIdWhereIgotRights(): number[] {
@@ -25,6 +26,9 @@ export const useRoleStore = defineStore("roleStore", {
     getCustomerId(): number {
       return this.customerId;
     },
+    getCaptainId(): number {
+      return this.captainId;
+    },
   },
   actions: {
     setCustomersIdWhereAmCaptain(customersId: number[]) {
@@ -38,6 +42,9 @@ export const useRoleStore = defineStore("roleStore", {
     },
     setCustomerId(customerId: number) {
       this.customerId = customerId;
+    },
+    setCaptainId(captainId: number) {
+      this.captainId = captainId;
     },
   },
 });

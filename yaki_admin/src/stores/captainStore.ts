@@ -19,12 +19,12 @@ export const useCaptainStore = defineStore("captainStore", {
   getters: {
     getCaptainList: (state: State) => state.captainList,
     getCaptainToDelete: (state: State) => state.captainToDelete,
-    
   },
   actions: {
     //get the captainId to delete
     setCaptainToDelete(captainId: number) {
       this.captainToDelete = captainId;
+      console.log("captainId to delete : ", captainId);
     },
 
     // get all captains of a customer
@@ -42,6 +42,7 @@ export const useCaptainStore = defineStore("captainStore", {
     //delete a captain
     async deleteCaptain(captainId: number): Promise<void> {
       await captainService.deleteCaptain(captainId);
+      console.log("captainStore : captain deleted", captainId);
     },
   },
 });

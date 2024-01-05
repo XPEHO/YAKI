@@ -22,11 +22,16 @@ const props = defineProps({
 });
 
 const UserToBeRemoved = () => {
-  teammateStore.setIdOfTeammateToDelete(props.user.teammateId);
-  modalStore.setTeammateNameToDelete(
+  // teammateStore.setIdOfTeammateToDelete(props.user.teammateId);
+  // modalStore.setTeammateNameToDelete(
+  //   `${props.user.firstname} ${props.user.lastname}`
+  // );
+
+  captainStore.setCaptainToDelete(props.user.captainId);
+  console.log("userinfocard captain id props user", props.user.captainId);
+  modalStore.setCaptainNameToDelete(
     `${props.user.firstname} ${props.user.lastname}`
   );
-  captainStore.deleteCaptain;
   modalStore.switchModalVisibility(true, MODALMODE.userDelete);
 };
 

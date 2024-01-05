@@ -63,9 +63,9 @@ export class CaptainService {
   disabledCaptain = async (captainId: number): Promise<void> => {
     const requestOptions = {
       method: "PUT",
-      headers: authHeader(`${URL}/captains/disable/${captainId}`),
+      headers: authHeader(`${URL}/captains/disabled/${captainId}`),
     };
-    await fetch(`${URL}/captains/disable/${captainId}`, requestOptions)
+    await fetch(`${URL}/captains/disabled/${captainId}`, requestOptions)
       .then(handleResponse)
       .catch((err) => console.warn(err));
   };
