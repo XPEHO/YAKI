@@ -9,11 +9,17 @@ import { useModalStore } from "@/stores/modalStore";
 import { useTeammateStore } from "@/stores/teammateStore";
 import { setUserAvatarUrl } from "@/utils/images.utils";
 import { useCaptainStore } from "@/stores/captainStore";
+import { useRoute } from "vue-router";
 
+//Get the stores
 const modalStore = useModalStore();
 const teammateStore = useTeammateStore();
 const captainStore = useCaptainStore();
 
+//Get the route
+const route = useRoute();
+
+//define the props
 const props = defineProps({
   user: {
     type: Object as PropType<UserWithIdType>,
@@ -21,16 +27,18 @@ const props = defineProps({
   },
 });
 
+//define the methods
 const UserToBeRemoved = () => {
-  // teammateStore.setIdOfTeammateToDelete(props.user.teammateId);
-  // modalStore.setTeammateNameToDelete(
-  //   `${props.user.firstname} ${props.user.lastname}`
-  // );
-
-  captainStore.setCaptainToDelete(props.user.captainId);
-  console.log("userinfocard captain id props user", props.user.captainId);
-  modalStore.setCaptainNameToDelete(`${props.user.firstname} ${props.user.lastname}`);
-  modalStore.switchModalVisibility(true, MODALMODE.userDelete);
+  if (route.name === "/dashboard/manage-team") {
+    teammateStore.setIdOfTeammateToDelete(props.user.teammateId);
+    modalStore.setTeammateNameToDelete(`${props.user.firstname} ${props.user.lastname}`);
+    modalStore.switchModalVisibility(true, MODALMODE.userDelete);
+  } else if (route.name === "/dashboard/manage-captains") {
+    captainStore.setCaptainToDelete(props.user.captainId);
+    console.log("userinfocard captain id props user", props.user.captainId);
+    modalStore.setCaptainNameToDelete(`${props.user.firstname} ${props.user.lastname}`);
+    modalStore.switchModalVisibility(true, MODALMODE.captainDelete);
+  }
 };
 
 const OpenModalNotImplemented = () => {

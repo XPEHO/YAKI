@@ -4,6 +4,7 @@ import { UserWithIdType } from "@/models/userWithId.type";
 import { PropType } from "vue";
 import { useTeamStore } from "@/stores/teamStore";
 
+//Get the stores
 const teamStore = useTeamStore();
 
 defineProps({

@@ -4,6 +4,7 @@ import { useTeamStore } from "@/stores/teamStore";
 import { useTeammateStore } from "@/stores/teammateStore";
 import { useRoleStore } from "@/stores/roleStore";
 import { TeamType } from "@/models/team.type";
+import { useCaptainStore } from "./captainStore";
 
 interface State {
   isShow: boolean;
@@ -107,6 +108,8 @@ export const useModalStore = defineStore("userModalStore", {
         case MODALMODE.userDelete:
           await this.handleUserDelete();
           return;
+        case MODALMODE.captainDelete:
+          await this.handleCaptainDelete();
       }
     },
     /**
@@ -182,8 +185,30 @@ export const useModalStore = defineStore("userModalStore", {
     async refreshTeamList() {
       const teamStore = useTeamStore();
       const roleStore = useRoleStore();
-
       await teamStore.setTeamListOfACaptain(roleStore.getCaptainsId);
     },
-  }, //actions end
+
+    /**
+     * Delete a captain.
+     */
+    async handleCaptainDelete() {
+      const captainStore = useCaptainStore();
+
+      const deletedCaptain = await captainStore.deleteCaptain(captainStore.getCaptainToDelete);
+      await this.refreshCaptainList();
+
+      return deletedCaptain;
+    },
+    /**
+     * Refresh the captain list.
+     */
+    async refreshCaptainList() {
+      const captainStore = useCaptainStore();
+      const roleStore = useRoleStore();
+
+      await captainStore.setAllCaptainsByCustomerId(roleStore.getCustomerId);
+    },
+  },
+
+  //actions end
 });
