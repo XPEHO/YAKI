@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import PageContentHeader from "@/ui/views/PageContentHeader.vue";
+import PageContentHeader from "@/ui/components/PageContentHeader.vue";
 import PageContentLayout from "@/ui/layouts/PageContentLayout.vue";
 import { useTeammateStore } from "@/stores/teammateStore";
 import UserList from "@/ui/components/UserList.vue";

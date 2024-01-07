@@ -8,17 +8,17 @@ const profile = () => {
 </script>
 
 <template>
-  <article class="user-card__container logged_user_card">
+  <article
+    @click="profile"
+    class="user-card__container logged_user_card selection-cursor"
+  >
     <figure class="user-card__avatar">
       <img
         :src="avatarIcon"
         alt="user-card"
       />
     </figure>
-    <div
-      class="user-card__wrapper-user-infos"
-      @click="profile"
-    >
+    <div class="user-card__wrapper-user-infos">
       <p class="user-card__name-text">Admin</p>
       <p class="user-card__email_text">Administrator</p>
     </div>
@@ -26,7 +26,7 @@ const profile = () => {
 </template>
 
 <style scoped lang="scss">
-.user-card__wrapper-user-infos {
+.selection-cursor {
   cursor: pointer;
 }
 </style>

@@ -60,10 +60,10 @@ const onDeletePress = async () => {
 
     <p class="modal__container-text">
       Are you sure you want to {{ action }} <br />
-      <span class="text__bold"> {{ deletedElement }}</span>
+      <span> {{ deletedElement }}</span>
+      From :
       <span v-if="modalStore.getMode === MODALMODE.userDelete">
-        From :
-        <span class="text__bold">{{ teamStore.getTeamSelected.teamName }}</span> ?
+        <span>{{ teamStore.getTeamSelected.teamName }}</span> ?
       </span>
       <br />
       This action is irreversible !

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import router from "@/router/router";
 import { environmentVar } from "@/envPlaceholder";
 import { onBeforeMount, reactive } from "vue";
 
@@ -7,70 +6,72 @@ import type { UserWithIdType } from "@/models/userWithId.type";
 import { usersService } from "@/services/users.service";
 
 import PageContentLayout from "@/ui/layouts/PageContentLayout.vue";
-import UserInvitationCard from "@/features/invitation/components/InvitationCard.vue";
-import SideBarButton from "@/features/shared/components/SideBarButton.vue";
-import HeaderContentPage from "@/features/shared/components/HeaderContentPage.vue";
-import backIcon from "@/assets/icons_svg/AddPlus.svg";
-
-import {
-  changeHeaderTitle,
-  changeHeaderSubText,
-  invitUser,
-  getListOfUserAlreadyAccepted,
-  getInvitationStatusText,
-  getReturnText,
-} from "@/features/invitation/services/invitationService";
+import InvitationViewHeader from "@/features/invitation/components/InvitationViewHeader.vue";
+import UserInvitationList from "@/features/invitation/components/UserInvitationList.vue";
 
 import { useRoute } from "vue-router";
 import { useTeamStore } from "@/stores/teamStore";
+import { INVITEDROLE } from "@/constants/pathParam.enum";
+import { useSelectedRoleStore } from "@/stores/selectedRole";
+import { useTeammateStore } from "@/stores/teammateStore";
+import { useCaptainStore } from "@/stores/captainStore";
+
 const route = useRoute();
-const invitationRole = route.params.role as string;
+const invitationRole = route.params.role as INVITEDROLE;
+
 const teamStore = useTeamStore();
+const selectedRoleStore = useSelectedRoleStore();
+const teammateStore = useTeammateStore();
+const captainStore = useCaptainStore();
 
 const props = reactive({
   userList: [] as UserWithIdType[],
   fromRoute: "" as string,
-  alreadyInList: [] as number[],
-  invitationStatusText: "" as string,
+  alreadInvitedUsers: [] as number[],
 });
 //list of person who have admin rights in company
 //don't want to fetch them in each separated component
 
+const getListOfUserAlreadyAccepted = async (invitedRole: string) => {
+  if (invitedRole == INVITEDROLE.teammate) {
+    return teammateStore.getTeammateList.map((teammate) => teammate.id);
+  }
+  if (invitedRole == INVITEDROLE.captain) {
+    return captainStore.getCaptainList.map((captain) => captain.id);
+  }
+  return [];
+};
+
 onBeforeMount(async () => {
-  props.alreadyInList = await getListOfUserAlreadyAccepted(invitationRole);
+  props.alreadInvitedUsers = await getListOfUserAlreadyAccepted(invitationRole);
   props.userList = await usersService.fetchUserInRange(
     environmentVar.tempUserIdRangeStart,
     environmentVar.tempUserIdRAngeEnd,
   );
-  props.invitationStatusText = getInvitationStatusText(invitationRole);
 });
-// invit button from user-component
+
+const onUserInvitation = (invitedUser: UserWithIdType) => {
+  if (invitationRole === INVITEDROLE.teammate) {
+    teamStore.addUserToTeam(invitedUser.id);
+  }
+  if (invitationRole === INVITEDROLE.captain) {
+    selectedRoleStore.addCaptainToCompany(invitedUser.id);
+  }
+};
 </script>
 <template>
   <page-content-layout>
     <template #pageContentHeader>
-      <header-content-page
-        v-bind:title="changeHeaderTitle(invitationRole)"
-        v-bind:text="changeHeaderSubText(invitationRole, teamStore.getTeamSelected.teamName)"
-      />
+      <invitation-view-header v-bind:invited-role="invitationRole" />
     </template>
 
     <template #content>
-      <side-bar-button
-        v-if="invitationRole != '/customer/admin-invitation'"
-        v-bind:inner-text="getReturnText(invitationRole)"
-        v-bind:icon-path="backIcon"
-        @click.prevent="router.go(-1)"
-      />
-
-      <user-invitation-card
-        v-for="user in props.userList"
-        v-bind:key="user.id"
-        v-bind:user="user"
-        v-bind:invitation-role="invitationRole"
-        v-bind:adminList="props.alreadyInList"
-        v-bind:invitationStatusText="props.invitationStatusText"
-        @invitUserToTeam="invitUser"
+      <user-invitation-list
+        v-if="props.userList && props.userList.length > 0"
+        :userList="props.userList"
+        :invitedUsers="props.alreadInvitedUsers"
+        :testprops="'test de props'"
+        @emittedUserInvitation="onUserInvitation"
       />
     </template>
   </page-content-layout>
