@@ -18,10 +18,6 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-  isUserAutorized: {
-    type: Boolean,
-    default: false,
-  },
 });
 
 const defaultClassList = [
@@ -36,12 +32,7 @@ const defaultClassList = [
   <div
     :class="[
       defaultClassList,
-      isModalElement
-        ? 'text-icon--background-white'
-        : isUserAutorized
-          ? 'text-icon--sidebar-color'
-          : '',
-      isUserAutorized ? '' : 'menu-link-disable',
+      isModalElement ? 'text-icon--background-white' : 'text-icon--sidebar-color',
     ]"
   >
     <figure>
