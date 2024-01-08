@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Tutorial from "@/assets/images/tuto_team_creation.png";
-import avatar from "@/assets/images/avatar_2.png";
+import avatar from "@/assets/images/avatarLetters.png";
 import { useTeamStore } from "@/stores/teamStore";
 import { useRoute } from "vue-router";
 
@@ -89,12 +89,14 @@ const teamParamState = route.params.state;
   text-align: center;
 }
 .p_main {
+  font-family: $font-sf-compact;
   font-size: 1.4rem;
   font-weight: 800;
   line-height: 120%;
 }
 
 .p_secondary {
+  font-family: $font-sf-compact;
   font-size: 1.2rem;
   font-weight: 500;
 
@@ -114,12 +116,15 @@ const teamParamState = route.params.state;
 }
 
 .no_team__figure {
-  max-width: 25rem;
+  padding-block-start: 2rem;
+  max-width: 20rem;
+  border-radius: 16px;
 
   img {
     width: 100%;
     object-fit: cover;
     filter: grayscale(20%);
+    border-radius: 16px;
   }
 }
 </style>

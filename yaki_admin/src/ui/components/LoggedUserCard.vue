@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import avatarIcon from "@/assets/images/avatar_2.png";
+import avatarIcon from "@/assets/images/avatarLetters.png";
 import router from "@/router/router";
 
 const profile = () => {
@@ -20,7 +20,7 @@ const profile = () => {
       @click="profile"
     >
       <p class="user-card__name-text">Admin</p>
-      <p>Administrator</p>
+      <p class="user-card__email_text">Administrator</p>
     </div>
   </article>
 </template>

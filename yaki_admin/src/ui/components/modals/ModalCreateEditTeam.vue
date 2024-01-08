@@ -4,9 +4,9 @@ import InputText from "@/ui/components/inputs/InputText.vue";
 import InputTextArea from "@/ui/components/inputs/InputTextArea.vue";
 import ButtonTextSized from "@/ui/components/buttons/ButtonTextSized.vue";
 
-import pencilIcon from "@/assets/images/pencil-regular-24.png";
-import deleteIcon from "@/assets/images/x_close.png";
-import avatar from "@/assets/images/avatar_2.png";
+import pencilIcon from "@/assets/icons_svg/Edit.svg";
+import deleteIcon from "@/assets/icons_svg/CrossClose.svg";
+import avatar from "@/assets/images/avatarLetters.png";
 
 import { BUTTONCOLORS } from "@/constants/componentsSettings.enum";
 import { useModalStore } from "@/stores/modalStore";

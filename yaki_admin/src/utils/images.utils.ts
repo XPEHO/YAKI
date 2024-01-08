@@ -3,7 +3,7 @@ import { AVATARENUM } from "@/constants/avatar.enum";
 import avatarH from "@/assets/images/avatarH.svg";
 import avatarF from "@/assets/images/avatarF.svg";
 import avatarN from "@/assets/images/avatarN.svg";
-import userAvatar from "@/assets/images/avatar_2.png";
+import userAvatar from "@/assets/images/avatarLetters.png";
 
 export const setUserAvatarUrl = (user: UserWithIdType) => {
   switch (user.avatarReference) {

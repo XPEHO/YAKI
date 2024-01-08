@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import buttonIcon from "@/ui/components/buttons/ButtonIcon.vue";
-import pencilIcon from "@/assets/images/pencil-regular-24.png";
-import deleteIcon from "@/assets/images/x_close.png";
+import pencilIcon from "@/assets/icons_svg/Edit.svg";
+import deleteIcon from "@/assets/icons_svg/CrossClose.svg";
 import { PropType } from "vue";
 import { UserWithIdType } from "@/models/userWithId.type";
 import { MODALMODE } from "@/constants/modalMode.enum";
@@ -41,7 +41,7 @@ const OpenModalNotImplemented = () => {
     </figure>
     <div class="user-card__wrapper-user-infos">
       <p class="user-card__name-text">{{ user.firstname }} {{ user.lastname }}</p>
-      <p>{{ user.email }}</p>
+      <p class="user-card__email_text">{{ user.email }}</p>
     </div>
     <section class="user-card__wrapper-status">
       <div class="user-card__wrapper-status_label">

@@ -10,7 +10,7 @@ import PageContentLayout from "@/ui/layouts/PageContentLayout.vue";
 import UserInvitationCard from "@/features/invitation/components/InvitationCard.vue";
 import SideBarButton from "@/features/shared/components/SideBarButton.vue";
 import HeaderContentPage from "@/features/shared/components/HeaderContentPage.vue";
-import backIcon from "@/assets/images/arrow-back.png";
+import backIcon from "@/assets/icons_svg/AddPlus.svg";
 
 import {
   changeHeaderTitle,

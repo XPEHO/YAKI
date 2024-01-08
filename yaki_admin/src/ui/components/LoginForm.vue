@@ -35,7 +35,7 @@ const forgottenPassword = () => {};
 <template>
   <section class="login_form_container">
     <div>
-      <p class="login-title">Administration</p>
+      <p class="text_default__title_header">Administration</p>
       <form>
         <input-text
           :labelText="usernamePlaceholder"
@@ -80,6 +80,11 @@ const forgottenPassword = () => {};
     align-self: center;
 
     width: min(90%, 450px);
+
+    > p {
+      padding-inline-start: 2rem;
+      padding-block-end: 4rem;
+    }
   }
 
   form {
@@ -87,11 +92,5 @@ const forgottenPassword = () => {};
     flex-direction: column;
     gap: 1.4rem;
   }
-}
-.login-title {
-  font-size: 2rem;
-  font-weight: bold;
-  padding-inline-start: 2rem;
-  padding-block-end: 4rem;
 }
 </style>

@@ -1,5 +1,3 @@
-<script setup lang="ts"></script>
-
 <template>
   <section class="statistics_container">
     <h1>Statistics</h1>

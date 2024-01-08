@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import ButtonTextIcon from "@/ui/components/buttons/ButtonTextIcon.vue";
 import ButtonTextSized from "@/ui/components/buttons/ButtonTextSized.vue";
-import deleteIcon from "@/assets/images/x_close.png";
+import deleteIcon from "@/assets/icons_svg/CrossClose.svg";
 
 import { BUTTONCOLORS } from "@/constants/componentsSettings.enum";
 import { MODALMODE } from "@/constants/modalMode.enum";

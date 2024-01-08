@@ -7,9 +7,9 @@
 <script setup lang="ts">
 import { PropType } from "vue";
 
-import avatarIcon from "@/assets/images/avatar.png";
-import editIcon from "@/assets/images/Edit.png";
-import deleteIcon from "@/assets/images/Delete.png";
+import avatarIcon from "@/assets/images/avatarLetters.png";
+import editIcon from "@/assets/icons_svg/AddPlus.svg";
+import deleteIcon from "@/assets/icons_svg/AddPlus.svg";
 import { UserWithIdType } from "@/models/userWithId.type";
 
 import modalState from "@/features/modal/services/modalState";
