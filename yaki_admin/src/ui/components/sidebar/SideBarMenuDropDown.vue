@@ -32,21 +32,17 @@ const props = defineProps({
     type: String,
     required: true,
   },
-  isUserAutorized: {
-    type: Boolean,
-    default: false,
-  },
 });
 </script>
 
 <template>
-  <section :class="['drop-down__container', isUserAutorized ? '' : 'menu-drop-down-disable']">
+  <section :class="['drop-down__container']">
     <div
       :class="[
         'text-icon__container',
         'text-icon__container-height--padding',
         'text_icon--icon',
-        isUserAutorized ? 'drop-down--sidebar-color' : '',
+        'drop-down--sidebar-color',
       ]"
     >
       <figure>
@@ -58,18 +54,13 @@ const props = defineProps({
       <p class="text-icon--text">{{ props.innerText }}</p>
     </div>
 
-    <!-- AUTORIZATION -->
     <input
       class="drop-down__checkbox"
       type="checkbox"
       id="sidebar-dropdown"
-      :disabled="!isUserAutorized"
     />
-    <!-- AUTORIZATION -->
-    <figure
-      v-if="isUserAutorized"
-      class="drop-down__icon image-filter"
-    >
+
+    <figure class="drop-down__icon image-filter">
       <img
         :src="arrowIcon"
         alt="drop down menu arrow"
@@ -160,22 +151,6 @@ const props = defineProps({
 
   &:active {
     transform: scale(0.99) translateY(1px);
-  }
-}
-
-.menu-drop-down-disable {
-  figure {
-    img {
-      filter: invert(0.8) brightness(0.5);
-    }
-  }
-
-  p {
-    color: rgb(113, 104, 104);
-  }
-
-  input {
-    cursor: default;
   }
 }
 </style>

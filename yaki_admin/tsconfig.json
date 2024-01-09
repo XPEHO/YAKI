@@ -11,7 +11,8 @@
     },
     "preserveValueImports": false,
     "importsNotUsedAsValues": "remove",
-    "allowJs": true
+    "allowJs": true,
+    "types": ["node"]
   },
 
   "references": [

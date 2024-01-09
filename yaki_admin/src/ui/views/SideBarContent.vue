@@ -48,23 +48,22 @@ const redirection = (path: string) => {
       </figure>
 
       <side-bar-menu-link
-        :is-user-autorized="userCredentials.owner"
+        v-if="userCredentials.owner"
         :icon="caseIcon"
         text="Clients"
       />
       <side-bar-menu-link
-        :is-user-autorized="userCredentials.customer"
+        v-if="userCredentials.customer"
         @click.prevent="redirection('/dashboard/manage-captains')"
         :icon="hatIcon"
         text="Captains"
       />
       <side-bar-menu-drop-down
-        :is-user-autorized="userCredentials.captain"
+        v-if="userCredentials.captain"
         inner-text="My teams"
         icon-path="groupIcon"
       />
       <side-bar-menu-link
-        :is-user-autorized="true"
         @click.prevent="redirection('/dashboard/statistics')"
         :icon="statIcon"
         text="Statistics"
