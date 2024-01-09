@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import eyesClosedIcon from "@/assets/images/eyes_closed.png";
-import eyesOpenedIcon from "@/assets/images/eyes_visible.png";
+import eyesClosedIcon from "@/assets/icons_svg/Eye.svg";
+import eyesOpenedIcon from "@/assets/icons_svg/Eye.svg";
 
 const props = defineProps({
   labelText: {

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import sideBarMenuDropDownElement from "./SideBarMenuDropDownElement.vue";
-import groupIcon from "@/assets/images/group-regular-24.png";
-import arrowIcon from "@/assets/images/chevron-down-regular-24.png";
-import addIcon from "@/assets/images/plus_icon.png";
+import groupIcon from "@/assets/icons_svg/Teams.svg";
+import arrowIcon from "@/assets/icons_svg/Chevron-down.svg";
+import addIcon from "@/assets/icons_svg/AddPlus.svg";
 
 import router from "@/router/router";
 import { useTeamStore } from "@/stores/teamStore";
@@ -80,6 +80,7 @@ const props = defineProps({
         </figure>
         <p>Create team</p>
       </button>
+
       <div
         v-if="teamStore.getTeamList && teamStore.getTeamList.length > 0"
         class="gap_add"
@@ -134,18 +135,27 @@ const props = defineProps({
   }
 
   p {
+    font-family: "Rubik";
+    font-weight: 350;
+    font-variant: normal;
+    letter-spacing: 0.2px;
+
+    color: black;
     font-size: 17px;
-    font-weight: 400;
   }
 
   &:hover {
     background-color: #ff9169;
     cursor: pointer;
-    color: rgb(238, 237, 237);
+
     figure {
       img {
         filter: invert(0.9);
       }
+    }
+
+    p {
+      color: rgb(238, 237, 237);
     }
   }
 

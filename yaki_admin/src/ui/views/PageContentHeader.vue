@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import buttonTextIcon from "@/ui/components/buttons/ButtonTextIcon.vue";
 import buttonIcon from "@/ui/components/buttons/ButtonIcon.vue";
-import teamImage from "@/assets/images/splashscreen.svg";
-import addIcon from "@/assets/images/plus_icon.png";
-import dotIcon from "@/assets/images/dots-vertical-rounded-regular-24.png";
+import teamImage from "@/assets/images/teamDefaultImg2.svg";
+import addIcon from "@/assets/icons_svg/AddPlus.svg";
+import dotIcon from "@/assets/icons_svg/3dots.svg";
 
 import router from "@/router/router";
 
@@ -63,7 +63,7 @@ const { isModalVisible, switchModalVisibility } = useModalToggleWithOutsideClick
             alt=""
           />
         </figure>
-        <h1>{{ title }}</h1>
+        <h1 class="text_default__title_header">{{ title }}</h1>
       </section>
 
       <section class="header__buttons-modal_container">
@@ -104,22 +104,14 @@ const { isModalVisible, switchModalVisibility } = useModalToggleWithOutsideClick
   padding-inline: 40px;
 
   figure {
-    background-color: black;
     width: 48px;
     height: 48px;
     border-radius: 16px;
     img {
       width: 100%;
       object-fit: contain;
+      border-radius: 16px;
     }
-  }
-
-  h1 {
-    font-size: 40px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 100%; /* 40px */
-    letter-spacing: -2px;
   }
 
   > div {

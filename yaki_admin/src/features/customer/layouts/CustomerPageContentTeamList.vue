@@ -8,7 +8,7 @@ import { MODALMODE } from "@/constants/modalMode.enum";
 
 import PageContentLayout from "@/ui/layouts/PageContentLayout.vue";
 import SideBarButton from "@/features/shared/components/SideBarButton.vue";
-import plusIcon from "@/assets/images/plus.png";
+import plusIcon from "@/assets/icons_svg/AddPlus.svg";
 import { useCaptainStore } from "@/stores/captainStore";
 import { useSelectedRoleStore } from "@/stores/selectedRole";
 

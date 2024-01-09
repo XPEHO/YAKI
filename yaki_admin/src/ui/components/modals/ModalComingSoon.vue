@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { BUTTONCOLORS } from "@/constants/componentsSettings.enum";
-import deleteIcon from "@/assets/images/x_close.png";
+import deleteIcon from "@/assets/icons_svg/CrossClose.svg";
 import ButtonTextIcon from "@/ui/components/buttons/ButtonTextIcon.vue";
 
 const emit = defineEmits(["close"]);

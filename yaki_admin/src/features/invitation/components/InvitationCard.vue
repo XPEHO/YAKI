@@ -2,7 +2,7 @@
 import { PropType, onMounted, reactive } from "vue";
 import type { UserWithIdType } from "@/models/userWithId.type";
 
-import avatarIcon from "@/assets/images/avatar.png";
+import avatarIcon from "@/assets/images/avatarLetters.png";
 import defaultButton from "@/features/shared/components/DefaultButton.vue";
 
 import {

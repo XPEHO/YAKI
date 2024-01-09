@@ -7,10 +7,10 @@ import SideBarMenuLink from "@/ui/components/sidebar/SideBarMenuLink.vue";
 import sideBarMenuDropDown from "@/ui/components/sidebar/SideBarMenuDropDown.vue";
 import LoggedUserCard from "@/ui/components/LoggedUserCard.vue";
 
-import Banner from "@/assets/images/splashscreen.svg";
-import caseIcon from "@/assets/images/briefcase-regular-24.png";
-import hatIcon from "@/assets/images/hard-hat-regular-24.png";
-import statIcon from "@/assets/images/stats.png";
+import Banner from "@/assets/images/YAKISquare.svg";
+import caseIcon from "@/assets/icons_svg/Briefcase.svg";
+import hatIcon from "@/assets/icons_svg/Boat.svg";
+import statIcon from "@/assets/icons_svg/Statistic.svg";
 
 const roleStoreTest = useRoleStore();
 

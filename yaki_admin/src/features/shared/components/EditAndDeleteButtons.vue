@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import editIcon from "@/assets/images/Edit_2.png";
-import editAltIcon from "@/assets/images/edit-alt.png";
-import deleteIcon from "@/assets/images/Delete_2.png";
-import validateIcon from "@/assets/images/check-circle.png";
+import editIcon from "@/assets/icons_svg/AddPlus.svg";
+import editAltIcon from "@/assets/icons_svg/AddPlus.svg";
+import deleteIcon from "@/assets/icons_svg/AddPlus.svg";
+import validateIcon from "@/assets/icons_svg/AddPlus.svg";
 
 import { ref } from "vue";
 
