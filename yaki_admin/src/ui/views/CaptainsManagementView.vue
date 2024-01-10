@@ -6,7 +6,7 @@ import { useCaptainStore } from "@/stores/captainStore";
 import { useSelectedRoleStore } from "@/stores/selectedRole";
 import { INVITEDROLE } from "@/constants/pathParam.enum";
 
-import PageContentHeader from "@/ui/views/PageContentHeader.vue";
+import PageContentHeader from "@/ui/components/PageContentHeader.vue";
 import UserList from "@/ui/components/UserList.vue";
 
 const captainStore = useCaptainStore();
