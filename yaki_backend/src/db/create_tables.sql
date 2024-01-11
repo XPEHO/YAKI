@@ -394,3 +394,8 @@ ADD COLUMN IF NOT EXISTS user_avatar_choice INTEGER;
 
 ALTER TABLE public.team 
 ADD COLUMN IF NOT EXISTS team_description TEXT DEFAULT '';
+
+ALTER TABLE public.locations
+ADD COLUMN IF NOT EXISTS location_entity_log_id integer DEFAULT 1;
+ALTER TABLE public.locations
+ADD COLUMN IF NOT EXISTS location_is_active boolean NOT NULL DEFAULT false;
