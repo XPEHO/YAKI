@@ -4,6 +4,7 @@ import avatarH from "@/assets/images/avatarH.svg";
 import avatarF from "@/assets/images/avatarF.svg";
 import avatarN from "@/assets/images/avatarN.svg";
 import userAvatar from "@/assets/images/avatarLetters.png";
+import teamImage from "@/assets/images/teamDefaultImg2.svg";
 
 export const setUserAvatarUrl = (user: UserWithIdType) => {
   switch (user.avatarReference) {
@@ -17,5 +18,13 @@ export const setUserAvatarUrl = (user: UserWithIdType) => {
       return avatarN;
     default:
       return userAvatar;
+  }
+};
+
+export const setTeamLogoUrl = (teamLogo: Uint8Array | null) => {
+  if (teamLogo) {
+    return `data:image/jpeg;base64,${teamLogo}`;
+  } else {
+    return teamImage;
   }
 };

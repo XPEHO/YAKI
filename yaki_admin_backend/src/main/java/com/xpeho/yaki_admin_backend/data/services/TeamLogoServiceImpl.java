@@ -22,10 +22,9 @@ public class TeamLogoServiceImpl implements TeamLogoService {
 
         if (OptionalTeamLogoModel.isPresent()) {
             TeamLogoModel teamLogoModel = OptionalTeamLogoModel.get();
-
             return teamLogoModel.toEntity();
         } else {
-            throw new EntityNotFoundException("Team logo not found");
+            return new TeamLogoEntity(0, null);
         }
     }
 

@@ -3,7 +3,7 @@ import { ref } from "vue";
 import eyesClosedIcon from "@/assets/icons_svg/Eye.svg";
 import eyesOpenedIcon from "@/assets/icons_svg/Eye.svg";
 
-const props = defineProps({
+defineProps({
   labelText: {
     type: String,
     required: true,

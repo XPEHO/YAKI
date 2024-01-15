@@ -6,7 +6,7 @@ import { useTeamStore } from "@/stores/teamStore";
 
 const teamStore = useTeamStore();
 
-const props = defineProps({
+defineProps({
   userList: {
     type: Object as PropType<UserWithIdType[]>,
     required: true,
