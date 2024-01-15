@@ -29,15 +29,17 @@ const props = defineProps({
 
 //define the methods
 const UserToBeRemoved = () => {
-  if (route.name === "/dashboard/manage-team") {
-    teammateStore.setIdOfTeammateToDelete(props.user.teammateId);
-    modalStore.setTeammateNameToDelete(`${props.user.firstname} ${props.user.lastname}`);
-    modalStore.switchModalVisibility(true, MODALMODE.userDelete);
-  } else if (route.name === "/dashboard/manage-captains") {
-    captainStore.setCaptainToDelete(props.user.captainId);
-    console.log("userinfocard captain id props user", props.user.captainId);
-    modalStore.setCaptainNameToDelete(`${props.user.firstname} ${props.user.lastname}`);
-    modalStore.switchModalVisibility(true, MODALMODE.captainDelete);
+  switch (route.fullPath) {
+    case "/dashboard/manage-team":
+      teammateStore.setIdOfTeammateToDelete(props.user.teammateId);
+      modalStore.setTeammateNameToDelete(`${props.user.firstname} ${props.user.lastname}`);
+      modalStore.switchModalVisibility(true, MODALMODE.userDelete);
+      break;
+    case "/dashboard/manage-captains":
+      captainStore.setCaptainToDelete(props.user.captainId);
+      modalStore.setCaptainNameToDelete(`${props.user.firstname} ${props.user.lastname}`);
+      modalStore.switchModalVisibility(true, MODALMODE.captainDelete);
+      break;
   }
 };
 

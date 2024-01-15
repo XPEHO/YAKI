@@ -24,6 +24,7 @@ export const useModalStore = defineStore("userModalStore", {
     teamDescriptionInputValue: "" as string,
     captainNameToDelete: "" as string,
   }),
+
   getters: {
     getIsShow: (state: State) => state.isShow,
     getMode: (state: State) => state.mode,
@@ -32,6 +33,7 @@ export const useModalStore = defineStore("userModalStore", {
     getTeamDescriptionInputValue: (state: State) => state.teamDescriptionInputValue,
     getCaptainNameToDelete: (state: State) => state.captainNameToDelete,
   },
+
   actions: {
     setIsShow(isShow: boolean) {
       this.isShow = isShow;
@@ -189,15 +191,11 @@ export const useModalStore = defineStore("userModalStore", {
     },
 
     /**
-     * Delete a captain.
+     * Delete a captain.(disabled)
      */
     async handleCaptainDelete() {
       const captainStore = useCaptainStore();
-
-      const deletedCaptain = await captainStore.deleteCaptain(captainStore.getCaptainToDelete);
-      await this.refreshCaptainList();
-
-      return deletedCaptain;
+      await captainStore.deleteCaptain(captainStore.getCaptainToDelete);
     },
     /**
      * Refresh the captain list.
@@ -205,7 +203,6 @@ export const useModalStore = defineStore("userModalStore", {
     async refreshCaptainList() {
       const captainStore = useCaptainStore();
       const roleStore = useRoleStore();
-
       await captainStore.setAllCaptainsByCustomerId(roleStore.getCustomerId);
     },
   },
