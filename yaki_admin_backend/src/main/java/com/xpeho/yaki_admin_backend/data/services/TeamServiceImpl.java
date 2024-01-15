@@ -22,13 +22,19 @@ public class TeamServiceImpl implements TeamService {
     final CaptainServiceImpl captainService;
     final CaptainsTeamsServiceImpl captainsTeamsService;
     final EntityLogServiceImpl entityLogService;
+    final TeamLogoServiceImpl teamLogoService;
 
-    public TeamServiceImpl(TeamJpaRepository teamJpaRepository, CaptainServiceImpl captainService, CaptainsTeamsServiceImpl captainsTeamsService, EntityLogServiceImpl entityLogService) {
+    public TeamServiceImpl(TeamJpaRepository teamJpaRepository,
+                           CaptainServiceImpl captainService,
+                           CaptainsTeamsServiceImpl captainsTeamsService,
+                           EntityLogServiceImpl entityLogService,
+                           TeamLogoServiceImpl teamLogoService
+    ) {
         this.teamJpaRepository = teamJpaRepository;
         this.captainService = captainService;
         this.captainsTeamsService = captainsTeamsService;
         this.entityLogService = entityLogService;
-
+        this.teamLogoService = teamLogoService;
     }
 
     @Override
@@ -137,6 +143,9 @@ public class TeamServiceImpl implements TeamService {
     @Override
     public TeamEntity disabled(int teamId) {
         Optional<TeamModel> teamModelOpt = teamJpaRepository.findById(teamId);
+        // delete logo rown when disable team
+        teamLogoService.deleteByTeamId(teamId);
+
         if (teamModelOpt.isEmpty()) {
             throw new EntityNotFoundException("The team with id " + teamId + " not found.");
         }

@@ -5,6 +5,7 @@ import com.xpeho.yaki_admin_backend.domain.entities.TeamEntityWithCaptainsDetail
 import com.xpeho.yaki_admin_backend.domain.services.TeamService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -54,4 +55,6 @@ public class TeamController {
     public TeamEntity disabled(@PathVariable int id) {
         return teamService.disabled(id);
     }
+
+
 }
