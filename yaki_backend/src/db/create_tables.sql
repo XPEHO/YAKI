@@ -78,6 +78,15 @@ CREATE SEQUENCE IF NOT EXISTS public.team_id_seq
     CACHE 1;
 ALTER SEQUENCE public.team_id_seq
     OWNER TO yaki;
+-- CREATE TEAMLOGO IDs
+CREATE SEQUENCE IF NOT EXISTS public.team_logo_id_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    CACHE 1;
+ALTER SEQUENCE public.team_logo_id_seq
+    OWNER TO yaki;    
 -- CREATE TEAM MATE IDs
 CREATE SEQUENCE IF NOT EXISTS public.teammate_id_seq
     INCREMENT 1
@@ -399,3 +408,13 @@ ALTER TABLE public.locations
 ADD COLUMN IF NOT EXISTS location_entity_log_id integer DEFAULT 1;
 ALTER TABLE public.locations
 ADD COLUMN IF NOT EXISTS location_is_active boolean NOT NULL DEFAULT false;
+
+CREATE TABLE IF NOT EXISTS public.team_logo(
+    team_logo_id integer NOT NULL DEFAULT nextval('public.team_logo_id_seq'::regclass),
+    team_logo_team_id integer NOT NULL,
+    team_logo_blob bytea,
+    CONSTRAINT team_logo_pkey PRIMARY KEY (team_logo_id)
+)
+TABLESPACE pg_default;
+ALTER TABLE IF EXISTS public.team_logo
+    OWNER to yaki;

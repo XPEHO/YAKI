@@ -3,13 +3,10 @@ package com.xpeho.yaki_admin_backend.data.services;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xpeho.yaki_admin_backend.data.models.EntityLogModel;
 import com.xpeho.yaki_admin_backend.data.models.LocationModel;
-import com.xpeho.yaki_admin_backend.data.sources.EntityLogJpaRepository;
 import com.xpeho.yaki_admin_backend.data.sources.LocationRepository;
 import com.xpeho.yaki_admin_backend.domain.entities.LocationEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -19,8 +16,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
