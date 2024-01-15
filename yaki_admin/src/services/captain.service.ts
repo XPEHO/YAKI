@@ -54,7 +54,7 @@ export class CaptainService {
     };
     await fetch(`${URL}/captains/delete/${captainId}`, requestOptions)
       .then(handleResponse)
-      .catch((err) => console.warn(err)); 
+      .catch((err) => console.warn(err));
   };
 
   //disabled a captain
