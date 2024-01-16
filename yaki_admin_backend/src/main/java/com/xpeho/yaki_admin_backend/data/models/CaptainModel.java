@@ -22,6 +22,7 @@ public class CaptainModel {
     @Column(name = "captain_entity_log_id")
     private int entityLogId;
 
+
     public CaptainModel(int userId, int customerId, int entityLogId) {
         this.userId = userId;
         this.customerId = customerId;

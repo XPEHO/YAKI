@@ -49,7 +49,6 @@ class CaptainServiceImpl(private val captainJpaRepository: CaptainJpaRepository,
     override fun deleteById(id: Int): CaptainEntity {
         val captainModelOpt = captainJpaRepository.findById(id)
         return if (captainModelOpt.isPresent) {
-            println(id)
             captainJpaRepository.deleteById(id)
             val captainModel = captainModelOpt.get()
             CaptainEntity(
@@ -106,7 +105,6 @@ class CaptainServiceImpl(private val captainJpaRepository: CaptainJpaRepository,
 
     //disable the captain but keep in log
     override fun disabled(captainId: Int): CaptainEntity {
-        println(captainId)
         val captainModelOpt: Optional<CaptainModel> = captainJpaRepository.findById(captainId)
         if (captainModelOpt.isEmpty) {
             throw EntityNotFoundException("The captain with id $captainId not found.")
@@ -115,7 +113,6 @@ class CaptainServiceImpl(private val captainJpaRepository: CaptainJpaRepository,
         entityLogService.disabledEntity(captainModel.entityLogId)
         captainModel.actifFlag = false
         captainJpaRepository.save(captainModel)
-        println(captainModel)
         return CaptainEntity(captainModel.captainId, captainModel.userId, captainModel.customerId)
     }
 }

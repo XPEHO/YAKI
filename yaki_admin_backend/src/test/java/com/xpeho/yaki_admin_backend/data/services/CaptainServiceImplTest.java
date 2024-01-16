@@ -158,8 +158,8 @@ class CaptainServiceImplTest {
         //given
         int customerId = 1;
         List<UserWithDetailsDto> userWithDetailsDtos = new ArrayList<>();
-        userWithDetailsDtos.add(new UserWithDetailsDto(1, 1, true, "Chette", "Barbie", "barbie@email.com", "avatarRef", null));
-        userWithDetailsDtos.add(new UserWithDetailsDto(2, 2, true, "Mattel", "Ken", "ken@email.com", "avatarRef", null));
+        userWithDetailsDtos.add(new UserWithDetailsDto(1, 1, "Chette", "Barbie", "barbie@email.com", "avatarRef", null));
+        userWithDetailsDtos.add(new UserWithDetailsDto(2, 2, "Mattel", "Ken", "ken@email.com", "avatarRef", null));
 
         //when
         when(captainJpaRepository.findAllCaptainByCustomerId(customerId)).thenReturn(userWithDetailsDtos);
