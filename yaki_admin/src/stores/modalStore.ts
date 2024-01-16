@@ -78,6 +78,7 @@ export const useModalStore = defineStore("userModalStore", {
 
     /**
      * Modal action management :
+     * Invoked in ModalFrameView, when user click on "validation" button in modal
      * Trigger corresponding methods depending on the current modal mode set when invoking switchModalVisibility.
      * See MODALMODE enum for more information
      *

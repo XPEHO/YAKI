@@ -9,7 +9,7 @@ import { INVITEDROLE } from "@/constants/pathParam.enum";
 
 const teamStore = useTeamStore();
 
-const props = defineProps({
+defineProps({
   /**
    * Role of the invited user,
    * used to display the correct title.

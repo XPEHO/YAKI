@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import buttonTextIcon from "@/ui/components/buttons/ButtonTextIcon.vue";
 import buttonIcon from "@/ui/components/buttons/ButtonIcon.vue";
-import teamImage from "@/assets/images/teamDefaultImg2.svg";
 import addIcon from "@/assets/icons_svg/AddPlus.svg";
 import dotIcon from "@/assets/icons_svg/3dots.svg";
 
@@ -12,6 +11,7 @@ import { useTeamStore } from "@/stores/teamStore";
 import { useModalToggleWithOutsideClickHandler } from "@/composable/useModalToggleWithOutsideClickHandler";
 import { computed } from "vue";
 import { INVITEDROLE } from "@/constants/pathParam.enum";
+import { setTeamLogoUrl } from "@/utils/images.utils";
 
 const teamStore = useTeamStore();
 
@@ -59,7 +59,7 @@ const { isModalVisible, switchModalVisibility } = useModalToggleWithOutsideClick
       <section>
         <figure v-if="isTeamManagement">
           <img
-            :src="teamImage"
+            :src="setTeamLogoUrl(teamStore.getTeamSelectedLogo.teamLogoBlob)"
             alt=""
           />
         </figure>

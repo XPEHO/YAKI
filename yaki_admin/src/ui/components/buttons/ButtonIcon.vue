@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { BUTTONCOLORS } from "@/constants/componentsSettings.enum";
 
-const props = defineProps({
+defineProps({
   icon: {
     type: String,
     required: true,
