@@ -29,9 +29,6 @@ export const useCaptainStore = defineStore("captainStore", {
     setCaptainToDelete(captainId: number) {
       this.captainToDelete = captainId;
     },
-    resetCaptainList() {
-      this.captainList = [];
-    },
 
     // get all captains of a customer
     async setAllCaptainsByCustomerId(customerId: number) {
