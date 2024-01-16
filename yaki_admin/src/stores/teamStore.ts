@@ -175,6 +175,11 @@ export const useTeamStore = defineStore("teamStore", {
       this.teamSelectedLogo = savedTeamLogo;
     },
 
+    async deleteTeamLogo(): Promise<void> {
+      teamLogoService.deleteTeamLogo(this.getTeamSelected.id);
+      this.teamSelectedLogo = { teamId: 0, teamLogoBlob: null };
+    },
+
     // ----------------------------------------------------------------------------------------------
     // DEPRECIATED WITH BASTI CHANGE ? ---------------------------------------------------------------
 

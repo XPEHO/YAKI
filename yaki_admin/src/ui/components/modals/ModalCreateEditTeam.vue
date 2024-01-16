@@ -112,6 +112,7 @@ const openFilePicker = () => {
 };
 
 const deleteTeamLogo = () => {
+  teamStore.deleteTeamLogo();
   setDefaultLogo();
 };
 </script>

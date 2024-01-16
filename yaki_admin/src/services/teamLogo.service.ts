@@ -40,6 +40,17 @@ class TeamLogoService {
 
     return response;
   };
+
+  deleteTeamLogo = async (teamId: number): Promise<void> => {
+    const requestOptions = {
+      method: "DELETE",
+      headers: authHeader(`${URL}/teams/${teamId}/logo`),
+    };
+
+    await fetch(`${URL}/teams/${teamId}/logo`, requestOptions)
+      .then(handleResponse)
+      .catch((err) => console.warn(err));
+  };
 }
 
 export const teamLogoService = Object.freeze(new TeamLogoService());
