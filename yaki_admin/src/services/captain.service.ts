@@ -19,6 +19,7 @@ export class CaptainService {
     return response;
   };
 
+  //get all captains of a customer
   getAllCaptainsByCustomerId = async (customerId: number): Promise<UserWithIdType[]> => {
     const requestOptions = {
       method: "GET",
@@ -55,6 +56,19 @@ export class CaptainService {
       .then(handleResponse)
       .catch((err) => console.warn(err));
   };
+
+  //disabled a captain
+  disabledCaptain = async (captainId: number): Promise<void> => {
+    const requestOptions = {
+      method: "PUT",
+      headers: authHeader(`${URL}/captains/disabled/${captainId}`),
+    };
+    await fetch(`${URL}/captains/disabled/${captainId}`, requestOptions)
+      .then(handleResponse)
+      .catch((err) => console.warn(err));
+  };
+
+  // get a captain by id
   getCaptain = async (captainId: number): Promise<CaptainType> => {
     const requestOptions = {
       method: "GET",

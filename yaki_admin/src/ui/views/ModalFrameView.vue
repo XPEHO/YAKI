@@ -60,7 +60,9 @@ const onAccept = async () => {
         @on-accept="onAccept"
         @on-cancel="onCancel"
         v-else-if="
-          modalStore.getMode === MODALMODE.teamDelete || modalStore.getMode === MODALMODE.userDelete
+          modalStore.getMode === MODALMODE.teamDelete ||
+          modalStore.getMode === MODALMODE.userDelete ||
+          modalStore.getMode === MODALMODE.captainDelete
         "
       />
       <modal-coming-soon

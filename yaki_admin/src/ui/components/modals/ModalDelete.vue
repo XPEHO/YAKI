@@ -17,6 +17,8 @@ const title = computed(() => {
   switch (modalStore.getMode) {
     case MODALMODE.userDelete:
       return "Remove user ?";
+    case MODALMODE.captainDelete:
+      return "Remove captain ?";
     case MODALMODE.teamDelete:
       return "Delete team ?";
   }
@@ -26,6 +28,8 @@ const title = computed(() => {
 const action = computed(() => {
   switch (modalStore.getMode) {
     case MODALMODE.userDelete:
+      return "Remove";
+    case MODALMODE.captainDelete:
       return "Remove";
     case MODALMODE.teamDelete:
       return "Delete";
@@ -37,6 +41,8 @@ const deletedElement = computed(() => {
   switch (modalStore.getMode) {
     case MODALMODE.userDelete:
       return modalStore.getTeammateNameToDelete;
+    case MODALMODE.captainDelete:
+      return modalStore.getCaptainNameToDelete;
     case MODALMODE.teamDelete:
       return teamStore.getTeamSelected.teamName;
   }
@@ -60,10 +66,15 @@ const onDeletePress = async () => {
 
     <p class="modal__container-text">
       Are you sure you want to {{ action }} <br />
-      <span> {{ deletedElement }}</span>
-      From :
-      <span v-if="modalStore.getMode === MODALMODE.userDelete">
-        <span>{{ teamStore.getTeamSelected.teamName }}</span> ?
+      <span class="text__bold"> {{ deletedElement }}</span>
+      <span
+        v-if="
+          modalStore.getMode === MODALMODE.userDelete ||
+          modalStore.getMode === MODALMODE.captainDelete
+        "
+      >
+        From :
+        <span class="text__bold">{{ teamStore.getTeamSelected.teamName }}</span> ?
       </span>
       <br />
       This action is irreversible !

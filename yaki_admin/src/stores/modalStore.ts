@@ -4,6 +4,7 @@ import { useTeamStore } from "@/stores/teamStore";
 import { useTeammateStore } from "@/stores/teammateStore";
 import { useRoleStore } from "@/stores/roleStore";
 import { TeamType } from "@/models/team.type";
+import { useCaptainStore } from "./captainStore";
 
 interface State {
   isShow: boolean;
@@ -11,6 +12,7 @@ interface State {
   teamNameInputValue: string;
   teammateNameToDelete: string;
   teamDescriptionInputValue: string;
+  captainNameToDelete: string;
 }
 
 export const useModalStore = defineStore("userModalStore", {
@@ -20,14 +22,18 @@ export const useModalStore = defineStore("userModalStore", {
     teamNameInputValue: "" as string,
     teammateNameToDelete: "" as string,
     teamDescriptionInputValue: "" as string,
+    captainNameToDelete: "" as string,
   }),
+
   getters: {
     getIsShow: (state: State) => state.isShow,
     getMode: (state: State) => state.mode,
     getTeamNameInputValue: (state: State) => state.teamNameInputValue,
     getTeammateNameToDelete: (state: State) => state.teammateNameToDelete,
     getTeamDescriptionInputValue: (state: State) => state.teamDescriptionInputValue,
+    getCaptainNameToDelete: (state: State) => state.captainNameToDelete,
   },
+
   actions: {
     setIsShow(isShow: boolean) {
       this.isShow = isShow;
@@ -43,6 +49,9 @@ export const useModalStore = defineStore("userModalStore", {
     },
     setTeamDescriptionInputValue(teamDescriptionInputValue: string) {
       this.teamDescriptionInputValue = teamDescriptionInputValue;
+    },
+    setCaptainNameToDelete(captainName: string) {
+      this.captainNameToDelete = captainName;
     },
 
     /**
@@ -101,6 +110,8 @@ export const useModalStore = defineStore("userModalStore", {
         case MODALMODE.userDelete:
           await this.handleUserDelete();
           return;
+        case MODALMODE.captainDelete:
+          await this.handleCaptainDelete();
       }
     },
     /**
@@ -176,8 +187,25 @@ export const useModalStore = defineStore("userModalStore", {
     async refreshTeamList() {
       const teamStore = useTeamStore();
       const roleStore = useRoleStore();
-
       await teamStore.setTeamListOfACaptain(roleStore.getCaptainsId);
     },
-  }, //actions end
+
+    /**
+     * Delete a captain.(disabled)
+     */
+    async handleCaptainDelete() {
+      const captainStore = useCaptainStore();
+      await captainStore.deleteCaptain(captainStore.getCaptainToDelete);
+    },
+    /**
+     * Refresh the captain list.
+     */
+    async refreshCaptainList() {
+      const captainStore = useCaptainStore();
+      const roleStore = useRoleStore();
+      await captainStore.setAllCaptainsByCustomerId(roleStore.getCustomerId);
+    },
+  },
+
+  //actions end
 });

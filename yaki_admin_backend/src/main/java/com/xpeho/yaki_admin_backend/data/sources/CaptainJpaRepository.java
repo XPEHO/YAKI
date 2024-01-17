@@ -18,7 +18,7 @@ public interface CaptainJpaRepository extends JpaRepository<CaptainModel, Intege
             INNER JOIN CaptainModel cap ON cap.userId = u.userId 
             INNER JOIN CustomerModel cust ON cust.id = cap.customerId 
             LEFT JOIN AvatarModel a on a.avatarId = u.userAvatarChoice 
-            WHERE cust.id = ?1
+            WHERE cust.id = ?1 AND cap.actifFlag = true
             """)
     List<UserWithDetailsDto> findAllCaptainByCustomerId(int id);
 }
