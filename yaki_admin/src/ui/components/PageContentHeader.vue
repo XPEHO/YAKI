@@ -57,7 +57,10 @@ const { isModalVisible, switchModalVisibility } = useModalToggleWithOutsideClick
   <section class="header__container">
     <div>
       <section>
-        <figure v-if="isTeamManagement">
+        <figure
+          class="header_figure"
+          v-if="isTeamManagement"
+        >
           <img
             :src="setTeamLogoUrl(teamStore.getTeamSelectedLogo.teamLogoBlob)"
             alt=""
@@ -103,17 +106,6 @@ const { isModalVisible, switchModalVisibility } = useModalToggleWithOutsideClick
   padding-block: 44px 24px;
   padding-inline: 40px;
 
-  figure {
-    width: 48px;
-    height: 48px;
-    border-radius: 16px;
-    img {
-      width: 100%;
-      object-fit: contain;
-      border-radius: 16px;
-    }
-  }
-
   > div {
     display: flex;
     align-items: center;
@@ -126,6 +118,19 @@ const { isModalVisible, switchModalVisibility } = useModalToggleWithOutsideClick
       gap: 8px;
     }
   }
+
+  .header_figure {
+    width: 48px;
+    height: 48px;
+    border-radius: 16px;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 16px;
+    }
+  }
+
   .header__buttons-modal_container {
     display: flex;
     align-items: center;

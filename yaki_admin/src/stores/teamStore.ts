@@ -177,6 +177,13 @@ export const useTeamStore = defineStore("teamStore", {
 
     async deleteTeamLogo(): Promise<void> {
       teamLogoService.deleteTeamLogo(this.getTeamSelected.id);
+      this.resetTeamStoreSelectedLogo();
+    },
+
+    /**
+     * Reset the teamSelectedLogo to its initial value
+     */
+    resetTeamStoreSelectedLogo(): void {
       this.teamSelectedLogo = { teamId: 0, teamLogoBlob: null };
     },
 

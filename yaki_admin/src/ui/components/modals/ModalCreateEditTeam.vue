@@ -153,10 +153,8 @@ const setTeamDescription = (value: string) => {
 
 <template>
   <section class="container__popup">
-    <h1 class="container__title-text container__style">{{ modalText.title }}</h1>
-    <p
-      :class="['container__text', 'container__style', isFileSizeTooBig ? 'is_logo_too_heavy' : '']"
-    >
+    <h1 class="container__title-text">{{ modalText.title }}</h1>
+    <p :class="['container__text', isFileSizeTooBig ? 'is_logo_too_heavy' : '']">
       {{ modalText.text }}
     </p>
 
@@ -169,7 +167,7 @@ const setTeamDescription = (value: string) => {
           />
         </figure>
 
-        <aside class="container__buttons">
+        <aside class="container__buttons_aside">
           <button-icon
             :icon="deleteIcon"
             @click="deleteTeamLogo"
@@ -188,37 +186,35 @@ const setTeamDescription = (value: string) => {
         </aside>
       </section>
 
-      <section class="popup__content">
-        <form class="popup__input-container">
-          <input-text
-            label-text="Team name"
-            :inputValue="modalStore.getTeamNameInputValue"
-            @emittedInput="setTeamName"
-            :isError="isMissingTeamNameError"
-          />
+      <form class="popup__input-container">
+        <input-text
+          label-text="Team name"
+          :inputValue="modalStore.getTeamNameInputValue"
+          @emittedInput="setTeamName"
+          :isError="isMissingTeamNameError"
+        />
 
-          <input-text-area
-            label-text="'Team description'"
-            :inputValue="modalStore.getTeamDescriptionInputValue"
-            @emittedInput="setTeamDescription"
-          />
+        <input-text-area
+          label-text="'Team description'"
+          :inputValue="modalStore.getTeamDescriptionInputValue"
+          @emittedInput="setTeamDescription"
+        />
 
-          <section class="container__buttons--popup">
-            <button-text-sized
-              text="Cancel"
-              :color="BUTTONCOLORS.secondary"
-              @click.prevent="onCancelPress"
-              type="button"
-            />
-            <button-text-sized
-              text="Modify"
-              :color="BUTTONCOLORS.primary"
-              @click.prevent="onAcceptPress"
-              type="submit"
-            />
-          </section>
-        </form>
-      </section>
+        <section class="container__buttons_form">
+          <button-text-sized
+            text="Cancel"
+            :color="BUTTONCOLORS.secondary"
+            @click.prevent="onCancelPress"
+            type="button"
+          />
+          <button-text-sized
+            text="Modify"
+            :color="BUTTONCOLORS.primary"
+            @click.prevent="onAcceptPress"
+            type="submit"
+          />
+        </section>
+      </form>
     </section>
   </section>
 </template>

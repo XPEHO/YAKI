@@ -4,9 +4,11 @@ import com.xpeho.yaki_admin_backend.domain.entities.TeamLogoEntity;
 import com.xpeho.yaki_admin_backend.domain.services.TeamLogoService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
+import java.util.Optional;
 
 @CrossOrigin
 @RestController
@@ -37,8 +39,13 @@ public class TeamLogoController {
     }
 
     @DeleteMapping()
-    public TeamLogoEntity deleteByTeamId(@PathVariable int id) {
-        return teamLogoService.deleteByTeamId(id);
+    public ResponseEntity<?> deleteByTeamId(@PathVariable int id) {
+        Optional<TeamLogoEntity> teamLogoEntity = teamLogoService.deleteByTeamId(id);
+        if (teamLogoEntity.isPresent()) {
+            return new ResponseEntity<>(teamLogoEntity.get(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
 }

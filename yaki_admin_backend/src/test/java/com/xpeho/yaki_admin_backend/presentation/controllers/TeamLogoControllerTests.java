@@ -20,6 +20,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Optional;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -87,7 +89,8 @@ public class TeamLogoControllerTests {
     @Test
     public void shouldDeleteTeamLogoByTeamId() throws Exception {
 
-        given(teamLogoService.deleteByTeamId(1)).willReturn(teamLogoEntity);
+        Optional<TeamLogoEntity> teamLogoEntityOptional = Optional.of(teamLogoEntity);
+        given(teamLogoService.deleteByTeamId(1)).willReturn(teamLogoEntityOptional);
 
         MockHttpServletResponse response = mvc.perform(
                         MockMvcRequestBuilders.delete("/teams/1/logo")
