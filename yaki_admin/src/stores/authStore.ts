@@ -22,6 +22,7 @@ export const useAuthStore = defineStore("loginStore", {
     async login(login: string, password: string): Promise<boolean> {
       try {
         const userEntity = await loginService.login(login, password);
+
         this.user = {
           user_id: userEntity.userId,
           token: userEntity.token,
@@ -56,6 +57,7 @@ export const useAuthStore = defineStore("loginStore", {
         return false;
       }
     },
+
     logout() {
       this.user = null;
       localStorage.removeItem("user");
