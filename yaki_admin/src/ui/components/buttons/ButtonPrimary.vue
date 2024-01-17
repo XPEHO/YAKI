@@ -14,6 +14,11 @@ const props = defineProps({
       return Object.values(BUTTONCOLORS).includes(value as BUTTONCOLORS);
     },
   },
+  isDisabled: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
 });
 
 const classList = [
@@ -27,7 +32,17 @@ const classList = [
 </script>
 
 <template>
-  <button :class="[classList, color]">
-    {{ props.text }}
+  <button
+    :class="[classList, color, isDisabled ? 'button_disabled' : '']"
+    :disabled="isDisabled"
+  >
+    <p :class="[isDisabled ? 'fade_out_text_animation' : '']">{{ text }}</p>
   </button>
 </template>
+
+<style scoped lang="scss">
+.button_disabled {
+  transform: translateY(var(--animation-translate-y-button));
+  box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.15);
+}
+</style>
