@@ -74,6 +74,11 @@ export const useModalStore = defineStore("userModalStore", {
           this.setTeamDescriptionInputValue(teamDescription);
         }
       }
+
+      if (mode === MODALMODE.teamCreate) {
+        teamStore.resetTeamStoreSelectedLogo();
+      }
+
       if (mode === MODALMODE.teamCreate || mode === MODALMODE.teamDelete) {
         this.setTeamNameInputValue("");
         this.setTeamDescriptionInputValue("");

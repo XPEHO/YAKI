@@ -143,7 +143,7 @@ public class TeamServiceImpl implements TeamService {
     @Override
     public TeamEntity disabled(int teamId) {
         Optional<TeamModel> teamModelOpt = teamJpaRepository.findById(teamId);
-        // delete logo rown when disable team
+            // Delete logo row when disable team. If there's no logo to delete, this will do nothing.
         teamLogoService.deleteByTeamId(teamId);
 
         if (teamModelOpt.isEmpty()) {

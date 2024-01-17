@@ -60,17 +60,6 @@ defineProps({
   padding-block: 44px 24px;
   padding-inline: 40px;
 
-  figure {
-    background-color: black;
-    width: 48px;
-    height: 48px;
-    border-radius: 16px;
-    img {
-      width: 100%;
-      object-fit: contain;
-    }
-  }
-
   > div {
     display: flex;
     align-items: flex-start;

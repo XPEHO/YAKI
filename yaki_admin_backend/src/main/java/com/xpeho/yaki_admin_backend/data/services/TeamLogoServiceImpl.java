@@ -4,7 +4,6 @@ import com.xpeho.yaki_admin_backend.data.models.TeamLogoModel;
 import com.xpeho.yaki_admin_backend.data.sources.TeamLogoRepository;
 import com.xpeho.yaki_admin_backend.domain.entities.TeamLogoEntity;
 import com.xpeho.yaki_admin_backend.domain.services.TeamLogoService;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -53,15 +52,16 @@ public class TeamLogoServiceImpl implements TeamLogoService {
         }
     }
 
-    public TeamLogoEntity deleteByTeamId(int teamId) {
+    public Optional<TeamLogoEntity> deleteByTeamId(int teamId) {
         Optional<TeamLogoModel> OptinalTeamLogoModel = teamLogoRepository.findOptionalByTeamLogoTeamId(teamId);
 
         if (OptinalTeamLogoModel.isPresent()) {
             TeamLogoModel teamLogoModelToDelete = OptinalTeamLogoModel.get();
             teamLogoRepository.delete(teamLogoModelToDelete);
-            return teamLogoModelToDelete.toEntity();
+            return Optional.of(teamLogoModelToDelete.toEntity());
         } else {
-            throw new EntityNotFoundException("Team logo not found");
+            return Optional.empty();
         }
+        // If there's no TeamLogo to delete, do nothing and return
     }
 }

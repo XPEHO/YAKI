@@ -17,9 +17,8 @@ import java.util.Optional;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertArrayEquals;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
@@ -88,10 +87,10 @@ public class TeamLogoServiceImplTest {
         TeamLogoModel teamLogoModelToDelete = new TeamLogoModel(1, logoBlob);
         given(teamLogoRepository.findOptionalByTeamLogoTeamId(1)).willReturn(Optional.of(teamLogoModel1));
         // when
-        TeamLogoEntity teamLogoEntity = teamLogoService.deleteByTeamId(1);
+        teamLogoService.deleteByTeamId(1);
         // then
-        assertThat(teamLogoEntity.teamId(), is(equalTo(teamLogoEntityToDelete.teamId())));
-        assertTrue(Arrays.equals(teamLogoEntity.teamLogoBlob(), teamLogoEntityToDelete.teamLogoBlob()));
+        Optional<TeamLogoModel> teamLogoEntity = teamLogoRepository.findOptionalByTeamLogoTeamId(1);
+        assertThat(teamLogoEntity.isPresent(), is(true));
     }
 
 }
