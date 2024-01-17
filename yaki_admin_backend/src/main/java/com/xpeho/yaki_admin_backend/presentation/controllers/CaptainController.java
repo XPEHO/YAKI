@@ -48,6 +48,7 @@ public class CaptainController {
 
     @GetMapping("/customer/{id}")
     public List<UserEntityWithID> getAllCaptainByCustomerId(@PathVariable int id) {
+        System.out.println("controller : CustomerID " + id);
         return captainService.getAllCaptainByCustomerId(id);
     }
 

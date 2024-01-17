@@ -82,6 +82,7 @@ class CaptainServiceImpl(private val captainJpaRepository: CaptainJpaRepository,
 
 
     override fun getAllCaptainByCustomerId(customerId: Int): List<UserEntityWithID> {
+        println("captain service impl " + captainJpaRepository.findAllByCustomerId(customerId))
         return captainJpaRepository
                 .findAllCaptainByCustomerId(customerId)
                 .map { userWithDetails: UserWithDetailsDto ->
