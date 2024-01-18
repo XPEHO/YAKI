@@ -23,7 +23,7 @@ import Banner from "@/assets/images/splashscreen.svg";
           <a
             href="https://xpeho.com/"
             target="_blank"
-            ><span class="xpeho">XPEHO</span></a
+            ><span class="color-xpeho">XPEHO</span></a
           >
         </p>
         <a
@@ -67,7 +67,7 @@ section {
         text-decoration: none;
         font-family: $font-rubik;
       }
-      .xpeho {
+      .color-xpeho {
         color: $green-xpeho-color;
         font-weight: 600;
       }
