@@ -31,24 +31,6 @@ class TeamsDeclarationSummary extends ConsumerWidget {
           ),
           IconButton(
             icon: const NavIconCircleAvatar(
-              imageSrc: 'assets/images/Search.svg',
-            ),
-            onPressed: () {
-              showModalBottomSheet(
-                context: context,
-                builder: (BuildContext context) {
-                  return const SizedBox(
-                    height: 200,
-                    child: Center(
-                      child: Text('Coming soon'),
-                    ),
-                  );
-                },
-              );
-            },
-          ),
-          IconButton(
-            icon: const NavIconCircleAvatar(
               imageSrc: 'assets/images/Account.svg',
             ),
             onPressed: () {
