@@ -76,9 +76,9 @@ String setFirstSentence({
 }) {
   return declarationMode == DeclarationPaths.timeOfDay.text
       ? teamNameList.contains("Absence")
-          ? "whenAreYouAbsent"
-          : "whenDoYouWork"
-      : "whereDoYouWork";
+          ? tr('whenAreYouAbsent')
+          : tr('whenDoYouWork')
+      : tr('whereDoYouWork');
 }
 
 String setTeam({required List<String> teamList}) {
