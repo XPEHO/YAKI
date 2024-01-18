@@ -73,7 +73,7 @@ const onDeletePress = async () => {
           modalStore.getMode === MODALMODE.captainDelete
         "
       >
-        <div v-if="modalStore.getMode !== MODALMODE.captainDelete">From :</div>
+        <span v-if="modalStore.getMode !== MODALMODE.captainDelete">From :</span>
         <span class="text__bold">{{ teamStore.getTeamSelected.teamName }}</span> ?
       </span>
       <br />
