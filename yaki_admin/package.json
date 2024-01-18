@@ -17,7 +17,7 @@
     "format:check": "prettier --check ."
   },
   "dependencies": {
-    "@yaki_ui/yaki_ui_web_components": "https://gitpkg.now.sh/XPEHO/yaki_ui/web?feat/web_admin_ui",
+    "@yaki_ui/yaki_ui_web_components": "https://gitpkg.now.sh/XPEHO/yaki_ui/web?main",
     "dotenv": "^16.1.4",
     "npm-run-all": "^4.1.5",
     "pinia": "^2.1.7",
