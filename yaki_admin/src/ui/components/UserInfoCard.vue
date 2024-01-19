@@ -7,9 +7,11 @@ import { UserWithIdType } from "@/models/userWithId.type";
 import { MODALMODE } from "@/constants/modalMode.enum";
 import { useModalStore } from "@/stores/modalStore";
 import { useTeammateStore } from "@/stores/teammateStore";
-import { setUserAvatarUrl } from "@/utils/images.utils";
 import { useCaptainStore } from "@/stores/captainStore";
+import { setUserAvatarUrl, userAvatar as avatar } from "@/utils/images.utils";
+import CercleAvatar from "@/ui/components/CercleAvatar.vue";
 import { useRoute } from "vue-router";
+import { ref } from "vue";
 
 //Get the stores
 const modalStore = useModalStore();
@@ -46,16 +48,27 @@ const UserToBeRemoved = () => {
 const OpenModalNotImplemented = () => {
   modalStore.switchModalVisibility(true, MODALMODE.comingSoon);
 };
+
+const userAvatar = ref(avatar);
 </script>
 
 <template>
   <article class="user-card__container user-card__accepted_status">
     <figure class="user-card__avatar rounded">
-      <img
-        class="user-card__avatar-img"
-        :src="setUserAvatarUrl(props.user)"
-        alt="user-card"
-      />
+      <div v-if="setUserAvatarUrl(props.user) !== userAvatar">
+        <img
+          class="user-card__avatar-img"
+          :src="setUserAvatarUrl(props.user)"
+          alt="user-card"
+        />
+      </div>
+      <div v-else>
+        <CercleAvatar
+          :firstName="props.user.firstname"
+          :lastName="props.user.lastname"
+          :avatarUrl="props.user.avatarReference"
+        />
+      </div>
     </figure>
     <div class="user-card__wrapper-user-infos">
       <p class="user-card__name-text">{{ user.firstname }} {{ user.lastname }}</p>

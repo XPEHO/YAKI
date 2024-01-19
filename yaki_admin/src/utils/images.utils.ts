@@ -28,3 +28,5 @@ export const setTeamLogoUrl = (teamLogo: Uint8Array | null) => {
     return teamImage;
   }
 };
+
+export { userAvatar };
