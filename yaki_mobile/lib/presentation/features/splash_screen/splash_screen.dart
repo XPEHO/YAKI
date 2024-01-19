@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:yaki/domain/entities/declaration_status.dart';
 import 'package:yaki/presentation/state/providers/avatar_provider.dart';
 import 'package:yaki/presentation/state/providers/declaration_provider.dart';
+import 'package:yaki/presentation/state/providers/token_provider.dart';
 import 'package:yaki/presentation/styles/color.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:go_router/go_router.dart';
@@ -16,40 +17,58 @@ class SplashScreen extends ConsumerStatefulWidget {
 }
 
 class SplashScreenState extends ConsumerState<SplashScreen> {
+  bool _isTokenSaved = false;
+  bool _isDeclared = false;
+  bool _isTokenValid = false;
+
   @override
   void initState() {
     super.initState();
     isLogin();
   }
 
+  void handleRedirection() {
+    if (!_isTokenSaved || !_isTokenValid) {
+      context.go('/authentication');
+      return;
+    }
+
+    if (_isDeclared) {
+      context.go('/teams-declaration-summary');
+    } else {
+      context.go('/team-selection');
+    }
+  }
+
+  /// Check if user is logged in and if token is valid.
+  /// If user is logged in and token is valid, get avatar.
   void isLogin() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    _isTokenSaved = prefs.containsKey('token');
+
+    // if token is not saved, no need to check for token validity
+    if (!_isTokenSaved) {
+      handleRedirection();
+      return;
+    }
+
+    _isTokenValid =
+        await ref.read(tokenRepositoryProvider).verifyTokenValidity();
+
+    // if token is not valid, no need to check for declaration as user going to authentication page
+    if (!_isTokenValid) {
+      handleRedirection();
+      return;
+    }
 
     // get if user is declared
     await ref.read(declarationProvider.notifier).getLatestDeclaration();
-    final bool isDeclared =
-        ref.read(declarationProvider).latestDeclarationStatus ==
-            LatestDeclarationStatus.declared;
+    _isDeclared = ref.read(declarationProvider).latestDeclarationStatus ==
+        LatestDeclarationStatus.declared;
+    //  get avatar
+    await ref.read(avatarProvider.notifier).getAvatar();
 
-    bool isLoggedIn = prefs.containsKey('token');
-
-    if (isLoggedIn) {
-      await ref.read(avatarProvider.notifier).getAvatar();
-    }
-
-    if (isLoggedIn && isDeclared) {
-      Future.delayed(const Duration(milliseconds: 100), () {
-        context.go('/teams-declaration-summary');
-      });
-    } else if (isLoggedIn) {
-      Future.delayed(const Duration(milliseconds: 100), () {
-        context.go('/team-selection');
-      });
-    } else {
-      Future.delayed(const Duration(milliseconds: 100), () {
-        context.go('/authentication');
-      });
-    }
+    handleRedirection();
   }
 
   @override

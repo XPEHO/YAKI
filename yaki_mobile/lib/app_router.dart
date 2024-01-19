@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yaki/data/sources/local/shared_preference.dart';
 import 'package:yaki/presentation/displaydata/declaration_enum.dart';
@@ -11,11 +11,23 @@ import 'package:yaki/presentation/features/teams_declarations_summary/teams_decl
 import 'package:yaki/presentation/features/user_declaration_summary/user_declaration_summary.dart';
 import 'package:yaki/presentation/features/team_selection/team_selection.dart';
 import 'package:yaki/presentation/features/user_declaration_summary/user_declaration_summary_absence.dart';
+import 'package:yaki/presentation/state/providers/token_provider.dart';
 import 'package:yaki/presentation/ui/default/user_default_redirection.dart';
 import 'package:yaki/presentation/features/password/forgot_password.dart';
 import 'package:yaki/presentation/features/password/change_password.dart';
 import 'package:yaki/presentation/features/profile/profile.dart';
 import 'package:yaki/presentation/features/registration/registration.dart';
+
+Future<bool> isTokenSavedAndValid(ProviderRef ref) async {
+  final isTokenSaved = await SharedPref.isTokenPresent();
+  bool isTokenValid = false;
+
+  if (isTokenSaved) {
+    isTokenValid =
+        await ref.read(tokenRepositoryProvider).verifyTokenValidity();
+  }
+  return isTokenSaved && isTokenValid;
+}
 
 /// router set as provider.
 final goRouterProvider = Provider<GoRouter>(
@@ -35,15 +47,6 @@ final goRouterProvider = Provider<GoRouter>(
                 canPop: false,
                 child: Authentication(),
               ),
-              redirect: (BuildContext context, GoRouterState state) async {
-                final isTokenSaves = await SharedPref.isTokenPresent();
-
-                if (isTokenSaves) {
-                  return '/teams-declaration-summary';
-                } else {
-                  return '/authentication';
-                }
-              },
             ),
             GoRoute(
               path: 'userDefaultRedirection',
@@ -52,7 +55,7 @@ final goRouterProvider = Provider<GoRouter>(
                 child: UserDefaultRedirection(),
               ),
               redirect: (BuildContext context, GoRouterState state) async {
-                if (await SharedPref.isTokenPresent()) {
+                if (await isTokenSavedAndValid(ref)) {
                   return '/userDefaultRedirection';
                 } else {
                   return '/authentication';
@@ -66,7 +69,7 @@ final goRouterProvider = Provider<GoRouter>(
                 child: Profile(),
               ),
               redirect: (BuildContext context, GoRouterState state) async {
-                if (await SharedPref.isTokenPresent()) {
+                if (await isTokenSavedAndValid(ref)) {
                   return '/profile';
                 } else {
                   return '/authentication';
@@ -80,7 +83,7 @@ final goRouterProvider = Provider<GoRouter>(
                 child: ChangePassword(),
               ),
               redirect: (BuildContext context, GoRouterState state) async {
-                if (await SharedPref.isTokenPresent()) {
+                if (await isTokenSavedAndValid(ref)) {
                   return '/changePassword';
                 } else {
                   return '/authentication';
@@ -94,7 +97,7 @@ final goRouterProvider = Provider<GoRouter>(
                 child: TeamSelection(),
               ),
               redirect: (BuildContext context, GoRouterState state) async {
-                if (await SharedPref.isTokenPresent()) {
+                if (await isTokenSavedAndValid(ref)) {
                   return '/team-selection';
                 } else {
                   return '/authentication';
@@ -110,10 +113,11 @@ final goRouterProvider = Provider<GoRouter>(
                 ),
               ),
               redirect: (BuildContext context, GoRouterState state) async {
-                if (await SharedPref.isTokenPresent()) {
+                if (await isTokenSavedAndValid(ref)) {
                   return '/declaration/half-day-start';
+                } else {
+                  return '/authentication';
                 }
-                return '/authentication';
               },
             ),
             GoRoute(
@@ -125,9 +129,7 @@ final goRouterProvider = Provider<GoRouter>(
                 ),
               ),
               redirect: (BuildContext context, GoRouterState state) async {
-                // null check
-
-                if (await SharedPref.isTokenPresent()) {
+                if (await isTokenSavedAndValid(ref)) {
                   return '/declaration/half-day-end';
                 }
                 return '/authentication';
@@ -142,13 +144,12 @@ final goRouterProvider = Provider<GoRouter>(
                 ),
               ),
               redirect: (BuildContext context, GoRouterState state) async {
-                // null check
                 final String pathParam = state.pathParameters['mode'] ?? '';
                 // check if the path parameter is valid
                 final bool isValidPath =
                     DeclarationPaths.isValidPath(value: pathParam);
 
-                if (await SharedPref.isTokenPresent() && isValidPath) {
+                if (await isTokenSavedAndValid(ref) && isValidPath) {
                   return '/declaration/${state.pathParameters['mode']!}';
                 }
                 return '/authentication';
@@ -163,7 +164,7 @@ final goRouterProvider = Provider<GoRouter>(
                 ),
               ),
               redirect: (BuildContext context, GoRouterState state) async {
-                if (await SharedPref.isTokenPresent()) {
+                if (await isTokenSavedAndValid(ref)) {
                   return '/summary/absence';
                 } else {
                   return '/team-selection';
@@ -184,7 +185,7 @@ final goRouterProvider = Provider<GoRouter>(
                 final bool isValidPath =
                     DeclarationSummaryPaths.isValidPath(value: pathParam);
 
-                if (await SharedPref.isTokenPresent() && isValidPath) {
+                if (await isTokenSavedAndValid(ref) && isValidPath) {
                   return '/summary/${state.pathParameters['mode']!}';
                 } else {
                   return '/team-selection';
@@ -198,9 +199,7 @@ final goRouterProvider = Provider<GoRouter>(
                 child: TeamsDeclarationSummary(),
               ),
               redirect: (BuildContext context, GoRouterState state) async {
-                // null check
-
-                if (await SharedPref.isTokenPresent()) {
+                if (await isTokenSavedAndValid(ref)) {
                   return '/teams-declaration-summary';
                 }
                 return '/authentication';
