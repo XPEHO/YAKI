@@ -1,7 +1,8 @@
+import { setUserAvatarUrl } from '../../utils/images.utils';
 <template>
   <div class="cercle-avatar">
     <div class="avatar">
-      <span class="initials">{{ getInitials() }}</span>
+      <span class="initials"> {{ initial }}</span>
     </div>
   </div>
 </template>
@@ -9,24 +10,20 @@
 <script>
 export default {
   props: {
-    firstName: {
+    firstname: {
       type: String,
       required: true,
     },
-    lastName: {
-      type: String,
-      required: true,
-    },
-    avatarReference: {
-      type: String,
+    type: String,
+    lastname: {
       required: true,
     },
   },
   methods: {
-    getInitials() {
-      const firstInitial = this.firstName.charAt(0).toUpperCase();
-      const lastInitial = this.lastName.charAt(0).toUpperCase();
-      return `${firstInitial}${lastInitial}`;
+    initial() {
+      console.log(this.firstname);
+      console.log(this.lastname);
+      return `${this.firstname.charAt(0).toUpperCase()}${this.lastname.charAt(0).toUpperCase()}`;
     },
   },
 };

@@ -2,16 +2,15 @@
 import buttonIcon from "@/ui/components/buttons/ButtonIcon.vue";
 import pencilIcon from "@/assets/icons_svg/Edit.svg";
 import deleteIcon from "@/assets/icons_svg/CrossClose.svg";
+import InitialAvatar from "@/ui/components/InitialAvatar.vue";
 import { PropType } from "vue";
 import { UserWithIdType } from "@/models/userWithId.type";
 import { MODALMODE } from "@/constants/modalMode.enum";
 import { useModalStore } from "@/stores/modalStore";
 import { useTeammateStore } from "@/stores/teammateStore";
 import { useCaptainStore } from "@/stores/captainStore";
-import { setUserAvatarUrl, userAvatar as avatar } from "@/utils/images.utils";
-import CercleAvatar from "@/ui/components/CercleAvatar.vue";
 import { useRoute } from "vue-router";
-import { ref } from "vue";
+import setUserAvatarUrl from "../../utils/images.utils";
 
 //Get the stores
 const modalStore = useModalStore();
@@ -48,25 +47,22 @@ const UserToBeRemoved = () => {
 const OpenModalNotImplemented = () => {
   modalStore.switchModalVisibility(true, MODALMODE.comingSoon);
 };
-
-const userAvatar = ref(avatar);
 </script>
 
 <template>
   <article class="user-card__container user-card__accepted_status">
     <figure class="user-card__avatar rounded">
-      <div v-if="setUserAvatarUrl(props.user) !== userAvatar">
+      <div v-if="setUserAvatarUrl(props.user).type !== ''">
         <img
           class="user-card__avatar-img"
-          :src="setUserAvatarUrl(props.user)"
+          :src="setUserAvatarUrl(props.user).url"
           alt="user-card"
         />
       </div>
       <div v-else>
-        <CercleAvatar
+        <InitialAvatar
           :firstName="props.user.firstname"
           :lastName="props.user.lastname"
-          :avatarUrl="props.user.avatarReference"
         />
       </div>
     </figure>
