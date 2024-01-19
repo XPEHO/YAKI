@@ -1,13 +1,59 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:yaki/domain/entities/declaration_status.dart';
+import 'package:yaki/presentation/state/providers/avatar_provider.dart';
+import 'package:yaki/presentation/state/providers/declaration_provider.dart';
 import 'package:yaki/presentation/styles/color.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:go_router/go_router.dart';
 
-class SplashScreen extends ConsumerWidget {
+class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  SplashScreenState createState() => SplashScreenState();
+}
+
+class SplashScreenState extends ConsumerState<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    isLogin();
+  }
+
+  void isLogin() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    // get if user is declared
+    await ref.read(declarationProvider.notifier).getLatestDeclaration();
+    final bool isDeclared =
+        ref.read(declarationProvider).latestDeclarationStatus ==
+            LatestDeclarationStatus.declared;
+
+    bool isLoggedIn = prefs.containsKey('token');
+
+    if (isLoggedIn) {
+      await ref.read(avatarProvider.notifier).getAvatar();
+    }
+
+    if (isLoggedIn && isDeclared) {
+      Future.delayed(const Duration(milliseconds: 100), () {
+        context.go('/teams-declaration-summary');
+      });
+    } else if (isLoggedIn) {
+      Future.delayed(const Duration(milliseconds: 100), () {
+        context.go('/team-selection');
+      });
+    } else {
+      Future.delayed(const Duration(milliseconds: 100), () {
+        context.go('/authentication');
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: Container(
