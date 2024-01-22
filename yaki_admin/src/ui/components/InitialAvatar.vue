@@ -14,16 +14,16 @@ export default {
       type: String,
       required: true,
     },
-    type: String,
     lastname: {
+      type: String,
       required: true,
     },
   },
-  methods: {
+  computed: {
     initial() {
-      console.log(this.firstname);
-      console.log(this.lastname);
-      return `${this.firstname.charAt(0).toUpperCase()}${this.lastname.charAt(0).toUpperCase()}`;
+      const firstInitial = this.firstname ? this.firstname.charAt(0) : "";
+      const lastInitial = this.lastname ? this.lastname.charAt(0) : "";
+      return `${firstInitial}${lastInitial}`;
     },
   },
 };
