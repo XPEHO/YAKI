@@ -28,7 +28,7 @@ export class CaptainService {
     const response = await fetch(`${URL}/captains/customer/${customerId}`, requestOptions)
       .then(handleResponse)
       .catch((err) => console.warn(err));
-
+    console.log(response);
     return response;
   };
 

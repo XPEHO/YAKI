@@ -1,4 +1,3 @@
-import { setUserAvatarUrl } from '../../utils/images.utils';
 <template>
   <div class="cercle-avatar">
     <div class="avatar">
