@@ -35,7 +35,7 @@ class CellIconChips extends StatelessWidget {
                 image: ClipRRect(
                   borderRadius: BorderRadius.circular(50),
                   child: const CellIconChipSvgPicture(
-                    imageSrc: "assets/images/onSite.svg",
+                    imageSrc: 'assets/images/Logo-Team.svg',
                   ),
                 ),
               ),
@@ -71,9 +71,9 @@ class CellIconChips extends StatelessWidget {
                   backgroundColor: AppColors.cellChipDefault,
                   fontWeightLabel: FontWeight.w500,
                   image: ClipRRect(
-                    borderRadius: BorderRadius.circular(50),
+                    borderRadius: BorderRadius.circular(8),
                     child: const CellIconChipSvgPicture(
-                      imageSrc: "assets/images/onSite.svg",
+                      imageSrc: 'assets/images/Logo-Team.svg',
                     ),
                   ),
                 ),
