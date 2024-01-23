@@ -62,7 +62,7 @@ class HeaderDeclarationHalfDayChoice extends ConsumerWidget {
               image: ClipRRect(
                 borderRadius: BorderRadius.circular(50),
                 child: const UserDeclarationChipSvgPicture(
-                  imageSrc: 'assets/images/onSite.svg',
+                  imageSrc: 'assets/images/Logo-Team.svg',
                 ),
               ),
             ),

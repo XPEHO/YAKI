@@ -26,7 +26,7 @@ class CellChipsRow extends StatelessWidget {
           children: [
             if (status != StatusEnum.undeclared && status != StatusEnum.absence)
               const CellCircleChipSvg(
-                imageSrc: "assets/images/onSite.svg",
+                imageSrc: "assets/images/Logo-Team.svg",
                 backgroundColor: AppColors.cellChipDefault,
               ),
             const SizedBox(width: 2.29),
@@ -40,7 +40,7 @@ class CellChipsRow extends StatelessWidget {
             if (statusAfternoon != StatusEnum.undeclared &&
                 statusAfternoon != StatusEnum.absence)
               const CellCircleChipSvg(
-                imageSrc: "assets/images/onSite.svg",
+                imageSrc: "assets/images/Logo-Team.svg",
                 backgroundColor: AppColors.cellChipDefault,
               ),
             const SizedBox(width: 2.29),
@@ -57,7 +57,7 @@ class CellChipsRow extends StatelessWidget {
         children: [
           if (status != StatusEnum.undeclared && status != StatusEnum.absence)
             const CellCircleChipSvg(
-              imageSrc: "assets/images/onSite.svg",
+              imageSrc: "assets/images/Logo-Team.svg",
               backgroundColor: AppColors.cellChipDefault,
             ),
           const SizedBox(width: 2.29),
