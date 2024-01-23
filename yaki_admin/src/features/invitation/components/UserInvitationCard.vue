@@ -3,7 +3,7 @@ import { PropType, ref } from "vue";
 import { UserWithIdType } from "@/models/userWithId.type";
 import addIcon from "@/assets/icons_svg/AddPlus.svg";
 import addedUser from "@/assets/icons_svg/Validated.svg";
-import userAvatar from "@/assets/images/avatarLetters.png";
+import InitialAvatar from "@/ui/components/InitialAvatar.vue";
 
 const toAddSettings = {
   isInvited: false,
@@ -60,10 +60,9 @@ const btnClassList = [
     ]"
   >
     <figure class="user-card__avatar rounded">
-      <img
-        class="user-card__avatar-img"
-        :src="userAvatar"
-        alt="user-card"
+      <InitialAvatar
+        :firstname="props.user.firstname"
+        :lastname="props.user.lastname"
       />
     </figure>
     <div class="user-card__wrapper-user-infos">
