@@ -26,7 +26,7 @@ class UserDefaultRedirection extends StatelessWidget {
             height: 40,
           ),
           const CircleAvatarSVG(
-            iconPath: 'assets/images/onSite.svg',
+            iconPath: 'assets/images/Logo-Team.svg',
             radius: 120,
           ),
           const SizedBox(

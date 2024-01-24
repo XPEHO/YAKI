@@ -54,7 +54,7 @@ class HeaderDeclarationSingleChoice extends StatelessWidget {
                       borderRadius: BorderRadius.circular(50),
                       child: UserDeclarationChipSvgPicture(
                         imageSrc: imageSrc == ''
-                            ? 'assets/images/onSite.svg'
+                            ? 'assets/images/Logo-Team.svg'
                             : imageSrc,
                       ),
                     ),
