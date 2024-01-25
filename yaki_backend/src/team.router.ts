@@ -24,4 +24,10 @@ teamRouter.get(
   (req, res) => teamController.getTeamByTeammateId(req, res)
 );
 
+teamRouter.get(
+  "/teams-logo",
+  (req, res, next) => authService.verifyToken(req, res, next),
+  (req, res) => teamController.getTeamImageByTeamsId(req, res)
+);
+
 export default teamRouter;
