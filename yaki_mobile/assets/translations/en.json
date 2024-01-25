@@ -131,5 +131,12 @@
   "feedback": "Help center ?",
   "feedbackMessage": "Do you have a question ? send us a mail at : yaki@xpeho.fr",
 
-  "filter": "Filter"
+  "filter": "Filter",
+
+  "absenceTitle1": "Declare an",
+  "absenceTitle2": "absence",
+  "absenceDatePickerInitialLabel": "Choose a date",
+  "absenceStart": "Start",
+  "absenceEnd": "End",
+  "absenceError": "* Please select a start date and an end date, \n The start date must be before or the same as the end date"
 }

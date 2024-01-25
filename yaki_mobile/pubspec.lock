@@ -1253,11 +1253,11 @@ packages:
     dependency: "direct main"
     description:
       path: flutter
-      ref: "0.7.4"
-      resolved-ref: "112775d0eeda190be546af5fcf49e923679b99ac"
+      ref: "0.9.0"
+      resolved-ref: b7d6f308afc2e5e330f0a6acc71ea3c9331054a6
       url: "https://github.com/XPEHO/yaki_ui.git"
     source: git
-    version: "0.7.4"
+    version: "0.9.0"
   yaml:
     dependency: transitive
     description:

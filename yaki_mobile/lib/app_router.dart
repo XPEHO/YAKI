@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:yaki/data/sources/local/shared_preference.dart';
 import 'package:yaki/presentation/displaydata/declaration_enum.dart';
 import 'package:yaki/presentation/displaydata/declaration_summary_enum.dart';
+import 'package:yaki/presentation/features/absence/absence.dart';
 import 'package:yaki/presentation/features/authentication/authentication.dart';
 import 'package:yaki/presentation/features/declaration/declaration_page.dart';
 import 'package:yaki/presentation/features/splash_screen/splash_screen.dart';
@@ -102,6 +103,19 @@ final goRouterProvider = Provider<GoRouter>(
                 } else {
                   return '/authentication';
                 }
+              },
+            ),
+            GoRoute(
+              path: 'declaration/long-absence',
+              builder: (context, state) => const PopScope(
+                canPop: false,
+                child: Absence(),
+              ),
+              redirect: (BuildContext context, GoRouterState state) async {
+                if (await isTokenSavedAndValid(ref)) {
+                  return '/declaration/long-absence';
+                }
+                return '/authentication';
               },
             ),
             GoRoute(
