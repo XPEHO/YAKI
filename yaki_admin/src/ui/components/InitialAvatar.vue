@@ -28,7 +28,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .cercle-avatar {
   display: flex;
   justify-content: center;
@@ -51,6 +51,6 @@ export default {
   font-size: 20px;
   font-weight: bold;
   color: #7d818c;
-  font-family: "SF-Pro-Rounded";
+  font-family: $font-sf-pro;
 }
 </style>

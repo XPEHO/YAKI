@@ -10,6 +10,13 @@
     format("truetype");
 }
 
+@font-face {
+  font-family: "SF-Pro-Rounded";
+  src: url("../../../node_modules/@yaki_ui/yaki_ui_web_components/fonts/SF-Pro-Rounded-Regular.otf")
+    format("truetype");
+}
+
+$font-sf-pro: "SF-Pro-Rounded", sans-serif;
 $font-sf-compact: "SF-compact-Rounded", sans-serif;
 $font-rubik: "Rubik", sans-serif;
 
