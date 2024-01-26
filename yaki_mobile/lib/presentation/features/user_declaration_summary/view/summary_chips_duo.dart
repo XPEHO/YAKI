@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:yaki/data/models/team_model.dart';
 import 'package:yaki/presentation/displaydata/declaration_status_enum.dart';
 import 'package:yaki/presentation/features/shared/sized_circle_avatar.dart';
+import 'package:yaki/presentation/features/shared/team_logo_image.dart';
 import 'package:yaki_ui/yaki_ui.dart';
 
 class SummaryChipDuo extends StatelessWidget {
@@ -27,8 +28,10 @@ class SummaryChipDuo extends StatelessWidget {
           fontSizeLabel: 20,
           image: ClipRRect(
             borderRadius: BorderRadius.circular(50),
-            child: const UserDeclarationChipSvgPicture(
-              imageSrc: "assets/images/Logo-Team.svg",
+            child: TeamLogoImage(
+              size: 32,
+              teamId: team.teamId,
+              teamName: team.teamName,
             ),
           ),
         ),

@@ -1,4 +1,5 @@
 import {TeamService} from "./team.service";
+import {TeamLogoDto} from "./teamLogo.dto";
 
 export class TeamController {
   private teamService: TeamService;
@@ -31,6 +32,26 @@ export class TeamController {
   };
 
   /**
+   * Verify if the query param is either teamIds or userId.
+   * If the query param is teamIds, it will call the getTeamsLogoByTeamsId function.
+   * If the query param is userId, it will call the getTeamsLogoByUserId function.
+   * If the query param is neither teamIds or userId, it will return a 400 error.
+   * @param req
+   * @param res
+   */
+  getTeamsLogo = async (req: any, res: any) => {
+    const queryParams = Object.keys(req.query)[0];
+
+    if (queryParams === "teamIds") {
+      this.getTeamsLogoByTeamsId(req, res);
+    } else if (queryParams === "userId") {
+      this.getTeamsLogoByUserId(req, res);
+    } else {
+      res.status(400).json({message: "invalid query param"});
+    }
+  };
+
+  /**
    * Retrive a list of team logo given a list of team id.
    * If a team id does not have a logo, it will not be returned.
    * User query param, ex : ?teamIds=1,2,3
@@ -38,13 +59,12 @@ export class TeamController {
    * @param req
    * @param res
    */
-  getTeamImageByTeamsId = async (req: any, res: any) => {
+  getTeamsLogoByTeamsId = async (req: any, res: any) => {
     const teamIds = req.query.teamIds;
-
     const idsArray = this.teamsIdsValidation(teamIds);
 
     try {
-      const teamsLogo = await this.teamService.getTeamLogoByTeamsId(idsArray);
+      const teamsLogo = await this.teamService.getTeamsLogoByTeamsId(idsArray);
 
       if (teamsLogo.length === 0) {
         console.log("404 no team logo was found");
@@ -81,5 +101,38 @@ export class TeamController {
     }
 
     return idsArray;
+  };
+
+  /**
+   * Retrive a list of team logo given a user id, meaning its all teams the user is into.
+   * If a team id does not have a logo, it will not be returned.
+   * User query param, ex : ?userId=1
+   * @param req
+   * @param res
+   */
+  getTeamsLogoByUserId = async (req: any, res: any) => {
+    const userId = Number(req.query.userId);
+
+    if (isNaN(userId)) {
+      throw new Error("invalid user id provided");
+    }
+
+    try {
+      const teamsLogo = await this.teamService.getTeamsLogoByUserId(userId);
+
+      if (teamsLogo.length === 0) {
+        console.log("404 no team logo was found");
+        res.status(404).json({message: "No team logo was found"});
+      } else {
+        console.log(
+          "200 team logo was found for the teams :",
+          teamsLogo.map((team: TeamLogoDto) => team.teamLogoTeamId)
+        );
+        res.status(200).json(teamsLogo);
+      }
+    } catch (error: any) {
+      // catch server errors
+      res.status(500).json({message: error.message});
+    }
   };
 }

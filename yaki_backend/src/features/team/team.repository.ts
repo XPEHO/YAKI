@@ -49,7 +49,7 @@ export class TeamRepository {
    * @param teamIds list of team id
    * @returns promise of list of TeamLogoDto
    */
-  getTeamLogoByTeamsId = async (teamIds: number[]): Promise<TeamLogoDto[]> => {
+  getTeamsLogoByTeamsId = async (teamIds: number[]): Promise<TeamLogoDto[]> => {
     let teamIdListString = teamIds.join(",");
 
     const client = new Client({
@@ -84,6 +84,46 @@ export class TeamRepository {
       throw new DataError("Error during users avatar fetching: " + error.message);
     } finally {
       client.end();
+    }
+  };
+
+  /**
+   * Retrive the list of team logo given a user id, meaning its all teams the user is into.
+   * @param userId
+   * @returns promise of list of TeamLogoDto
+   */
+  getTeamsLogoByUserId = async (userId: number): Promise<TeamLogoDto[]> => {
+    const client = new Client({
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE,
+      port: Number(process.env.DB_PORT),
+    });
+
+    const query = `
+      SELECT 
+      tl.team_logo_team_id, 
+      tl.team_logo_blob 
+      FROM public.team_logo tl
+      JOIN public.teammate tm on tm.teammate_team_id = tl.team_logo_team_id
+      WHERE tm.teammate_user_id= $1
+    `;
+
+    await client.connect();
+    try {
+      const result = await client.query(query, [userId]);
+
+      if (result.rows.length === 0) {
+        return [];
+      }
+      const teamLogoList: TeamLogoDto[] = result.rows.map(
+        (teamImageRow) =>
+          new TeamLogoDto(teamImageRow.team_logo_team_id, teamImageRow.team_logo_blob)
+      );
+      return teamLogoList;
+    } catch (error: any) {
+      throw new DataError("Error during users avatar fetching: " + error.message);
     }
   };
 

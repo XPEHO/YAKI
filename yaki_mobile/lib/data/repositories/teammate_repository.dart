@@ -30,6 +30,7 @@ class TeammateRepository {
 
       switch (statusCode) {
         case 200:
+          // If the response is OK, parse the JSON to a list of TeammateModel
           final List<TeammateWithDeclarationModel> modelList =
               setTeammateWithDeclaModelList(listHttpResponse);
 
@@ -41,50 +42,25 @@ class TeammateRepository {
             final TeammateWithDeclarationModel currentModel = modelList[i];
 
             // skip item if necessary data is incorrect
-            if (currentModel.userId == null ||
-                currentModel.declarationStatus != null &&
-                    currentModel.declarationStatus != StatusEnum.absence.name &&
-                    currentModel.teamId == null) {
+            if (isDataIncorrect(currentModel: currentModel)) {
               debugPrint('Incorrect data from : $currentModel $i');
               continue;
             }
 
-            // If preview teammate is the same as the current one, meaning "current" is the afternoon declaration part
-            if (i != 0 && currentModel.userId == modelList[i - 1].userId) {
-              final TeammateWithDeclarationEntity halfDayUser = entityList.last;
-
-              halfDayUser.declarationStatusAfternoon = StatusEnum.fromValue(
-                currentModel.declarationStatus!,
+            if (isAfternoonDeclaration(
+              currentModel: currentModel,
+              i: i,
+              modelList: modelList,
+            )) {
+              updateLatestTeammateEntityAfternoonDeclaration(
+                entityList: entityList,
+                currentModel: currentModel,
               );
-              halfDayUser.teamIdAfternoon = currentModel.teamId;
-              halfDayUser.teamNameAfternoon = currentModel.teamName;
-              halfDayUser.customerAfternoonId = currentModel.customerId;
-              halfDayUser.customerAfternoonName = currentModel.customerName;
             } else {
-              entityList.add(
-                TeammateWithDeclarationEntity(
-                  loggedUserId: userId,
-                  userId: currentModel.userId!,
-                  userFirstName: currentModel.userFirstName!,
-                  userLastName: currentModel.userLastName!,
-                  declarationDate: currentModel.declarationDate,
-                  declarationDateStart: currentModel.declarationDateStart,
-                  declarationDateEnd: currentModel.declarationDateEnd,
-                  declarationStatus: StatusEnum.fromValue(
-                    currentModel.declarationStatus ??
-                        StatusEnum.undeclared.name,
-                  ),
-                  teamId: currentModel.teamId,
-                  teamName: currentModel.teamName,
-                  customerId: currentModel.customerId,
-                  customerName: currentModel.customerName,
-                  avatarReference: currentModel.avatarReference,
-                  avatar: currentModel.avatarByteArray != null
-                      ? Uint8List.fromList(
-                          (currentModel.avatarByteArray!.cast<int>()),
-                        )
-                      : null,
-                ),
+              addNewTeammateEntityToTheList(
+                entityList: entityList,
+                currentModel: currentModel,
+                userId: userId,
               );
             }
           }
@@ -95,6 +71,82 @@ class TeammateRepository {
     } catch (err) {
       return Future.error(Exception('Error during teammate list fetch'));
     }
+  }
+
+  /// Check if the data from the API is correct
+  /// * if there is no userId the data can't be correct, as we look to retrive a teammateDeclaration
+  /// Or
+  /// * if the declarationStatus is not null and not equal to absence while the teamId is null the data can't be correct.
+  /// Meaning that the user has declaration but without team data, which is incorrect.
+  ///
+  /// If all the data is correct, continue to the next step.
+  /// If not, skip the item
+  bool isDataIncorrect({required TeammateWithDeclarationModel currentModel}) {
+    return currentModel.userId == null ||
+        (currentModel.declarationStatus != null &&
+            currentModel.declarationStatus != StatusEnum.absence.name &&
+            currentModel.teamId == null);
+  }
+
+  /// Add a new teammate to the entityList
+  void addNewTeammateEntityToTheList({
+    required List<TeammateWithDeclarationEntity> entityList,
+    required TeammateWithDeclarationModel currentModel,
+    required int userId,
+  }) {
+    entityList.add(
+      TeammateWithDeclarationEntity(
+        loggedUserId: userId,
+        userId: currentModel.userId!,
+        userFirstName: currentModel.userFirstName!,
+        userLastName: currentModel.userLastName!,
+        declarationDate: currentModel.declarationDate,
+        declarationDateStart: currentModel.declarationDateStart,
+        declarationDateEnd: currentModel.declarationDateEnd,
+        declarationStatus: StatusEnum.fromValue(
+          currentModel.declarationStatus ?? StatusEnum.undeclared.name,
+        ),
+        teamId: currentModel.teamId ?? -1,
+        teamName: currentModel.teamName ?? 'no declaration',
+        customerId: currentModel.customerId,
+        customerName: currentModel.customerName,
+        avatarReference: currentModel.avatarReference,
+        avatar: currentModel.avatarByteArray != null
+            ? Uint8List.fromList(
+                (currentModel.avatarByteArray!.cast<int>()),
+              )
+            : null,
+      ),
+    );
+  }
+
+  /// If preview teammate is the same as the current one,
+  /// meaning "current" as a half day declaration,
+  bool isAfternoonDeclaration({
+    required int i,
+    required TeammateWithDeclarationModel currentModel,
+    required List<TeammateWithDeclarationModel> modelList,
+  }) {
+    return i != 0 && currentModel.userId == modelList[i - 1].userId;
+  }
+
+  /// Update the afternoon declaration part of the current teammate.
+  /// After the isAfternoonDeclaration() method has been called.
+  /// and returned true.
+  /// retrive the latest entity added to the entityList, to update the afternoon declaration part.
+  void updateLatestTeammateEntityAfternoonDeclaration({
+    required List<TeammateWithDeclarationEntity> entityList,
+    required TeammateWithDeclarationModel currentModel,
+  }) {
+    final TeammateWithDeclarationEntity halfDayUser = entityList.last;
+
+    halfDayUser.declarationStatusAfternoon = StatusEnum.fromValue(
+      currentModel.declarationStatus!,
+    );
+    halfDayUser.teamIdAfternoon = currentModel.teamId;
+    halfDayUser.teamNameAfternoon = currentModel.teamName;
+    halfDayUser.customerAfternoonId = currentModel.customerId;
+    halfDayUser.customerAfternoonName = currentModel.customerName;
   }
 
   /// Helper method that parses the API response data and returns a list of

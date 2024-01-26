@@ -2,17 +2,26 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:yaki/presentation/displaydata/declaration_status_enum.dart';
 import 'package:yaki/presentation/features/shared/sized_circle_avatar.dart';
-import 'package:yaki/presentation/features/teams_declarations_summary/view/cell_iconchips.dart';
-import 'package:yaki/presentation/styles/color.dart';
+import 'package:yaki/presentation/features/teams_declarations_summary/view/cell_opened_iconchips.dart';
+import 'package:yaki/presentation/features/teams_declarations_summary/view/collapsed_team_logo_chip.dart';
 import 'package:yaki_ui/yaki_ui.dart';
 
-class CellChipsRow extends StatelessWidget {
+/// Row displayed when the Cell_Card is COLLAPSED
+class CellCollapsedChipsRow extends StatelessWidget {
+  final int teamId;
+  final String teamName;
   final StatusEnum status;
+  final int? teamIdAfternoon;
+  final String? teamNameAfternoon;
   final StatusEnum? statusAfternoon;
 
-  const CellChipsRow({
+  const CellCollapsedChipsRow({
     super.key,
+    required this.teamId,
+    required this.teamName,
     required this.status,
+    required this.teamIdAfternoon,
+    required this.teamNameAfternoon,
     required this.statusAfternoon,
   });
 
@@ -24,10 +33,11 @@ class CellChipsRow extends StatelessWidget {
         padding: const EdgeInsets.only(top: 6),
         child: Row(
           children: [
+            // MORNING DECLARATION
             if (status != StatusEnum.undeclared && status != StatusEnum.absence)
-              const CellCircleChipSvg(
-                imageSrc: "assets/images/Logo-Team.svg",
-                backgroundColor: AppColors.cellChipDefault,
+              CollapsedTeamLogoChip(
+                teamId: teamId,
+                teamName: teamName,
               ),
             const SizedBox(width: 2.29),
             CellCircleChipSvg(
@@ -39,9 +49,9 @@ class CellChipsRow extends StatelessWidget {
             // AFTERNOON DECLARATION
             if (statusAfternoon != StatusEnum.undeclared &&
                 statusAfternoon != StatusEnum.absence)
-              const CellCircleChipSvg(
-                imageSrc: "assets/images/Logo-Team.svg",
-                backgroundColor: AppColors.cellChipDefault,
+              CollapsedTeamLogoChip(
+                teamId: teamIdAfternoon!,
+                teamName: teamNameAfternoon!,
               ),
             const SizedBox(width: 2.29),
             CellCircleChipSvg(
@@ -52,16 +62,16 @@ class CellChipsRow extends StatelessWidget {
         ),
       );
     } else {
-      // full day
+      // FULL DAY
       return Row(
         children: [
           if (status != StatusEnum.undeclared && status != StatusEnum.absence)
-            const CellCircleChipSvg(
-              imageSrc: "assets/images/Logo-Team.svg",
-              backgroundColor: AppColors.cellChipDefault,
+            CollapsedTeamLogoChip(
+              teamId: teamId,
+              teamName: teamName,
             ),
           const SizedBox(width: 2.29),
-          // display a IconChip instead of a CircleChip if the status is undeclared or absence
+          // DISPLAY a ICONCHIP instead of a CircleChip if the status is UNDECLARED or ABSENCE
           status != StatusEnum.undeclared && status != StatusEnum.absence
               ? CellCircleChipSvg(
                   imageSrc: setStatusImage(status),

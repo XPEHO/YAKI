@@ -30,7 +30,7 @@ class _AbsenceState extends ConsumerState<Absence> {
   /// This method is called every time the user selects a date.
   /// It checks if the selected dates are valid and if so, it enables the button.
   ///
-  /// - If any of the dates is null, the button is disabled. (meaning not date has been selected)
+  /// - If any of the dates is null, the button is disabled. (meaning not date has been selected).
   /// - If the start date is after the end date, the button is disabled.
   /// - If the start date is the same as the end date, the button is enabled.
   /// - If the start date is before the end date, the button is enabled.
@@ -55,7 +55,7 @@ class _AbsenceState extends ConsumerState<Absence> {
         )
         .teamId;
 
-    ref.watch(declarationProvider.notifier).createVacationDeclaration(
+    ref.watch(declarationProvider.notifier).createAbsenceDeclaration(
           dateStart: _selectedDateStart!,
           dateEnd: _selectedDateEnd!,
           status: StatusEnum.absence.name,

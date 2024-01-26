@@ -8,7 +8,7 @@ jest.mock("../features/team/team.repository", () => {
     TeamRepository: jest.fn().mockImplementation(() => {
       return {
         getTeamByTeammateId: jest.fn(),
-        getTeamLogoByTeamsId: jest.fn(),
+        getTeamsLogoByTeamsId: jest.fn(),
       };
     }),
   };
@@ -48,7 +48,7 @@ describe("TeamService", () => {
     });
   });
 
-  describe("getTeamLogoByTeamsId", () => {
+  describe("getTeamsLogoByTeamsId", () => {
     it("should return a teams logo list if it exists", async () => {
       const buffer1 = Buffer.from("mock buffer data 1");
       const buffer2 = Buffer.from("mock buffer data 2");
@@ -57,23 +57,23 @@ describe("TeamService", () => {
         {teamLogoTeamId: 1, teamLogoBlob: buffer1},
         {teamLogoTeamId: 2, teamLogoBlob: buffer2},
       ];
-      mockTeamRepository.getTeamLogoByTeamsId.mockResolvedValueOnce(teamLogo);
+      mockTeamRepository.getTeamsLogoByTeamsId.mockResolvedValueOnce(teamLogo);
 
-      const result = await service.getTeamLogoByTeamsId([1, 2]);
+      const result = await service.getTeamsLogoByTeamsId([1, 2]);
       expect(result).toEqual(teamLogo);
-      expect(mockTeamRepository.getTeamLogoByTeamsId).toHaveBeenCalledWith([1, 2]);
-      expect(mockTeamRepository.getTeamLogoByTeamsId).toHaveBeenCalledTimes(1);
+      expect(mockTeamRepository.getTeamsLogoByTeamsId).toHaveBeenCalledWith([1, 2]);
+      expect(mockTeamRepository.getTeamsLogoByTeamsId).toHaveBeenCalledTimes(1);
     });
 
     it("should return an empty array if the team does not exist", async () => {
       const teamLogo: TeamLogoDto[] = [];
 
-      mockTeamRepository.getTeamLogoByTeamsId.mockResolvedValueOnce(teamLogo);
+      mockTeamRepository.getTeamsLogoByTeamsId.mockResolvedValueOnce(teamLogo);
 
-      const result = await service.getTeamLogoByTeamsId([1, 2]);
+      const result = await service.getTeamsLogoByTeamsId([1, 2]);
       expect(result).toEqual(teamLogo);
-      expect(mockTeamRepository.getTeamLogoByTeamsId).toHaveBeenCalledWith([1, 2]);
-      expect(mockTeamRepository.getTeamLogoByTeamsId).toHaveBeenCalledTimes(1);
+      expect(mockTeamRepository.getTeamsLogoByTeamsId).toHaveBeenCalledWith([1, 2]);
+      expect(mockTeamRepository.getTeamsLogoByTeamsId).toHaveBeenCalledTimes(1);
     });
   });
 

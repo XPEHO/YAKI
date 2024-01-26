@@ -8,8 +8,8 @@ import 'package:yaki/domain/entities/user_entity.dart';
 import 'package:yaki/presentation/displaydata/avatar_enum.dart';
 import 'package:yaki/presentation/displaydata/declaration_status_enum.dart';
 import 'package:yaki/presentation/features/shared/sized_circle_avatar.dart';
-import 'package:yaki/presentation/features/teams_declarations_summary/view/cell_chips_row.dart';
-import 'package:yaki/presentation/features/teams_declarations_summary/view/cell_iconchips.dart';
+import 'package:yaki/presentation/features/teams_declarations_summary/view/cell_collapsed_chips_row.dart';
+import 'package:yaki/presentation/features/teams_declarations_summary/view/cell_opened_iconchips.dart';
 import 'package:yaki/presentation/state/providers/avatar_provider.dart';
 import 'package:yaki/presentation/state/providers/team_provider.dart';
 import 'package:yaki/presentation/state/providers/user_provider.dart';
@@ -27,50 +27,51 @@ class CellCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return StreamBuilder(
-      stream: Stream.periodic(const Duration(minutes: 1)),
-      builder: (context, snapshot) {
-        return Cell(
-          title: '${teammate.userFirstName} ${teammate.userLastName}',
-          subtitle: teammate.declarationDate != null
-              ? timeSinceDeclaration(teammate.declarationDate!)
-              : '',
-          image: setUserAvatarImage(
-            ref: ref,
-            isModifierBtnUsed: isModifierBtnUsed,
-            teammate: teammate,
-          ),
-          chips: CellChipsRow(
+    return Cell(
+      title: '${teammate.userFirstName} ${teammate.userLastName}',
+      subtitle: teammate.declarationDate != null
+          ? timeSinceDeclaration(teammate.declarationDate!)
+          : '',
+      image: setUserAvatarImage(
+        ref: ref,
+        isModifierBtnUsed: isModifierBtnUsed,
+        teammate: teammate,
+      ),
+      chips: CellCollapsedChipsRow(
+        teamId: teammate.teamId,
+        teamName: teammate.teamName,
+        status: teammate.declarationStatus,
+        teamIdAfternoon: teammate.teamIdAfternoon,
+        teamNameAfternoon: teammate.teamNameAfternoon,
+        statusAfternoon: teammate.declarationStatusAfternoon,
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          CellOpenedIconChips(
+            teamId: teammate.teamId,
+            teamName: teammate.teamName,
             status: teammate.declarationStatus,
+            teamIdAfternoon: teammate.teamIdAfternoon,
+            teamNameAfternoon: teammate.teamNameAfternoon,
             statusAfternoon: teammate.declarationStatusAfternoon,
           ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              CellIconChips(
-                teamName: teammate.teamName,
-                status: teammate.declarationStatus,
-                teamNameAfternoon: teammate.teamNameAfternoon,
-                statusAfternoon: teammate.declarationStatusAfternoon,
-              ),
-              //display the button only if the modifier button is used
-              if (isModifierBtnUsed) ...[
-                const SizedBox(
-                  height: 16,
-                ),
-                Button.secondary(
-                  buttonHeight: 52,
-                  onPressed: () {
-                    ref.read(teamProvider.notifier).clearTeamList();
-                    context.go('/team-selection');
-                  },
-                  text: 'MODIFIER',
-                ),
-              ],
-            ],
-          ),
-        );
-      },
+          //display the button only if the modifier button is used
+          if (isModifierBtnUsed) ...[
+            const SizedBox(
+              height: 16,
+            ),
+            Button.secondary(
+              buttonHeight: 52,
+              onPressed: () {
+                ref.read(teamProvider.notifier).clearTeamList();
+                context.go('/team-selection');
+              },
+              text: 'MODIFIER',
+            ),
+          ],
+        ],
+      ),
     );
   }
 }
