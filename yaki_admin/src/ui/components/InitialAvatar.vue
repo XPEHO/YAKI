@@ -51,5 +51,6 @@ export default {
   font-size: 20px;
   font-weight: bold;
   color: #7d818c;
+  font-family: Rubik;
 }
 </style>
