@@ -66,14 +66,14 @@ const onDeletePress = async () => {
 
     <p class="modal__container-text">
       Are you sure you want to {{ action }} <br />
-      <span class="text__bold"> {{ deletedElement }}</span>
+      <span class="text__bold"> {{ deletedElement }} </span>
       <span
         v-if="
           modalStore.getMode === MODALMODE.userDelete ||
           modalStore.getMode === MODALMODE.captainDelete
         "
       >
-        <span v-if="modalStore.getMode !== MODALMODE.captainDelete">From :</span>
+        <span v-if="modalStore.getMode !== MODALMODE.captainDelete"> From : </span>
         <span class="text__bold">{{ teamStore.getTeamSelected.teamName }}</span> ?
       </span>
       <br />
