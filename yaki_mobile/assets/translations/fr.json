@@ -140,5 +140,5 @@
   "absenceDatePickerInitialLabel": "Choisir une date",
   "absenceStart": "Début",
   "absenceEnd": "Fin",
-  "absenceError": "* Veuillez renseigner une date de début et de fin, \n Votre date de fin doit être antérieur ou identique à votre date de début"
+  "absenceError": "* Veuillez renseigner une date de début et de fin, \n Votre date de début doit être antérieur ou identique à votre date de fin"
 }
