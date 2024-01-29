@@ -25,5 +25,7 @@ final teamRepositoryProvider = Provider(
 /// Define a StateNotifierProvider that creates an instance of
 /// the TeamNotifier class
 final teamProvider = StateNotifierProvider<TeamNotifier, TeamPageState>(
-  (ref) => TeamNotifier(),
+  (ref) => TeamNotifier(
+    teamRepository: ref.read(teamRepositoryProvider),
+  ),
 );

@@ -1,10 +1,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yaki/data/models/team_model.dart';
+import 'package:yaki/data/repositories/team_repository.dart';
 import 'package:yaki/presentation/state/state/team_page_state.dart';
 
 /// A StateNotifier class that manages the state of a list of TeamEntity objects
 class TeamNotifier extends StateNotifier<TeamPageState> {
-  TeamNotifier()
+  TeamRepository teamRepository;
+
+  TeamNotifier({required this.teamRepository})
       : super(
           TeamPageState(
             fetchedTeamList: [], // saved from team_future_provider.dart
@@ -54,10 +57,30 @@ class TeamNotifier extends StateNotifier<TeamPageState> {
     }
   }
 
+  /// Empty the list of selected teams and deactivate the button.
   void clearTeamList() {
     state = state.copyWith(
       selectedTeamList: [],
       isButtonActivated: false,
     );
+  }
+
+  /// Asynchronous method that retrieves a list of teams from the API and
+  void getUserTeamList() async {
+    List<TeamModel> userTeamList = await teamRepository.getTeam();
+
+    state = state.copyWith(fetchedTeamList: userTeamList);
+  }
+
+  /// Determines if the teamName is in the list of teams fetched from the API.
+  /// Used in the CellOpenedIconChips and CellCollapsedChipsRow widgets.
+  /// (features/teams_declarations_summary/view/...)
+  bool isTeamBelowToCurrentUser({
+    required String teamName,
+  }) {
+    bool isTeamBelowToCurrentUser =
+        state.fetchedTeamList.any((team) => team.teamName == teamName);
+
+    return isTeamBelowToCurrentUser;
   }
 }
