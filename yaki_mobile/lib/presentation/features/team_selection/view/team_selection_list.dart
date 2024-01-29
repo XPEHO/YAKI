@@ -2,11 +2,12 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:yaki/data/models/team_model.dart';
 import 'package:yaki/presentation/features/shared/custom_circular_progress_indicator.dart';
 import 'package:yaki/presentation/features/shared/something_went_wrong.dart';
+import 'package:yaki/presentation/features/shared/team_logo_image.dart';
 import 'package:yaki/presentation/state/providers/team_future_provider.dart';
+
 import 'package:yaki/presentation/state/providers/team_provider.dart';
 import 'package:yaki_ui/team_selection_card.dart';
 
@@ -19,11 +20,6 @@ class TeamSelectionList extends ConsumerWidget {
 
     return teamListAsync.when(
       data: (teamList) {
-        // save fetched team list in state
-        if (teamList.isNotEmpty) {
-          ref.read(teamProvider).fetchedTeamList = teamList;
-        }
-
         return ScrollConfiguration(
           behavior: const ScrollBehavior().copyWith(
             physics: const BouncingScrollPhysics(),
@@ -46,8 +42,10 @@ class TeamSelectionList extends ConsumerWidget {
                     picture: CircleAvatar(
                       backgroundColor: Colors.transparent,
                       radius: 40,
-                      child: SvgPicture.asset(
-                        pictoLink(teamList[index]),
+                      child: TeamLogoImage(
+                        teamId: teamList[index].teamId,
+                        teamName: teamList[index].teamName,
+                        size: 80,
                       ),
                     ),
                     title: tr("project"),
@@ -83,12 +81,4 @@ void onSelection({
   required TeamModel team,
 }) {
   ref.read(teamProvider.notifier).setSelectedTeamList(team, isSelected);
-}
-
-//temporary : TeamModel should contain a pictoLink
-String pictoLink(TeamModel team) {
-  final picto = team.teamName == "Absence"
-      ? 'assets/images/absent.svg'
-      : 'assets/images/Logo-Team.svg';
-  return picto;
 }

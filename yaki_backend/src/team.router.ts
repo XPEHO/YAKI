@@ -27,7 +27,7 @@ teamRouter.get(
 teamRouter.get(
   "/teams-logo",
   (req, res, next) => authService.verifyToken(req, res, next),
-  (req, res) => teamController.getTeamImageByTeamsId(req, res)
+  (req, res) => teamController.getTeamsLogo(req, res)
 );
 
 export default teamRouter;

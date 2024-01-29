@@ -33,7 +33,7 @@ describe("TeamRepository", () => {
     ];
     pgClient.query.mockResolvedValue({rows: mockRows});
 
-    const result = await teamRepository.getTeamLogoByTeamsId(teamIds);
+    const result = await teamRepository.getTeamsLogoByTeamsId(teamIds);
 
     expect(pgClient.connect).toHaveBeenCalled();
     expect(pgClient.query).toHaveBeenCalledWith(expect.stringContaining("1,2,3"));
@@ -47,7 +47,7 @@ describe("TeamRepository", () => {
     const teamIds = [1, 2, 3];
     pgClient.query.mockResolvedValue({rows: []});
 
-    const result = await teamRepository.getTeamLogoByTeamsId(teamIds);
+    const result = await teamRepository.getTeamsLogoByTeamsId(teamIds);
 
     expect(pgClient.connect).toHaveBeenCalled();
     expect(pgClient.query).toHaveBeenCalledWith(expect.stringContaining("1,2,3"));

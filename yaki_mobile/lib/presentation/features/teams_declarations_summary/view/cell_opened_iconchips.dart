@@ -2,19 +2,25 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:yaki/presentation/displaydata/declaration_status_enum.dart';
 import 'package:yaki/presentation/features/shared/sized_circle_avatar.dart';
+import 'package:yaki/presentation/features/shared/team_logo_image.dart';
 import 'package:yaki/presentation/styles/color.dart';
 import 'package:yaki_ui/yaki_ui.dart';
 
-class CellIconChips extends StatelessWidget {
-  final String? teamName;
+/// Row displayed when the Cell_Card is OPEN
+class CellOpenedIconChips extends StatelessWidget {
+  final int teamId;
+  final String teamName;
   final StatusEnum status;
+  final int? teamIdAfternoon;
   final String? teamNameAfternoon;
   final StatusEnum? statusAfternoon;
 
-  const CellIconChips({
+  const CellOpenedIconChips({
     super.key,
+    required this.teamId,
     required this.teamName,
     required this.status,
+    required this.teamIdAfternoon,
     required this.teamNameAfternoon,
     required this.statusAfternoon,
   });
@@ -29,13 +35,15 @@ class CellIconChips extends StatelessWidget {
           children: [
             if (status != StatusEnum.undeclared && status != StatusEnum.absence)
               IconChip(
-                label: teamName ?? "err name",
+                label: teamName,
                 backgroundColor: AppColors.cellChipDefault,
                 fontWeightLabel: FontWeight.w500,
-                image: const ClipRRect(
-                  borderRadius: BorderRadius.all(Radius.circular(50)),
-                  child: CellIconChipSvgPicture(
-                    imageSrc: 'assets/images/Logo-Team.svg',
+                image: ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(50)),
+                  child: TeamLogoImage(
+                    size: 16,
+                    teamId: teamId,
+                    teamName: teamName,
                   ),
                 ),
               ),
@@ -60,20 +68,22 @@ class CellIconChips extends StatelessWidget {
           height: 4,
         ),
         // AFTERNOON DECLARATION :  only if the statusAfternoon is not null
-        if (statusAfternoon != null && teamNameAfternoon != null)
+        if (statusAfternoon != null)
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               if (statusAfternoon != StatusEnum.undeclared &&
                   statusAfternoon != StatusEnum.absence)
                 IconChip(
-                  label: teamNameAfternoon ?? "err name",
+                  label: teamNameAfternoon!,
                   backgroundColor: AppColors.cellChipDefault,
                   fontWeightLabel: FontWeight.w500,
-                  image: const ClipRRect(
-                    borderRadius: BorderRadius.all(Radius.circular(50)),
-                    child: CellIconChipSvgPicture(
-                      imageSrc: 'assets/images/Logo-Team.svg',
+                  image: ClipRRect(
+                    borderRadius: const BorderRadius.all(Radius.circular(50)),
+                    child: TeamLogoImage(
+                      size: 16,
+                      teamId: teamIdAfternoon!,
+                      teamName: teamNameAfternoon!,
                     ),
                   ),
                 ),

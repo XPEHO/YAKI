@@ -28,11 +28,27 @@ export class TeamService {
    * @param teamIds list of team id
    * @returns promise of list of TeamLogoDto
    */
-  getTeamLogoByTeamsId = async (teamIds: number[]): Promise<TeamLogoDto[]> => {
+  getTeamsLogoByTeamsId = async (teamIds: number[]): Promise<TeamLogoDto[]> => {
     try {
-      const teamsLogo = await this.teamRepository.getTeamLogoByTeamsId(teamIds);
+      const teamsLogo = await this.teamRepository.getTeamsLogoByTeamsId(teamIds);
 
       return teamsLogo;
+    } catch (error: any) {
+      console.error("Error get team logo : ", error.message);
+      throw error;
+    }
+  };
+
+  /**
+   * Team service method, Retrive a list of team logo given a User id.
+   * If a team id does not have a logo, it will not be returned.
+   * @param teamId
+   * @returns promise of list of TeamLogoDto
+   */
+  getTeamsLogoByUserId = async (teamId: number): Promise<TeamLogoDto[]> => {
+    try {
+      const teamLogo = await this.teamRepository.getTeamsLogoByUserId(teamId);
+      return teamLogo;
     } catch (error: any) {
       console.error("Error get team logo : ", error.message);
       throw error;

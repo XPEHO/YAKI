@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yaki/data/models/team_model.dart';
 import 'package:yaki/presentation/state/state/team_page_state.dart';
@@ -8,40 +7,37 @@ class TeamNotifier extends StateNotifier<TeamPageState> {
   TeamNotifier()
       : super(
           TeamPageState(
-            fetchedTeamList: [], // saved from team_selection_list.dart
+            fetchedTeamList: [], // saved from team_future_provider.dart
             selectedTeamList: [], // teams selected by the user from the team_selection_list.dart
             isButtonActivated: false,
           ),
         );
+
+  void setFetchedTeamList(List<TeamModel> fetchedTeamList) {
+    state = state.copyWith(fetchedTeamList: fetchedTeamList);
+  }
 
   /// when a team card is pressed, it save the selected team in the state,
   /// or remove it if it is already in the list and the card is pressed again.(unselected).
   ///
   /// if the list is empty or has more than 2 teams, the button is deactivated.
   void setSelectedTeamList(TeamModel selectedTeam, bool isCardPressed) {
-    final isTeamInList = state.selectedTeamList
-        .any((teamSearch) => teamSearch.teamId == selectedTeam.teamId);
+    final isTeamInList = state.selectedTeamList.any(
+      (teamSearch) => teamSearch.teamId == selectedTeam.teamId,
+    );
 
-    if (!isCardPressed && isTeamInList) {
-      state.selectedTeamList.remove(selectedTeam);
-    } else if (isCardPressed) {
+    if (isCardPressed) {
       state.selectedTeamList.add(selectedTeam);
+    } else if (isTeamInList) {
+      // cardPress false and in list, remove
+      state.selectedTeamList.remove(selectedTeam);
     }
 
     if (state.selectedTeamList.isNotEmpty &&
         state.selectedTeamList.length < 3) {
-      state = TeamPageState(
-        fetchedTeamList: state.fetchedTeamList,
-        selectedTeamList: state.selectedTeamList,
-        isButtonActivated: true,
-      );
-    } else if (state.selectedTeamList.isEmpty ||
-        state.selectedTeamList.length > 2) {
-      state = TeamPageState(
-        fetchedTeamList: state.fetchedTeamList,
-        selectedTeamList: state.selectedTeamList,
-        isButtonActivated: false,
-      );
+      state = state.copyWith(isButtonActivated: true);
+    } else {
+      state = state.copyWith(isButtonActivated: false);
     }
   }
 
@@ -51,19 +47,15 @@ class TeamNotifier extends StateNotifier<TeamPageState> {
     final bool isAbsenceSelected = state.selectedTeamList
         .any((teamSearch) => teamSearch.teamName == "Absence");
 
-    if (isAbsenceSelected &&
-        state.selectedTeamList.first.teamName != "Absence") {
-      state.selectedTeamList = state.selectedTeamList.reversed.toList();
-    }
+    if (!isAbsenceSelected) return;
 
-    for (final team in state.selectedTeamList) {
-      debugPrint("team: ${team.teamName}");
+    if (state.selectedTeamList.first.teamName != "Absence") {
+      state.selectedTeamList = state.selectedTeamList.reversed.toList();
     }
   }
 
   void clearTeamList() {
-    state = TeamPageState(
-      fetchedTeamList: state.fetchedTeamList,
+    state = state.copyWith(
       selectedTeamList: [],
       isButtonActivated: false,
     );
