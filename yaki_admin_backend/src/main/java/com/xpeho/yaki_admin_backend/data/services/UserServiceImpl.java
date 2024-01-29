@@ -10,6 +10,8 @@ import com.xpeho.yaki_admin_backend.domain.services.UserService;
 import com.xpeho.yaki_admin_backend.events.OnResetPasswordCompletEvent;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,7 +19,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.rmi.UnexpectedException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -87,7 +88,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserEntityWithID> findUserByIdRange(int idStart, int idEnd) {
         List<UserModel> userList = userJpaRepository.findByUserIdBetween(idStart, idEnd);
-
         List<UserEntityWithID> userWithIdList = new ArrayList<>();
         for (UserModel user : userList) {
             UserEntityWithID newUserWIthId = new UserEntityWithID(
@@ -99,7 +99,28 @@ public class UserServiceImpl implements UserService {
                     user.getEmail(),
                     null,
                     null
-                );
+            );
+            userWithIdList.add(newUserWIthId);
+        }
+        return userWithIdList;
+    }
+
+    @Override
+    public List<UserEntityWithID> findAllUsers() {
+        Pageable pageable = PageRequest.of(0, 10);
+        List<UserModel> userList = userJpaRepository.findAllUsers(pageable).getContent();
+        List<UserEntityWithID> userWithIdList = new ArrayList<>();
+        for (UserModel user : userList) {
+            UserEntityWithID newUserWIthId = new UserEntityWithID(
+                    user.getUserId(),
+                    null,
+                    null,
+                    user.getLastName(),
+                    user.getFirstName(),
+                    user.getEmail(),
+                    null,
+                    null
+            );
             userWithIdList.add(newUserWIthId);
         }
         return userWithIdList;
@@ -122,14 +143,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public void changePassword(ChangePasswordEntity changePasswordEntity) {
         Optional<UserModel> user = userJpaRepository.findById(changePasswordEntity.userId());
-        if(user.isEmpty()){
+        if (user.isEmpty()) {
             //the user should not be log in as it doesn't exist, or the id received by the front is wrong
-                throw new EntityNotFoundException("Your account is unknown");
+            throw new EntityNotFoundException("Your account is unknown");
         }
-        try{
+        try {
             authManager.authenticate(new UsernamePasswordAuthenticationToken(user.get().getLogin(), changePasswordEntity.currentPassword()));
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             throw new BadCredentialsException("Wrong password");
         }
         String encodedPassword = passwordEncoder.encode(changePasswordEntity.newPassword());
@@ -137,6 +157,7 @@ public class UserServiceImpl implements UserService {
         userJpaRepository.save(user.get());
     }
 
+    
     public void resetPassword(UserModel user, PasswordEncoder passwordEncoder) {
         String temporaryPassword = passwordService.generatePassword(12);
         String encodedPassword = passwordEncoder.encode(temporaryPassword);

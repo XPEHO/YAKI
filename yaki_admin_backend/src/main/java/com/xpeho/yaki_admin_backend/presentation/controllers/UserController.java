@@ -20,16 +20,24 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
+
     @PostMapping
     public UserEntity createUser(@RequestBody UserEntityIn userEntity) {
         return userService.save(userEntity);
     }
+
     @GetMapping("/inRange")
     public List<UserEntityWithID> findUserByIdRange(@RequestParam int idStart,
                                                     @RequestParam int idEnd) {
         return userService.findUserByIdRange(idStart, idEnd);
     }
-    
+
+    @GetMapping()
+    public List<UserEntityWithID> findAllUsers() {
+        return userService.findAllUsers();
+    }
+
+
     @DeleteMapping("{id}")
     public UserEntity deleteUser(@PathVariable int id) {
         return userService.deleteById(id);

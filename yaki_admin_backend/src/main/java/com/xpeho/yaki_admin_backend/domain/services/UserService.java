@@ -15,6 +15,8 @@ public interface UserService {
 
     List<UserEntityWithID> findUserByIdRange(int idStart, int idEnd);
 
+    List<UserEntityWithID> findAllUsers();
+
     UserEntity deleteById(int id);
 
     void changePassword(ChangePasswordEntity changePasswordEntity);
