@@ -10,8 +10,10 @@ import com.xpeho.yaki_admin_backend.domain.services.UserService;
 import com.xpeho.yaki_admin_backend.events.OnResetPasswordCompletEvent;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -106,24 +108,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserEntityWithID> findAllUsers() {
-        Pageable pageable = PageRequest.of(0, 10);
-        List<UserModel> userList = userJpaRepository.findAllUsers(pageable).getContent();
-        List<UserEntityWithID> userWithIdList = new ArrayList<>();
-        for (UserModel user : userList) {
-            UserEntityWithID newUserWIthId = new UserEntityWithID(
-                    user.getUserId(),
-                    null,
-                    null,
-                    user.getLastName(),
-                    user.getFirstName(),
-                    user.getEmail(),
-                    null,
-                    null
-            );
-            userWithIdList.add(newUserWIthId);
-        }
-        return userWithIdList;
+    public Page<UserEntityWithID> findAllUsers(Pageable pageable) {
+        Pageable sortedByName = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by("lastName"));
+        Page<UserModel> userPage = userJpaRepository.findAll(sortedByName);
+        return userPage.map(user -> new UserEntityWithID(
+                user.getUserId(),
+                null,
+                null,
+                user.getLastName(),
+                user.getFirstName(),
+                user.getEmail(),
+                null,
+                null
+        ));
     }
 
     @Override
@@ -157,7 +154,7 @@ public class UserServiceImpl implements UserService {
         userJpaRepository.save(user.get());
     }
 
-    
+
     public void resetPassword(UserModel user, PasswordEncoder passwordEncoder) {
         String temporaryPassword = passwordService.generatePassword(12);
         String encodedPassword = passwordEncoder.encode(temporaryPassword);

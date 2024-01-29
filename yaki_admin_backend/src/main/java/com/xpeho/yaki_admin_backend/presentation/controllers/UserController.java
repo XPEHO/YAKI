@@ -6,6 +6,8 @@ import com.xpeho.yaki_admin_backend.domain.entities.UserEntityIn;
 import com.xpeho.yaki_admin_backend.domain.entities.UserEntityWithID;
 import com.xpeho.yaki_admin_backend.domain.services.UserService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,8 +35,11 @@ public class UserController {
     }
 
     @GetMapping()
-    public List<UserEntityWithID> findAllUsers() {
-        return userService.findAllUsers();
+    public List<UserEntityWithID> findAllUsers(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return userService.findAllUsers(pageable).getContent();
     }
 
 
