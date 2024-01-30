@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import buttonPrimary from "@/ui/components/buttons/ButtonPrimary.vue";
-import buttonSecondary from "@/ui/components/buttons/ButtonSecondary.vue";
 import inputText from "@/ui/components/inputs/InputText.vue";
 import inputPassword from "@/ui/components/inputs/InputPassword.vue";
 import { useAuthStore } from "@/stores/authStore";
@@ -45,7 +44,9 @@ watch(isLoggingError, (newValue) => {
   }
 });
 
-const forgottenPassword = () => {};
+const openYakiWeb = () => {
+  window.open("https://yaki.xpeho.fr/ui/#", "_blank");
+};
 </script>
 
 <template>
@@ -69,16 +70,15 @@ const forgottenPassword = () => {};
           type="submit"
           :is-disabled="isLloggingLoading"
         />
-
         <div
           v-show="isLloggingLoading"
           :class="['loader', isLloggingLoading ? 'loader-animation' : '']"
         ></div>
-
-        <buttonSecondary
-          text="FORGOTTEN PASSWORD?"
-          @click.prevent="forgottenPassword"
-        />
+        <p class="text_default__Team_description info_text">
+          * Your logging informations also are utilized on YAKI mobile. <br />
+          If you've forgotten your password, you may use the mobile application or his
+          <span @click.prevent="openYakiWeb">web version</span>.
+        </p>
       </form>
     </div>
   </section>
@@ -133,6 +133,20 @@ const forgottenPassword = () => {};
     color: red;
     font-family: $font-sf-compact;
     font-size: 1.2rem;
+  }
+}
+
+.info_text {
+  font-family: $font-sf-compact;
+  font-size: 0.85rem;
+  font-weight: 400;
+  letter-spacing: 0.4px;
+  padding-inline-start: 1.2rem;
+
+  span {
+    font-weight: 600;
+    color: $green-xpeho-color;
+    cursor: pointer;
   }
 }
 </style>
