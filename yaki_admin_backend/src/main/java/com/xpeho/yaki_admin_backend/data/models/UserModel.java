@@ -73,6 +73,13 @@ public class UserModel implements UserDetails {
         this.enabled = false;
     }
 
+    public UserModel(int userId, String lastName, String firstName, String email) {
+        this.userId = userId;
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.email = email;
+    }
+
     public UserModel() {
         this.enabled = false;
     }
