@@ -8,6 +8,7 @@ import 'package:yaki/presentation/features/shared/feedback_user.dart';
 import 'package:yaki/presentation/state/providers/avatar_provider.dart';
 import 'package:yaki/presentation/state/providers/declaration_provider.dart';
 import 'package:yaki/presentation/state/providers/login_provider.dart';
+import 'package:yaki/presentation/state/providers/team_provider.dart';
 import 'package:yaki/presentation/styles/color.dart';
 import 'package:yaki/presentation/styles/text_style.dart';
 import 'package:yaki_ui/yaki_ui.dart';
@@ -69,6 +70,11 @@ class _AuthenticationState extends ConsumerState<Authentication> {
     await ref.read(declarationProvider.notifier).getLatestDeclaration();
     final declarationStatus =
         ref.read(declarationProvider).latestDeclarationStatus;
+
+    // if has a declaration at loging, fetch the team list for comparison purposes (unaviable check)
+    if (declarationStatus == LatestDeclarationStatus.declared) {
+      await ref.read(teamProvider.notifier).getUserTeamList();
+    }
 
     declarationStatus == LatestDeclarationStatus.declared
         ? goToTeamsDeclarationSummary()
