@@ -11,8 +11,19 @@ import java.util.Optional;
 
 public interface UserJpaRepository extends JpaRepository<UserModel, Integer> {
     @Query("""
-            SELECT new com.xpeho.yaki_admin_backend.data.models.UserModel(u.userId, u.lastName, u.firstName, u.email)
-            FROM UserModel u 
+            SELECT new com.xpeho.yaki_admin_backend.domain.entities.UserEntityWithID(
+                u.userId, 
+                c.captainId, 
+                t.teammateId, 
+                u.lastName, 
+                u.firstName, 
+                u.email, 
+                a.avatarReference, 
+                a.avatarBlob)
+            FROM UserModel u
+            INNER JOIN CaptainModel c ON c.userId = u.userId
+            INNER JOIN TeammateModel t ON t.userId = u.userId
+            INNER JOIN AvatarModel a ON a.userId = u.userId
             WHERE u.enabled = true
             """)
     Page<UserModel> findAllEnabledUsers(Pageable pageable);
