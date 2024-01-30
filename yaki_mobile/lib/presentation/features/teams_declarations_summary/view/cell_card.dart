@@ -86,13 +86,18 @@ bool isSubtitleDisplayed({
         : true;
 
 String timeSinceDeclaration(DateTime declarationDate) {
-  final duration = DateTime.now().difference(declarationDate);
-  if (duration.inDays > 0) {
-    return '${duration.inDays} days ago';
-  } else if (duration.inHours > 0) {
-    return '${duration.inHours} hours ago';
-  } else if (duration.inMinutes > 0) {
-    return '${duration.inMinutes} minutes ago';
+  DateTime a = declarationDate;
+  DateTime b = DateTime.now();
+
+  Duration difference = b.difference(a);
+
+  int hours = difference.inHours % 24;
+  int minutes = difference.inMinutes % 60;
+
+  if (hours > 0) {
+    return '$hours hours ago';
+  } else if (minutes > 0) {
+    return '$minutes minutes ago';
   } else {
     return 'Just now';
   }
