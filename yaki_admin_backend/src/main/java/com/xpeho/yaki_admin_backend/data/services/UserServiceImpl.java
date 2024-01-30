@@ -109,8 +109,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Page<UserEntityWithID> findAllUsers(Pageable pageable) {
+        // Create a new PageRequest object. This is a concrete implementation of the Pageable interface, which is used to add pagination information to database queries.
+        // The parameters to the of() method are:
+        // - pageable.getPageNumber(): This gets the number of the page that we want to retrieve. Page numbers are zero-based, so the first page is page 0.
+        // - pageable.getPageSize(): This gets the number of items that we want on each page. This is used to limit the number of results returned by the query.
+        // - Sort.by("lastName"): This creates a Sort object that specifies that the results should be sorted by the "lastName" field.
+        // The result is a Pageable object that we can pass to the findAll() method to retrieve a page of users, sorted by last name.
+
         Pageable sortedByName = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by("lastName"));
         Page<UserModel> userPage = userJpaRepository.findAll(sortedByName);
+        
         return userPage.map(user -> new UserEntityWithID(
                 user.getUserId(),
                 null,
