@@ -138,5 +138,7 @@
   "absenceDatePickerInitialLabel": "Choose a date",
   "absenceStart": "Start",
   "absenceEnd": "End",
-  "absenceError": "* Please select a start date and an end date, \n The start date must be before or the same as the end date"
+  "absenceError": "* Please select a start date and an end date, \n The start date must be before or the same as the end date",
+
+  "unavailable": "Unavailable"
 }

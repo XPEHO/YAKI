@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:yaki/domain/entities/declaration_status.dart';
 import 'package:yaki/presentation/state/providers/avatar_provider.dart';
 import 'package:yaki/presentation/state/providers/declaration_provider.dart';
+import 'package:yaki/presentation/state/providers/team_provider.dart';
 import 'package:yaki/presentation/state/providers/token_provider.dart';
 import 'package:yaki/presentation/styles/color.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -34,6 +35,9 @@ class SplashScreenState extends ConsumerState<SplashScreen> {
     }
 
     if (_isDeclared) {
+      // get the user team list if direct redirect to the team declaration summary page.
+      // will be used to compare if logged user, is in the team of the users displayed in the list.
+      ref.read(teamProvider.notifier).getUserTeamList();
       context.go('/teams-declaration-summary');
     } else {
       context.go('/team-selection');
