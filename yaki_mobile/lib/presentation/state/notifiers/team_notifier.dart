@@ -66,7 +66,7 @@ class TeamNotifier extends StateNotifier<TeamPageState> {
   }
 
   /// Asynchronous method that retrieves a list of teams from the API and
-  void getUserTeamList() async {
+  Future<void> getUserTeamList() async {
     List<TeamModel> userTeamList = await teamRepository.getTeam();
 
     state = state.copyWith(fetchedTeamList: userTeamList);

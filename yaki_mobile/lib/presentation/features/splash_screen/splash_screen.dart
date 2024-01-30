@@ -35,9 +35,6 @@ class SplashScreenState extends ConsumerState<SplashScreen> {
     }
 
     if (_isDeclared) {
-      // get the user team list if direct redirect to the team declaration summary page.
-      // will be used to compare if logged user, is in the team of the users displayed in the list.
-      ref.read(teamProvider.notifier).getUserTeamList();
       context.go('/teams-declaration-summary');
     } else {
       context.go('/team-selection');
@@ -65,12 +62,20 @@ class SplashScreenState extends ConsumerState<SplashScreen> {
       return;
     }
 
-    // get if user is declared
-    await ref.read(declarationProvider.notifier).getLatestDeclaration();
-    _isDeclared = ref.read(declarationProvider).latestDeclarationStatus ==
-        LatestDeclarationStatus.declared;
     //  get avatar
     await ref.read(avatarProvider.notifier).getAvatar();
+
+    // get if user is declared
+    await ref.read(declarationProvider.notifier).getLatestDeclaration();
+
+    _isDeclared = ref.read(declarationProvider).latestDeclarationStatus ==
+        LatestDeclarationStatus.declared;
+
+    if (_isDeclared) {
+      // get the user team list if direct redirect to the team declaration summary page.
+      // will be used to compare if logged user, is in the team of the users displayed in the list.
+      await ref.read(teamProvider.notifier).getUserTeamList();
+    }
 
     handleRedirection();
   }

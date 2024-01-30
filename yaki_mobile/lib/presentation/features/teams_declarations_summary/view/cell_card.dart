@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yaki/domain/entities/teammate_with_declaration_entity.dart';
-import 'package:yaki/domain/entities/user_entity.dart';
 import 'package:yaki/presentation/displaydata/avatar_enum.dart';
 import 'package:yaki/presentation/displaydata/declaration_status_enum.dart';
 import 'package:yaki/presentation/features/shared/sized_circle_avatar.dart';
@@ -12,7 +11,6 @@ import 'package:yaki/presentation/features/teams_declarations_summary/view/cell_
 import 'package:yaki/presentation/features/teams_declarations_summary/view/cell_opened_iconchips.dart';
 import 'package:yaki/presentation/state/providers/avatar_provider.dart';
 import 'package:yaki/presentation/state/providers/team_provider.dart';
-import 'package:yaki/presentation/state/providers/user_provider.dart';
 import 'package:yaki_ui/yaki_ui.dart';
 
 class CellCard extends ConsumerWidget {
@@ -105,31 +103,26 @@ Widget setUserAvatarImage({
   required bool isModifierBtnUsed,
   required TeammateWithDeclarationEntity teammate,
 }) {
-  String? firstName;
-  String? lastName;
+  String firstName = "A";
+  String lastName = "B";
   String? avatarReference;
   Uint8List? avatar;
 
-  // if its the current user, we get the data from the userProvider
-  if (isModifierBtnUsed) {
-    final avatarData = ref.watch(avatarProvider);
-    final UserEntity? user = ref.watch(userProvider);
+  final avatarData = ref.watch(avatarProvider);
 
-    if (user != null) {
-      firstName = user.firstName;
-      lastName = user.lastName;
-    }
-    avatarReference = avatarData.avatarReference;
+  if (isModifierBtnUsed) {
     avatar = avatarData.avatar;
+    avatarReference = avatarData.avatarReference;
   } else {
-    firstName = teammate.userFirstName;
-    lastName = teammate.userLastName;
     avatarReference = teammate.avatarReference;
     avatar = teammate.avatar;
   }
 
+  firstName = teammate.userFirstName;
+  lastName = teammate.userLastName;
+
   String firstLestters =
-      '${firstName != null && firstName.isNotEmpty ? firstName[0] : "A"}${lastName != null && lastName.isNotEmpty ? lastName[0] : "B"}';
+      '${firstName.isNotEmpty ? firstName[0] : "A"}${lastName.isNotEmpty ? lastName[0] : "B"}';
 
   if (avatarReference != null &&
       AvatarEnum.defaultAvatars.contains(avatarReference)) {
