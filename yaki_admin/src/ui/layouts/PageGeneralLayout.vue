@@ -33,6 +33,8 @@ const modalStore = useModalStore();
 
   background-color: $background-color-theme-primary;
   overflow: hidden;
+
+  position: relative;
 }
 
 .fade-enter-active,

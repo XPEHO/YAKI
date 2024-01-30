@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { PropType, ref } from "vue";
+import { PropType, onMounted, ref } from "vue";
 import { UserWithIdType } from "@/models/userWithId.type";
 import addIcon from "@/assets/icons_svg/AddPlus.svg";
 import addedUser from "@/assets/icons_svg/Validated.svg";
@@ -22,9 +22,19 @@ const props = defineProps({
     type: Object as PropType<UserWithIdType>,
     required: true,
   },
+  invitedUserList: {
+    type: Object as PropType<number[]>,
+    required: true,
+  },
 });
 
 const visualSettings = ref(toAddSettings);
+
+onMounted(() => {
+  if (props.invitedUserList.includes(props.user.id)) {
+    visualSettings.value = invitedSettings;
+  }
+});
 
 /**
  * Emit to the parent component (userInvitationList)
@@ -101,7 +111,6 @@ const btnClassList = [
     gap: 1rem;
   }
 }
-
 $background-color-user-card-invited: #e6edee;
 $background-color-user-card-invited-hover: #ecf0f5;
 
