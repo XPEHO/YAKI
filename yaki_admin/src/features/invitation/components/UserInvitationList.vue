@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import UsersInvitationCard from "@/features/invitation/components/UserInvitationCard.vue";
 import { UserWithIdType } from "@/models/userWithId.type";
-import { PropType, onMounted, ref } from "vue";
+import { PropType } from "vue";
 
-const props = defineProps({
+defineProps({
   userList: {
     type: Object as PropType<UserWithIdType[]>,
     required: true,
@@ -12,20 +12,6 @@ const props = defineProps({
     type: Array as PropType<number[]>,
     required: true,
   },
-});
-
-const filteredUserList = ref<UserWithIdType[]>([]);
-
-onMounted(() => {
-  if (props.userList && props.invitedUsers) {
-    if (props.invitedUsers.length === 0) {
-      filteredUserList.value = props.userList;
-      return;
-    }
-    filteredUserList.value = props.userList.filter((user) => {
-      return !props.invitedUsers.includes(user.id);
-    });
-  }
 });
 
 /**
@@ -42,8 +28,9 @@ const onUserInvitation = (invitedUser: UserWithIdType) => {
   <section class="user-list__container">
     <section class="user-list__in-team-container">
       <users-invitation-card
-        v-for="user in filteredUserList"
+        v-for="user in userList"
         :user="user"
+        :invitedUserList="invitedUsers"
         :key="user.id"
         @emittedUserInvitation="onUserInvitation"
       />
@@ -54,7 +41,7 @@ const onUserInvitation = (invitedUser: UserWithIdType) => {
 <style scoped lang="scss">
 $border-radius: 24px;
 .user-list__container {
-  padding-block-end: 10rem;
+  padding-block-end: 9rem;
 
   > p:nth-of-type(1) {
     color: #7d818c;

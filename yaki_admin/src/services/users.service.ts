@@ -1,4 +1,5 @@
 import { environmentVar } from "@/envPlaceholder";
+import { UserPagesResponseType } from "@/models/userPages.type";
 import { UserWithIdType } from "@/models/userWithId.type";
 import { authHeader } from "@/utils/authUtils";
 import { handleResponse } from "@/utils/responseUtils";
@@ -28,6 +29,19 @@ export class UserService {
     const response = await fetch(`${URL}/users/${id}`, requestOptions)
       .then(handleResponse)
       .catch((err) => console.warn(err));
+    return response;
+  };
+
+  getUsersByPage = async (page: number, size: number): Promise<UserPagesResponseType> => {
+    const requestOptions = {
+      method: "GET",
+      headers: authHeader(`${URL}/users?page=${page}&size=${size}`),
+    };
+
+    const response = await fetch(`${URL}/users?page=${page}&size=${size}`, requestOptions)
+      .then(handleResponse)
+      .catch((err) => console.warn(err));
+
     return response;
   };
 }
