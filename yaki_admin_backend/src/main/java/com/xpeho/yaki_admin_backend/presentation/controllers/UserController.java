@@ -39,17 +39,29 @@ public class UserController {
         return userService.findUserByIdRange(idStart, idEnd);
     }
 
+    // Define a GET mapping for the root path. This method will be invoked when a GET request is made to the root path.
     @GetMapping()
     public ResponseEntity<Map<String, Object>> findAllUsers(
+            // Request parameters for the page number and size. If not provided, they default to 0 and 10 respectively.
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
+
+        // Create a Pageable object with the provided page number and size. This is used to add pagination information to the database query.
         Pageable pageable = PageRequest.of(page, size);
+
+        // Call the userService to get a Page of UserEntityWithID. The Page includes the data for the requested page, as well as pagination information.
         Page<UserEntityWithID> userPage = userService.findAllUsers(pageable);
 
+        // Create a map to hold the response data.
         Map<String, Object> response = new HashMap<>();
+
+        // Add the list of users to the response map. The getContent() method is used to get the list of UserEntityWithID from the Page.
         response.put("users", userPage.getContent());
+
+        // Add the total number of pages to the response map. The getTotalPages() method is used to get the total number of pages from the Page.
         response.put("totalPages", userPage.getTotalPages());
 
+        // Return the response map as the body of a ResponseEntity. The status is set to OK to indicate that the request was successful.
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
