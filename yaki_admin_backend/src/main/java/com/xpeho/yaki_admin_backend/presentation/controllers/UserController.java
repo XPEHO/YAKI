@@ -6,11 +6,16 @@ import com.xpeho.yaki_admin_backend.domain.entities.UserEntityIn;
 import com.xpeho.yaki_admin_backend.domain.entities.UserEntityWithID;
 import com.xpeho.yaki_admin_backend.domain.services.UserService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin
 @RestController
@@ -35,11 +40,17 @@ public class UserController {
     }
 
     @GetMapping()
-    public List<UserEntityWithID> findAllUsers(
+    public ResponseEntity<Map<String, Object>> findAllUsers(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return userService.findAllUsers(pageable).getContent();
+        Page<UserEntityWithID> userPage = userService.findAllUsers(pageable);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("users", userPage.getContent());
+        response.put("totalPages", userPage.getTotalPages());
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 

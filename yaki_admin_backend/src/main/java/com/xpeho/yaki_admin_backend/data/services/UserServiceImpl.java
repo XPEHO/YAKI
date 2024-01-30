@@ -118,7 +118,8 @@ public class UserServiceImpl implements UserService {
 
         Pageable sortedByName = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by("lastName"));
         Page<UserModel> userPage = userJpaRepository.findAll(sortedByName);
-        
+        int totalPages = userPage.getTotalPages();
+
         return userPage.map(user -> new UserEntityWithID(
                 user.getUserId(),
                 null,
