@@ -55,6 +55,9 @@ class CellOpenedIconChips extends ConsumerWidget {
     final bool absentOrUndeclared =
         status == StatusEnum.undeclared || status == StatusEnum.absence;
 
+    final bool isUserIsInAfternoonTeamAndNotAbsent =
+        isUserIsInAfternoonTeam && statusAfternoon != StatusEnum.absence;
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -105,7 +108,8 @@ class CellOpenedIconChips extends ConsumerWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              if (isUserIsInAfternoonTeam) ...[
+              // do not display team chip if the user is not in the afternoon team or if he is absent
+              if (isUserIsInAfternoonTeamAndNotAbsent) ...[
                 IconChip(
                   label: teamNameAfternoon!,
                   backgroundColor: AppColors.cellChipDefault,
@@ -121,8 +125,14 @@ class CellOpenedIconChips extends ConsumerWidget {
                 ),
                 const SizedBox(
                   width: 4,
+                  height: 8,
                 ),
-                const SizedBox(height: 8),
+              ],
+              // no need to display this chip if the user neither is into the morning team (only one unavailable chip is enough for the day)
+              if (!isUserIsInAfternoonTeam && isUserIsInTeam)
+                const UnavailableIconChip(),
+
+              if (isUserIsInAfternoonTeam || absentOrUndeclared)
                 IconChip(
                   label: tr(statusAfternoon!.name),
                   backgroundColor: setStatusColor(statusAfternoon!),
@@ -134,10 +144,6 @@ class CellOpenedIconChips extends ConsumerWidget {
                     ),
                   ),
                 ),
-              ],
-              // no need to display this chip if the user neither is into the morning team (only one unavailable chip is enough for the day)
-              if (!isUserIsInAfternoonTeam && isUserIsInTeam)
-                const UnavailableIconChip(),
             ],
           ),
       ],
