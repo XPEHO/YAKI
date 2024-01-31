@@ -72,6 +72,7 @@ public class UserModel implements UserDetails {
         this.password = password;
         this.enabled = false;
     }
+    
 
     public UserModel() {
         this.enabled = false;
