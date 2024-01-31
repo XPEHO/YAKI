@@ -115,9 +115,11 @@ public class UserServiceImpl implements UserService {
         // - pageable.getPageSize(): This gets the number of items that we want on each page. This is used to limit the number of results returned by the query.
         // - Sort.by("lastName"): This creates a Sort object that specifies that the results should be sorted by the "lastName" field.
         // The result is a Pageable object that we can pass to the findAll() method to retrieve a page of users, sorted by last name.
+
         Pageable sortedByName = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by("lastName"));
 
-        // Use the UserRepository find all enabled users, sorted by last name, and return them as a Page of UserModels.
+        // Use the UserRepository to find all users, sorted by last name, and return them as a Page of UserModels.
+        // The findAll method takes the Pageable object as a parameter, which includes the page number, page size, and sorting details.
         Page<UserModel> userPage = userJpaRepository.findAllEnabledUsers(sortedByName);
 
         // Get the total number of pages in the result set. This is calculated based on the total number of items and the page size.
