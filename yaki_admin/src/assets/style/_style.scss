@@ -65,6 +65,11 @@ $loader-animation-delay: 0.15s;
 $loader-fade-duration: 0.5s;
 
 // LOGGING LOADER
+
+.loading_relative_container {
+  position: relative;
+}
+
 .loader {
   width: 2.8rem;
   aspect-ratio: 1/1;
@@ -79,7 +84,7 @@ $loader-fade-duration: 0.5s;
 
   position: absolute;
 
-  top: 62%;
+  top: 40%;
   left: 44%;
 
   opacity: 0;
