@@ -19,12 +19,13 @@ export class TeamRepository {
       port: Number(process.env.DB_PORT),
     });
     const query = `
-    SELECT t.team_id, t.team_name, t.team_actif_flag 
-	  FROM public.teammate tm
-    INNER JOIN public.team t
-    ON t.team_id = tm.teammate_team_id
-    WHERE tm.teammate_user_id = $1
-    AND t.team_actif_flag = true;
+      SELECT t.team_id, t.team_name, t.team_actif_flag 
+      FROM public.teammate tm
+      INNER JOIN public.team t
+      ON t.team_id = tm.teammate_team_id
+      WHERE tm.teammate_user_id = $1
+      AND t.team_actif_flag = true
+      AND tm.teammate_actif_flag = true;
     `;
     client.connect();
     try {
