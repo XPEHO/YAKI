@@ -50,8 +50,8 @@ const openYakiWeb = () => {
 </script>
 
 <template>
-  <section class="login_form_container">
-    <div :class="['loging_from_wrapper', isLoggingError ? 'logging_error' : '']">
+  <section class="logging_form_container">
+    <div :class="['logging_from_wrapper', isLoggingError ? 'logging_error' : '']">
       <p class="text_default__title_header">Administration</p>
       <form>
         <input-text
@@ -64,16 +64,19 @@ const openYakiWeb = () => {
           @emittedInput="onInputPassword"
         />
 
-        <button-primary
-          text="SIGN IN"
-          @click.prevent="login"
-          type="submit"
-          :is-disabled="isLloggingLoading"
-        />
-        <div
-          v-show="isLloggingLoading"
-          :class="['loader', isLloggingLoading ? 'loader-animation' : '']"
-        ></div>
+        <div class="loading_relative_container">
+          <button-primary
+            text="SIGN IN"
+            @click.prevent="login"
+            type="submit"
+            :is-disabled="isLloggingLoading"
+          />
+          <div
+            v-show="isLloggingLoading"
+            :class="['loader', isLloggingLoading ? 'loader-animation' : '']"
+          ></div>
+        </div>
+
         <p class="text_default__Team_description info_text">
           * Your logging informations also are utilized on YAKI mobile. <br />
           If you've forgotten your password, you may use the mobile application or his
@@ -86,7 +89,7 @@ const openYakiWeb = () => {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-.login_form_container {
+.logging_form_container {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -100,11 +103,10 @@ const openYakiWeb = () => {
     display: flex;
     flex-direction: column;
     gap: 1.4rem;
-    position: relative;
   }
 }
 
-.loging_from_wrapper {
+.logging_from_wrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
