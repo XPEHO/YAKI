@@ -8,6 +8,11 @@
   src: url("../../../node_modules/@yaki_ui/yaki_ui_web_components/fonts/SF-Compact-Rounded-Regular.ttf")
     format("truetype");
 }
+@font-face {
+  font-family: "SF-Pro-Rounded";
+  src: url("../../../node_modules/@yaki_ui/yaki_ui_web_components/fonts/SF-Pro-Rounded-Regular.otf")
+    format("truetype");
+}
 * {
   margin: 0;
   padding: 0;
@@ -44,6 +49,10 @@
   line-height: 100%;
 }
 
+.loading_relative_container {
+  position: relative;
+}
+
 .loader {
   width: 2.8rem;
   aspect-ratio: 1/1;
@@ -54,7 +63,7 @@
   border-right-color: rgb(51, 51, 51) 3;
   border-radius: 50%;
   position: absolute;
-  top: 62%;
+  top: 17%;
   left: 44%;
   opacity: 0;
 }
