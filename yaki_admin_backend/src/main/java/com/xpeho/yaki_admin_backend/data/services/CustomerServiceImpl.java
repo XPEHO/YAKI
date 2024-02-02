@@ -43,20 +43,22 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public CustomerEntity createCustomer(CustomerEntity customerEntity) {
         EntityLogModel entityLogModel = entityLogService.createEntityLog();
-        final CustomerModel customerModel = new CustomerModel(
+        final CustomerModel customerModelToSave = new CustomerModel(
                 customerEntity.customerName(),
                 customerEntity.ownerId(),
                 customerEntity.locationId(),
-                entityLogModel.getId()
-        );
-        CustomerModel createdCustomer = customerJpaRepository.save(customerModel);
+                entityLogModel.getId());
 
-        return new CustomerEntity(
-                createdCustomer.getId(),
-                createdCustomer.getName(),
-                createdCustomer.getOwnerId(),
-                createdCustomer.getLocationId()
+        final CustomerModel responseModel = customerJpaRepository.save(customerModelToSave);
+
+        final CustomerEntity responseEntity = new CustomerEntity(
+                responseModel.getId(),
+                responseModel.getName(),
+                responseModel.getOwnerId(),
+                responseModel.getLocationId()
         );
+
+        return responseEntity;
     }
 
     @Override
