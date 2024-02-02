@@ -50,6 +50,7 @@ public class CustomerServiceImpl implements CustomerService {
                 entityLogModel.getId());
 
         final CustomerModel responseModel = customerJpaRepository.save(customerModelToSave);
+        System.out.println(responseModel);
 
         final CustomerEntity responseEntity = new CustomerEntity(
                 responseModel.getId(),
@@ -57,7 +58,7 @@ public class CustomerServiceImpl implements CustomerService {
                 responseModel.getOwnerId(),
                 responseModel.getLocationId()
         );
-
+        System.out.println(responseEntity);
         return responseEntity;
     }
 
