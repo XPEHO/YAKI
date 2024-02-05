@@ -90,7 +90,6 @@ class CustomerServiceImplTest {
 
         //when
         CustomerEntity savedCustomer = customerService.createCustomer(customerE1);
-        System.out.println(savedCustomer);
 
         //then - verify the output
         assertNotNull(savedCustomer);
