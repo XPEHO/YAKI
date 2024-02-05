@@ -16,7 +16,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.*;
 
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
@@ -81,19 +81,24 @@ class CustomerServiceImplTest {
         assertEquals(returnedResponse,
                 expectedResponse);
     }
-    
 
     @Test
     void createCustomerTest() throws Exception {
         //given
-        given(customerJpaRepository.save(customer1)).willReturn(customer1);
+        given(customerJpaRepository.save(any(CustomerModel.class))).willReturn(customer1);
         given(entityLogService.createEntityLog()).willReturn(entityLogModel);
 
-        // when
-        CustomerEntity savedOwner = customerService.createCustomer(customerE1);
+        //when
+        CustomerEntity savedCustomer = customerService.createCustomer(customerE1);
+        System.out.println(savedCustomer);
 
-        // then - verify the output
-        assertNotEquals(savedOwner, (null));
+        //then - verify the output
+        assertNotNull(savedCustomer);
+        assertEquals(customerE1.id(), savedCustomer.id());
+        assertEquals(customerE1.customerName(), savedCustomer.customerName());
+        assertEquals(customerE1.ownerId(), savedCustomer.ownerId());
+        assertEquals(customerE1.locationId(), savedCustomer.locationId());
+
     }
 
     @Test
