@@ -144,7 +144,11 @@ export const useTeamStore = defineStore("teamStore", {
      */
     async deleteTeam(teamId: number): Promise<TeamType> {
       const deletedTeam = await teamService.deleteTeam(teamId);
+
+      // reset store values after team deletion
       this.setTeamDeleted(deletedTeam);
+      this.setTeamSelected({} as TeamType);
+
       return this.getTeamDeleted;
     },
 

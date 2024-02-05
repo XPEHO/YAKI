@@ -74,7 +74,12 @@ const onDeletePress = async () => {
         "
       >
         <span v-if="modalStore.getMode !== MODALMODE.captainDelete"> From : </span>
-        <span class="text__bold">{{ teamStore.getTeamSelected.teamName }}</span> ?
+        <span
+          v-if="modalStore.getMode !== MODALMODE.captainDelete"
+          class="text__bold"
+          >{{ teamStore.getTeamSelected.teamName }}</span
+        >
+        ?
       </span>
       <br />
       This action is irreversible !

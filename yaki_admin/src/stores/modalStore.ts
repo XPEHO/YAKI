@@ -135,6 +135,8 @@ export const useModalStore = defineStore("userModalStore", {
         this.getTeamDescriptionInputValue,
       );
       teamStore.setTeamSelected(createdTeam);
+
+      //reset teammate list to display an empty list for newly created team
       teammateStore.resetTeamatesList();
       await this.refreshTeamList();
 
@@ -168,9 +170,14 @@ export const useModalStore = defineStore("userModalStore", {
      */
     async handleTeamDelete(): Promise<TeamType> {
       const teamStore = useTeamStore();
+      const teammateStore = useTeammateStore();
 
       const deletedTeam = await teamStore.deleteTeam(teamStore.getTeamSelected.id);
       await this.refreshTeamList();
+
+      // reset deleted team informations and teammate list
+      teammateStore.resetTeamatesList();
+      this.setTeammateNameToDelete("");
 
       return deletedTeam;
     },
@@ -181,6 +188,10 @@ export const useModalStore = defineStore("userModalStore", {
     async handleUserDelete() {
       const teammateStore = useTeammateStore();
       await teammateStore.deleteTeammateFromTeam(teammateStore.getIdOfTeammateToDelete);
+
+      // reset deleted team informations
+      this.setTeammateNameToDelete("");
+      teammateStore.setIdOfTeammateToDelete(0);
     },
 
     /**
