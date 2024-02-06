@@ -1,13 +1,87 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:yaki/domain/entities/declaration_status.dart';
+import 'package:yaki/presentation/state/providers/avatar_provider.dart';
+import 'package:yaki/presentation/state/providers/declaration_provider.dart';
+import 'package:yaki/presentation/state/providers/team_provider.dart';
+import 'package:yaki/presentation/state/providers/token_provider.dart';
 import 'package:yaki/presentation/styles/color.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:go_router/go_router.dart';
 
-class SplashScreen extends ConsumerWidget {
+class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  SplashScreenState createState() => SplashScreenState();
+}
+
+class SplashScreenState extends ConsumerState<SplashScreen> {
+  bool _isTokenSaved = false;
+  bool _isDeclared = false;
+  bool _isTokenValid = false;
+
+  @override
+  void initState() {
+    super.initState();
+    isLogin();
+  }
+
+  void handleRedirection() {
+    if (!_isTokenSaved || !_isTokenValid) {
+      context.go('/authentication');
+      return;
+    }
+
+    if (_isDeclared) {
+      context.go('/teams-declaration-summary');
+    } else {
+      context.go('/team-selection');
+    }
+  }
+
+  /// Check if user is logged in and if token is valid.
+  /// If user is logged in and token is valid, get avatar.
+  void isLogin() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    _isTokenSaved = prefs.containsKey('token');
+
+    // if token is not saved, no need to check for token validity
+    if (!_isTokenSaved) {
+      handleRedirection();
+      return;
+    }
+
+    _isTokenValid =
+        await ref.read(tokenRepositoryProvider).verifyTokenValidity();
+
+    // if token is not valid, no need to check for declaration as user going to authentication page
+    if (!_isTokenValid) {
+      handleRedirection();
+      return;
+    }
+
+    //  get avatar
+    await ref.read(avatarProvider.notifier).getAvatar();
+
+    // get if user is declared
+    await ref.read(declarationProvider.notifier).getLatestDeclaration();
+
+    _isDeclared = ref.read(declarationProvider).latestDeclarationStatus ==
+        LatestDeclarationStatus.declared;
+
+    if (_isDeclared) {
+      // get the user team list if direct redirect to the team declaration summary page.
+      // will be used to compare if logged user, is in the team of the users displayed in the list.
+      await ref.read(teamProvider.notifier).getUserTeamList();
+    }
+
+    handleRedirection();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: Container(

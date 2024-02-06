@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import {BUTTONCOLORS} from "@/constants/componentsSettings";
+import { BUTTONCOLORS } from "@/constants/componentsSettings.enum";
 
-const props = defineProps({
+defineProps({
   icon: {
     type: String,
     required: true,
@@ -24,7 +24,8 @@ const classList = ["button--general", "button--height-secondary", "button--icon-
     <figure>
       <img
         :src="icon"
-        alt="arrow-left" />
+        alt="arrow-left"
+      />
     </figure>
   </button>
 </template>

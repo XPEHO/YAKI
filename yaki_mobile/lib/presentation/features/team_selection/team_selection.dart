@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yaki/presentation/displaydata/declaration_enum.dart';
-import 'package:yaki/presentation/displaydata/declaration_summary_enum.dart';
 import 'package:yaki/presentation/features/shared/app_bar_date.dart';
 import 'package:yaki/presentation/features/team_selection/view/team_selection_header.dart';
 import 'package:yaki/presentation/features/team_selection/view/team_selection_list.dart';
@@ -9,7 +8,6 @@ import 'package:yaki/presentation/features/shared/sized_circle_avatar.dart';
 import 'package:yaki/presentation/state/providers/avatar_provider.dart';
 import 'package:yaki/presentation/state/providers/team_provider.dart';
 import 'package:yaki/presentation/state/providers/user_provider.dart';
-import 'package:yaki/presentation/ui/vacation/vacation_selection_dialog.dart';
 import 'package:yaki_ui/yaki_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -78,28 +76,12 @@ void onValidationTap({
   final teamList = ref.read(teamProvider).selectedTeamList;
   final selectCount = teamList.length;
 
-  final fetchedTeamList = ref.read(teamProvider).fetchedTeamList;
-
   if (selectCount == 1) {
     final bool isAbsenceSelected =
         teamList.any((team) => team.teamName == "Absence");
 
     if (isAbsenceSelected) {
-      // get first team with valid teamId
-      final int selectedTeamId = fetchedTeamList
-          .firstWhere(
-            (team) => team.teamId > 0,
-            orElse: () => fetchedTeamList.first,
-          )
-          .teamId;
-
-      VacationSelectionDialog(
-        teamId: selectedTeamId,
-        ref: ref,
-        context: context,
-        goToPage: () =>
-            context.go('/summary/${DeclarationSummaryPaths.absence.text}'),
-      ).show();
+      context.go("/declaration/long-absence");
     } else {
       context.go("/declaration/${DeclarationPaths.fullDay.text}");
     }

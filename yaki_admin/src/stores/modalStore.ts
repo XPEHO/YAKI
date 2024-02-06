@@ -1,9 +1,10 @@
-import {MODALMODE} from "@/constants/modalMode";
-import {defineStore} from "pinia";
-import {useTeamStore} from "@/stores/teamStore";
-import {useTeammateStore} from "@/stores/teammateStore";
-import {useRoleStore} from "@/stores/roleStore";
-import {TeamType} from "@/models/team.type";
+import { MODALMODE } from "@/constants/modalMode.enum";
+import { defineStore } from "pinia";
+import { useTeamStore } from "@/stores/teamStore";
+import { useTeammateStore } from "@/stores/teammateStore";
+import { useRoleStore } from "@/stores/roleStore";
+import { TeamType } from "@/models/team.type";
+import { useCaptainStore } from "./captainStore";
 
 interface State {
   isShow: boolean;
@@ -11,6 +12,7 @@ interface State {
   teamNameInputValue: string;
   teammateNameToDelete: string;
   teamDescriptionInputValue: string;
+  captainNameToDelete: string;
 }
 
 export const useModalStore = defineStore("userModalStore", {
@@ -20,14 +22,18 @@ export const useModalStore = defineStore("userModalStore", {
     teamNameInputValue: "" as string,
     teammateNameToDelete: "" as string,
     teamDescriptionInputValue: "" as string,
+    captainNameToDelete: "" as string,
   }),
+
   getters: {
     getIsShow: (state: State) => state.isShow,
     getMode: (state: State) => state.mode,
     getTeamNameInputValue: (state: State) => state.teamNameInputValue,
     getTeammateNameToDelete: (state: State) => state.teammateNameToDelete,
     getTeamDescriptionInputValue: (state: State) => state.teamDescriptionInputValue,
+    getCaptainNameToDelete: (state: State) => state.captainNameToDelete,
   },
+
   actions: {
     setIsShow(isShow: boolean) {
       this.isShow = isShow;
@@ -44,6 +50,9 @@ export const useModalStore = defineStore("userModalStore", {
     setTeamDescriptionInputValue(teamDescriptionInputValue: string) {
       this.teamDescriptionInputValue = teamDescriptionInputValue;
     },
+    setCaptainNameToDelete(captainName: string) {
+      this.captainNameToDelete = captainName;
+    },
 
     /**
      * Determine modal visibility :
@@ -56,7 +65,7 @@ export const useModalStore = defineStore("userModalStore", {
      */
     switchModalVisibility(setVisible: boolean, mode: MODALMODE | null) {
       const teamStore = useTeamStore();
-      const {teamName, teamDescription} = teamStore.getTeamSelected;
+      const { teamName, teamDescription } = teamStore.getTeamSelected;
 
       // get current teamName and teamDescription and set it as input value for edition
       if (mode === MODALMODE.teamEdit && teamName) {
@@ -65,6 +74,11 @@ export const useModalStore = defineStore("userModalStore", {
           this.setTeamDescriptionInputValue(teamDescription);
         }
       }
+
+      if (mode === MODALMODE.teamCreate) {
+        teamStore.resetTeamStoreSelectedLogo();
+      }
+
       if (mode === MODALMODE.teamCreate || mode === MODALMODE.teamDelete) {
         this.setTeamNameInputValue("");
         this.setTeamDescriptionInputValue("");
@@ -78,6 +92,7 @@ export const useModalStore = defineStore("userModalStore", {
 
     /**
      * Modal action management :
+     * Invoked in ModalFrameView, when user click on "validation" button in modal
      * Trigger corresponding methods depending on the current modal mode set when invoking switchModalVisibility.
      * See MODALMODE enum for more information
      *
@@ -100,6 +115,8 @@ export const useModalStore = defineStore("userModalStore", {
         case MODALMODE.userDelete:
           await this.handleUserDelete();
           return;
+        case MODALMODE.captainDelete:
+          await this.handleCaptainDelete();
       }
     },
     /**
@@ -113,8 +130,13 @@ export const useModalStore = defineStore("userModalStore", {
       const teamStore = useTeamStore();
       const teammateStore = useTeammateStore();
 
-      const createdTeam = await teamStore.createTeam(this.getTeamNameInputValue, this.getTeamDescriptionInputValue);
+      const createdTeam = await teamStore.createTeam(
+        this.getTeamNameInputValue,
+        this.getTeamDescriptionInputValue,
+      );
       teamStore.setTeamSelected(createdTeam);
+
+      //reset teammate list to display an empty list for newly created team
       teammateStore.resetTeamatesList();
       await this.refreshTeamList();
 
@@ -133,7 +155,7 @@ export const useModalStore = defineStore("userModalStore", {
         teamStore.getTeamSelected.captainsId[0],
         this.getTeamNameInputValue,
         null,
-        this.getTeamDescriptionInputValue
+        this.getTeamDescriptionInputValue,
       );
 
       teamStore.setTeamSelected(editedTeam);
@@ -148,9 +170,14 @@ export const useModalStore = defineStore("userModalStore", {
      */
     async handleTeamDelete(): Promise<TeamType> {
       const teamStore = useTeamStore();
+      const teammateStore = useTeammateStore();
 
       const deletedTeam = await teamStore.deleteTeam(teamStore.getTeamSelected.id);
       await this.refreshTeamList();
+
+      // reset deleted team informations and teammate list
+      teammateStore.resetTeamatesList();
+      this.setTeammateNameToDelete("");
 
       return deletedTeam;
     },
@@ -161,19 +188,40 @@ export const useModalStore = defineStore("userModalStore", {
     async handleUserDelete() {
       const teammateStore = useTeammateStore();
       await teammateStore.deleteTeammateFromTeam(teammateStore.getIdOfTeammateToDelete);
+
+      // reset deleted team informations
+      this.setTeammateNameToDelete("");
+      teammateStore.setIdOfTeammateToDelete(0);
     },
 
     /**
      * Refetch the team list of a given captain.
      * Get all the captainsID from the roleStore the current connected user have.
      *
-     * Invoked in modalStore createNewteam / editTeamName / deleteTeam
+     * Invoked in modalStore handleTeamCreate / handleTeamEdit / handleTeamDelete
      */
     async refreshTeamList() {
       const teamStore = useTeamStore();
       const roleStore = useRoleStore();
-
       await teamStore.setTeamListOfACaptain(roleStore.getCaptainsId);
     },
-  }, //actions end
+
+    /**
+     * Delete a captain.(disabled)
+     */
+    async handleCaptainDelete() {
+      const captainStore = useCaptainStore();
+      await captainStore.deleteCaptain(captainStore.getCaptainToDelete);
+    },
+    /**
+     * Refresh the captain list.
+     */
+    async refreshCaptainList() {
+      const captainStore = useCaptainStore();
+      const roleStore = useRoleStore();
+      await captainStore.setAllCaptainsByCustomerId(roleStore.getCustomerId);
+    },
+  },
+
+  //actions end
 });

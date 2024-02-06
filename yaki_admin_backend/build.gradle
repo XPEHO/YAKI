@@ -32,7 +32,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web:3.1.0'
     implementation 'org.postgresql:postgresql:42.6.0'
     implementation 'org.springframework.boot:spring-boot-starter-validation:3.1.5'
-    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0'
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
     implementation 'org.springframework.boot:spring-boot-starter-security:3.0.4'
     implementation 'org.springframework.boot:spring-boot-starter-web:3.1.0'
     implementation 'io.jsonwebtoken:jjwt-api:0.12.3'
@@ -40,12 +40,12 @@ dependencies {
     implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
     implementation group: 'com.mailjet', name: 'mailjet-client', version: '4.2.0'
     implementation 'io.micrometer:micrometer-registry-prometheus'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test:3.1.0'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:3.2.0'
     testImplementation 'org.springframework.security:spring-security-test:6.1.1'
     implementation 'io.jsonwebtoken:jjwt-api:0.12.3'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.3'
-    testImplementation 'com.h2database:h2:2.1.214'
+    testImplementation 'com.h2database:h2:2.2.224'
     implementation group: 'org.apache.commons', name: 'commons-text', version: '1.10.0'
     // ad jacoco for sonar scan coverage
     testImplementation 'org.jacoco:org.jacoco.core:0.8.10'
@@ -66,7 +66,7 @@ dependencies {
     jacoco {
         toolVersion = "0.8.8"
     }
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.10'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.21'
 }
 
 tasks.named('test') {

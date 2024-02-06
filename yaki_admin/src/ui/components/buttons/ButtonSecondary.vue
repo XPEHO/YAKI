@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {BUTTONCOLORS} from "@/constants/componentsSettings";
+import { BUTTONCOLORS } from "@/constants/componentsSettings.enum";
 
 const props = defineProps({
   text: {

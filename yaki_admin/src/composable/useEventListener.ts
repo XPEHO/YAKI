@@ -1,4 +1,4 @@
-import {onMounted, onUnmounted} from "vue";
+import { onMounted, onUnmounted } from "vue";
 
 type EventType = keyof HTMLElementEventMap;
 type EventListener = (evt: HTMLElementEventMap[EventType]) => void;
@@ -11,7 +11,11 @@ type EventListener = (evt: HTMLElementEventMap[EventType]) => void;
  * @param event - The event type to listen to. Key of the HTMLElementEventMap.
  * @param callback - The event listener function called when the event activated.
  */
-export function useEventTargetListener(target: EventTarget, event: EventType, callback: EventListener) {
+export function useEventTargetListener(
+  target: EventTarget,
+  event: EventType,
+  callback: EventListener,
+) {
   onMounted(() => {
     target.addEventListener(event, callback);
   });

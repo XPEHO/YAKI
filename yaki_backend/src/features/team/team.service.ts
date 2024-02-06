@@ -1,4 +1,5 @@
 import {TeamRepository} from "./team.repository";
+import {TeamLogoDto} from "./teamLogo.dto";
 
 export class TeamService {
   teamRepository: TeamRepository;
@@ -18,6 +19,39 @@ export class TeamService {
       return team;
     } else {
       throw new TypeError("No team with this team id exists");
+    }
+  };
+
+  /**
+   * Team service method, Retrive a list of team logo given a list of team id.
+   * If a team id does not have a logo, it will not be returned.
+   * @param teamIds list of team id
+   * @returns promise of list of TeamLogoDto
+   */
+  getTeamsLogoByTeamsId = async (teamIds: number[]): Promise<TeamLogoDto[]> => {
+    try {
+      const teamsLogo = await this.teamRepository.getTeamsLogoByTeamsId(teamIds);
+
+      return teamsLogo;
+    } catch (error: any) {
+      console.error("Error get team logo : ", error.message);
+      throw error;
+    }
+  };
+
+  /**
+   * Team service method, Retrive a list of team logo given a User id.
+   * If a team id does not have a logo, it will not be returned.
+   * @param teamId
+   * @returns promise of list of TeamLogoDto
+   */
+  getTeamsLogoByUserId = async (teamId: number): Promise<TeamLogoDto[]> => {
+    try {
+      const teamLogo = await this.teamRepository.getTeamsLogoByUserId(teamId);
+      return teamLogo;
+    } catch (error: any) {
+      console.error("Error get team logo : ", error.message);
+      throw error;
     }
   };
 

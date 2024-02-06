@@ -126,7 +126,6 @@
   "somethingWentWrong": "Certaines informations se sont perdues en chemin",
   "retry": "réessayer",
 
-  
   "upload": "Envoyer",
   "takePicture": "prendre une photo",
   "imgGallery": "image à partir de ma gallerie",
@@ -134,5 +133,14 @@
   "feedback": "Besoin d'aide ?",
   "feedbackMessage": "N'hésitez pas à nous contacter à l'adresse suivante : yaki@xpeho.fr",
 
-  "filter": "Filtrer"
+  "filter": "Filtrer",
+
+  "absenceTitle1": "Déclarer une",
+  "absenceTitle2": "absence",
+  "absenceDatePickerInitialLabel": "Choisir une date",
+  "absenceStart": "Début",
+  "absenceEnd": "Fin",
+  "absenceError": "* Veuillez renseigner une date de début et de fin, \n Votre date de début doit être antérieur ou identique à votre date de fin",
+
+  "unavailable": "Non disponible"
 }

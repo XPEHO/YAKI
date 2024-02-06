@@ -1,13 +1,16 @@
 <script setup lang="ts">
 import buttonPrimary from "@/ui/components/buttons/ButtonPrimary.vue";
-import buttonSecondary from "@/ui/components/buttons/ButtonSecondary.vue";
 import inputText from "@/ui/components/inputs/InputText.vue";
 import inputPassword from "@/ui/components/inputs/InputPassword.vue";
-import {useAuthStore} from "@/stores/authStore";
-import {reactive} from "vue";
+import { useAuthStore } from "@/stores/authStore";
+import { reactive, ref, watch } from "vue";
 
 const usernamePlaceholder = "Login";
 const passwordPlaceholder = "Password";
+
+const isLloggingLoading = ref(false);
+const isLoggingError = ref(false);
+
 const form = reactive({
   username: "",
   password: "",
@@ -21,37 +24,64 @@ const onInputPassword = (value: string) => {
   form.password = value;
 };
 
-const login = () => {
+const login = async () => {
   const authStore = useAuthStore();
-  if (form.username !== "" && form.password !== "") {
-    return authStore.login(form.username, form.password).catch((error) => console.warn(error));
-  }
-  return;
+  if (form.username === "" || form.password === "") return;
+
+  isLoggingError.value = false;
+  isLloggingLoading.value = true;
+
+  await authStore.login(form.username, form.password).then((res) => {
+    if (!res) {
+      isLoggingError.value = true;
+    }
+  });
 };
 
-const forgottenPassword = () => {};
+watch(isLoggingError, (newValue) => {
+  if (newValue) {
+    isLloggingLoading.value = false;
+  }
+});
+
+const openYakiWeb = () => {
+  window.open("https://yaki.xpeho.fr/ui/#", "_blank");
+};
 </script>
 
 <template>
-  <section class="login_form_container">
-    <div>
-      <p class="login-title">Administration</p>
+  <section class="logging_form_container">
+    <div :class="['logging_from_wrapper', isLoggingError ? 'logging_error' : '']">
+      <p class="text_default__title_header">Administration</p>
       <form>
         <input-text
           :labelText="usernamePlaceholder"
-          @emittedInput="onInputLogin" />
+          @emittedInput="onInputLogin"
+        />
 
         <input-password
           :labelText="passwordPlaceholder"
-          @emittedInput="onInputPassword" />
+          @emittedInput="onInputPassword"
+        />
 
-        <button-primary
-          text="SIGN IN"
-          @click.prevent="login"
-          type="submit" />
-        <buttonSecondary
-          text="FORGOTTEN PASSWORD?"
-          @click.prevent="forgottenPassword" />
+        <div class="loading_relative_container">
+          <button-primary
+            text="SIGN IN"
+            @click.prevent="login"
+            type="submit"
+            :is-disabled="isLloggingLoading"
+          />
+          <div
+            v-show="isLloggingLoading"
+            :class="['loader', isLloggingLoading ? 'loader-animation' : '']"
+          ></div>
+        </div>
+
+        <p class="text_default__Team_description info_text">
+          * Your logging informations also are utilized on YAKI mobile. <br />
+          If you've forgotten your password, you may use the mobile application or his
+          <span @click.prevent="openYakiWeb">web version</span>.
+        </p>
       </form>
     </div>
   </section>
@@ -59,7 +89,7 @@ const forgottenPassword = () => {};
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-.login_form_container {
+.logging_form_container {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -69,25 +99,56 @@ const forgottenPassword = () => {};
   width: 100%;
   height: 100%;
 
-  div {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-self: center;
-
-    width: min(90%, 450px);
-  }
-
   form {
     display: flex;
     flex-direction: column;
     gap: 1.4rem;
   }
 }
-.login-title {
-  font-size: 2rem;
-  font-weight: bold;
-  padding-inline-start: 2rem;
-  padding-block-end: 4rem;
+
+.logging_from_wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-self: center;
+
+  width: min(90%, 450px);
+
+  > p {
+    padding-inline-start: 2rem;
+    padding-block-end: 4rem;
+  }
+}
+
+.logging_error {
+  position: relative;
+
+  &:after {
+    position: absolute;
+    bottom: -15%;
+    left: 10%;
+
+    text-align: center;
+
+    content: "Something went wrong. Please try again.";
+
+    color: red;
+    font-family: $font-sf-compact;
+    font-size: 1.2rem;
+  }
+}
+
+.info_text {
+  font-family: $font-sf-compact;
+  font-size: 0.85rem;
+  font-weight: 400;
+  letter-spacing: 0.4px;
+  padding-inline-start: 1.2rem;
+
+  span {
+    font-weight: 600;
+    color: $green-xpeho-color;
+    cursor: pointer;
+  }
 }
 </style>

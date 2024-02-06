@@ -39,6 +39,30 @@ public class CustomerModel {
     @Column(name = "customer_entity_log_id")
     private int entityLogId;
 
+    public CustomerModel() {
+
+    }
+
+    public CustomerModel(int id, OwnerModel owner, String name, int ownerId, List<UserModel> users, int locationId, int entityLogId) {
+        this.id = id;
+        this.owner = owner;
+        this.name = name;
+        this.ownerId = ownerId;
+        this.users = users;
+        this.locationId = locationId;
+        this.actif = true;
+        this.entityLogId = entityLogId;
+    }
+
+    public CustomerModel(String customerName, int ownerId, int locationId, int entityLogId) {
+        this.ownerId = ownerId;
+        this.name = customerName;
+        this.locationId = locationId;
+        this.users = new ArrayList<>();
+        this.actif = true;
+        this.entityLogId = entityLogId;
+    }
+
     public int getEntityLogId() {
         return entityLogId;
     }
@@ -53,30 +77,6 @@ public class CustomerModel {
 
     public void setActif(boolean actif) {
         this.actif = actif;
-    }
-
-    public CustomerModel() {
-
-    }
-
-    public CustomerModel(int id, OwnerModel owner, String name, int ownerId, List<UserModel> users, int locationId,int entityLogId) {
-        this.id = id;
-        this.owner = owner;
-        this.name = name;
-        this.ownerId = ownerId;
-        this.users = users;
-        this.locationId = locationId;
-        this.actif = true;
-        this.entityLogId = entityLogId;
-    }
-
-    public CustomerModel(String customerName, int ownerId, int locationId,int entityLogId) {
-        this.ownerId = ownerId;
-        this.name = customerName;
-        this.locationId = locationId;
-        this.users = new ArrayList<>();
-        this.actif = true;
-        this.entityLogId = entityLogId;
     }
 
     public void addUsers(List<UserModel> users) {
@@ -130,4 +130,5 @@ public class CustomerModel {
     public void setUsers(List<UserModel> users) {
         this.users = users;
     }
+
 }

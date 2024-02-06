@@ -8,6 +8,7 @@ import 'package:yaki/presentation/features/shared/feedback_user.dart';
 import 'package:yaki/presentation/state/providers/avatar_provider.dart';
 import 'package:yaki/presentation/state/providers/declaration_provider.dart';
 import 'package:yaki/presentation/state/providers/login_provider.dart';
+import 'package:yaki/presentation/state/providers/team_provider.dart';
 import 'package:yaki/presentation/styles/color.dart';
 import 'package:yaki/presentation/styles/text_style.dart';
 import 'package:yaki_ui/yaki_ui.dart';
@@ -47,6 +48,39 @@ class _AuthenticationState extends ConsumerState<Authentication> {
     super.initState();
   }
 
+  Future<void> clearTokenAndSetLoginDetails(
+    String login,
+    String password,
+  ) async {
+    await SharedPref.deleteToken();
+    await SharedPref.setLoginDetails(login, password);
+  }
+
+  /// Redirecting the user to different pages based on their latest declaration status.
+  /// It uses the `declarationProvider` to get the latest declaration status of the user.
+  ///
+  /// If the latest declaration status is `declared`, the user is redirected to the Teams Declaration Summary page
+  /// If the latest declaration status is `notDeclared`, the user is redirected to the Team Selection page.
+  /// If the latest declaration status is neither `declared` nor `notDeclared`, Triggers a fetch for the latest declaration
+  Future<void> handleRedirectionBasedOnDeclarationStatus(
+    WidgetRef ref,
+    Function goToTeamsDeclarationSummary,
+    Function goToTeamSelectionPage,
+  ) async {
+    await ref.read(declarationProvider.notifier).getLatestDeclaration();
+    final declarationStatus =
+        ref.read(declarationProvider).latestDeclarationStatus;
+
+    // if has a declaration at loging, fetch the team list for comparison purposes (unaviable check)
+    if (declarationStatus == LatestDeclarationStatus.declared) {
+      await ref.read(teamProvider.notifier).getUserTeamList();
+    }
+
+    declarationStatus == LatestDeclarationStatus.declared
+        ? goToTeamsDeclarationSummary()
+        : goToTeamSelectionPage();
+  }
+
   void onPressAuthent({
     required WidgetRef ref,
     required String login,
@@ -59,28 +93,28 @@ class _AuthenticationState extends ConsumerState<Authentication> {
     setLoading(true); // show the loader
     final String lowercaseLogin = login.toLowerCase().trim();
     final String trimPassword = password.trim();
-    await SharedPref.deleteToken();
-    await SharedPref.setLoginDetails(lowercaseLogin, trimPassword);
+
+    clearTokenAndSetLoginDetails(lowercaseLogin, trimPassword);
 
     final bool authenticationResult = await ref
         .read(loginRepositoryProvider)
         .userAuthentication(lowercaseLogin, trimPassword);
+
     if (authenticationResult && await SharedPref.isTokenPresent()) {
       await ref.read(avatarProvider.notifier).getAvatar();
+
       final bool isCaptain = ref.read(loginRepositoryProvider).isCaptain();
       final bool isTeammate = ref.read(loginRepositoryProvider).isTeammate();
+
       if (isTeammate || isCaptain) {
-        final declaration = ref.watch(declarationProvider);
-        if (declaration.latestDeclarationStatus ==
-            LatestDeclarationStatus.declared) {
-          goToTeamsDeclarationSummary();
-        } else if (declaration.latestDeclarationStatus ==
-            LatestDeclarationStatus.notDeclared) {
-          goToTeamSelectionPage();
-        } else {
-          ref.read(declarationProvider.notifier).getLatestDeclaration();
-        }
+        // if user is a captain or a teammate
+        handleRedirectionBasedOnDeclarationStatus(
+          ref,
+          goToTeamsDeclarationSummary,
+          goToTeamSelectionPage,
+        );
       } else {
+        // if not a user with a role, go to information page
         goToUserDefaultRedirection();
       }
     } else {

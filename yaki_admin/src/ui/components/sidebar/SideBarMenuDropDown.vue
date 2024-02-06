@@ -1,35 +1,26 @@
 <script setup lang="ts">
 import sideBarMenuDropDownElement from "./SideBarMenuDropDownElement.vue";
-import groupIcon from "@/assets/images/group-regular-24.png";
-import arrowIcon from "@/assets/images/chevron-down-regular-24.png";
-import addIcon from "@/assets/images/plus_icon.png";
+import groupIcon from "@/assets/icons_svg/Teams.svg";
+import arrowIcon from "@/assets/icons_svg/Chevron-down.svg";
+import addIcon from "@/assets/icons_svg/AddPlus.svg";
 
 import router from "@/router/router";
-import {onBeforeMount} from "vue";
-import {useTeamStore} from "@/stores/teamStore";
-import {useModalStore} from "@/stores/modalStore";
-import {MODALMODE} from "@/constants/modalMode";
-import {TeamType} from "@/models/team.type";
+import { useTeamStore } from "@/stores/teamStore";
+import { useModalStore } from "@/stores/modalStore";
+import { MODALMODE } from "@/constants/modalMode.enum";
+import { TeamType } from "@/models/team.type";
 
-const teamStore = useTeamStore();
 const modalStore = useModalStore();
-
-//before mount, fetch teams, select first team from the list
-onBeforeMount(async () => {
-  // automaticaly select first team right after team fetch on component mount ( right after the first connexion)
-  if (teamStore.getTeamList && teamStore.getTeamList.length > 0) {
-    teamStore.setTeamInfoAndFetchTeammates(teamStore.getTeamList[0]);
-  }
-});
+const teamStore = useTeamStore();
 
 // add team button press to open modal
 const onClickAddTeam = () => {
   modalStore.switchModalVisibility(true, MODALMODE.teamCreate);
 };
 
-const onClickSelectTeam = (team: TeamType) => {
-  teamStore.setTeamInfoAndFetchTeammates(team);
-  router.push({path: "/dashboard/manage-team"});
+const onClickSelectTeam = async (team: TeamType) => {
+  await teamStore.setTeamInfoAndFetchTeammates(team);
+  router.push({ path: "/dashboard/manage-team" });
 };
 
 const props = defineProps({
@@ -45,44 +36,62 @@ const props = defineProps({
 </script>
 
 <template>
-  <section class="drop-down__container">
-    <div class="text-icon__container text-icon__container-height--padding text_icon--icon drop-down--sidebar-color">
+  <section :class="['drop-down__container']">
+    <div
+      :class="[
+        'text-icon__container',
+        'text-icon__container-height--padding',
+        'text_icon--icon',
+        'drop-down--sidebar-color',
+      ]"
+    >
       <figure>
         <img
           :src="groupIcon"
-          alt="group icon" />
+          alt="group icon"
+        />
       </figure>
       <p class="text-icon--text">{{ props.innerText }}</p>
     </div>
+
     <input
       class="drop-down__checkbox"
       type="checkbox"
-      id="sidebar-dropdown" />
-    <figure class="drop-down__icon">
+      id="sidebar-dropdown"
+    />
+
+    <figure class="drop-down__icon image-filter">
       <img
         :src="arrowIcon"
-        alt="drop down menu arrow" />
+        alt="drop down menu arrow"
+      />
     </figure>
+
     <section class="drop-down__menu">
       <button
         @click.prevent="onClickAddTeam"
-        class="drop-down__create-team">
+        class="drop-down__create-team"
+      >
         <figure>
           <img
             :src="addIcon"
-            alt="Add icon" />
+            alt="Add icon"
+          />
         </figure>
         <p>Create team</p>
       </button>
+
       <div
         v-if="teamStore.getTeamList && teamStore.getTeamList.length > 0"
-        class="gap_add">
+        class="gap_add"
+      >
         <side-bar-menu-drop-down-element
           v-for="team in teamStore.getTeamList"
           :key="team.id"
           v-bind:id="team.id"
           v-bind:teamName="team.teamName"
-          @click.prevent="() => onClickSelectTeam(team)" />
+          @click.prevent="() => onClickSelectTeam(team)"
+        />
       </div>
       <div v-else>
         <p class="no-teams unselectabla-text">No team available</p>
@@ -98,6 +107,7 @@ const props = defineProps({
   gap: 5px;
 }
 .no-teams {
+  font-family: "Rubik";
   padding-inline-start: 16px;
   padding-block: 8px;
   color: rgb(238, 237, 237);
@@ -126,18 +136,27 @@ const props = defineProps({
   }
 
   p {
+    font-family: "Rubik";
+    font-weight: 350;
+    font-variant: normal;
+    letter-spacing: 0.2px;
+
+    color: black;
     font-size: 17px;
-    font-weight: 400;
   }
 
   &:hover {
     background-color: #ff9169;
     cursor: pointer;
-    color: rgb(238, 237, 237);
+
     figure {
       img {
         filter: invert(0.9);
       }
+    }
+
+    p {
+      color: rgb(238, 237, 237);
     }
   }
 

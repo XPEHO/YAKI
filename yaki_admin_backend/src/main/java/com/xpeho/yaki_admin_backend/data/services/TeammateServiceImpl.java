@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -31,13 +32,16 @@ public class TeammateServiceImpl implements TeammateService {
 
         List<UserEntityWithID> userEntityWithIDList = new ArrayList<>();
         for (Object[] result : results) {
+
             int id = (int) result[0];
             int teammateId = (Integer) result[1];
             String lastname = result[2].toString();
             String firstname = result[3].toString();
             String email = result[4].toString();
+            String avatarReference = Objects.toString(result[5], "");
+            byte[] avatarBlob = result[6] instanceof byte[] ? (byte[]) result[6] : null;
 
-            UserEntityWithID userEntityWithID = new UserEntityWithID(id, null,teammateId, lastname, firstname, email);
+            UserEntityWithID userEntityWithID = new UserEntityWithID(id, null,teammateId, lastname, firstname, email, avatarReference, avatarBlob);
             userEntityWithIDList.add(userEntityWithID);
         }
         return userEntityWithIDList;

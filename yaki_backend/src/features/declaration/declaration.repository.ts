@@ -2,6 +2,7 @@ import {Client} from "pg";
 import {DeclarationDtoIn} from "./declaration.dtoIn";
 import YakiUtils from "../../utils/yakiUtils";
 import {DeclarationDto} from "./declaration.dto";
+import {DataError} from "../../errors/dataOrDataBaseError";
 
 export class DeclarationRepository {
   /**
@@ -23,7 +24,8 @@ export class DeclarationRepository {
       port: Number(process.env.DB_PORT),
     });
     client.connect();
-    const declarationValuesList: Array<string> = YakiUtils.objectsListToValuesList(declarationList);
+    const declarationValuesList: Array<string> =
+      YakiUtils.objectsListToValuesList(declarationList);
     const query = `INSERT INTO declaration 
     (
       declaration_user_id, 
@@ -74,7 +76,8 @@ export class DeclarationRepository {
       port: Number(process.env.DB_PORT),
     });
     client.connect();
-    const declarationsValuesList: Array<string> = YakiUtils.objectsListToValuesList(declarationList);
+    const declarationsValuesList: Array<string> =
+      YakiUtils.objectsListToValuesList(declarationList);
 
     try {
       const result = await client.query(
@@ -174,7 +177,7 @@ export class DeclarationRepository {
     }
   }
 
-  async unflagLatestDeclaration(userId: number): Promise<number> {
+  async unflagLatestDeclaration(userId: number): Promise<void> {
     const client = new Client({
       host: process.env.DB_HOST,
       user: process.env.DB_USER,
@@ -185,17 +188,15 @@ export class DeclarationRepository {
     client.connect();
 
     try {
-      const query = await client.query(
+      await client.query(
         `UPDATE public.declaration d
          SET declaration_is_latest = false
          WHERE declaration_is_latest = true AND declaration_user_id = $1
          RETURNING *`,
         [userId]
       );
-
-      const declarationChangedCount: number = query.rowCount;
-
-      return declarationChangedCount;
+    } catch (error: any) {
+      throw new DataError("Error during unflag preview declaration: " + error.message);
     } finally {
       client.end();
     }

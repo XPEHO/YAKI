@@ -90,8 +90,8 @@
   "teamSelectionPageTitle2": "for today ?",
   "teamSelectionPageHint": "Select 1 or 2 activities",
 
-  "whenDoYouWork ": "When are you working",
-  "whereDoYouWork ": "Where are you working",
+  "whenDoYouWork": "When are you working",
+  "whereDoYouWork": "Where are you working",
   "whenAreYouAbsent": "When are you absent ?",
   "thisMorning": " this ",
   "thisAfternoon": " this ",
@@ -124,7 +124,6 @@
   "somethingWentWrong": "Some data are lost along the way",
   "retry": "Retry",
 
-  
   "upload": "Upload",
   "takePicture": "Take a picture",
   "imgGallery": "Gallery",
@@ -132,5 +131,14 @@
   "feedback": "Help center ?",
   "feedbackMessage": "Do you have a question ? send us a mail at : yaki@xpeho.fr",
 
-  "filter": "Filter"
+  "filter": "Filter",
+
+  "absenceTitle1": "Declare an",
+  "absenceTitle2": "absence",
+  "absenceDatePickerInitialLabel": "Choose a date",
+  "absenceStart": "Start",
+  "absenceEnd": "End",
+  "absenceError": "* Please select a start date and an end date, \n The start date must be before or the same as the end date",
+
+  "unavailable": "Unavailable"
 }

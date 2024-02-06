@@ -1,8 +1,8 @@
-import type {TeammateTypeOut, TeammateTypeIn} from "@/models/teammate.type";
-import {environmentVar} from "@/envPlaceholder";
-import {authHeader} from "@/utils/authUtils";
-import {handleResponse} from "@/utils/responseUtils";
-import {UserWithIdType} from "@/models/userWithId.type";
+import type { TeammateTypeOut, TeammateTypeIn } from "@/models/teammate.type";
+import { environmentVar } from "@/envPlaceholder";
+import { authHeader } from "@/utils/authUtils";
+import { handleResponse } from "@/utils/responseUtils";
+import { UserWithIdType } from "@/models/userWithId.type";
 
 const URL: string = environmentVar.baseURL;
 

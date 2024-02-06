@@ -4,11 +4,14 @@ import { teammateService } from "@/services/teammate.service";
 import { teamService } from "@/services/team.service";
 import { useSelectedRoleStore } from "@/stores/selectedRole";
 import { useTeammateStore } from "@/stores/teammateStore";
+import { teamLogoService } from "@/services/teamLogo.service";
+import { TeamLogoType } from "@/models/TeamLogo.type";
 
 interface State {
   teamList: TeamType[];
   isTeamListSetOnLoggin: boolean;
   teamSelected: TeamType;
+  teamSelectedLogo: TeamLogoType;
   teamDeleted: TeamType;
   captainIdToBeAssign: number | null;
 }
@@ -20,6 +23,8 @@ export const useTeamStore = defineStore("teamStore", {
     // This way the router will not trigger fetch everytime the user navigate to the captain page.
     isTeamListSetOnLoggin: false as boolean,
     teamSelected: {} as TeamType,
+    teamSelectedLogo: { teamId: 0, teamLogoBlob: null } as TeamLogoType,
+
     teamDeleted: {} as TeamType,
 
     // DEPRECIATED WITH BASTI CHANGE ? ------------------------------------
@@ -30,6 +35,7 @@ export const useTeamStore = defineStore("teamStore", {
     getTeamList: (state: State) => state.teamList,
     getIsTeamListSetOnLoggin: (state: State) => state.isTeamListSetOnLoggin,
     getTeamSelected: (state: State) => state.teamSelected,
+    getTeamSelectedLogo: (state: State) => state.teamSelectedLogo,
     getTeamDeleted: (state: State) => state.teamDeleted,
 
     // DEPRECIATED WITH BASTI CHANGE ? ------------------------------------
@@ -52,16 +58,23 @@ export const useTeamStore = defineStore("teamStore", {
       return false;
     },
 
+    // Move this methide to the teammateStore ?
     /**
      * save team info in the store (teamSelected)
      * And trigger the team's teammates fetch.
      * @param team TeamType
      */
-    setTeamInfoAndFetchTeammates(team: TeamType): void {
+    async setTeamInfoAndFetchTeammates(team: TeamType): Promise<void> {
       const teammateStore = useTeammateStore();
-      this.setTeamSelected(team);
+
       // fetch team teammates
-      teammateStore.setListOfTeammatesWithinTeam(team.id);
+      await teammateStore.setListOfTeammatesWithinTeam(team.id);
+
+      // if same team is selected, no need to set the team info again, and fetch the logo again
+      if (this.getTeamSelected.id === team.id) return;
+
+      this.setTeamSelected(team);
+      this.getTeamLogo(team.id);
     },
 
     /**
@@ -71,7 +84,7 @@ export const useTeamStore = defineStore("teamStore", {
     async setTeamListOfACaptain(captainsId: number[]) {
       this.teamList = [];
       const promises: Promise<TeamType[]>[] = captainsId.map((captainId) =>
-        teamService.getAllTeamsWithinCaptain(captainId)
+        teamService.getAllTeamsWithinCaptain(captainId),
       );
       const teams = await Promise.all(promises);
       this.teamList = [...teams.flat()];
@@ -96,21 +109,13 @@ export const useTeamStore = defineStore("teamStore", {
      * @param teamDescription description of the team
      * @returns created team: TeamType
      */
-    async createTeam(
-      teamName: string,
-      teamDescription: string
-    ): Promise<TeamType> {
+    async createTeam(teamName: string, teamDescription: string): Promise<TeamType> {
       const selectedRoleStore = useSelectedRoleStore();
       const customerId = selectedRoleStore.getCustomerIdSelected;
       const captainId = selectedRoleStore.getCaptainIdSelected;
 
       //the back handle if the captainId is null or not
-      return await teamService.createTeam(
-        captainId,
-        teamName,
-        customerId,
-        teamDescription
-      );
+      return await teamService.createTeam(captainId, teamName, customerId, teamDescription);
     },
 
     /**
@@ -128,15 +133,9 @@ export const useTeamStore = defineStore("teamStore", {
       cptId: number | null,
       teamName: string | null,
       customerId: number | null,
-      teamDescription: string | null
+      teamDescription: string | null,
     ): Promise<TeamType> {
-      return await teamService.updateTeam(
-        teamID,
-        cptId,
-        teamName,
-        customerId,
-        teamDescription
-      );
+      return await teamService.updateTeam(teamID, cptId, teamName, customerId, teamDescription);
     },
 
     /**
@@ -145,10 +144,54 @@ export const useTeamStore = defineStore("teamStore", {
      */
     async deleteTeam(teamId: number): Promise<TeamType> {
       const deletedTeam = await teamService.deleteTeam(teamId);
+
+      // reset store values after team deletion
       this.setTeamDeleted(deletedTeam);
+      this.setTeamSelected({} as TeamType);
+
       return this.getTeamDeleted;
     },
 
+    /**
+     * Get the team logo of a team given its id
+     * @param teamId id of the team
+     */
+    async getTeamLogo(teamId: number): Promise<void> {
+      const teamLogo: TeamLogoType = await teamLogoService.getTeamLogo(teamId);
+      this.teamSelectedLogo = teamLogo;
+    },
+
+    /**
+     * Fetch the team logo of a team
+     * @param teamId id of the team
+     * @returns TeamLogoType
+     * @throws Error if the team logo is not found
+     */
+    async createOrUpdateTeamLogo(logo: File): Promise<void> {
+      const teamId = this.getTeamSelected.id;
+      const savedTeamLogo: TeamLogoType = await teamLogoService.createOrUpdateTeamLogo(
+        teamId,
+        logo,
+      );
+
+      if (savedTeamLogo.teamLogoBlob === null) return;
+
+      this.teamSelectedLogo = savedTeamLogo;
+    },
+
+    async deleteTeamLogo(): Promise<void> {
+      teamLogoService.deleteTeamLogo(this.getTeamSelected.id);
+      this.resetTeamStoreSelectedLogo();
+    },
+
+    /**
+     * Reset the teamSelectedLogo to its initial value
+     */
+    resetTeamStoreSelectedLogo(): void {
+      this.teamSelectedLogo = { teamId: 0, teamLogoBlob: null };
+    },
+
+    // ----------------------------------------------------------------------------------------------
     // DEPRECIATED WITH BASTI CHANGE ? ---------------------------------------------------------------
 
     setCaptainIdToBeAssign(captainId: number | null) {
@@ -158,17 +201,12 @@ export const useTeamStore = defineStore("teamStore", {
     async createTeamOptionalAssignCaptain(
       teamName: string,
       captainId: number | null,
-      teamDescription: string
+      teamDescription: string,
     ): Promise<void> {
       const selectedRoleStore = useSelectedRoleStore();
       const customerId = selectedRoleStore.getCustomerIdSelected;
 
-      await teamService.createTeam(
-        captainId,
-        teamName,
-        customerId,
-        teamDescription
-      );
+      await teamService.createTeam(captainId, teamName, customerId, teamDescription);
     },
 
     /**
@@ -179,7 +217,7 @@ export const useTeamStore = defineStore("teamStore", {
       const selectedRoleStore = useSelectedRoleStore();
 
       this.teamList = await teamService.getAllTeamsByCustomerId(
-        selectedRoleStore.customerIdSelected
+        selectedRoleStore.customerIdSelected,
       );
     },
   },
