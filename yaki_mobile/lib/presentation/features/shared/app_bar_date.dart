@@ -9,7 +9,7 @@ import 'package:yaki/presentation/styles/text_style.dart';
 class AppBarWithDate extends ConsumerWidget implements PreferredSizeWidget {
   final List<Widget>? actions;
 
-  const AppBarWithDate({Key? key, this.actions}) : super(key: key);
+  const AppBarWithDate({super.key, this.actions});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

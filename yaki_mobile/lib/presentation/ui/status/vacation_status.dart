@@ -17,7 +17,7 @@ void _routeHandling(BuildContext context, WidgetRef ref) {
 void onAvatarIconPress() {}
 
 class VacationStatus extends ConsumerWidget {
-  const VacationStatus({Key? key}) : super(key: key);
+  const VacationStatus({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
