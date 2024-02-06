@@ -59,8 +59,17 @@ export function userFilePicker() {
     const file = target.files[0];
     fileSelected.value = file;
 
+    // Check if the file is an image or a gif
+    if (!file.type.startsWith("image/")) {
+      // Handle non-image file...
+      console.error("File is not an image");
+      return;
+    }
+
     if (file.size > fileSizeLimit) {
       isFileSizeTooBig.value = true;
+      // reset the fileSelected.value to null to prevent the logo creation
+      fileSelected.value = null;
       return;
     }
 
