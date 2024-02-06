@@ -53,19 +53,22 @@ const onAccept = async () => {
         @on-accept="onAccept"
         @on-cancel="onCancel"
         v-if="
-          modalStore.getMode === MODALMODE.teamCreate ||
-          modalStore.getMode === MODALMODE.teamEdit
-        " />
+          modalStore.getMode === MODALMODE.teamCreate || modalStore.getMode === MODALMODE.teamEdit
+        "
+      />
       <modal-delete
         @on-accept="onAccept"
         @on-cancel="onCancel"
         v-else-if="
           modalStore.getMode === MODALMODE.teamDelete ||
-          modalStore.getMode === MODALMODE.userDelete
-        " />
+          modalStore.getMode === MODALMODE.userDelete ||
+          modalStore.getMode === MODALMODE.captainDelete
+        "
+      />
       <modal-coming-soon
         @close="closeModal"
-        v-else-if="modalStore.getMode === MODALMODE.comingSoon" />
+        v-else-if="modalStore.getMode === MODALMODE.comingSoon"
+      />
     </dialog>
   </section>
 </template>

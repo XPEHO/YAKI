@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const props = defineProps({
+defineProps({
   labelText: {
     type: String,
     required: true,
@@ -10,7 +10,7 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits<{emittedInput: [value: string]}>();
+const emit = defineEmits<{ emittedInput: [value: string] }>();
 
 const onInputUse = (e: Event) => {
   emit("emittedInput", (e.target as HTMLInputElement).value);
@@ -18,7 +18,9 @@ const onInputUse = (e: Event) => {
 </script>
 
 <template>
-  <section class="input__border-background input__container-flex textarea__container-height-pos input__label-style">
+  <section
+    class="input__border-background input__container-flex textarea__container-height-pos input__label-style"
+  >
     <textarea
       @input="onInputUse"
       :value="inputValue"
@@ -26,7 +28,8 @@ const onInputUse = (e: Event) => {
       placeholder=""
       id="textarea"
       cols="10"
-      rows="5"></textarea>
+      rows="5"
+    ></textarea>
     <label for="textarea">Text area label</label>
   </section>
 </template>

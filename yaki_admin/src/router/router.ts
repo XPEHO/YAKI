@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { useAuthStore } from "@/stores/authStore";
+
 import LoginView from "@/ui/views/LoginView.vue";
 import UserInvitationPageContent from "@/features/invitation/layouts/UserInvitationPageContent.vue";
-
 import PageGeneralLayout from "@/ui/layouts/PageGeneralLayout.vue";
 import TeamManagementView from "@/ui/views/TeamManagementView.vue";
 import TeamStatusNotification from "@/ui/views/TeamStatusNotification.vue";

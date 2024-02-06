@@ -14,7 +14,7 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits<{emittedInput: [value: string]}>();
+const emit = defineEmits<{ emittedInput: [value: string] }>();
 
 const onInputUse = (e: Event) => {
   emit("emittedInput", (e.target as HTMLInputElement).value);
@@ -37,7 +37,8 @@ const classList = [
       class="input__text input__no-border-background"
       type="text"
       placeholder=""
-      id="input-text" />
+      id="input-text"
+    />
     <label for="input-text">{{ props.labelText }}</label>
   </section>
 </template>

@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import UserInfoCard from "@/ui/components/UserInfoCard.vue";
-import {UserWithIdType} from "@/models/userWithId.type";
-import {PropType} from "vue";
-import {useTeamStore} from "@/stores/teamStore";
+import { UserWithIdType } from "@/models/userWithId.type";
+import { PropType } from "vue";
+import { useTeamStore } from "@/stores/teamStore";
 
+//Get the stores
 const teamStore = useTeamStore();
 
-const props = defineProps({
+defineProps({
   userList: {
     type: Object as PropType<UserWithIdType[]>,
     required: true,
@@ -24,15 +25,24 @@ const props = defineProps({
 
 <template>
   <section class="user-list__container">
-    <p v-if="isUsingTeamDescription && teamStore.getTeamSelected.teamDescription">
+    <p
+      v-if="isUsingTeamDescription && teamStore.getTeamSelected.teamDescription"
+      class="text_default__Team_description"
+    >
       {{ teamStore.getTeamSelected.teamDescription }}
     </p>
-    <p v-if="userList && userList.length > 0">Teammates :</p>
+    <p
+      v-if="userList && userList.length > 0"
+      class="text_default__Team_name"
+    >
+      Teammates :
+    </p>
     <section class="user-list__in-team-container">
       <user-info-card
         v-for="user in userList"
         :user="user"
-        :key="user.id" />
+        :key="user.id"
+      />
     </section>
   </section>
 </template>
@@ -43,23 +53,10 @@ $border-radius: 24px;
   padding-block-end: 10rem;
 
   > p:nth-of-type(1) {
-    color: #7d818c;
-    font-family: Rubik;
-    font-size: 15px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 150%;
-
     padding-block-end: 32px;
   }
 
   > p:nth-of-type(2) {
-    color: #7d818c;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 100%;
-
     padding-block-end: 16px;
   }
 

@@ -1,17 +1,39 @@
 <script setup lang="ts">
+import router from "@/router/router";
+import { onMounted, reactive } from "vue";
+import { useRoleStore } from "@/stores/roleStore";
+
 import SideBarMenuLink from "@/ui/components/sidebar/SideBarMenuLink.vue";
 import sideBarMenuDropDown from "@/ui/components/sidebar/SideBarMenuDropDown.vue";
 import LoggedUserCard from "@/ui/components/LoggedUserCard.vue";
 
-import Banner from "@/assets/images/splashscreen.svg";
-import caseIcon from "@/assets/images/briefcase-regular-24.png";
-import hatIcon from "@/assets/images/hard-hat-regular-24.png";
-import statIcon from "@/assets/images/stats.png";
+import Banner from "@/assets/images/YAKISquare.svg";
+import caseIcon from "@/assets/icons_svg/Briefcase.svg";
+import hatIcon from "@/assets/icons_svg/Boat.svg";
+import statIcon from "@/assets/icons_svg/Statistic.svg";
 
-import router from "@/router/router";
+const roleStoreTest = useRoleStore();
 
-const onClickStatistics = () => {
-  router.push("/dashboard/statistics");
+const userCredentials = reactive({
+  owner: false as boolean,
+  customer: false as boolean,
+  captain: false as boolean,
+});
+
+onMounted(() => {
+  userCredentials.customer = roleStoreTest.customersIdWhereIgotRights.length > 0;
+  userCredentials.captain = roleStoreTest.captainsId.length > 0;
+});
+
+const redirection = (path: string) => {
+  if (path.includes("statistics")) {
+    router.push("/dashboard/statistics");
+    return;
+  }
+  if (path.includes("manage-captains") && userCredentials.customer) {
+    router.push("/dashboard/manage-captains");
+    return;
+  }
 };
 </script>
 
@@ -19,16 +41,33 @@ const onClickStatistics = () => {
   <nav class="sidebar__container">
     <div>
       <figure>
-        <img :src="Banner" alt="" />
+        <img
+          :src="Banner"
+          alt=""
+        />
       </figure>
 
-      <side-bar-menu-link :icon="caseIcon" text="Clients" />
-      <side-bar-menu-link :icon="hatIcon" text="Captains" />
-      <side-bar-menu-drop-down inner-text="My teams" icon-path="groupIcon" />
       <side-bar-menu-link
-        @click.prevent="onClickStatistics"
+        v-if="userCredentials.owner"
+        :icon="caseIcon"
+        text="Clients"
+      />
+      <side-bar-menu-link
+        v-if="userCredentials.customer"
+        @click.prevent="redirection('/dashboard/manage-captains')"
+        :icon="hatIcon"
+        text="Captains"
+      />
+      <side-bar-menu-drop-down
+        v-if="userCredentials.captain"
+        inner-text="My teams"
+        icon-path="groupIcon"
+      />
+      <side-bar-menu-link
+        @click.prevent="redirection('/dashboard/statistics')"
         :icon="statIcon"
-        text="Statistics" />
+        text="Statistics"
+      />
     </div>
 
     <div>

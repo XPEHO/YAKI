@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { BUTTONCOLORS } from "@/constants/componentsSettings.enum";
-import deleteIcon from "@/assets/images/x_close.png";
+import deleteIcon from "@/assets/icons_svg/CrossClose.svg";
 import ButtonTextIcon from "@/ui/components/buttons/ButtonTextIcon.vue";
 
 const emit = defineEmits(["close"]);
@@ -18,7 +18,8 @@ const closeModal = async () => {
         :text="'CLOSE'"
         :icon="deleteIcon"
         :color="BUTTONCOLORS.delete"
-        @click.prevent="closeModal" />
+        @click.prevent="closeModal"
+      />
     </div>
   </section>
 </template>

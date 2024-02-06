@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import {BUTTONCOLORS} from "@/constants/componentsSettings.enum";
+import { BUTTONCOLORS } from "@/constants/componentsSettings.enum";
 
-const props = defineProps({
+defineProps({
   text: {
     type: String,
     required: true,
@@ -20,7 +20,12 @@ const props = defineProps({
   },
 });
 
-const classList = ["button--general", "button--sized-content", "button--height-secondary", "button--icon-text-style"];
+const classList = [
+  "button--general",
+  "button--sized-content",
+  "button--height-secondary",
+  "button--icon-text-style",
+];
 </script>
 
 <template>
@@ -28,7 +33,8 @@ const classList = ["button--general", "button--sized-content", "button--height-s
     <figure>
       <img
         :src="icon"
-        alt="arrow-left" />
+        alt="arrow-left"
+      />
     </figure>
     <p class="button--text text-uppercase unselectabla-text">{{ text }}</p>
   </button>

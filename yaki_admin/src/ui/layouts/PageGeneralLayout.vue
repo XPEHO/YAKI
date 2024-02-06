@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import modalFrameView from "@/ui/views/ModalFrameView.vue";
-import {useModalStore} from "@/stores/modalStore";
+import { useModalStore } from "@/stores/modalStore";
 import SideBarContent from "@/ui/views/SideBarContent.vue";
 
 const modalStore = useModalStore();
@@ -33,6 +33,8 @@ const modalStore = useModalStore();
 
   background-color: $background-color-theme-primary;
   overflow: hidden;
+
+  position: relative;
 }
 
 .fade-enter-active,

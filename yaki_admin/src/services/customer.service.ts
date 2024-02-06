@@ -6,17 +6,12 @@ import { environmentVar } from "@/envPlaceholder";
 const URL: string = environmentVar.baseURL;
 
 export class CustomerService {
-  getAllCustomersRightByUserId = async (
-    userId: number
-  ): Promise<CustomerType[]> => {
+  getAllCustomersRightByUserId = async (userId: number): Promise<CustomerType[]> => {
     const requestOptions = {
       method: "GET",
       headers: authHeader(`${URL}/customers/rights/${userId}`),
     };
-    const response = await fetch(
-      `${URL}/customers/rights/${userId}`,
-      requestOptions
-    )
+    const response = await fetch(`${URL}/customers/rights/${userId}`, requestOptions)
       .then(handleResponse)
       .catch((err) => console.warn(err));
 
@@ -52,25 +47,20 @@ export class CustomerService {
   addCustomerRights = async (customerId: number, userId: number): Promise<CustomerType> => {
     const requestOptions = {
       method: "POST",
-      body: JSON.stringify({customerId: customerId, usersId: [userId]}),
+      body: JSON.stringify({ customerId: customerId, usersId: [userId] }),
       headers: authHeader(`${URL}/customers/addCustomerRights`),
     };
     const response = await fetch(`${URL}/customers/addCustomerRights`, requestOptions)
       .then(handleResponse)
       .catch((err) => console.warn(err));
-      return response;
-  }
-  getAllUsersRightByCustomerId = async (
-    customerId: number
-  ): Promise<number[]> => {
+    return response;
+  };
+  getAllUsersRightByCustomerId = async (customerId: number): Promise<number[]> => {
     const requestOptions = {
       method: "GET",
       headers: authHeader(`${URL}/customers/usersRights/${customerId}`),
     };
-    const response = await fetch(
-      `${URL}/customers/usersRights/${customerId}`,
-      requestOptions
-    )
+    const response = await fetch(`${URL}/customers/usersRights/${customerId}`, requestOptions)
       .then(handleResponse)
       .catch((err) => console.warn(err));
 
