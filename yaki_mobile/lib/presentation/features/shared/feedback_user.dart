@@ -4,7 +4,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:yaki/presentation/styles/text_style.dart';
 
 class FeedbackUser extends StatelessWidget {
-  const FeedbackUser({Key? key}) : super(key: key);
+  const FeedbackUser({super.key});
 
   @override
   Widget build(BuildContext context) {

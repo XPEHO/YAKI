@@ -6,7 +6,7 @@ import 'package:yaki/presentation/state/providers/team_future_provider.dart';
 import 'package:yaki/presentation/styles/color.dart';
 
 class ModalFilter extends ConsumerWidget {
-  const ModalFilter({Key? key}) : super(key: key);
+  const ModalFilter({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

@@ -13,7 +13,7 @@ import 'package:yaki_ui/yaki_ui.dart';
 import 'package:image/image.dart' as img;
 
 class AvatarModal extends ConsumerStatefulWidget {
-  const AvatarModal({Key? key}) : super(key: key);
+  const AvatarModal({super.key});
 
   @override
   AvatarModalState createState() => AvatarModalState();
