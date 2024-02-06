@@ -130,10 +130,14 @@ class AvatarModalState extends ConsumerState<AvatarModal> {
               Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Button.secondary(
-                    text: tr('takePicture').toUpperCase(),
-                    onPressed: () => pickImage(ImageSource.camera),
-                  ),
+                  //check if the app is running on the web
+                  if (!kIsWeb)
+                    Button.secondary(
+                      text: tr('takePicture').toUpperCase(),
+                      onPressed: () {
+                        pickImage(ImageSource.camera);
+                      },
+                    ),
                   const SizedBox(height: 10),
                   kIsWeb
                       ? const SizedBox.shrink()

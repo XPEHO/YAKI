@@ -45,10 +45,10 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
   /// Function invoked in declaration page when a locationCard is selected.
   /// Handle the creation of the declaration. FullDay or HalfDay.
   ///
-  /// HalfDay is split in 3 steps, morning and afternoon selection while determining if an absence is selected (If so to to last halfDay declaration step).
-  ///
-  /// Then the first halfDay step : save the first selected status (remote / on site).
-  /// The last halfDay step : save the second selected status (remote / on site), set the DeclarationHalfDaySelection and create the declaration.
+  /// HalfDay is split in 3 steps,
+  /// * Time Of Day :  morning and afternoon selection while determining if an absence is selected (If so go to last halfDay declaration step).
+  /// * First halfDay step : save the first selected status (remote / on site).
+  /// * last halfDay step : save the second selected status (remote / on site).
   Future<void> declarationCreationHandler({
     required DeclarationPaths declarationMode,
     required List<TeamModel> teamList,
@@ -61,56 +61,17 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
     if (userId == null) return;
 
     switch (declarationMode) {
-      // FULL DAY
       case DeclarationPaths.fullDay:
-        state.fullDayTeam = teamList.first;
-        state.fullDayStatus = selectedStatus;
-
-        await createFullDay(
-          status: StatusEnum.getValue(key: selectedStatus.name),
-          teamId: teamList.first.teamId,
-          userId: userId,
-        );
+        handleStateAndFullDayDeclaration(teamList, selectedStatus, userId);
         break;
-
-      // TIME OF DAY determine initial morning or afternoon selection
       case DeclarationPaths.timeOfDay:
-        state.halfDayWorkflow.firstToDSelection = selectedStatus;
-        state.halfDayWorkflow.firstTeam = teamList.first;
-        state.halfDayWorkflow.secondTeam = teamList.last;
-
-        // declaration requier a teamID,
-        // therefore in case of ABSENCE for now will use the second teamID,
-        // as the DB declaration table requier a valid teamId.
-        if (state.halfDayWorkflow.firstTeam.teamId == -1) {
-          state.halfDayWorkflow.firstStatus = StatusEnum.absence;
-          state.halfDayWorkflow.firstTeam = teamList.last;
-        }
+        handleTimeOfDayDeclaration(teamList, selectedStatus);
         break;
-
-      // HALF DAY START determine first team status (remote / on site)
       case DeclarationPaths.halfDayStart:
-        state.halfDayWorkflow.firstStatus = selectedStatus;
+        handleHalfDayStartDeclaration(selectedStatus);
         break;
-
-      // HALF DAY END determine second team status (remote / on site ), and create the declaration
       case DeclarationPaths.halfDayEnd:
-        state.halfDayWorkflow.secondStatus = selectedStatus;
-
-        setDeclarationHalfDaySelection();
-
-        await createHalfDay(
-          morningStatus: StatusEnum.getValue(
-            key: state.declarationsHalfDaySelections.morningTeamStatus.name,
-          ),
-          morningTeamId: state.declarationsHalfDaySelections.morningTeam.teamId,
-          afternoonStatus: StatusEnum.getValue(
-            key: state.declarationsHalfDaySelections.afternoonTeamStatus.name,
-          ),
-          afternoonTeamId:
-              state.declarationsHalfDaySelections.afternoonTeam.teamId,
-          userId: userId,
-        );
+        await handleHalfDayEndDeclaration(teamList, selectedStatus, userId);
         break;
       default:
         debugPrint('improper declaration mode');
@@ -118,7 +79,74 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
     }
   }
 
-  /// Invoked in declaration_body "page",
+  /// set fullDayTeam and fullDayStatus in state
+  /// then create the fullDay declaration
+  Future<void> handleStateAndFullDayDeclaration(
+    List<TeamModel> teamList,
+    StatusEnum selectedStatus,
+    int userId,
+  ) async {
+    state.fullDayTeam = teamList.first;
+    state.fullDayStatus = selectedStatus;
+
+    await createFullDay(
+      status: StatusEnum.getValue(key: selectedStatus.name),
+      teamId: teamList.first.teamId,
+      userId: userId,
+    );
+  }
+
+  /// First part of the halfDay declaration: Time of day selection for the first team.
+  /// Set in state :
+  /// * First, and second team (order determined by user selection order).
+  /// * Time of day selection (morning or afternoon), related to the first team.
+  /// * IF the first team is "absence", register the status
+  /// (as absence as no  team, assign the team to be associatd with the absence)
+  void handleTimeOfDayDeclaration(
+    List<TeamModel> teamList,
+    StatusEnum selectedStatus,
+  ) {
+    state.halfDayWorkflow.firstToDSelection = selectedStatus;
+    state.halfDayWorkflow.firstTeam = teamList.first;
+    state.halfDayWorkflow.secondTeam = teamList.last;
+
+    if (state.halfDayWorkflow.firstTeam.teamId == -1) {
+      state.halfDayWorkflow.firstStatus = StatusEnum.absence;
+      state.halfDayWorkflow.firstTeam = teamList.last;
+    }
+  }
+
+  /// Second part of the halfDay declaration: **WHERE** (remote / on site) for the first team.
+  /// register the status in state.
+  void handleHalfDayStartDeclaration(StatusEnum selectedStatus) {
+    state.halfDayWorkflow.firstStatus = selectedStatus;
+  }
+
+  /// Last part of the halfDay declaration: **WHERE** (remote / on site) for the second team.
+  /// Save the second status in state, then invoke the create halfDay declaration function.
+  Future<void> handleHalfDayEndDeclaration(
+    List<TeamModel> teamList,
+    StatusEnum selectedStatus,
+    int userId,
+  ) async {
+    state.halfDayWorkflow.secondStatus = selectedStatus;
+
+    setDeclarationHalfDaySelection();
+
+    await createHalfDay(
+      morningStatus: StatusEnum.getValue(
+        key: state.declarationsHalfDaySelections.morningTeamStatus.name,
+      ),
+      morningTeamId: state.declarationsHalfDaySelections.morningTeam.teamId,
+      afternoonStatus: StatusEnum.getValue(
+        key: state.declarationsHalfDaySelections.afternoonTeamStatus.name,
+      ),
+      afternoonTeamId: state.declarationsHalfDaySelections.afternoonTeam.teamId,
+      userId: userId,
+    );
+  }
+
+  /// Create fullday declaration Model to be send to the repository
   Future<void> createFullDay({
     required String status,
     required int teamId,
@@ -195,8 +223,8 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
     );
   }
 
-  // ABSENCE declaration creation.
-  Future<void> createVacationDeclaration({
+  /// ABSENCE declaration Model creation
+  Future<void> createAbsenceDeclaration({
     required String status,
     required int teamId,
     required DateTime dateStart,
@@ -231,6 +259,9 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
     );
   }
 
+  /// Depending of the informations registered during the halfDay declaration process.
+  /// (use the TimeOfDay selected for the first team)
+  /// Determine the team and status of the morning and afternoon declaration.
   setDeclarationHalfDaySelection() {
     final HalfDayWorkflow workflow = state.halfDayWorkflow;
 

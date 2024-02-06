@@ -45,8 +45,9 @@ dependencies {
     implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.3'
-    testImplementation 'com.h2database:h2:2.1.214'
     implementation group: 'org.apache.commons', name: 'commons-text', version: '1.11.0'
+    testImplementation 'com.h2database:h2:2.2.224'
+
     // ad jacoco for sonar scan coverage
     testImplementation 'org.jacoco:org.jacoco.core:0.8.10'
 

@@ -1,5 +1,5 @@
-import {ref} from "vue";
-import {useEventTargetListener} from "@/composable/useEventListener";
+import { ref } from "vue";
+import { useEventTargetListener } from "@/composable/useEventListener";
 
 /**
  * Composition function that toggles the visibility of a modal when a button is clicked.
@@ -16,7 +16,10 @@ import {useEventTargetListener} from "@/composable/useEventListener";
  * Used to detect clicks outside the modal and close it if it is open.
  * Event listeners are removed when the component is unmounted.
  */
-export function useModalToggleWithOutsideClickHandler(modalSelector: string, buttonSelector: string) {
+export function useModalToggleWithOutsideClickHandler(
+  modalSelector: string,
+  buttonSelector: string,
+) {
   const isModalVisible = ref(false);
   const switchModalVisibility = () => {
     isModalVisible.value = !isModalVisible.value;
@@ -38,5 +41,5 @@ export function useModalToggleWithOutsideClickHandler(modalSelector: string, but
 
   useEventTargetListener(window, "mousedown", onClickOutsideCloseModal);
 
-  return {isModalVisible, switchModalVisibility};
+  return { isModalVisible, switchModalVisibility };
 }

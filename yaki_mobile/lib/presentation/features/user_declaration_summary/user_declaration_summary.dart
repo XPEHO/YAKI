@@ -81,6 +81,7 @@ class UserDeclarationSummary extends ConsumerWidget {
   }
 }
 
+/// Set the IconChip widget configuration according to the summary mode
 Widget setSummaryWidget({
   required String summaryMode,
   required WidgetRef ref,

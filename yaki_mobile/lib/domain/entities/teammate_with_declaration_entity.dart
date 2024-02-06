@@ -11,8 +11,8 @@ class TeammateWithDeclarationEntity {
   DateTime? declarationDateStart;
   DateTime? declarationDateEnd;
   StatusEnum declarationStatus;
-  int? teamId;
-  String? teamName;
+  int teamId;
+  String teamName;
   int? customerId;
   String? customerName;
   StatusEnum? declarationStatusAfternoon;

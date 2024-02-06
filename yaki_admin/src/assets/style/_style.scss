@@ -1,128 +1,135 @@
+@font-face {
+  font-family: "Rubik";
+  src: url("../../../node_modules/@yaki_ui/yaki_ui_web_components/fonts/Rubik-VariableFont_wght.ttf")
+    format("truetype");
+}
+
+@font-face {
+  font-family: "SF-compact-Rounded";
+  src: url("../../../node_modules/@yaki_ui/yaki_ui_web_components/fonts/SF-Compact-Rounded-Regular.ttf")
+    format("truetype");
+}
+
+@font-face {
+  font-family: "SF-Pro-Rounded";
+  src: url("../../../node_modules/@yaki_ui/yaki_ui_web_components/fonts/SF-Pro-Rounded-Regular.otf")
+    format("truetype");
+}
+
+$font-sf-pro: "SF-Pro-Rounded", sans-serif;
+$font-sf-compact: "SF-compact-Rounded", sans-serif;
+$font-rubik: "Rubik", sans-serif;
+
+$color-font-main-text: #0f1013;
+$color-font-sub-text: #7d818c;
+
 * {
   margin: 0;
   padding: 0;
-}
-
-body {
-  @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap");
-  font-family: "Inter", sans-serif;
-
-  font-size: 16px;
 }
 
 #app {
   height: 100svh;
 }
 
-// GENERAL SHARED STYLES ----------------------------------------------------------------------------------------
+.text_default__title_header {
+  font-family: $font-sf-compact;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: $color-font-main-text;
+  line-height: 40px;
+  letter-spacing: -2px;
+}
 
-.sub-text {
+.text_default__Team_description {
+  font-family: $font-rubik;
+  color: $color-font-sub-text;
   font-size: 15px;
-  font-weight: 900;
-  color: $font-color-sub-text;
-}
-
-.input-general {
-  font-size: $font-size-input-login;
-  border-radius: $modal-border-radius;
-  border: 1px solid #ccc;
-
+  font-style: normal;
   font-weight: 300;
-
-  &::placeholder {
-    font-size: $font-size-input-login-placeholder;
-  }
-
-  &:focus {
-    outline: 1px solid rgb(142, 140, 140);
-  }
+  line-height: 150%;
 }
 
-// CSS ICON ----------------------------------------------------------------------------------------
-
-@mixin arrow-down-mixin($border-left-right, $border-top, $color) {
-  width: 0;
-  height: 0;
-  border-left: $border-left-right solid transparent;
-  border-right: $border-left-right solid transparent;
-
-  border-top: $border-top solid $color;
+.text_default__Team_name {
+  font-family: $font-rubik;
+  color: $color-font-sub-text;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 450;
+  line-height: 100%;
 }
 
-@mixin check-icon-mixin($size, $color) {
-  width: $size;
-  height: $size;
-  background-color: $color;
-  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+// parameter for the loader animation in loginForm
+// also used in ButtonPrimary file to make the text fade out
+$loader-animation-delay: 0.15s;
+$loader-fade-duration: 0.5s;
+
+// LOGGING LOADER ==============================================
+
+.loading_relative_container {
+  position: relative;
 }
 
-// SIDEBAR SHARED STYLES ----------------------------------------------------------------------------------------
+.loader {
+  width: 2.8rem;
+  aspect-ratio: 1/1;
 
-.sidebar-element-generic-style {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
+  border: 4px solid;
+  border-top-color: rgba(134, 130, 130, 0);
+  border-bottom-color: rgba(134, 130, 130, 0);
+  border-left-color: rgb(51, 51, 51) 3;
+  border-right-color: rgb(51, 51, 51) 3;
 
-  width: 100%;
+  border-radius: 50%;
 
-  div {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.65rem;
+  position: absolute;
 
-    figure {
-      width: 1.8rem;
-      img {
-        width: 100%;
-      }
-    }
+  top: 17%;
+  left: 44%;
 
-    p {
-      font-size: $font-size-side-bar-element;
-      letter-spacing: 0.05rem;
-    }
+  opacity: 0;
+}
+
+.loader-animation {
+  animation:
+    spin 1s linear infinite,
+    $loader-fade-duration ease $loader-animation-delay normal forwards 1 fadeIn;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
   }
-
-  &:hover {
-    cursor: pointer;
+  100% {
+    transform: rotate(360deg);
   }
 }
 
-.sidebar-active-class {
-  background-color: #59a9b5;
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  66% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
-.team-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  align-items: center;
-  max-width: 70vw;
+// set in ButtonPrimary file to make the text fade out
+.fade_out_text_animation {
+  animation: $loader-fade-duration ease $loader-animation-delay normal forwards 1 fadeOut;
 }
 
-// MODAL SHARED STYLES ----------------------------------------------------------------------------------------
-
-.modal-content-container {
-  border-top-right-radius: $modal-border-radius;
-  border-top-left-radius: $modal-border-radius;
-
-  background-color: $color-modal-background;
-
-  flex-grow: 3;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.modal-title-text {
-  color: $font-color-main-text;
-  font-size: 1.1rem;
-  font-weight: 900;
-}
-
-.modal-sub-text {
-  font-size: 0.95rem;
-  color: $font-color-sub-text;
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  66% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }

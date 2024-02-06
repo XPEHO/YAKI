@@ -1,74 +1,174 @@
 <script setup lang="ts">
-import router from "@/router/router";
-import {environmentVar} from "@/envPlaceholder";
-import {onBeforeMount, reactive} from "vue";
+import { onBeforeMount, reactive } from "vue";
 
-import type {UserWithIdType} from "@/models/userWithId.type";
-import {usersService} from "@/services/users.service";
+import type { UserWithIdType } from "@/models/userWithId.type";
 
 import PageContentLayout from "@/ui/layouts/PageContentLayout.vue";
-import UserInvitationCard from "@/features/invitation/components/InvitationCard.vue";
-import SideBarButton from "@/features/shared/components/SideBarButton.vue";
-import HeaderContentPage from "@/features/shared/components/HeaderContentPage.vue";
-import backIcon from "@/assets/images/arrow-back.png";
+import InvitationViewHeader from "@/features/invitation/components/InvitationViewHeader.vue";
+import UserInvitationList from "@/features/invitation/components/UserInvitationList.vue";
 
-import {
-  changeHeaderTitle,
-  changeHeaderSubText,
-  invitUser,
-  getListOfUserAlreadyAccepted,
-  getInvitationStatusText,
-  getReturnText,
-} from "@/features/invitation/services/invitationService";
+import { useRoute } from "vue-router";
+import { useTeamStore } from "@/stores/teamStore";
+import { INVITEDROLE } from "@/constants/pathParam.enum";
+import { useSelectedRoleStore } from "@/stores/selectedRole";
+import { useTeammateStore } from "@/stores/teammateStore";
+import { useCaptainStore } from "@/stores/captainStore";
 
-import {useRoute} from "vue-router";
-import {useTeamStore} from "@/stores/teamStore";
+import chevronLeftIcon from "@/assets/icons_svg/Chevron-left.svg";
+import chevronRightIcon from "@/assets/icons_svg/Chevron-right.svg";
+import { useUserStore } from "@/stores/userStore";
+
 const route = useRoute();
-const invitationRole = route.params.role as string;
+const invitationRole = route.params.role as INVITEDROLE;
+
 const teamStore = useTeamStore();
+const selectedRoleStore = useSelectedRoleStore();
+const teammateStore = useTeammateStore();
+const captainStore = useCaptainStore();
+const userStore = useUserStore();
 
 const props = reactive({
   userList: [] as UserWithIdType[],
   fromRoute: "" as string,
-  alreadyInList: [] as number[],
-  invitationStatusText: "" as string,
+  alreadInvitedUsers: [] as number[],
 });
 //list of person who have admin rights in company
 //don't want to fetch them in each separated component
 
+const getListOfUserAlreadyAccepted = async (invitedRole: string) => {
+  if (invitedRole == INVITEDROLE.teammate) {
+    return teammateStore.getTeammateList.map((teammate) => teammate.id);
+  }
+  if (invitedRole == INVITEDROLE.captain) {
+    return captainStore.getCaptainList.map((captain) => captain.id);
+  }
+  return [];
+};
+
 onBeforeMount(async () => {
-  props.alreadyInList = await getListOfUserAlreadyAccepted(invitationRole);
-  props.userList = await usersService.fetchUserInRange(
-    environmentVar.tempUserIdRangeStart,
-    environmentVar.tempUserIdRAngeEnd
-  );
-  props.invitationStatusText = getInvitationStatusText(invitationRole);
+  props.alreadInvitedUsers = await getListOfUserAlreadyAccepted(invitationRole);
+
+  await userStore.getUsersByPage();
+  props.userList = userStore.getUsers;
 });
-// invit button from user-component
+
+const onUserInvitation = (invitedUser: UserWithIdType) => {
+  if (invitationRole === INVITEDROLE.teammate) {
+    teamStore.addUserToTeam(invitedUser.id);
+  }
+  if (invitationRole === INVITEDROLE.captain) {
+    selectedRoleStore.addCaptainToCompany(invitedUser.id);
+  }
+};
+
+const nextPage = async () => {
+  userStore.setPageNumber(userStore.getPageNumber + 1);
+
+  await userStore.getUsersByPage();
+  //because Vue3 reactivity need to use splice to update the list
+  props.userList.splice(0, props.userList.length, ...userStore.getUsers);
+};
+
+const previewPage = async () => {
+  userStore.setPageNumber(userStore.getPageNumber - 1);
+
+  await userStore.getUsersByPage();
+  //because Vue3 reactivity need to use splice to update the list
+  props.userList.splice(0, props.userList.length, ...userStore.getUsers);
+};
 </script>
 <template>
   <page-content-layout>
     <template #pageContentHeader>
-      <header-content-page
-        v-bind:title="changeHeaderTitle(invitationRole)"
-        v-bind:text="changeHeaderSubText(invitationRole, teamStore.getTeamSelected.teamName)" />
+      <invitation-view-header v-bind:invited-role="invitationRole" />
     </template>
 
     <template #content>
-      <side-bar-button
-        v-if="invitationRole != '/customer/admin-invitation'"
-        v-bind:inner-text="getReturnText(invitationRole)"
-        v-bind:icon-path="backIcon"
-        @click.prevent="router.go(-1)" />
-
-      <user-invitation-card
-        v-for="user in props.userList"
-        v-bind:key="user.id"
-        v-bind:user="user"
-        v-bind:invitation-role="invitationRole"
-        v-bind:adminList="props.alreadyInList"
-        v-bind:invitationStatusText="props.invitationStatusText"
-        @invitUserToTeam="invitUser" />
+      <user-invitation-list
+        v-if="props.userList && props.userList.length > 0"
+        :userList="props.userList"
+        :invitedUsers="props.alreadInvitedUsers"
+        :testprops="'test de props'"
+        @emittedUserInvitation="onUserInvitation"
+      />
     </template>
   </page-content-layout>
+
+  <section class="page_handling__container">
+    <button
+      class="page_count_button"
+      @click.prevent="previewPage"
+    >
+      <figure>
+        <img
+          :src="chevronLeftIcon"
+          alt=""
+        />
+      </figure>
+    </button>
+
+    <div>
+      <p>Page : {{ userStore.getPageNumber + 1 }} / {{ userStore.getTotalPagesCount }}</p>
+    </div>
+
+    <button
+      class="page_count_button"
+      @click.prevent="nextPage"
+    >
+      <figure>
+        <img
+          :src="chevronRightIcon"
+          alt=""
+        />
+      </figure>
+    </button>
+  </section>
 </template>
+
+<style scoped lang="scss">
+.page_handling__container {
+  position: absolute;
+  bottom: 0;
+
+  width: 95%;
+  height: 80px;
+  margin-inline: 1rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+
+  $size: 40px;
+
+  background-color: $background-color-theme-primary;
+
+  figure {
+    width: $size;
+    height: $size;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  p {
+    font-family: $font-sf-pro;
+  }
+
+  .page_count_button {
+    border: none;
+    background-color: transparent;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &:active {
+      transform: scale(0.9);
+    }
+  }
+}
+</style>

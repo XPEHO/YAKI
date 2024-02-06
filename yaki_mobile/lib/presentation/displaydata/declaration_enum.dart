@@ -1,5 +1,12 @@
 enum DeclarationTimeOfDay { morning, afternoon, fullDay }
 
+/// declaration paths enum
+/// used in router to determine which page to display
+///
+/// * **fullDay**: page when **one team** is selected, request **WHERE** the user is working.
+/// * **timeOfDay**: is the **first page** of the half-day declaration path, as the user **selected WHEN** he is working for **the first team**
+/// * **halfDayStart**: is the **second page** of the half-day declaration path, as the user **selected WHERE** he is working for **the first team**
+/// * **halfDayEnd**: is the **third page** of the half-day declaration path, as the user **selected WHERE** (given the first time of day selection deduce WHEN for the second team) he is working for **the second team**
 enum DeclarationPaths {
   fullDay('full-day'),
   timeOfDay('time-of-day'),
@@ -11,7 +18,7 @@ enum DeclarationPaths {
   final String text;
   const DeclarationPaths(this.text);
 
-  /// return a list of all the .text of the enum
+  /// return a list of all the .text (ex: 'full-day') of the enum
   static List<String> getPathList() {
     return DeclarationPaths.values.map((e) => e.text).toList();
   }

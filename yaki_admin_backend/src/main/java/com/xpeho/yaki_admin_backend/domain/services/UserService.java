@@ -4,6 +4,8 @@ import com.xpeho.yaki_admin_backend.domain.entities.ChangePasswordEntity;
 import com.xpeho.yaki_admin_backend.domain.entities.UserEntity;
 import com.xpeho.yaki_admin_backend.domain.entities.UserEntityIn;
 import com.xpeho.yaki_admin_backend.domain.entities.UserEntityWithID;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -14,6 +16,9 @@ public interface UserService {
     UserEntity findById(int id);
 
     List<UserEntityWithID> findUserByIdRange(int idStart, int idEnd);
+
+
+    Page<UserEntityWithID> findAllUsers(Pageable pageable);
 
     UserEntity deleteById(int id);
 

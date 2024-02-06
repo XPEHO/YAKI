@@ -56,6 +56,7 @@ class MockDeclarationApi extends _i1.Mock implements _i3.DeclarationApi {
           ),
         )),
       ) as _i4.Future<_i2.HttpResponse<dynamic>>);
+
   @override
   _i4.Future<_i2.HttpResponse<dynamic>> create(
     List<_i5.DeclarationModel>? declaration,

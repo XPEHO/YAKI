@@ -1,9 +1,9 @@
-import {UserWithIdType} from "@/models/userWithId.type";
-import {AVATARENUM} from "@/constants/avatar.enum";
+import { UserWithIdType } from "@/models/userWithId.type";
+import { AVATARENUM } from "@/constants/avatar.enum";
 import avatarH from "@/assets/images/avatarH.svg";
 import avatarF from "@/assets/images/avatarF.svg";
 import avatarN from "@/assets/images/avatarN.svg";
-import userAvatar from "@/assets/images/avatar_2.png";
+import teamImage from "@/assets/images/teamDefaultImg2.svg";
 
 export const setUserAvatarUrl = (user: UserWithIdType) => {
   switch (user.avatarReference) {
@@ -16,6 +16,14 @@ export const setUserAvatarUrl = (user: UserWithIdType) => {
     case AVATARENUM.avatarN:
       return avatarN;
     default:
-      return userAvatar;
+      return "";
+  }
+};
+
+export const setTeamLogoUrl = (teamLogo: Uint8Array | null) => {
+  if (teamLogo) {
+    return `data:image/jpeg;base64,${teamLogo}`;
+  } else {
+    return teamImage;
   }
 };

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {useTeamStore} from "@/stores/teamStore";
+import { useTeamStore } from "@/stores/teamStore";
 
 const teamStore = useTeamStore();
 
@@ -14,11 +14,15 @@ const props = defineProps({
   },
 });
 
-const classList = ["text-icon__container", "drop-down__menu_item--height-padding-color unselectabla-text"];
+const classList = [
+  "text-icon__container",
+  "drop-down__menu_item--height-padding-color unselectabla-text",
+  "text-icon--text",
+];
 </script>
 
 <template>
-  <p :class="[classList, {'team-selected': teamStore.isSameTeamId(props.id)}]">
+  <p :class="[classList, { 'team-selected': teamStore.isSameTeamId(props.id) }]">
     {{ props.teamName }}
   </p>
 </template>

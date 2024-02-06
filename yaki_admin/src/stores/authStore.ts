@@ -1,12 +1,12 @@
-import {defineStore} from "pinia";
+import { defineStore } from "pinia";
 
-import {loginService} from "@/services/login.service";
+import { loginService } from "@/services/login.service";
 import router from "@/router/router";
 
-import {CaptainType} from "@/models/captain.type";
-import {CustomerType} from "@/models/customer.type";
-import {useRoleStore} from "./roleStore";
-import {useSelectedRoleStore} from "./selectedRole";
+import { CaptainType } from "@/models/captain.type";
+import { CustomerType } from "@/models/customer.type";
+import { useRoleStore } from "./roleStore";
+import { useSelectedRoleStore } from "./selectedRole";
 
 export const useAuthStore = defineStore("loginStore", {
   state: () => ({
@@ -22,6 +22,7 @@ export const useAuthStore = defineStore("loginStore", {
     async login(login: string, password: string): Promise<boolean> {
       try {
         const userEntity = await loginService.login(login, password);
+
         this.user = {
           user_id: userEntity.userId,
           token: userEntity.token,
@@ -56,6 +57,7 @@ export const useAuthStore = defineStore("loginStore", {
         return false;
       }
     },
+
     logout() {
       this.user = null;
       localStorage.removeItem("user");
