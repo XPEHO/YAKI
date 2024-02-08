@@ -6,7 +6,7 @@ import { useRoleStore } from "@/stores/roleStore";
 
 interface State {
   captainList: UserWithIdType[];
-  idOfCaptainToDelete: number;
+  captainIdToDelete: number;
   currentCustomerId: number;
 }
 
@@ -16,19 +16,19 @@ export const useCaptainStore = defineStore("captainStore", {
     captainList: [] as UserWithIdType[],
     // in the customer view, when a captain is selected to maybe be deleted
     // at delete icon press, the captainID will be saved
-    idOfCaptainToDelete: 0 as number,
+    captainIdToDelete: 0 as number,
     currentCustomerId: 0 as number,
   }),
   getters: {
     getCaptainList: (state: State) => state.captainList,
-    getCaptainToDelete: (state: State) => state.idOfCaptainToDelete,
+    getCaptainToDelete: (state: State) => state.captainIdToDelete,
     getCurrentCustomerId: (state: State) => state.currentCustomerId,
   },
 
   actions: {
     //get the captainId to delete
     setCaptainToDelete(captainId: number) {
-      this.idOfCaptainToDelete = captainId;
+      this.captainIdToDelete = captainId;
     },
 
     // get all captains of a customer
@@ -38,13 +38,13 @@ export const useCaptainStore = defineStore("captainStore", {
     },
 
     // create a captain
-    async createCaptain(data: CaptainType): Promise<void> {
+    async addCaptainRight(data: CaptainType): Promise<void> {
       await captainService.createCaptain(data);
     },
 
     //delete a captain (disabled)
-    async deleteCaptain(): Promise<void> {
-      await captainService.disabledCaptain(this.idOfCaptainToDelete);
+    async removeCaptainRight(): Promise<void> {
+      await captainService.disabledCaptain(this.captainIdToDelete);
       //refresh captain list
       await this.setAllCaptainsByCustomerId(this.getCurrentCustomerId);
     },

@@ -32,7 +32,7 @@ const props = defineProps({
 const onRemoveUserPress = () => {
   switch (route.fullPath) {
     case "/dashboard/manage-team":
-      teammateStore.setIdOfTeammateToDelete(props.user.teammateId);
+      teammateStore.setTeammateIdToDelete(props.user.teammateId);
       modalStore.setTeammateNameToDelete(`${props.user.firstname} ${props.user.lastname}`);
       modalStore.switchModalVisibility(true, MODALMODE.userDelete);
       break;

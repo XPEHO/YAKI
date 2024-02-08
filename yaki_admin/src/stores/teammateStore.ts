@@ -6,22 +6,22 @@ import { useModalStore } from "@/stores/modalStore";
 
 interface State {
   teammates: UserWithIdType[];
-  IdOfTeammateToDelete: number;
+  teammateIdToDelete: number;
 }
 
 export const useTeammateStore = defineStore("teammateStore", {
   state: () => ({
     teammates: [] as UserWithIdType[],
-    IdOfTeammateToDelete: 0 as number,
+    teammateIdToDelete: 0 as number,
   }),
   getters: {
     getTeammateList: (state: State) => state.teammates,
-    getIdOfTeammateToDelete: (state: State) => state.IdOfTeammateToDelete,
+    getTeammateIdToDelete: (state: State) => state.teammateIdToDelete,
   },
   actions: {
     // get the teamMateId to delete
-    setIdOfTeammateToDelete(id: number) {
-      this.IdOfTeammateToDelete = id;
+    setTeammateIdToDelete(id: number) {
+      this.teammateIdToDelete = id;
     },
     resetTeamatesList() {
       this.teammates = [];
@@ -47,12 +47,12 @@ export const useTeammateStore = defineStore("teammateStore", {
       const teamStore = useTeamStore();
       const modalStore = useModalStore();
 
-      await teammateService.deleteTeammate(this.IdOfTeammateToDelete);
+      await teammateService.deleteTeammate(this.teammateIdToDelete);
       //refresh teammate list
       await this.setTeammatesByTeamId(teamStore.getTeamSelected.id);
 
       modalStore.setTeammateNameToDelete("");
-      this.setIdOfTeammateToDelete(0);
+      this.setTeammateIdToDelete(0);
     },
   },
 });

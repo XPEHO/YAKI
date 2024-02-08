@@ -41,7 +41,7 @@ export const useSelectedRoleStore = defineStore("selectedRoleStore", {
     async addCaptainToCompany(userId: number) {
       const captainStore = useCaptainStore();
       captainStore
-        .createCaptain({ id: 0, userId: userId, customerId: this.customerIdSelected })
+        .addCaptainRight({ id: 0, userId: userId, customerId: this.customerIdSelected })
         .then(() => {
           //reload the captain list
           captainStore.setAllCaptainsByCustomerId(this.customerIdSelected);

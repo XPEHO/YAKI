@@ -13,25 +13,17 @@ import { ref, watch } from "vue";
 import { BUTTONCOLORS } from "@/constants/componentsSettings.enum";
 import { MODALMODE } from "@/constants/modalMode.enum";
 import { useModalStore } from "@/stores/modalStore";
-import { userFilePicker } from "@/composable/userFilePicker";
+import { useTeamLogoStore } from "@/stores/teamLogoStore";
 
 const modalStore = useModalStore();
+const inputFileElement = ref<HTMLElement | null>(null);
 const isMissingTeamNameError = ref<boolean>(false);
+
+const teamLogoStore = useTeamLogoStore();
 
 // At modal open (in the watch), the logo displayed is the one that was saved in the store.
 // its used to store the initial logo, and is used when the user want to edit the logo to still have the initial image
-const logoAtModalOpen = ref("");
-
-const {
-  logoDisplayed,
-  isFileSizeTooBig,
-  inputFileElement,
-  isLogoToBeDeleted,
-  initiateFilePickerAndResetSizeFlag,
-  validateAndProcessFile,
-  setTeamLogoToDisplay,
-  AddOrRemoveLogo,
-} = userFilePicker();
+const onModalOpenLogo = ref("");
 
 const modalText = ref({
   title: "",
@@ -46,8 +38,7 @@ const modalText = ref({
  */
 const resetRef = () => {
   if (isMissingTeamNameError.value) isMissingTeamNameError.value = false;
-  if (isFileSizeTooBig.value) isFileSizeTooBig.value = false;
-  if (isLogoToBeDeleted.value) isLogoToBeDeleted.value = false;
+  if (teamLogoStore.isFileSizeTooBig) teamLogoStore.isFileSizeTooBig = false;
 };
 
 /**
@@ -75,17 +66,75 @@ const setModalHeaderText = (newIsShow: boolean, newMode: MODALMODE) => {
   }
 };
 
-// when the modal is shown and display this component.
+/**
+ * On modal open.
+ * (check if the newIsShow is true, and a modalModeMatch the current modal type).
+ *  Set the initial logo to the one saved in the store.
+ *  Set the modal header text.
+ */
 watch(
   [() => modalStore.getMode, () => modalStore.getIsShow],
   ([newMode, newIsShow]) => {
-    setTeamLogoToDisplay(newIsShow, newMode);
+    teamLogoStore.setTeamLogoToDisplay(newIsShow, newMode);
     setModalHeaderText(newIsShow, newMode);
 
-    logoAtModalOpen.value = logoDisplayed.value;
+    onModalOpenLogo.value = teamLogoStore.getLogoDisplayed;
   },
   { immediate: true },
 );
+
+/**
+ * Open the file picker and reset the file flag.
+ * If IsFileSizeTooBig was set to true, reset the flag.
+ * If isLogoToBeDeleted is set to true, reset the flag.
+ */
+const openFilePickerAndResetFileFlag = () => {
+  inputFileElement.value!.click();
+  if (teamLogoStore.getIsFileSizeTooBig) teamLogoStore.setIsFileSizeTooBig(false);
+  if (teamLogoStore.getIsLogoToBeDeleted) teamLogoStore.isLogoToBeDeleted = false;
+};
+
+/**
+ * On create logo button press.
+ * * If the **delete flag** is true, reset it (as the user want to use another file as a logo)
+ * Then trigger the function handling the selected file, and the validation. in order to display the new logo or not.
+ * (the create or delete logo function will be called when the user will submit the form)
+ */
+const onAddLogoPress = () => {
+  if (teamLogoStore.isLogoToBeDeleted) {
+    teamLogoStore.setIsLogoToBeDeleted(false);
+  }
+  openFilePickerAndResetFileFlag();
+};
+
+/**
+ * On delete logo button press. IF :
+ * * * Initial logo is an image, set the **delete flag** to true
+ * * * Initial logo is the *default logo*, if a file was selected, set the *default logo* back
+ * * * Initial logo is an image and a new image was selected, set the preview image back
+ * * Reset the **delete flag** by pressing the button again.
+ */
+const onRemoveLogoPress = () => {
+  // allow to toggle the delete flag so visual effect
+  if (teamLogoStore.getIsLogoToBeDeleted) {
+    teamLogoStore.setIsLogoToBeDeleted(false);
+    // reset visual effect.
+    teamLogoStore.setIsFileSizeTooBig(false);
+    return;
+  }
+
+  const isDefaultLogo = onModalOpenLogo.value === defaultTeamImage;
+  const isInitialLogoSameAsNewPickedLogo = onModalOpenLogo.value === teamLogoStore.getLogoDisplayed;
+
+  if (isDefaultLogo) {
+    teamLogoStore.setLogoDisplayed(defaultTeamImage);
+  } else {
+    isInitialLogoSameAsNewPickedLogo
+      ? teamLogoStore.setIsLogoToBeDeleted(true)
+      : teamLogoStore.setLogoDisplayed(onModalOpenLogo.value),
+      teamLogoStore.setFileSelected(null);
+  }
+};
 
 const emit = defineEmits(["onAccept", "onCancel"]);
 /**
@@ -98,9 +147,6 @@ const onModalAccept = async () => {
     isMissingTeamNameError.value = true;
     return;
   }
-
-  await AddOrRemoveLogo();
-
   emit("onAccept");
   resetRef();
 };
@@ -111,47 +157,6 @@ const onModalAccept = async () => {
 const onModalCancel = () => {
   emit("onCancel");
   resetRef();
-};
-
-/**
- * On create logo button press.
- * * If the **delete flag** is true, reset it (as the user want to use another file as a logo)
- * Then trigger the function handling the selected file, and the validation. in order to display the new logo or not.
- * (the create or delete logo function will be called when the user will submit the form)
- */
-const onAddTeamLogoPress = () => {
-  if (isLogoToBeDeleted.value) {
-    isLogoToBeDeleted.value = false;
-  }
-  initiateFilePickerAndResetSizeFlag();
-};
-
-/**
- * On delete logo button press.
- * * On modal open :
- * * * Initial logo is an image, set the **delete flag** to true
- * * * Initial logo is the *default logo*, if a file was selected, set the *default logo* back
- * * * Initial logo is an image and a new image was selected, set the preview image back
- * * Reset the **delete flag** by pressing the button again.
- */
-const onRemoveTeamLogoPress = () => {
-  // reset visual effect.
-  isFileSizeTooBig.value = false;
-
-  // allow to toggle the delete flag so visual effect
-  if (isLogoToBeDeleted.value) {
-    isLogoToBeDeleted.value = false;
-    return;
-  }
-
-  const isDefaultLogo = logoAtModalOpen.value === defaultTeamImage;
-  const isInitialLogoSameAsPickedLogo = logoAtModalOpen.value === logoDisplayed.value;
-
-  if (isDefaultLogo === false) {
-    isInitialLogoSameAsPickedLogo
-      ? (isLogoToBeDeleted.value = true)
-      : (logoDisplayed.value = logoAtModalOpen.value);
-  }
 };
 
 /**
@@ -184,9 +189,13 @@ const setTeamDescriptionToDisplay = (value: string) => {
 
     <section class="popup__content">
       <section class="popup__avatar-section">
-        <figure :class="[isLogoToBeDeleted ? 'logo_to_be_deleted logo_to_delete_filter' : '']">
+        <figure
+          :class="[
+            teamLogoStore.isLogoToBeDeleted ? 'logo_to_be_deleted logo_to_delete_filter' : '',
+          ]"
+        >
           <div
-            v-if="isFileSizeTooBig"
+            v-if="teamLogoStore.isFileSizeTooBig"
             class="is_logo_too_heavy"
           >
             <p>Your file is too large</p>
@@ -194,8 +203,8 @@ const setTeamDescriptionToDisplay = (value: string) => {
             <p>under 500kb</p>
           </div>
           <img
-            :class="[isFileSizeTooBig ? 'logo_too_heavy_gray_scale' : '']"
-            :src="logoDisplayed"
+            :class="[teamLogoStore.isFileSizeTooBig ? 'logo_too_heavy_gray_scale' : '']"
+            :src="teamLogoStore.logoDisplayed"
             alt="avatar"
           />
         </figure>
@@ -203,18 +212,18 @@ const setTeamDescriptionToDisplay = (value: string) => {
         <aside class="container__buttons_aside">
           <button-icon
             :icon="deleteIcon"
-            @click="onRemoveTeamLogoPress"
+            @click="onRemoveLogoPress"
           />
           <button-icon
             :icon="pencilIcon"
-            @click="onAddTeamLogoPress"
+            @click="onAddLogoPress"
           />
           <input
             class="display_none"
             type="file"
             name="file"
             ref="inputFileElement"
-            @change="validateAndProcessFile"
+            @change="teamLogoStore.validateAndProcessFile"
           />
         </aside>
       </section>
