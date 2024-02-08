@@ -32,17 +32,54 @@ export function userFilePicker() {
   const isLogoToBeDeleted = ref<boolean>(false);
 
   /**
+   * invoked in ModalCreateEdit watch  (modalStore.isShow or modalStore.mode)
+   * * if the modal is show and the mode is teamEdit or teamCreate, retrive the current team logo
+   * (early return allow to check if condition are not meet).
+   * * And set it to the logoSrc, ref used to display the logo image.
+   * @param newIsShow modalStore is show value
+   * @param newMode  modalStore mode value
+   * @returns
+   */
+  const setTeamLogoToDisplay = (newIsShow: boolean, newMode: MODALMODE) => {
+    if (!newIsShow || (newMode !== MODALMODE.teamEdit && newMode !== MODALMODE.teamCreate)) {
+      return;
+    }
+    const currentLogo = teamStore.getTeamSelectedLogo.teamLogoBlob;
+    logoDisplayed.value = setTeamLogoUrl(currentLogo);
+  };
+
+  /**
    * Trigger the file input click event to open the file picker dialog.
    */
-  const triggerFilePickerAndResetSizeFlag = () => {
+  const initiateFilePickerAndResetSizeFlag = () => {
     inputFileElement.value!.click();
     if (isFileSizeTooBig.value) isFileSizeTooBig.value = false;
   };
 
   /**
-   * Handle the file input change event.
+   * Checks if the selected file is an image, if its not return false.
    *
-   * Is triggered when a file is selected in the file input element.
+   * Checks for a size limit. If it goes over the limit set `isLogoToHeavy`
+   * to true and returns false, else return true.
+   * @param file
+   * @returns
+   */
+  const validateFileTypeAndSize = (file: File) => {
+    if (!file.type.startsWith("image/")) {
+      console.error("File is not an image");
+      return false;
+    }
+
+    if (file.size > fileSizeLimit) {
+      isFileSizeTooBig.value = true;
+      return false;
+    }
+    return true;
+  };
+
+  /**
+   * Invoked when a file is selected in the file input element.
+   *
    * Checks if any file has been selected.
    * Then, it checks for a size limit. If it goes over the limit set `isLogoToHeavy` to true and returns.
    * Else creates a new FileReader object to read the file content and assigne it to the selecteFile ref used to display the image.
@@ -50,7 +87,7 @@ export function userFilePicker() {
    * @param event - The event object associated with the file input change event.
    * @returns void
    */
-  const handleSelectedFileAndValidation = async (event: Event) => {
+  const validateAndProcessFile = async (event: Event) => {
     const target = event.target as HTMLInputElement;
 
     // if no file selected, return
@@ -59,16 +96,7 @@ export function userFilePicker() {
     const file = target.files[0];
     fileSelected.value = file;
 
-    // Check if the file is an image or a gif
-    if (!file.type.startsWith("image/")) {
-      // Handle non-image file...
-      console.error("File is not an image");
-      return;
-    }
-
-    if (file.size > fileSizeLimit) {
-      isFileSizeTooBig.value = true;
-      // reset the fileSelected.value to null to prevent the logo creation
+    if (!validateFileTypeAndSize(file)) {
       fileSelected.value = null;
       return;
     }
@@ -87,31 +115,13 @@ export function userFilePicker() {
   };
 
   /**
-   * Triggered in ModalCreateEdit in watch (modalStore.isShow or modalStore.mode)
-   * if the modal is show and the mode is teamEdit or teamCreate, retrive the current team logo.
-   * And set it to the logoSrc, ref used to display the logo image.
-   * @param newIsShow modalStore is show value
-   * @param newMode  modalStore mode value
-   * @returns
-   */
-  const setTeamLogoToDisplay = (newIsShow: boolean, newMode: MODALMODE) => {
-    if (!newIsShow || (newMode !== MODALMODE.teamEdit && newMode !== MODALMODE.teamCreate)) {
-      return;
-    }
-    const currentLogo = teamStore.getTeamSelectedLogo;
-
-    logoDisplayed.value = setTeamLogoUrl(currentLogo.teamLogoBlob);
-  };
-
-  /**
    * Create or delete the team logo.
    * Based on the isLogoToBeDeleted and fileSelected refs.
    */
-  const createOrDeleteLogo = async () => {
+  const AddOrRemoveLogo = async () => {
     // if logo is to be deleted, delete it
     if (isLogoToBeDeleted.value) {
       await teamStore.deleteTeamLogo();
-
       // set back default logo
       logoDisplayed.value = defaultTeamImage;
     }
@@ -128,9 +138,9 @@ export function userFilePicker() {
     isFileSizeTooBig,
     inputFileElement,
     isLogoToBeDeleted,
-    triggerFilePickerAndResetSizeFlag,
-    handleSelectedFileAndValidation,
+    initiateFilePickerAndResetSizeFlag,
+    validateAndProcessFile,
     setTeamLogoToDisplay,
-    createOrDeleteLogo,
+    AddOrRemoveLogo,
   };
 }

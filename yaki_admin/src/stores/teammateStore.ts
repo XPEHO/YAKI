@@ -2,6 +2,7 @@ import { UserWithIdType } from "@/models/userWithId.type";
 import { teammateService } from "@/services/teammate.service";
 import { defineStore } from "pinia";
 import { useTeamStore } from "@/stores/teamStore";
+import { useModalStore } from "@/stores/modalStore";
 
 interface State {
   teammates: UserWithIdType[];
@@ -25,15 +26,33 @@ export const useTeammateStore = defineStore("teammateStore", {
     resetTeamatesList() {
       this.teammates = [];
     },
-    async setListOfTeammatesWithinTeam(teamId: number): Promise<void> {
+    async setTeammatesByTeamId(teamId: number): Promise<void> {
       this.teammates = await teammateService.getAllWithinTeam(teamId);
     },
-    // remove a user from a team (delete his "teammate" status)
-    async deleteTeammateFromTeam(id: number): Promise<void> {
+
+    // add a selected user to a team
+    async addTeammateToTeam(userId: number): Promise<void> {
       const teamStore = useTeamStore();
-      await teammateService.deleteTeammate(id);
+
+      const data = { teamId: teamStore.getTeamSelected.id, userId: userId };
+      await teammateService.createTeammate(data);
+      await this.setTeammatesByTeamId(teamStore.getTeamSelected.id);
+    },
+
+    /**
+     * Delete a user from a team.
+     * Refresh the teammate list.
+     */
+    async deleteTeammateFromTeam(): Promise<void> {
+      const teamStore = useTeamStore();
+      const modalStore = useModalStore();
+
+      await teammateService.deleteTeammate(this.IdOfTeammateToDelete);
       //refresh teammate list
-      await this.setListOfTeammatesWithinTeam(teamStore.getTeamSelected.id);
+      await this.setTeammatesByTeamId(teamStore.getTeamSelected.id);
+
+      modalStore.setTeammateNameToDelete("");
+      this.setIdOfTeammateToDelete(0);
     },
   },
 });

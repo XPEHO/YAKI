@@ -20,6 +20,12 @@ export const setUserAvatarUrl = (user: UserWithIdType) => {
   }
 };
 
+/**
+ * Get the team logo data from the teamstore and return the URL,
+ * Depending of the stored value
+ * @param teamLogo Unit8Array
+ * @returns
+ */
 export const setTeamLogoUrl = (teamLogo: Uint8Array | null) => {
   if (teamLogo) {
     return `data:image/jpeg;base64,${teamLogo}`;

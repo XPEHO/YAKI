@@ -7,6 +7,7 @@ import { CaptainType } from "@/models/captain.type";
 import { CustomerType } from "@/models/customer.type";
 import { useRoleStore } from "./roleStore";
 import { useSelectedRoleStore } from "./selectedRole";
+import { useModalStore } from "./modalStore";
 
 export const useAuthStore = defineStore("loginStore", {
   state: () => ({
@@ -20,6 +21,8 @@ export const useAuthStore = defineStore("loginStore", {
   }),
   actions: {
     async login(login: string, password: string): Promise<boolean> {
+      const modalStore = useModalStore();
+
       try {
         const userEntity = await loginService.login(login, password);
 
@@ -50,6 +53,10 @@ export const useAuthStore = defineStore("loginStore", {
 
         roleStore.setCaptainsId(userEntity.captainId);
         roleStore.setCustomersIdWhereIgotRights(userEntity.customerId);
+
+        // reset the modal state(visibility, mode, and input values) in case of the user was in the middle of a modal action
+        // and then redirected to the login page for some reason
+        modalStore.resetStates();
 
         router.push(this.returnedUrl);
         return true;

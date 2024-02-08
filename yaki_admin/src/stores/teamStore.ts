@@ -1,11 +1,13 @@
 import { TeamType } from "./../models/team.type";
 import { defineStore } from "pinia";
-import { teammateService } from "@/services/teammate.service";
 import { teamService } from "@/services/team.service";
 import { useSelectedRoleStore } from "@/stores/selectedRole";
 import { useTeammateStore } from "@/stores/teammateStore";
 import { teamLogoService } from "@/services/teamLogo.service";
 import { TeamLogoType } from "@/models/TeamLogo.type";
+import { MODALMODE } from "@/constants/modalMode.enum";
+import { useModalStore } from "@/stores/modalStore";
+import { useRoleStore } from "@/stores/roleStore";
 
 interface State {
   teamList: TeamType[];
@@ -24,7 +26,6 @@ export const useTeamStore = defineStore("teamStore", {
     isTeamListSetOnLoggin: false as boolean,
     teamSelected: {} as TeamType,
     teamSelectedLogo: { teamId: 0, teamLogoBlob: null } as TeamLogoType,
-
     teamDeleted: {} as TeamType,
 
     // DEPRECIATED WITH BASTI CHANGE ? ------------------------------------
@@ -64,11 +65,11 @@ export const useTeamStore = defineStore("teamStore", {
      * And trigger the team's teammates fetch.
      * @param team TeamType
      */
-    async setTeamInfoAndFetchTeammates(team: TeamType): Promise<void> {
+    async setTeamSelectedAndFetchTeammates(team: TeamType): Promise<void> {
       const teammateStore = useTeammateStore();
 
       // fetch team teammates
-      await teammateStore.setListOfTeammatesWithinTeam(team.id);
+      await teammateStore.setTeammatesByTeamId(team.id);
 
       // if same team is selected, no need to set the team info again, and fetch the logo again
       if (this.getTeamSelected.id === team.id) return;
@@ -95,62 +96,128 @@ export const useTeamStore = defineStore("teamStore", {
       }
     },
 
-    // add a selected user to a team
-    async addUserToTeam(userId: number): Promise<void> {
-      const teammateStore = useTeammateStore();
-      const data = { teamId: this.getTeamSelected.id, userId: userId };
-      await teammateService.createTeammate(data);
-      await teammateStore.setListOfTeammatesWithinTeam(this.getTeamSelected.id);
+    // TEAMS CRUD METHODS
+
+    /**
+     * Modal action management :
+     * Invoked in ModalFrameView, when user click on "validation" button in modal
+     * Trigger corresponding methods depending on the current modal mode set when invoking switchModalVisibility.
+     * See MODALMODE enum for more information
+     *
+     * Actions :
+     *
+     * * teamCreate : create a team
+     * * teamEdit : edit a team informations
+     * * teamDelete : delete a team from the logged captain's team list
+     */
+    async onModalTeamActionAccept(): Promise<void | TeamType> {
+      const modalStore = useModalStore();
+
+      switch (modalStore.getMode) {
+        case MODALMODE.teamCreate:
+          return await this.createTeam();
+        case MODALMODE.teamEdit:
+          await this.updateTeam();
+          return;
+        case MODALMODE.teamDelete:
+          return await this.deleteTeam();
+      }
     },
 
     /**
-     * Create a team, assign to the connected captain and his customer
-     * @param teamName name of the team
-     * @param teamDescription description of the team
+     * Create a team, and select it as the current team (setTeamSelected).
+     * Reset the teammate list on teamateStore, as a new team do not come with teammates.
+     * (it preventy to do an API call to fetch the teammate list)
+     * Refresh the team list.
      * @returns created team: TeamType
      */
-    async createTeam(teamName: string, teamDescription: string): Promise<TeamType> {
+    async createTeam(): Promise<TeamType> {
       const selectedRoleStore = useSelectedRoleStore();
       const customerId = selectedRoleStore.getCustomerIdSelected;
       const captainId = selectedRoleStore.getCaptainIdSelected;
 
-      //the back handle if the captainId is null or not
-      return await teamService.createTeam(captainId, teamName, customerId, teamDescription);
-    },
+      const modalStore = useModalStore();
 
-    /**
-     * Updates the team information in the database.
-     *
-     * @param teamID team to be updated.
-     * @param cptId captain of the team. This can be null if no captain is assigned.
-     * @param teamName New team name. null if the team name is not being updated.
-     * @param customerId id of the customer that the team belongs to.
-     * @param teamDescription New team description. null if the team description is not being updated.
-     * @returns updated team: TeamType.
-     */
-    async updateTeam(
-      teamID: number,
-      cptId: number | null,
-      teamName: string | null,
-      customerId: number | null,
-      teamDescription: string | null,
-    ): Promise<TeamType> {
-      return await teamService.updateTeam(teamID, cptId, teamName, customerId, teamDescription);
+      //the back handle if the captainId is null or not
+      const createdTeam = await teamService.createTeam(
+        captainId,
+        modalStore.getTeamNameInputValue,
+        customerId,
+        modalStore.getTeamDescriptionInputValue,
+      );
+
+      await this.selectTeamRefreshListAndResetInputs(createdTeam);
+      this.resetTeammateList();
+
+      return createdTeam;
     },
 
     /**
      * Delete a team by its id
      * @param deletedTeam: TeamType
      */
-    async deleteTeam(teamId: number): Promise<TeamType> {
-      const deletedTeam = await teamService.deleteTeam(teamId);
+    async deleteTeam(): Promise<TeamType> {
+      const modalStore = useModalStore();
 
-      // reset store values after team deletion
+      const deletedTeam = await teamService.deleteTeam(this.getTeamSelected.id);
+      // information of the deleted team saved to be displayed in the delete team page resume (TeamStatusNotification.vue)
       this.setTeamDeleted(deletedTeam);
-      this.setTeamSelected({} as TeamType);
+      // reset store values after team deletion
+      modalStore.setTeammateNameToDelete("");
+
+      await this.selectTeamRefreshListAndResetInputs({} as TeamType);
+      this.resetTeammateList();
 
       return this.getTeamDeleted;
     },
+
+    /**
+     * Edit the team name and the team description. Reset the input value afterwards.
+     * @returns updated team: TeamType.
+     */
+    async updateTeam(): Promise<TeamType> {
+      const modalStore = useModalStore();
+
+      const editedTeam = await teamService.updateTeam(
+        this.getTeamSelected.id,
+        this.getTeamSelected.captainsId[0],
+        modalStore.getTeamNameInputValue,
+        null,
+        modalStore.getTeamDescriptionInputValue,
+      );
+
+      await this.selectTeamRefreshListAndResetInputs(editedTeam);
+
+      return editedTeam;
+    },
+
+    /**
+     * * Set the team be to selected in the team list.
+     * * Refresh the team list to reflect any list team change (Get again the team list of the current captain)
+     * * Reset the input value of the modal (teamNameInputValue, teamDescriptionInputValue)
+     * @param team TeamType Team to be selected
+     */
+    async selectTeamRefreshListAndResetInputs(team: TeamType) {
+      this.setTeamSelected(team);
+
+      const roleStore = useRoleStore();
+      await this.setTeamListOfACaptain(roleStore.getCaptainsId);
+
+      const modalStore = useModalStore();
+      modalStore.setTeamNameInputValue("");
+      modalStore.setTeamDescriptionInputValue("");
+    },
+
+    /**
+     * Reset the teammate list on teammateStore (set to an empty array)
+     * Invoked after team creation and team delection to restart with a empty list.
+     */
+    resetTeammateList() {
+      const teammateStore = useTeammateStore();
+      teammateStore.resetTeamatesList();
+    },
+
+    // TEAMS LOGO METHODS
 
     /**
      * Get the team logo of a team given its id
@@ -189,36 +256,6 @@ export const useTeamStore = defineStore("teamStore", {
      */
     resetTeamStoreSelectedLogo(): void {
       this.teamSelectedLogo = { teamId: 0, teamLogoBlob: null };
-    },
-
-    // ----------------------------------------------------------------------------------------------
-    // DEPRECIATED WITH BASTI CHANGE ? ---------------------------------------------------------------
-
-    setCaptainIdToBeAssign(captainId: number | null) {
-      this.captainIdToBeAssign = captainId;
-    },
-
-    async createTeamOptionalAssignCaptain(
-      teamName: string,
-      captainId: number | null,
-      teamDescription: string,
-    ): Promise<void> {
-      const selectedRoleStore = useSelectedRoleStore();
-      const customerId = selectedRoleStore.getCustomerIdSelected;
-
-      await teamService.createTeam(captainId, teamName, customerId, teamDescription);
-    },
-
-    /**
-     * will fetch the teams list of a customer.
-     * And assign it to the teamList
-     */
-    async setTeamsFromCustomer() {
-      const selectedRoleStore = useSelectedRoleStore();
-
-      this.teamList = await teamService.getAllTeamsByCustomerId(
-        selectedRoleStore.customerIdSelected,
-      );
     },
   },
 });

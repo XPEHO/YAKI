@@ -18,7 +18,7 @@ onBeforeMount(async () => {
     teamStore.getTeamList &&
     teamStore.getTeamList.length > 0
   ) {
-    teamStore.setTeamInfoAndFetchTeammates(teamStore.getTeamList[0]);
+    teamStore.setTeamSelectedAndFetchTeammates(teamStore.getTeamList[0]);
   }
 });
 </script>

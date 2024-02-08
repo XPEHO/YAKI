@@ -29,7 +29,7 @@ const props = defineProps({
 });
 
 //define the methods
-const UserToBeRemoved = () => {
+const onRemoveUserPress = () => {
   switch (route.fullPath) {
     case "/dashboard/manage-team":
       teammateStore.setIdOfTeammateToDelete(props.user.teammateId);
@@ -83,7 +83,7 @@ const OpenModalNotImplemented = () => {
         />
 
         <button-icon
-          @click.prevent="UserToBeRemoved"
+          @click.prevent="onRemoveUserPress"
           :icon="deleteIcon"
           alt="supprimer"
         />

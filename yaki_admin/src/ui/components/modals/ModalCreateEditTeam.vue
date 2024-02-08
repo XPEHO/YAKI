@@ -17,17 +17,20 @@ import { userFilePicker } from "@/composable/userFilePicker";
 
 const modalStore = useModalStore();
 const isMissingTeamNameError = ref<boolean>(false);
-const onOpenDisplayedLogo = ref("");
+
+// At modal open (in the watch), the logo displayed is the one that was saved in the store.
+// its used to store the initial logo, and is used when the user want to edit the logo to still have the initial image
+const logoAtModalOpen = ref("");
 
 const {
   logoDisplayed,
   isFileSizeTooBig,
   inputFileElement,
   isLogoToBeDeleted,
-  triggerFilePickerAndResetSizeFlag,
-  handleSelectedFileAndValidation,
+  initiateFilePickerAndResetSizeFlag,
+  validateAndProcessFile,
   setTeamLogoToDisplay,
-  createOrDeleteLogo,
+  AddOrRemoveLogo,
 } = userFilePicker();
 
 const modalText = ref({
@@ -48,41 +51,27 @@ const resetRef = () => {
 };
 
 /**
- * Register the input value in the modalStore.
- * If the input is not empty and the error is true, set the error to false to remove the error message (the user is typing)
- * @param value being emitted by the InputText component
- */
-const setTeamNameToDisplay = (value: string) => {
-  if (value !== "" && isMissingTeamNameError.value === true) {
-    isMissingTeamNameError.value = false;
-  }
-  modalStore.setTeamNameInputValue(value);
-};
-
-/**
- * Register the input value in the modalStore.
- * @param value being emitted by the InputTextArea component
- */
-const setTeamDescriptionToDisplay = (value: string) => {
-  modalStore.setTeamDescriptionInputValue(value);
-};
-
-/**
  * Depending on the modal mode, change the modal text
  * @param newIsShow modalStore.getIsShow
  * @param newMode modalStore.getMode
  */
 const setModalHeaderText = (newIsShow: boolean, newMode: MODALMODE) => {
-  if (newIsShow && newMode === MODALMODE.teamEdit) {
+  if (!newIsShow) return;
+
+  if (newMode === MODALMODE.teamEdit) {
     modalText.value = {
       title: "Team edition",
       text: "You can edit your team name, description and logo",
     };
-  } else if (newIsShow && newMode === MODALMODE.teamCreate) {
+    return;
+  }
+
+  if (newMode === MODALMODE.teamCreate) {
     modalText.value = {
       title: "Team creation",
       text: "The team name must be provided. You can also add a description and a logo",
     };
+    return;
   }
 };
 
@@ -93,7 +82,7 @@ watch(
     setTeamLogoToDisplay(newIsShow, newMode);
     setModalHeaderText(newIsShow, newMode);
 
-    onOpenDisplayedLogo.value = logoDisplayed.value;
+    logoAtModalOpen.value = logoDisplayed.value;
   },
   { immediate: true },
 );
@@ -109,7 +98,8 @@ const onModalAccept = async () => {
     isMissingTeamNameError.value = true;
     return;
   }
-  await createOrDeleteLogo();
+
+  await AddOrRemoveLogo();
 
   emit("onAccept");
   resetRef();
@@ -129,11 +119,11 @@ const onModalCancel = () => {
  * Then trigger the function handling the selected file, and the validation. in order to display the new logo or not.
  * (the create or delete logo function will be called when the user will submit the form)
  */
-const onCreateTeamLogoPress = () => {
+const onAddTeamLogoPress = () => {
   if (isLogoToBeDeleted.value) {
     isLogoToBeDeleted.value = false;
   }
-  triggerFilePickerAndResetSizeFlag();
+  initiateFilePickerAndResetSizeFlag();
 };
 
 /**
@@ -144,24 +134,44 @@ const onCreateTeamLogoPress = () => {
  * * * Initial logo is an image and a new image was selected, set the preview image back
  * * Reset the **delete flag** by pressing the button again.
  */
-const onDeleteTeamLogoPress = () => {
+const onRemoveTeamLogoPress = () => {
+  // reset visual effect.
   isFileSizeTooBig.value = false;
+
+  // allow to toggle the delete flag so visual effect
   if (isLogoToBeDeleted.value) {
     isLogoToBeDeleted.value = false;
     return;
   }
 
-  if (onOpenDisplayedLogo.value === defaultTeamImage) {
-    // set back default logo
-    logoDisplayed.value = defaultTeamImage;
-  } else {
-    if (onOpenDisplayedLogo.value !== logoDisplayed.value) {
-      // set back preview image
-      logoDisplayed.value = onOpenDisplayedLogo.value;
-    } else {
-      isLogoToBeDeleted.value = true;
-    }
+  const isDefaultLogo = logoAtModalOpen.value === defaultTeamImage;
+  const isInitialLogoSameAsPickedLogo = logoAtModalOpen.value === logoDisplayed.value;
+
+  if (isDefaultLogo === false) {
+    isInitialLogoSameAsPickedLogo
+      ? (isLogoToBeDeleted.value = true)
+      : (logoDisplayed.value = logoAtModalOpen.value);
   }
+};
+
+/**
+ * Register the input value in the modalStore.
+ * If the input is not empty and the error is true, set the error to false to remove the error message (the user is typing)
+ * @param value being emitted by the InputText component
+ */
+const setTeamNameToDisplay = (value: string) => {
+  if (value !== "" && isMissingTeamNameError.value === true) {
+    isMissingTeamNameError.value = false;
+  }
+  modalStore.setTeamNameInputValue(value);
+};
+
+/**
+ * Register the input value in the modalStore.
+ * @param value being emitted by the InputTextArea component
+ */
+const setTeamDescriptionToDisplay = (value: string) => {
+  modalStore.setTeamDescriptionInputValue(value);
 };
 </script>
 
@@ -193,18 +203,18 @@ const onDeleteTeamLogoPress = () => {
         <aside class="container__buttons_aside">
           <button-icon
             :icon="deleteIcon"
-            @click="onDeleteTeamLogoPress"
+            @click="onRemoveTeamLogoPress"
           />
           <button-icon
             :icon="pencilIcon"
-            @click="onCreateTeamLogoPress"
+            @click="onAddTeamLogoPress"
           />
           <input
             class="display_none"
             type="file"
             name="file"
             ref="inputFileElement"
-            @change="handleSelectedFileAndValidation"
+            @change="validateAndProcessFile"
           />
         </aside>
       </section>

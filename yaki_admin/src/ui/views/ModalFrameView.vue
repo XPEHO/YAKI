@@ -7,8 +7,14 @@ import { useModalStore } from "@/stores/modalStore";
 import { isATeamType } from "@/models/team.type";
 import { MODALMODE } from "@/constants/modalMode.enum";
 import { TEAMPARAMS } from "@/constants/pathParam.enum";
+import { useTeamStore } from "@/stores/teamStore";
+import { useTeammateStore } from "@/stores/teammateStore";
+import { useCaptainStore } from "@/stores/captainStore";
 
 const modalStore = useModalStore();
+const teamStore = useTeamStore();
+const teammateStore = useTeammateStore();
+const captainStore = useCaptainStore();
 
 const onCancel = () => {
   modalStore.switchModalVisibility(false, null);
@@ -28,7 +34,15 @@ const closeModal = () => {
  *
  */
 const onAccept = async () => {
-  const result = await modalStore.onModalChoiceValidation();
+  const isUserToBeDeleted = modalStore.getMode === MODALMODE.userDelete;
+  const isCaptainToBeDeleted = modalStore.getMode === MODALMODE.captainDelete;
+
+  const result = isUserToBeDeleted
+    ? await teammateStore.deleteTeammateFromTeam()
+    : isCaptainToBeDeleted
+      ? await captainStore.deleteCaptain()
+      : await teamStore.onModalTeamActionAccept();
+
   modalStore.switchModalVisibility(false, null);
 
   if (isATeamType(result)) {
