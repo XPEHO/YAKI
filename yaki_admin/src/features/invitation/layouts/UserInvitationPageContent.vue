@@ -8,7 +8,6 @@ import InvitationViewHeader from "@/features/invitation/components/InvitationVie
 import UserInvitationList from "@/features/invitation/components/UserInvitationList.vue";
 
 import { useRoute } from "vue-router";
-import { useTeamStore } from "@/stores/teamStore";
 import { INVITEDROLE } from "@/constants/pathParam.enum";
 import { useSelectedRoleStore } from "@/stores/selectedRole";
 import { useTeammateStore } from "@/stores/teammateStore";
@@ -21,7 +20,6 @@ import { useUserStore } from "@/stores/userStore";
 const route = useRoute();
 const invitationRole = route.params.role as INVITEDROLE;
 
-const teamStore = useTeamStore();
 const selectedRoleStore = useSelectedRoleStore();
 const teammateStore = useTeammateStore();
 const captainStore = useCaptainStore();
@@ -54,7 +52,7 @@ onBeforeMount(async () => {
 
 const onUserInvitation = (invitedUser: UserWithIdType) => {
   if (invitationRole === INVITEDROLE.teammate) {
-    teamStore.addUserToTeam(invitedUser.id);
+    teammateStore.addTeammateToTeam(invitedUser.id);
   }
   if (invitationRole === INVITEDROLE.captain) {
     selectedRoleStore.addCaptainToCompany(invitedUser.id);

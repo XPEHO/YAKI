@@ -19,7 +19,7 @@ const onClickAddTeam = () => {
 };
 
 const onClickSelectTeam = async (team: TeamType) => {
-  await teamStore.setTeamInfoAndFetchTeammates(team);
+  await teamStore.setTeamSelectedAndFetchTeammates(team);
   router.push({ path: "/dashboard/manage-team" });
 };
 
