@@ -1,5 +1,6 @@
 package com.xpeho.yaki_admin_backend.presentation.controllers;
 
+import com.xpeho.yaki_admin_backend.data.models.UserModel;
 import com.xpeho.yaki_admin_backend.domain.entities.ChangePasswordEntity;
 import com.xpeho.yaki_admin_backend.domain.entities.UserEntity;
 import com.xpeho.yaki_admin_backend.domain.entities.UserEntityIn;
@@ -11,6 +12,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -71,10 +74,22 @@ public class UserController {
         return userService.deleteById(id);
     }
 
-    //route avalaible when changing your password
+    //route available when changing your password
     @PutMapping("/change-password")
     public void changePassword(@RequestBody ChangePasswordEntity changePasswordEntity) {
         userService.changePassword(changePasswordEntity);
     }
 
+    //route for to get the currently authenticated user
+    @GetMapping("current-user")
+    public UserEntity getCurrentUser() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (principal instanceof UserDetails) {
+            int id = ((UserModel) principal).getUserId();
+            return userService.findById(id);
+        } else {
+            throw new RuntimeException("User not authenticated");
+        }
+    }
 }

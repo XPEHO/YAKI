@@ -1,10 +1,35 @@
 <script setup lang="ts">
 import avatarIcon from "@/assets/images/avatarLetters.png";
+import { UserWithIdType } from "@/models/userWithId.type";
 import router from "@/router/router";
+import { PropType, onMounted } from "vue";
 
 const profile = () => {
   router.push("/dashboard/profile");
 };
+
+let user: UserWithIdType | null = null;
+
+const fetchUser = async () => {
+  try {
+    const response = await fetch("current-user");
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    user = await response.json();
+  } catch (e) {
+    console.error("Error fetching user:", e);
+  }
+};
+
+onMounted(fetchUser);
+
+const props = defineProps({
+  user: {
+    type: Object as PropType<UserWithIdType>,
+    required: true,
+  },
+});
 </script>
 
 <template>
@@ -19,8 +44,8 @@ const profile = () => {
       />
     </figure>
     <div class="user-card__wrapper-user-infos">
-      <p class="user-card__name-text">Admin</p>
-      <p class="user-card__email_text">Administrator</p>
+      <p class="user-card__name-text">{{ user.lastname }}</p>
+      <p class="user-card__email_text">{{ user.firstname }}</p>
     </div>
   </article>
 </template>
