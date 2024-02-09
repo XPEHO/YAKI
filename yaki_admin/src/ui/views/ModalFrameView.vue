@@ -10,11 +10,13 @@ import { TEAMPARAMS } from "@/constants/pathParam.enum";
 import { useTeamStore } from "@/stores/teamStore";
 import { useTeammateStore } from "@/stores/teammateStore";
 import { useCaptainStore } from "@/stores/captainStore";
+import { useTeamLogoStore } from "@/stores/teamLogoStore";
 
 const modalStore = useModalStore();
 const teamStore = useTeamStore();
 const teammateStore = useTeammateStore();
 const captainStore = useCaptainStore();
+const teamLogoStore = useTeamLogoStore();
 
 const onCancel = () => {
   modalStore.switchModalVisibility(false, null);
@@ -25,26 +27,50 @@ const closeModal = () => {
 };
 
 /**
- * At modal accept validation.
- * Trigger the onMdodalChoiceValidation method of the modalStore.
- * Given the result type and modal mode, redirect to the right page.
+ * Handles the modal accept action.
+ * Depending on the current modal mode,
+ * it either
+ * * deletes a user,
+ * * deletes a captain,
+ * * or performs create / update / delete a team.
  *
- * * If the current page is team/empty or team/deleted, redirect to /manage-team after a team creation.
- * * After a team deletion, redirect to team/deleted.
- *
+ * @returns {Promise} The result of the async operation. The specific result depends on the modal mode:
+ * - If the modal mode is 'userDelete', it returns the result of deleting a teammate from the team.
+ * - If the modal mode is 'captainDelete', it returns the result of deleting a captain.
+ * - Otherwise, it returns the result of performing CRUD operations on a team.
  */
-const onAccept = async () => {
+const restActions = async () => {
   const isUserToBeDeleted = modalStore.getMode === MODALMODE.userDelete;
   const isCaptainToBeDeleted = modalStore.getMode === MODALMODE.captainDelete;
 
-  const result = isUserToBeDeleted
-    ? await teammateStore.deleteTeammateFromTeam()
-    : isCaptainToBeDeleted
-      ? await captainStore.deleteCaptain()
-      : await teamStore.onModalTeamActionAccept();
+  if (isUserToBeDeleted) {
+    return await teammateStore.deleteTeammateFromTeam();
+  } else if (isCaptainToBeDeleted) {
+    return await captainStore.removeCaptainRight();
+  } else {
+    return await teamStore.crudOperations();
+  }
+};
 
-  modalStore.switchModalVisibility(false, null);
+/**
+ * Handles the team logo.
+ * If the modal mode is 'teamEdit', it either
+ * * deletes the logo if the user wants to delete it,
+ * * or creates / updates the logo if the user wants to keep it.
+ * If the modal mode is 'teamDelete', it deletes the logo.
+ */
+const handleTeamLogo = () => {
+  if (modalStore.getMode === MODALMODE.teamEdit) {
+    if (teamLogoStore.getIsLogoToBeDeleted) {
+      teamLogoStore.delete();
+    } else {
+      teamLogoStore.createOrUpdate();
+    }
+  }
+  if (modalStore.getMode === MODALMODE.teamDelete) teamLogoStore.delete();
+};
 
+const handleRedirect = (result: any) => {
   if (isATeamType(result)) {
     const currentPath = router.currentRoute.value.path;
     if (
@@ -57,6 +83,18 @@ const onAccept = async () => {
       router.push({ path: `/dashboard/team/${TEAMPARAMS.deleted}` });
     }
   }
+};
+
+/**
+ * At modal accept validation.
+ */
+const onAccept = async () => {
+  const result = restActions();
+  handleTeamLogo();
+
+  modalStore.switchModalVisibility(false, null);
+
+  handleRedirect(result);
 };
 </script>
 

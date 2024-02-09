@@ -8,6 +8,7 @@ import { TeamLogoType } from "@/models/TeamLogo.type";
 import { MODALMODE } from "@/constants/modalMode.enum";
 import { useModalStore } from "@/stores/modalStore";
 import { useRoleStore } from "@/stores/roleStore";
+import { useTeamLogoStore } from "./teamLogoStore";
 
 interface State {
   teamList: TeamType[];
@@ -99,23 +100,27 @@ export const useTeamStore = defineStore("teamStore", {
     // TEAMS CRUD METHODS
 
     /**
-     * Modal action management :
      * Invoked in ModalFrameView, when user click on "validation" button in modal
+     *
      * Trigger corresponding methods depending on the current modal mode set when invoking switchModalVisibility.
      * See MODALMODE enum for more information
      *
      * Actions :
      *
-     * * teamCreate : create a team
+     * * teamCreate : create a team (the create or update logo will also be triggered if a logo is set in the modal)
      * * teamEdit : edit a team informations
      * * teamDelete : delete a team from the logged captain's team list
      */
-    async onModalTeamActionAccept(): Promise<void | TeamType> {
+    async crudOperations(): Promise<void | TeamType> {
       const modalStore = useModalStore();
+      const teamLogoStore = useTeamLogoStore();
 
       switch (modalStore.getMode) {
-        case MODALMODE.teamCreate:
-          return await this.createTeam();
+        case MODALMODE.teamCreate: {
+          const createdTeam = await this.createTeam();
+          await teamLogoStore.createOrUpdate();
+          return createdTeam;
+        }
         case MODALMODE.teamEdit:
           await this.updateTeam();
           return;
@@ -133,10 +138,10 @@ export const useTeamStore = defineStore("teamStore", {
      */
     async createTeam(): Promise<TeamType> {
       const selectedRoleStore = useSelectedRoleStore();
+      const modalStore = useModalStore();
+
       const customerId = selectedRoleStore.getCustomerIdSelected;
       const captainId = selectedRoleStore.getCaptainIdSelected;
-
-      const modalStore = useModalStore();
 
       //the back handle if the captainId is null or not
       const createdTeam = await teamService.createTeam(
@@ -146,7 +151,7 @@ export const useTeamStore = defineStore("teamStore", {
         modalStore.getTeamDescriptionInputValue,
       );
 
-      await this.selectTeamRefreshListAndResetInputs(createdTeam);
+      await this.selectTeamRefreshListResetInputs(createdTeam);
       this.resetTeammateList();
 
       return createdTeam;
@@ -165,7 +170,7 @@ export const useTeamStore = defineStore("teamStore", {
       // reset store values after team deletion
       modalStore.setTeammateNameToDelete("");
 
-      await this.selectTeamRefreshListAndResetInputs({} as TeamType);
+      await this.selectTeamRefreshListResetInputs({} as TeamType);
       this.resetTeammateList();
 
       return this.getTeamDeleted;
@@ -186,7 +191,7 @@ export const useTeamStore = defineStore("teamStore", {
         modalStore.getTeamDescriptionInputValue,
       );
 
-      await this.selectTeamRefreshListAndResetInputs(editedTeam);
+      await this.selectTeamRefreshListResetInputs(editedTeam);
 
       return editedTeam;
     },
@@ -197,7 +202,7 @@ export const useTeamStore = defineStore("teamStore", {
      * * Reset the input value of the modal (teamNameInputValue, teamDescriptionInputValue)
      * @param team TeamType Team to be selected
      */
-    async selectTeamRefreshListAndResetInputs(team: TeamType) {
+    async selectTeamRefreshListResetInputs(team: TeamType) {
       this.setTeamSelected(team);
 
       const roleStore = useRoleStore();
