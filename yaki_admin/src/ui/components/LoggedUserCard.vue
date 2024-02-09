@@ -2,7 +2,7 @@
 import avatarIcon from "@/assets/images/avatarLetters.png";
 import { UserWithIdType } from "@/models/userWithId.type";
 import router from "@/router/router";
-import { PropType, onMounted } from "vue";
+import { onMounted } from "vue";
 
 const profile = () => {
   router.push("/dashboard/profile");
@@ -10,9 +10,16 @@ const profile = () => {
 
 let user: UserWithIdType | null = null;
 
+const token = localStorage.getItem("token");
+
 const fetchUser = async () => {
   try {
-    const response = await fetch("current-user");
+    const response = await fetch(import.meta.env.BASE_URL + "/users/current-user", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -23,13 +30,6 @@ const fetchUser = async () => {
 };
 
 onMounted(fetchUser);
-
-const props = defineProps({
-  user: {
-    type: Object as PropType<UserWithIdType>,
-    required: true,
-  },
-});
 </script>
 
 <template>
@@ -44,8 +44,8 @@ const props = defineProps({
       />
     </figure>
     <div class="user-card__wrapper-user-infos">
-      <p class="user-card__name-text">{{ user.lastname }}</p>
-      <p class="user-card__email_text">{{ user.firstname }}</p>
+      <p class="user-card__name-text">{{ user?.lastname }}</p>
+      <p class="user-card__email_text">{{ user?.firstname }}</p>
     </div>
   </article>
 </template>
