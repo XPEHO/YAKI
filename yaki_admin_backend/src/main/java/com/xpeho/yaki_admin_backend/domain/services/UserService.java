@@ -23,5 +23,4 @@ public interface UserService {
     UserEntity deleteById(int id);
 
     void changePassword(ChangePasswordEntity changePasswordEntity);
-
 }

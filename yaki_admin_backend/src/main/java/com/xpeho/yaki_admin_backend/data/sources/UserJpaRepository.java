@@ -22,6 +22,4 @@ public interface UserJpaRepository extends JpaRepository<UserModel, Integer> {
     List<UserModel> findByUserIdBetween(int idStart, int idEnd);
 
     boolean existsByEmail(String email);
-
-
 }
