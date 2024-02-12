@@ -44,6 +44,18 @@ export class UserService {
 
     return response;
   };
+
+  getCurrentUser = async (): Promise<UserWithIdType> => {
+    const requestOptions = {
+      method: "GET",
+      headers: authHeader(`${URL}/users/current-user`),
+    };
+    const response = await fetch(`${URL}/users/current-user`, requestOptions)
+      .then(handleResponse)
+      .catch((err) => console.warn(err));
+
+    return response;
+  };
 }
 
 export const usersService = Object.freeze(new UserService());

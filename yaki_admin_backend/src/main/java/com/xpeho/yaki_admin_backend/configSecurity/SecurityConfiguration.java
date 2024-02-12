@@ -33,8 +33,8 @@ public class SecurityConfiguration {
                         .xssProtection(xssProtection -> xssProtection.headerValue(XXssProtectionHeaderWriter.HeaderValue.ENABLED_MODE_BLOCK))
                         .contentSecurityPolicy(policy -> policy
                                 .policyDirectives("style-src 'self' somecdn.css.com; script-src 'self'; form-action 'self'")
-                                )
                         )
+                )
                 .cors(Customizer.withDefaults())
                 .csrf((csrf) -> csrf.disable())
                 .authorizeHttpRequests(authorize -> authorize
