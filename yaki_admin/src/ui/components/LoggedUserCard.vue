@@ -14,17 +14,7 @@ const profile = () => {
 let user = ref<UserWithIdType | null>(null);
 
 // Define an asynchronous function `fetchUser`.
-// Retrieve the 'user' item from local storage.
 const fetchUser = async () => {
-  let storedUser = localStorage.getItem("user");
-  let token = null;
-
-  // If `storedUser` exists, parse it from JSON string to an object.
-  if (storedUser) {
-    let parsedUser = JSON.parse(storedUser);
-    token = parsedUser.token;
-  }
-
   // Try to fetch the current user using the token.
   try {
     const fetchedUser = await usersService.getCurrentUser();
