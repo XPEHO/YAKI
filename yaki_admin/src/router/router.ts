@@ -37,7 +37,7 @@ const router = createRouter({
             const roleStore = useRoleStore();
 
             if (teamStore.getIsTeamListSetOnLoggin === false) {
-              await teamStore.setTeamListOfACaptain(roleStore.getCaptainsId);
+              await teamStore.setTeamsListByCaptainId(roleStore.getCaptainsId);
             }
             if (teamStore.getTeamList.length === 0) {
               next(`/dashboard/team/${TEAMPARAMS.empty}`);

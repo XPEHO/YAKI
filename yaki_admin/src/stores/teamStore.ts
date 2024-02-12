@@ -35,6 +35,7 @@ export const useTeamStore = defineStore("teamStore", {
   }),
   getters: {
     getTeamList: (state: State) => state.teamList,
+    // used in router.
     getIsTeamListSetOnLoggin: (state: State) => state.isTeamListSetOnLoggin,
     getTeamSelected: (state: State) => state.teamSelected,
     getTeamSelectedLogo: (state: State) => state.teamSelectedLogo,
@@ -83,7 +84,7 @@ export const useTeamStore = defineStore("teamStore", {
      * will fetch the teams list of a captain
      * A captain can have multiple teams, therefore a list of captainId is needed
      */
-    async setTeamListOfACaptain(captainsId: number[]) {
+    async setTeamsListByCaptainId(captainsId: number[]) {
       this.teamList = [];
       const promises: Promise<TeamType[]>[] = captainsId.map((captainId) =>
         teamService.getAllTeamsWithinCaptain(captainId),
@@ -97,7 +98,7 @@ export const useTeamStore = defineStore("teamStore", {
       }
     },
 
-    // TEAMS CRUD METHODS
+    // TEAMS CRUD METHODS  -------------------------------------------------------------------
 
     /**
      * Invoked in ModalFrameView, when user click on "validation" button in modal
@@ -115,18 +116,30 @@ export const useTeamStore = defineStore("teamStore", {
       const modalStore = useModalStore();
       const teamLogoStore = useTeamLogoStore();
 
+      let result: TeamType = {} as TeamType;
+
       switch (modalStore.getMode) {
         case MODALMODE.teamCreate: {
-          const createdTeam = await this.createTeam();
+          result = await this.createTeam();
           await teamLogoStore.createOrUpdate();
-          return createdTeam;
+          this.resetTeammatesList();
+          this.resetModalInputsValues();
+          break;
         }
-        case MODALMODE.teamEdit:
-          await this.updateTeam();
-          return;
-        case MODALMODE.teamDelete:
-          return await this.deleteTeam();
+        case MODALMODE.teamEdit: {
+          result = await this.updateTeam();
+          this.resetModalInputsValues();
+          break;
+        }
+        case MODALMODE.teamDelete: {
+          result = await this.deleteTeam();
+          this.resetTeammatesList();
+          break;
+        }
       }
+      await this.sharedPostCrudOperations(result);
+
+      return result;
     },
 
     /**
@@ -144,36 +157,12 @@ export const useTeamStore = defineStore("teamStore", {
       const captainId = selectedRoleStore.getCaptainIdSelected;
 
       //the back handle if the captainId is null or not
-      const createdTeam = await teamService.createTeam(
+      return await teamService.createTeam(
         captainId,
         modalStore.getTeamNameInputValue,
         customerId,
         modalStore.getTeamDescriptionInputValue,
       );
-
-      await this.selectTeamRefreshListResetInputs(createdTeam);
-      this.resetTeammateList();
-
-      return createdTeam;
-    },
-
-    /**
-     * Delete a team by its id
-     * @param deletedTeam: TeamType
-     */
-    async deleteTeam(): Promise<TeamType> {
-      const modalStore = useModalStore();
-
-      const deletedTeam = await teamService.deleteTeam(this.getTeamSelected.id);
-      // information of the deleted team saved to be displayed in the delete team page resume (TeamStatusNotification.vue)
-      this.setTeamDeleted(deletedTeam);
-      // reset store values after team deletion
-      modalStore.setTeammateNameToDelete("");
-
-      await this.selectTeamRefreshListResetInputs({} as TeamType);
-      this.resetTeammateList();
-
-      return this.getTeamDeleted;
     },
 
     /**
@@ -183,31 +172,46 @@ export const useTeamStore = defineStore("teamStore", {
     async updateTeam(): Promise<TeamType> {
       const modalStore = useModalStore();
 
-      const editedTeam = await teamService.updateTeam(
+      return await teamService.updateTeam(
         this.getTeamSelected.id,
         this.getTeamSelected.captainsId[0],
         modalStore.getTeamNameInputValue,
         null,
         modalStore.getTeamDescriptionInputValue,
       );
-
-      await this.selectTeamRefreshListResetInputs(editedTeam);
-
-      return editedTeam;
     },
 
     /**
-     * * Set the team be to selected in the team list.
-     * * Refresh the team list to reflect any list team change (Get again the team list of the current captain)
-     * * Reset the input value of the modal (teamNameInputValue, teamDescriptionInputValue)
-     * @param team TeamType Team to be selected
+     * Delete a team by its id.
+     * Set the teamDeleted attribute to the deleted team.
+     * Reset the deleted team name in the modal store.
+     * @param deletedTeam: TeamType
+     * @returns return empty object to reset the teamSelected attribute.
      */
-    async selectTeamRefreshListResetInputs(team: TeamType) {
-      this.setTeamSelected(team);
+    async deleteTeam(): Promise<TeamType> {
+      const deletedTeam = await teamService.deleteTeam(this.getTeamSelected.id);
+      // information of the deleted team saved to be displayed in the delete team page resume (TeamStatusNotification.vue)
+      this.setTeamDeleted(deletedTeam);
 
+      return deletedTeam;
+    },
+
+    /**
+     * Select the team that has been created, edited or deleted.
+     * Refrech the teams list of the captain.
+     * @param team
+     */
+    async sharedPostCrudOperations(team: TeamType): Promise<void> {
       const roleStore = useRoleStore();
-      await this.setTeamListOfACaptain(roleStore.getCaptainsId);
 
+      this.setTeamSelected(team);
+      await this.setTeamsListByCaptainId(roleStore.getCaptainsId);
+    },
+
+    /**
+     * Reset the input values of the modal store
+     */
+    resetModalInputsValues() {
       const modalStore = useModalStore();
       modalStore.setTeamNameInputValue("");
       modalStore.setTeamDescriptionInputValue("");
@@ -217,12 +221,12 @@ export const useTeamStore = defineStore("teamStore", {
      * Reset the teammate list on teammateStore (set to an empty array)
      * Invoked after team creation and team delection to restart with a empty list.
      */
-    resetTeammateList() {
+    resetTeammatesList() {
       const teammateStore = useTeammateStore();
       teammateStore.resetTeamatesList();
     },
 
-    // TEAMS LOGO METHODS
+    // TEAMS LOGO METHODS -------------------------------------------------------------------
 
     /**
      * Get the team logo of a team given its id
@@ -231,29 +235,6 @@ export const useTeamStore = defineStore("teamStore", {
     async getTeamLogo(teamId: number): Promise<void> {
       const teamLogo: TeamLogoType = await teamLogoService.getTeamLogo(teamId);
       this.teamSelectedLogo = teamLogo;
-    },
-
-    /**
-     * Fetch the team logo of a team
-     * @param teamId id of the team
-     * @returns TeamLogoType
-     * @throws Error if the team logo is not found
-     */
-    async createOrUpdateTeamLogo(logo: File): Promise<void> {
-      const teamId = this.getTeamSelected.id;
-      const savedTeamLogo: TeamLogoType = await teamLogoService.createOrUpdateTeamLogo(
-        teamId,
-        logo,
-      );
-
-      if (savedTeamLogo.teamLogoBlob === null) return;
-
-      this.teamSelectedLogo = savedTeamLogo;
-    },
-
-    async deleteTeamLogo(): Promise<void> {
-      teamLogoService.deleteTeamLogo(this.getTeamSelected.id);
-      this.resetTeamStoreSelectedLogo();
     },
 
     /**

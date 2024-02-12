@@ -12,6 +12,8 @@ import { useTeammateStore } from "@/stores/teammateStore";
 import { useCaptainStore } from "@/stores/captainStore";
 import { useTeamLogoStore } from "@/stores/teamLogoStore";
 
+import defaultTeamImage from "@/assets/images/teamDefaultImg2.svg";
+
 const modalStore = useModalStore();
 const teamStore = useTeamStore();
 const teammateStore = useTeammateStore();
@@ -67,7 +69,12 @@ const handleTeamLogo = () => {
       teamLogoStore.createOrUpdate();
     }
   }
-  if (modalStore.getMode === MODALMODE.teamDelete) teamLogoStore.delete();
+  const isDefaultOrNoLogo =
+    teamLogoStore.getLogoDisplayed !== "" || teamLogoStore.getLogoDisplayed !== defaultTeamImage;
+
+  if (!isDefaultOrNoLogo && modalStore.getMode === MODALMODE.teamDelete) {
+    teamLogoStore.delete();
+  }
 };
 
 const handleRedirect = (result: any) => {
@@ -89,11 +96,10 @@ const handleRedirect = (result: any) => {
  * At modal accept validation.
  */
 const onAccept = async () => {
-  const result = restActions();
+  const result = await restActions();
+
   handleTeamLogo();
-
   modalStore.switchModalVisibility(false, null);
-
   handleRedirect(result);
 };
 </script>
