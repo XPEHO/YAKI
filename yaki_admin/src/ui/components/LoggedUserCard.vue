@@ -12,6 +12,8 @@ let user: UserWithIdType | null = null;
 
 const token = localStorage.getItem("token");
 
+console.log("token", token);
+
 const fetchUser = async () => {
   try {
     const response = await fetch(import.meta.env.BASE_URL + "/users/current-user", {
@@ -20,10 +22,14 @@ const fetchUser = async () => {
       },
     });
 
+    console.log("response", response);
+
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     user = await response.json();
+
+    console.log("user", user);
   } catch (e) {
     console.error("Error fetching user:", e);
   }
