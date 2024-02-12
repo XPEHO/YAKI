@@ -35,8 +35,8 @@ public class SecurityConfiguration {
                                 .policyDirectives("style-src 'self' somecdn.css.com; script-src 'self'; form-action 'self'")
                         )
                 )
-                .csrf((csrf) -> csrf.disable())
                 .cors(Customizer.withDefaults())
+                .csrf((csrf) -> csrf.disable())
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(
                                 "/actuator/prometheus",
