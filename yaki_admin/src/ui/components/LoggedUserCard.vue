@@ -2,6 +2,7 @@
 import avatarIcon from "@/assets/images/avatarLetters.png";
 import { UserWithIdType } from "@/models/userWithId.type";
 import router from "@/router/router";
+import { usersService } from "@/services/users.service";
 import { onMounted } from "vue";
 
 const profile = () => {
@@ -10,26 +11,21 @@ const profile = () => {
 
 let user: UserWithIdType | null = null;
 
-const token = localStorage.getItem("token");
-
-console.log("token", token);
-
 const fetchUser = async () => {
+  let storedUser = localStorage.getItem("user");
+  let token = null;
+
+  if (storedUser) {
+    let parsedUser = JSON.parse(storedUser);
+    token = parsedUser.token;
+  }
+
+  console.log("Token:", token);
+
   try {
-    const response = await fetch(import.meta.env.BASE_URL + "/users/current-user", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    user = await usersService.getCurrentUser(token);
 
-    console.log("response", response);
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    user = await response.json();
-
-    console.log("user", user);
+    console.log("User:", user); // Log the user
   } catch (e) {
     console.error("Error fetching user:", e);
   }
@@ -50,8 +46,8 @@ onMounted(fetchUser);
       />
     </figure>
     <div class="user-card__wrapper-user-infos">
-      <p class="user-card__name-text">{{ user?.lastname }}</p>
-      <p class="user-card__email_text">{{ user?.firstname }}</p>
+      <p class="user-card__name-text"></p>
+      <p class="user-card__name_text"></p>
     </div>
   </article>
 </template>
