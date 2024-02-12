@@ -11,7 +11,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.header.writers.XXssProtectionHeaderWriter;
 
 @Configuration
@@ -36,10 +35,8 @@ public class SecurityConfiguration {
                                 .policyDirectives("style-src 'self' somecdn.css.com; script-src 'self'; form-action 'self'")
                         )
                 )
+                .csrf((csrf) -> csrf.disable())
                 .cors(Customizer.withDefaults())
-                .csrf(csrf -> csrf
-                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                )
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(
                                 "/actuator/prometheus",
