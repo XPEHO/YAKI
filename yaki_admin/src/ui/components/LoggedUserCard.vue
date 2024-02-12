@@ -27,7 +27,7 @@ const fetchUser = async () => {
 
   // Try to fetch the current user using the token.
   try {
-    const fetchedUser = await usersService.getCurrentUser(token);
+    const fetchedUser = await usersService.getCurrentUser();
     user.value = fetchedUser;
   } catch (e) {
     console.error("Error fetching user:", e);

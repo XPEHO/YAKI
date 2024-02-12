@@ -45,12 +45,10 @@ export class UserService {
     return response;
   };
 
-  getCurrentUser = async (token: String): Promise<UserWithIdType> => {
+  getCurrentUser = async (): Promise<UserWithIdType> => {
     const requestOptions = {
       method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      headers: authHeader(`${URL}/users/current-user`),
     };
     const response = await fetch(`${URL}/users/current-user`, requestOptions)
       .then(handleResponse)
