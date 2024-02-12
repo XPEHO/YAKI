@@ -31,14 +31,23 @@ const modalText = ref({
 });
 
 /**
- * Reset the state of :
+ * Reset on modal accept or cancel.
  * * isMissingTeamNameError (error when user try to submit an empty team name)
  * * isFileSizeTooBig (error when user try to submit a logo that is too heavy)
- * * isLogoToBeDeleted (flag to delete the logo)
+ *
  */
-const resetRef = () => {
+const teamNameAndFileSizeFlagReset = () => {
   if (isMissingTeamNameError.value) isMissingTeamNameError.value = false;
   if (teamLogoStore.isFileSizeTooBig) teamLogoStore.isFileSizeTooBig = false;
+};
+
+/**
+ * On open picker and remove logo press.
+ * Reset the size and delete flag to reset the visual effects on selecting new file.
+ */
+const sizeAndDeleteFlagReset = () => {
+  if (teamLogoStore.getIsFileSizeTooBig) teamLogoStore.setIsFileSizeTooBig(false);
+  if (teamLogoStore.getIsLogoToBeDeleted) teamLogoStore.setIsLogoToBeDeleted(false);
 };
 
 /**
@@ -85,13 +94,12 @@ watch(
 
 /**
  * Open the file picker and reset the file flag.
- * If IsFileSizeTooBig was set to true, reset the flag.
- * If isLogoToBeDeleted is set to true, reset the flag.
+ * reset size and delete logo flags, to reset the visuals effect on selecting new file.
  */
-const openFilePickerAndResetFileFlag = () => {
+const openFilePicker = () => {
   inputFileElement.value!.click();
-  if (teamLogoStore.getIsFileSizeTooBig) teamLogoStore.setIsFileSizeTooBig(false);
-  if (teamLogoStore.getIsLogoToBeDeleted) teamLogoStore.isLogoToBeDeleted = false;
+
+  sizeAndDeleteFlagReset();
 };
 
 /**
@@ -104,7 +112,7 @@ const onAddLogoPress = () => {
   if (teamLogoStore.isLogoToBeDeleted) {
     teamLogoStore.setIsLogoToBeDeleted(false);
   }
-  openFilePickerAndResetFileFlag();
+  openFilePicker();
 };
 
 /**
@@ -117,9 +125,7 @@ const onAddLogoPress = () => {
 const onRemoveLogoPress = () => {
   // allow to toggle the delete flag so visual effect
   if (teamLogoStore.getIsLogoToBeDeleted) {
-    teamLogoStore.setIsLogoToBeDeleted(false);
-    // reset visual effect.
-    teamLogoStore.setIsFileSizeTooBig(false);
+    sizeAndDeleteFlagReset();
     return;
   }
 
@@ -148,7 +154,7 @@ const onModalAccept = async () => {
     return;
   }
   emit("onAccept");
-  resetRef();
+  teamNameAndFileSizeFlagReset();
 };
 
 /**
@@ -156,7 +162,7 @@ const onModalAccept = async () => {
  */
 const onModalCancel = () => {
   emit("onCancel");
-  resetRef();
+  teamNameAndFileSizeFlagReset();
 };
 
 /**

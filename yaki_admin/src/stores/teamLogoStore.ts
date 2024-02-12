@@ -2,6 +2,8 @@ import { MODALMODE } from "@/constants/modalMode.enum";
 import { setTeamLogoUrl } from "@/utils/images.utils";
 import { defineStore } from "pinia";
 import { useTeamStore } from "@/stores/teamStore";
+import { teamLogoService } from "@/services/teamLogo.service";
+import { TeamLogoType } from "@/models/TeamLogo.type";
 
 interface State {
   fileSelected: File | null;
@@ -126,10 +128,18 @@ export const useTeamLogoStore = defineStore("teamLogoStore", {
      */
     async createOrUpdate(): Promise<void> {
       const teamStore = useTeamStore();
-      if (this.fileSelected) {
-        await teamStore.createOrUpdateTeamLogo(this.fileSelected);
-        this.setFileSelected(null);
-      }
+
+      if (!this.fileSelected) return;
+
+      const savedTeamLogo: TeamLogoType = await teamLogoService.createOrUpdateTeamLogo(
+        teamStore.getTeamSelected.id,
+        this.fileSelected,
+      );
+
+      if (savedTeamLogo.teamLogoBlob === null) return;
+      teamStore.teamSelectedLogo = savedTeamLogo;
+
+      this.setFileSelected(null);
     },
 
     /**
@@ -140,7 +150,10 @@ export const useTeamLogoStore = defineStore("teamLogoStore", {
      */
     async delete(): Promise<Promise<void>> {
       const teamStore = useTeamStore();
-      await teamStore.deleteTeamLogo();
+
+      teamLogoService.deleteTeamLogo(teamStore.getTeamSelected.id);
+      teamStore.resetTeamStoreSelectedLogo();
+
       this.setFileSelected(null);
       this.setIsLogoToBeDeleted(false);
     },
