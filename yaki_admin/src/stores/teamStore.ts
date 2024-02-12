@@ -121,7 +121,10 @@ export const useTeamStore = defineStore("teamStore", {
       switch (modalStore.getMode) {
         case MODALMODE.teamCreate: {
           result = await this.createTeam();
+          await this.sharedPostCrudOperations(result);
+
           await teamLogoStore.createOrUpdate();
+
           this.resetTeammatesList();
           this.resetModalInputsValues();
           break;
@@ -129,15 +132,16 @@ export const useTeamStore = defineStore("teamStore", {
         case MODALMODE.teamEdit: {
           result = await this.updateTeam();
           this.resetModalInputsValues();
+          await this.sharedPostCrudOperations(result);
           break;
         }
         case MODALMODE.teamDelete: {
           result = await this.deleteTeam();
           this.resetTeammatesList();
+          await this.sharedPostCrudOperations(result);
           break;
         }
       }
-      await this.sharedPostCrudOperations(result);
 
       return result;
     },

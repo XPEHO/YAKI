@@ -138,7 +138,6 @@ export const useTeamLogoStore = defineStore("teamLogoStore", {
 
       if (savedTeamLogo.teamLogoBlob === null) return;
       teamStore.teamSelectedLogo = savedTeamLogo;
-
       this.setFileSelected(null);
     },
 
