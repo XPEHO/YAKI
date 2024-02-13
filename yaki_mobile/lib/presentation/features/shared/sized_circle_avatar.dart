@@ -52,7 +52,10 @@ class CellAvatarImg extends StatelessWidget {
         borderRadius: BorderRadius.circular(
           48.0,
         ), // adjust the radius as needed
-        child: Image.memory(imageAvatar),
+        child: Image.memory(
+          imageAvatar,
+          fit: BoxFit.cover,
+        ),
       ),
     );
   }

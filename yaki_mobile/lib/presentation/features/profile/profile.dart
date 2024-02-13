@@ -185,7 +185,10 @@ Widget changeAvatarImage(WidgetRef ref) {
       borderRadius: BorderRadius.circular(
         100.0,
       ), // adjust the radius as needed
-      child: Image.memory(avatarData.avatar!),
+      child: Image.memory(
+        avatarData.avatar!,
+        fit: BoxFit.cover,
+      ),
     );
   } else {
     return CircleAvatar(
