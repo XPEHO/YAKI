@@ -27,6 +27,10 @@ class AvatarModalState extends ConsumerState<AvatarModal> {
     final LoggedUser? user = ref.watch(loginRepositoryProvider).loggedUser;
 
     Future<void> pickImage(ImageSource source) async {
+      setState(() {
+        _imageFile = null;
+      });
+
       final pickedFile = await ImagePicker().pickImage(
         source: source,
         maxHeight: 640,
