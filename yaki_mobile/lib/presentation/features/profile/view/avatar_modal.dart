@@ -27,19 +27,20 @@ class AvatarModalState extends ConsumerState<AvatarModal> {
     final LoggedUser? user = ref.watch(loginRepositoryProvider).loggedUser;
 
     Future<void> pickImage(ImageSource source) async {
-      final pickedFile = await ImagePicker().pickImage(source: source);
+      final pickedFile = await ImagePicker().pickImage(
+        source: source,
+        maxHeight: 640,
+        maxWidth: 480,
+        imageQuality: 50,
+      );
+
       if (pickedFile != null) {
         final originalImage = img.decodeImage(await pickedFile.readAsBytes());
-        final resizedImage = img.copyResize(
-          originalImage!,
-          width: 160,
-          height: 160,
-        );
 
         final directory = await getApplicationDocumentsDirectory();
         final path = directory.path;
         final File resizedImageFile = File('$path/resized_image.jpg')
-          ..writeAsBytesSync(img.encodeJpg(resizedImage));
+          ..writeAsBytesSync(img.encodeJpg(originalImage!));
 
         setState(() {
           _imageFile = resizedImageFile;
@@ -147,13 +148,22 @@ class AvatarModalState extends ConsumerState<AvatarModal> {
                         ),
                   const SizedBox(height: 10),
                   if (_imageFile != null)
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(
-                        100.0,
-                      ), // adjust the radius as needed
-                      child: Image.file(
-                        _imageFile!,
+                    SizedBox(
+                      height: 160,
+                      width: 160,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(
+                          100.0,
+                        ), // adjust the radius as needed
+                        child: Image.file(
+                          _imageFile!,
+                          fit: BoxFit.cover,
+                        ),
                       ),
+                    ),
+                  if (_imageFile != null)
+                    Text(
+                      '${tr("imageSize")} ${(_imageFile!.lengthSync() / 1024).toStringAsFixed(2)} kb',
                     ),
                   const SizedBox(height: 20),
                   if (_imageFile != null)
