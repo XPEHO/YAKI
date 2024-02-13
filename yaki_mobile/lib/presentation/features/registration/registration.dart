@@ -63,7 +63,7 @@ class _RegistrationState extends ConsumerState<Registration> {
         showSnackBar(
           content: tr("registrationSnackSuccess"),
           textStyle: registrationSnackTextStyle(
-            textColor: const Color.fromARGB(255, 82, 251, 45),
+            textColor: const Color.fromARGB(255, 99, 224, 71),
           ),
           actionLabel: tr('registrationSnackValidation'),
           barAction: () {},
@@ -74,18 +74,18 @@ class _RegistrationState extends ConsumerState<Registration> {
         showSnackBar(
           content: tr("registrationSnackError"),
           textStyle: registrationSnackTextStyle(
-            textColor: const Color.fromARGB(255, 245, 33, 33),
+            textColor: const Color.fromARGB(255, 230, 113, 113),
           ),
           actionLabel: tr('registrationCancelButton'),
           barAction: () {},
         );
       } else if (registrationResult == "registrationInputEmailError") {
         showSnackBar(
-          content: tr('registrationCancelButton'),
+          content: tr('registrationSnackEmailError'),
           textStyle: registrationSnackTextStyle(
-            textColor: const Color.fromARGB(255, 245, 33, 33),
+            textColor: const Color.fromARGB(255, 230, 113, 113),
           ),
-          actionLabel: "Ok",
+          actionLabel: tr('registrationCancelButton'),
           barAction: () {},
         );
       }

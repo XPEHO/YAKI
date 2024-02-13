@@ -54,7 +54,6 @@
   "registrationInputNameError2": "This field must only contain letters",
   "registrationInputEmailLabel": "Email :",
   "registrationInputEmailError": "Incorrect email format",
-  "registrationAlreadyUsedEmail": "This email is already used",
   "registrationInputPasswordLabel": "Password :",
   "registrationInputPasswordError1": "Please create a password",
   "registrationInputPasswordError2": "Minimum : 10 characters \n- One Upper and lowercase \n- A number \n- A special character",
@@ -64,7 +63,7 @@
   "registrationButton": "register",
   "registrationSnackSuccess": "Account creation sucess. Please check yours emails",
   "registrationSnackError": "Oups, something went wrong, try again later",
-  "registrationSnackEmailError": "eamil already used",
+  "registrationSnackEmailError": "The email address you entered is already associated with an existing account. \n Please sign in or use another email address.",
 
   "registrationSnackValidation": "Confirm",
   "registrationCancelButton": "Cancel",
