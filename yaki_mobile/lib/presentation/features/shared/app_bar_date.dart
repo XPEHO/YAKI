@@ -13,7 +13,7 @@ class AppBarWithDate extends ConsumerWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final toDayDate = DateFormat('d MMMM y').format(DateTime.now());
+    final toDayDate = DateFormat('d MMMM y').format(DateTime.now().toUtc());
     final currentRoute = ModalRoute.of(context)?.settings.name;
     final showBackButton = currentRoute == 'team-selection';
 

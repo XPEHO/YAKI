@@ -84,7 +84,7 @@ class _AbsenceState extends ConsumerState<Absence> {
                 DatePickerCard(
                   title: tr('absenceStart'),
                   initialButtonLabel: tr('absenceDatePickerInitialLabel'),
-                  earliestSelectableDate: DateTime.now(),
+                  earliestSelectableDate: DateTime.now().toUtc(),
                   onDateSelection: (selectedDate) {
                     setState(() {
                       _selectedDateStart = selectedDate;
@@ -105,7 +105,7 @@ class _AbsenceState extends ConsumerState<Absence> {
                 DatePickerCard(
                   title: tr('absenceEnd'),
                   initialButtonLabel: tr('absenceDatePickerInitialLabel'),
-                  earliestSelectableDate: DateTime.now(),
+                  earliestSelectableDate: DateTime.now().toUtc(),
                   onDateSelection: (selectedDate) {
                     setState(() {
                       _selectedDateEnd = selectedDate;

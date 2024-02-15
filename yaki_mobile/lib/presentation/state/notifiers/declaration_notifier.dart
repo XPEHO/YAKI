@@ -152,7 +152,7 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
     required int teamId,
     required int userId,
   }) async {
-    final todayDate = DateTime.now();
+    final todayDate = DateTime.now().toUtc();
 
     // CREATE DECLARATION
     DeclarationModel newDeclaration = DeclarationModel(
@@ -184,7 +184,7 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
     required int afternoonTeamId,
     required int userId,
   }) async {
-    final todayDate = DateTime.now();
+    final todayDate = DateTime.now().toUtc();
     // FIRST DECLARATION
     DeclarationModel newDeclarationMorning = DeclarationModel(
       declarationUserId: userId,
@@ -230,7 +230,7 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
     required DateTime dateStart,
     required DateTime dateEnd,
   }) async {
-    final todayDate = DateTime.now();
+    final todayDate = DateTime.now().toUtc();
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final int? userId = prefs.getInt("userId");
