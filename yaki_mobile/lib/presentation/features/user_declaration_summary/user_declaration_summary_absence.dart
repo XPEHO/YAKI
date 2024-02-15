@@ -53,10 +53,10 @@ class UserDeclarationSummaryAbsence extends ConsumerWidget {
                   flex: 1,
                   child: Center(
                     child: SummaryAbsence(
-                      dateStart:
-                          declarationStatus.dateAbsenceStart ?? DateTime.now(),
-                      dateEnd:
-                          declarationStatus.dateAbsenceEnd ?? DateTime.now(),
+                      dateStart: declarationStatus.dateAbsenceStart ??
+                          DateTime.now().toUtc(),
+                      dateEnd: declarationStatus.dateAbsenceEnd ??
+                          DateTime.now().toUtc(),
                     ),
                   ),
                 ),

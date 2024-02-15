@@ -143,5 +143,17 @@
 
   "unavailable": "Non disponible",
 
-  "imageSize": "Taille de l'image :"
+  "imageSize": "Taille de l'image :",
+
+  "hour": {
+    "zero": "À l'instant",
+    "one": "Depuis {} heure",
+    "other": "Depuis {} heures"
+  },
+
+  "minute": {
+    "zero": "À l'instant",
+    "one": "Depuis {} minute",
+    "other": "Depuis {} minutes"
+  }
 }

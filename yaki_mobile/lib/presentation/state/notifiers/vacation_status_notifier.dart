@@ -19,9 +19,9 @@ class VacationStatusNotifier extends StateNotifier<StateVacationPage> {
   /// set state declaration for the morning
   void setStateVacation(DateTime? dateStart, DateTime? dateEnd) {
     String dateStartString =
-        DateFormat.yMd('fr').format(dateStart ?? DateTime.now());
+        DateFormat.yMd('fr').format(dateStart ?? DateTime.now().toUtc());
     String dateEndString =
-        DateFormat.yMd('fr').format(dateEnd ?? DateTime.now());
+        DateFormat.yMd('fr').format(dateEnd ?? DateTime.now().toUtc());
     state = StateVacationPage(
       image: 'assets/images/absent.svg',
       dateStart: dateStartString,

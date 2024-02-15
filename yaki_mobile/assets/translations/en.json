@@ -141,5 +141,17 @@
 
   "unavailable": "Unavailable",
 
-  "imageSize": "Picture size :"
+  "imageSize": "Picture size :",
+
+  "hour": {
+    "zero": "Just now",
+    "one": "Since {} hour",
+    "other": "Since {} hours ago"
+  },
+
+  "minute": {
+    "zero": "Just now",
+    "one": "Since {} minute",
+    "other": "Since {} minutes ago"
+  }
 }

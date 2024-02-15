@@ -128,8 +128,8 @@ ALTER SEQUENCE public.entity_log_id_seq
 -- CREATE TABLE FOR LOGS   
 CREATE TABLE IF NOT EXISTS public.entity_log(
     entity_log_id integer NOT NULL DEFAULT nextval('entity_log_id_seq'::regclass),
-    entity_log_creation_date timestamp with time zone,
-    entity_log_inactivation_date timestamp with time zone,
+    entity_log_creation_date timestamp without time zone,
+    entity_log_inactivation_date timestamp without time zone,
     CONSTRAINT "ENTITY_LOG_pkey" PRIMARY KEY (entity_log_id)
 )
 TABLESPACE pg_default;
@@ -314,9 +314,9 @@ CREATE TABLE IF NOT EXISTS public.declaration
 (
     declaration_id integer NOT NULL DEFAULT nextval('declaration_id_seq'::regclass),
     declaration_user_id integer NOT NULL,
-    declaration_date timestamp with time zone,
-    declaration_date_start timestamp with time zone,
-    declaration_date_end timestamp with time zone,
+    declaration_date timestamp without time zone,
+    declaration_date_start timestamp without time zone,
+    declaration_date_end timestamp without time zone,
     declaration_status character varying(30),
     declaration_team_id integer NOT NULL,
     declaration_is_latest boolean NOT NULL,

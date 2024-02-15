@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -86,18 +87,19 @@ bool isSubtitleDisplayed({
         : true;
 
 String timeSinceDeclaration(DateTime declarationDate) {
-  DateTime a = declarationDate;
-  DateTime b = DateTime.now();
+  DateTime declaration = declarationDate;
+  DateTime now = DateTime.now();
 
-  Duration difference = b.difference(a);
+  Duration difference = now.difference(declaration);
 
-  int hours = difference.inHours % 24;
-  int minutes = difference.inMinutes % 60;
+  int totalMinutes = difference.inMinutes;
+  int hours = totalMinutes ~/ 60;
+  int minutes = totalMinutes % 60;
 
   if (hours > 0) {
-    return '$hours hours ago';
+    return 'hour'.plural(hours);
   } else if (minutes > 0) {
-    return '$minutes minutes ago';
+    return 'minute'.plural(minutes);
   } else {
     return 'Just now';
   }

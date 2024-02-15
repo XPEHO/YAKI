@@ -15,8 +15,8 @@ class DeclarationStatus {
   late HalfDayWorkflow halfDayWorkflow = HalfDayWorkflow();
   late DeclarationsHalfDaySelections declarationsHalfDaySelections =
       defaultHalfDay;
-  late DateTime? dateAbsenceStart = DateTime.now();
-  late DateTime? dateAbsenceEnd = DateTime.now();
+  late DateTime? dateAbsenceStart = DateTime.now().toUtc();
+  late DateTime? dateAbsenceEnd = DateTime.now().toUtc();
 
   DeclarationStatus();
 
