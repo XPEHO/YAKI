@@ -13,13 +13,15 @@ jobs:
           java-version: "17.x"
           distribution: "temurin"
       - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.16.1"
+          channel: "stable"
       - name: Install lcov
         run: |
           sudo apt update
           sudo apt install lcov
       - name: Build apk
         run: |
-          flutter upgrade
           flutter pub get
           dart format --set-exit-if-changed .
           flutter analyze
@@ -33,9 +35,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.16.1"
+          channel: "stable"
       - name: Build web
         run: |
-          flutter upgrade
           flutter pub get
           dart format --set-exit-if-changed .
           flutter analyze

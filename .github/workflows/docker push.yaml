@@ -26,6 +26,9 @@ jobs:
           java-version: "17.x"
           distribution: "temurin"
       - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.16.1"
+          channel: "stable"
       - name: Install lcov
         run: |
           sudo apt update
@@ -34,7 +37,6 @@ jobs:
         run: |
           echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io --username phanatic --password-stdin
           cd yaki_mobile
-          flutter upgrade
           flutter pub get
           dart format --set-exit-if-changed .
           flutter analyze
@@ -42,7 +44,7 @@ jobs:
           flutter build web --base-href "/ui/"
           docker build -t yaki_mobile .
           docker tag yaki_mobile ghcr.io/xpeho/yaki:frontend-mobile-latest
-          docker push ghcr.io/xpeho/yaki:frontend-mobile-latest 
+          docker push ghcr.io/xpeho/yaki:frontend-mobile-latest
   build-yaki-backend-admin:
     runs-on: ubuntu-20.04
     steps:
