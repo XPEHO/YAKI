@@ -10,6 +10,7 @@ import Banner from "@/assets/images/splashscreen.svg";
         <img
           class="banner"
           v-bind:src="Banner"
+          alt="banner"
         />
       </figure>
     </article>

@@ -45,7 +45,7 @@ $border-radius: 24px;
 
   > p:nth-of-type(1) {
     color: #7d818c;
-    font-family: Rubik;
+    font-family: Rubik, sans-serif;
     font-size: 15px;
     font-style: normal;
     font-weight: 400;
