@@ -91,7 +91,7 @@ export const useModalStore = defineStore("userModalStore", {
       }
 
       if (setVisible === true && mode !== null) {
-        this.setMode(mode!);
+        this.setMode(mode);
       }
       this.setIsShow(setVisible);
     },
