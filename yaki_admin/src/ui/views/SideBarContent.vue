@@ -28,11 +28,9 @@ onMounted(() => {
 const redirection = (path: string) => {
   if (path.includes("statistics")) {
     router.push("/dashboard/statistics");
-    return;
   }
   if (path.includes("manage-captains") && userCredentials.customer) {
     router.push("/dashboard/manage-captains");
-    return;
   }
 };
 </script>

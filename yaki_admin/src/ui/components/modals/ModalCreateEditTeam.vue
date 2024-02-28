@@ -63,7 +63,6 @@ const setModalHeaderText = (newIsShow: boolean, newMode: MODALMODE) => {
       title: "Team edition",
       text: "You can edit your team name, description and logo",
     };
-    return;
   }
 
   if (newMode === MODALMODE.teamCreate) {
@@ -71,7 +70,6 @@ const setModalHeaderText = (newIsShow: boolean, newMode: MODALMODE) => {
       title: "Team creation",
       text: "The team name must be provided. You can also add a description and a logo",
     };
-    return;
   }
 };
 
