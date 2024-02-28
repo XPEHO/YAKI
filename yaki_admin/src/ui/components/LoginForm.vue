@@ -45,7 +45,8 @@ watch(isLoggingError, (newValue) => {
 });
 
 const openYakiWeb = () => {
-  window.open("https://yaki.xpeho.fr/ui/#", "_blank");
+  const newWindow = window.open("https://yaki.xpeho.fr/ui/#", "_blank");
+  if (newWindow) newWindow.opener = null;
 };
 </script>
 
