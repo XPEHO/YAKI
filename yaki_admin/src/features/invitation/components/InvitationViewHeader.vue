@@ -74,7 +74,7 @@ defineProps({
       p {
         padding-inline-start: 1rem;
         color: #7d818c;
-        font-family: Rubik;
+        font-family: Rubik, sans-serif;
         font-size: 16px;
         font-weight: 400;
 

@@ -107,7 +107,7 @@ const props = defineProps({
   gap: 5px;
 }
 .no-teams {
-  font-family: "Rubik";
+  font-family: Rubik, sans-serif;
   padding-inline-start: 16px;
   padding-block: 8px;
   color: rgb(238, 237, 237);
@@ -136,7 +136,7 @@ const props = defineProps({
   }
 
   p {
-    font-family: "Rubik";
+    font-family: Rubik, sans-serif;
     font-weight: 350;
     font-variant: normal;
     letter-spacing: 0.2px;
