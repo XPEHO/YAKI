@@ -23,12 +23,14 @@ import Banner from "@/assets/images/splashscreen.svg";
           <a
             href="https://xpeho.com/"
             target="_blank"
+            rel="noopener"
             ><span class="color-xpeho">XPEHO</span></a
           >
         </p>
         <a
           href="https://github.com/XPEHO/YAKI/blob/main/PRIVACY_POLICY.md"
           target="_blank"
+          rel="noopener"
           >Privacy Policy</a
         >
       </div>
