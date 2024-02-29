@@ -2,7 +2,7 @@
 
 Working localization declaration app
 
-## Table of contents
+## Table of contents.
 
 - [General info](#general-info)
 - [Structure](#structure)
