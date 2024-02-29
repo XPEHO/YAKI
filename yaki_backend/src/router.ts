@@ -93,7 +93,8 @@ router.get("/users/:userId", async (req, res) => {
   try {
     await userController.getUserById(req, res);
   } catch (error) {
-    res.status(500).send(error);
+    console.error(error);
+    res.status(500).send({ message: "An error occurred" });
   }
 });
 
