@@ -1,20 +1,20 @@
-import {TeamService} from "./features/team/team.service";
 import express from "express";
-import {UserController} from "./features/user/user.controller";
-import {UserService} from "./features/user/user.service";
-import {UserRepository} from "./features/user/user.repository";
-import {TeammateRepository} from "./features/teammate/teammate.repository";
-import {authService} from "./features/user/authentication.service";
-import {TeammateController} from "./features/teammate/teammate.controller";
-import {TeammateService} from "./features/teammate/teammate.service";
-import {limiter, signInLimiter} from "./middleware/rateLimiter";
-import {PasswordRepository} from "./features/password/password.repository";
-import {PasswordService} from "./features/password/password.service";
-import {PasswordController} from "./features/password/password.controller";
-import {TeamRepository} from "./features/team/team.repository";
-import {AvatarService} from "./features/user_avatar/avatar.service";
-import {AvatarRepository} from "./features/user_avatar/avatar.repository";
-import {AvatarController} from "./features/user_avatar/avatar.controller";
+import { TeamService } from "./features/team/team.service";
+import { UserController } from "./features/user/user.controller";
+import { UserService } from "./features/user/user.service";
+import { UserRepository } from "./features/user/user.repository";
+import { TeammateRepository } from "./features/teammate/teammate.repository";
+import { authService } from "./features/user/authentication.service";
+import { TeammateController } from "./features/teammate/teammate.controller";
+import { TeammateService } from "./features/teammate/teammate.service";
+import { limiter, signInLimiter } from "./middleware/rateLimiter";
+import { PasswordRepository } from "./features/password/password.repository";
+import { PasswordService } from "./features/password/password.service";
+import { PasswordController } from "./features/password/password.controller";
+import { TeamRepository } from "./features/team/team.repository";
+import { AvatarService } from "./features/user_avatar/avatar.service";
+import { AvatarRepository } from "./features/user_avatar/avatar.repository";
+import { AvatarController } from "./features/user_avatar/avatar.controller";
 
 export const router = express.Router();
 
@@ -28,12 +28,16 @@ const avatarController = new AvatarController(avatarServiece);
 
 //TEAM MATE
 const teammateRepository = new TeammateRepository();
-const teammateService = new TeammateService(teammateRepository, teamService, avatarServiece);
+const teammateService = new TeammateService(
+  teammateRepository,
+  teamService,
+  avatarServiece
+);
 const teammateController = new TeammateController(teammateService);
 
 // MULTER to handle file upload
 const multer = require("multer");
-const upload = multer({dest: "uploads/"});
+const upload = multer({ dest: "uploads/" });
 
 //USER
 const userRepository = new UserRepository();
@@ -49,7 +53,7 @@ router.get("/verify-token", authService.verifyToken, (_, res) =>
   res.status(200).send("Token is valid")
 );
 
-router.post("/login", signInLimiter, (req, res) =>
+router.post("/login", signInLimiter, async (req, res) => {
   /* #swagger.parameters['Login'] = {
                 in: 'body',
                 description: 'Login details',
@@ -57,38 +61,78 @@ router.post("/login", signInLimiter, (req, res) =>
                 type: 'object',
                 schema: { login: 'string', password: 'string' }
 } */
-  userController.checkLogin(req, res)
-);
+  try {
+    await userController.checkLogin(req, res);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
 router.use(limiter);
-router.post("/register", (req, res) => userController.registerNewUser(req, res));
 
-router.post("/register", (req, res) => userController.registerNewUser(req, res));
+router.post("/register", async (req, res) => {
+  try {
+    await userController.registerNewUser(req, res);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 
-router.get("/users/:userId", (req, res) => {
-  userController.getUserById(req, res);
+router.post("/register", async (req, res) => {
+  try {
+    await userController.registerNewUser(req, res);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+router.get("/users/:userId", async (req, res) => {
+  try {
+    await userController.getUserById(req, res);
+  } catch (error) {
+    res.status(500).send(error);
+  }
 });
 
 // upload.single("avatar") is the multer middleware to handle the file upload
 router.post(
   "/users/:id/avatar-selection",
   upload.single("avatar"),
-  (req, res, next) => authService.verifyToken(req, res, next),
-  async (req, res) => avatarController.setAvatarByUserId(req, res)
+  (req, res, next) => authService.verifyToken(req, res, next).catch(next),
+  async (req, res) => {
+    try {
+      await avatarController.setAvatarByUserId(req, res);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
 );
 
 router.get(
   "/users/:id/personal-avatar",
-  (req, res, next) => authService.verifyToken(req, res, next),
-  async (req, res) => avatarController.getAvatarByUserId(req, res)
+  (req, res, next) => authService.verifyToken(req, res, next).catch(next),
+  async (req, res) => {
+    try {
+      await avatarController.getAvatarByUserId(req, res);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
 );
 
 router.post(
   "/password/change",
   (req, res, next) => authService.verifyToken(req, res, next),
-  async (req, res) => passwordController.changePassword(req, res)
+  async (req, res) => {
+    try {
+      await passwordController.changePassword(req, res);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
 );
 
-router.post("/password/forgot", async (req, res) =>
+router.post("/password/forgot", async (req, res) => {
   /* #swagger.parameters['login forgotPassword'] = {
 router.post("/forgot", async (req, res) =>
   /* #swagger.parameters['password forgot'] = {
@@ -98,8 +142,12 @@ router.post("/forgot", async (req, res) =>
                 type: 'object',
                 schema: { email: 'string' }
   */
-  passwordController.forgotPassword(req, res)
-);
+  try {
+    await passwordController.forgotPassword(req, res);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 
 router.get(
   "/users-declaration-and-avatar",
@@ -111,9 +159,18 @@ router.get(
                 type: 'number',
                 schema: { userId: 1 }
 }
-  */ authService.verifyToken(req, res, next),
-  async (req, res) =>
-    teammateController.getTeammatesDeclarationsAndAvatarFromUserTeams(req, res)
+  */
+    authService.verifyToken(req, res, next).catch(next),
+  async (req, res) => {
+    try {
+      await teammateController.getTeammatesDeclarationsAndAvatarFromUserTeams(
+        req,
+        res
+      );
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
 );
 
 // DEPRECIATED - TO BE REMOVED WHEN 1.10 isnt used anymore
@@ -128,8 +185,15 @@ router.get(
                 type: 'number',
                 schema: { userId: 1 }
 }
-  */ authService.verifyToken(req, res, next),
-  async (req, res) => teammateController.getByTeamIdWithLastDeclaration(req, res)
+  */
+    authService.verifyToken(req, res, next).catch(next),
+  async (req, res) => {
+    try {
+      await teammateController.getByTeamIdWithLastDeclaration(req, res);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
 );
 
 // DEPRECIATED - TO BE REMOVED WHEN 1.15 isnt used anymore
@@ -144,6 +208,13 @@ router.get(
                 type: 'number',
                 schema: { userId: 1 }
 }
-  */ authService.verifyToken(req, res, next),
-  async (req, res) => teammateController.getTeammatesDeclarationsFromUserTeams(req, res)
+  */
+    authService.verifyToken(req, res, next).catch(next),
+  async (req, res) => {
+    try {
+      await teammateController.getTeammatesDeclarationsFromUserTeams(req, res);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
 );
