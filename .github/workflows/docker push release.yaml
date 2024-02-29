@@ -25,6 +25,10 @@ jobs:
         with:
           java-version: "17.x"
           distribution: "temurin"
+      - name: Clear Flutter tool cache
+        run: |
+          echo "Clearing Flutter tool cache..."
+          rm -rf /opt/hostedtoolcache/flutter
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: "3.16.1"
