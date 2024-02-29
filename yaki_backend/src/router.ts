@@ -64,7 +64,8 @@ router.post("/login", signInLimiter, async (req, res) => {
   try {
     await userController.checkLogin(req, res);
   } catch (error) {
-    res.status(500).send(error);
+    console.error(error);
+    res.status(500).send({ message: "An error occurred" });
   }
 });
 
@@ -74,7 +75,8 @@ router.post("/register", async (req, res) => {
   try {
     await userController.registerNewUser(req, res);
   } catch (error) {
-    res.status(500).send(error);
+    console.error(error);
+    res.status(500).send({ message: "An error occurred" });
   }
 });
 
@@ -82,7 +84,8 @@ router.post("/register", async (req, res) => {
   try {
     await userController.registerNewUser(req, res);
   } catch (error) {
-    res.status(500).send(error);
+    console.error(error);
+    res.status(500).send({ message: "An error occurred" });
   }
 });
 
@@ -103,7 +106,8 @@ router.post(
     try {
       await avatarController.setAvatarByUserId(req, res);
     } catch (error) {
-      res.status(500).send(error);
+      console.error(error);
+      res.status(500).send({ message: "An error occurred" });
     }
   }
 );
@@ -115,7 +119,8 @@ router.get(
     try {
       await avatarController.getAvatarByUserId(req, res);
     } catch (error) {
-      res.status(500).send(error);
+      console.error(error);
+      res.status(500).send({ message: "An error occurred" });
     }
   }
 );
@@ -127,7 +132,8 @@ router.post(
     try {
       await passwordController.changePassword(req, res);
     } catch (error) {
-      res.status(500).send(error);
+      console.error(error);
+      res.status(500).send({ message: "An error occurred" });
     }
   }
 );
@@ -145,7 +151,8 @@ router.post("/forgot", async (req, res) =>
   try {
     await passwordController.forgotPassword(req, res);
   } catch (error) {
-    res.status(500).send(error);
+    console.error(error);
+    res.status(500).send({ message: "An error occurred" });
   }
 });
 
@@ -168,7 +175,8 @@ router.get(
         res
       );
     } catch (error) {
-      res.status(500).send(error);
+      console.error(error);
+      res.status(500).send({ message: "An error occurred" });
     }
   }
 );
@@ -191,7 +199,8 @@ router.get(
     try {
       await teammateController.getByTeamIdWithLastDeclaration(req, res);
     } catch (error) {
-      res.status(500).send(error);
+      console.error(error);
+      res.status(500).send({ message: "An error occurred" });
     }
   }
 );
@@ -214,7 +223,8 @@ router.get(
     try {
       await teammateController.getTeammatesDeclarationsFromUserTeams(req, res);
     } catch (error) {
-      res.status(500).send(error);
+      console.error(error);
+      res.status(500).send({ message: "An error occurred" });
     }
   }
 );

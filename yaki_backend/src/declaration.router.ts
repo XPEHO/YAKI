@@ -35,7 +35,8 @@ declarationRouter.post(
     try {
       declarationController.createDeclaration(req, res);
     } catch (error) {
-      res.status(500).send(error);
+      console.error(error);
+      res.status(500).send({ message: "An error occurred" });
     }
   }
 );
@@ -56,7 +57,8 @@ declarationRouter.get(
     try {
       declarationController.getDeclarationsForTeammate(req, res);
     } catch (error) {
-      res.status(500).send(error);
+      console.error(error);
+      res.status(500).send({ message: "An error occurred" });
     }
   }
 );
