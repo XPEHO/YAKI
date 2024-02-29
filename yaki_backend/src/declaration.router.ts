@@ -1,9 +1,9 @@
-import express, {Router} from "express";
-import {authService} from "./features/user/authentication.service";
-import {DeclarationController} from "./features/declaration/declaration.controller";
-import {DeclarationRepository} from "./features/declaration/declaration.repository";
-import {DeclarationService} from "./features/declaration/declaration.service";
-import {limiter} from "./middleware/rateLimiter";
+import express, { Router } from "express";
+import { authService } from "./features/user/authentication.service";
+import { DeclarationController } from "./features/declaration/declaration.controller";
+import { DeclarationRepository } from "./features/declaration/declaration.repository";
+import { DeclarationService } from "./features/declaration/declaration.service";
+import { limiter } from "./middleware/rateLimiter";
 
 /* Creating a new router object. */
 const declarationRouter: Router = express.Router();
@@ -31,8 +31,13 @@ declarationRouter.post(
 }
   */
     authService.verifyToken(req, res, next),
-  (req, res) => {
-    declarationController.createDeclaration(req, res);
+  async (req, res) => {
+    try {
+      declarationController.createDeclaration(req, res);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send({ message: "An error occurred" });
+    }
   }
 );
 
@@ -48,8 +53,13 @@ declarationRouter.get(
 }
   */
     authService.verifyToken(req, res, next),
-  (req, res) => {
-    declarationController.getDeclarationsForTeammate(req, res);
+  async (req, res) => {
+    try {
+      declarationController.getDeclarationsForTeammate(req, res);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send({ message: "An error occurred" });
+    }
   }
 );
 
