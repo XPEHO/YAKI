@@ -31,7 +31,8 @@ jobs:
           rm -rf /opt/hostedtoolcache/flutter
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.16.1"
+          flutter-version: "3.19.2"
+          channel: "stable"
       - name: Install lcov
         run: |
           sudo apt update
