@@ -3,24 +3,24 @@ on:
   workflow_dispatch:
     inputs:
       build-name:
-        description: 'Build name: major.minor.patch'
+        description: "Build name: major.minor.patch"
         required: true
-        default: '0.0.0'
+        default: "0.0.0"
       build-number:
-        description: 'Build number: positive integer'
+        description: "Build number: positive integer"
         required: true
-        default: '0'
+        default: "0"
 
 jobs:
   upload:
     name: Upload
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-java@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
         with:
-          java-version: '17.x'
-          distribution: 'temurin'
+          java-version: "17.x"
+          distribution: "temurin"
       - uses: subosito/flutter-action@v2
       - name: Set up key.properties file from secrets
         run: |
@@ -43,4 +43,3 @@ jobs:
           packageName: com.xpeho.yaki
           releaseFiles: yaki_mobile/build/app/outputs/bundle/release/app-release.aab
           track: production
-      

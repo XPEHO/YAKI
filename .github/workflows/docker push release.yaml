@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Build and publish Yaki backend Docker image
         run: |
           echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io --username phanatic --password-stdin
@@ -21,10 +21,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          java-version: "17.x"
-          distribution: "temurin"
+        uses: actions/checkout@v4
       - name: Clear Flutter tool cache
         run: |
           echo "Clearing Flutter tool cache..."
@@ -53,12 +50,9 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          java-version: "17.x"
-          distribution: "temurin"
+        uses: actions/checkout@v4
       - name: Setup Java
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           java-version: "17.x"
           distribution: "temurin"
@@ -75,9 +69,9 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Install node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
       - name: Build and publish Yaki frontend admin Docker image
         run: |
           echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io --username phanatic --password-stdin
