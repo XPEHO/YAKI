@@ -67,7 +67,7 @@ const openYakiWeb = () => {
 
         <div class="loading_relative_container">
           <button-primary
-            text="SIGN IN"
+            text="LOGIN"
             @click.prevent="login"
             type="submit"
             :is-disabled="isLloggingLoading"
