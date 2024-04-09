@@ -106,7 +106,31 @@ class Profile extends ConsumerWidget {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 10),
+                        const SizedBox(height: 20),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 30.0),
+                          child: Row(
+                            children: [
+                              const SizedBox(
+                                width: 48,
+                                child: Swap(
+                                  setActivated: true,
+                                ),
+                              ),
+                              const SizedBox(width: 20),
+                              Text(
+                                tr('notificationStatus'),
+                                style: const TextStyle(
+                                  color: kTextColor,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600,
+                                  fontFamily: 'SF Pro Rounded',
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 20),
                         InputText(
                           type: InputTextType.email,
                           label: tr('inputLabelFirstName'),

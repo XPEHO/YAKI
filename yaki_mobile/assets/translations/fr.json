@@ -155,5 +155,7 @@
     "zero": "À l'instant",
     "one": "Depuis {} minute",
     "other": "Depuis {} minutes"
-  }
+  },
+
+  "notificationStatus": "Notifications journalières"
 }
