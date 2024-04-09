@@ -1,8 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yaki/data/sources/local/shared_preference.dart';
 import 'package:yaki/domain/entities/user_entity.dart';
 import 'package:yaki/presentation/displaydata/avatar_enum.dart';
@@ -12,30 +14,66 @@ import 'package:yaki/presentation/state/providers/avatar_provider.dart';
 import 'package:yaki/presentation/state/providers/user_provider.dart';
 import 'package:yaki_ui/yaki_ui.dart';
 
-class Profile extends ConsumerWidget {
+class Profile extends ConsumerStatefulWidget {
   const Profile({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<Profile> createState() => _ProfileState();
+}
+
+class _ProfileState extends ConsumerState<Profile> {
+  final ScrollController scrollController = ScrollController();
+  static const platform = MethodChannel('com.xpeho.yaki/notification');
+
+  void onLogout({required Function goToAuthentication}) {
+    goToAuthentication();
+  }
+
+  void onDeleteToken({
+    required WidgetRef ref,
+    required Function goToAuthentication,
+  }) async {
+    await SharedPref.deleteToken();
+    onLogout(goToAuthentication: goToAuthentication);
+  }
+
+  Future<String> getPassword() async {
+    List<String> loginDetails = await SharedPref.getLoginDetails();
+    return loginDetails[1];
+  }
+
+  void onSwapChangeCallback(bool value) {
+    debugPrint('onSwapChangeCallback');
+    debugPrint('value: $value');
+    if (value) {
+      scheduleNotifications();
+    } else {
+      cancelNotifications();
+    }
+    setNotificationPermission(value);
+  }
+
+  void scheduleNotifications() async {
+    debugPrint('scheduleNotifications');
+    try {
+      await platform.invokeMethod('scheduleNotifications');
+    } on PlatformException catch (e) {
+      debugPrint('Error: ${e.message}');
+    }
+  }
+
+  void cancelNotifications() async {
+    debugPrint('cancelNotifications');
+    try {
+      await platform.invokeMethod('cancelNotifications');
+    } on PlatformException catch (e) {
+      debugPrint('Error: ${e.message}');
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final UserEntity? user = ref.watch(userProvider);
-    final ScrollController scrollController = ScrollController();
-
-    void onLogout({required Function goToAuthentication}) {
-      goToAuthentication();
-    }
-
-    void onDeleteToken({
-      required WidgetRef ref,
-      required Function goToAuthentication,
-    }) async {
-      await SharedPref.deleteToken();
-      onLogout(goToAuthentication: goToAuthentication);
-    }
-
-    Future<String> getPassword() async {
-      List<String> loginDetails = await SharedPref.getLoginDetails();
-      return loginDetails[1];
-    }
 
     return Scaffold(
       appBar: AppBar(
@@ -111,10 +149,21 @@ class Profile extends ConsumerWidget {
                           padding: const EdgeInsets.only(left: 30.0),
                           child: Row(
                             children: [
-                              const SizedBox(
+                              SizedBox(
                                 width: 48,
-                                child: Swap(
-                                  setActivated: true,
+                                child: FutureBuilder(
+                                  future: isNotificationPermitted(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return const CircularProgressIndicator();
+                                    } else {
+                                      return Swap(
+                                        setActivated: snapshot.data ?? false,
+                                        onSwapChange: onSwapChangeCallback,
+                                      );
+                                    }
+                                  },
                                 ),
                               ),
                               const SizedBox(width: 20),
@@ -227,4 +276,17 @@ Widget changeAvatarImage(WidgetRef ref) {
       ),
     );
   }
+}
+
+Future<bool> isNotificationPermitted() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  final bool? isNotificationPermitted = prefs.getBool('notificationPermission');
+  debugPrint("isNotificationPermitted: $isNotificationPermitted");
+  return isNotificationPermitted ?? false;
+}
+
+void setNotificationPermission(bool value) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  debugPrint("setNotificationPermission: $value");
+  await prefs.setBool('notificationPermission', value);
 }

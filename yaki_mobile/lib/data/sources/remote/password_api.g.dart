@@ -21,7 +21,7 @@ class _PasswordApi implements PasswordApi {
   @override
   Future<HttpResponse<dynamic>> postChangePassword(
       PasswordChangementOut passwordChangementOut) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
@@ -51,7 +51,7 @@ class _PasswordApi implements PasswordApi {
   @override
   Future<HttpResponse<dynamic>> postForgotPassword(
       PasswordForgotOut passwordForgotOut) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};

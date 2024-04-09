@@ -43,7 +43,8 @@ dependencies:
   # This dependency allows for dependency injection and manage states
   # import 'package:hooks_riverpod/hooks_riverpod.dart'
   # link : https://riverpod.dev/docs/getting_started
-  flutter_riverpod: ^2.4.9
+  flutter_riverpod: ^2.5.1
+  riverpod_annotation: ^2.3.4
 
   # // Retrofit dependency //
   # this dependency allows to make api requests thanks to annotations
@@ -116,6 +117,11 @@ dev_dependencies:
   retrofit_generator: ^8.0.6
   build_runner: ">=2.3.0 <4.0.0"
   json_serializable: ^6.7.1
+
+  # Riverpod dependency
+  custom_lint: ^0.6.0
+  riverpod_lint: ^2.3.9
+  riverpod_generator: ^2.3.10
 
   # Mockito 5.0.0 supports Dart's new null safety language feature in Dart 2.12, primarily
   # with code generation.
