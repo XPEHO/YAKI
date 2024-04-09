@@ -153,5 +153,7 @@
     "zero": "Just now",
     "one": "Since {} minute",
     "other": "Since {} minutes ago"
-  }
+  },
+
+  "notificationStatus": "Daily notifications"
 }
