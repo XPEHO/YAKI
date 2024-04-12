@@ -13,23 +13,19 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 
+const val APP_ID = "com.xpeho.yaki"
+
 class MainActivity : FlutterActivity() {
   // The channel name used to communicate with the Flutter part
   private val CHANNEL = "com.xpeho.yaki/notification"
   // The alarm scheduler used to schedule the notifications
   private lateinit var alarmScheduler: AlarmSchedulerImpl
-  // The alarm item to define the properties of the notification
-  private val alarmItem =
-      AlarmItem(
-          time = LocalDateTime.of(LocalDate.now(), LocalTime.of(9, 0)),
-          message = "It's time to do your daily declaration!"
-      )
 
   /**
-   * This method is called when the app is launched. We use it to initialize the alarm scheduler.
+   * This method is called when the app is launched. We use it to initialize the alarm scheduler and
+   * to initialize the params of the notification.
    */
   override fun onCreate(savedInstanceState: android.os.Bundle?) {
-    println("Debug notification : onCreate")
     super.onCreate(savedInstanceState)
     alarmScheduler = AlarmSchedulerImpl(context = this)
   }
@@ -37,9 +33,8 @@ class MainActivity : FlutterActivity() {
   /**
    * This method is called when the app is resumed. We use it to schedule the alarm if the following
    * conditions are met:
-   * - the notifications are not already scheduled
-   * - the notifications are permitted
-   * - the notifications are activated in the Flutter part
+   * - The notifications are permitted
+   * - The notifications are activated in the Flutter part
    */
   override fun onResume() {
     super.onResume()
@@ -116,7 +111,7 @@ class MainActivity : FlutterActivity() {
     }
 
     // Get the shared preferences
-    val sharedPreferences = getSharedPreferences("com.xpeho.yaki", Context.MODE_PRIVATE)
+    val sharedPreferences = getSharedPreferences(APP_ID, Context.MODE_PRIVATE)
 
     // Check if the notifications are already scheduled
     val areNotificationsScheduled = sharedPreferences.getBoolean("areNotificationsScheduled", false)
@@ -129,14 +124,21 @@ class MainActivity : FlutterActivity() {
       askNotificationsPermission()
       return
     } else {
-      // Schedule the alarm if the permission is already granted
-      alarmScheduler.schedule(alarmItem)
+      // Get the alarm item
+      getAlarmItem() { alarmItem ->
+        // Schedule the alarm if the permission is already granted
+        alarmScheduler.schedule(alarmItem)
+      }
     }
   }
 
   /** This method is a channel method that cancel the notifications. */
   private fun cancelNotifications() {
-    alarmScheduler.cancel(alarmItem)
+    // Get the alarm item
+    getAlarmItem() { alarmItem ->
+      // Cancel the alarm
+      alarmScheduler.cancel(alarmItem)
+    }
   }
 
   /** This method check if the notifications are permitted. */
@@ -153,5 +155,52 @@ class MainActivity : FlutterActivity() {
           putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
         }
     context.startActivity(intent)
+  }
+
+  /**
+   * This method get the params of the notification from the Flutter part.
+   *
+   * @param callback The callback to call when the params are retrieved
+   */
+  private fun getAlarmItem(callback: (alarmItem: AlarmItem) -> Unit) {
+
+    // Get the params of the notification
+    flutterEngine?.let { engine ->
+      val methodChannel = MethodChannel(engine.dartExecutor.binaryMessenger, CHANNEL)
+
+      // Call the getNotificationParams method in the Flutter part
+      methodChannel.invokeMethod(
+          "getNotificationParams",
+          null,
+          object : MethodChannel.Result {
+            override fun success(result: Any?) {
+              val params = result as? Map<*, *>
+              if (params != null) {
+                val title = params["title"] as? String ?: "YAKI Reminder"
+                val message =
+                    params["message"] as? String ?: "It's time do do your daily declaration !"
+                val hour = params["hour"] as? Int ?: 9
+                val minute = params["minute"] as? Int ?: 0
+
+                callback(
+                    AlarmItem(
+                        title = title,
+                        message = message,
+                        time = LocalDateTime.of(LocalDate.now(), LocalTime.of(hour, minute)),
+                    )
+                )
+              }
+            }
+
+            override fun error(code: String, message: String?, details: Any?) {
+              return
+            }
+
+            override fun notImplemented() {
+              return
+            }
+          }
+      )
+    }
   }
 }

@@ -157,5 +157,7 @@
     "other": "Depuis {} minutes"
   },
 
-  "notificationStatus": "Notifications journalières"
+  "notificationStatus": "Notifications journalières",
+  "notificationTitle": "YAKI",
+  "notificationMessage": "Plutôt team pantoufles ou team baskets ?"
 }

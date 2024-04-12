@@ -1,7 +1,6 @@
 package com.xpeho.yaki
 
 import android.app.AlarmManager
-import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
@@ -12,9 +11,6 @@ import java.util.Calendar
 class AlarmSchedulerImpl(private val context: Context) : AlarmScheduler {
   /** The alarm manager used to schedule the alarms */
   private val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-  /** The notification manager used to manage the notifications */
-  private val notificationManager =
-      context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
   /** The identifier of the pending intent used to schedule and cancel the alarms */
   private val alarmPendingIntentIdentifier = "com.xpeho.yaki.DAILY_DECLARATION_ALARM"
 
@@ -41,7 +37,10 @@ class AlarmSchedulerImpl(private val context: Context) : AlarmScheduler {
 
     // The intent used to schedule the alarm
     val intent =
-        Intent(context, AlarmReceiver::class.java).apply { putExtra("message", item.message) }
+        Intent(context, AlarmReceiver::class.java).apply {
+          putExtra("title", item.title)
+          putExtra("message", item.message)
+        }
     // The pending intent used to schedule the alarm
     val pendingIntent =
         PendingIntent.getBroadcast(
@@ -60,7 +59,7 @@ class AlarmSchedulerImpl(private val context: Context) : AlarmScheduler {
     )
 
     // Get the shared preferences
-    val sharedPreferences = context.getSharedPreferences("com.xpeho.yaki", Context.MODE_PRIVATE)
+    val sharedPreferences = context.getSharedPreferences(APP_ID, Context.MODE_PRIVATE)
 
     // Define as scheduled in the shared preferences
     with(sharedPreferences.edit()) {
@@ -77,7 +76,10 @@ class AlarmSchedulerImpl(private val context: Context) : AlarmScheduler {
   override fun cancel(item: AlarmItem) {
     // The intent used to schedule the alarm
     val intent =
-        Intent(context, AlarmReceiver::class.java).apply { putExtra("message", item.message) }
+        Intent(context, AlarmReceiver::class.java).apply {
+          putExtra("title", item.title)
+          putExtra("message", item.message)
+        }
     // The pending intent used to schedule the alarm
     val pendingIntent =
         PendingIntent.getBroadcast(
@@ -90,7 +92,7 @@ class AlarmSchedulerImpl(private val context: Context) : AlarmScheduler {
     alarmManager.cancel(pendingIntent)
 
     // Get the shared preferences
-    val sharedPreferences = context.getSharedPreferences("com.xpeho.yaki", Context.MODE_PRIVATE)
+    val sharedPreferences = context.getSharedPreferences(APP_ID, Context.MODE_PRIVATE)
 
     // Define as not scheduled in the shared preferences
     with(sharedPreferences.edit()) {

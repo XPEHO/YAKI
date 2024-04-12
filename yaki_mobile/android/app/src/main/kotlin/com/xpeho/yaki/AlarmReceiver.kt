@@ -8,6 +8,9 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import androidx.core.app.NotificationCompat
+import java.util.Calendar
+
+const val ALARM_ID = "Alarm"
 
 /** The receiver used to show a push notification when the alarm is triggered. */
 class AlarmReceiver : BroadcastReceiver() {
@@ -20,14 +23,24 @@ class AlarmReceiver : BroadcastReceiver() {
    */
   override fun onReceive(context: Context?, intent: Intent?) {
     // Get the message from the intent
-    val message = intent?.getStringExtra("message") ?: return
+    if (intent == null) {
+      return
+    }
+    val notificationTitle = intent.getStringExtra("title") ?: return
+    val notificationMessage = intent.getStringExtra("message") ?: return
+
+    // Make sure that the notification is not shown on weekends
+    val currentDay = Calendar.getInstance().get(Calendar.DAY_OF_WEEK)
+    if (currentDay == Calendar.SATURDAY || currentDay == Calendar.SUNDAY) {
+      return
+    }
 
     if (context != null) {
       // Create the notification channel
       val notificationManager =
           context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-      val channel = NotificationChannel("Alarm", "Alarm", NotificationManager.IMPORTANCE_DEFAULT)
+      val channel = NotificationChannel(ALARM_ID, ALARM_ID, NotificationManager.IMPORTANCE_DEFAULT)
       notificationManager.createNotificationChannel(channel)
 
       // Set the intent to launch the app
@@ -43,9 +56,9 @@ class AlarmReceiver : BroadcastReceiver() {
 
       // Create the notification
       val notification =
-          NotificationCompat.Builder(context, "Alarm")
-              .setContentTitle("Reminder")
-              .setContentText(message)
+          NotificationCompat.Builder(context, ALARM_ID)
+              .setContentTitle(notificationTitle)
+              .setContentText(notificationMessage)
               .setSmallIcon(R.mipmap.ic_notif)
               .setColor(Color.parseColor("#FF936B")) // Set the color
               .setContentIntent(launchAppPendingIntent) // Set the PendingIntent

@@ -46,6 +46,8 @@ void main() async {
     switch (call.method) {
       case 'areNotificationsActivated':
         return await areNotificationsActivated();
+      case 'getNotificationParams':
+        return getNotificationParams();
       default:
         throw MissingPluginException();
     }
@@ -70,4 +72,13 @@ Future<bool> areNotificationsActivated() async {
   final bool? areNotificationsActivated =
       prefs.getBool('areNotificationsActivated');
   return areNotificationsActivated ?? false;
+}
+
+Map<String, dynamic> getNotificationParams() {
+  return {
+    'title': tr("notificationTitle"),
+    'message': tr("notificationMessage"),
+    'hour': 9,
+    'minute': 0,
+  };
 }
