@@ -22,7 +22,7 @@ class SplashScreenState extends ConsumerState<SplashScreen> {
   bool _isTokenSaved = false;
   bool _isDeclared = false;
   bool _isTokenValid = false;
-  late bool _isNotificationPermitted;
+  late bool _areNotificationsActivated;
   static const platform = MethodChannel('com.xpeho.yaki/notification');
 
   @override
@@ -50,15 +50,11 @@ class SplashScreenState extends ConsumerState<SplashScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     _isTokenSaved = prefs.containsKey('token');
 
-    _isNotificationPermitted = prefs.containsKey('notificationPermission');
-    if (!_isNotificationPermitted) {
-      await prefs.setBool('notificationPermission', true);
+    _areNotificationsActivated = prefs.containsKey('areNotificationsActivated');
+    if (!_areNotificationsActivated) {
+      await prefs.setBool('areNotificationsActivated', true);
       scheduleNotifications();
-      _isNotificationPermitted = prefs.containsKey('notificationPermission');
     }
-    debugPrint(
-      'Notification permission is in shared preferences : $_isNotificationPermitted',
-    );
 
     // if token is not saved, no need to check for token validity
     if (!_isTokenSaved) {

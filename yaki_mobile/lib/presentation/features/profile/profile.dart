@@ -50,7 +50,7 @@ class _ProfileState extends ConsumerState<Profile> {
     } else {
       cancelNotifications();
     }
-    setNotificationPermission(value);
+    setNotificationsActivationState(value);
   }
 
   void scheduleNotifications() async {
@@ -152,7 +152,7 @@ class _ProfileState extends ConsumerState<Profile> {
                               SizedBox(
                                 width: 48,
                                 child: FutureBuilder(
-                                  future: isNotificationPermitted(),
+                                  future: areNotificationsActivated(),
                                   builder: (context, snapshot) {
                                     if (snapshot.connectionState ==
                                         ConnectionState.waiting) {
@@ -278,15 +278,14 @@ Widget changeAvatarImage(WidgetRef ref) {
   }
 }
 
-Future<bool> isNotificationPermitted() async {
+Future<bool> areNotificationsActivated() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  final bool? isNotificationPermitted = prefs.getBool('notificationPermission');
-  debugPrint("isNotificationPermitted: $isNotificationPermitted");
-  return isNotificationPermitted ?? false;
+  final bool? areNotificationsActivated =
+      prefs.getBool('areNotificationsActivated');
+  return areNotificationsActivated ?? false;
 }
 
-void setNotificationPermission(bool value) async {
+void setNotificationsActivationState(bool value) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  debugPrint("setNotificationPermission: $value");
-  await prefs.setBool('notificationPermission', value);
+  await prefs.setBool('areNotificationsActivated', value);
 }

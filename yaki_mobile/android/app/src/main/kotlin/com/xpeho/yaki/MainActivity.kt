@@ -14,23 +14,75 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 
 class MainActivity : FlutterActivity() {
+  // The channel name used to communicate with the Flutter part
   private val CHANNEL = "com.xpeho.yaki/notification"
+  // The alarm scheduler used to schedule the notifications
   private lateinit var alarmScheduler: AlarmSchedulerImpl
+  // The alarm item to define the properties of the notification
   private val alarmItem =
       AlarmItem(
-          time =
-              LocalDateTime.of(
-                  LocalDate.now(),
-                  LocalTime.of(9, 0)
-              ), // LocalDateTime.now().plusSeconds(10),
+          time = LocalDateTime.of(LocalDate.now(), LocalTime.of(9, 0)),
           message = "It's time to do your daily declaration!"
       )
 
+  /**
+   * This method is called when the app is launched. We use it to initialize the alarm scheduler.
+   */
   override fun onCreate(savedInstanceState: android.os.Bundle?) {
+    println("Debug notification : onCreate")
     super.onCreate(savedInstanceState)
     alarmScheduler = AlarmSchedulerImpl(context = this)
   }
 
+  /**
+   * This method is called when the app is resumed. We use it to schedule the alarm if the following
+   * conditions are met:
+   * - the notifications are not already scheduled
+   * - the notifications are permitted
+   * - the notifications are activated in the Flutter part
+   */
+  override fun onResume() {
+    super.onResume()
+
+    // Check if the notifications are permitted
+    if (!areNotificationsPermitted()) {
+      cancelNotifications()
+      return
+    }
+
+    // Check if the notifications are activated in the Flutter part
+    flutterEngine?.let { engine ->
+      val methodChannel = MethodChannel(engine.dartExecutor.binaryMessenger, CHANNEL)
+
+      // Call the areNotificationsActivated method in the Flutter part
+      methodChannel.invokeMethod(
+          "areNotificationsActivated",
+          null,
+          object : MethodChannel.Result {
+            override fun success(result: Any?) {
+              if (result as? Boolean == true) {
+                // Notifications are activated, schedule the alarm.
+                scheduleNotifications()
+              } else {
+                cancelNotifications()
+                return
+              }
+            }
+            override fun error(code: String, message: String?, details: Any?) {
+              return
+            }
+            override fun notImplemented() {
+              return
+            }
+          }
+      )
+    }
+  }
+
+  /**
+   * This method define a channel connexion to Flutter. We use it to give the Flutter part the
+   * ability to manage the notifications.
+   */
   override fun configureFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
     super.configureFlutterEngine(flutterEngine)
     MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler {
@@ -53,42 +105,53 @@ class MainActivity : FlutterActivity() {
     }
   }
 
+  /**
+   * This method is a channel method that schedule the notifications if the permissions are granted
+   * and ask the permissions if not. It also check before if the notifications are already scheduled
+   * and if the android version is compatible.
+   */
   private fun scheduleNotifications() {
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
       return
     }
 
-    // Ask notification permission if needed
-    askNotificationsPermissionIfNeeded()
+    // Get the shared preferences
+    val sharedPreferences = getSharedPreferences("com.xpeho.yaki", Context.MODE_PRIVATE)
 
-    // Start a new thread to check the permissions status
-    Thread {
-          while (!areNotificationsPermitted()) {
-            Thread.sleep(5000) // Wait for 5 second
-          }
-          // Schedule the alarm after the permission is granted
-          alarmScheduler.schedule(alarmItem)
-        }
-        .start()
+    // Check if the notifications are already scheduled
+    val areNotificationsScheduled = sharedPreferences.getBoolean("areNotificationsScheduled", false)
+    if (areNotificationsScheduled) {
+      return
+    }
+
+    // Ask notification permission if needed
+    if (!areNotificationsPermitted()) {
+      askNotificationsPermission()
+      return
+    } else {
+      // Schedule the alarm if the permission is already granted
+      alarmScheduler.schedule(alarmItem)
+    }
   }
 
+  /** This method is a channel method that cancel the notifications. */
   private fun cancelNotifications() {
     alarmScheduler.cancel(alarmItem)
   }
 
+  /** This method check if the notifications are permitted. */
   private fun areNotificationsPermitted(): Boolean {
     val notificationManager =
         this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     return notificationManager.areNotificationsEnabled()
   }
 
-  private fun askNotificationsPermissionIfNeeded() {
-    if (!areNotificationsPermitted()) {
-      val intent =
-          Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).apply {
-            putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
-          }
-      context.startActivity(intent)
-    }
+  /** This method ask the user to enable the notifications with a redirection to the settings. */
+  private fun askNotificationsPermission() {
+    val intent =
+        Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).apply {
+          putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
+        }
+    context.startActivity(intent)
   }
 }
