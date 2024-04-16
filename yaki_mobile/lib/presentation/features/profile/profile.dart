@@ -189,8 +189,16 @@ class _ProfileState extends ConsumerState<Profile> with WidgetsBindingObserver {
                               return const CircularProgressIndicator();
                             } else {
                               if (!snapshot.data!) {
-                                return const Text(
-                                  "Notifications not permitted in settings",
+                                return Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(30, 5, 30, 0),
+                                  child: Text(
+                                    tr("notificationsNotPermittedMessage"),
+                                    style: const TextStyle(
+                                      color: Colors.red,
+                                      fontSize: 12,
+                                    ),
+                                  ),
                                 );
                               } else {
                                 return Container();

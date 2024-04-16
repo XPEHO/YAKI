@@ -159,5 +159,6 @@
 
   "notificationStatus": "Notifications journalières",
   "notificationTitle": "YAKI",
-  "notificationMessage": "Plutôt team pantoufles ou team baskets ?"
+  "notificationMessage": "Plutôt team pantoufles ou team baskets ?",
+  "notificationsNotPermittedMessage": "Vous avez désactivé les notifications pour cette application. Veuillez les activer dans les paramètres de votre appareil."
 }
