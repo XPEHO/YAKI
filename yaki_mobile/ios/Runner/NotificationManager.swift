@@ -2,6 +2,16 @@ import UserNotifications
 
 extension AppDelegate {
     /**
+     This method check if the permission is granted for the app to send notifications.
+     */
+    func checkPermission(result: @escaping FlutterResult) {
+        UNUserNotificationCenter.current().getNotificationSettings { settings in
+            let isAuthorized = settings.authorizationStatus == .authorized 
+            return result(isAuthorized)
+        }
+    }
+    
+    /**
      This method is used to setup notifications for the app.
      
      It sets the UNUserNotificationCenter delegate to self.
@@ -24,7 +34,6 @@ extension AppDelegate {
                 completion(false)
             }
         }
-
         getNotificationParameters();
     }
     
@@ -46,7 +55,7 @@ extension AppDelegate {
         var dateComponents = DateComponents()
         dateComponents.hour = notificationSettings.hours
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
-    
+        
         let uuidString = UUID().uuidString
         AppDelegate.shared.notificationId = uuidString
         let request = UNNotificationRequest(identifier: uuidString, content: content, trigger: trigger)

@@ -7,10 +7,7 @@ extension AppDelegate {
      then creates and returns a FlutterMethodChannel with the specified channel name and the binaryMessenger of the controller.
      */
     func getMethodChannel() -> FlutterMethodChannel {
-        var controller: FlutterViewController?
-        DispatchQueue.main.sync {
-            controller = window?.rootViewController as? FlutterViewController
-        }
+        let controller: FlutterViewController? = window?.rootViewController as? FlutterViewController
         return FlutterMethodChannel(name: FlutterChannel.name.rawValue, binaryMessenger: controller!.binaryMessenger)
     }
     
@@ -53,6 +50,8 @@ extension AppDelegate {
                 result("Notification disabled")
             } else if call.method == FlutterChannel.scheduleNotifications.rawValue {
                 self?.handleScheduleNotifications(result: result)
+            } else if call.method == FlutterChannel.areNotificationsPermitted.rawValue {
+                self?.checkPermission(result: result)
             }
             else {
                 result(FlutterMethodNotImplemented)
@@ -71,16 +70,20 @@ extension AppDelegate {
         UNUserNotificationCenter.current().getNotificationSettings { [weak self] settings in
             guard let strongSelf = self else { return }
             
-            if settings.authorizationStatus == .authorized {
-                strongSelf.isScheduleNotificationAuthorized = true
-                result("Notification enabled")
-            } else {
-                debugPrint("Notification not enabled")
-                self?.requestNotificationAuthorization{ granted in
-                    if granted {
-                        strongSelf.isScheduleNotificationAuthorized = true
-                        result("Notification enabled")
-                    }
+            DispatchQueue.main.async {
+                if settings.authorizationStatus == .authorized {
+                    strongSelf.isScheduleNotificationAuthorized = true
+                    result("Notification enabled")
+                } else {
+                    debugPrint("Notification not enabled")
+                    self?.requestNotificationAuthorization{ granted in
+                        if granted {
+                            strongSelf.isScheduleNotificationAuthorized = true
+                            debugPrint("Notification enabled from return")                 
+                        } else {
+                            strongSelf.isScheduleNotificationAuthorized = false 
+                        }
+                    } 
                 }
             }
         }
