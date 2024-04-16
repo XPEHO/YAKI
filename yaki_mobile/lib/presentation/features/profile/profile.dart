@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
@@ -13,6 +12,7 @@ import 'package:yaki/presentation/features/shared/feedback_user.dart';
 import 'package:yaki/presentation/state/providers/avatar_provider.dart';
 import 'package:yaki/presentation/state/providers/user_provider.dart';
 import 'package:yaki_ui/yaki_ui.dart';
+import 'package:yaki/channels.dart';
 
 class Profile extends ConsumerStatefulWidget {
   const Profile({super.key});
@@ -23,7 +23,6 @@ class Profile extends ConsumerStatefulWidget {
 
 class _ProfileState extends ConsumerState<Profile> {
   final ScrollController scrollController = ScrollController();
-  static const platform = MethodChannel('com.xpeho.yaki/notification');
 
   void onLogout({required Function goToAuthentication}) {
     goToAuthentication();
@@ -42,6 +41,7 @@ class _ProfileState extends ConsumerState<Profile> {
     return loginDetails[1];
   }
 
+  /// Callback for the swap button
   void onSwapChangeCallback(bool value) {
     debugPrint('onSwapChangeCallback');
     debugPrint('value: $value');
@@ -51,24 +51,6 @@ class _ProfileState extends ConsumerState<Profile> {
       cancelNotifications();
     }
     setNotificationsActivationState(value);
-  }
-
-  void scheduleNotifications() async {
-    debugPrint('scheduleNotifications');
-    try {
-      await platform.invokeMethod('scheduleNotifications');
-    } on PlatformException catch (e) {
-      debugPrint('Error: ${e.message}');
-    }
-  }
-
-  void cancelNotifications() async {
-    debugPrint('cancelNotifications');
-    try {
-      await platform.invokeMethod('cancelNotifications');
-    } on PlatformException catch (e) {
-      debugPrint('Error: ${e.message}');
-    }
   }
 
   @override
@@ -179,6 +161,23 @@ class _ProfileState extends ConsumerState<Profile> {
                             ],
                           ),
                         ),
+                        FutureBuilder(
+                          future: areNotificationsPermitted(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const CircularProgressIndicator();
+                            } else {
+                              if (!snapshot.data!) {
+                                return const Text(
+                                  "Notifications not permitted in settings",
+                                );
+                              } else {
+                                return Container();
+                              }
+                            }
+                          },
+                        ),
                         const SizedBox(height: 20),
                         InputText(
                           type: InputTextType.email,
@@ -278,13 +277,7 @@ Widget changeAvatarImage(WidgetRef ref) {
   }
 }
 
-Future<bool> areNotificationsActivated() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  final bool? areNotificationsActivated =
-      prefs.getBool('areNotificationsActivated');
-  return areNotificationsActivated ?? false;
-}
-
+/// Set the notifications activated or not in the shared preferences
 void setNotificationsActivationState(bool value) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   await prefs.setBool('areNotificationsActivated', value);
