@@ -8,6 +8,7 @@ enum FlutterChannel: String {
     case cancelNotifications = "cancelNotifications"
     case scheduleNotifications = "scheduleNotifications"
     case getNotificationParams = "getNotificationParams"
+    case areNotificationsPermitted = "areNotificationsPermitted"
 }
 
 /**
