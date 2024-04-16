@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:yaki/domain/entities/declaration_status.dart';
@@ -21,6 +22,8 @@ class SplashScreenState extends ConsumerState<SplashScreen> {
   bool _isTokenSaved = false;
   bool _isDeclared = false;
   bool _isTokenValid = false;
+  late bool _areNotificationsActivated;
+  static const platform = MethodChannel('com.xpeho.yaki/notification');
 
   @override
   void initState() {
@@ -46,6 +49,12 @@ class SplashScreenState extends ConsumerState<SplashScreen> {
   void isLogin() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     _isTokenSaved = prefs.containsKey('token');
+
+    _areNotificationsActivated = prefs.containsKey('areNotificationsActivated');
+    if (!_areNotificationsActivated) {
+      await prefs.setBool('areNotificationsActivated', true);
+      scheduleNotifications();
+    }
 
     // if token is not saved, no need to check for token validity
     if (!_isTokenSaved) {
@@ -78,6 +87,15 @@ class SplashScreenState extends ConsumerState<SplashScreen> {
     }
 
     handleRedirection();
+  }
+
+  void scheduleNotifications() async {
+    debugPrint('scheduleNotifications');
+    try {
+      await platform.invokeMethod('scheduleNotifications');
+    } on PlatformException catch (e) {
+      debugPrint('Error: ${e.message}');
+    }
   }
 
   @override

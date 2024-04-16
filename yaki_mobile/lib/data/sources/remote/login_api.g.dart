@@ -20,7 +20,7 @@ class _LoginApi implements LoginApi {
 
   @override
   Future<HttpResponse<dynamic>> postLogin(LoginModel login) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
