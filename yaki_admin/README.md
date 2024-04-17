@@ -46,3 +46,11 @@ npm run build
 ```
 npm run lint
 ```
+
+### Yaki UI
+
+In order to update yaki ui dependance you need to execute :
+
+```
+npm install "https://gitpkg.now.sh/XPEHO/yaki_ui/web?main"
+```

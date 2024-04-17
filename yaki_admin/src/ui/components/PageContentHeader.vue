@@ -32,18 +32,29 @@ const props = defineProps({
    */
   invitedRole: {
     type: String as () => INVITEDROLE,
-    required: true,
+  },
+
+  /**
+   * Title of the page
+   */
+  title: {
+    type: String,
+    default: "",
   },
 });
 
 const title = computed(() => {
-  switch (props.invitedRole) {
-    case INVITEDROLE.captain:
-      return "Captain management";
-    case INVITEDROLE.teammate:
-      return teamStore.getTeamSelected.teamName;
-    default:
-      return "";
+  if (props.invitedRole) {
+    switch (props.invitedRole) {
+      case INVITEDROLE.captain:
+        return "Captain management";
+      case INVITEDROLE.teammate:
+        return teamStore.getTeamSelected.teamName;
+      default:
+        return "";
+    }
+  } else {
+    return props.title;
   }
 });
 
@@ -71,6 +82,7 @@ const { isModalVisible, switchModalVisibility } = useModalToggleWithOutsideClick
 
       <section class="header__buttons-modal_container">
         <button-text-icon
+          v-if="invitedRole"
           @click.prevent="router.push({ path: `invitation/${invitedRole}` })"
           :icon="addIcon"
           text="INVITATION"
