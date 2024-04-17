@@ -77,7 +77,7 @@ const btnClassList = [
     </figure>
     <div class="user-card__wrapper-user-infos">
       <p class="user-card__name-text">{{ user.firstname }} {{ user.lastname }}</p>
-      <p class="user-card__email_text">{{ user.email }}</p>
+      <p class="user-card__info-text">{{ user.email }}</p>
     </div>
     <section class="user-card__wrapper-status">
       <div class="user-card__wrapper-status_label">

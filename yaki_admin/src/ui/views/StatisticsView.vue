@@ -1,24 +1,15 @@
+<script setup lang="ts">
+import PageContentHeader from "@/ui/components/PageContentHeader.vue";
+import PageContentLayout from "@/ui/layouts/PageContentLayout.vue";
+</script>
+
 <template>
-  <section class="statistics_container">
-    <h1>Statistics</h1>
-    <p>Coming Soon</p>
-  </section>
+  <page-content-layout>
+    <template #pageContentHeader>
+      <page-content-header title="Statistics" />
+    </template>
+    <template #content>
+      <p class="text_default__Team_name">Coming Soon</p>
+    </template>
+  </page-content-layout>
 </template>
-
-<style scoped lang="scss">
-.statistics_container {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  justify-content: space-between;
-  padding: 2rem;
-
-  h1 {
-    font-size: 40px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 100%; /* 40px */
-    letter-spacing: -2px;
-  }
-}
-</style>
