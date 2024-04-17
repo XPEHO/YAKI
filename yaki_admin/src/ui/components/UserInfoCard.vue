@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import buttonIcon from "@/ui/components/buttons/ButtonIcon.vue";
-import pencilIcon from "@/assets/icons_svg/Edit.svg";
 import deleteIcon from "@/assets/icons_svg/CrossClose.svg";
 import InitialAvatar from "@/ui/components/InitialAvatar.vue";
 import { PropType } from "vue";
@@ -43,10 +42,6 @@ const onRemoveUserPress = () => {
       break;
   }
 };
-
-const OpenModalNotImplemented = () => {
-  modalStore.switchModalVisibility(true, MODALMODE.comingSoon);
-};
 </script>
 
 <template>
@@ -76,12 +71,6 @@ const OpenModalNotImplemented = () => {
         <p class="label label--text label-primary-color">en attente</p>
       </div>
       <div class="user-card__wrapper-status_buttons">
-        <button-icon
-          @click.prevent="OpenModalNotImplemented"
-          :icon="pencilIcon"
-          alt="modifier"
-        />
-
         <button-icon
           @click.prevent="onRemoveUserPress"
           :icon="deleteIcon"
