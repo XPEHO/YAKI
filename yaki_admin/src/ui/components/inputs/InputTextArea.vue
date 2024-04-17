@@ -30,6 +30,6 @@ const onInputUse = (e: Event) => {
       cols="10"
       rows="5"
     ></textarea>
-    <label for="textarea">Text area label</label>
+    <label for="textarea"> {{ labelText }}</label>
   </section>
 </template>

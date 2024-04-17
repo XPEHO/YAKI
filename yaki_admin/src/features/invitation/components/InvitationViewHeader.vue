@@ -30,21 +30,21 @@ defineProps({
         <h1 class="text_default__title_header">
           {{
             invitedRole === INVITEDROLE.teammate
-              ? "Teammate invitation : "
-              : "Captain invitation : "
+              ? $t("header.teammateInvitation")
+              : $t("header.captainInvitation")
           }}
         </h1>
 
         <p v-if="invitedRole === INVITEDROLE.teammate">
-          User will be added to : <span>{{ teamStore.getTeamSelected.teamName }}</span>
+          {{ $t("header.teammateAddedTo") }} <span>{{ teamStore.getTeamSelected.teamName }}</span>
         </p>
-        <p v-if="invitedRole === INVITEDROLE.captain">Grant captain rights to the selected user</p>
+        <p v-if="invitedRole === INVITEDROLE.captain">{{ $t("header.captainInvitComment") }}</p>
       </section>
 
       <button-text-icon
         @click.prevent="router.go(-1)"
         :icon="backIcon"
-        text="Return"
+        :text="$t('buttons.return')"
         color="button--color-secondary"
       />
     </div>

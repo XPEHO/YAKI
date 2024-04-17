@@ -5,9 +5,6 @@ import inputPassword from "@/ui/components/inputs/InputPassword.vue";
 import { useAuthStore } from "@/stores/authStore";
 import { reactive, ref, watch } from "vue";
 
-const usernamePlaceholder = "Login";
-const passwordPlaceholder = "Password";
-
 const isLloggingLoading = ref(false);
 const isLoggingError = ref(false);
 
@@ -56,18 +53,18 @@ const openYakiWeb = () => {
       <p class="text_default__title_header">Administration</p>
       <form>
         <input-text
-          :labelText="usernamePlaceholder"
+          :labelText="$t('inputs.login')"
           @emittedInput="onInputLogin"
         />
 
         <input-password
-          :labelText="passwordPlaceholder"
+          :labelText="$t('inputs.password')"
           @emittedInput="onInputPassword"
         />
 
         <div class="loading_relative_container">
           <button-primary
-            text="LOGIN"
+            :text="$t('buttons.login')"
             @click.prevent="login"
             type="submit"
             :is-disabled="isLloggingLoading"
@@ -79,9 +76,10 @@ const openYakiWeb = () => {
         </div>
 
         <p class="text_default__Team_description info_text">
-          * Your logging informations also are utilized on YAKI mobile. <br />
-          If you've forgotten your password, you may use the mobile application or his
-          <span @click.prevent="openYakiWeb">web version</span>.
+          * {{ $t("loginPage.changePasswordInfo") }} <br />
+          {{ $t("loginPage.changePasswordInfo2") }}
+          <span @click.prevent="openYakiWeb">{{ $t("loginPage.PWALink") }}</span
+          >.
         </p>
       </form>
     </div>
@@ -95,10 +93,6 @@ const openYakiWeb = () => {
   flex-direction: column;
   justify-content: center;
   align-self: center;
-  gap: 2rem;
-
-  width: 100%;
-  height: 100%;
 
   form {
     display: flex;
@@ -110,7 +104,6 @@ const openYakiWeb = () => {
 .logging_from_wrapper {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-self: center;
 
   width: min(90%, 450px);

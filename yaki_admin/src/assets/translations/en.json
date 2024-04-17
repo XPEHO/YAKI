@@ -1,0 +1,94 @@
+{
+  "inputs": {
+    "login": "Login",
+    "password": "Password",
+    "teamName": "Team name",
+    "teamDescription": "Team description"
+  },
+  "buttons": {
+    "login": "Login",
+    "logout": "Logout",
+    "cancel": "Cancel",
+    "validate": "Validate",
+    "modify": "Modify",
+    "delete": "Delete",
+    "remove": "Remove",
+    "invitation": "Invitation",
+    "return": "Return",
+    "editTeam": "Edit team",
+    "deleteTeam": "Delete team",
+    "close": "Close",
+    "downloadCsv": "Export in CSV"
+  },
+  "loginPage": {
+    "changePasswordInfo": "Your logging informations also are utilized on YAKI mobile.",
+    "changePasswordInfo2": "If you've forgotten your password, you may use the mobile application or his",
+    "PWALink": "web version",
+    "by": "by",
+    "privacyPolicy": "Privacy Policy"
+  },
+  "sidebar": {
+    "clients": "Clients",
+    "captains": "Captains",
+    "myTeams": "My Teams",
+    "createTeam": "Create Team",
+    "noTeams": "You don't have any team",
+    "statistics": "Statistics"
+  },
+  "teamStatus": {
+    "tutorialTitle": "You dont have any team",
+    "tutorialContent": "Teams can be created using the create team option",
+    "deletedTeamName": "The team : ",
+    "deletedTeamConfirmation": "was correctly deleted.",
+    "noTeamLeft": "You have no team left",
+    "noTeam": "You dont have any team",
+    "howToCreateATeam1": "You can create a new team using the ",
+    "howToCreateATeam2": "Teams can be created using ",
+    "createTeam": "create team",
+    "option": "option"
+  },
+  "header": {
+    "teammateInvitation": "Teammate invitation : ",
+    "teammateAddedTo": "User will be added to :",
+    "captainManagement": "Captain management",
+    "captainInvitation": "Captain invitation : ",
+    "captainInvitComment": "Grant captain rights to the selected user",
+    "profile": "Profile",
+    "statistics": "Statistics"
+  },
+  "popups": {
+    "irreversible": "tThis action is irreversible !",
+    "deletionConfirmation": "Are you sure you want to ",
+    "fileHandling": {
+      "tooLarge": "The file is too large",
+      "select": "Select a file",
+      "sizeLimit": "under 500kb",
+      "wrongFormat": "The file format is not supported"
+    },
+    "teamCreation": {
+      "title": "Team creation",
+      "description": "The team name must be provided. You can also add a description and a logo"
+    },
+    "teamEdition": {
+      "title": "Team edition",
+      "description": "You can edit your team name, description and logo avatar"
+    },
+    "teamDeletion": {
+      "title": "Delete team ?"
+    },
+    "teamRemoveUser": {
+      "title": "Remove user ?",
+      "from": " from : "
+    },
+    "captainRemoval": {
+      "title": "Remove captain ?",
+      "confirmation": "Are you sure you want to remove captain rights from "
+    }
+  },
+  "connectedUserCard": {
+    "role": "Administrator"
+  },
+  "general": {
+    "teammates": "Teammates"
+  }
+}

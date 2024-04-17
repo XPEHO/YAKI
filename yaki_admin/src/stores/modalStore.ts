@@ -2,6 +2,21 @@ import { MODALMODE } from "@/constants/modalMode.enum";
 import { defineStore } from "pinia";
 import { useTeamStore } from "@/stores/teamStore";
 
+type CreateEditModalText = {
+  title: string;
+  text: string;
+  validateBtnText: string;
+};
+
+type CreateEditTranslation = {
+  modalTitleEditText: string;
+  modalDescriptionEditText: string;
+  modaleTitleCreateText: string;
+  modalDescriptionCreateText: string;
+  modalValidateButtonText: string;
+  modalEditButtonText: string;
+};
+
 interface State {
   isShow: boolean;
   mode: MODALMODE;
@@ -9,6 +24,7 @@ interface State {
   teamDescriptionInputValue: string;
   teammateNameToDelete: string;
   captainNameToDelete: string;
+  createEditModalText: CreateEditModalText;
 }
 
 export const useModalStore = defineStore("userModalStore", {
@@ -19,6 +35,7 @@ export const useModalStore = defineStore("userModalStore", {
     teammateNameToDelete: "" as string,
     teamDescriptionInputValue: "" as string,
     captainNameToDelete: "" as string,
+    createEditModalText: { title: "", text: "", validateBtnText: "" } as CreateEditModalText,
   }),
 
   getters: {
@@ -28,6 +45,7 @@ export const useModalStore = defineStore("userModalStore", {
     getTeamDescriptionInputValue: (state: State) => state.teamDescriptionInputValue,
     getTeammateNameToDelete: (state: State) => state.teammateNameToDelete,
     getCaptainNameToDelete: (state: State) => state.captainNameToDelete,
+    getCreateEditModalText: (state: State) => state.createEditModalText,
   },
 
   actions: {
@@ -48,6 +66,9 @@ export const useModalStore = defineStore("userModalStore", {
     },
     setCaptainNameToDelete(captainName: string) {
       this.captainNameToDelete = captainName;
+    },
+    setCreateEditModalText(createEditModalText: CreateEditModalText) {
+      this.createEditModalText = createEditModalText;
     },
     /**
      * Reset modal visibility and mode.s
@@ -94,6 +115,31 @@ export const useModalStore = defineStore("userModalStore", {
         this.setMode(mode);
       }
       this.setIsShow(setVisible);
+    },
+
+    /**
+     * Depending on the modal mode, change the modal text
+     * @param newIsShow modalStore.getIsShow
+     * @param newMode modalStore.getMode
+     */
+    setModalHeaderText(newIsShow: boolean, newMode: MODALMODE, translation: CreateEditTranslation) {
+      if (!newIsShow) return;
+
+      if (newMode === MODALMODE.teamEdit) {
+        this.setCreateEditModalText({
+          title: translation.modalTitleEditText,
+          text: translation.modalDescriptionEditText,
+          validateBtnText: translation.modalEditButtonText,
+        });
+      }
+
+      if (newMode === MODALMODE.teamCreate) {
+        this.setCreateEditModalText({
+          title: translation.modaleTitleCreateText,
+          text: translation.modalDescriptionCreateText,
+          validateBtnText: translation.modalValidateButtonText,
+        });
+      }
     },
   },
 });

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import LoginForm from "@/ui/components/LoginForm.vue";
 import Banner from "@/assets/images/splashscreen.svg";
+import LanguageSwitch from "@/ui/components/LanguageSwitch.vue";
 </script>
 
 <template>
@@ -20,7 +21,7 @@ import Banner from "@/assets/images/splashscreen.svg";
 
       <div>
         <p>
-          By
+          {{ $t("loginPage.by") }}
           <a
             href="https://xpeho.com/"
             target="_blank"
@@ -32,8 +33,9 @@ import Banner from "@/assets/images/splashscreen.svg";
           href="https://github.com/XPEHO/YAKI/blob/main/PRIVACY_POLICY.md"
           target="_blank"
           rel="noopener"
-          >Privacy Policy</a
+          >{{ $t("loginPage.privacyPolicy") }}</a
         >
+        <language-switch />
       </div>
     </article>
   </section>
@@ -69,6 +71,8 @@ section {
         color: #7e7e7e;
         text-decoration: none;
         font-family: $font-rubik;
+        text-align: center;
+        width: 15rem;
       }
       .color-xpeho {
         color: $green-xpeho-color;

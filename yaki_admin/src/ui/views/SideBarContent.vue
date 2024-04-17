@@ -48,23 +48,24 @@ const redirection = (path: string) => {
       <side-bar-menu-link
         v-if="userCredentials.owner"
         :icon="caseIcon"
-        text="Clients"
+        :text="$t('sidebar.clients')"
       />
       <side-bar-menu-link
         v-if="userCredentials.customer"
         @click.prevent="redirection('/dashboard/manage-captains')"
         :icon="hatIcon"
-        text="Captains"
+        :text="$t('sidebar.captains')"
       />
       <side-bar-menu-drop-down
         v-if="userCredentials.captain"
-        inner-text="My teams"
+        :inner-text="$t('sidebar.myTeams')"
         icon-path="groupIcon"
+        :is-menu-open="true"
       />
       <side-bar-menu-link
         @click.prevent="redirection('/dashboard/statistics')"
         :icon="statIcon"
-        text="Statistics"
+        :text="$t('sidebar.statistics')"
       />
     </div>
 

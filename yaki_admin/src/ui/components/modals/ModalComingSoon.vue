@@ -15,7 +15,7 @@ const closeModal = async () => {
     <h1 class="modal__container-title">Coming soon</h1>
     <div class="modal__location-button">
       <button-text-icon
-        :text="'CLOSE'"
+        :text="$t('buttons.close')"
         :icon="deleteIcon"
         :color="BUTTONCOLORS.delete"
         @click.prevent="closeModal"

@@ -3,6 +3,7 @@ import PageContentHeader from "@/ui/components/PageContentHeader.vue";
 import PageContentLayout from "@/ui/layouts/PageContentLayout.vue";
 import router from "@/router/router";
 import buttonSecondary from "@/ui/components/buttons/ButtonSecondary.vue";
+import LanguageSwitch from "../components/LanguageSwitch.vue";
 
 const logOff = () => {
   router.push("/");
@@ -15,11 +16,11 @@ const logOff = () => {
       <page-content-header title="Profile" />
     </template>
     <template #content>
-      <p class="text_default__Team_name">Coming Soon</p>
       <buttonSecondary
-        text="Log off"
+        :text="$t('buttons.logout')"
         @click.prevent="logOff"
       />
+      <LanguageSwitch />
     </template>
   </page-content-layout>
 </template>

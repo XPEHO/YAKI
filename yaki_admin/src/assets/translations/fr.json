@@ -1,0 +1,94 @@
+{
+  "inputs": {
+    "login": "Indentifiant",
+    "password": "Mot de passe",
+    "teamName": "Nom de l'équipe",
+    "teamDescription": "Description de l'équipe"
+  },
+  "buttons": {
+    "login": "Connexion",
+    "logout": "Déconnexion",
+    "cancel": "Annuler",
+    "validate": "Valider",
+    "modify": "Modifier",
+    "delete": "Supprimer",
+    "remove": "Retirer",
+    "invitation": "Inviter",
+    "return": "Retour",
+    "editTeam": "Éditer l'équipe",
+    "deleteTeam": "Supprimer l'équipe",
+    "close": "Fermer",
+    "downloadCsv": "Exporter en CSV"
+  },
+  "loginPage": {
+    "changePasswordInfo": "Vos informations de connexion sont également utilisées sur YAKI mobile.",
+    "changePasswordInfo2": "Si vous avez oublié votre mot de passe, vous pouvez utiliser l'application mobile ou sa",
+    "PWALink": "version web",
+    "by": "par",
+    "privacyPolicy": "Politique de confidentialité"
+  },
+  "sidebar": {
+    "clients": "Clients",
+    "captains": "Capitaines",
+    "myTeams": "Mes équipes",
+    "createTeam": "Créer une équipe",
+    "noTeams": "Vous n'avez aucune équipe",
+    "statistics": "Statistiques"
+  },
+  "teamStatus": {
+    "tutorialTitle": "Vous n'avez aucune équipe",
+    "tutorialContent": "Les équipes peuvent être créées en utilisant l'option créer une équipe",
+    "deletedTeamName": "L'équipe : ",
+    "deletedTeamConfirmation": "a été correctement supprimée.",
+    "noTeamLeft": "Il ne vous reste plus d'équipe",
+    "noTeam": "Vous n'avez aucune équipe",
+    "howToCreateATeam1": "Vous pouvez créer une nouvelle équipe en utilisant l'option ",
+    "howToCreateATeam2": "Les équipes peuvent être créées en utilisant ",
+    "createTeam": "créer une équipe",
+    "option": "option"
+  },
+  "header": {
+    "teammateInvitation": "Invitation d'un coéquipier : ",
+    "teammateAddedTo": "L'utilisateur sera ajouté à :",
+    "captainManagement": "Gestion des capitaines",
+    "captainInvitation": "Invitation du capitaine : ",
+    "captainInvitComment": "Accorder les droits de capitaine à l'utilisateur sélectionné",
+    "profile": "Profil",
+    "statistics": "Statistiques"
+  },
+  "popups": {
+    "irreversible": "Cette action est irréversible !",
+    "deletionConfirmation": "Êtes-vous sûr de vouloir ",
+    "fileHandling": {
+      "tooLarge": "Le fichier est trop volumineux",
+      "select": "Sélectionner un fichier",
+      "sizeLimit": "sous 500kb",
+      "wrongFormat": "Le format du fichier est incorrect"
+    },
+    "teamCreation": {
+      "title": "Création d'équipe",
+      "description": "Le nom de l'équipe doit être fourni. Vous pouvez également ajouter une description et un logo"
+    },
+    "teamEdition": {
+      "title": "Édition de l'équipe",
+      "description": "Vous pouvez modifier le nom de votre équipe, la description et l'avatar du logo"
+    },
+    "teamDeletion": {
+      "title": "Supprimer l'équipe ?"
+    },
+    "teamRemoveUser": {
+      "title": "Retirer l'utilisateur ?",
+      "from": " de :"
+    },
+    "captainRemoval": {
+      "title": "Retirer le capitaine ?",
+      "confirmation": "Êtes-vous sûr de vouloir retirer les droits de capitaine de "
+    }
+  },
+  "connectedUserCard": {
+    "role": "Administrateur"
+  },
+  "general": {
+    "teammates": "Coéquipiers"
+  }
+}

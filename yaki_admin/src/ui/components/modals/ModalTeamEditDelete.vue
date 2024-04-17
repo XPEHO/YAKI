@@ -27,13 +27,13 @@ const deleteTeam = () => {
   <section class="modal__container modal__edit-size">
     <side-bar-menu-link
       @click.prevent="editTeam"
-      :text="'Edit team'"
+      :text="$t('buttons.editTeam')"
       :icon="pencilIcon"
       :is-modal-element="true"
     />
     <side-bar-menu-link
       @click.prevent="deleteTeam"
-      :text="'Delete team'"
+      :text="$t('buttons.deleteTeam')"
       :icon="deleteIcon"
       :is-modal-element="true"
     />
