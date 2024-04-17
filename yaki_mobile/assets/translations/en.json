@@ -157,5 +157,6 @@
 
   "notificationStatus": "Daily notifications",
   "notificationTitle": "YAKI",
-  "notificationMessage": "Are you more of a slippers team or a sneakers team?"
+  "notificationMessage": "Are you more of a slippers team or a sneakers team?",
+  "notificationsNotPermittedMessage": "You have disabled notifications for this application. Please enable them in the settings of your device."
 }

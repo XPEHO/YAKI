@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:yaki/channels.dart';
 import 'package:yaki/domain/entities/declaration_status.dart';
 import 'package:yaki/presentation/state/providers/avatar_provider.dart';
 import 'package:yaki/presentation/state/providers/declaration_provider.dart';
@@ -87,15 +88,6 @@ class SplashScreenState extends ConsumerState<SplashScreen> {
     }
 
     handleRedirection();
-  }
-
-  void scheduleNotifications() async {
-    debugPrint('scheduleNotifications');
-    try {
-      await platform.invokeMethod('scheduleNotifications');
-    } on PlatformException catch (e) {
-      debugPrint('Error: ${e.message}');
-    }
   }
 
   @override

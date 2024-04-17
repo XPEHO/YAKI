@@ -40,37 +40,37 @@ class MainActivity : FlutterActivity() {
     super.onResume()
 
     // Check if the notifications are permitted
-    if (!areNotificationsPermitted()) {
-      cancelNotifications()
-      return
-    }
+    if (areNotificationsPermitted()) {
 
-    // Check if the notifications are activated in the Flutter part
-    flutterEngine?.let { engine ->
-      val methodChannel = MethodChannel(engine.dartExecutor.binaryMessenger, CHANNEL)
+      // Check if the notifications are activated in the Flutter part
+      flutterEngine?.let { engine ->
+        val methodChannel = MethodChannel(engine.dartExecutor.binaryMessenger, CHANNEL)
 
-      // Call the areNotificationsActivated method in the Flutter part
-      methodChannel.invokeMethod(
-          "areNotificationsActivated",
-          null,
-          object : MethodChannel.Result {
-            override fun success(result: Any?) {
-              if (result as? Boolean == true) {
-                // Notifications are activated, schedule the alarm.
-                scheduleNotifications()
-              } else {
-                cancelNotifications()
+        // Call the areNotificationsActivated method in the Flutter part
+        methodChannel.invokeMethod(
+            "areNotificationsActivated",
+            null,
+            object : MethodChannel.Result {
+              override fun success(result: Any?) {
+                if (result as? Boolean == true) {
+                  // Notifications are activated, schedule the alarm.
+                  scheduleNotifications()
+                } else {
+                  cancelNotifications()
+                  return
+                }
+              }
+              override fun error(code: String, message: String?, details: Any?) {
+                return
+              }
+              override fun notImplemented() {
                 return
               }
             }
-            override fun error(code: String, message: String?, details: Any?) {
-              return
-            }
-            override fun notImplemented() {
-              return
-            }
-          }
-      )
+        )
+      }
+    } else {
+      cancelNotifications()
     }
   }
 
@@ -92,7 +92,7 @@ class MainActivity : FlutterActivity() {
           cancelNotifications()
           result.success(null)
         }
-        "arePermissionsEnabled" -> {
+        "areNotificationsPermitted" -> {
           result.success(areNotificationsPermitted())
         }
         else -> result.notImplemented()
