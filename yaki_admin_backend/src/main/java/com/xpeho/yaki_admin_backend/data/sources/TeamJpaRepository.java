@@ -11,4 +11,6 @@ public interface TeamJpaRepository extends JpaRepository<TeamModel, Integer> {
     List<TeamModel> findAllByCaptain(int id);
 
     List<TeamModel> findAllByCustomerIdAndActifIsTrue(int id);
+
+    int countTeamByCustomerIdAndActifIsTrue(int id);
 }
