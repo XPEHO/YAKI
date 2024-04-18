@@ -1,6 +1,23 @@
 <script setup lang="ts">
 import PageContentHeader from "@/ui/components/PageContentHeader.vue";
 import PageContentLayout from "@/ui/layouts/PageContentLayout.vue";
+import buttonPrimary from "@/ui/components/buttons/ButtonPrimary.vue";
+
+import { statisticsService } from "@/services/statistics.service";
+
+const downloadCsv = async () => {
+  try {
+    const url = await statisticsService.getStatisticsCsv(1);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "statistics.csv";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  } catch (error) {
+    console.error("Error while getting CSV:", error);
+  }
+};
 </script>
 
 <template>
@@ -9,7 +26,24 @@ import PageContentLayout from "@/ui/layouts/PageContentLayout.vue";
       <page-content-header title="Statistics" />
     </template>
     <template #content>
-      <p class="text_default__Team_name">Coming Soon</p>
+      <div>
+        <buttonPrimary
+          text="Download in CSV format"
+          @click.prevent="downloadCsv"
+        />
+      </div>
     </template>
   </page-content-layout>
 </template>
+
+<style scoped>
+div {
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+
+  & button {
+    width: 20rem;
+  }
+}
+</style>
