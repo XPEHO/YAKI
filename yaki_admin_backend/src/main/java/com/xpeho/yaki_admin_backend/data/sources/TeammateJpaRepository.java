@@ -15,4 +15,12 @@ public interface TeammateJpaRepository extends JpaRepository<TeammateModel, Inte
             WHERE tm.teamId = ?1 and tm.actif = true
             """)
     List<Object[]> findAllByTeam(int id);
+
+    @Query("""
+            SELECT count(*)
+            FROM TeammateModel tm
+            INNER JOIN TeamModel t ON tm.teamId = t.id
+            WHERE t.customerId = ?1 and t.actif = true
+            """)
+    int countTeammateByCustomerIdAndActifIsTrue(int id);
 }
