@@ -1,12 +1,22 @@
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
 const { locale } = useI18n();
 
-const languageSelected = ref("fr");
+const languageSelected = ref("");
 
-// Load the saved language from local storage or default to 'en'
-locale.value = localStorage.getItem("language") || "fr";
+onMounted(() => {
+  let storedLanguage = localStorage.getItem("language");
+  const browserLanguage = navigator.language || navigator.languages[0];
+
+  if (!storedLanguage) {
+    // Save the selected language to local storage
+    storedLanguage = browserLanguage.includes("fr") ? "fr" : "en";
+  }
+
+  locale.value = storedLanguage;
+  languageSelected.value = storedLanguage;
+});
 
 const switchLanguage = () => {
   locale.value = locale.value === "en" ? "fr" : "en";
