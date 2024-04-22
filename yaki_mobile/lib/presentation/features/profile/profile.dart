@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
@@ -147,65 +148,67 @@ class _ProfileState extends ConsumerState<Profile> with WidgetsBindingObserver {
                           ],
                         ),
                         const SizedBox(height: 20),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 30.0),
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                width: 48,
-                                child: FutureBuilder(
-                                  future: areNotificationsActivated(),
-                                  builder: (context, snapshot) {
-                                    if (snapshot.connectionState ==
-                                        ConnectionState.waiting) {
-                                      return const CircularProgressIndicator();
-                                    } else {
-                                      return Swap(
-                                        setActivated: snapshot.data ?? false,
-                                        onSwapChange: onSwapChangeCallback,
-                                      );
-                                    }
-                                  },
-                                ),
-                              ),
-                              const SizedBox(width: 20),
-                              Text(
-                                tr('notificationStatus'),
-                                style: const TextStyle(
-                                  color: kTextColor,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w600,
-                                  fontFamily: 'SF Pro Rounded',
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        FutureBuilder(
-                          future: areNotificationsPermitted(),
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return const CircularProgressIndicator();
-                            } else {
-                              if (!snapshot.data!) {
-                                return Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(30, 5, 30, 0),
-                                  child: Text(
-                                    tr("notificationsNotPermittedMessage"),
-                                    style: const TextStyle(
-                                      color: Colors.red,
-                                      fontSize: 12,
-                                    ),
+                        if (!kIsWeb)
+                          Padding(
+                            padding: const EdgeInsets.only(left: 30.0),
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: 48,
+                                  child: FutureBuilder(
+                                    future: areNotificationsActivated(),
+                                    builder: (context, snapshot) {
+                                      if (snapshot.connectionState ==
+                                          ConnectionState.waiting) {
+                                        return const CircularProgressIndicator();
+                                      } else {
+                                        return Swap(
+                                          setActivated: snapshot.data ?? false,
+                                          onSwapChange: onSwapChangeCallback,
+                                        );
+                                      }
+                                    },
                                   ),
-                                );
+                                ),
+                                const SizedBox(width: 20),
+                                Text(
+                                  tr('notificationStatus'),
+                                  style: const TextStyle(
+                                    color: kTextColor,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w600,
+                                    fontFamily: 'SF Pro Rounded',
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        if (!kIsWeb)
+                          FutureBuilder(
+                            future: areNotificationsPermitted(),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return const CircularProgressIndicator();
                               } else {
-                                return Container();
+                                if (!snapshot.data!) {
+                                  return Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(30, 5, 30, 0),
+                                    child: Text(
+                                      tr("notificationsNotPermittedMessage"),
+                                      style: const TextStyle(
+                                        color: Colors.red,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  return Container();
+                                }
                               }
-                            }
-                          },
-                        ),
+                            },
+                          ),
                         const SizedBox(height: 20),
                         InputText(
                           type: InputTextType.email,
