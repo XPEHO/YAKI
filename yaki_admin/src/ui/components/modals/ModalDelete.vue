@@ -13,14 +13,24 @@ import { computed } from "vue";
 const modalStore = useModalStore();
 const teamStore = useTeamStore();
 
+import { useI18n } from "vue-i18n";
+const { t } = useI18n();
+const translation = {
+  remove: t("buttons.remove"),
+  delete: t("buttons.delete"),
+  userRemove: t("popups.teamRemoveUser.title"),
+  captainRemove: t("popups.captainRemoval.title"),
+  teamDelete: t("popups.teamDeletion.title"),
+};
+
 const title = computed(() => {
   switch (modalStore.getMode) {
     case MODALMODE.userDelete:
-      return "Remove user ?";
+      return translation.userRemove;
     case MODALMODE.captainDelete:
-      return "Remove captain ?";
+      return translation.captainRemove;
     case MODALMODE.teamDelete:
-      return "Delete team ?";
+      return translation.teamDelete;
   }
   return "";
 });
@@ -28,11 +38,11 @@ const title = computed(() => {
 const action = computed(() => {
   switch (modalStore.getMode) {
     case MODALMODE.userDelete:
-      return "Remove";
+      return translation.remove;
     case MODALMODE.captainDelete:
-      return "Remove";
+      return translation.remove;
     case MODALMODE.teamDelete:
-      return "Delete";
+      return translation.delete;
   }
   return "";
 });
@@ -65,7 +75,7 @@ const onDeletePress = async () => {
     <h1 class="modal__container-title">{{ title }}</h1>
 
     <p class="modal__container-text">
-      Are you sure you want to {{ action }} <br />
+      {{ $t("popups.deletionConfirmation") }} {{ action.toLowerCase() }} <br />
       <span class="text__bold"> {{ deletedElement }} </span>
       <span
         v-if="
@@ -73,7 +83,9 @@ const onDeletePress = async () => {
           modalStore.getMode === MODALMODE.captainDelete
         "
       >
-        <span v-if="modalStore.getMode !== MODALMODE.captainDelete"> From : </span>
+        <span v-if="modalStore.getMode !== MODALMODE.captainDelete">
+          {{ $t("popups.teamDeletion.from") }}
+        </span>
         <span
           v-if="modalStore.getMode !== MODALMODE.captainDelete"
           class="text__bold"
@@ -82,17 +94,19 @@ const onDeletePress = async () => {
         ?
       </span>
       <br />
-      This action is irreversible !
+      {{ $t("popups.irreversible") }}
     </p>
 
     <div class="modal__location-button">
       <button-text-sized
-        text="Cancel"
+        :text="$t('buttons.cancel')"
         :color="BUTTONCOLORS.secondary"
         @click.prevent="onCancelPress"
       />
       <button-text-icon
-        :text="modalStore.getMode === MODALMODE.userDelete ? 'REMOVE' : 'DELETE'"
+        :text="
+          modalStore.getMode === MODALMODE.userDelete ? $t('buttons.remove') : $t('buttons.delete')
+        "
         :icon="deleteIcon"
         :color="BUTTONCOLORS.delete"
         @click.prevent="onDeletePress"

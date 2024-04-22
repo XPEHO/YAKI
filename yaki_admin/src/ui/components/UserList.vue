@@ -32,10 +32,10 @@ defineProps({
       {{ teamStore.getTeamSelected.teamDescription }}
     </p>
     <p
-      v-if="userList && userList.length > 0"
+      v-if="isUsingTeamDescription && userList && userList.length > 0"
       class="text_default__Team_name"
     >
-      Teammates :
+      {{ $t("general.teammates") }} :
     </p>
     <section class="user-list__in-team-container">
       <user-info-card

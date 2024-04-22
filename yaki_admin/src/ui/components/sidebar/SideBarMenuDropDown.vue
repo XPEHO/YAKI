@@ -32,6 +32,10 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  isMenuOpen: {
+    type: Boolean,
+    required: true,
+  },
 });
 </script>
 
@@ -58,6 +62,7 @@ const props = defineProps({
       class="drop-down__checkbox"
       type="checkbox"
       id="sidebar-dropdown"
+      :checked="isMenuOpen"
     />
 
     <figure class="drop-down__icon image-filter">
@@ -78,7 +83,7 @@ const props = defineProps({
             alt="Add icon"
           />
         </figure>
-        <p>Create team</p>
+        <p>{{ $t("sidebar.createTeam") }}</p>
       </button>
 
       <div
@@ -94,7 +99,7 @@ const props = defineProps({
         />
       </div>
       <div v-else>
-        <p class="no-teams unselectabla-text">No team available</p>
+        <p class="no-teams unselectabla-text">{{ $t("sidebar.noTeams") }}</p>
       </div>
     </section>
   </section>

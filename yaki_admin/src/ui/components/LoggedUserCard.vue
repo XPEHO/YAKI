@@ -40,7 +40,7 @@ onMounted(fetchUser);
     </figure>
     <div class="user-card__wrapper-user-infos">
       <p class="user-card__name-text">{{ user?.firstname }} {{ user?.lastname }}</p>
-      <p class="user-card__info-text">Administrator</p>
+      <p class="user-card__info-text">{{ $t("connectedUserCard.role") }}</p>
     </div>
   </article>
 </template>

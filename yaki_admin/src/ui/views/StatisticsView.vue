@@ -6,6 +6,10 @@ import buttonPrimary from "@/ui/components/buttons/ButtonPrimary.vue";
 import { statisticsService } from "@/services/statistics.service";
 import { useSelectedRoleStore } from "@/stores/selectedRole";
 
+import { useI18n } from "vue-i18n";
+const { t } = useI18n();
+const cvsFileName = `${t("sidebar.statistics")}.csv`;
+
 const selectedRoleStore = useSelectedRoleStore();
 
 const downloadCsv = async () => {
@@ -15,7 +19,7 @@ const downloadCsv = async () => {
     const url = await statisticsService.getStatisticsCsv(customerId);
     const link = document.createElement("a");
     link.href = url;
-    link.download = "statistics.csv";
+    link.download = cvsFileName;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -28,12 +32,12 @@ const downloadCsv = async () => {
 <template>
   <page-content-layout>
     <template #pageContentHeader>
-      <page-content-header title="Statistics" />
+      <page-content-header :title="$t('sidebar.statistics')" />
     </template>
     <template #content>
       <div>
         <buttonPrimary
-          text="Download in CSV format"
+          :text="$t('buttons.downloadCsv')"
           @click.prevent="downloadCsv"
         />
       </div>

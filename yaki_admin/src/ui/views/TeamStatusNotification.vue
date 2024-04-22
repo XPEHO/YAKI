@@ -8,6 +8,10 @@ const teamStore = useTeamStore();
 
 const route = useRoute();
 const teamParamState = route.params.state;
+
+import { useI18n } from "vue-i18n";
+
+const { locale } = useI18n();
 </script>
 
 <template>
@@ -16,22 +20,38 @@ const teamParamState = route.params.state;
       v-if="teamParamState === 'deleted'"
       class="no-team-in-list"
     >
-      <p class="p_main p_common">The team : {{ teamStore.getTeamDeleted.teamName }}</p>
+      <p class="p_main p_common">
+        {{ $t("teamStatus.deletedTeamName") }}{{ teamStore.getTeamDeleted.teamName }}
+      </p>
       <figure class="deleted_team__figure">
         <img
           :src="avatar"
           alt=""
         />
       </figure>
-      <p class="p_secondary p_common margin-top-2">was correctly deleted.</p>
+      <p class="p_secondary p_common margin-top-2">
+        {{ $t("teamStatus.deletedTeamConfirmation") }}
+      </p>
 
       <div
         v-if="teamStore.getTeamList.length === 0"
         class="margin-top-3"
       >
-        <p class="p_secondary p_common">You have no team left</p>
-        <p class="p_secondary p_common margin-top-1">
-          You can create a new team using the <span>create team</span> option
+        <p class="p_secondary p_common">{{ $t("teamStatus.noTeamLeft") }}</p>
+        <p
+          v-if="locale == 'en'"
+          class="p_secondary p_common margin-top-1"
+        >
+          {{ $t("teamStatus.howToCreateATeam1") }}
+          <span>{{ $t("teamStatus.createTeam") }}</span>
+          {{ $t("teamStatus.option") }}
+        </p>
+        <p
+          v-else
+          class="p_secondary p_common margin-top-1"
+        >
+          {{ $t("teamStatus.howToCreateATeam1") }}
+          <span>{{ $t("teamStatus.createTeam") }}</span>
         </p>
       </div>
     </div>
@@ -40,9 +60,9 @@ const teamParamState = route.params.state;
       v-else
       class="no-team-in-list"
     >
-      <p class="p_main p_common">You dont have any team</p>
+      <p class="p_main p_common">{{ $t("teamStatus.noTeam") }}</p>
       <p class="p_secondary p_common margin-top-3">
-        Teams can be created using the <span>create team</span> option
+        {{ $t("teamStatus.howToCreateATeam2") }} <span>{{ $t("teamStatus.createTeam") }}</span>
       </p>
       <figure class="no_team__figure">
         <img

@@ -11,7 +11,6 @@ import defaultTeamImage from "@/assets/images/teamDefaultImg2.svg";
 import { ref, watch } from "vue";
 
 import { BUTTONCOLORS } from "@/constants/componentsSettings.enum";
-import { MODALMODE } from "@/constants/modalMode.enum";
 import { useModalStore } from "@/stores/modalStore";
 import { useTeamLogoStore } from "@/stores/teamLogoStore";
 
@@ -19,16 +18,22 @@ const modalStore = useModalStore();
 const inputFileElement = ref<HTMLElement | null>(null);
 const isMissingTeamNameError = ref<boolean>(false);
 
+import { useI18n } from "vue-i18n";
+const { t } = useI18n();
+const createEditTranslation = {
+  modalTitleEditText: t("popups.teamEdition.title"),
+  modalDescriptionEditText: t("popups.teamEdition.description"),
+  modaleTitleCreateText: t("popups.teamCreation.title"),
+  modalDescriptionCreateText: t("popups.teamCreation.description"),
+  modalValidateButtonText: t("buttons.validate"),
+  modalEditButtonText: t("buttons.modify"),
+};
+
 const teamLogoStore = useTeamLogoStore();
 
 // At modal open (in the watch), the logo displayed is the one that was saved in the store.
 // its used to store the initial logo, and is used when the user want to edit the logo to still have the initial image
 const onModalOpenLogo = ref("");
-
-const modalText = ref({
-  title: "",
-  text: "",
-});
 
 /**
  * Reset on modal accept or cancel.
@@ -51,29 +56,6 @@ const sizeAndDeleteFlagReset = () => {
 };
 
 /**
- * Depending on the modal mode, change the modal text
- * @param newIsShow modalStore.getIsShow
- * @param newMode modalStore.getMode
- */
-const setModalHeaderText = (newIsShow: boolean, newMode: MODALMODE) => {
-  if (!newIsShow) return;
-
-  if (newMode === MODALMODE.teamEdit) {
-    modalText.value = {
-      title: "Team edition",
-      text: "You can edit your team name, description and logo",
-    };
-  }
-
-  if (newMode === MODALMODE.teamCreate) {
-    modalText.value = {
-      title: "Team creation",
-      text: "The team name must be provided. You can also add a description and a logo",
-    };
-  }
-};
-
-/**
  * On modal open.
  * (check if the newIsShow is true, and a modalModeMatch the current modal type).
  *  Set the initial logo to the one saved in the store.
@@ -83,7 +65,7 @@ watch(
   [() => modalStore.getMode, () => modalStore.getIsShow],
   ([newMode, newIsShow]) => {
     teamLogoStore.setTeamLogoToDisplay(newIsShow, newMode);
-    setModalHeaderText(newIsShow, newMode);
+    modalStore.setModalHeaderText(newIsShow, newMode, createEditTranslation);
 
     onModalOpenLogo.value = teamLogoStore.getLogoDisplayed;
   },
@@ -186,9 +168,9 @@ const setTeamDescriptionToDisplay = (value: string) => {
 
 <template>
   <section class="container__popup">
-    <h1 class="container__title-text">{{ modalText.title }}</h1>
+    <h1 class="container__title-text">{{ modalStore.getCreateEditModalText.title }}</h1>
     <p class="container__text">
-      {{ modalText.text }}
+      {{ modalStore.getCreateEditModalText.text }}
     </p>
 
     <section class="popup__content">
@@ -202,9 +184,9 @@ const setTeamDescriptionToDisplay = (value: string) => {
             v-if="teamLogoStore.isFileSizeTooBig"
             class="is_logo_too_heavy"
           >
-            <p>Your file is too large</p>
-            <p>Please select a file</p>
-            <p>under 500kb</p>
+            <p>{{ $t("popups.fileHandling.tooLarge") }}</p>
+            <p>{{ $t("popups.fileHandling.select") }}</p>
+            <p>{{ $t("popups.fileHandling.sizeLimit") }}</p>
           </div>
           <img
             :class="[teamLogoStore.isFileSizeTooBig ? 'logo_too_heavy_gray_scale' : '']"
@@ -234,27 +216,27 @@ const setTeamDescriptionToDisplay = (value: string) => {
 
       <form class="popup__input-container">
         <input-text
-          label-text="Team name"
+          :label-text="$t('inputs.teamName')"
           :inputValue="modalStore.getTeamNameInputValue"
           @emittedInput="setTeamNameToDisplay"
           :isError="isMissingTeamNameError"
         />
 
         <input-text-area
-          label-text="'Team description'"
+          :label-text="$t('inputs.teamDescription')"
           :inputValue="modalStore.getTeamDescriptionInputValue"
           @emittedInput="setTeamDescriptionToDisplay"
         />
 
         <section class="container__buttons_form">
           <button-text-sized
-            text="Cancel"
+            :text="$t('buttons.cancel')"
             :color="BUTTONCOLORS.secondary"
             @click.prevent="onModalCancel"
             type="button"
           />
           <button-text-sized
-            text="Modify"
+            :text="modalStore.getCreateEditModalText.validateBtnText"
             :color="BUTTONCOLORS.primary"
             @click.prevent="onModalAccept"
             type="submit"
