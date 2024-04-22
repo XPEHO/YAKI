@@ -60,7 +60,7 @@
     "irreversible": "Cette action est irréversible !",
     "deletionConfirmation": "Êtes-vous sûr de vouloir ",
     "fileHandling": {
-      "tooLarge": "Le fichier est trop volumineux",
+      "tooLarge": "Fichier trop volumineux",
       "select": "Sélectionner un fichier",
       "sizeLimit": "sous 500kb",
       "wrongFormat": "Le format du fichier est incorrect"

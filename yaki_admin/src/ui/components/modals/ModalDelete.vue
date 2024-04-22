@@ -15,22 +15,22 @@ const teamStore = useTeamStore();
 
 import { useI18n } from "vue-i18n";
 const { t } = useI18n();
-const translation = {
+const translation = computed(() => ({
   remove: t("buttons.remove"),
   delete: t("buttons.delete"),
   userRemove: t("popups.teamRemoveUser.title"),
   captainRemove: t("popups.captainRemoval.title"),
   teamDelete: t("popups.teamDeletion.title"),
-};
+}));
 
 const title = computed(() => {
   switch (modalStore.getMode) {
     case MODALMODE.userDelete:
-      return translation.userRemove;
+      return translation.value.userRemove;
     case MODALMODE.captainDelete:
-      return translation.captainRemove;
+      return translation.value.captainRemove;
     case MODALMODE.teamDelete:
-      return translation.teamDelete;
+      return translation.value.teamDelete;
   }
   return "";
 });
@@ -38,11 +38,11 @@ const title = computed(() => {
 const action = computed(() => {
   switch (modalStore.getMode) {
     case MODALMODE.userDelete:
-      return translation.remove;
+      return translation.value.remove;
     case MODALMODE.captainDelete:
-      return translation.remove;
+      return translation.value.remove;
     case MODALMODE.teamDelete:
-      return translation.delete;
+      return translation.value.delete;
   }
   return "";
 });
