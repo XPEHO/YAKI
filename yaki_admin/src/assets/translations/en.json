@@ -57,7 +57,7 @@
     "statistics": "Statistics"
   },
   "popups": {
-    "irreversible": "tThis action is irreversible !",
+    "irreversible": "This action is irreversible !",
     "deletionConfirmation": "Are you sure you want to ",
     "fileHandling": {
       "tooLarge": "The file is too large",

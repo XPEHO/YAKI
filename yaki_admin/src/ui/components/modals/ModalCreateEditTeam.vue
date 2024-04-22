@@ -8,7 +8,7 @@ import pencilIcon from "@/assets/icons_svg/Edit.svg";
 import deleteIcon from "@/assets/icons_svg/CrossClose.svg";
 import defaultTeamImage from "@/assets/images/teamDefaultImg2.svg";
 
-import { ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 
 import { BUTTONCOLORS } from "@/constants/componentsSettings.enum";
 import { useModalStore } from "@/stores/modalStore";
@@ -20,14 +20,15 @@ const isMissingTeamNameError = ref<boolean>(false);
 
 import { useI18n } from "vue-i18n";
 const { t } = useI18n();
-const createEditTranslation = {
+
+const createEditTranslation = computed(() => ({
   modalTitleEditText: t("popups.teamEdition.title"),
   modalDescriptionEditText: t("popups.teamEdition.description"),
   modaleTitleCreateText: t("popups.teamCreation.title"),
   modalDescriptionCreateText: t("popups.teamCreation.description"),
   modalValidateButtonText: t("buttons.validate"),
   modalEditButtonText: t("buttons.modify"),
-};
+}));
 
 const teamLogoStore = useTeamLogoStore();
 
@@ -65,7 +66,7 @@ watch(
   [() => modalStore.getMode, () => modalStore.getIsShow],
   ([newMode, newIsShow]) => {
     teamLogoStore.setTeamLogoToDisplay(newIsShow, newMode);
-    modalStore.setModalHeaderText(newIsShow, newMode, createEditTranslation);
+    modalStore.setModalHeaderText(newIsShow, newMode, createEditTranslation.value);
 
     onModalOpenLogo.value = teamLogoStore.getLogoDisplayed;
   },
