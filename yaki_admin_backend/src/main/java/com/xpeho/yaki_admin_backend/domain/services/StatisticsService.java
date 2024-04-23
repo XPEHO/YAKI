@@ -1,9 +1,14 @@
 package com.xpeho.yaki_admin_backend.domain.services;
 
-import com.xpeho.yaki_admin_backend.domain.entities.StatisticsEntity;
-import org.springframework.http.ResponseEntity;
+import com.xpeho.yaki_admin_backend.domain.entities.statistics.*;
+
+import java.util.ArrayList;
 
 public interface StatisticsService {
-    StatisticsEntity getStatisticsByCustomer(int id);
-    String getStatisticsCsvContentByCustomer(int id);
+    BasicStatisticsEntity getBasicStatistics(StatisticsRequestEntity requestEntity);
+    ArrayList<DeclarationsListEntity> getDeclarationsList(StatisticsRequestEntity requestEntity);
+    GlobalStatisticsEntity getGlobalStatistics(StatisticsRequestEntity requestEntity);
+    ArrayList<PerTeammateStatisticsEntity> getPerTeammateStatistics(StatisticsRequestEntity requestEntity);
+    ArrayList<PerTeamStatisticsEntity> getPerTeamStatistics(StatisticsRequestEntity requestEntity);
+    ArrayList<PerWeekdayStatisticsEntity> getPerWeekDayStatistics(StatisticsRequestEntity requestEntity);
 }
