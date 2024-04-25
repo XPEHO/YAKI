@@ -191,7 +191,9 @@ export class DeclarationRepository {
       await client.query(
         `UPDATE public.declaration d
          SET declaration_is_latest = false
-         WHERE declaration_is_latest = true AND declaration_user_id = $1
+         WHERE declaration_is_latest = true 
+         AND declaration_user_id = $1
+         AND DATE(declaration_date) = (CURRENT_DATE AT TIME ZONE 'UTC')
          RETURNING *`,
         [userId]
       );
