@@ -63,7 +63,7 @@ export class DeclarationRepository {
   }
 
   /**
-   * Inset the half day declaration into the database
+   * Inset the half day declaration into the database.
    * @param declarationList declaration list containing the declaratin to be inserted
    * @returns return the inserted halfDay declarations.
    */
@@ -191,7 +191,9 @@ export class DeclarationRepository {
       await client.query(
         `UPDATE public.declaration d
          SET declaration_is_latest = false
-         WHERE declaration_is_latest = true AND declaration_user_id = $1
+         WHERE declaration_is_latest = true 
+         AND declaration_user_id = $1
+         AND DATE(declaration_date) = (CURRENT_DATE AT TIME ZONE 'UTC')
          RETURNING *`,
         [userId]
       );
