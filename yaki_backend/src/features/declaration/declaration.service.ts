@@ -28,7 +28,14 @@ export class DeclarationService {
       throw new TypeError("Invalid declaration status.");
     }
 
-    const reference = new DeclarationDto(0, new Date(), new Date(), new Date(), StatusDeclaration.ON_SITE, 0);
+    const reference = new DeclarationDto(
+      0,
+      new Date(),
+      new Date(),
+      new Date(),
+      StatusDeclaration.ON_SITE,
+      0
+    );
     if (YakiUtils.isSameObjStructure(declarationList[0], reference) === false) {
       throw new TypeError("Incorrect data");
     }
@@ -39,20 +46,25 @@ export class DeclarationService {
       declarationList[0].declarationDateStart &&
       declarationList[0].declarationDateEnd &&
       declarationList[0].declarationStatus !== undefined &&
-      declarationList[0].declarationStatus.trim() !== "" &&
-      declarationList[0].declarationTeamId
+      declarationList[0].declarationStatus.trim() !== ""
     ) {
-      const dateStart = YakiUtils.setToDateWithoutTime(declarationList[0].declarationDateStart);
+      const dateStart = YakiUtils.setToDateWithoutTime(
+        declarationList[0].declarationDateStart
+      );
       const dateEnd = YakiUtils.setToDateWithoutTime(declarationList[0].declarationDateEnd);
       const today = YakiUtils.todayDateOnly();
 
       // If all check are true : declaration is for one day, and its made for the current date
       // if any of the check is false, it mean its scheduled absence for the future
       // an absence created for the current day will be considered as the latest declaration
-      if (dateStart.getTime() === dateEnd.getTime() && dateStart.getTime() === today.getTime()) {
+      if (
+        dateStart.getTime() === dateEnd.getTime() &&
+        dateStart.getTime() === today.getTime()
+      ) {
         // unflag from true to false the preview "latest" declaration
-        await this.declarationRepository.unflagLatestDeclaration(declarationList[0].declarationUserId);
-
+        await this.declarationRepository.unflagLatestDeclaration(
+          declarationList[0].declarationUserId
+        );
         return await this.declarationRepository.createDeclaration(declarationList, true);
       }
       // Here : create an absence for the future OR/AND with a duration of more than one day
@@ -86,7 +98,14 @@ export class DeclarationService {
     }
 
     for (let declaration of declarationList) {
-      const reference = new DeclarationDto(0, new Date(), new Date(), new Date(), StatusDeclaration.ON_SITE, 0);
+      const reference = new DeclarationDto(
+        0,
+        new Date(),
+        new Date(),
+        new Date(),
+        StatusDeclaration.ON_SITE,
+        0
+      );
       if (YakiUtils.isSameObjStructure(declaration, reference) === false) {
         throw new TypeError("Incorrect data");
       }
@@ -101,23 +120,22 @@ export class DeclarationService {
         declaration.declarationDateStart &&
         declaration.declarationDateEnd &&
         declaration.declarationStatus !== undefined &&
-        declaration.declarationStatus.trim() !== "" &&
-        declaration.declarationTeamId
+        declaration.declarationStatus.trim() !== ""
       ) {
         isObjectsValid = true;
       }
-
       // break loop at the first false value ( found unexpected data )
       if (!isObjectsValid) break;
     }
-    if (isObjectsValid) {
-      // unflag from true to false the preview "latest" declaration
-      await this.declarationRepository.unflagLatestDeclaration(declarationList[0].declarationUserId);
-
-      return await this.declarationRepository.createHalfDayDeclaration(declarationList, true);
-    } else {
+    if (!isObjectsValid) {
       throw new TypeError("One or more requiered information is missing.");
     }
+    // unflag from true to false the preview "latest" declaration
+    await this.declarationRepository.unflagLatestDeclaration(
+      declarationList[0].declarationUserId
+    );
+
+    return await this.declarationRepository.createHalfDayDeclaration(declarationList, true);
   }
 
   /**
@@ -126,8 +144,13 @@ export class DeclarationService {
    * @returns DeclarationDtoIn[] | String
    */
   async getDeclarationForTeammate(teammateId: number): Promise<DeclarationDtoIn[] | string> {
-    const declarationList: DeclarationDtoIn[] = await this.declarationRepository.getDeclarationForTeammate(teammateId);
-    if (declarationList.length !== 0 || declarationList !== null || declarationList !== undefined) {
+    const declarationList: DeclarationDtoIn[] =
+      await this.declarationRepository.getDeclarationForTeammate(teammateId);
+    if (
+      declarationList.length !== 0 ||
+      declarationList !== null ||
+      declarationList !== undefined
+    ) {
       return this.selectDeclarationToReturn(declarationList);
     } else {
       throw new TypeError("You have to declare yourself.");

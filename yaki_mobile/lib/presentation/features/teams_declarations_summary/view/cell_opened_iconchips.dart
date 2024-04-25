@@ -34,13 +34,13 @@ class CellOpenedIconChips extends ConsumerWidget {
 
     bool isUserIsInTeam =
         ref.read(teamProvider.notifier).isTeamBelowToCurrentUser(
-              teamName: teamName,
+              teamId: teamId,
             );
 
     if (statusAfternoon != null) {
       isUserIsInAfternoonTeam =
           ref.read(teamProvider.notifier).isTeamBelowToCurrentUser(
-                teamName: teamNameAfternoon!,
+                teamId: teamIdAfternoon!,
               );
     }
 

@@ -72,14 +72,17 @@ class TeamNotifier extends StateNotifier<TeamPageState> {
     state = state.copyWith(fetchedTeamList: userTeamList);
   }
 
-  /// Determines if the teamName is in the list of teams fetched from the API.
+  /// Determines if the teamId is in the list of teams fetched from the API.
+  /// If the teamId is absenceTeamId, it returns true.( -1 mean "Absence"), all users have "this team ID"
   /// Used in the CellOpenedIconChips and CellCollapsedChipsRow widgets.
   /// (features/teams_declarations_summary/view/...)
   bool isTeamBelowToCurrentUser({
-    required String teamName,
+    required int teamId,
   }) {
+    if (teamId == absenceTeamId) return true;
+
     bool isTeamBelowToCurrentUser =
-        state.fetchedTeamList.any((team) => team.teamName == teamName);
+        state.fetchedTeamList.any((team) => team.teamId == teamId);
 
     return isTeamBelowToCurrentUser;
   }

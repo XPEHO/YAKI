@@ -9,7 +9,7 @@ export class DeclarationDto {
   declarationDateStart: Date;
   declarationDateEnd: Date;
   declarationStatus: StatusDeclaration;
-  declarationTeamId: number;
+  declarationTeamId: number | null;
 
   constructor(
     declarationUserId: number,

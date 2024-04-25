@@ -11,7 +11,9 @@ export class TeammateRepository {
    * @param usersId users id list used to get their declarations
    * @returns
    */
-  getTeammatesDeclarationsFromUserTeams = async (usersId: number[]): Promise<UserWithDeclaration[]> => {
+  getTeammatesDeclarationsFromUserTeams = async (
+    usersId: number[]
+  ): Promise<UserWithDeclaration[]> => {
     const valuesList = usersId.map((_, index) => `$${index + 1}`).join(",");
 
     const client = new Client({
@@ -37,8 +39,8 @@ export class TeammateRepository {
     FROM public.user u
     LEFT JOIN (
       SELECT * FROM public.declaration subd 
-      INNER JOIN public.team t on t.team_id = subd.declaration_team_id
-      INNER JOIN public.customer c on t.team_customer_id = c.customer_id
+      LEFT JOIN public.team t on t.team_id = subd.declaration_team_id
+      LEFT JOIN public.customer c on t.team_customer_id = c.customer_id
       ) as d on ( 
         d.declaration_user_id = u.user_id 
         AND d.declaration_is_latest = true 
@@ -46,7 +48,7 @@ export class TeammateRepository {
         )
     WHERE u.user_id IN (${valuesList}) 
     AND u.user_enabled = true
-    ORDER BY d.declaration_date DESC`;
+    ORDER BY d.declaration_date DESC, u.user_id, d.declaration_date_start ASC`;
     await client.connect();
     try {
       const poolResult: QueryResult = await client.query(query, usersId);

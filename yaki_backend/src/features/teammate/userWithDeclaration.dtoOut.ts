@@ -8,10 +8,10 @@ export class UserWithDeclaration {
   declarationDateStart: Date;
   declarationDateEnd: Date;
   declarationStatus: StatusDeclaration;
-  teamId: number;
-  teamName: string;
-  teamCustomerId: number;
-  customerName: string;
+  teamId: number | null;
+  teamName: string | null;
+  teamCustomerId: number | null;
+  customerName: string | null;
 
   constructor(
     userId: number,

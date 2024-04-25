@@ -11,7 +11,7 @@ export class DeclarationDtoIn {
   declarationDateStart: Date;
   declarationDateEnd: Date;
   declarationStatus: StatusDeclaration;
-  declarationTeamId: number;
+  declarationTeamId: number | null;
 
   constructor(
     declarationId: number,
