@@ -63,7 +63,7 @@ export class DeclarationRepository {
   }
 
   /**
-   * Inset the half day declaration into the database
+   * Inset the half day declaration into the database.
    * @param declarationList declaration list containing the declaratin to be inserted
    * @returns return the inserted halfDay declarations.
    */
