@@ -26,12 +26,15 @@ export class DeclarationController {
 
     try {
       if (mode === "fullDay") {
-        const createdFullDayDeclaration = await this.declarationService.createDeclaration(declarationReqBody);
+        const createdFullDayDeclaration = await this.declarationService.createDeclaration(
+          declarationReqBody
+        );
         res.status(201).json(createdFullDayDeclaration);
       }
 
       if (mode === "halfDay") {
-        const createdHalfDayDeclarations = await this.declarationService.createHalfDayDeclarations(declarationReqBody);
+        const createdHalfDayDeclarations =
+          await this.declarationService.createHalfDayDeclarations(declarationReqBody);
         res.status(201).json(createdHalfDayDeclarations);
       }
     } catch (error: any) {

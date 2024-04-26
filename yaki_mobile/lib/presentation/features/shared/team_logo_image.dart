@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:yaki/domain/entities/team_logo_entity.dart';
 import 'package:yaki/presentation/state/providers/team_logo_provider.dart';
+import 'package:yaki/presentation/state/state/team_page_state.dart';
 
 class TeamLogoImage extends ConsumerWidget {
   final double size;
@@ -35,8 +36,8 @@ class TeamLogoImage extends ConsumerWidget {
     // used as check to know if the team has a logo (retrive the value from the map where key is teamId)
     final teamLogoEntity = teamLogoMap[teamId];
 
-    // teamId == -1 means that the team is Absence card
-    if (teamId != -1 && teamLogoEntity != null) {
+    // teamId == absenceTeamId means that the team is Absence card
+    if (teamId != absenceTeamId && teamLogoEntity != null) {
       return SizedBox(
         width: size,
         height: size,

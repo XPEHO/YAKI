@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yaki/data/models/team_model.dart';
 import 'package:yaki/presentation/state/providers/team_logo_provider.dart';
 import 'package:yaki/presentation/state/providers/team_provider.dart';
+import 'package:yaki/presentation/state/state/team_page_state.dart';
 
 final teamFutureProvider = FutureProvider.autoDispose<List<TeamModel>>((ref) {
   final teamRepo = ref.watch(teamRepositoryProvider);
@@ -20,7 +21,7 @@ final teamFutureProvider = FutureProvider.autoDispose<List<TeamModel>>((ref) {
       return [
         ...list,
         TeamModel(
-          teamId: -1,
+          teamId: absenceTeamId,
           teamName: "Absence",
           teamActifFlag: true,
         ),

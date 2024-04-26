@@ -8,6 +8,7 @@ import 'package:yaki/presentation/displaydata/user_with_declaration_category_enu
 import 'package:yaki/presentation/state/providers/filter_provider.dart';
 import 'package:yaki/presentation/state/providers/team_logo_provider.dart';
 import 'package:yaki/presentation/state/providers/teammate_provider.dart';
+import 'package:yaki/presentation/state/state/team_page_state.dart';
 
 final teammateFutureProvider =
     FutureProvider.autoDispose<GroupedUserWithDeclaration>((ref) {
@@ -18,7 +19,7 @@ final teammateFutureProvider =
       teammateRepo.getTeammate().then((list) {
     final List<TeamLogoEntity> teamLogoList = ref.read(teamLogoProvider);
     // this will be the default team logo notifier value
-    if (teamLogoList.isNotEmpty && teamLogoList.first.teamId == -1) {
+    if (teamLogoList.isNotEmpty && teamLogoList.first.teamId == absenceTeamId) {
       ref.read(teamLogoProvider.notifier).getTeamsLogoByUserId();
     }
 

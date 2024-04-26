@@ -1,5 +1,6 @@
 import 'package:yaki/data/models/team_model.dart';
 import 'package:yaki/presentation/displaydata/declaration_status_enum.dart';
+import 'package:yaki/presentation/state/state/team_page_state.dart';
 
 enum LatestDeclarationStatus {
   unknown,
@@ -70,7 +71,7 @@ class DeclarationsHalfDaySelections {
 
 // DEFAULTS VALUES allow to use copyWith
 TeamModel defaultTeam = TeamModel(
-  teamId: -1,
+  teamId: absenceTeamId,
   teamName: "default",
   teamActifFlag: false,
 );

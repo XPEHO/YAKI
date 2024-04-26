@@ -318,7 +318,7 @@ CREATE TABLE IF NOT EXISTS public.declaration
     declaration_date_start timestamp without time zone,
     declaration_date_end timestamp without time zone,
     declaration_status character varying(30),
-    declaration_team_id integer NOT NULL,
+    declaration_team_id integer,
     declaration_is_latest boolean NOT NULL,
     CONSTRAINT declaration_pkey PRIMARY KEY (declaration_id),
     CONSTRAINT declaration_user_id_fkey FOREIGN KEY (declaration_user_id)
@@ -418,3 +418,4 @@ CREATE TABLE IF NOT EXISTS public.team_logo(
 TABLESPACE pg_default;
 ALTER TABLE IF EXISTS public.team_logo
     OWNER to yaki;
+

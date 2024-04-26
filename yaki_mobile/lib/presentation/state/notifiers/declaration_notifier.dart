@@ -9,6 +9,7 @@ import 'package:yaki/data/repositories/team_repository.dart';
 import 'package:yaki/domain/entities/declaration_status.dart';
 import 'package:yaki/presentation/displaydata/declaration_enum.dart';
 import 'package:yaki/presentation/displaydata/declaration_status_enum.dart';
+import 'package:yaki/presentation/state/state/team_page_state.dart';
 
 class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
   final DeclarationRepository declarationRepository;
@@ -110,7 +111,7 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
     state.halfDayWorkflow.firstTeam = teamList.first;
     state.halfDayWorkflow.secondTeam = teamList.last;
 
-    if (state.halfDayWorkflow.firstTeam.teamId == -1) {
+    if (state.halfDayWorkflow.firstTeam.teamId == absenceTeamId) {
       state.halfDayWorkflow.firstStatus = StatusEnum.absence;
       state.halfDayWorkflow.firstTeam = teamList.last;
     }
@@ -196,7 +197,10 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
         '${DateFormat('yyyy-MM-dd').format(todayDate)} 12:00:00Z',
       ),
       declarationStatus: morningStatus,
-      declarationTeamId: morningTeamId,
+      declarationTeamId:
+          morningStatus != StatusEnum.getValue(key: StatusEnum.absence.value)
+              ? morningTeamId
+              : null,
     );
     // SECOND DECLARATION
     DeclarationModel newDeclarationAfternoon = DeclarationModel(
@@ -209,7 +213,10 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
         '${DateFormat('yyyy-MM-dd').format(todayDate)} 23:59:59Z',
       ),
       declarationStatus: afternoonStatus,
-      declarationTeamId: afternoonTeamId,
+      declarationTeamId:
+          afternoonStatus != StatusEnum.getValue(key: StatusEnum.absence.value)
+              ? afternoonTeamId
+              : null,
     );
 
     // ADD THE 2 DECLARATION TO THE LIST
@@ -245,7 +252,7 @@ class DeclarationNotifier extends StateNotifier<DeclarationStatus> {
       declarationDateEnd: DateTime.parse(
         '${DateFormat('yyyy-MM-dd').format(dateEnd)} 23:59:59Z',
       ),
-      declarationTeamId: teamId,
+      declarationTeamId: null,
       declarationStatus: status,
     );
 

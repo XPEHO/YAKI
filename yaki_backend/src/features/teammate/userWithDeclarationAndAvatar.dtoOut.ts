@@ -8,10 +8,10 @@ export class UsersWithDeclarationAndAvatar {
   declarationDateStart: Date;
   declarationDateEnd: Date;
   declarationStatus: StatusDeclaration;
-  teamId: number;
-  teamName: string;
-  teamCustomerId: number;
-  customerName: string;
+  teamId: number | null;
+  teamName: string | null;
+  teamCustomerId: number | null;
+  customerName: string | null;
   avatarReference: string | null;
   avatarByteArray: number[] | null;
 
@@ -54,10 +54,10 @@ export interface UsersWithDeclarationAndAvatarInterface {
   declarationDateStart: Date;
   declarationDateEnd: Date;
   declarationStatus: StatusDeclaration;
-  teamId: number;
-  teamName: string;
-  teamCustomerId: number;
-  customerName: string;
+  teamId: number | null;
+  teamName: string | null;
+  teamCustomerId: number | null;
+  customerName: string | null;
   avatarReference: string | null;
   avatarByteArray: number[] | null;
 }

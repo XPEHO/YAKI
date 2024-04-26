@@ -7,6 +7,7 @@ import 'package:yaki/data/models/teammate_with_declaration_model.dart';
 import 'package:yaki/data/sources/remote/teammate_api.dart';
 import 'package:yaki/domain/entities/teammate_with_declaration_entity.dart';
 import 'package:yaki/presentation/displaydata/declaration_status_enum.dart';
+import 'package:yaki/presentation/state/state/team_page_state.dart';
 
 class TeammateRepository {
   final TeammateApi teammateApi;
@@ -48,8 +49,8 @@ class TeammateRepository {
             }
 
             if (isAfternoonDeclaration(
-              currentModel: currentModel,
               i: i,
+              currentModel: currentModel,
               modelList: modelList,
             )) {
               updateLatestTeammateEntityAfternoonDeclaration(
@@ -106,8 +107,8 @@ class TeammateRepository {
         declarationStatus: StatusEnum.fromValue(
           currentModel.declarationStatus ?? StatusEnum.undeclared.name,
         ),
-        teamId: currentModel.teamId ?? -1,
-        teamName: currentModel.teamName ?? 'no declaration',
+        teamId: currentModel.teamId ?? absenceTeamId,
+        teamName: currentModel.teamName ?? 'absence',
         customerId: currentModel.customerId,
         customerName: currentModel.customerName,
         avatarReference: currentModel.avatarReference,
@@ -143,7 +144,7 @@ class TeammateRepository {
     halfDayUser.declarationStatusAfternoon = StatusEnum.fromValue(
       currentModel.declarationStatus!,
     );
-    halfDayUser.teamIdAfternoon = currentModel.teamId;
+    halfDayUser.teamIdAfternoon = currentModel.teamId ?? absenceTeamId;
     halfDayUser.teamNameAfternoon = currentModel.teamName;
     halfDayUser.customerAfternoonId = currentModel.customerId;
     halfDayUser.customerAfternoonName = currentModel.customerName;

@@ -23,3 +23,5 @@ class TeamPageState {
     );
   }
 }
+
+const absenceTeamId = -1;
