@@ -33,7 +33,7 @@ enum NotificationParams: String {
  And the notification scheduled status.
  */
 enum userDefaultsKeys: String {
-    case notificationId = "notificationId"
+    case notificationIds = "notificationIds"
     case isScheduleNotificationAuthorized = "isScheduleNotificationAuthorized"
     case isNotificationScheduled = "isNotificationScheduled"
 }

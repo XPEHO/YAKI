@@ -18,13 +18,13 @@ var notificationSettings = Notification(
     messageBody: "fill out your YAKI declaration!")
 
 
-extension AppDelegate {    
-    var notificationId: String? {
+extension AppDelegate {
+    var notificationIds: [String]? {
         get {
-            return UserDefaults.standard.string(forKey: userDefaultsKeys.notificationId.rawValue)
+            return UserDefaults.standard.array(forKey: userDefaultsKeys.notificationIds.rawValue) as? [String]
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: userDefaultsKeys.notificationId.rawValue)
+            UserDefaults.standard.set(newValue, forKey: userDefaultsKeys.notificationIds.rawValue)
         }
     }
     
@@ -33,7 +33,7 @@ extension AppDelegate {
             return UserDefaults.standard.bool(forKey: userDefaultsKeys.isScheduleNotificationAuthorized.rawValue)
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: userDefaultsKeys.isScheduleNotificationAuthorized.rawValue)    
+            UserDefaults.standard.set(newValue, forKey: userDefaultsKeys.isScheduleNotificationAuthorized.rawValue)
         }
     }
     var isNotificationScheduled: Bool {

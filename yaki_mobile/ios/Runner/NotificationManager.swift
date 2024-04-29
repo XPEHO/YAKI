@@ -6,7 +6,7 @@ extension AppDelegate {
      */
     func checkPermission(result: @escaping FlutterResult) {
         UNUserNotificationCenter.current().getNotificationSettings { settings in
-            let isAuthorized = settings.authorizationStatus == .authorized 
+            let isAuthorized = settings.authorizationStatus == .authorized
             return result(isAuthorized)
         }
     }
@@ -47,20 +47,25 @@ extension AppDelegate {
      
      - Note: The `UNNotificationRequest`'s identifier is a newly generated UUID string, which is also stored in `AppDelegate.shared.notificationId`.s
      */
-    func createNotification() -> UNNotificationRequest {
+    func createNotification() -> [UNNotificationRequest] {
+        var requests = [UNNotificationRequest]()
+        AppDelegate.shared.notificationIds = [String]()
         let content = UNMutableNotificationContent()
         content.title = notificationSettings.messageTitle
         content.body = notificationSettings.messageBody
         
-        var dateComponents = DateComponents()
-        dateComponents.hour = notificationSettings.hours
-        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
-        
-        let uuidString = UUID().uuidString
-        AppDelegate.shared.notificationId = uuidString
-        let request = UNNotificationRequest(identifier: uuidString, content: content, trigger: trigger)
-        
-        return request
+        for weekday in 2...6 { // 2 for Monday, 6 for Friday
+            var dateComponents = DateComponents()
+            dateComponents.hour = notificationSettings.hours
+            dateComponents.weekday = weekday
+            let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
+            
+            let uuidString = UUID().uuidString
+            AppDelegate.shared.notificationIds?.append(uuidString)
+            let request = UNNotificationRequest(identifier: uuidString, content: content, trigger: trigger)
+            requests.append(request)
+        }
+        return requests
     }
     
     /**
@@ -72,24 +77,19 @@ extension AppDelegate {
      If there's an error scheduling the notification, it's printed to the console.s
      */
     func scheduleNotification() {
-        // Check if current day is a weekend
-        let calendar = Calendar.current
-        let dayOfWeek = calendar.component(.weekday, from: Date())
-        if dayOfWeek == 1 || dayOfWeek == 7 { // 1 for Sunday, 7 for Saturday
-            debugPrint("It's a weekend, no notification scheduled")
-            return
-        }
-        
-        let request = createNotification()
+        let requests = createNotification()
         let notificationCenter = UNUserNotificationCenter.current()
         
-        // Schedule the request with the system.
-        notificationCenter.add(request) { (error) in
-            if let error = error {
-                debugPrint("Error: \(error)")
-            } else {
-                debugPrint("Notification scheduled successfully")
-                AppDelegate.shared.isNotificationScheduled = true
+        
+        for request in requests {
+            // Schedule the request with the system.
+            notificationCenter.add(request) { (error) in
+                if let error = error {
+                    debugPrint("Error: \(error)")
+                } else {
+                    debugPrint("Notification scheduled successfully")
+                    AppDelegate.shared.isNotificationScheduled = true
+                }
             }
         }
     }
@@ -99,10 +99,10 @@ extension AppDelegate {
      It uses the notificationId to remove the pending notification request.
      */
     func disableNotification() {
-        guard let identifier = AppDelegate.shared.notificationId else { return }
+        guard let identifiers = AppDelegate.shared.notificationIds else { return }
         
         let notificationCenter = UNUserNotificationCenter.current()
-        notificationCenter.removePendingNotificationRequests(withIdentifiers: [identifier])
+        notificationCenter.removePendingNotificationRequests(withIdentifiers: identifiers)
         AppDelegate.shared.isNotificationScheduled = false
         debugPrint("Notification disabled")
     }
