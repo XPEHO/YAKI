@@ -122,7 +122,7 @@ export class DeclarationRepository {
 
   /**
    * Get the latest declaration for a team mate
-   * Select current day declaration, OR declaration ending after the current day (vacation or "other" situation)
+   * Select current day declaration, OR declaration ending after the current day (absence situation)
    * @param {number} teammateId - number
    * @returns An array of Declaration objects.
    */
@@ -145,12 +145,8 @@ export class DeclarationRepository {
         OR (
             declaration_date_start::date <= now()::date
             AND declaration_date_end::date > now()::date 
-            AND (
-              declaration_status = 'vacation' 
-              OR
-              declaration_status = 'other'
-              )
-            )
+            AND declaration_status = 'absence'
+        )
         ORDER BY declaration_date DESC LIMIT 10`,
         [teammateId]
       );

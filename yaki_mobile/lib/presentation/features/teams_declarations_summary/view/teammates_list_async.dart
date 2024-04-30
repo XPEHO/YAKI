@@ -11,6 +11,7 @@ import 'package:yaki/presentation/features/shared/something_went_wrong.dart';
 import 'package:yaki/presentation/features/teams_declarations_summary/view/cell_card.dart';
 import 'package:yaki/presentation/state/providers/teammate_future_provider.dart';
 import 'package:yaki/presentation/styles/text_style.dart';
+import 'package:yaki_ui/yaki_ui.dart';
 
 class TeammateListAsync extends ConsumerWidget {
   const TeammateListAsync({super.key});
@@ -33,6 +34,7 @@ class TeammateListAsync extends ConsumerWidget {
             },
           ),
           child: RefreshIndicator(
+            color: kPrimaryColor,
             onRefresh: () async {
               groupedUsersWithDeclaration =
                   await ref.refresh(teammateFutureProvider);
