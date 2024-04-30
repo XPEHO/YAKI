@@ -74,9 +74,15 @@ const router = createRouter({
 // BEGIN: be15d9bcejpp
 router.beforeEach(async (to) => {
   // redirect to login page if not logged in and trying to access a restricted page
-  const publicPages = ["/", "/registerConfirm"];
+  const publicPages = ["/"];
   const authRequired = !publicPages.includes(to.path);
   const auth = useAuthStore();
+
+  // Logout on reload
+  const role = useRoleStore();
+  if (auth.user && role.captainsId.length === 0 && role.customersIdWhereIgotRights.length === 0) {
+    auth.logout();
+  }
 
   if (authRequired && !auth.user) {
     auth.returnedUrl = to.fullPath;
