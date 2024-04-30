@@ -11,7 +11,7 @@ class DeclarationModel {
   String declarationStatus;
   int? declarationTeamId;
 
-  // Remote, On site, Vacation, Other
+  // Remote, On site, Absence
   DeclarationModel({
     required this.declarationUserId,
     required this.declarationDate,

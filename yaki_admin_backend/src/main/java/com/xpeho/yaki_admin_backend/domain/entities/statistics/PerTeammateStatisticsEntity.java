@@ -1,23 +1,24 @@
 package com.xpeho.yaki_admin_backend.domain.entities.statistics;
 
-public class PerTeammateStatisticsEntity extends StatisticsEntity{
+public class PerTeammateStatisticsEntity extends StatisticsEntity {
     String firstName;
     String lastName;
     double declarationCount;
     double remoteCount;
     double onsiteCount;
-    double vacationCount;
+    double absenceCount;
 
     public PerTeammateStatisticsEntity() {
     }
 
-    public PerTeammateStatisticsEntity(String firstName, String lastName, double declarationCount, double remoteCount, double onsiteCount, double vacationCount) {
+    public PerTeammateStatisticsEntity(String firstName, String lastName, double declarationCount, double remoteCount,
+            double onsiteCount, double absenceCount) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.declarationCount = declarationCount;
         this.remoteCount = remoteCount;
         this.onsiteCount = onsiteCount;
-        this.vacationCount = vacationCount;
+        this.absenceCount = absenceCount;
     }
 
     public String getFirstName() {
@@ -60,11 +61,11 @@ public class PerTeammateStatisticsEntity extends StatisticsEntity{
         this.onsiteCount = onsiteCount;
     }
 
-    public double getVacationCount() {
-        return vacationCount;
+    public double getAbsenceCount() {
+        return absenceCount;
     }
 
-    public void setVacationCount(double vacationCount) {
-        this.vacationCount = vacationCount;
+    public void setAbsenceCount(double absenceCount) {
+        this.absenceCount = absenceCount;
     }
 }
