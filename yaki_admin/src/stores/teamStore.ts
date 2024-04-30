@@ -11,7 +11,8 @@ import { useRoleStore } from "@/stores/roleStore";
 import { useTeamLogoStore } from "./teamLogoStore";
 
 interface State {
-  teamList: TeamType[];
+  teamListByCaptain: TeamType[];
+  teamListByCustomer: TeamType[];
   isTeamListSetOnLoggin: boolean;
   teamSelected: TeamType;
   teamSelectedLogo: TeamLogoType;
@@ -21,8 +22,9 @@ interface State {
 
 export const useTeamStore = defineStore("teamStore", {
   state: () => ({
-    teamList: [] as TeamType[],
-    // attribute false when a user log in, and set to true when the teamList is fetched for the very first time.
+    teamListByCaptain: [] as TeamType[],
+    teamListByCustomer: [] as TeamType[],
+    // attribute false when a user log in, and set to true when the teamListByCaptain is fetched for the very first time.
     // This way the router will not trigger fetch everytime the user navigate to the captain page.
     isTeamListSetOnLoggin: false as boolean,
     teamSelected: {} as TeamType,
@@ -34,7 +36,8 @@ export const useTeamStore = defineStore("teamStore", {
     captainIdToBeAssign: null as number | null,
   }),
   getters: {
-    getTeamList: (state: State) => state.teamList,
+    getTeamListByCaptain: (state: State) => state.teamListByCaptain,
+    getTeamListByCustomer: (state: State) => state.teamListByCustomer,
     // used in router.
     getIsTeamListSetOnLoggin: (state: State) => state.isTeamListSetOnLoggin,
     getTeamSelected: (state: State) => state.teamSelected,
@@ -85,17 +88,25 @@ export const useTeamStore = defineStore("teamStore", {
      * A captain can have multiple teams, therefore a list of captainId is needed
      */
     async setTeamsListByCaptainId(captainsId: number[]) {
-      this.teamList = [];
+      this.teamListByCaptain = [];
       const promises: Promise<TeamType[]>[] = captainsId.map((captainId) =>
         teamService.getAllTeamsWithinCaptain(captainId),
       );
       const teams = await Promise.all(promises);
-      this.teamList = [...teams.flat()];
+      this.teamListByCaptain = [...teams.flat()];
 
       // change attribute value to true after the first fetch
       if (this.getIsTeamListSetOnLoggin === false) {
         this.setIsTeamListSetOnLoggin(true);
       }
+    },
+
+    /**
+     * Fetch the teams list of a customer
+     * A customer can have multiple teams, therefore a list of customerId is needed
+     */
+    async setTeamsListByCustomerId(customerId: number) {
+      this.teamListByCustomer = await teamService.getAllTeamsByCustomerId(customerId);
     },
 
     // TEAMS CRUD METHODS  -------------------------------------------------------------------

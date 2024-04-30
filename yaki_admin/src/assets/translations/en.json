@@ -90,5 +90,18 @@
   },
   "general": {
     "teammates": "Teammates"
+  },
+  "statistics": {
+    "basic": "Basic",
+    "global": "Global statistics",
+    "declarations": "Declarations list",
+    "perTeam": "Per team",
+    "perTeammate": "Per teammates",
+    "perWeekday": "Per weekday",
+    "statisticTypeSelectorLabel": "Statistic type :",
+    "teamSelectorLabel": "Team :",
+    "allTeamsOption": "All teams",
+    "dateSelectorStartLabel": "From :",
+    "dateSelectorEndLabel": "To :"
   }
 }

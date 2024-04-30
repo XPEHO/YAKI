@@ -39,7 +39,7 @@ const router = createRouter({
             if (teamStore.getIsTeamListSetOnLoggin === false) {
               await teamStore.setTeamsListByCaptainId(roleStore.getCaptainsId);
             }
-            if (teamStore.getTeamList.length === 0) {
+            if (teamStore.getTeamListByCaptain.length === 0) {
               next(`/dashboard/team/${TEAMPARAMS.empty}`);
             } else {
               next();
