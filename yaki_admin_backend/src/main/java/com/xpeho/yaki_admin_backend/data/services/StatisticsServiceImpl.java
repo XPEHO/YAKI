@@ -39,10 +39,12 @@ public class StatisticsServiceImpl implements StatisticsService {
     @Override
     public ArrayList<DeclarationsListEntity> getDeclarationsList(StatisticsRequestEntity requestEntity) {
         List<Object[]> results;
-        if (requestEntity.teamId() == null || requestEntity.teamId() == 0){
-            results = declarationJpaRepository.getDeclarationsListByCustomerId(requestEntity.periodStart(), requestEntity.periodEnd(), requestEntity.customerId());
+        if (requestEntity.teamId() == null || requestEntity.teamId() == 0) {
+            results = declarationJpaRepository.getDeclarationsListByCustomerId(requestEntity.periodStart(),
+                    requestEntity.periodEnd(), requestEntity.customerId());
         } else {
-            results = declarationJpaRepository.getDeclarationsListByCustomerAndTeamId(requestEntity.periodStart(), requestEntity.periodEnd(), requestEntity.customerId(), requestEntity.teamId());
+            results = declarationJpaRepository.getDeclarationsListByCustomerAndTeamId(requestEntity.periodStart(),
+                    requestEntity.periodEnd(), requestEntity.customerId(), requestEntity.teamId());
         }
 
         ArrayList<DeclarationsListEntity> declarationsListEntities = new ArrayList<>();
@@ -51,9 +53,12 @@ public class StatisticsServiceImpl implements StatisticsService {
             String firstName = result[1].toString();
             String lastName = result[2].toString();
             String declarationStatus = result[3].toString();
-            LocalDateTime declarationDate = Instant.parse(result[4].toString()).atZone(ZoneId.systemDefault()).toLocalDateTime();
-            LocalDateTime declarationDateStart = Instant.parse(result[5].toString()).atZone(ZoneId.systemDefault()).toLocalDateTime();
-            LocalDateTime declarationDateEnd = Instant.parse(result[6].toString()).atZone(ZoneId.systemDefault()).toLocalDateTime();
+            LocalDateTime declarationDate = Instant.parse(result[4].toString()).atZone(ZoneId.systemDefault())
+                    .toLocalDateTime();
+            LocalDateTime declarationDateStart = Instant.parse(result[5].toString()).atZone(ZoneId.systemDefault())
+                    .toLocalDateTime();
+            LocalDateTime declarationDateEnd = Instant.parse(result[6].toString()).atZone(ZoneId.systemDefault())
+                    .toLocalDateTime();
 
             DeclarationsListEntity declarationsListEntity = new DeclarationsListEntity(
                     teamName,
@@ -62,8 +67,7 @@ public class StatisticsServiceImpl implements StatisticsService {
                     declarationStatus,
                     declarationDate,
                     declarationDateStart,
-                    declarationDateEnd
-            );
+                    declarationDateEnd);
             declarationsListEntities.add(declarationsListEntity);
         }
         return declarationsListEntities;
@@ -71,9 +75,11 @@ public class StatisticsServiceImpl implements StatisticsService {
 
     @Override
     public GlobalStatisticsEntity getGlobalStatistics(StatisticsRequestEntity requestEntity) {
-        List<Object[]> results = declarationJpaRepository.getGlobalStatisticsByCustomerId(requestEntity.periodStart(), requestEntity.periodEnd(), requestEntity.customerId());
+        List<Object[]> results = declarationJpaRepository.getGlobalStatisticsByCustomerId(requestEntity.periodStart(),
+                requestEntity.periodEnd(), requestEntity.customerId());
         if (results.isEmpty()) {
-            throw new EntityNotFoundException("The global statistics for customer with id " + requestEntity.customerId() + " not found.");
+            throw new EntityNotFoundException(
+                    "The global statistics for customer with id " + requestEntity.customerId() + " not found.");
         }
         Object[] result = results.get(0);
         double declarationCount = Double.parseDouble(result[0].toString());
@@ -83,17 +89,18 @@ public class StatisticsServiceImpl implements StatisticsService {
         return new GlobalStatisticsEntity(
                 declarationCount,
                 remoteCount,
-                onsiteCount
-        );
+                onsiteCount);
     }
 
     @Override
     public ArrayList<PerTeammateStatisticsEntity> getPerTeammateStatistics(StatisticsRequestEntity requestEntity) {
         List<Object[]> results;
-        if (requestEntity.teamId() == null || requestEntity.teamId() == 0){
-            results = declarationJpaRepository.getPerTeammateStatisticsByCustomerId(requestEntity.periodStart(), requestEntity.periodEnd(), requestEntity.customerId());
+        if (requestEntity.teamId() == null || requestEntity.teamId() == 0) {
+            results = declarationJpaRepository.getPerTeammateStatisticsByCustomerId(requestEntity.periodStart(),
+                    requestEntity.periodEnd(), requestEntity.customerId());
         } else {
-            results = declarationJpaRepository.getPerTeammateStatisticsByCustomerAndTeamId(requestEntity.periodStart(), requestEntity.periodEnd(), requestEntity.customerId(), requestEntity.teamId());
+            results = declarationJpaRepository.getPerTeammateStatisticsByCustomerAndTeamId(requestEntity.periodStart(),
+                    requestEntity.periodEnd(), requestEntity.customerId(), requestEntity.teamId());
         }
 
         ArrayList<PerTeammateStatisticsEntity> perTeammateStatisticsEntities = new ArrayList<>();
@@ -103,7 +110,7 @@ public class StatisticsServiceImpl implements StatisticsService {
             double declarationCount = Double.parseDouble(result[3].toString());
             double remoteCount = Double.parseDouble(result[4].toString());
             double onsiteCount = Double.parseDouble(result[5].toString());
-            double vacationCount = Double.parseDouble(result[6].toString());
+            double absenceCount = Double.parseDouble(result[6].toString());
 
             PerTeammateStatisticsEntity perTeammateStatisticsEntity = new PerTeammateStatisticsEntity(
                     firstName,
@@ -111,8 +118,7 @@ public class StatisticsServiceImpl implements StatisticsService {
                     declarationCount,
                     remoteCount,
                     onsiteCount,
-                    vacationCount
-            );
+                    absenceCount);
             perTeammateStatisticsEntities.add(perTeammateStatisticsEntity);
         }
         return perTeammateStatisticsEntities;
@@ -120,7 +126,8 @@ public class StatisticsServiceImpl implements StatisticsService {
 
     @Override
     public ArrayList<PerTeamStatisticsEntity> getPerTeamStatistics(StatisticsRequestEntity requestEntity) {
-        List<Object[]> results = declarationJpaRepository.getPerTeamStatisticsByCustomerId(requestEntity.periodStart(), requestEntity.periodEnd(), requestEntity.customerId());
+        List<Object[]> results = declarationJpaRepository.getPerTeamStatisticsByCustomerId(requestEntity.periodStart(),
+                requestEntity.periodEnd(), requestEntity.customerId());
 
         ArrayList<PerTeamStatisticsEntity> perTeamStatisticsEntities = new ArrayList<>();
         for (Object[] result : results) {
@@ -133,8 +140,7 @@ public class StatisticsServiceImpl implements StatisticsService {
                     teamName,
                     declarationCount,
                     remoteCount,
-                    onsiteCount
-            );
+                    onsiteCount);
             perTeamStatisticsEntities.add(perTeamStatisticsEntity);
         }
         return perTeamStatisticsEntities;
@@ -142,7 +148,8 @@ public class StatisticsServiceImpl implements StatisticsService {
 
     @Override
     public ArrayList<PerWeekdayStatisticsEntity> getPerWeekDayStatistics(StatisticsRequestEntity requestEntity) {
-        List<Object[]> results = declarationJpaRepository.getPerWeekDayStatisticsByCustomerId(requestEntity.periodStart(), requestEntity.periodEnd(), requestEntity.customerId());
+        List<Object[]> results = declarationJpaRepository.getPerWeekDayStatisticsByCustomerId(
+                requestEntity.periodStart(), requestEntity.periodEnd(), requestEntity.customerId());
 
         ArrayList<PerWeekdayStatisticsEntity> perWeekdayStatisticsEntities = new ArrayList<>();
         for (Object[] result : results) {
@@ -150,15 +157,14 @@ public class StatisticsServiceImpl implements StatisticsService {
             double declarationCount = Double.parseDouble(result[1].toString());
             double remoteCount = Double.parseDouble(result[2].toString());
             double onsiteCount = Double.parseDouble(result[3].toString());
-            double vacationCount = Double.parseDouble(result[4].toString());
+            double absenceCount = Double.parseDouble(result[4].toString());
 
             PerWeekdayStatisticsEntity perWeekdayStatisticsEntity = new PerWeekdayStatisticsEntity(
                     weekday,
                     declarationCount,
                     remoteCount,
                     onsiteCount,
-                    vacationCount
-            );
+                    absenceCount);
             perWeekdayStatisticsEntities.add(perWeekdayStatisticsEntity);
         }
         return perWeekdayStatisticsEntities;

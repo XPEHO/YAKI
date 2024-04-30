@@ -12,7 +12,7 @@ class DeclarationModelIn {
   String declarationStatus;
   int? declarationTeamId;
 
-  // Remote, On site, Vacation, Other
+  // Remote, On site, Absence
   DeclarationModelIn({
     required this.declarationId,
     required this.declarationUserId,

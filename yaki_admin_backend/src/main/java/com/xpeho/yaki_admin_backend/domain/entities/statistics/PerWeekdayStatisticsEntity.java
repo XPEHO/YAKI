@@ -5,17 +5,18 @@ public class PerWeekdayStatisticsEntity extends StatisticsEntity {
     double declarationCount;
     double remoteCount;
     double onsiteCount;
-    double vacationCount;
+    double absenceCount;
 
     public PerWeekdayStatisticsEntity() {
     }
 
-    public PerWeekdayStatisticsEntity(String weekday, double declarationCount, double remoteCount, double onsiteCount, double vacationCount) {
+    public PerWeekdayStatisticsEntity(String weekday, double declarationCount, double remoteCount, double onsiteCount,
+            double absenceCount) {
         this.weekday = weekday;
         this.declarationCount = declarationCount;
         this.remoteCount = remoteCount;
         this.onsiteCount = onsiteCount;
-        this.vacationCount = vacationCount;
+        this.absenceCount = absenceCount;
     }
 
     public String getWeekday() {
@@ -50,11 +51,11 @@ public class PerWeekdayStatisticsEntity extends StatisticsEntity {
         this.onsiteCount = onsiteCount;
     }
 
-    public double getVacationCount() {
-        return vacationCount;
+    public double getAbsenceCount() {
+        return absenceCount;
     }
 
-    public void setVacationCount(double vacationCount) {
-        this.vacationCount = vacationCount;
+    public void setAbsenceCount(double absenceCount) {
+        this.absenceCount = absenceCount;
     }
 }
