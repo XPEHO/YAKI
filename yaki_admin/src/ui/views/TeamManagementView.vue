@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import PageContentHeader from "@/ui/components/PageContentHeader.vue";
 import PageContentLayout from "@/ui/layouts/PageContentLayout.vue";
+import InviteMemberTutorial from "@/ui/components/tutoriels/InviteMemberTutorial.vue";
 import { useTeammateStore } from "@/stores/teammateStore";
 import UserList from "@/ui/components/UserList.vue";
 import { INVITEDROLE } from "@/constants/pathParam.enum";
@@ -33,9 +34,12 @@ onBeforeMount(async () => {
     </template>
     <template #content>
       <user-list
+        v-if="teammateStore.teammates.length > 0"
         :userList="teammateStore.teammates"
         :isUsingTeamDescription="true"
       />
+
+      <invite-member-tutorial v-else />
     </template>
   </page-content-layout>
 </template>

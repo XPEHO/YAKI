@@ -31,18 +31,18 @@ const switchLanguage = () => {
     @click.prevent="switchLanguage"
     :class="['language_switch_container', languageSelected === 'en' ? 'toggle-position' : '']"
   >
-    <p>Fr</p>
-    <p>En</p>
+    <p :class="languageSelected === 'fr' ? 'p_selected' : 'p_not_selected'">Fr</p>
+    <p :class="languageSelected === 'fr' ? 'p_not_selected' : 'p_selected'">En</p>
   </section>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
 .language_switch_container {
   isolation: isolate;
   display: flex;
   justify-content: space-between;
   width: 60px;
-  height: 90px;
+  height: 30px;
   cursor: pointer;
 
   position: relative;
@@ -53,16 +53,26 @@ const switchLanguage = () => {
     font-weight: 700;
     padding: 0 0.5rem;
     z-index: 1;
+    user-select: none;
+    transition: all 0.25s ease-in-out;
   }
+}
+
+.p_selected {
+  color: $font-color-main-text;
+}
+
+.p_not_selected {
+  color: $font-color-sub-text;
 }
 
 .language_switch_container::after {
   content: "";
   position: absolute;
   width: 55%;
-  height: 40%;
+  height: 100%;
   background-color: $background-color-theme-secondary;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.25s ease-in-out;
   transform: translateY(-10%);
   border-radius: 8px;
 }
