@@ -1,19 +1,36 @@
+import { STATISTICTYPE } from "@/constants/statisticType.enum";
 import { environmentVar } from "@/envPlaceholder";
 import { authHeader } from "@/utils/authUtils";
 
 const URL: string = environmentVar.baseURL;
 
 class StatisticsService {
-  getStatisticsCsv = async (id: number): Promise<string> => {
+  getStatisticsCsv = async (
+    customerId: number,
+    teamId: number,
+    statisticType: STATISTICTYPE,
+    periodStart: string,
+    periodEnd: string,
+  ): Promise<string> => {
     const requestOptions = {
-      method: "GET",
-      headers: authHeader(`${URL}/statistics/customer/${id}/csv`),
+      method: "POST",
+      headers: authHeader(
+        `${URL}/statistics/${STATISTICTYPE[statisticType as keyof typeof STATISTICTYPE]}/csv`,
+      ),
+      body: JSON.stringify({
+        customerId: customerId,
+        teamId: teamId,
+        periodStart: periodStart,
+        periodEnd: periodEnd,
+      }),
     };
     let response: Blob | null = null;
 
-    await fetch(`${URL}/statistics/customer/${id}/csv`, requestOptions)
+    await fetch(
+      `${URL}/statistics/${STATISTICTYPE[statisticType as keyof typeof STATISTICTYPE]}/csv`,
+      requestOptions,
+    )
       .then(async (res) => {
-        console.log("res", res);
         response = await res.blob();
       })
       .catch((err) => {

@@ -2,7 +2,6 @@ package com.xpeho.yaki_admin_backend.presentation.controllers;
 
 import com.xpeho.yaki_admin_backend.domain.entities.statistics.*;
 import com.xpeho.yaki_admin_backend.domain.services.StatisticsService;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -12,8 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
-@RestController
 @CrossOrigin
+@RestController
 @RequestMapping("/statistics")
 @SecurityRequirement(name = "bearerAuth")
 public class StatisticsController {
@@ -66,7 +65,8 @@ public class StatisticsController {
     @PostMapping("per-teammate/csv")
     public ResponseEntity<byte[]> getPerTeammateStatisticsCsv(@RequestBody StatisticsRequestEntity requestEntity) {
         checkRequestEntity(requestEntity);
-        ArrayList<PerTeammateStatisticsEntity> perTeammateStatistics = statisticsService.getPerTeammateStatistics(requestEntity);
+        ArrayList<PerTeammateStatisticsEntity> perTeammateStatistics = statisticsService
+                .getPerTeammateStatistics(requestEntity);
         String perTeammateStatisticsCsvContent = StatisticsCsvConverter.convertListToCsvContent(perTeammateStatistics);
         if (perTeammateStatisticsCsvContent == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -88,7 +88,8 @@ public class StatisticsController {
     @PostMapping("per-weekday/csv")
     public ResponseEntity<byte[]> getPerWeekdayStatisticsCsv(@RequestBody StatisticsRequestEntity requestEntity) {
         checkRequestEntity(requestEntity);
-        ArrayList<PerWeekdayStatisticsEntity> perWeekdayStatistics = statisticsService.getPerWeekDayStatistics(requestEntity);
+        ArrayList<PerWeekdayStatisticsEntity> perWeekdayStatistics = statisticsService
+                .getPerWeekDayStatistics(requestEntity);
         String perWeekdayStatisticsCsvContent = StatisticsCsvConverter.convertListToCsvContent(perWeekdayStatistics);
         if (perWeekdayStatisticsCsvContent == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -98,8 +99,9 @@ public class StatisticsController {
 
     /**
      * Convert a string to a byte array
+     * 
      * @param filename : name of the file
-     * @param content : content of the file
+     * @param content  : content of the file
      * @return ResponseEntity<byte[]>
      */
     private ResponseEntity<byte[]> toByteArray(String filename, String content) {
@@ -112,9 +114,10 @@ public class StatisticsController {
 
     /**
      * Check if the request entity is valid
+     * 
      * @param requestEntity : StatisticsRequestEntity to check
      */
-    private void checkRequestEntity (StatisticsRequestEntity requestEntity) {
+    private void checkRequestEntity(StatisticsRequestEntity requestEntity) {
         if (requestEntity.customerId() == null) {
             throw new IllegalArgumentException("customerId is required");
         }

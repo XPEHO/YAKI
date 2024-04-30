@@ -90,5 +90,18 @@
   },
   "general": {
     "teammates": "Coéquipiers"
+  },
+  "statistics": {
+    "basic": "Base",
+    "global": "Globales",
+    "declarations": "Liste des déclarations",
+    "perTeam": "Par équipe",
+    "perTeammate": "Par coéquipier",
+    "perWeekday": "Par jour de la semaine",
+    "statisticTypeSelectorLabel": "Type de statistique :",
+    "teamSelectorLabel": "Équipe :",
+    "allTeamsOption": "Toutes les équipes",
+    "dateSelectorStartLabel": "De :",
+    "dateSelectorEndLabel": "À :"
   }
 }

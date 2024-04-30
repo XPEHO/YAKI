@@ -87,11 +87,11 @@ const props = defineProps({
       </button>
 
       <div
-        v-if="teamStore.getTeamList && teamStore.getTeamList.length > 0"
+        v-if="teamStore.getTeamListByCaptain && teamStore.getTeamListByCaptain.length > 0"
         class="gap_add"
       >
         <side-bar-menu-drop-down-element
-          v-for="team in teamStore.getTeamList"
+          v-for="team in teamStore.getTeamListByCaptain"
           :key="team.id"
           v-bind:id="team.id"
           v-bind:teamName="team.teamName"

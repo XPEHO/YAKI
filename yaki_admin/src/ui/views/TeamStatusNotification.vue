@@ -34,7 +34,7 @@ const { locale } = useI18n();
       </p>
 
       <div
-        v-if="teamStore.getTeamList.length === 0"
+        v-if="teamStore.getTeamListByCaptain.length === 0"
         class="margin-top-3"
       >
         <p class="p_secondary p_common">{{ $t("teamStatus.noTeamLeft") }}</p>
