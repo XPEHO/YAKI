@@ -180,7 +180,7 @@ export class DeclarationService {
     const dayEnd = declarationList[0].declarationDateEnd.toDateString();
 
     // check for same day declaration
-    // if not can be vacation or "other" that could requier for more than on day.
+    // if not can be absence that could requier for more than on day.
     if (dayStart == dayEnd) {
       // check if first declaration for the day is daily declaration.
       // if not necessary halfDay declaration.
@@ -200,8 +200,9 @@ export class DeclarationService {
           throw new TypeError("Missing a half day declaration");
         }
       }
-    } // can add else to retreive vacations or other having longer duration than just a day
-
+    } else {
+      listToReturn.push(declarationList[0]);
+    }
     return listToReturn;
   };
 }

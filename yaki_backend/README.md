@@ -117,7 +117,7 @@ To create a new declaration, send a POST request to the /declarations endpoint w
 
 - declaration_team_mate_id: The ID of the teammate making the declaration.
 
-- declaration_status: The status of the declaration (Remote, On site, Vacation, Other).
+- declaration_status: The status of the declaration (Remote, On site, Absence).
 
 #### Response:
 
