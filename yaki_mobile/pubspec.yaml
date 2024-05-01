@@ -59,7 +59,7 @@ dependencies:
   # set .json (or others files) in this folder
   # https://pub.dev/packages/easy_localization
   # can now use : import 'package:json_serializable/json_serializable.dart';
-  easy_localization: ^3.0.2-dev.2
+  easy_localization: ^3.0.6
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
