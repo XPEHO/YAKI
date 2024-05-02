@@ -43,17 +43,17 @@ class MockDeclarationApi extends _i1.Mock implements _i3.DeclarationApi {
   }
 
   @override
-  _i4.Future<_i2.HttpResponse<dynamic>> getDeclaration(int? id) =>
+  _i4.Future<_i2.HttpResponse<dynamic>> getLatestDeclarationByUserId(int? id) =>
       (super.noSuchMethod(
         Invocation.method(
-          #getDeclaration,
+          #getLatestDeclarationByUserId,
           [id],
         ),
         returnValue: _i4.Future<_i2.HttpResponse<dynamic>>.value(
             _FakeHttpResponse_0<dynamic>(
           this,
           Invocation.method(
-            #getDeclaration,
+            #getLatestDeclarationByUserId,
             [id],
           ),
         )),

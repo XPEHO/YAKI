@@ -19,9 +19,9 @@ class _DeclarationApi implements DeclarationApi {
   String? baseUrl;
 
   @override
-  Future<HttpResponse<dynamic>> getDeclaration(int id) async {
+  Future<HttpResponse<dynamic>> getLatestDeclarationByUserId(int id) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'teammateId': id};
+    final queryParameters = <String, dynamic>{r'userId': id};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _result =

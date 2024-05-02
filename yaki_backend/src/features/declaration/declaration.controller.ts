@@ -53,10 +53,10 @@ export class DeclarationController {
    * @param {Request} req - Request - the request object
    * @param {Response} res - Response - the response object
    */
-  async getDeclarationsForTeammate(req: Request, res: Response) {
-    const teammateId = Number(req.query.teammateId);
+  async getLatestDeclarationByUserID(req: Request, res: Response) {
+    const userId = Number(req.query.userId);
     try {
-      const declarations = await this.declarationService.getDeclarationForTeammate(teammateId);
+      const declarations = await this.declarationService.getLatestDeclarationByUserId(userId);
       res.status(200).json(declarations);
     } catch (error: any) {
       if (error instanceof TypeError) {
