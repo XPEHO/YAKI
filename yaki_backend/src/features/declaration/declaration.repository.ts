@@ -123,10 +123,10 @@ export class DeclarationRepository {
   /**
    * Get the latest declaration for a team mate
    * Select current day declaration, OR declaration ending after the current day (absence situation)
-   * @param {number} teammateId - number
+   * @param {number} userId - number
    * @returns An array of Declaration objects.
    */
-  async getDeclarationForTeammate(teammateId: number): Promise<DeclarationDtoIn[]> {
+  async getLatestDeclarationByUserId(userId: number): Promise<DeclarationDtoIn[]> {
     const client = new Client({
       host: process.env.DB_HOST,
       user: process.env.DB_USER,
@@ -148,7 +148,7 @@ export class DeclarationRepository {
             AND declaration_status = 'absence'
         )
         ORDER BY declaration_date DESC LIMIT 10`,
-        [teammateId]
+        [userId]
       );
 
       const declarationListToFront: DeclarationDtoIn[] = [];

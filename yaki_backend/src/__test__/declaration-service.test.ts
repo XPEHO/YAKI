@@ -21,15 +21,27 @@ describe("DeclarationService", () => {
     ];
 
     const declarationDtoIn: DeclarationDtoIn[] = [
-      new DeclarationDtoIn(1, 1, new Date(), new Date(), new Date(), StatusDeclaration.REMOTE, 1),
+      new DeclarationDtoIn(
+        1,
+        1,
+        new Date(),
+        new Date(),
+        new Date(),
+        StatusDeclaration.REMOTE,
+        1
+      ),
     ];
 
     /* This test is checking if the declarationService.createDeclaration method returns a new
     declaration. */
     it("should create and return a new declaration", async () => {
-      jest.spyOn(declarationRepository, "createDeclaration").mockResolvedValueOnce(declarationDtoIn);
+      jest
+        .spyOn(declarationRepository, "createDeclaration")
+        .mockResolvedValueOnce(declarationDtoIn);
 
-      const createdDeclaration = await declarationService.createDeclaration(declarationDtoList);
+      const createdDeclaration = await declarationService.createDeclaration(
+        declarationDtoList
+      );
 
       expect(createdDeclaration).toEqual(declarationDtoIn);
     });
@@ -43,7 +55,9 @@ describe("DeclarationService", () => {
         declarationDate: new Date(),
         declarationStatus: "",
       };
-      await expect(declarationService.createDeclaration(declaration)).rejects.toThrow(TypeError);
+      await expect(declarationService.createDeclaration(declaration)).rejects.toThrow(
+        TypeError
+      );
     });
   });
 
@@ -56,9 +70,11 @@ describe("DeclarationService", () => {
     ];
 
     it("should get and return declaration of teammate 1", async () => {
-      jest.spyOn(declarationRepository, "getDeclarationForTeammate").mockResolvedValueOnce(declarationDtoIn);
+      jest
+        .spyOn(declarationRepository, "getLatestDeclarationByUserId")
+        .mockResolvedValueOnce(declarationDtoIn);
 
-      const declarationForTeammates = await declarationService.getDeclarationForTeammate(1);
+      const declarationForTeammates = await declarationService.getLatestDeclarationByUserId(1);
 
       expect(declarationForTeammates).toEqual(declarationDtoIn);
     });
@@ -67,10 +83,14 @@ describe("DeclarationService", () => {
       // Arrange
       const teammateId = 1;
 
-      jest.spyOn(declarationRepository, "getDeclarationForTeammate").mockResolvedValueOnce([]);
+      jest
+        .spyOn(declarationRepository, "getLatestDeclarationByUserId")
+        .mockResolvedValueOnce([]);
 
       // Act and Assert
-      await expect(declarationService.getDeclarationForTeammate(teammateId)).rejects.toThrow(TypeError);
+      await expect(
+        declarationService.getLatestDeclarationByUserId(teammateId)
+      ).rejects.toThrow(TypeError);
     });
   });
 });

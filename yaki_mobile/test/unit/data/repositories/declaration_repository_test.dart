@@ -54,7 +54,8 @@ void main() {
         'Successfully GET daily declaration.',
         () async {
           // Stubbing
-          when(mockedDeclarationApi.getDeclaration(teammateId)).thenAnswer(
+          when(mockedDeclarationApi.getLatestDeclarationByUserId(teammateId))
+              .thenAnswer(
             (realInvocation) => Future.value(httpResponse),
           );
           when(httpResponse.response).thenReturn(response);
@@ -71,7 +72,8 @@ void main() {
         'Fail to get the last declaration, or no daily declaration.',
         () async {
           // Stubbing
-          when(mockedDeclarationApi.getDeclaration(teammateId)).thenAnswer(
+          when(mockedDeclarationApi.getLatestDeclarationByUserId(teammateId))
+              .thenAnswer(
             (realInvocation) => Future.value(httpResponse),
           );
           when(httpResponse.response).thenReturn(response);
@@ -88,7 +90,7 @@ void main() {
         'throw exception when get declaration',
         () async {
           // Stubbing
-          when(mockedDeclarationApi.getDeclaration(teammateId))
+          when(mockedDeclarationApi.getLatestDeclarationByUserId(teammateId))
               .thenAnswer((realInvocation) => Future.value(httpResponse));
           when(httpResponse.response).thenReturn(response);
           when(response.statusCode).thenReturn(418);
