@@ -47,6 +47,16 @@
     "createTeam": "create team",
     "option": "option"
   },
+  "tutorials": {
+    "captainTitle": "Welcome to the captain management section",
+    "captainContent1": "There is still no captain in your company.",
+    "captainContent2": "To change this, you can invite a co-worker to take on this role using the",
+    "teamTitle": "Welcome to your new team",
+    "teamContent1": "There are still no members in your team.",
+    "teamContent2": "To change this, you can invite teammates using the",
+    "invit": "Invitation",
+    "button": "button"
+  },
   "header": {
     "teammateInvitation": "Teammate invitation : ",
     "teammateAddedTo": "User will be added to :",

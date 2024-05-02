@@ -2,6 +2,7 @@
 import { onBeforeMount } from "vue";
 
 import PageContentLayout from "@/ui/layouts/PageContentLayout.vue";
+import InviteCaptainTutorial from "@/ui/components/tutoriels/InviteCaptainTutorial.vue";
 import { useCaptainStore } from "@/stores/captainStore";
 import { useSelectedRoleStore } from "@/stores/selectedRole";
 import { INVITEDROLE } from "@/constants/pathParam.enum";
@@ -24,9 +25,11 @@ onBeforeMount(async () => {
     </template>
     <template #content>
       <user-list
+        v-if="captainStore.getCaptainList.length > 0"
         :userList="captainStore.getCaptainList"
         :isUsingTeamDescription="false"
       />
+      <invite-captain-tutorial v-else />
     </template>
   </page-content-layout>
 </template>

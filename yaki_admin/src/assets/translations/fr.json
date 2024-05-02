@@ -47,6 +47,16 @@
     "createTeam": "créer une équipe",
     "option": "option"
   },
+  "tutorials": {
+    "captainTitle": "Bienvenue dans la section gestion des capitaines.",
+    "captainContent1": "Il n'y a toujours pas de capitaine dans votre entreprise.",
+    "captainContent2": "Pour changer cela, vous pouvez inviter un collègue à prendre ce rôle en utilisant",
+    "teamTitle": "Bienvenu sur votre nouvelle équipe",
+    "teamContent1": "Elle ne contient pour l'instant pas de membres.",
+    "teamContent2": "Pour changer cela, vous pouvez inviter des coéquipiers en utilisant",
+    "invit": "Inviter",
+    "button": "Le button :"
+  },
   "header": {
     "teammateInvitation": "Invitation d'un coéquipier : ",
     "teammateAddedTo": "L'utilisateur sera ajouté à :",

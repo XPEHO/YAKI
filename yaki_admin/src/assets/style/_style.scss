@@ -145,3 +145,37 @@ $loader-fade-duration: 0.5s;
     opacity: 0;
   }
 }
+
+// Tutoriels ==============================================
+
+.margin-top-3 {
+  margin-top: 3rem;
+}
+
+.margin-top-2 {
+  margin-top: 2rem;
+}
+
+.margin-top-1 {
+  margin-top: 1rem;
+}
+
+.p-tutoriel-common {
+  font-family: $font-sf-compact;
+  color: #7d818c;
+  text-align: center;
+}
+.p-tutoriel-main {
+  font-size: 1.4rem;
+  font-weight: 800;
+  line-height: 120%;
+}
+.p-tutoriel-secondary {
+  font-size: 1.2rem;
+  font-weight: 500;
+
+  span {
+    font-size: 1.3rem;
+    font-weight: 800;
+  }
+}

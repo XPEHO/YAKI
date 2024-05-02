@@ -139,6 +139,7 @@ const openYakiWeb = () => {
   letter-spacing: 0.4px;
   padding-inline-start: 1.2rem;
 
+  min-height: 100px;
   span {
     font-weight: 600;
     color: $green-xpeho-color;
