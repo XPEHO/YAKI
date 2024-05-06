@@ -140,12 +140,12 @@ export class DeclarationService {
 
   /**
    * Get all declarations for a team mate.
-   * @param {number} teammateId - number
+   * @param {number} userId - number
    * @returns DeclarationDtoIn[] | String
    */
-  async getDeclarationForTeammate(teammateId: number): Promise<DeclarationDtoIn[] | string> {
+  async getLatestDeclarationByUserId(userId: number): Promise<DeclarationDtoIn[] | string> {
     const declarationList: DeclarationDtoIn[] =
-      await this.declarationRepository.getDeclarationForTeammate(teammateId);
+      await this.declarationRepository.getLatestDeclarationByUserId(userId);
     if (
       declarationList.length !== 0 ||
       declarationList !== null ||

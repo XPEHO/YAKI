@@ -11,10 +11,11 @@ class DeclarationRepository {
     this._declarationApi,
   );
 
-  Future<bool> getLatestDeclaration(int teamMateId) async {
+  Future<bool> getLatestDeclaration(int userId) async {
     bool isAlreadyHaveDeclaration = false;
     try {
-      final getHttpResponse = await _declarationApi.getDeclaration(teamMateId);
+      final getHttpResponse =
+          await _declarationApi.getLatestDeclarationByUserId(userId);
       final statusCode = getHttpResponse.response.statusCode;
       switch (statusCode) {
         case 200:

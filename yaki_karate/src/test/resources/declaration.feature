@@ -137,7 +137,7 @@ Feature: CreationDeclaration
     And header x-access-token = token
     And header user_id = userId
     ##it's a userId but we must put teammateId
-    And param teammateId = 12
+    And param userId = 12
     When method get
     Then status 200
     And match response contains [{ declarationId: '#number', declarationUserId: '#number', declarationDate: '#string', declarationDateStart: '#string', declarationDateEnd: '#string', declarationStatus: 'remote', declarationTeamId: '#number' }]
@@ -154,6 +154,6 @@ Feature: CreationDeclaration
     Given url 'http://localhost:3000/declarations'
     And header x-access-token = token
     And header user_id = userId
-    And param teammateId = 900
+    And param userId = 900
     When method get
     Then status 404
