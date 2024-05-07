@@ -1,5 +1,13 @@
 # YAKI local data base data
 
+## How to create a postgres database with docker :
+
+```
+docker run --name postgres-database -e POSTGRES_PASSWORD=password -d -p 5432:5432 postgres
+```
+
+The POSTGRES_PASSWORD variable is the password for the postgres user. The -p 5432:5432 option maps the port 5432 of the container to the port 5432 of the host machine.
+
 ## how to use :
 
 run
