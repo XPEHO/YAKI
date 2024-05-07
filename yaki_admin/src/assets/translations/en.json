@@ -67,6 +67,7 @@
     "statistics": "Statistics"
   },
   "popups": {
+    "from": " from : ",
     "irreversible": "This action is irreversible !",
     "deletionConfirmation": "Are you sure you want to ",
     "fileHandling": {
@@ -87,8 +88,7 @@
       "title": "Delete team ?"
     },
     "teamRemoveUser": {
-      "title": "Remove user ?",
-      "from": " from : "
+      "title": "Remove user ?"
     },
     "captainRemoval": {
       "title": "Remove captain ?",
