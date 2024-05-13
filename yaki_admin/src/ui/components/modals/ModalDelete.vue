@@ -84,7 +84,7 @@ const onDeletePress = async () => {
         "
       >
         <span v-if="modalStore.getMode !== MODALMODE.captainDelete">
-          {{ $t("popups.teamDeletion.from") }}
+          {{ $t("popups.from") }}
         </span>
         <span
           v-if="modalStore.getMode !== MODALMODE.captainDelete"

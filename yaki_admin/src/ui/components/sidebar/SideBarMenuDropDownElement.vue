@@ -18,6 +18,7 @@ const classList = [
   "text-icon__container",
   "drop-down__menu_item--height-padding-color unselectabla-text",
   "text-icon--text",
+  "text-wrap",
 ];
 </script>
 
@@ -35,5 +36,11 @@ const classList = [
   &:hover {
     background-color: #f0eeee;
   }
+}
+
+.text-wrap {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>
