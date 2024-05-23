@@ -1,18 +1,20 @@
 package com.xpeho.yaki_admin_backend.domain.entities.statistics;
 
+import java.math.BigDecimal;
+
 public class PerTeammateStatisticsEntity extends StatisticsEntity {
     String firstName;
     String lastName;
-    double declarationCount;
-    double remoteCount;
-    double onsiteCount;
-    double absenceCount;
+    BigDecimal declarationCount;
+    BigDecimal remoteCount;
+    BigDecimal onsiteCount;
+    BigDecimal absenceCount;
 
     public PerTeammateStatisticsEntity() {
     }
 
-    public PerTeammateStatisticsEntity(String firstName, String lastName, double declarationCount, double remoteCount,
-            double onsiteCount, double absenceCount) {
+    public PerTeammateStatisticsEntity(String firstName, String lastName, BigDecimal declarationCount, BigDecimal remoteCount,
+                                       BigDecimal onsiteCount, BigDecimal absenceCount) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.declarationCount = declarationCount;
@@ -37,35 +39,35 @@ public class PerTeammateStatisticsEntity extends StatisticsEntity {
         this.lastName = lastName;
     }
 
-    public double getDeclarationCount() {
+    public BigDecimal getDeclarationCount() {
         return declarationCount;
     }
 
-    public void setDeclarationCount(double declarationCount) {
+    public void setDeclarationCount(BigDecimal declarationCount) {
         this.declarationCount = declarationCount;
     }
 
-    public double getRemoteCount() {
+    public BigDecimal getRemoteCount() {
         return remoteCount;
     }
 
-    public void setRemoteCount(double remoteCount) {
+    public void setRemoteCount(BigDecimal remoteCount) {
         this.remoteCount = remoteCount;
     }
 
-    public double getOnsiteCount() {
+    public BigDecimal getOnsiteCount() {
         return onsiteCount;
     }
 
-    public void setOnsiteCount(double onsiteCount) {
+    public void setOnsiteCount(BigDecimal onsiteCount) {
         this.onsiteCount = onsiteCount;
     }
 
-    public double getAbsenceCount() {
+    public BigDecimal getAbsenceCount() {
         return absenceCount;
     }
 
-    public void setAbsenceCount(double absenceCount) {
+    public void setAbsenceCount(BigDecimal absenceCount) {
         this.absenceCount = absenceCount;
     }
 }
