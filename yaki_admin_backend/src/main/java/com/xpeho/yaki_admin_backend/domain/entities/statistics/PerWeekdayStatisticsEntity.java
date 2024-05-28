@@ -1,17 +1,19 @@
 package com.xpeho.yaki_admin_backend.domain.entities.statistics;
 
+import java.math.BigDecimal;
+
 public class PerWeekdayStatisticsEntity extends StatisticsEntity {
     String weekday;
-    double declarationCount;
-    double remoteCount;
-    double onsiteCount;
-    double absenceCount;
+    BigDecimal declarationCount;
+    BigDecimal remoteCount;
+    BigDecimal onsiteCount;
+    BigDecimal absenceCount;
 
     public PerWeekdayStatisticsEntity() {
     }
 
-    public PerWeekdayStatisticsEntity(String weekday, double declarationCount, double remoteCount, double onsiteCount,
-            double absenceCount) {
+    public PerWeekdayStatisticsEntity(String weekday, BigDecimal declarationCount, BigDecimal remoteCount, BigDecimal onsiteCount,
+            BigDecimal absenceCount) {
         this.weekday = weekday;
         this.declarationCount = declarationCount;
         this.remoteCount = remoteCount;
@@ -27,35 +29,35 @@ public class PerWeekdayStatisticsEntity extends StatisticsEntity {
         this.weekday = weekday;
     }
 
-    public double getDeclarationCount() {
+    public BigDecimal getDeclarationCount() {
         return declarationCount;
     }
 
-    public void setDeclarationCount(double declarationCount) {
+    public void setDeclarationCount(BigDecimal declarationCount) {
         this.declarationCount = declarationCount;
     }
 
-    public double getRemoteCount() {
+    public BigDecimal getRemoteCount() {
         return remoteCount;
     }
 
-    public void setRemoteCount(double remoteCount) {
+    public void setRemoteCount(BigDecimal remoteCount) {
         this.remoteCount = remoteCount;
     }
 
-    public double getOnsiteCount() {
+    public BigDecimal getOnsiteCount() {
         return onsiteCount;
     }
 
-    public void setOnsiteCount(double onsiteCount) {
+    public void setOnsiteCount(BigDecimal onsiteCount) {
         this.onsiteCount = onsiteCount;
     }
 
-    public double getAbsenceCount() {
+    public BigDecimal getAbsenceCount() {
         return absenceCount;
     }
 
-    public void setAbsenceCount(double absenceCount) {
+    public void setAbsenceCount(BigDecimal absenceCount) {
         this.absenceCount = absenceCount;
     }
 }

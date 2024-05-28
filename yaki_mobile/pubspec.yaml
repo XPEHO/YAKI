@@ -28,6 +28,10 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 
+# Force the use of the latest version of the intl package because of a conflict between packages
+dependency_overrides:
+  intl: ^0.19.0
+
 dependencies:
   flutter:
     sdk: flutter
@@ -93,7 +97,7 @@ dependencies:
     git:
       url: https://github.com/XPEHO/yaki_ui.git
       path: flutter
-      ref: 0.10.1
+      ref: 0.10.2
   collection: ^1.17.2
   image_picker: ^1.0.4
   path_provider: ^2.1.1

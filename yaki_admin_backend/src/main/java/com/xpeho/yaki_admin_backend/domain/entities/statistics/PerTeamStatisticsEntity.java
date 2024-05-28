@@ -1,15 +1,17 @@
 package com.xpeho.yaki_admin_backend.domain.entities.statistics;
 
+import java.math.BigDecimal;
+
 public class PerTeamStatisticsEntity extends StatisticsEntity{
     String teamName;
-    double declarationCount;
-    double remoteCount;
-    double onsiteCount;
+    BigDecimal declarationCount;
+    BigDecimal remoteCount;
+    BigDecimal onsiteCount;
 
     public PerTeamStatisticsEntity() {
     }
 
-    public PerTeamStatisticsEntity(String teamName, double declarationCount, double remoteCount, double onsiteCount) {
+    public PerTeamStatisticsEntity(String teamName, BigDecimal declarationCount, BigDecimal remoteCount, BigDecimal onsiteCount) {
         this.teamName = teamName;
         this.declarationCount = declarationCount;
         this.remoteCount = remoteCount;
@@ -24,27 +26,27 @@ public class PerTeamStatisticsEntity extends StatisticsEntity{
         this.teamName = teamName;
     }
 
-    public double getDeclarationCount() {
+    public BigDecimal getDeclarationCount() {
         return declarationCount;
     }
 
-    public void setDeclarationCount(double declarationCount) {
+    public void setDeclarationCount(BigDecimal declarationCount) {
         this.declarationCount = declarationCount;
     }
 
-    public double getRemoteCount() {
+    public BigDecimal getRemoteCount() {
         return remoteCount;
     }
 
-    public void setRemoteCount(double remoteCount) {
+    public void setRemoteCount(BigDecimal remoteCount) {
         this.remoteCount = remoteCount;
     }
 
-    public double getOnsiteCount() {
+    public BigDecimal getOnsiteCount() {
         return onsiteCount;
     }
 
-    public void setOnsiteCount(double onsiteCount) {
+    public void setOnsiteCount(BigDecimal onsiteCount) {
         this.onsiteCount = onsiteCount;
     }
 }
