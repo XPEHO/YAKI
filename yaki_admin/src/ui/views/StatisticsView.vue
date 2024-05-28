@@ -2,6 +2,7 @@
 import PageContentHeader from "@/ui/components/PageContentHeader.vue";
 import PageContentLayout from "@/ui/layouts/PageContentLayout.vue";
 import buttonPrimary from "@/ui/components/buttons/ButtonPrimary.vue";
+import PreviewTable from "@/ui/components/PreviewTable.vue";
 
 import { statisticsService } from "@/services/statistics.service";
 import { useSelectedRoleStore } from "@/stores/selectedRole";
@@ -24,6 +25,7 @@ const periodStartSelected = ref<string>(
   new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().split("T")[0],
 );
 const periodEndSelected = ref<string>(new Date().toISOString().split("T")[0]);
+const statisticsPreview = ref<Array<Array<string>>>([[""]]);
 
 onMounted(() => {
   if (roleStore.getCustomersIdWhereIgotRights.length === 0) {
@@ -60,12 +62,29 @@ const downloadCsv = async () => {
   }
 };
 
+const loadPreview = async () => {
+  const customerId = selectedRoleStore.getCustomerIdSelected;
+  try {
+    statisticsPreview.value = await statisticsService.getStatisticsArray(
+      customerId,
+      teamSelected.value,
+      statisticTypeSelected.value,
+      periodStartSelected.value,
+      periodEndSelected.value,
+    );
+  } catch (error) {
+    console.error("Error while getting preview :", error);
+  }
+};
+
 const onSelectTeam = (e: Event) => {
   teamSelected.value = parseInt((e.target as HTMLSelectElement).value);
+  loadPreview();
 };
 
 const onSelectStatisticType = (e: Event) => {
   statisticTypeSelected.value = (e.target as HTMLSelectElement).value as STATISTICTYPE;
+  loadPreview();
 };
 
 const onSelectPeriodStart = (e: Event) => {
@@ -73,6 +92,7 @@ const onSelectPeriodStart = (e: Event) => {
   if (new Date((e.target as HTMLInputElement).value) > new Date(periodEndSelected.value)) {
     periodEndSelected.value = (e.target as HTMLInputElement).value;
   }
+  loadPreview();
 };
 
 const onSelectPeriodEnd = (e: Event) => {
@@ -80,6 +100,7 @@ const onSelectPeriodEnd = (e: Event) => {
   if (new Date((e.target as HTMLInputElement).value) < new Date(periodStartSelected.value)) {
     periodStartSelected.value = (e.target as HTMLInputElement).value;
   }
+  loadPreview();
 };
 </script>
 
@@ -172,6 +193,9 @@ const onSelectPeriodEnd = (e: Event) => {
             :text="$t('buttons.downloadCsv')"
             @click.prevent="downloadCsv"
           />
+        </section>
+        <section>
+          <PreviewTable :statisticsArray="statisticsPreview" />
         </section>
       </main>
     </template>

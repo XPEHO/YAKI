@@ -44,6 +44,27 @@ class StatisticsService {
       return "javascript:void(0)";
     }
   };
+
+  getStatisticsArray = async (
+    customerId: number,
+    teamId: number,
+    statisticType: STATISTICTYPE,
+    periodStart: string,
+    periodEnd: string,
+  ): Promise<Array<Array<string>>> => {
+    const data = await this.getStatisticsCsv(
+      customerId,
+      teamId,
+      statisticType,
+      periodStart,
+      periodEnd,
+    );
+
+    const response = await fetch(data);
+    const csvText = await response.text();
+
+    return csvText.split("\n").map((row) => row.split(","));
+  };
 }
 
 export const statisticsService = Object.freeze(new StatisticsService());
