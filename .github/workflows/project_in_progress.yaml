@@ -1,0 +1,14 @@
+on:
+  project_card:
+    moved:
+      - 'In progress 🏗'
+
+jobs:
+  project_in_progress:
+    name: Add to follow-up project
+    runs-on: ubuntu-latest
+    steps:
+      - name: Add to follow-up project_card
+        run: |
+          issue_num = context.payload.project_card.content_url.split('/').pop()
+          gh issue edit $issue_num --add-project follow-up
