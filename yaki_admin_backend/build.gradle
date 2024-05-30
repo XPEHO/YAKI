@@ -49,7 +49,7 @@ dependencies {
     testImplementation 'com.h2database:h2:2.2.224'
 
     // ad jacoco for sonar scan coverage
-    testImplementation 'org.jacoco:org.jacoco.core:0.8.10'
+    testImplementation 'org.jacoco:org.jacoco.core:0.8.12'
 
 
     test {
