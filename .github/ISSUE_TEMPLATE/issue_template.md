@@ -1,3 +1,12 @@
+---
+name: Feature request
+about: Suggest an idea for this project
+title: ''
+labels: ''
+assignees: ''
+
+---
+
 # 🗒️NOTES
 
 Anything relevant to the issue's state or any additional description.
