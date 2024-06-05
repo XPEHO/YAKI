@@ -11,7 +11,7 @@ assignees: ''
 
 Anything relevant to the issue's state or any additional description.
 
-# 🏁MILESTONES
+# 🏁PREREQUISITES
 
 - [ ] **DOR**
 - [ ] **DOD**
