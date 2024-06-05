@@ -35,9 +35,9 @@ onMounted(() => {
     // If the user is a customer
     teamStore.setTeamsListByCustomerId(selectedRoleStore.getCustomerIdSelected);
 
-    // Retrieve and assign all the teams owned by the captains under the customer 
+    // Retrieve and assign all the teams owned by the captains under the customer
     for (let team of teamStore.getTeamListByCustomer) {
-     teamList.value.push(team);
+      teamList.value.push(team);
     }
   }
 });
