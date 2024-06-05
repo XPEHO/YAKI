@@ -15,8 +15,6 @@ import { setTeamLogoUrl } from "@/utils/images.utils";
 
 import { useI18n } from "vue-i18n";
 const { t } = useI18n();
-const invitationButtonText = t("buttons.invitation");
-const captainManagementText = t("header.captainManagement");
 
 const teamStore = useTeamStore();
 
@@ -52,7 +50,7 @@ const title = computed(() => {
   if (props.invitedRole) {
     switch (props.invitedRole) {
       case INVITEDROLE.captain:
-        return captainManagementText;
+        return "header.captainManagement";
       case INVITEDROLE.teammate:
         return teamStore.getTeamSelected.teamName;
       default:
@@ -82,7 +80,13 @@ const { isModalVisible, switchModalVisibility } = useModalToggleWithOutsideClick
             alt=""
           />
         </figure>
-        <h1 class="text_default__title_header">{{ title }}</h1>
+        <h1 class="text_default__title_header">
+          {{
+            teamStore.getTeamSelected.teamName == title
+              ? teamStore.getTeamSelected.teamName
+              : t(title)
+          }}
+        </h1>
       </section>
 
       <section class="header__buttons-modal_container">
@@ -90,7 +94,7 @@ const { isModalVisible, switchModalVisibility } = useModalToggleWithOutsideClick
           v-if="invitedRole"
           @click.prevent="router.push({ path: `invitation/${invitedRole}` })"
           :icon="addIcon"
-          :text="invitationButtonText"
+          :text="t('buttons.invitation')"
         />
 
         <button-icon

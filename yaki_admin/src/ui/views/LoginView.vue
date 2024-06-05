@@ -35,7 +35,7 @@ import LanguageSwitch from "@/ui/components/LanguageSwitch.vue";
           rel="noopener"
           >{{ $t("loginPage.privacyPolicy") }}</a
         >
-        <language-switch />
+        <language-switch :version="'login'" />
       </div>
     </article>
   </section>

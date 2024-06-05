@@ -2,7 +2,6 @@
 import PageContentHeader from "@/ui/components/PageContentHeader.vue";
 import PageContentLayout from "@/ui/layouts/PageContentLayout.vue";
 import buttonSecondary from "@/ui/components/buttons/ButtonSecondary.vue";
-import LanguageSwitch from "../components/LanguageSwitch.vue";
 import { useAuthStore } from "@/stores/authStore";
 
 const logOff = () => {
@@ -14,14 +13,13 @@ const logOff = () => {
 <template>
   <page-content-layout>
     <template #pageContentHeader>
-      <page-content-header title="Profile" />
+      <page-content-header title="header.profile" />
     </template>
     <template #content>
       <buttonSecondary
         :text="$t('buttons.logout')"
         @click.prevent="logOff"
       />
-      <LanguageSwitch />
     </template>
   </page-content-layout>
 </template>
