@@ -96,6 +96,7 @@ const previewPage = async () => {
     <button
       class="page_count_button"
       @click.prevent="previewPage"
+      :style="userStore.getPageNumber === 0 ? 'pointer-events: none; opacity: 0.2;' : ''"
     >
       <figure>
         <img
@@ -112,6 +113,11 @@ const previewPage = async () => {
     <button
       class="page_count_button"
       @click.prevent="nextPage"
+      :style="
+        userStore.getPageNumber === userStore.getTotalPagesCount - 1
+          ? 'pointer-events: none; opacity: 0.2;'
+          : ''
+      "
     >
       <figure>
         <img
