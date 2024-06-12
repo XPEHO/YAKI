@@ -6,6 +6,7 @@ import { useRoleStore } from "@/stores/roleStore";
 import SideBarMenuLink from "@/ui/components/sidebar/SideBarMenuLink.vue";
 import sideBarMenuDropDown from "@/ui/components/sidebar/SideBarMenuDropDown.vue";
 import LoggedUserCard from "@/ui/components/LoggedUserCard.vue";
+import LanguageSwitch from "@/ui/components/LanguageSwitch.vue";
 
 import Banner from "@/assets/images/YAKISquare.svg";
 import caseIcon from "@/assets/icons_svg/Briefcase.svg";
@@ -69,8 +70,9 @@ const redirection = (path: string) => {
       />
     </div>
 
-    <div>
+    <div class="profile__language">
       <logged-user-card />
+      <LanguageSwitch :version="'sidebar'" />
     </div>
   </nav>
 </template>
@@ -96,5 +98,8 @@ const redirection = (path: string) => {
       object-fit: contain;
     }
   }
+}
+.profile__language > * {
+  margin: 1rem auto;
 }
 </style>

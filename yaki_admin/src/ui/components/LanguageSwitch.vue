@@ -3,6 +3,12 @@ import { onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
 const { locale } = useI18n();
 
+const props = defineProps({
+  version: {
+    type: String,
+  },
+});
+
 const languageSelected = ref("");
 
 onMounted(() => {
@@ -29,7 +35,11 @@ const switchLanguage = () => {
 <template>
   <section
     @click.prevent="switchLanguage"
-    :class="['language_switch_container', languageSelected === 'en' ? 'toggle-position' : '']"
+    :class="[
+      'language_switch_container',
+      props.version ? props.version : '',
+      languageSelected === 'en' ? 'toggle-position' : '',
+    ]"
   >
     <p :class="languageSelected === 'fr' ? 'p_selected' : 'p_not_selected'">Fr</p>
     <p :class="languageSelected === 'fr' ? 'p_not_selected' : 'p_selected'">En</p>
@@ -44,7 +54,6 @@ const switchLanguage = () => {
   width: 60px;
   height: 30px;
   cursor: pointer;
-
   position: relative;
 
   p {
@@ -71,7 +80,6 @@ const switchLanguage = () => {
   position: absolute;
   width: 55%;
   height: 100%;
-  background-color: $background-color-theme-secondary;
   transition: all 0.25s ease-in-out;
   transform: translateY(-10%);
   border-radius: 8px;
@@ -79,5 +87,17 @@ const switchLanguage = () => {
 
 .toggle-position::after {
   transform: translate(95%, -10%);
+}
+
+.login.language_switch_container::after {
+  background-color: $background-color-theme-secondary;
+}
+
+.sidebar.language_switch_container::after {
+  background-color: $background-color-theme-primary;
+}
+
+.sidebar {
+  margin: auto;
 }
 </style>
