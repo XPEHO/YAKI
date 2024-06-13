@@ -3,23 +3,35 @@ import PageContentHeader from "@/ui/components/PageContentHeader.vue";
 import PageContentLayout from "@/ui/layouts/PageContentLayout.vue";
 import buttonPrimary from "@/ui/components/buttons/ButtonPrimary.vue";
 import PreviewTable from "@/ui/components/PreviewTable.vue";
-
+import InputDropdown from "@yaki_ui/yaki_ui_web_components/components/vue/InputDropdown.vue";
 import { statisticsService } from "@/services/statistics.service";
 import { useSelectedRoleStore } from "@/stores/selectedRole";
 
 import { useTeamStore } from "@/stores/teamStore";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, reactive } from "vue";
 import { useRoleStore } from "@/stores/roleStore";
 import { TeamType } from "@/models/team.type";
 import { STATISTICTYPE } from "@/constants/statisticType.enum";
+import { useI18n } from "vue-i18n";
+
+const i18n = useI18n();
 
 const selectedRoleStore = useSelectedRoleStore();
 const roleStore = useRoleStore();
 const teamStore = useTeamStore();
 
+const statsticsTypeArray: Array<string> = Object.entries(STATISTICTYPE).map((x) =>
+  x[1].toString().split("-").join(" "),
+);
+
+const statisticsForm = reactive({
+  statisticTypeSelected: statsticsTypeArray[0] as STATISTICTYPE,
+  teamSelected: 0,
+});
+
 const teamList = ref<TeamType[]>([]);
-const teamSelected = ref<number>(0);
-const statisticTypeSelected = ref<STATISTICTYPE>(STATISTICTYPE.basic);
+const fullTeamList = ref<TeamType[]>([]);
+
 // Set the default value to 30 days before the current date and the current date in format yyyy-mm-dd
 const periodStartSelected = ref<string>(
   new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().split("T")[0],
@@ -40,6 +52,19 @@ onMounted(() => {
       teamList.value.push(team);
     }
   }
+
+  const teamListWithDefault = [...teamList.value];
+  teamListWithDefault.unshift({
+    id: 0,
+    teamName: i18n.t("statistics.allTeamsOption"),
+    customerId: 0,
+    teamDescription: "",
+    captainsId: [],
+    captains: [],
+  });
+  fullTeamList.value = teamListWithDefault;
+
+  loadPreview();
 });
 
 const downloadCsv = async () => {
@@ -49,14 +74,14 @@ const downloadCsv = async () => {
     const link = document.createElement("a");
     const url = await statisticsService.getStatisticsCsv(
       customerId,
-      teamSelected.value,
-      statisticTypeSelected.value,
+      statisticsForm.teamSelected,
+      statisticsForm.statisticTypeSelected,
       periodStartSelected.value,
       periodEndSelected.value,
     );
     link.href = url;
     link.download = `statistics_${
-      STATISTICTYPE[statisticTypeSelected.value as keyof typeof STATISTICTYPE]
+      STATISTICTYPE[statisticsForm.statisticTypeSelected as keyof typeof STATISTICTYPE]
     }.csv`;
     document.body.appendChild(link);
     link.click();
@@ -71,8 +96,8 @@ const loadPreview = async () => {
   try {
     statisticsPreview.value = await statisticsService.getStatisticsArray(
       customerId,
-      teamSelected.value,
-      statisticTypeSelected.value,
+      statisticsForm.teamSelected,
+      statisticsForm.statisticTypeSelected,
       periodStartSelected.value,
       periodEndSelected.value,
     );
@@ -81,13 +106,13 @@ const loadPreview = async () => {
   }
 };
 
-const onSelectTeam = (e: Event) => {
-  teamSelected.value = parseInt((e.target as HTMLSelectElement).value);
+const onStatisticTypeSelect = (value: any) => {
+  statisticsForm.statisticTypeSelected = value as STATISTICTYPE;
   loadPreview();
 };
 
-const onSelectStatisticType = (e: Event) => {
-  statisticTypeSelected.value = (e.target as HTMLSelectElement).value as STATISTICTYPE;
+const onTeamSelect = (value: any) => {
+  statisticsForm.teamSelected = Number(value);
   loadPreview();
 };
 
@@ -116,53 +141,24 @@ const onSelectPeriodEnd = (e: Event) => {
     <template #content>
       <main>
         <section>
-          <article class="statistic-selector-container">
-            <label
-              for="statisticTypeSelected"
-              class="text_default__Team_name"
-              >{{ $t("statistics.statisticTypeSelectorLabel") }}</label
-            >
-            <select
-              class="statistic-selector"
-              name="statisticTypeSelected"
-              @change="onSelectStatisticType"
-            >
-              <option
-                :key="statKey"
-                :value="statKey"
-                v-for="[statKey, statValue] in Object.entries(STATISTICTYPE)"
-                :selected="statValue == statisticTypeSelected"
-              >
-                {{ $t("statistics." + statKey) }}
-              </option>
-            </select>
-          </article>
-          <article class="statistic-selector-container">
-            <label
-              class="text_default__Team_name"
-              for="teamSelected"
-              >{{ $t("statistics.teamSelectorLabel") }}</label
-            >
-            <select
-              class="statistic-selector"
-              name="teamSelected"
-              @change="onSelectTeam"
-            >
-              <option
-                value="0"
-                selected
-              >
-                {{ $t("statistics.allTeamsOption") }}
-              </option>
-              <option
-                :key="team.id"
-                :value="team.id"
-                v-for="team in teamList"
-              >
-                {{ team.teamName }}
-              </option>
-            </select>
-          </article>
+          <input-dropdown
+            :labelText="$t('statistics.statisticTypeSelectorLabel')"
+            :placeHolderValue="statsticsTypeArray[0]"
+            :valueGroup="statsticsTypeArray"
+            :selectedValue="statsticsTypeArray[0]"
+            @emittedSelectedInput="onStatisticTypeSelect"
+          />
+
+          <input-dropdown
+            v-if="fullTeamList.length > 0"
+            :labelText="$t('statistics.teamSelectorLabel')"
+            :placeHolderValue="fullTeamList[0].id.toString()"
+            :valueNames="fullTeamList.map((team) => team.teamName)"
+            :valueGroup="fullTeamList.map((team) => team.id.toString())"
+            :selectedValue="fullTeamList[0].id.toString()"
+            @emittedSelectedInput="onTeamSelect"
+          />
+
           <article>
             <div class="date-selector-container">
               <label

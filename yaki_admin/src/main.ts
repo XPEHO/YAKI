@@ -8,6 +8,7 @@ import "../node_modules/@yaki_ui/yaki_ui_web_components/css/yaki_ui.css";
 
 import enJson from "@/assets/translations/en.json";
 import frJson from "@/assets/translations/fr.json";
+import clickOutside from "@/utils/clickOutsideDirective";
 
 const translations = {
   en: enJson,
@@ -28,4 +29,6 @@ app.use(pinia);
 app.use(i18n);
 app.use(router);
 
+// Implementing the directive that allows the detection of clicking outside an element
+app.directive("click-outside", clickOutside);
 app.mount("#app");
