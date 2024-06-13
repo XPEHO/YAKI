@@ -20,7 +20,6 @@ class UserServiceImplTest {
     private final ObjectMapper objectMapper = new ObjectMapper();
     private UserModel user1;
     private UserEntity userE1;
-    private UserModel user2;
     @Autowired
     private UserServiceImpl userService;
 
@@ -31,18 +30,17 @@ class UserServiceImplTest {
     void setup() {
         userE1 = new UserEntity("Beaumont", "Bertrand", "bertrand.beaumont@mail.com", "bertrand");
         user1 = new UserModel(1, "Beaumont", "Bertrand", "bertrand.beaumont@mail.com", "bertrand", "passwordHArd");
-        user2 = new UserModel("Balthazar", "Brigangnier", "Balthazar.Brigangnier@mail.com", "babri");
     }
 
     @Test
     void findByIdTest() throws Exception {
-        //given
+        // given
         given(userJpaRepository.findById(1)).willReturn(Optional.of(user1));
 
-        //when
+        // when
         UserEntity userDto = userService.findById(1);
 
-        //then
+        // then
         String returnedResponse = objectMapper.writeValueAsString(userDto);
         String expectedResponse = objectMapper.writeValueAsString(userE1);
         assertEquals(returnedResponse,
@@ -51,13 +49,13 @@ class UserServiceImplTest {
 
     @Test
     void deleteByIdTest() throws Exception {
-        //given
+        // given
         given(userJpaRepository.findById(1)).willReturn(Optional.of(user1));
 
-        //when
+        // when
         UserEntity userDto = userService.deleteById(1);
 
-        //then
+        // then
         String returnedResponse = objectMapper.writeValueAsString(userDto);
         String expectedResponse = objectMapper.writeValueAsString(userE1);
         assertEquals(returnedResponse,
