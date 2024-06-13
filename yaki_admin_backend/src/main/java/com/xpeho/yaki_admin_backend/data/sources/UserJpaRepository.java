@@ -11,11 +11,39 @@ import java.util.Optional;
 
 public interface UserJpaRepository extends JpaRepository<UserModel, Integer> {
     @Query("""
-            SELECT u   
+            SELECT u
             FROM UserModel u
             WHERE u.enabled = true
             """)
     Page<UserModel> findAllEnabledUsers(Pageable pageable);
+
+    @Query("""
+            SELECT u
+            FROM UserModel u
+            JOIN TeammateModel tm ON u.userId = tm.userId
+            JOIN TeamModel t ON tm.teamId = t.id
+            WHERE u.enabled = true AND t.customerId = :customerId
+            """)
+    Page<UserModel> findAllEnabledUsersByCustomer(Pageable pageable, Integer customerId);
+
+    @Query("""
+            SELECT u
+            FROM UserModel u
+            JOIN TeammateModel tm ON u.userId = tm.userId
+            LEFT JOIN CaptainModel c ON u.userId = c.userId
+            JOIN TeamModel t ON tm.teamId = t.id
+            WHERE u.enabled = true AND t.customerId = :customerId AND c.userId IS NULL
+            """)
+    Page<UserModel> findAllEnabledUsersByCustomerExcludingCaptains(Pageable pageable, Integer customerId);
+
+    @Query("""
+            SELECT u
+            FROM UserModel u
+            JOIN TeammateModel tm ON u.userId = tm.userId
+            JOIN TeamModel t ON tm.teamId = t.id
+            WHERE u.enabled = true AND t.customerId = :customerId AND t.id != :excludeTeamId
+            """)
+    Page<UserModel> findAllEnabledUsersByCustomerExcludingTeam(Pageable pageable, Integer customerId, Integer excludeTeamId);
 
     Optional<UserModel> findByLogin(String login);
 
