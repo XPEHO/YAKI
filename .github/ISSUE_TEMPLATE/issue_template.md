@@ -31,12 +31,6 @@ Anything relevant to the issue's state or any additional description.
 - [ ] Step 3:
 ...
 
-# 🪳STEPS TO REPRODUCE (If it is a bug)
-
-- Step 1: Step 1
-- Step 2: Step 2
-- Step 3: Step 3
-
 # ✅ACCEPTANCE CRITERIA
 
 - ⛔Acceptance criterion not-met
