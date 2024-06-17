@@ -1,0 +1,9 @@
+// This file exists because Cucumber need to be run with CommonJS modules and not ES6 modules as the rest of the code base.
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "CommonJS"
+  },
+  "include": ["test/**/*"],
+  "exclude": ["node_modules"]
+}
