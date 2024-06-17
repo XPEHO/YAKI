@@ -30,4 +30,8 @@ coverage
 
 .assets/style
 style.css.map
-
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/test/playwright/screenshots/

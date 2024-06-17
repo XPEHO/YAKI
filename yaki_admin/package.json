@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "vite",
     "test": "vitest",
-    "coverage": "vitest run --coverage",
+    "coverage": "vitest --coverage",
+    "test:cucumber": "TS_NODE_PROJECT=./tsconfig.cucumber.json cucumber-js test/features",
     "build": "run-p type-check build-only",
     "build-uat": "run-p type-check build-only-uat",
     "preview": "vite preview",
@@ -27,6 +28,8 @@
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
+    "@cucumber/cucumber": "^10.8.0",
+    "@playwright/test": "^1.44.1",
     "@rushstack/eslint-patch": "^1.2.0",
     "@types/node": "^18.16.16",
     "@vitejs/plugin-vue": "^4.0.0",
@@ -40,6 +43,7 @@
     "eslint-plugin-vue": "^9.18.1",
     "sass": "^1.62.1",
     "sass-loader": "^13.2.2",
+    "ts-node": "^10.9.2",
     "typescript": "~5.0.0",
     "vitest": "^0.32.0",
     "vue-tsc": "^1.2.0"

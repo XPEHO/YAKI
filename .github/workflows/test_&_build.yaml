@@ -71,7 +71,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-      - name: Build an test Admin FrontEnd
+      - name: Build and test Admin FrontEnd
         run: |
           npm ci
           npm run build
