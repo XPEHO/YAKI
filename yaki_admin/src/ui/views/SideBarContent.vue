@@ -12,6 +12,7 @@ import Banner from "@/assets/images/YAKISquare.svg";
 import caseIcon from "@/assets/icons_svg/Briefcase.svg";
 import hatIcon from "@/assets/icons_svg/Boat.svg";
 import statIcon from "@/assets/icons_svg/Statistic.svg";
+import groupIcon from "@/assets/icons_svg/Teams.svg";
 
 const roleStoreTest = useRoleStore();
 
@@ -32,6 +33,9 @@ const redirection = (path: string) => {
   }
   if (path.includes("manage-captains") && userCredentials.customer) {
     router.push("/dashboard/manage-captains");
+  }
+  if (path.includes("team-list") && userCredentials.customer) {
+    router.push("/dashboard/team-list");
   }
 };
 </script>
@@ -56,6 +60,12 @@ const redirection = (path: string) => {
         @click.prevent="redirection('/dashboard/manage-captains')"
         :icon="hatIcon"
         :text="$t('sidebar.captains')"
+      />
+      <side-bar-menu-link
+        v-if="userCredentials.customer"
+        @click.prevent="redirection('/dashboard/team-list')"
+        :icon="groupIcon"
+        :text="$t('sidebar.teams')"
       />
       <side-bar-menu-drop-down
         v-if="userCredentials.captain"

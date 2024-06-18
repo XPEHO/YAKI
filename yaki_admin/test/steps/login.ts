@@ -1,25 +1,14 @@
-import { Given, When, Then } from "@cucumber/cucumber";
-import { expect } from "@playwright/test";
-import { setup, page } from "./setup";
+import { Given, When } from "@cucumber/cucumber";
+import { setup, page, loginAs } from "./setup";
 
-// COMPOSED STEPS
+// Login as a certain role
 Given("I launch the application and login as a {string}", async (role: string) => {
   await setup();
-  await page.goto("http://localhost:5173/", {
-    waitUntil: "networkidle",
-  });
-  await page.waitForLoadState("load");
-  await page.getByLabel("Login").click();
   const login = role === "customer" ? "lazard" : "lavigne";
-  await page.getByLabel("Login").fill(login);
-  await page.getByLabel("Password").click();
-  await page.getByLabel("Password").fill(login);
-  await page.getByRole("button", { name: "Login" }).click();
-  await page.waitForSelector('button:has-text("Login")', { state: "detached" });
-  await expect(page).toHaveURL(/dashboard/);
+  await loginAs(login);
 });
 
-// STEPS
+// Launch the application
 Given("I launch the application", async () => {
   await setup();
   await page.goto("http://localhost:5173/", {
@@ -28,21 +17,20 @@ Given("I launch the application", async () => {
   await page.waitForLoadState("load");
 });
 
+// Enter login as a certain user
 When("I enter the login as {string}", async (login: string) => {
   await page.getByLabel("Login").click();
   await page.getByLabel("Login").fill(login);
 });
 
+// Enter password as a certain user
 When("I enter the password as {string}", async (password: string) => {
   await page.getByLabel("Password").click();
   await page.getByLabel("Password").fill(password);
 });
 
+// Click on login button
 When("I click on login button", async () => {
   await page.getByRole("button", { name: "Login" }).click();
   await page.waitForSelector('button:has-text("Login")', { state: "detached" });
-});
-
-Then("I should be redirected to the dashboard", async () => {
-  await expect(page).toHaveURL(/dashboard/);
 });
