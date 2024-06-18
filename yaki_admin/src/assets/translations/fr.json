@@ -31,6 +31,7 @@
     "clients": "Clients",
     "captains": "Capitaines",
     "myTeams": "Mes équipes",
+    "teams": "Équipes",
     "createTeam": "Créer une équipe",
     "noTeams": "Vous n'avez aucune équipe",
     "statistics": "Statistiques"
@@ -99,7 +100,8 @@
     "role": "Administrateur"
   },
   "general": {
-    "teammates": "Coéquipiers"
+    "teammates": "Coéquipiers",
+    "comingSoon": "Bientôt disponible"
   },
   "statistics": {
     "basic": "Base",
