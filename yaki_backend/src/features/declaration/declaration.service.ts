@@ -157,6 +157,10 @@ export class DeclarationService {
     }
   }
 
+  async getDeclaredDaysByUserId(userId: number): Promise<String[] | string> {
+      return await this.declarationRepository.getDeclaredDaysByUserId(userId);
+  } 
+
   /**
    * Function returning either daily declaration or both halfday declaration.
    *

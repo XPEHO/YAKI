@@ -1,4 +1,4 @@
-import {Client} from "pg";
+import {Client, QueryResult} from "pg";
 import {DeclarationDtoIn} from "./declaration.dtoIn";
 import YakiUtils from "../../utils/yakiUtils";
 import {DeclarationDto} from "./declaration.dto";
@@ -171,6 +171,58 @@ export class DeclarationRepository {
     } finally {
       client.end();
     }
+  }
+
+  async getDeclaredDaysByUserId(userId: number): Promise<String[]> { 
+    // Todo: do it yknow    
+    const client = new Client({
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE,
+      port: Number(process.env.DB_PORT),
+    });
+
+    client.connect();
+
+    const sqlQueryString = 
+    `
+    with recursive DateElements as (
+      select 
+        declaration_date_start as date, 
+        declaration_date_end,
+        declaration_user_id
+      from public.declaration
+      where declaration_user_id = $1
+
+      union all
+
+      select 
+        date + interval '1 day', 
+        declaration_date_end,
+        declaration_user_id
+      from DateElements
+      where date < declaration_date_end and declaration_user_id = $1
+    )
+    select distinct to_char(date, 'yyyy-mm-dd') date
+    from DateElements
+    order by to_char(date, 'yyyy-mm-dd');
+    `
+
+    let result: QueryResult<any>
+    try {
+      result = await client.query(sqlQueryString, [userId])
+    } catch(error) {
+      console.error(error)
+      return []
+    }
+
+    let days: String[]  = []
+    for (let day of result.rows) {
+      days.push(day.date)
+    }
+
+    return days
   }
 
   async unflagLatestDeclaration(userId: number): Promise<void> {
