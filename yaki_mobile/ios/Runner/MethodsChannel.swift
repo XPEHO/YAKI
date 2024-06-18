@@ -11,6 +11,19 @@ extension AppDelegate {
         return FlutterMethodChannel(name: FlutterChannel.name.rawValue, binaryMessenger: controller!.binaryMessenger)
     }
     
+   /**
+    Get the list of days that have been declared by the user.
+    */
+    func getDeclaredDays(completion: @escaping ([String]) -> Void) {
+        let channel = getMethodChannel();
+        
+        channel.invokeMethod(FlutterChannel.getDeclaredDays.rawValue, arguments: nil) { (result: Any?) in
+            if let result = result as? [String] {
+                completion(result)
+            }
+        }
+    }
+    
     /**
      This method is used to retrive the notification parameters values from flutter.
      This using the flutter channels.

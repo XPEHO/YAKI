@@ -84,4 +84,21 @@ class MockDeclarationApi extends _i1.Mock implements _i3.DeclarationApi {
           ),
         )),
       ) as _i4.Future<_i2.HttpResponse<dynamic>>);
+
+  @override
+  _i4.Future<_i2.HttpResponse<dynamic>> getDeclaredDaysByUserId(int? id) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getDeclaredDaysByUserId,
+          [id],
+        ),
+        returnValue: _i4.Future<_i2.HttpResponse<dynamic>>.value(
+            _FakeHttpResponse_0<dynamic>(
+          this,
+          Invocation.method(
+            #getDeclaredDaysByUserId,
+            [id],
+          ),
+        )),
+      ) as _i4.Future<_i2.HttpResponse<dynamic>>);
 }

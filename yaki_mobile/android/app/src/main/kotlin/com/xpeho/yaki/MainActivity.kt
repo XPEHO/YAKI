@@ -12,12 +12,14 @@ import io.flutter.plugin.common.MethodChannel
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
+import android.util.Log
+
 
 const val APP_ID = "com.xpeho.yaki"
 
 class MainActivity : FlutterActivity() {
   // The channel name used to communicate with the Flutter part
-  private val CHANNEL = "com.xpeho.yaki/notification"
+  private val CHANNEL_NAME = "com.xpeho.yaki/notification"
   // The alarm scheduler used to schedule the notifications
   private lateinit var alarmScheduler: AlarmSchedulerImpl
 
@@ -30,6 +32,14 @@ class MainActivity : FlutterActivity() {
     alarmScheduler = AlarmSchedulerImpl(context = this)
   }
 
+  private fun methodChannel(): MethodChannel {
+    val result = flutterEngine?.dartExecutor?.let { MethodChannel(it.binaryMessenger, CHANNEL_NAME) }
+    if (result == null) {
+      throw Error("methodChannel tried to be constructed before flutterEngine")
+    }
+    return result
+  }
+
   /**
    * This method is called when the app is resumed. We use it to schedule the alarm if the following
    * conditions are met:
@@ -39,15 +49,20 @@ class MainActivity : FlutterActivity() {
   override fun onResume() {
     super.onResume()
 
+    isDeclaredToday {
+      Log.d("MainActivity", "isDeclaredToday: $it")
+      // Note(Loucas): The notification disabling logic should happen when calling isDeclaredToday.
+      // Please note that this code is based on completion closures, but can be converted to async await syntax.
+      // https://betterprogramming.pub/kotlin-suspending-functions-as-swift-async-await-with-adapter-pattern-a79aacaa5b1c
+    }
+
     // Check if the notifications are permitted
     if (areNotificationsPermitted()) {
 
       // Check if the notifications are activated in the Flutter part
       flutterEngine?.let { engine ->
-        val methodChannel = MethodChannel(engine.dartExecutor.binaryMessenger, CHANNEL)
-
         // Call the areNotificationsActivated method in the Flutter part
-        methodChannel.invokeMethod(
+        methodChannel().invokeMethod(
             "areNotificationsActivated",
             null,
             object : MethodChannel.Result {
@@ -80,7 +95,8 @@ class MainActivity : FlutterActivity() {
    */
   override fun configureFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
     super.configureFlutterEngine(flutterEngine)
-    MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler {
+
+    methodChannel().setMethodCallHandler {
         call,
         result ->
       when (call.method) {
@@ -157,6 +173,23 @@ class MainActivity : FlutterActivity() {
     context.startActivity(intent)
   }
 
+  private fun isDeclaredToday(resultHandler: (Boolean) -> Unit) {
+    methodChannel().invokeMethod("isDeclaredToday", null, object : MethodChannel.Result {
+      override fun success(result: Any?) {
+        resultHandler(result as? Boolean ?: false)
+      }
+      override fun error(code: String, message: String?, details: Any?) {
+        Log.e("MainActivity", "isDeclaredToday error")
+        message?.let { Log.e("MainActivity", it) }
+        resultHandler(false)
+      }
+      override fun notImplemented() {
+        Log.e("MainActivity", "isDeclaredToday not implemented")
+        resultHandler(false)
+      }
+    })
+  }
+
   /**
    * This method get the params of the notification from the Flutter part.
    *
@@ -166,10 +199,8 @@ class MainActivity : FlutterActivity() {
 
     // Get the params of the notification
     flutterEngine?.let { engine ->
-      val methodChannel = MethodChannel(engine.dartExecutor.binaryMessenger, CHANNEL)
-
       // Call the getNotificationParams method in the Flutter part
-      methodChannel.invokeMethod(
+      methodChannel().invokeMethod(
           "getNotificationParams",
           null,
           object : MethodChannel.Result {
