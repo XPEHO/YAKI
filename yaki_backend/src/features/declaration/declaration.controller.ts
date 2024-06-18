@@ -68,4 +68,20 @@ export class DeclarationController {
       }
     }
   }
+
+  async getDeclaredDaysByUserId(req: Request, res: Response) {
+    const userId = Number(req.query.userId);
+    try {
+      const days = await this.declarationService.getDeclaredDaysByUserId(userId)
+      res.status(200).json(days);
+    } catch (error: any) {
+      if (error instanceof TypeError) {
+        // catch not found errors
+        res.status(404).json({message: error.message});
+      } else {
+        // catch server errors
+        res.status(500).json({message: error.message});
+      }
+    }
+  }
 }
