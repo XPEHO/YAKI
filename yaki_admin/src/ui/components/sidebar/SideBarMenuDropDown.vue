@@ -121,7 +121,7 @@ const props = defineProps({
 .drop-down__create-team {
   margin-block: 4px;
   padding-inline-start: 16px;
-  height: 56px;
+  min-height: 56px;
 
   display: flex;
   align-items: center;

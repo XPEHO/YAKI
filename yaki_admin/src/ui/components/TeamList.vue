@@ -2,12 +2,8 @@
 import TeamInfoCard from "@/ui/components/TeamInfoCard.vue";
 import { TeamType } from "@/models/team.type";
 import { PropType } from "vue";
-import { useTeamStore } from "@/stores/teamStore";
 
-//Get the stores
-const teamStore = useTeamStore();
-
-const props = defineProps({
+defineProps({
   teamList: {
     type: Object as PropType<TeamType[]>,
     required: true,
