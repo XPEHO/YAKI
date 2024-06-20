@@ -12,3 +12,9 @@ Feature: Team Management
     Given I launch the application and login as a "captain"
     Then I should not see the button "Teams" in the sidebar
     Then I close the application
+
+  Scenario: Customer can see the list of teams
+    Given I launch the application and login as a "customer"
+    When I click on the button "Teams" in the sidebar
+    Then I should see the list of teams
+    Then I close the application
