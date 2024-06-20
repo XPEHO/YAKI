@@ -18,7 +18,8 @@
     "editTeam": "Éditer l'équipe",
     "deleteTeam": "Supprimer l'équipe",
     "close": "Fermer",
-    "downloadCsv": "Exporter en CSV"
+    "downloadCsv": "Exporter en CSV",
+    "seeDetail": "Voir le détail"
   },
   "loginPage": {
     "changePasswordInfo": "Vos informations de connexion sont également utilisées sur YAKI mobile.",
@@ -46,7 +47,8 @@
     "howToCreateATeam1": "Vous pouvez créer une nouvelle équipe en utilisant l'option ",
     "howToCreateATeam2": "Les équipes peuvent être créées en utilisant ",
     "createTeam": "créer une équipe",
-    "option": "option"
+    "option": "option",
+    "lastActivity": "Dernière activité : "
   },
   "tutorials": {
     "captainTitle": "Bienvenue dans la section gestion des capitaines.",

@@ -10,6 +10,7 @@ Then("I should be on {string} path", async (path: string) => {
 
 // Sidebar buttons
 const isButtonInSidebar = async (text: string) => {
+  await page.waitForSelector(".sidebar__container");
   const sidebarElements = await page.$$(
     ".sidebar__container .text-icon__container:not(.dropdown__container)",
   );
@@ -34,4 +35,10 @@ Then("I should see the button {string} in the sidebar", async (text: string) => 
 Then("I should not see the button {string} in the sidebar", async (text: string) => {
   const buttonIsInSidebar = await isButtonInSidebar(text);
   expect(buttonIsInSidebar).toBe(false);
+});
+
+Then("I should see the list of teams", async () => {
+  await page.waitForSelector(".user-list__container");
+  const teamList = await page.$(".user-list__container");
+  expect(teamList).not.toBeNull();
 });
