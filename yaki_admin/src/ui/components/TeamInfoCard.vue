@@ -1,14 +1,12 @@
 <script setup lang="ts">
 import buttonIcon from "@/ui/components/buttons/ButtonIcon.vue";
 import eyeIcon from "@/assets/icons_svg/Eye.svg";
-import InitialAvatar from "@/ui/components/InitialAvatar.vue";
 import { PropType, onBeforeMount, ref } from "vue";
 import { TeamType } from "@/models/team.type";
 import { TeamLogoType } from "@/models/TeamLogo.type";
 import { teamLogoService } from "@/services/teamLogo.service";
 import { setTeamLogoUrl } from "@/utils/images.utils";
 import { useModalStore } from "@/stores/modalStore";
-import ModalComingSoon from "./modals/ModalComingSoon.vue";
 import { MODALMODE } from "@/constants/modalMode.enum";
 
 const modalStore = useModalStore();

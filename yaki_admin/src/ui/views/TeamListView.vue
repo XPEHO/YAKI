@@ -3,7 +3,7 @@ import { useSelectedRoleStore } from "@/stores/selectedRole";
 import { useTeamStore } from "@/stores/teamStore";
 import PageContentHeader from "@/ui/components/PageContentHeader.vue";
 import PageContentLayout from "@/ui/layouts/PageContentLayout.vue";
-import { computed, onBeforeMount, onMounted, ref } from "vue";
+import { computed, onBeforeMount, ref } from "vue";
 import InviteMemberTutorial from "@/ui/components/tutoriels/InviteMemberTutorial.vue";
 import TeamList from "@/ui/components/TeamList.vue";
 import chevronLeftIcon from "@/assets/icons_svg/Chevron-left.svg";
