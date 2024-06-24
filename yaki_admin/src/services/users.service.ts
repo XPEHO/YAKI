@@ -32,13 +32,30 @@ export class UserService {
     return response;
   };
 
-  getUsersByPage = async (page: number, size: number): Promise<UserPagesResponseType> => {
+  getUsersByPage = async (
+    page: number,
+    size: number,
+    customerId: number | null = null,
+    excludeCaptains: boolean = false,
+    excludeTeamId: number | null = null,
+  ): Promise<UserPagesResponseType> => {
+    let requestParams = `?page=${page}&size=${size}`;
+
+    if (customerId != null) {
+      requestParams += `&customerId=${customerId}`;
+      if (excludeCaptains) {
+        requestParams += `&excludeCaptains=${excludeCaptains}`;
+      } else if (excludeTeamId != null) {
+        requestParams += `&excludeTeamId=${excludeTeamId}`;
+      }
+    }
+
     const requestOptions = {
       method: "GET",
-      headers: authHeader(`${URL}/users?page=${page}&size=${size}`),
+      headers: authHeader(`${URL}/users${requestParams}`),
     };
 
-    const response = await fetch(`${URL}/users?page=${page}&size=${size}`, requestOptions)
+    const response = await fetch(`${URL}/users${requestParams}`, requestOptions)
       .then(handleResponse)
       .catch((err) => console.warn(err));
 

@@ -37,11 +37,19 @@ export const useUserStore = defineStore("userStore", {
       this.itemsPerPage = itemsPerPage;
     },
 
-    async getUsersByPage() {
+    async getUsersByPage(
+      customerId: number | null = null,
+      excludeCaptains: boolean = false,
+      excludeTeamId: number | null = null,
+    ) {
       const serviceResponse: UserPagesResponseType = await usersService.getUsersByPage(
         this.pageNumber,
         this.itemsPerPage,
+        customerId,
+        excludeCaptains,
+        excludeTeamId,
       );
+
       this.users = serviceResponse.users;
       this.totalPagesCount = serviceResponse.totalPages;
     },
