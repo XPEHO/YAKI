@@ -2,8 +2,9 @@
 import PageContentHeader from "@/ui/components/PageContentHeader.vue";
 import PageContentLayout from "@/ui/layouts/PageContentLayout.vue";
 import buttonPrimary from "@/ui/components/buttons/ButtonPrimary.vue";
-import PreviewTable from "@/ui/components/PreviewTable.vue";
 import InputDropdown from "@yaki_ui/yaki_ui_web_components/components/vue/InputDropdown.vue";
+import PreviewTable from "@yaki_ui/yaki_ui_web_components/components/vue/PreviewTable.vue";
+
 import { statisticsService } from "@/services/statistics.service";
 import { useSelectedRoleStore } from "@/stores/selectedRole";
 
@@ -13,6 +14,7 @@ import { useRoleStore } from "@/stores/roleStore";
 import { TeamType } from "@/models/team.type";
 import { STATISTICTYPE } from "@/constants/statisticType.enum";
 import { useI18n } from "vue-i18n";
+import { textDirection } from "@/models/dataTable.type";
 
 const i18n = useI18n();
 
@@ -195,7 +197,13 @@ const onSelectPeriodEnd = (e: Event) => {
           />
         </section>
         <section>
-          <PreviewTable :statisticsArray="statisticsPreview" />
+          <PreviewTable
+            :statisticsArray="statisticsPreview"
+            :rows-per-page="10"
+            :text-align-headers="[textDirection.center]"
+            :text-align-content="[textDirection.left]"
+            :is-page-change-enabled="true"
+          />
         </section>
       </main>
     </template>
