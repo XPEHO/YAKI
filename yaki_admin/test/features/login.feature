@@ -3,16 +3,16 @@ Feature: Login
 
   Scenario: Login as Customer
     Given I launch the application
-    When I enter the login as "lazard"
-    When I enter the password as "lazard"
+    When I enter the login as "customer"
+    When I enter the password as "customer"
     When I click on login button
     Then I should be on "dashboard" path
     Then I close the application
 
   Scenario: Login as Captain
     Given I launch the application
-    When I enter the login as "lavigne"
-    When I enter the password as "lavigne"
+    When I enter the login as "captain"
+    When I enter the password as "captain"
     When I click on login button
     Then I should be on "dashboard" path
     Then I close the application
