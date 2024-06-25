@@ -1,6 +1,7 @@
 package com.xpeho.yaki_admin_backend.data.services;
 
 import com.xpeho.yaki_admin_backend.data.sources.DeclarationJpaRepository;
+import com.xpeho.yaki_admin_backend.domain.entities.LastActivityEntity;
 import com.xpeho.yaki_admin_backend.domain.entities.statistics.*;
 import com.xpeho.yaki_admin_backend.data.sources.TeamJpaRepository;
 import com.xpeho.yaki_admin_backend.data.sources.TeammateJpaRepository;
@@ -172,5 +173,48 @@ public class StatisticsServiceImpl implements StatisticsService {
             perWeekdayStatisticsEntities.add(perWeekdayStatisticsEntity);
         }
         return perWeekdayStatisticsEntities;
+    }
+
+    @Override
+    public List<LastActivityEntity> getLastTeamsActivityByCustomerId(Integer targetId) {
+        List<Object[]> results = declarationJpaRepository.getLastTeamActivityById(
+            targetId);
+        
+        ArrayList<LastActivityEntity> customerActivityData = new ArrayList<>();
+
+        for (Object[] result : results) {
+            String teamId = result[0].toString();
+            LocalDateTime latestActivity = ((Timestamp) result[1]).toLocalDateTime();
+
+            LastActivityEntity teamActivityData = new LastActivityEntity(
+                teamId,
+                latestActivity);
+                
+            customerActivityData.add(teamActivityData);
+        }
+
+        return customerActivityData;
+    }
+
+    @Override
+    public List<LastActivityEntity> getLastTeamActivityById(Integer targetId) {
+
+        List<Object[]> results = declarationJpaRepository.getLastTeamActivityById(
+            targetId);
+        
+        ArrayList<LastActivityEntity> teamActivityData = new ArrayList<>();
+
+        for (Object[] result : results) {
+            String teamId = result[0].toString();
+            LocalDateTime latestActivity = ((Timestamp) result[1]).toLocalDateTime();
+
+            LastActivityEntity soleTeamActivityData = new LastActivityEntity(
+                teamId,
+                latestActivity);
+
+            teamActivityData.add(soleTeamActivityData);
+        } 
+
+        return teamActivityData; 
     }
 }
