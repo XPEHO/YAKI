@@ -1,5 +1,7 @@
 import { chromium, Browser, Page } from "@playwright/test";
 import { setDefaultTimeout } from "@cucumber/cucumber";
+import dotenv from "dotenv";
+dotenv.config();
 
 let browser: Browser;
 let page: Page;
@@ -27,15 +29,29 @@ const teardown = async () => {
 };
 
 // Login function to avoid repeating the login steps
-const loginAs = async (login: string) => {
-  await page.goto("http://localhost:5173/", {
+const loginAs = async (role: string) => {
+  let login;
+  let password;
+  if (role === "captain") {
+    login = process.env.CUCUMBER_LOGIN_CAPTAIN ?? "";
+    password = process.env.CUCUMBER_PASSWORD_CAPTAIN ?? "";
+  } else if (role === "customer") {
+    login = process.env.CUCUMBER_LOGIN_CUSTOMER ?? "";
+    password = process.env.CUCUMBER_PASSWORD_CUSTOMER ?? "";
+  } else {
+    throw new Error("Unknown role");
+  }
+  if (!process.env.CUCUMBER_URL_UAT) {
+    throw new Error("No url defined");
+  }
+  await page.goto(process.env.CUCUMBER_URL_UAT, {
     waitUntil: "networkidle",
   });
   await page.waitForLoadState("load");
   await page.getByLabel("Login").click();
   await page.getByLabel("Login").fill(login);
   await page.getByLabel("Password").click();
-  await page.getByLabel("Password").fill(login);
+  await page.getByLabel("Password").fill(password);
   await page.getByRole("button", { name: "Login" }).click();
   await page.waitForSelector('button:has-text("Login")', { state: "detached" });
 };

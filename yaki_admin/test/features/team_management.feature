@@ -8,7 +8,7 @@ Feature: Team Management
     Then I should be on "team-list" path
     Then I close the application
 
-  Scenario: Customer can't access the teams page
+  Scenario: Captain can't access the teams page
     Given I launch the application and login as a "captain"
     Then I should not see the button "Teams" in the sidebar
     Then I close the application
