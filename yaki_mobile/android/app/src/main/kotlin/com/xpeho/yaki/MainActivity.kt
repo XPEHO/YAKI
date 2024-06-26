@@ -24,12 +24,30 @@ class MainActivity : FlutterActivity() {
   private lateinit var alarmScheduler: AlarmSchedulerImpl
 
   /**
-   * This method is called when the app is launched. We use it to initialize the alarm scheduler and
-   * to initialize the params of the notification.
+   * This method define a channel connexion to Flutter. We use it to give the Flutter part the
+   * ability to manage the notifications.
    */
-  override fun onCreate(savedInstanceState: android.os.Bundle?) {
-    super.onCreate(savedInstanceState)
-    alarmScheduler = AlarmSchedulerImpl(context = this)
+  override fun configureFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
+    super.configureFlutterEngine(flutterEngine)
+
+    methodChannel().setMethodCallHandler {
+        call,
+        result ->
+      when (call.method) {
+        "scheduleNotifications" -> {
+          scheduleNotifications()
+          result.success(null)
+        }
+        "cancelNotifications" -> {
+          cancelNotifications()
+          result.success(null)
+        }
+        "areNotificationsPermitted" -> {
+          result.success(areNotificationsPermitted())
+        }
+        else -> result.notImplemented()
+      }
+    }
   }
 
   private fun methodChannel(): MethodChannel {
@@ -41,6 +59,15 @@ class MainActivity : FlutterActivity() {
   }
 
   /**
+   * This method is called when the app is launched. We use it to initialize the alarm scheduler and
+   * to initialize the params of the notification.
+   */
+  override fun onCreate(savedInstanceState: android.os.Bundle?) {
+    super.onCreate(savedInstanceState)
+    alarmScheduler = AlarmSchedulerImpl(context = this)
+  }
+
+  /**
    * This method is called when the app is resumed. We use it to schedule the alarm if the following
    * conditions are met:
    * - The notifications are permitted
@@ -49,8 +76,8 @@ class MainActivity : FlutterActivity() {
   override fun onResume() {
     super.onResume()
 
-    isDeclaredToday {
-      Log.d("MainActivity", "isDeclaredToday: $it")
+    isDeclaredToday { isDeclared -> 
+      Log.d("MainActivity", "isDeclaredToday: $isDeclared")
       // Note(Loucas): The notification disabling logic should happen when calling isDeclaredToday.
       // Please note that this code is based on completion closures, but can be converted to async await syntax.
       // https://betterprogramming.pub/kotlin-suspending-functions-as-swift-async-await-with-adapter-pattern-a79aacaa5b1c
@@ -76,9 +103,12 @@ class MainActivity : FlutterActivity() {
                 }
               }
               override fun error(code: String, message: String?, details: Any?) {
+                Log.e("MainActivity", "areNotificationsActivated error")
+                message?.let { Log.e("MainActivity", it) }
                 return
               }
               override fun notImplemented() {
+                Log.e("MainActivity", "areNotificationsActivated not implemented")
                 return
               }
             }
@@ -86,33 +116,6 @@ class MainActivity : FlutterActivity() {
       }
     } else {
       cancelNotifications()
-    }
-  }
-
-  /**
-   * This method define a channel connexion to Flutter. We use it to give the Flutter part the
-   * ability to manage the notifications.
-   */
-  override fun configureFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
-    super.configureFlutterEngine(flutterEngine)
-
-    methodChannel().setMethodCallHandler {
-        call,
-        result ->
-      when (call.method) {
-        "scheduleNotifications" -> {
-          scheduleNotifications()
-          result.success(null)
-        }
-        "cancelNotifications" -> {
-          cancelNotifications()
-          result.success(null)
-        }
-        "areNotificationsPermitted" -> {
-          result.success(areNotificationsPermitted())
-        }
-        else -> result.notImplemented()
-      }
     }
   }
 
@@ -173,7 +176,7 @@ class MainActivity : FlutterActivity() {
     context.startActivity(intent)
   }
 
-  private fun isDeclaredToday(resultHandler: (Boolean) -> Unit) {
+  fun isDeclaredToday(resultHandler: (Boolean) -> Unit) {
     methodChannel().invokeMethod("isDeclaredToday", null, object : MethodChannel.Result {
       override fun success(result: Any?) {
         resultHandler(result as? Boolean ?: false)

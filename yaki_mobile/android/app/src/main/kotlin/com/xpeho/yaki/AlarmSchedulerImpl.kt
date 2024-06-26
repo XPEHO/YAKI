@@ -26,14 +26,16 @@ class AlarmSchedulerImpl(private val context: Context) : AlarmScheduler {
     }
 
     // The time of the alarm defined in the local time zone
-    val zonedDateTime = item.time.atZone(ZoneId.systemDefault())
+    //val zonedDateTime = item.time.atZone(ZoneId.systemDefault())
     // The calendar used to schedule the alarm
     val calendar =
-        Calendar.getInstance().apply { timeInMillis = zonedDateTime.toInstant().toEpochMilli() }
+        Calendar.getInstance().apply { 
+          timeInMillis = System.currentTimeMillis() //zonedDateTime.toInstant().toEpochMilli() 
+        }
     // If the alarm time is in the past, we schedule it for the next day
-    if (calendar.timeInMillis < System.currentTimeMillis()) {
+    /* if (calendar.timeInMillis < System.currentTimeMillis()) {
       calendar.add(Calendar.DAY_OF_YEAR, 1)
-    }
+    } */
 
     // The intent used to schedule the alarm
     val intent =
@@ -54,7 +56,7 @@ class AlarmSchedulerImpl(private val context: Context) : AlarmScheduler {
     alarmManager.setInexactRepeating(
         AlarmManager.RTC_WAKEUP,
         calendar.timeInMillis,
-        AlarmManager.INTERVAL_DAY,
+        60000, //AlarmManager.INTERVAL_DAY,
         pendingIntent
     )
 
