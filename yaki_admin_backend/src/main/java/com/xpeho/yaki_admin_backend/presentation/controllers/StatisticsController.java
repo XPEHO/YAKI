@@ -1,8 +1,11 @@
 package com.xpeho.yaki_admin_backend.presentation.controllers;
 
+
+import com.xpeho.yaki_admin_backend.domain.entities.LastActivityEntity;
 import com.xpeho.yaki_admin_backend.domain.entities.statistics.*;
 import com.xpeho.yaki_admin_backend.domain.services.StatisticsService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -10,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
+
 
 @CrossOrigin
 @RestController
@@ -22,6 +27,29 @@ public class StatisticsController {
     public StatisticsController(StatisticsService statisticsService) {
         this.statisticsService = statisticsService;
     }
+
+    /**
+     * Returns the latest activity of a singular team, or of a customer's list of teams
+     * 
+     * @param customerId : id of the customer
+     * @param teamId  : id of the team, if a customerId is given, the teamId is ignored
+     * @return a list of objects {teamId: String, lastActivityDate: LocalDateTime}, or a code 400 if no parameter is given
+    */
+    @GetMapping("lastActivity")
+    public ResponseEntity<List<LastActivityEntity>> getLatestTeamActivity(
+            @RequestParam(required = false) Integer customerId,
+            @RequestParam(required = false) Integer teamId)
+            {
+                if (customerId != null) {
+                    return new ResponseEntity<>(statisticsService.getLastTeamsActivityByCustomerId(customerId), HttpStatus.OK);
+                } else if (teamId != null) {
+                    return new ResponseEntity<>(statisticsService.getLastTeamActivityById(teamId), HttpStatus.OK);
+                } else {
+                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                }
+
+    }
+    
 
     @PostMapping("basic")
     public BasicStatisticsEntity getBasicStatistics(@RequestBody StatisticsRequestEntity requestEntity) {

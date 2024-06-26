@@ -422,4 +422,21 @@ public interface DeclarationJpaRepository extends JpaRepository<DeclarationModel
       + PER_WEEKDAY_COUNTS
       + PER_WEEKDAY_MAIN_QUERY, nativeQuery = true)
   List<Object[]> getPerWeekDayStatisticsByCustomerId(LocalDate periodStart, LocalDate periodEnd, int customerId);
+
+  @Query(value = """
+      ---------------------------------- LATEST ACTIVITY IN A TEAM
+    SELECT declaration_team_id, MAX(declaration_date)
+    FROM declaration
+    WHERE declaration_team_id = ?1
+    GROUP BY declaration_team_id""", nativeQuery = true)
+  List<Object[]> getLastTeamActivityById(Integer targetId);
+
+  @Query(value = """
+      ---------------------------------- LATEST ACTIVITY IN A TEAM
+    SELECT team.team_id, MAX(declaration_date) 
+    FROM declaration
+    INNER JOIN team ON declaration.declaration_team_id = team.team_id
+    WHERE team.team_customer_id = ?1
+    GROUP BY team.team_id""", nativeQuery = true)
+  List<Object[]> getLastTeamsActivityByCustomerId(Integer targetId);
 }
