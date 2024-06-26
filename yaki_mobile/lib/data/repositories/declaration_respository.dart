@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:retrofit/retrofit.dart';
 import 'package:yaki/data/models/declaration_model.dart';
 import 'package:yaki/data/models/declaration_model_in.dart';
 import 'package:yaki/data/sources/remote/declaration_api.dart';
@@ -130,5 +131,21 @@ class DeclarationRepository {
       debugPrint("error during creation : $err");
     }
     return statusHalfDay;
+  }
+
+  Future<List<String>> getDeclaredDays(int userId) async {
+    HttpResponse getHttpResponse;
+    try {
+      getHttpResponse = await _declarationApi.getDeclaredDaysByUserId(userId);
+    } catch (err) {
+      debugPrint('Error during http request: $err');
+      return [];
+    }
+    final statusCode = getHttpResponse.response.statusCode;
+    if (statusCode != 200) {
+      debugPrint('Error:  $statusCode\n${getHttpResponse.data}');
+      return [];
+    }
+    return List<String>.from(getHttpResponse.data);
   }
 }

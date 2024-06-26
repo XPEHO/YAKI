@@ -26,6 +26,11 @@ import UserNotifications
      If the app doesn't have authorization, it disables the notification.
      */
     override func applicationDidBecomeActive(_ application: UIApplication) {
+        getDeclaredDays {
+            debugPrint("Declared days: \($0)")
+            // Note(Loucas): Handle notification scheduling using the declared days here
+        }
+        
         UNUserNotificationCenter.current().getNotificationSettings { settings in
             if settings.authorizationStatus != .authorized {
                 self.disableNotification();

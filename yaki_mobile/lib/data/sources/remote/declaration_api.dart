@@ -18,4 +18,9 @@ abstract class DeclarationApi {
     @Body() List<DeclarationModel> declaration,
     @Query("mode") String mode,
   );
+
+  @GET('/declarations/declaredDays')
+  Future<HttpResponse> getDeclaredDaysByUserId(
+    @Query("userId") int id,
+  );
 }

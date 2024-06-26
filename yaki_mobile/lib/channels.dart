@@ -1,7 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/services.dart';
+import 'package:yaki/presentation/state/providers/declaration_provider.dart';
 
 const platform = MethodChannel('com.xpeho.yaki/notification');
 
@@ -13,6 +15,10 @@ void initChannels() {
         return await areNotificationsActivated();
       case 'getNotificationParams':
         return getNotificationParams();
+      case 'getDeclaredDays':
+        return await getDeclaredDays();
+      case 'isDeclaredToday':
+        return await isDeclaredToday();
       default:
         throw MissingPluginException();
     }
@@ -37,6 +43,45 @@ Map<String, dynamic> getNotificationParams() {
     'hour': 9,
     'minute': 0,
   };
+}
+
+/// send the list of all declared days for the current user to Swift
+/// Note: We have to retrieve all of them because iOS requires to schedule
+/// notifications in advance.
+Future<List<String>> getDeclaredDays() async {
+  final provider = ProviderContainer();
+  final declarationRepository = provider.read(declarationRepositoryProvider);
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+
+  final int? userId = prefs.getInt("userId");
+  if (userId == null) {
+    return Future.value([]);
+  }
+  debugPrint("getDeclaredDays, userId : $userId");
+  return declarationRepository.getDeclaredDays(userId);
+}
+
+/// check that the user has declared himself today.
+Future<bool> isDeclaredToday() async {
+  final provider = ProviderContainer();
+  final declarationRepository = provider.read(declarationRepositoryProvider);
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+
+  final int? userId = prefs.getInt("userId");
+  if (userId == null) {
+    return Future.value(false);
+  }
+  debugPrint("isDeclaredToday, userId : $userId");
+  debugPrint(
+    "isDeclaredToday, today : ${DateFormat("yyyy-MM-dd").format(DateTime.now())}",
+  );
+  final declaredDays = await declarationRepository.getDeclaredDays(userId);
+  final today = DateFormat("yyyy-MM-dd").format(DateTime.now());
+  final closestDay = declaredDays.reduce((a, b) => a.compareTo(b) <= 0 ? a : b);
+  debugPrint("isDeclaredToday, closestDay : $closestDay");
+  debugPrint("isDeclaredToday, function result : ${closestDay == today}");
+
+  return Future.value(closestDay == today);
 }
 
 //------------------------FLUTTER CALL TO NATIVE METHOD---------------------------

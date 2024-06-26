@@ -9,6 +9,7 @@ enum FlutterChannel: String {
     case scheduleNotifications = "scheduleNotifications"
     case getNotificationParams = "getNotificationParams"
     case areNotificationsPermitted = "areNotificationsPermitted"
+    case getDeclaredDays = "getDeclaredDays"
 }
 
 /**
