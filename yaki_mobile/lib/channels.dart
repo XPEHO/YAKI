@@ -11,14 +11,8 @@ void initChannels() {
   // Notification channel
   platform.setMethodCallHandler((MethodCall call) async {
     switch (call.method) {
-      case 'areNotificationsActivated':
-        return await areNotificationsActivated();
-      case 'getNotificationParams':
-        return getNotificationParams();
-      case 'getDeclaredDays':
-        return await getDeclaredDays();
-      case 'isDeclaredToday':
-        return await isDeclaredToday();
+      case 'notificationSetting':
+        return await notificationSetting();
       default:
         throw MissingPluginException();
     }
@@ -27,14 +21,18 @@ void initChannels() {
 
 //------------------------NATIVE CALL TO FLUTTER METHOD---------------------------
 
+// Todo(Loucas): Modify its usage un profile.dart to unschedule all notifications
+// if the user does not want to receive them.
+
 /// Check if the notifications are activated in the shared preferences
-Future<bool> areNotificationsActivated() async {
+Future<bool> notificationSetting() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   final bool? areNotificationsActivated =
       prefs.getBool('areNotificationsActivated');
   return areNotificationsActivated ?? false;
 }
 
+// Todo(Loucas): Only use this from the flutter function that schedules notifications
 /// Getter of the notification parameters stored in the translations
 Map<String, dynamic> getNotificationParams() {
   return {
@@ -45,6 +43,7 @@ Map<String, dynamic> getNotificationParams() {
   };
 }
 
+// Todo(Loucas): Only use this from the flutter function that schedules notifications
 /// send the list of all declared days for the current user to Swift
 /// Note: We have to retrieve all of them because iOS requires to schedule
 /// notifications in advance.
@@ -57,59 +56,33 @@ Future<List<String>> getDeclaredDays() async {
   if (userId == null) {
     return Future.value([]);
   }
-  debugPrint("getDeclaredDays, userId : $userId");
   return declarationRepository.getDeclaredDays(userId);
-}
-
-/// check that the user has declared himself today.
-Future<bool> isDeclaredToday() async {
-  final provider = ProviderContainer();
-  final declarationRepository = provider.read(declarationRepositoryProvider);
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-
-  final int? userId = prefs.getInt("userId");
-  if (userId == null) {
-    return Future.value(false);
-  }
-  debugPrint("isDeclaredToday, userId : $userId");
-  debugPrint(
-    "isDeclaredToday, today : ${DateFormat("yyyy-MM-dd").format(DateTime.now())}",
-  );
-  final declaredDays = await declarationRepository.getDeclaredDays(userId);
-  final today = DateFormat("yyyy-MM-dd").format(DateTime.now());
-  final closestDay = declaredDays.reduce((a, b) => a.compareTo(b) <= 0 ? a : b);
-  debugPrint("isDeclaredToday, closestDay : $closestDay");
-  debugPrint("isDeclaredToday, function result : ${closestDay == today}");
-
-  return Future.value(closestDay == today);
 }
 
 //------------------------FLUTTER CALL TO NATIVE METHOD---------------------------
 
-/// Schedule notifications natively using the platform channel
-void scheduleNotifications() async {
-  try {
-    await platform.invokeMethod('scheduleNotifications');
-  } on PlatformException catch (e) {
-    debugPrint('Error: ${e.message}');
-  }
-}
-
-/// Cancel notifications natively using the platform channel
-void cancelNotifications() async {
-  try {
-    await platform.invokeMethod('cancelNotifications');
-  } on PlatformException catch (e) {
-    debugPrint('Error: ${e.message}');
-  }
-}
-
 /// Check if notifications are permitted natively using the platform channel
 Future<bool> areNotificationsPermitted() async {
   try {
-    return await platform.invokeMethod('areNotificationsPermitted');
+    // Todo(Loucas): Redo this
+    //return await platform.invokeMethod('areNotificationsPermitted');
   } on PlatformException catch (e) {
     debugPrint('Error: ${e.message}');
   }
   return true;
+}
+
+Future<void> scheduleNotificationSwift(
+  String timestamp,
+  String title,
+  String message,
+) {
+  return platform.invokeMethod(
+    'scheduleNotificationSwift',
+    {'timestamp': timestamp, 'title': title, 'message': message},
+  );
+}
+
+Future<void> cancelAllNotificationsSwift() {
+  return platform.invokeMethod('cancelAllNotificationsSwift');
 }

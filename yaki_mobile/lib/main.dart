@@ -41,6 +41,9 @@ void main() async {
 
   // Platform channels
   initChannels();
+  // Todo(Loucas): Here, add some notification scheduling logic
+  scheduleNotificationSwift("2024-01-01 00:00:00", "title", "message");
+  cancelAllNotificationsSwift();
 }
 
 Future<List<Override>> _overrides() async {
