@@ -5,6 +5,7 @@ export type TeamType = {
   captainsId: number[];
   captains: CaptainDetails[];
   teamDescription: string | null;
+  lastActivity?: Date;
 };
 
 export function isATeamType(obj: any): obj is TeamType {

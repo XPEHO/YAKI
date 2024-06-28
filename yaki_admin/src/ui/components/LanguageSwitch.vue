@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
+import { useLanguageStore } from "@/stores/languageStore";
 const { locale } = useI18n();
 
 const props = defineProps({
@@ -10,6 +11,7 @@ const props = defineProps({
 });
 
 const languageSelected = ref("");
+const languageStore = useLanguageStore();
 
 onMounted(() => {
   let storedLanguage = localStorage.getItem("language");
@@ -29,6 +31,7 @@ const switchLanguage = () => {
   // Save the selected language to local storage
   localStorage.setItem("language", locale.value);
   languageSelected.value = locale.value;
+  languageStore.setLanguage(locale.value);
 };
 </script>
 

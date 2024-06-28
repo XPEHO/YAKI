@@ -1,13 +1,36 @@
 <script setup lang="ts">
 import TeamInfoCard from "@/ui/components/TeamInfoCard.vue";
 import { TeamType } from "@/models/team.type";
-import { PropType } from "vue";
+import { onBeforeMount, PropType, ref } from "vue";
+import { useStatisticsStore } from "@/stores/statisticsStore";
 
-defineProps({
+const statisticsStore = useStatisticsStore();
+
+const props = defineProps({
   teamList: {
     type: Object as PropType<TeamType[]>,
     required: true,
   },
+});
+
+const teamListValue: TeamType[] = [...props.teamList];
+let teamWithLatestActivity = ref<TeamType[]>([]);
+
+onBeforeMount(async () => {
+  await statisticsStore.setTeamsLatestActivityByCustomerId(teamListValue[0].customerId);
+  const teamLatestActivities = [...statisticsStore.getTeamsLatestActivity];
+
+  for (let team of teamListValue) {
+    for (let latestActivity of teamLatestActivities) {
+      if (team.id.toString() === latestActivity.teamId) {
+        const teamWithDetails: TeamType = {
+          ...team,
+          lastActivity: latestActivity.lastActivityDate,
+        };
+        teamWithLatestActivity.value = [...teamWithLatestActivity.value, teamWithDetails];
+      }
+    }
+  }
 });
 </script>
 
@@ -15,7 +38,7 @@ defineProps({
   <section class="user-list__container">
     <section class="user-list__in-team-container">
       <team-info-card
-        v-for="team in teamList"
+        v-for="team in teamWithLatestActivity"
         :team="team"
         :key="team.id"
       />
