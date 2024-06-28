@@ -13,6 +13,11 @@ void initChannels() {
     switch (call.method) {
       case 'notificationSetting':
         return await notificationSetting();
+      case 'channelLog':
+        final message = call.arguments['message'] as String;
+        final platformName = call.arguments['platformName'] as String;
+        await channelLog(message, platformName);
+        break;
       default:
         throw MissingPluginException();
     }
@@ -20,6 +25,10 @@ void initChannels() {
 }
 
 //------------------------NATIVE CALL TO FLUTTER METHOD---------------------------
+
+Future<void> channelLog(String message, String platformName) async {
+  debugPrint("$platformName: $message");
+}
 
 // Todo(Loucas): Modify its usage un profile.dart to unschedule all notifications
 // if the user does not want to receive them.
@@ -72,11 +81,16 @@ Future<bool> areNotificationsPermitted() async {
   return true;
 }
 
+/// Schedule a notification using the platform channel
+/// @param timestamp: ISO8601 formated string, "yyyy-MM-dd'T'HH:mm:ssZ"
+/// @param title: The title of the notification
+/// @param message: The message of the notification
 Future<void> scheduleNotificationSwift(
   String timestamp,
   String title,
   String message,
 ) {
+  // Todo(Loucas): Add error handling for Dates < today()
   return platform.invokeMethod(
     'scheduleNotificationSwift',
     {'timestamp': timestamp, 'title': title, 'message': message},

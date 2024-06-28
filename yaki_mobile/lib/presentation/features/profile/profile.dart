@@ -67,7 +67,7 @@ class _ProfileState extends ConsumerState<Profile> with WidgetsBindingObserver {
     debugPrint('onSwapChangeCallback');
     debugPrint('value: $value');
     if (value) {
-      scheduleNotificationSwift("2024-01-01 00:00:00", "title", "message");
+      scheduleNotificationSwift("2022-01-01T00:00:00Z", "title", "message");
     } else {
       cancelAllNotificationsSwift();
     }

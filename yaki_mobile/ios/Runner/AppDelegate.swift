@@ -17,6 +17,8 @@ import UserNotifications
     enum FlutterMethodCall: String {
         // Future<bool> notificationSetting() 
         case notificationSetting = "notificationSetting"
+        // Future<void> channelLog(String message, String platformName)
+        case channelLog = "channelLog"
     }
 
     static let flutterChannelName = "com.xpeho.yaki/notification"
@@ -24,6 +26,8 @@ import UserNotifications
     static var shared: AppDelegate {
         return UIApplication.shared.delegate as! AppDelegate
     }
+
+    var center: UNUserNotificationCenter?
 
     override func application(
         _ application: UIApplication,
@@ -36,21 +40,21 @@ import UserNotifications
     
     override func applicationDidBecomeActive(_ application: UIApplication) {
         // Request notification authorization if it hasn't been granted
-        let center = UNUserNotificationCenter.current()
-        center.requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
-            print("Notifications granted: \(granted)")
+        center = UNUserNotificationCenter.current()
+        center?.requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+            self.channelLog("Notifications granted: \(granted)")
         }
         // Todo(Loucas): Remove this logging block. That's its only use for now.
-        center.getNotificationSettings { settings in
+        center?.getNotificationSettings { settings in
             if settings.authorizationStatus != .authorized {
-                print("Notifications not authorized")
+                self.channelLog("Notifications not authorized")
             }
-            print("Notifications autorizationStatus: \(settings.authorizationStatus)")
+            self.channelLog("Notifications autorizationStatus: \(settings.authorizationStatus)")
         }
         // Todo(Loucas): Remove this
-        print("applicationDidBecomeActive")
+        channelLog("applicationDidBecomeActive")
         notificationSetting {
-            print("notificationSetting: \($0)")
+            self.channelLog("notificationSetting: \($0)")
         }
     }
 
@@ -66,7 +70,7 @@ import UserNotifications
             switch call.method {
             case SwiftMethodCall.scheduleNotificationSwift.rawValue:
                 guard let args = call.arguments as? [String: Any] else {
-                    print("scheduleNotificationSwift: Invalid arguments")
+                    self.channelLog("scheduleNotificationSwift: Invalid arguments")
                     result(FlutterError(
                         code: "invalid-arguments",
                         message: "Invalid arguments",
@@ -88,9 +92,18 @@ import UserNotifications
             }
         }
     }
+
+    private func channelLog(_ message: String) {
+        print("channelLog")
+        let platformName = "Swift"
+        let channel = getMethodChannel();
+        DispatchQueue.main.async {
+            channel.invokeMethod(FlutterMethodCall.channelLog.rawValue, arguments: ["message": message, "platformName": platformName])
+        }
+    }
     
     private func isNotificationGranted(completion: @escaping (Bool) -> Void) {
-        UNUserNotificationCenter.current().getNotificationSettings { settings in
+        center?.getNotificationSettings { settings in
             let iOsSetting = settings.authorizationStatus
             self.notificationSetting { flutterSetting in
                 if iOsSetting == .authorized && flutterSetting {
@@ -105,25 +118,71 @@ import UserNotifications
 
     func scheduleNotification(timestamp: String, title: String, message: String) {
         // Todo(Loucas): Implement
-        print("scheduleNotificationSwift")
-        print("timestamp: \(timestamp), title: \(title), message: \(message)")
+        channelLog("scheduleNotificationSwift")
+        channelLog("timestamp: \(timestamp), title: \(title), message: \(message)")
+        var timestampDate = Date(iso8601Timestamp: timestamp)
+        guard var timestampDate = timestampDate else {
+            channelLog("scheduleNotificationSwift: Invalid timestamp")
+            return
+        }
+        // timestampDate in utc -> local
+        //timestampDate.addTimeInterval(Double(TimeZone.current.secondsFromGMT()))
+        channelLog("timestampDate: \(timestampDate)\tcurrent date : \(Date())")
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second],from: timestampDate)
+        channelLog("components: \(components)")
+        let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
+        channelLog("trigger: \(trigger)")
+        let content = UNMutableNotificationContent()
+        channelLog("content: \(content)")
+        content.title = title
+        content.body = message
+        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+        center?.add(request) { error in
+            if let error = error {
+                self.channelLog("scheduleNotificationSwift: \(error.localizedDescription)")
+            } else {
+                self.channelLog("\n\nscheduleNotificationSwift: Notification scheduled")
+                    self.center?.getPendingNotificationRequests {
+                        self.channelLog("Pending notifications: \($0)")
+                    }
+            }
+        }
     }
 
     func cancelAllNotifications() {
-        // Todo(Loucas): Implement
-        print("cancelAllNotificationsSwift")
+        channelLog("cancelAllNotificationsSwift")
+        center?.removeAllPendingNotificationRequests()
+        center?.removeAllDeliveredNotifications()
     }    
 
     func notificationSetting(completion: @escaping (Bool) -> Void) {
-        print("notificationSetting")
+        channelLog("notificationSetting")
         let channel = getMethodChannel();
-        channel.invokeMethod(FlutterMethodCall.notificationSetting.rawValue, arguments: nil) { response in
-            guard let responseBool = response as? Bool else {
-                print("Swift notificationSetting response is not a bool")
-                completion(false)
-                return
+        DispatchQueue.main.async {
+            channel.invokeMethod(FlutterMethodCall.notificationSetting.rawValue, arguments: nil) { response in
+                guard let responseBool = response as? Bool else {
+                    self.channelLog("Swift notificationSetting response is not a bool")
+                    completion(false)
+                    return
+                }
+                completion(responseBool)
             }
-            completion(responseBool)
+        }
+    }
+}
+
+// Note: We need to convert a timestamp in ISO 8601 format to a Date in scheduleNotificationSwift(timestamp: String, title: String, message: String)
+extension Date {
+    init?(iso8601Timestamp: String) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        if let date = dateFormatter.date(from: iso8601Timestamp) {
+            self = date
+        } else {
+            print("Error constructing Date from invalid timestamp format: \(iso8601Timestamp).\n Must follow format \"yyyy-MM-dd'T'HH:mm:ssZ\"")
+            return nil
         }
     }
 }

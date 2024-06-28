@@ -54,7 +54,7 @@ class SplashScreenState extends ConsumerState<SplashScreen> {
     _areNotificationsActivated = prefs.containsKey('areNotificationsActivated');
     if (!_areNotificationsActivated) {
       await prefs.setBool('areNotificationsActivated', true);
-      scheduleNotificationSwift("2024-01-01 00:00:00", "title", "message");
+      scheduleNotificationSwift("2022-01-01T00:00:00Z", "title", "message");
     }
 
     // if token is not saved, no need to check for token validity
