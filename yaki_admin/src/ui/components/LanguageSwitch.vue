@@ -20,6 +20,8 @@ onMounted(() => {
   if (!storedLanguage) {
     // Save the selected language to local storage
     storedLanguage = browserLanguage.includes("fr") ? "fr" : "en";
+    localStorage.setItem("language", storedLanguage);
+    languageStore.setLanguage(storedLanguage);
   }
 
   locale.value = storedLanguage;
