@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -82,6 +83,11 @@ Future<bool> areNotificationsPermitted() async {
   return true;
 }
 
+//    private func logAllNotifications() {
+Future<void> logAllNotificationsSwift() async {
+  return platform.invokeMethod('logAllNotificationsSwift');
+}
+
 /// Schedule a notification using the platform channel
 /// @param timestamp: utc ISO8601 formated date string, format: "yyyy-MM-ddTHH:mm:ss.mmmuuuZ".
 ///   timestamp can be easily created using date.toUtc().toIso8601String()
@@ -109,6 +115,7 @@ Future<void> scheduleReminderNotifications(
   int days,
   List<({int year, int month, int day})> declaredDays,
 ) async {
+  debugPrint("scheduleReminderNotifications");
   const days = 60;
   final now = DateTime.now();
   final todayAt9am = DateTime(now.year, now.month, now.day, 9, 0, 0).toUtc();
@@ -121,10 +128,14 @@ Future<void> scheduleReminderNotifications(
       if (Platform.isIOS) {
         await scheduleNotificationSwift(
           date.toIso8601String(),
-          "title",
+          "title", // Todo(Loucas): Change the messages to use `notificationTitle` and `notificationMessage` from `tr`
           "message ${date.toIso8601String()}",
         );
       }
     }
+  }
+  debugPrint("scheduleReminderNotifications done");
+  if (Platform.isIOS && kDebugMode) {
+    logAllNotificationsSwift();
   }
 }

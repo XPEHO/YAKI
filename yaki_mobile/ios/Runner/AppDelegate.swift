@@ -11,6 +11,8 @@ import UserNotifications
         case scheduleNotificationSwift = "scheduleNotificationSwift"
         // cancelAllNotificationsSwift()
         case cancelAllNotificationsSwift = "cancelAllNotificationsSwift"
+        // logAllNotifications()
+        case logAllNotificationsSwift = "logAllNotificationsSwift"
     }
 
     // List of Flutter methods that can be called from Swift
@@ -73,6 +75,9 @@ import UserNotifications
             case SwiftMethodCall.cancelAllNotificationsSwift.rawValue:
                 self.cancelAllNotifications()
                 result(nil)
+            case SwiftMethodCall.logAllNotificationsSwift.rawValue:
+                self.logAllNotifications()
+                result(nil)
             default:
                 result(FlutterMethodNotImplemented)
             }
@@ -80,11 +85,32 @@ import UserNotifications
     }
 
     private func channelLog(_ message: String) {
-        print("channelLog")
         let platformName = "Swift"
         let channel = getMethodChannel();
         DispatchQueue.main.async {
             channel.invokeMethod(FlutterMethodCall.channelLog.rawValue, arguments: ["message": message, "platformName": platformName])
+        }
+    }
+
+    private func logAllNotifications() {
+        center?.getPendingNotificationRequests { requests in
+            for (i, request) in requests.enumerated() {
+                guard let trigger = request.trigger as? UNCalendarNotificationTrigger else {
+                    continue
+                }
+                guard let nextDate = trigger.nextTriggerDate() else {
+                    continue
+                }
+                let calendar = Calendar.current
+                let formatter = DateFormatter()
+                formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                let dateString = formatter.string(from: nextDate)
+                self.channelLog("Pending notification \(i+1): \n" 
+                    + "\tid: \(request.identifier)\n"
+                    + "\ttitle: \(request.content.title)\n"
+                    + "\tbody: \(request.content.body)\n"
+                    + "\tdate: \(dateString)")
+            }
         }
     }
     

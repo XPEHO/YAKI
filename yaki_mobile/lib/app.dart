@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yaki/app_router.dart';
+import 'package:yaki/channels.dart';
+import 'package:yaki/presentation/state/providers/declaration_provider.dart';
 
 const font = TextStyle(
   fontFamily: 'SF Pro Rounded',
@@ -16,6 +19,31 @@ class YakiApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final appRouteProvider = ref.watch(goRouterProvider);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      initChannels();
+      final declarationRepository = ref.read(declarationRepositoryProvider);
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+
+      final int? userId = prefs.getInt("userId");
+      if (userId == null) {
+        debugPrint("Error retrieving userId in app.dart");
+        return;
+      }
+      final declaredDays = await declarationRepository.getDeclaredDays(userId);
+      final formatter = DateFormat('yyyy-MM-dd');
+      final declaredDaysComponents = declaredDays
+          .map((e) => formatter.parse(e))
+          .map(
+            (e) => (year: e.year, month: e.month, day: e.day),
+          )
+          .toList();
+      await scheduleReminderNotifications(
+        60,
+        declaredDaysComponents,
+      );
+      debugPrint("The Declared Days were $declaredDays"); //todo remove
+    });
 
     return MaterialApp.router(
       color: backgroundColor,
@@ -39,23 +67,6 @@ class YakiApp extends ConsumerWidget {
         }),
       ),
       routerConfig: appRouteProvider, // Referencing navigation router
-    );
-  }
-}
-
-class MyPage extends StatelessWidget {
-  const MyPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: Color(0xFFF2F6F9),
-      body: Center(
-        child: Text(
-          'YAKI',
-          style: font,
-        ),
-      ),
     );
   }
 }
