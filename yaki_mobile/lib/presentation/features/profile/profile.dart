@@ -67,9 +67,9 @@ class _ProfileState extends ConsumerState<Profile> with WidgetsBindingObserver {
     debugPrint('onSwapChangeCallback');
     debugPrint('value: $value');
     if (value) {
-      scheduleNotifications();
+      scheduleNotificationSwift("2022-01-01T00:00:00Z", "title", "message");
     } else {
-      cancelNotifications();
+      cancelAllNotificationsSwift();
     }
     setNotificationsActivationState(value);
   }
@@ -156,7 +156,7 @@ class _ProfileState extends ConsumerState<Profile> with WidgetsBindingObserver {
                                 SizedBox(
                                   width: 48,
                                   child: FutureBuilder(
-                                    future: areNotificationsActivated(),
+                                    future: notificationSetting(),
                                     builder: (context, snapshot) {
                                       if (snapshot.connectionState ==
                                           ConnectionState.waiting) {

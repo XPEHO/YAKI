@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 /// On the Web the API is the current host followed by /api
 /// On mobile the API is String.fromEnvironment('API_BASE_URL') value
 final urlProvider = Provider<String>((ref) {
+  return "https://yaki.uat.xpeho.fr/api";
   if (kIsWeb) {
     if (Uri.base.host == "localhost") {
       return const String.fromEnvironment('API_BASE_URL');
