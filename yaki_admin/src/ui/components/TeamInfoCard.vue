@@ -8,8 +8,10 @@ import { teamLogoService } from "@/services/teamLogo.service";
 import { setTeamLogoUrl } from "@/utils/images.utils";
 import { useModalStore } from "@/stores/modalStore";
 import { MODALMODE } from "@/constants/modalMode.enum";
+import { useLanguageStore } from "@/stores/languageStore";
 
 const modalStore = useModalStore();
+const languageStore = useLanguageStore();
 
 const teamLogo = ref<TeamLogoType>({
   teamId: 0,
@@ -55,8 +57,20 @@ const onSeeDetailPress = () => {
 
     <div class="user-card__wrapper-user-infos">
       <p class="user-card__name-text">{{ team.teamName }}</p>
-      <p class="user-card__info-text">
-        {{ $t("teamStatus.lastActivity") }}{{ $t("general.comingSoon") }}
+      <p
+        v-if="props.team.lastActivity"
+        class="user-card__info-text"
+      >
+        {{ $t("teamStatus.lastActivity")
+        }}{{
+          props.team.lastActivity && languageStore.getLanguage !== null
+            ? `${new Date(props.team.lastActivity).toLocaleDateString(
+                languageStore.getLanguage,
+              )} - ${new Date(props.team.lastActivity).toLocaleTimeString(
+                languageStore.getLanguage,
+              )}`
+            : ""
+        }}
       </p>
     </div>
     <section class="user-card__wrapper-status">
