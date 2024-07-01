@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -82,21 +83,48 @@ Future<bool> areNotificationsPermitted() async {
 }
 
 /// Schedule a notification using the platform channel
-/// @param timestamp: ISO8601 formated string, "yyyy-MM-dd'T'HH:mm:ssZ"
+/// @param timestamp: utc ISO8601 formated date string, format: "yyyy-MM-ddTHH:mm:ss.mmmuuuZ".
+///   timestamp can be easily created using date.toUtc().toIso8601String()
 /// @param title: The title of the notification
 /// @param message: The message of the notification
 Future<void> scheduleNotificationSwift(
   String timestamp,
   String title,
   String message,
-) {
+) async {
   // Todo(Loucas): Add error handling for Dates < today()
-  return platform.invokeMethod(
+  return await platform.invokeMethod(
     'scheduleNotificationSwift',
     {'timestamp': timestamp, 'title': title, 'message': message},
   );
 }
 
-Future<void> cancelAllNotificationsSwift() {
+Future<void> cancelAllNotificationsSwift() async {
   return platform.invokeMethod('cancelAllNotificationsSwift');
+}
+
+// ---- only about notifications ----
+
+Future<void> scheduleReminderNotifications(
+  int days,
+  List<({int year, int month, int day})> declaredDays,
+) async {
+  const days = 60;
+  final now = DateTime.now();
+  final todayAt9am = DateTime(now.year, now.month, now.day, 9, 0, 0).toUtc();
+
+  await cancelAllNotificationsSwift();
+  for (var i = 1; i <= days; i++) {
+    final date = todayAt9am.add(Duration(days: i));
+    if (!declaredDays
+        .contains((year: date.year, month: date.month, day: date.day))) {
+      if (Platform.isIOS) {
+        await scheduleNotificationSwift(
+          date.toIso8601String(),
+          "title",
+          "message ${date.toIso8601String()}",
+        );
+      }
+    }
+  }
 }

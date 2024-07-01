@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -43,23 +41,9 @@ void main() async {
 
   // Platform channels
   initChannels();
-  // Todo(Loucas): Here, add some notification scheduling logic
-  //scheduleNotificationSwift("2025-01-01T08:00:00Z", "title", "message");
-  final todayDate = DateTime.now().toUtc();
-  final formatter = DateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
-  cancelAllNotificationsSwift();
-  debugPrint("sleeping");
-  sleep(Duration(seconds: 2)); // Todo(Loucas): Make an instruction queue
-  debugPrint("waking up");
-  scheduleNotificationSwift(
-    "${formatter.format(todayDate.add(Duration(minutes: 2)))}Z",
-    "title",
-    "message scheduled at ${formatter.format(todayDate.add(Duration(minutes: 2)))}",
-  );
-  scheduleNotificationSwift(
-    "${formatter.format(todayDate.add(Duration(minutes: 3)))}Z", // Todo(Loucas): Change swift code to accept the basic ISO8601 formated string produced by dart
-    "title2",
-    "message2 scheduled at ${formatter.format(todayDate.add(Duration(minutes: 3)))}",
+  scheduleReminderNotifications(
+    60,
+    [(year: 2024, month: 07, day: 02)],
   );
 }
 
