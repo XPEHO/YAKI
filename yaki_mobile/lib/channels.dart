@@ -77,11 +77,10 @@ Future<bool> isDeclaredToday() async {
   );
   final declaredDays = await declarationRepository.getDeclaredDays(userId);
   final today = DateFormat("yyyy-MM-dd").format(DateTime.now());
-  final closestDay = declaredDays.reduce((a, b) => a.compareTo(b) <= 0 ? a : b);
-  debugPrint("isDeclaredToday, closestDay : $closestDay");
-  debugPrint("isDeclaredToday, function result : ${closestDay == today}");
+  final result = declaredDays.contains(today);
+  debugPrint("isDeclaredToday, function result : $result");
 
-  return Future.value(closestDay == today);
+  return Future.value(result);
 }
 
 //------------------------FLUTTER CALL TO NATIVE METHOD---------------------------
