@@ -19,9 +19,9 @@ public interface UserService {
     List<UserEntityWithID> findUserByIdRange(int idStart, int idEnd);
 
 
-    Page<UserEntityWithID> findAllUsers(Pageable pageable, Integer customerId, Boolean excludeCaptains, Integer excludeTeamId);
+    Page<UserEntityWithID> findAllUsers(Pageable pageable, Integer customerId, Boolean excludeCaptains, Integer excludeTeamId, String q, String email);
 
-    Page<UserModel> getUserPage(Pageable pageable, Integer customerId, Boolean excludeCaptains, Integer excludeTeamId);
+    Page<UserModel> getUserPage(Pageable pageable, Integer customerId, Boolean excludeCaptains, Integer excludeTeamId, String q, String email);
 
     UserEntity deleteById(int id);
 

@@ -37,19 +37,19 @@ class UserServiceImplUnitTest {
         Boolean excludeCaptains = true;
         Integer excludeTeamId = null;
 
-        when(userJpaRepository.findAllEnabledUsersByCustomerExcludingCaptains(any(), any())).thenReturn(new PageImpl<>(List.of(user1)));
+        when(userJpaRepository.findAllEnabledUsersByCustomerExcludingCaptains(any(), any(), any(), any())).thenReturn(new PageImpl<>(List.of(user1)));
 
         var expectedResult = new PageImpl<>(List.of(user1));
 
 
         // WHEN
-        var result = userService.getUserPage(pageable, customerId, excludeCaptains, excludeTeamId);
+        var result = userService.getUserPage(pageable, customerId, excludeCaptains, excludeTeamId, null, null);
 
         // THEN
-        verify(userJpaRepository).findAllEnabledUsersByCustomerExcludingCaptains(any(), any());
-        verify(userJpaRepository, never()).findAllEnabledUsersByCustomer(any(), any());
-        verify(userJpaRepository, never()).findAllEnabledUsersByCustomerExcludingTeam(any(), any(), any());
-        verify(userJpaRepository, never()).findAllEnabledUsers(any());
+        verify(userJpaRepository).findAllEnabledUsersByCustomerExcludingCaptains(any(), any(), any(), any());
+        verify(userJpaRepository, never()).findAllEnabledUsersByCustomer(any(), any(), any(), any());
+        verify(userJpaRepository, never()).findAllEnabledUsersByCustomerExcludingTeam(any(), any(), any(), any(), any());
+        verify(userJpaRepository, never()).findAllEnabledUsers(any(), any(), any());
 
         assertEquals(expectedResult, result);
 
@@ -65,18 +65,18 @@ class UserServiceImplUnitTest {
         Boolean excludeCaptains = null;
         Integer excludeTeamId = 1;
 
-        when(userJpaRepository.findAllEnabledUsersByCustomerExcludingTeam(any(), any(), any())).thenReturn(new PageImpl<>(List.of(user1)));
+        when(userJpaRepository.findAllEnabledUsersByCustomerExcludingTeam(any(), any(), any(), any(), any())).thenReturn(new PageImpl<>(List.of(user1)));
 
         var expectedResult = new PageImpl<>(List.of(user1));
 
         // WHEN
-        var result = userService.getUserPage(pageable, customerId, excludeCaptains, excludeTeamId);
+        var result = userService.getUserPage(pageable, customerId, excludeCaptains, excludeTeamId, null, null);
 
         // THEN
-        verify(userJpaRepository, never()).findAllEnabledUsersByCustomerExcludingCaptains(any(), any());
-        verify(userJpaRepository, never()).findAllEnabledUsersByCustomer(any(), any());
-        verify(userJpaRepository).findAllEnabledUsersByCustomerExcludingTeam(any(), any(), any());
-        verify(userJpaRepository, never()).findAllEnabledUsers(any());
+        verify(userJpaRepository, never()).findAllEnabledUsersByCustomerExcludingCaptains(any(), any(), any(), any());
+        verify(userJpaRepository, never()).findAllEnabledUsersByCustomer(any(), any(), any(), any());
+        verify(userJpaRepository).findAllEnabledUsersByCustomerExcludingTeam(any(), any(), any(), any(), any());
+        verify(userJpaRepository, never()).findAllEnabledUsers(any(), any(), any());
 
         assertEquals(expectedResult, result);
     }
@@ -91,18 +91,18 @@ class UserServiceImplUnitTest {
         Boolean excludeCaptains = null;
         Integer excludeTeamId = null;
 
-        when(userJpaRepository.findAllEnabledUsersByCustomer(any(), any())).thenReturn(new PageImpl<>(List.of(user1)));
+        when(userJpaRepository.findAllEnabledUsersByCustomer(any(), any(), any(), any())).thenReturn(new PageImpl<>(List.of(user1)));
 
         var expectedResult = new PageImpl<>(List.of(user1));
 
         // WHEN
-        var result = userService.getUserPage(pageable, customerId, excludeCaptains, excludeTeamId);
+        var result = userService.getUserPage(pageable, customerId, excludeCaptains, excludeTeamId, null, null);
 
         // THEN
-        verify(userJpaRepository, never()).findAllEnabledUsersByCustomerExcludingCaptains(any(), any());
-        verify(userJpaRepository).findAllEnabledUsersByCustomer(any(), any());
-        verify(userJpaRepository, never()).findAllEnabledUsersByCustomerExcludingTeam(any(), any(), any());
-        verify(userJpaRepository, never()).findAllEnabledUsers(any());
+        verify(userJpaRepository, never()).findAllEnabledUsersByCustomerExcludingCaptains(any(), any(), any(), any());
+        verify(userJpaRepository).findAllEnabledUsersByCustomer(any(), any(), any(), any());
+        verify(userJpaRepository, never()).findAllEnabledUsersByCustomerExcludingTeam(any(), any(), any(), any(), any());
+        verify(userJpaRepository, never()).findAllEnabledUsers(any(), any(), any());
 
         assertEquals(expectedResult, result);
     }
@@ -117,18 +117,18 @@ class UserServiceImplUnitTest {
         Boolean excludeCaptains = null;
         Integer excludeTeamId = null;
 
-        when(userJpaRepository.findAllEnabledUsers(any())).thenReturn(new PageImpl<>(List.of(user1)));
+        when(userJpaRepository.findAllEnabledUsers(any(), any(), any())).thenReturn(new PageImpl<>(List.of(user1)));
 
         var expectedResult = new PageImpl<>(List.of(user1));
 
         // WHEN
-        var result = userService.getUserPage(pageable, customerId, excludeCaptains, excludeTeamId);
+        var result = userService.getUserPage(pageable, customerId, excludeCaptains, excludeTeamId, null, null);
 
         // THEN
-        verify(userJpaRepository, never()).findAllEnabledUsersByCustomerExcludingCaptains(any(), any());
-        verify(userJpaRepository, never()).findAllEnabledUsersByCustomer(any(), any());
-        verify(userJpaRepository, never()).findAllEnabledUsersByCustomerExcludingTeam(any(), any(), any());
-        verify(userJpaRepository).findAllEnabledUsers(any());
+        verify(userJpaRepository, never()).findAllEnabledUsersByCustomerExcludingCaptains(any(), any(), any(), any());
+        verify(userJpaRepository, never()).findAllEnabledUsersByCustomer(any(), any(), any(), any());
+        verify(userJpaRepository, never()).findAllEnabledUsersByCustomerExcludingTeam(any(), any(), any(), any(), any());
+        verify(userJpaRepository).findAllEnabledUsers(any(), any(), any());
 
         assertEquals(expectedResult, result);
     }
