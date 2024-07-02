@@ -11,6 +11,7 @@ import { useRoute } from "vue-router";
 import { INVITEDROLE } from "@/constants/pathParam.enum";
 import { useSelectedRoleStore } from "@/stores/selectedRole";
 import { useTeammateStore } from "@/stores/teammateStore";
+import { useTeamStore } from "@/stores/teamStore";
 import { useCaptainStore } from "@/stores/captainStore";
 
 import chevronLeftIcon from "@/assets/icons_svg/Chevron-left.svg";
@@ -22,6 +23,7 @@ const invitationRole = route.params.role as INVITEDROLE;
 
 const selectedRoleStore = useSelectedRoleStore();
 const teammateStore = useTeammateStore();
+const teamStore = useTeamStore();
 const captainStore = useCaptainStore();
 const userStore = useUserStore();
 
@@ -46,7 +48,15 @@ const getListOfUserAlreadyAccepted = async (invitedRole: string) => {
 onBeforeMount(async () => {
   props.alreadInvitedUsers = await getListOfUserAlreadyAccepted(invitationRole);
 
-  await userStore.getUsersByPage();
+  if (invitationRole === INVITEDROLE.teammate) {
+    let customerId = selectedRoleStore.getCustomerIdSelected;
+    let excludeTeamId = teamStore.getTeamSelected.id;
+    await userStore.getUsersByPage(customerId, false, excludeTeamId);
+  } else if (invitationRole === INVITEDROLE.captain) {
+    let customerId = selectedRoleStore.getCustomerIdSelected;
+    let excludeCaptains = true;
+    await userStore.getUsersByPage(customerId, excludeCaptains);
+  }
   props.userList = userStore.getUsers;
 });
 
