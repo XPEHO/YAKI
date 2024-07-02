@@ -48,6 +48,10 @@ export const useTeamStore = defineStore("teamStore", {
     getCaptainIdToBeAssign: (state: State) => state.captainIdToBeAssign,
   },
   actions: {
+    async setCurrentTeamData(teamId: number): Promise<void> {
+      this.teamSelected = await teamService.getTeamDetails(teamId);
+    },
+
     setIsTeamListSetOnLoggin(isTeamListSet: boolean): void {
       this.isTeamListSetOnLoggin = isTeamListSet;
     },

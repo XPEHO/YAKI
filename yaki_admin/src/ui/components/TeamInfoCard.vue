@@ -6,11 +6,9 @@ import { TeamType } from "@/models/team.type";
 import { TeamLogoType } from "@/models/TeamLogo.type";
 import { teamLogoService } from "@/services/teamLogo.service";
 import { setTeamLogoUrl } from "@/utils/images.utils";
-import { useModalStore } from "@/stores/modalStore";
-import { MODALMODE } from "@/constants/modalMode.enum";
 import { useLanguageStore } from "@/stores/languageStore";
+import router from "@/router/router";
 
-const modalStore = useModalStore();
 const languageStore = useLanguageStore();
 
 const teamLogo = ref<TeamLogoType>({
@@ -39,7 +37,7 @@ const getTeamLogo = async (teamId: number) => {
 
 //define the methods
 const onSeeDetailPress = () => {
-  modalStore.switchModalVisibility(true, MODALMODE.comingSoon);
+  router.push({ path: `team-details/${props.team.id}` });
 };
 </script>
 
@@ -69,7 +67,7 @@ const onSeeDetailPress = () => {
               )} - ${new Date(props.team.lastActivity).toLocaleTimeString(
                 languageStore.getLanguage,
               )}`
-            : ""
+            : "No latest activity so far"
         }}
       </p>
     </div>
