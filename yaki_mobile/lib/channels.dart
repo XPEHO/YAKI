@@ -1,7 +1,7 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/services.dart';
@@ -111,30 +111,79 @@ Future<void> cancelAllNotificationsSwift() async {
 
 // ---- only about notifications ----
 
+/*
+  Data sources: The declared days are retrieved through the DeclarationRepository from the Express.js Backend talking to PostgreSQL.
+  The userId is coming from the sharedPreferences.
+  Todo(Loucas): 
+    - [x] Exclude weekends
+    - [ ] Exclude holidays in metropolitan France
+      - https://calendrier.api.gouv.fr/jours-feries/metropole.json
+        - [ ] Get from a local file
+        - [ ] If the current year is not found in said file, query the API
+        - [ ] Add to the documentation: instructions to refresh the local file
+           - [ ] Prerequisite: Find the location to put this information in the documentation
+    - [ ] Refactor this whole thing into its own classes and files
+    - [ ] Android - create scheduleNotificationKotlin(timestamp: String, title: String, message: String)
+*/
 Future<void> scheduleReminderNotifications(
   int days,
   List<({int year, int month, int day})> declaredDays,
 ) async {
-  debugPrint("scheduleReminderNotifications");
+  debugPrint("scheduleReminderNotifications"); //todo remove
   const days = 60;
   final now = DateTime.now();
   final todayAt9am = DateTime(now.year, now.month, now.day, 9, 0, 0).toUtc();
 
+  String fileLocation = 'assets/public_holidays/public_holidays.json';
+
+  final String fileContent = await rootBundle.loadString(fileLocation);
+
+  final Map<String, dynamic> holidaysJson = jsonDecode(fileContent);
+
+  final List<({int year, int month, int day})> holidays = holidaysJson.entries
+      .map(
+        (entry) => (
+          year: entry.key.split('-')[0],
+          month: entry.key.split('-')[1],
+          day: entry.key.split('-')[2],
+        ),
+      )
+      .map(
+        (e) => (
+          year: int.parse(e.year),
+          month: int.parse(e.month),
+          day: int.parse(e.day),
+        ),
+      )
+      .toList();
+
   await cancelAllNotificationsSwift();
   for (var i = 1; i <= days; i++) {
     final date = todayAt9am.add(Duration(days: i));
+
+    if (date.weekday == DateTime.saturday || date.weekday == DateTime.sunday) {
+      debugPrint("Date $date is a Saturday or Sunday");
+      continue;
+    }
+    var isHoliday =
+        holidays.contains((year: date.year, month: date.month, day: date.day));
+    if (isHoliday) {
+      debugPrint("Date $date is a French metropolitan holiday");
+      continue;
+    }
+
     if (!declaredDays
         .contains((year: date.year, month: date.month, day: date.day))) {
       if (Platform.isIOS) {
         await scheduleNotificationSwift(
           date.toIso8601String(),
-          "title", // Todo(Loucas): Change the messages to use `notificationTitle` and `notificationMessage` from `tr`
-          "message ${date.toIso8601String()}",
+          tr("notificationTitle"),
+          tr("notificationMessage"),
         );
       }
     }
   }
-  debugPrint("scheduleReminderNotifications done");
+  debugPrint("scheduleReminderNotifications done"); // todo remove
   if (Platform.isIOS && kDebugMode) {
     logAllNotificationsSwift();
   }
