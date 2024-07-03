@@ -108,9 +108,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<UserEntityWithID> findAllUsers(Pageable pageable, Integer customerId, Boolean excludeCaptains, Integer excludeTeamId) {
+    public Page<UserEntityWithID> findAllUsers(
+            Pageable pageable,
+            Integer customerId,
+            Boolean excludeCaptains,
+            Integer excludeTeamId,
+            String q,
+            String email) {
         // Call the getUserPage method to get a Page of UserModels, sorted by last name.
-        Page<UserModel> userPage = getUserPage(pageable, customerId, excludeCaptains, excludeTeamId);
+        Page<UserModel> userPage = getUserPage(pageable, customerId, excludeCaptains, excludeTeamId, q, email);
 
         return userPage.map(user -> new UserEntityWithID(
                 user.getUserId(),
@@ -125,7 +131,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<UserModel> getUserPage(Pageable pageable, Integer customerId, Boolean excludeCaptains, Integer excludeTeamId) {
+    public Page<UserModel> getUserPage(
+            Pageable pageable,
+            Integer customerId,
+            Boolean excludeCaptains,
+            Integer excludeTeamId,
+            String q,
+            String email) {
         // Create a new PageRequest object. This is a concrete implementation of the Pageable interface, which is used to add pagination information to database queries.
         // The parameters to the of() method are:
         // - pageable.getPageNumber(): This gets the number of the page that we want to retrieve. Page numbers are zero-based, so the first page is page 0.
@@ -139,14 +151,14 @@ public class UserServiceImpl implements UserService {
         // The findAll method takes the Pageable object as a parameter, which includes the page number, page size, and sorting details.
         if (customerId != null) {
             if (excludeCaptains != null && excludeCaptains) {
-                return userJpaRepository.findAllEnabledUsersByCustomerExcludingCaptains(sortedByName, customerId);
+                return userJpaRepository.findAllEnabledUsersByCustomerExcludingCaptains(sortedByName, customerId, q, email);
             } else if (excludeTeamId != null) {
-                return userJpaRepository.findAllEnabledUsersByCustomerExcludingTeam(sortedByName, customerId, excludeTeamId);
+                return userJpaRepository.findAllEnabledUsersByCustomerExcludingTeam(sortedByName, customerId, excludeTeamId, q, email);
             } else {
-                return userJpaRepository.findAllEnabledUsersByCustomer(sortedByName, customerId);
+                return userJpaRepository.findAllEnabledUsersByCustomer(sortedByName, customerId, q, email);
             }
         } else {
-            return userJpaRepository.findAllEnabledUsers(sortedByName);
+            return userJpaRepository.findAllEnabledUsers(sortedByName, q, email);
         }
     }
 

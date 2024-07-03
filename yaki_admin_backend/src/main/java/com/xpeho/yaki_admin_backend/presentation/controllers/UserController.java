@@ -13,9 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @CrossOrigin
 @RestController
@@ -49,7 +47,9 @@ public class UserController {
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(required = false) Integer customerId,
             @RequestParam(required = false) Boolean excludeCaptains,
-            @RequestParam(required = false) Integer excludeTeamId) {
+            @RequestParam(required = false) Integer excludeTeamId,
+            @RequestParam(required = false) String q,
+            @RequestParam(required = false) String email) {
 
         // Create a Pageable object with the provided page number and size. This is used
         // to add pagination information to the database query.
@@ -58,7 +58,7 @@ public class UserController {
         // Call the userService to get a Page of UserEntityWithID. The Page includes the
         // data for the requested page, as well as pagination information.
         Page<UserEntityWithID> userPage = userService.findAllUsers(pageable, customerId, excludeCaptains,
-                excludeTeamId);
+                excludeTeamId, q, email);
 
         // Create a map to hold the response data.
         // The getContent() method is used to get the list of UserEntityWithID from the Page.
