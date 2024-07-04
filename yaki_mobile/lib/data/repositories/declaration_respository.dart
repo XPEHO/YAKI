@@ -133,6 +133,7 @@ class DeclarationRepository {
     return statusHalfDay;
   }
 
+  // List of the declared days in string format yyyy-mm-dd
   Future<List<String>> getDeclaredDays(int userId) async {
     HttpResponse getHttpResponse;
     try {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:yaki/app_router.dart';
+import 'package:yaki/channels.dart';
 
 const font = TextStyle(
   fontFamily: 'SF Pro Rounded',
@@ -16,6 +17,13 @@ class YakiApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final appRouteProvider = ref.watch(goRouterProvider);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      initChannels();
+      await scheduleReminderNotifications(
+        60,
+      );
+    });
 
     return MaterialApp.router(
       color: backgroundColor,
@@ -39,23 +47,6 @@ class YakiApp extends ConsumerWidget {
         }),
       ),
       routerConfig: appRouteProvider, // Referencing navigation router
-    );
-  }
-}
-
-class MyPage extends StatelessWidget {
-  const MyPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: Color(0xFFF2F6F9),
-      body: Center(
-        child: Text(
-          'YAKI',
-          style: font,
-        ),
-      ),
     );
   }
 }

@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:yaki/app.dart';
 import 'package:flutter/services.dart';
-import 'package:yaki/channels.dart';
 import 'package:yaki/presentation/state/dio/dio_interceptor.dart';
 
 void main() async {
@@ -39,8 +38,12 @@ void main() async {
     ),
   );
 
-  // Platform channels
-  initChannels();
+  // // Platform channels
+  // initChannels();
+  // scheduleReminderNotifications(
+  //   60,
+  //   [(year: 2024, month: 07, day: 02)],
+  // );
 }
 
 Future<List<Override>> _overrides() async {
