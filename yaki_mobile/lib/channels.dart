@@ -72,6 +72,8 @@ Future<List<String>> getDeclaredDays() async {
 
 //------------------------FLUTTER CALL TO NATIVE METHOD---------------------------
 
+typedef DayRecord = ({int year, int month, int day});
+
 /// Check if notifications are permitted natively using the platform channel
 Future<bool> areNotificationsPermitted() async {
   try {
@@ -81,11 +83,6 @@ Future<bool> areNotificationsPermitted() async {
     debugPrint('Error: ${e.message}');
   }
   return true;
-}
-
-//    private func logAllNotifications() {
-Future<void> logAllNotificationsSwift() async {
-  return platform.invokeMethod('logAllNotificationsSwift');
 }
 
 /// Schedule a notification using the platform channel
@@ -98,7 +95,6 @@ Future<void> scheduleNotificationSwift(
   String title,
   String message,
 ) async {
-  // Todo(Loucas): Add error handling for Dates < today()
   return await platform.invokeMethod(
     'scheduleNotificationSwift',
     {'timestamp': timestamp, 'title': title, 'message': message},
@@ -109,66 +105,140 @@ Future<void> cancelAllNotificationsSwift() async {
   return platform.invokeMethod('cancelAllNotificationsSwift');
 }
 
+//    private func logAllNotifications() {
+Future<void> logAllNotificationsSwift() async {
+  return platform.invokeMethod('logAllNotificationsSwift');
+}
+
+Future<void> scheduleNotificationKotlin(
+  String timestamp,
+  String title,
+  String message,
+) async {
+  return platform.invokeMethod(
+    'scheduleNotificationKotlin',
+    {'timestamp': timestamp, 'title': title, 'message': message},
+  );
+}
+
+Future<void> cancelAllNotificationsKotlin() async {
+  return platform.invokeMethod('cancelAllNotificationsKotlin');
+}
+
+Future<void> logAllNotificationsKotlin() async {
+  return platform.invokeMethod('logAllNotificationsKotlin');
+}
+
 // ---- only about notifications ----
+
+List<DayRecord> listDayRecordsFromGouvFrJson(String jsonString) {
+  final Map<String, dynamic> holidaysJson;
+  try {
+    holidaysJson = jsonDecode(jsonString);
+  } catch (e) {
+    debugPrint("Failed to parse file: $e");
+    rethrow;
+  }
+
+  List<DayRecord> holidays = [];
+  try {
+    holidays = holidaysJson.entries
+        .map((entry) => entry.key.split('-'))
+        .map(
+          (entry) => (
+            year: entry[0],
+            month: entry[1],
+            day: entry[2],
+          ),
+        )
+        .map(
+          (e) => (
+            year: int.parse(e.year),
+            month: int.parse(e.month),
+            day: int.parse(e.day),
+          ),
+        )
+        .toList();
+  } catch (e) {
+    debugPrint("Failed to parse date string: $e");
+    rethrow;
+  }
+
+  return holidays;
+}
 
 /*
   Data sources: The declared days are retrieved through the DeclarationRepository from the Express.js Backend talking to PostgreSQL.
   The userId is coming from the sharedPreferences.
   Todo(Loucas): 
     - [x] Exclude weekends
-    - [ ] Exclude holidays in metropolitan France
+    - [x] Exclude holidays in metropolitan France
       - https://calendrier.api.gouv.fr/jours-feries/metropole.json
-        - [ ] Get from a local file
-        - [ ] If the current year is not found in said file, query the API
+        - [x] Get from a local file
+        - [x] If the current year is not found in said file, query the API
         - [ ] Add to the documentation: instructions to refresh the local file
            - [ ] Prerequisite: Find the location to put this information in the documentation
     - [ ] Refactor this whole thing into its own classes and files
     - [ ] Android - create scheduleNotificationKotlin(timestamp: String, title: String, message: String)
+    - [ ] Flutter - Also call this function when a new declaration has occured
 */
 Future<void> scheduleReminderNotifications(
   int days,
-  List<({int year, int month, int day})> declaredDays,
+  List<DayRecord> declaredDays,
 ) async {
   debugPrint("scheduleReminderNotifications"); //todo remove
-  const days = 60;
   final now = DateTime.now();
   final todayAt9am = DateTime(now.year, now.month, now.day, 9, 0, 0).toUtc();
 
   String fileLocation = 'assets/public_holidays/public_holidays.json';
+  String fileContent;
+  try {
+    fileContent = await rootBundle.loadString(fileLocation);
+  } catch (e) {
+    debugPrint("Failed to load file: $e");
+    return;
+  }
 
-  final String fileContent = await rootBundle.loadString(fileLocation);
+  List<DayRecord> holidays = listDayRecordsFromGouvFrJson(fileContent);
 
-  final Map<String, dynamic> holidaysJson = jsonDecode(fileContent);
+  // todo: remove temporary test
+  holidays = [];
 
-  final List<({int year, int month, int day})> holidays = holidaysJson.entries
-      .map(
-        (entry) => (
-          year: entry.key.split('-')[0],
-          month: entry.key.split('-')[1],
-          day: entry.key.split('-')[2],
+  if (!holidays.map((e) => e.year).contains(now.year)) {
+    debugPrint("Fetching holidays from API"); // todo remove logging
+    // fetch the api https://calendrier.api.gouv.fr/jours-feries/metropole.json
+
+    String jsonResponse;
+    try {
+      HttpClient client = HttpClient();
+      var request = await client.getUrl(
+        Uri.parse(
+          'https://calendrier.api.gouv.fr/jours-feries/metropole.json',
         ),
-      )
-      .map(
-        (e) => (
-          year: int.parse(e.year),
-          month: int.parse(e.month),
-          day: int.parse(e.day),
-        ),
-      )
-      .toList();
+      );
+      var response = await request.close();
+      jsonResponse = await response.transform(utf8.decoder).join();
+    } catch (e) {
+      debugPrint("Failed to fetch holidays: $e");
+      return;
+    }
+    holidays = listDayRecordsFromGouvFrJson(jsonResponse);
+  }
 
   await cancelAllNotificationsSwift();
   for (var i = 1; i <= days; i++) {
     final date = todayAt9am.add(Duration(days: i));
 
     if (date.weekday == DateTime.saturday || date.weekday == DateTime.sunday) {
-      debugPrint("Date $date is a Saturday or Sunday");
+      debugPrint("Date $date is a Saturday or Sunday"); // todo remove logging
       continue;
     }
     var isHoliday =
         holidays.contains((year: date.year, month: date.month, day: date.day));
     if (isHoliday) {
-      debugPrint("Date $date is a French metropolitan holiday");
+      debugPrint(
+        "Date $date is a French metropolitan holiday",
+      ); // todo remove logging
       continue;
     }
 
@@ -183,7 +253,7 @@ Future<void> scheduleReminderNotifications(
       }
     }
   }
-  debugPrint("scheduleReminderNotifications done"); // todo remove
+  debugPrint("scheduleReminderNotifications done"); // todo remove logging
   if (Platform.isIOS && kDebugMode) {
     logAllNotificationsSwift();
   }

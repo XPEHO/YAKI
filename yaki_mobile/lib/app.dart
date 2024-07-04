@@ -32,7 +32,7 @@ class YakiApp extends ConsumerWidget {
       }
       final declaredDays = await declarationRepository.getDeclaredDays(userId);
       final formatter = DateFormat('yyyy-MM-dd');
-      final declaredDaysComponents = declaredDays
+      final List<DayRecord> declaredDaysComponents = declaredDays
           .map((e) => formatter.parse(e))
           .map(
             (e) => (year: e.year, month: e.month, day: e.day),
