@@ -13,8 +13,6 @@ void initChannels() {
   // Notification channel
   platform.setMethodCallHandler((MethodCall call) async {
     switch (call.method) {
-      case 'notificationSetting':
-        return await notificationSetting();
       case 'channelLog':
         final message = call.arguments['message'] as String;
         final platformName = call.arguments['platformName'] as String;
@@ -32,7 +30,7 @@ Future<void> channelLog(String message, String platformName) async {
   debugPrint("$platformName: $message");
 }
 
-// Todo(Loucas): Modify its usage un profile.dart to unschedule all notifications
+// Todo(Loucas): In profile.dart, unschedule all notifications
 // if the user does not want to receive them.
 
 /// Check if the notifications are activated in the shared preferences
@@ -41,33 +39,6 @@ Future<bool> notificationSetting() async {
   final bool? areNotificationsActivated =
       prefs.getBool('areNotificationsActivated');
   return areNotificationsActivated ?? false;
-}
-
-// Todo(Loucas): Only use this from the flutter function that schedules notifications
-/// Getter of the notification parameters stored in the translations
-Map<String, dynamic> getNotificationParams() {
-  return {
-    'title': tr("notificationTitle"),
-    'message': tr("notificationMessage"),
-    'hour': 9,
-    'minute': 0,
-  };
-}
-
-// Todo(Loucas): Only use this from the flutter function that schedules notifications
-/// send the list of all declared days for the current user to Swift
-/// Note: We have to retrieve all of them because iOS requires to schedule
-/// notifications in advance.
-Future<List<String>> getDeclaredDays() async {
-  final provider = ProviderContainer();
-  final declarationRepository = provider.read(declarationRepositoryProvider);
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-
-  final int? userId = prefs.getInt("userId");
-  if (userId == null) {
-    return Future.value([]);
-  }
-  return declarationRepository.getDeclaredDays(userId);
 }
 
 //------------------------FLUTTER CALL TO NATIVE METHOD---------------------------
@@ -184,8 +155,30 @@ List<DayRecord> listDayRecordsFromGouvFrJson(String jsonString) {
 */
 Future<void> scheduleReminderNotifications(
   int days,
-  List<DayRecord> declaredDays,
 ) async {
+  if (!await notificationSetting()) {
+    debugPrint("Notifications are not activated");
+    return;
+  }
+
+  // retrieve declared days
+  final provider = ProviderContainer();
+  final declarationRepository = provider.read(declarationRepositoryProvider);
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  final int? userId = prefs.getInt("userId");
+  if (userId == null) {
+    debugPrint("userId is null");
+    return;
+  }
+  List<String> declaredDaysStrings =
+      await declarationRepository.getDeclaredDays(userId);
+  List<DayRecord> declaredDays = declaredDaysStrings
+      .map(
+        (e) => e.split('-').map((e) => int.parse(e)).toList(),
+      )
+      .map((e) => (year: e[0], month: e[1], day: e[2]))
+      .toList();
+
   debugPrint("scheduleReminderNotifications"); //todo remove
   final now = DateTime.now();
   final todayAt9am = DateTime(now.year, now.month, now.day, 9, 0, 0).toUtc();
@@ -225,7 +218,12 @@ Future<void> scheduleReminderNotifications(
     holidays = listDayRecordsFromGouvFrJson(jsonResponse);
   }
 
-  await cancelAllNotificationsSwift();
+  if (Platform.isIOS) {
+    await cancelAllNotificationsSwift();
+  }
+  if (Platform.isAndroid) {
+    await cancelAllNotificationsKotlin();
+  }
   for (var i = 1; i <= days; i++) {
     final date = todayAt9am.add(Duration(days: i));
 
@@ -251,10 +249,22 @@ Future<void> scheduleReminderNotifications(
           tr("notificationMessage"),
         );
       }
+      if (Platform.isAndroid) {
+        await scheduleNotificationKotlin(
+          date.toIso8601String(),
+          tr("notificationTitle"),
+          tr("notificationMessage"),
+        );
+      }
     }
   }
   debugPrint("scheduleReminderNotifications done"); // todo remove logging
-  if (Platform.isIOS && kDebugMode) {
-    logAllNotificationsSwift();
+  if (kDebugMode) {
+    if (Platform.isIOS) {
+      logAllNotificationsSwift();
+    }
+    if (Platform.isAndroid) {
+      //logAllNotificationsKotlin();
+    }
   }
 }

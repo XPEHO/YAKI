@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yaki/app_router.dart';
 import 'package:yaki/channels.dart';
-import 'package:yaki/presentation/state/providers/declaration_provider.dart';
 
 const font = TextStyle(
   fontFamily: 'SF Pro Rounded',
@@ -22,27 +20,9 @@ class YakiApp extends ConsumerWidget {
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       initChannels();
-      final declarationRepository = ref.read(declarationRepositoryProvider);
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-
-      final int? userId = prefs.getInt("userId");
-      if (userId == null) {
-        debugPrint("Error retrieving userId in app.dart");
-        return;
-      }
-      final declaredDays = await declarationRepository.getDeclaredDays(userId);
-      final formatter = DateFormat('yyyy-MM-dd');
-      final List<DayRecord> declaredDaysComponents = declaredDays
-          .map((e) => formatter.parse(e))
-          .map(
-            (e) => (year: e.year, month: e.month, day: e.day),
-          )
-          .toList();
       await scheduleReminderNotifications(
         60,
-        declaredDaysComponents,
       );
-      debugPrint("The Declared Days were $declaredDays"); //todo remove
     });
 
     return MaterialApp.router(
