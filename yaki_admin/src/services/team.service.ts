@@ -6,6 +6,18 @@ import { handleResponse } from "@/utils/responseUtils";
 const URL: string = environmentVar.baseURL;
 
 export class TeamService {
+  getTeamDetails = async (teamId: number): Promise<TeamType> => {
+    const requestOptions = {
+      method: "GET",
+      headers: authHeader(`${URL}/teams/${teamId}`),
+    };
+    const res = await fetch(`${URL}/teams/${teamId}`, requestOptions)
+      .then(handleResponse)
+      .catch((err) => console.warn(err));
+
+    return res;
+  };
+
   /* `getAllTeamsWithinCaptain` is a method of the `TeamService` class that takes in a `number`
     parameter `id` and returns a `Promise` that resolves to an array of `TeamType` objects. */
   getAllTeamsWithinCaptain = async (id: number): Promise<TeamType[]> => {

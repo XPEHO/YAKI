@@ -10,6 +10,7 @@ import CaptainsManagementView from "@/ui/views/CaptainsManagementView.vue";
 import ProfileView from "@/ui/views/ProfileView.vue";
 import StatisticsView from "@/ui/views/StatisticsView.vue";
 import TeamListView from "@/ui/views/TeamListView.vue";
+import TeamDetailsView from "@/ui/views/TeamDetailsView.vue";
 
 import { useTeamStore } from "@/stores/teamStore";
 import { useRoleStore } from "@/stores/roleStore";
@@ -50,6 +51,10 @@ const router = createRouter({
         {
           path: "team/:state",
           component: TeamStatusNotification,
+        },
+        {
+          path: "team-details/:id",
+          component: TeamDetailsView,
         },
         {
           path: "team-list",

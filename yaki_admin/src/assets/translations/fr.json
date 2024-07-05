@@ -19,7 +19,8 @@
     "deleteTeam": "Supprimer l'équipe",
     "close": "Fermer",
     "downloadCsv": "Exporter en CSV",
-    "seeDetail": "Voir le détail"
+    "seeDetail": "Voir le détail",
+    "add": "Ajouter"
   },
   "loginPage": {
     "changePasswordInfo": "Vos informations de connexion sont également utilisées sur YAKI mobile.",
@@ -48,7 +49,11 @@
     "howToCreateATeam2": "Les équipes peuvent être créées en utilisant ",
     "createTeam": "créer une équipe",
     "option": "option",
-    "lastActivity": "Dernière activité : "
+    "captainNumber": "Nombre de capitaines : ",
+    "teammateNumber": "Nombre de coéquipiers : ",
+    "lastActivity": "Dernière activité : ",
+    "inactiveWeekAgo": "Plus d'une semaine sans activité",
+    "inactiveMonthAgo": "Plus d'un mois sans activité"
   },
   "tutorials": {
     "captainTitle": "Bienvenue dans la section gestion des capitaines.",
@@ -102,6 +107,9 @@
     "role": "Administrateur"
   },
   "general": {
+    "details": "Informations",
+    "description": "Description",
+    "captains": "Capitaines",
     "teammates": "Coéquipiers",
     "comingSoon": "Bientôt disponible"
   },
